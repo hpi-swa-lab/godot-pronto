@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3v6uexjov2rs"]
+
+[ext_resource type="Script" path="res://addons/prototyping/Move.gd" id="1_rp3a2"]
+
+[node name="Move" type="Node"]
+script = ExtResource("1_rp3a2")
