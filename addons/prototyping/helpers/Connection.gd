@@ -60,7 +60,6 @@ func is_target() -> bool:
 func delete(from: Node):
 	_ensure_connections(from).erase(self)
 
-var _from: Node = null
 var _arguments: Array
 var _expression: Expression
 var _installed := false
@@ -83,12 +82,6 @@ func _install_in_game(from: Node):
 	if Engine.is_editor_hint():
 		return
 	
-	if _from:
-		if _from != from:
-			push_error("Attempting to re-bind connection")
-		return
-	_from = from
-	
 	var signal_arguments: Array = (from.get_signal_list()
 		.filter(func (s): return s["name"] == signal_name)
 		.map(func (s): return s["args"].map(func (a): return a["name"])))[0]
@@ -103,22 +96,16 @@ func _install_in_game(from: Node):
 		_expression = Expression.new()
 		_expression.parse(expression, signal_arguments)
 	
-	from.connect(signal_name, Callable(self, "_trigger" + str(signal_arguments.size())))
+	match signal_arguments.size():
+		0: from.connect(signal_name, func (): _trigger(from, []))
+		1: from.connect(signal_name, func (arg1): _trigger(from, [arg1]))
+		2: from.connect(signal_name, func (arg1, arg2): _trigger(from, [arg1, arg2]))
+		3: from.connect(signal_name, func (arg1, arg2, arg3): _trigger(from, [arg1, arg2, arg3]))
+		4: from.connect(signal_name, func (arg1, arg2, arg3, arg4): _trigger(from, [arg1, arg2, arg3, arg4]))
 
-func _trigger(arguments: Array):
+func _trigger(from: Object, arguments: Array):
 	if to:
-		var target = _from.get_node(to)
+		var target = from.get_node(to)
 		target.callv(invoke, _arguments.map(func (arg: Expression): return arg.execute(arguments, target)))
 	else:
-		_expression.execute(arguments, _from)
-
-func _trigger0():
-	_trigger([])
-func _trigger1(arg1):
-	_trigger([arg1])
-func _trigger2(arg1, arg2):
-	_trigger([arg1, arg2])
-func _trigger3(arg1, arg2, arg3):
-	_trigger([arg1, arg2, arg3])
-func _trigger4(arg1, arg2, arg3, arg4):
-	_trigger([arg1, arg2, arg3, arg4])
+		_expression.execute(arguments, from)

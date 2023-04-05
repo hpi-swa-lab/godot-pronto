@@ -2,9 +2,17 @@ extends Node
 
 signal left
 signal right
+signal click(pos: Vector2)
+signal moved(pos: Vector2)
 
 func _process(delta):
 	if Input.is_action_pressed("ui_left"):
-		emit_signal("left")
+		left.emit()
 	if Input.is_action_pressed("ui_right"):
-		emit_signal("right")
+		right.emit()
+
+func _input(event):
+	if event is InputEventMouseButton and event.pressed:
+		click.emit(event.position)
+	if event is InputEventMouseMotion:
+		moved.emit(event.position)
