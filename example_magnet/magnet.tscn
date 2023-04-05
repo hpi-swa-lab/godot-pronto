@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://45p6sfudyotr"]
+[gd_scene load_steps=10 format=3 uid="uid://45p6sfudyotr"]
 
 [ext_resource type="Script" path="res://addons/prototyping/Move.gd" id="1_ksxia"]
 [ext_resource type="Script" path="res://addons/prototyping/helpers/Connection.gd" id="2_g2igt"]
@@ -21,6 +21,15 @@ invoke = "queue_free"
 arguments = Array[String]([])
 expression = ""
 
+[sub_resource type="Resource" id="Resource_8suk4"]
+script = ExtResource("2_g2igt")
+signal_name = "timeout"
+to = NodePath("")
+invoke = ""
+arguments = Array[String]([])
+expression = "for m in from.get_tree().get_nodes_in_group(\"metal\"):
+	m.get_node(\"State\").put(\"attached\", false)"
+
 [sub_resource type="Resource" id="Resource_j40h6"]
 script = ExtResource("2_g2igt")
 signal_name = "collided"
@@ -35,7 +44,9 @@ signal_name = "collided"
 to = NodePath("")
 invoke = ""
 arguments = Array[String]([])
-expression = "print(other)"
+expression = "for m in from.get_tree().get_nodes_in_group(\"metal\"):
+	m.get_node(\"State\").put(\"attached\", false)
+other.get_node(\"State\").put(\"attached\", true)"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ul02o"]
 
@@ -61,7 +72,7 @@ metadata/pronto_connections = [SubResource("Resource_t47d0")]
 [node name="FreeTimer" type="Timer" parent="."]
 wait_time = 0.3
 autostart = true
-metadata/pronto_connections = [SubResource("Resource_co8gn")]
+metadata/pronto_connections = [SubResource("Resource_co8gn"), SubResource("Resource_8suk4")]
 
 [node name="Collision" type="Node" parent="."]
 script = ExtResource("3_n16uc")

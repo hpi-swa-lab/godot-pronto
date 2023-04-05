@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cuw85xlxw1fxj"]
+[gd_scene load_steps=8 format=3 uid="uid://cuw85xlxw1fxj"]
 
 [ext_resource type="Script" path="res://addons/prototyping/State.gd" id="2_qpnkj"]
 [ext_resource type="Script" path="res://addons/prototyping/Controls.gd" id="3_kcbcg"]
 [ext_resource type="Script" path="res://addons/prototyping/helpers/Connection.gd" id="4_pujtg"]
+[ext_resource type="Script" path="res://addons/prototyping/Bind.gd" id="4_xkwlb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5kw8h"]
 size = Vector2(39, 38)
@@ -20,7 +21,7 @@ script = ExtResource("4_pujtg")
 signal_name = "timeout"
 to = NodePath("..")
 invoke = "set"
-arguments = Array[String](["\"position\"", "lerp(position, get_node(\"State\").at(\"target\"), 0.01)"])
+arguments = Array[String](["\"position\"", "lerp(target.position, target.get_node(\"State\").at(\"target\"), 0.01)"])
 expression = ""
 
 [node name="metal" type="Area2D" groups=["metal"]]
@@ -39,6 +40,7 @@ shape = SubResource("RectangleShape2D_5kw8h")
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_qpnkj")
 metadata/target = Vector2(0, 0)
+metadata/attached = false
 
 [node name="Controls" type="Node" parent="."]
 script = ExtResource("3_kcbcg")
@@ -48,3 +50,10 @@ metadata/pronto_connections = [SubResource("Resource_wb2ay")]
 wait_time = 0.001
 autostart = true
 metadata/pronto_connections = [SubResource("Resource_jq1sq")]
+
+[node name="Bind" type="Node" parent="Timer"]
+script = ExtResource("4_xkwlb")
+from = Array[NodePath]([NodePath("../../State")])
+from_prop = Array[String](["attached"])
+to_prop = "paused"
+convert = "not value0"

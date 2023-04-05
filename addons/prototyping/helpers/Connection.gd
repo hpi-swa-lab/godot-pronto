@@ -46,7 +46,7 @@ static func get_connections(node: Node) -> Array:
 @export var arguments: Array[String] = []
 ## (Optional) Only used when neither [member to], [member invoke], or [member arguments] is not set.
 ## A string describing the [Expression] that is to be run when [member signal_name] triggers.
-@export var expression: String = ""
+@export_multiline var expression: String = ""
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
@@ -59,10 +59,6 @@ func is_target() -> bool:
 ## Remove this connection from [param node].
 func delete(from: Node):
 	_ensure_connections(from).erase(self)
-
-var _arguments: Array
-var _expression: Expression
-var _installed := false
 
 func _store(from: Node):
 	var connections = _ensure_connections(from)
@@ -86,26 +82,23 @@ func _install_in_game(from: Node):
 		.filter(func (s): return s["name"] == signal_name)
 		.map(func (s): return s["args"].map(func (a): return a["name"])))[0]
 	
-	if arguments:
-		_arguments = arguments.map(func (expr: String):
-			var e := Expression.new()
-			e.parse(expr, signal_arguments)
-			return e)
-	
-	if expression:
-		_expression = Expression.new()
-		_expression.parse(expression, signal_arguments)
-	
+	var s = signal_arguments
 	match signal_arguments.size():
-		0: from.connect(signal_name, func (): _trigger(from, []))
-		1: from.connect(signal_name, func (arg1): _trigger(from, [arg1]))
-		2: from.connect(signal_name, func (arg1, arg2): _trigger(from, [arg1, arg2]))
-		3: from.connect(signal_name, func (arg1, arg2, arg3): _trigger(from, [arg1, arg2, arg3]))
-		4: from.connect(signal_name, func (arg1, arg2, arg3, arg4): _trigger(from, [arg1, arg2, arg3, arg4]))
+		0: from.connect(signal_name, func (): _trigger(from, s, []))
+		1: from.connect(signal_name, func (arg1): _trigger(from, s, [arg1]))
+		2: from.connect(signal_name, func (arg1, arg2): _trigger(from, s, [arg1, arg2]))
+		3: from.connect(signal_name, func (arg1, arg2, arg3): _trigger(from, s, [arg1, arg2, arg3]))
+		4: from.connect(signal_name, func (arg1, arg2, arg3, arg4): _trigger(from, s, [arg1, arg2, arg3, arg4]))
 
-func _trigger(from: Object, arguments: Array):
+func _trigger(from: Object, argument_names: Array, argument_values: Array):
+	var names = argument_names.duplicate()
+	var values = argument_values.duplicate()
+	names.append("from")
+	values.append(from)
 	if to:
 		var target = from.get_node(to)
-		target.callv(invoke, _arguments.map(func (arg: Expression): return arg.execute(arguments, target)))
+		names.append("target")
+		values.append(target)
+		target.callv(invoke, arguments.map(func (arg): return ConnectionsList.eval(arg, names, values)))
 	else:
-		_expression.execute(arguments, from)
+		ConnectionsList.eval(expression, names, values)
