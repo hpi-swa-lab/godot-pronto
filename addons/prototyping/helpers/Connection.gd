@@ -30,7 +30,7 @@ static func connect_expr(from: Node, signal_name: String, expression: String):
 	c._store(from)
 
 ## Returns list of all connections from [param node]
-static func get_connections(node: Node) -> Array[Connection]:
+static func get_connections(node: Node) -> Array:
 	if not node.has_meta("pronto_connections"):
 		return []
 	else:
