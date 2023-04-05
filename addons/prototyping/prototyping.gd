@@ -22,7 +22,7 @@ func _handles(object):
 
 func _edit(object):
 	edited_object = object
-	if edited_object:
+	if edited_object and edited_object is Node:
 		show_signals(edited_object)
 	else:
 		close()
@@ -61,12 +61,7 @@ func show_signals(component: Node):
 	
 	component.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(popup, false, Node.INTERNAL_MODE_BACK)
 	
-	var anchor = parentThat(component, func (p): return p is Node2D or p is Control)
+	var anchor = Utils.parent_that(component, func (p): return p is Node2D or p is Control)
 	popup.position = anchor.get_viewport_transform() * anchor.global_position
 	
 	return popup
-
-func parentThat(node: Node, cond: Callable):
-	if cond.call(node):
-		return node
-	return parentThat(node.get_parent(), cond)

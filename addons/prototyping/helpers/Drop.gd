@@ -7,7 +7,7 @@ var node: Node
 func _init(node: Node):
 	self.node = node
 	
-	var anchor = parentThat(node, is_visible_node)
+	var anchor = Utils.parent_that(node, is_visible_node)
 	node.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(self, false, Node.INTERNAL_MODE_BACK)
 	position = anchor.get_viewport_transform() * anchor.global_position
 	
@@ -60,11 +60,6 @@ func get_methods_for(node: Node) -> Array[Dictionary]:
 	else:
 		return ClassDB.class_get_method_list(node.get_class(), true)
 
-func parentThat(node: Node, cond: Callable):
-	if cond.call(node):
-		return node
-	return parentThat(node.get_parent(), cond)
-
 func is_visible_node(node: Node):
 	return node is Node3D or node is Control or node is Node2D
 
@@ -84,7 +79,10 @@ func _can_drop_data(at_position, data):
 
 func _drop_data(at_position, data):
 	print(data)
-	show_connect_popup(data)
+	if true:
+		Connection.connect_expr(data["source"], data["signal"]["name"], "print('Hello')")
+	else:
+		show_connect_popup(data)
 	# var source_signal = data["signal"]
 	# data["source"].connect(source_signal["name"], func(): Callable(target, target_method["name"]).call(), CONNECT_PERSIST)
 

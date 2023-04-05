@@ -1,12 +1,21 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxw1f08u1pph8"]
+[gd_scene load_steps=11 format=3 uid="uid://bxw1f08u1pph8"]
 
 [ext_resource type="PackedScene" uid="uid://cdb8co5bbceus" path="res://player.tscn" id="1_nlcks"]
 [ext_resource type="Script" path="res://addons/prototyping/State.gd" id="1_qpvja"]
 [ext_resource type="Script" path="res://addons/prototyping/Collision.gd" id="3_4cnv0"]
 [ext_resource type="Script" path="res://addons/prototyping/Spawner.gd" id="3_eabdu"]
+[ext_resource type="Script" path="res://addons/prototyping/helpers/Connection.gd" id="3_rhlim"]
 [ext_resource type="PackedScene" uid="uid://cdmy8k4iavvkf" path="res://coin.tscn" id="4_01hla"]
 [ext_resource type="Script" path="res://addons/prototyping/Bind.gd" id="4_mbl43"]
 [ext_resource type="Script" path="res://addons/prototyping/Invoker.gd" id="7_am56y"]
+
+[sub_resource type="Resource" id="Resource_48psi"]
+script = ExtResource("3_rhlim")
+signal_name = "area_entered"
+to = NodePath("../State")
+invoke = "inc"
+arguments = Array[String](["\"score\"", "400"])
+expression = ""
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41hoy"]
 size = Vector2(1200, 20)
@@ -20,6 +29,7 @@ metadata/score = 0
 
 [node name="player" parent="." instance=ExtResource("1_nlcks")]
 position = Vector2(237, 539)
+metadata/pronto_connections = Array[ExtResource("3_rhlim")]([SubResource("Resource_48psi")])
 
 [node name="Collision" type="Node" parent="player"]
 script = ExtResource("3_4cnv0")
