@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://cuw85xlxw1fxj"]
+[gd_scene load_steps=7 format=3 uid="uid://cuw85xlxw1fxj"]
 
-[ext_resource type="Script" path="res://addons/prototyping/Move.gd" id="1_s5sje"]
 [ext_resource type="Script" path="res://addons/prototyping/State.gd" id="2_qpnkj"]
 [ext_resource type="Script" path="res://addons/prototyping/Controls.gd" id="3_kcbcg"]
 [ext_resource type="Script" path="res://addons/prototyping/helpers/Connection.gd" id="4_pujtg"]
@@ -19,9 +18,9 @@ expression = ""
 [sub_resource type="Resource" id="Resource_jq1sq"]
 script = ExtResource("4_pujtg")
 signal_name = "timeout"
-to = NodePath("../Move")
-invoke = "move_toward"
-arguments = Array[String](["get_node(\"../State\").at(\"target\")"])
+to = NodePath("..")
+invoke = "set"
+arguments = Array[String](["\"position\"", "lerp(position, get_node(\"State\").at(\"target\"), 0.01)"])
 expression = ""
 
 [node name="metal" type="Area2D" groups=["metal"]]
@@ -36,9 +35,6 @@ color = Color(0.6, 0.6, 0.6, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 2)
 shape = SubResource("RectangleShape2D_5kw8h")
-
-[node name="Move" type="Node" parent="."]
-script = ExtResource("1_s5sje")
 
 [node name="State" type="Node" parent="."]
 script = ExtResource("2_qpnkj")
