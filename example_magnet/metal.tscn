@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://cuw85xlxw1fxj"]
+
+[ext_resource type="Script" path="res://addons/prototyping/Move.gd" id="1_s5sje"]
+[ext_resource type="Script" path="res://addons/prototyping/State.gd" id="2_qpnkj"]
+[ext_resource type="Script" path="res://addons/prototyping/Controls.gd" id="3_kcbcg"]
+[ext_resource type="Script" path="res://addons/prototyping/helpers/Connection.gd" id="4_pujtg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5kw8h"]
+size = Vector2(39, 38)
+
+[sub_resource type="Resource" id="Resource_wb2ay"]
+script = ExtResource("4_pujtg")
+signal_name = "moved"
+to = NodePath("../State")
+invoke = "put"
+arguments = Array[String](["\"target\"", "pos"])
+expression = ""
+
+[sub_resource type="Resource" id="Resource_jq1sq"]
+script = ExtResource("4_pujtg")
+signal_name = "timeout"
+to = NodePath("../Move")
+invoke = "move_toward"
+arguments = Array[String](["get_node(\"../State\").at(\"target\")"])
+expression = ""
+
+[node name="metal" type="Area2D" groups=["metal"]]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -18.0
+offset_right = 20.0
+offset_bottom = 22.0
+color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 2)
+shape = SubResource("RectangleShape2D_5kw8h")
+
+[node name="Move" type="Node" parent="."]
+script = ExtResource("1_s5sje")
+
+[node name="State" type="Node" parent="."]
+script = ExtResource("2_qpnkj")
+metadata/target = Vector2(0, 0)
+
+[node name="Controls" type="Node" parent="."]
+script = ExtResource("3_kcbcg")
+metadata/pronto_connections = [SubResource("Resource_wb2ay")]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.001
+autostart = true
+metadata/pronto_connections = [SubResource("Resource_jq1sq")]

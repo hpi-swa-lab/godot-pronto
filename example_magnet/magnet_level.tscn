@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bphsu3p8jbxlx"]
+
+[ext_resource type="PackedScene" uid="uid://ba3n8yanx3gyq" path="res://example_magnet/magnet_player.tscn" id="1_fqspb"]
+[ext_resource type="PackedScene" uid="uid://cuw85xlxw1fxj" path="res://example_magnet/metal.tscn" id="2_iqm6o"]
+
+[node name="magnet_level" type="Node2D"]
+
+[node name="magnet_player" parent="." instance=ExtResource("1_fqspb")]
+position = Vector2(537, 285)
+
+[node name="metal" parent="." instance=ExtResource("2_iqm6o")]
+position = Vector2(104, 122)
+
+[node name="metal2" parent="." instance=ExtResource("2_iqm6o")]
+position = Vector2(515, 75)
+
+[node name="metal3" parent="." instance=ExtResource("2_iqm6o")]
+position = Vector2(831, 203)

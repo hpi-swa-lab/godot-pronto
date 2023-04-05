@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://45p6sfudyotr"]
+
+[ext_resource type="Script" path="res://addons/prototyping/Move.gd" id="1_ksxia"]
+[ext_resource type="Script" path="res://addons/prototyping/helpers/Connection.gd" id="2_g2igt"]
+[ext_resource type="Script" path="res://addons/prototyping/Collision.gd" id="3_n16uc"]
+
+[sub_resource type="Resource" id="Resource_t47d0"]
+resource_local_to_scene = true
+script = ExtResource("2_g2igt")
+signal_name = "timeout"
+to = NodePath("../Move")
+invoke = "move_right"
+arguments = Array[String]([])
+expression = ""
+
+[sub_resource type="Resource" id="Resource_co8gn"]
+script = ExtResource("2_g2igt")
+signal_name = "timeout"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = Array[String]([])
+expression = ""
+
+[sub_resource type="Resource" id="Resource_j40h6"]
+script = ExtResource("2_g2igt")
+signal_name = "collided"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = Array[String]([])
+expression = ""
+
+[sub_resource type="Resource" id="Resource_i3u8h"]
+script = ExtResource("2_g2igt")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = Array[String]([])
+expression = "print(other)"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ul02o"]
+
+[node name="magnet" type="Area2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 11.0
+offset_bottom = 12.0
+color = Color(1, 0, 0, 1)
+
+[node name="Move" type="Node" parent="."]
+script = ExtResource("1_ksxia")
+speed = 1000.0
+rotated = true
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.001
+autostart = true
+metadata/pronto_connections = [SubResource("Resource_t47d0")]
+
+[node name="FreeTimer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+metadata/pronto_connections = [SubResource("Resource_co8gn")]
+
+[node name="Collision" type="Node" parent="."]
+script = ExtResource("3_n16uc")
+limit_to_group = "metal"
+metadata/pronto_connections = [SubResource("Resource_j40h6"), SubResource("Resource_i3u8h")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ul02o")
