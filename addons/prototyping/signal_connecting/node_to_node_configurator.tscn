@@ -1,8 +1,14 @@
-[gd_scene format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=3 format=3 uid="uid://ig2ib85womvq"]
+
+[ext_resource type="Theme" uid="uid://bos6jdoh4ueyq" path="res://addons/prototyping/pronto_theme.tres" id="1_vs0ja"]
+[ext_resource type="Script" path="res://addons/prototyping/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
 
 [node name="Node To Node Configurator" type="PanelContainer"]
-offset_right = 214.0
-offset_bottom = 166.0
+offset_right = 254.0
+offset_bottom = 206.0
+theme = ExtResource("1_vs0ja")
+script = ExtResource("2_fmteu")
+metadata/pronto_ignore = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -23,45 +29,37 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Signal"
+text = "Signal:"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Signal" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-caret_blink = true
-caret_blink_interval = 0.5
+text = "area_entered( Area2D area )"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Args
-"
-
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-caret_blink = true
-caret_blink_interval = 0.5
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Receiver" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
 layout_mode = 2
-text = "Method"
+text = "Connected Method:"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="Function" type="OptionButton" parent="MarginContainer/VBoxContainer/Receiver"]
 layout_mode = 2
-caret_blink = true
-caret_blink_interval = 0.5
+fit_to_longest_item = false
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="LeftParen" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
+layout_mode = 2
+text = "("
+
+[node name="Args" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Receiver"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+[node name="RightParen" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
 layout_mode = 2
-text = "Ok"
+text = ")"
 
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Cancel"
+size_flags_horizontal = 0
+text = "Done"
+
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/Receiver/Function" to="." method="_on_function_item_selected"]

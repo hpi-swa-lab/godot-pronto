@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnribn5gqxves"]
+
+[ext_resource type="Script" path="res://addons/prototyping/signal_connecting/argument.gd" id="1_oixx0"]
+
+[node name="Argument" type="HBoxContainer"]
+offset_right = 76.0
+offset_bottom = 31.0
+script = ExtResource("1_oixx0")
+metadata/pronto_ignore = true
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 2
+placeholder_text = "null"
+expand_to_text_length = true
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="Separator" type="Label" parent="."]
+layout_mode = 2
+text = ","

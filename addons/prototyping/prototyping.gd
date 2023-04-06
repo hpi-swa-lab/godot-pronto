@@ -4,19 +4,9 @@ extends EditorPlugin
 var edited_object
 var popup
 
-var NodeToNodeConfigurator
-
-var test_thing
-
-func load_ui_scenes():
-	NodeToNodeConfigurator = load("res://addons/prototyping/signal_connecting/node_to_node_configurator.tscn")
+var NodeToNodeConfigurator = load("res://addons/prototyping/signal_connecting/node_to_node_configurator.tscn")
 
 func _enter_tree():
-	test_thing = Button.new()
-	test_thing.text = "shdfjjshdkfjhsdjkfhkjds"
-	get_editor_interface().get_editor_main_screen().add_child(test_thing)
-	load_ui_scenes()
-	
 	if not Engine.is_editor_hint():
 		return
 	
@@ -30,11 +20,28 @@ func _enter_tree():
 	add_custom_type("Invoker", "Node", preload("Invoker.gd"), base.get_theme_icon("Shortcut"))
 
 func _exit_tree():
-	if test_thing:
-		test_thing.queue_free()
+	remove_custom_type("Move")
+	remove_custom_type("Spawner")
+	remove_custom_type("Controls")
+	remove_custom_type("Bind")
+	remove_custom_type("State")
+	remove_custom_type("Collision")
+	remove_custom_type("Invoker")
+
+func pronto_should_ignore(object):
+	if not object is Node:
+		return false
+	
+	if object.has_meta("pronto_ignore"):
+		return object.get_meta("pronto_ignore")
+	else:
+		if object.has_method("get_parent") and object.get_parent():
+			return pronto_should_ignore(object.get_parent())
+		else:
+			return false
 
 func _handles(object):
-	return true
+	return !pronto_should_ignore(object)
 
 func _edit(object):
 	edited_object = object
@@ -60,10 +67,13 @@ func _forward_canvas_gui_input(event):
 	return false
 
 func show_signals(component: Node):
+	print(component)
 	if popup:
 		close()
 	
 	popup = NodeToNodeConfigurator.instantiate()
+	popup.selected_signal = component.get_signal_list()[0] # just for testing
+	popup.receiver = component # just for testing
 #	popup = Panel.new()
 #	popup.custom_minimum_size = Vector2(200, 400)
 #	var container = VBoxContainer.new()
