@@ -4,7 +4,19 @@ extends EditorPlugin
 var edited_object
 var popup
 
+var NodeToNodeConfigurator
+
+var test_thing
+
+func load_ui_scenes():
+	NodeToNodeConfigurator = load("res://addons/prototyping/signal_connecting/node_to_node_configurator.tscn")
+
 func _enter_tree():
+	test_thing = Button.new()
+	test_thing.text = "shdfjjshdkfjhsdjkfhkjds"
+	get_editor_interface().get_editor_main_screen().add_child(test_thing)
+	load_ui_scenes()
+	
 	if not Engine.is_editor_hint():
 		return
 	
@@ -16,6 +28,10 @@ func _enter_tree():
 	add_custom_type("State", "Node", preload("State.gd"), base.get_theme_icon("Shortcut"))
 	add_custom_type("Collision", "Node", preload("Collision.gd"), preload("res://addons/prototyping/icons/Collision.svg"))
 	add_custom_type("Invoker", "Node", preload("Invoker.gd"), base.get_theme_icon("Shortcut"))
+
+func _exit_tree():
+	if test_thing:
+		test_thing.queue_free()
 
 func _handles(object):
 	return true
@@ -47,17 +63,18 @@ func show_signals(component: Node):
 	if popup:
 		close()
 	
-	popup = Panel.new()
-	popup.custom_minimum_size = Vector2(200, 400)
-	var container = VBoxContainer.new()
-	container.add_theme_constant_override("separation", -10)
-	for s in component.get_signal_list():
-		container.add_child(PSignal.new(s, component))
-	
-	var scroll = ScrollContainer.new()
-	scroll.set_anchors_preset(Control.PRESET_FULL_RECT)
-	scroll.add_child(container)
-	popup.add_child(scroll)
+	popup = NodeToNodeConfigurator.instantiate()
+#	popup = Panel.new()
+#	popup.custom_minimum_size = Vector2(200, 400)
+#	var container = VBoxContainer.new()
+#	container.add_theme_constant_override("separation", -10)
+#	for s in component.get_signal_list():
+#		container.add_child(PSignal.new(s, component))
+#
+#	var scroll = ScrollContainer.new()
+#	scroll.set_anchors_preset(Control.PRESET_FULL_RECT)
+#	scroll.add_child(container)
+#	popup.add_child(scroll)
 	
 	component.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(popup, false, Node.INTERNAL_MODE_BACK)
 	

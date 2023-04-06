@@ -18,7 +18,3 @@ config/icon="res://icon.svg"
 [autoload]
 
 ConnectionsList="*res://addons/prototyping/helpers/ConnectionsList.gd"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/prototyping/plugin.cfg")
