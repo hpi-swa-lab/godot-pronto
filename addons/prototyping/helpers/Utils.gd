@@ -42,5 +42,10 @@ static func spawn_popup_from_canvas(reference: Node, popup: Node):
 static func popup_position(anchor: Node):
 	return anchor.get_viewport_transform() * anchor.global_position
 
-static func icon_for_class(name: StringName, reference: Node):
+
+static func icon_from_theme(name: StringName, reference: Node):
 	return reference.get_viewport().get_parent().get_parent().get_theme_icon(name, &"EditorIcons")
+
+
+static func icon_for_class(name: StringName, reference: Node):
+	return icon_from_theme(name, reference)

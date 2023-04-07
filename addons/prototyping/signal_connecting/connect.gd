@@ -2,7 +2,12 @@
 extends VBoxContainer
 
 var anchor: Node
-var node: Node
+var node: Node:
+	set(value):
+		node = value
+		for c in Connection.get_connections(node):
+			%connections.add_item(c.signal_name, Utils.icon_from_theme("Signals", node))
+		%connections.visible = %connections.item_count > 0
 
 func _process(delta):
 	if anchor:
@@ -11,7 +16,7 @@ func _process(delta):
 	if %signals.visible:
 		if not get_global_rect().has_point(get_viewport().get_mouse_position()):
 			%signals.visible = false
-			%add.visible = true
+			%edit.visible = true
 
 func all_classes_of(node: Node):
 	var l = []
@@ -22,7 +27,7 @@ func all_classes_of(node: Node):
 	return l
 
 func _on_add_mouse_entered():
-	for c in %signal_list.get_children():
+	for c in %signal_list.get_children().slice(2):
 		c.queue_free()
 	
 	if node.get_script():
@@ -34,7 +39,7 @@ func _on_add_mouse_entered():
 		for s in ClassDB.class_get_signal_list(c, false):
 			%signal_list.add_child(DragSignal.new(s, node))
 	%signals.visible = true
-	%add.visible = false
+	%edit.visible = false
 
 func build_class_row(c: StringName):
 	var label = Label.new()
