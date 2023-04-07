@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5kw8h"]
 size = Vector2(39, 38)
 
-[sub_resource type="Resource" id="Resource_wb2ay"]
+[sub_resource type="Resource" id="Resource_e0ajf"]
 script = ExtResource("4_pujtg")
 signal_name = "moved"
 to = NodePath("../State")
@@ -44,7 +44,7 @@ metadata/attached = false
 
 [node name="Controls" type="Node" parent="."]
 script = ExtResource("3_kcbcg")
-metadata/pronto_connections = [SubResource("Resource_wb2ay")]
+metadata/pronto_connections = [SubResource("Resource_e0ajf")]
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.001

@@ -7,6 +7,7 @@
 [node name="Node To Node Configurator" type="PanelContainer"]
 offset_right = 328.0
 offset_bottom = 103.0
+focus_mode = 2
 theme = ExtResource("1_vs0ja")
 script = ExtResource("2_fmteu")
 metadata/pronto_ignore = true
@@ -20,7 +21,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

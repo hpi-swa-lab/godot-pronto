@@ -14,7 +14,7 @@ class_name Connection
 
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
-static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array[String]):
+static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to

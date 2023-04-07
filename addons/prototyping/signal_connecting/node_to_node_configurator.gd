@@ -5,9 +5,11 @@ var anchor: Node
 var from: Node
 var existing_connection = null
 
-func _gui_input(event):
-	if event is InputEventKey and event.key == KEY_ESCAPE:
+func _input(event):
+	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
 		_on_cancel_pressed()
+	if event is InputEventKey and event.keycode == KEY_ENTER and event.pressed:
+		_on_done_pressed()
 
 var receiver: Object:
 	set(value):
@@ -30,9 +32,9 @@ var selected_signal: Dictionary:
 		%Signal.text = Utils.print_signal(value)
 
 func set_existing_connection(from: Node, connection: Connection):
+	self.from = from
 	existing_connection = connection
 	receiver = from.get_node(connection.to)
-	self.from = from
 	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
 	
 	var function_index = Utils.find_index(receiver.get_method_list(), func (i): return i["name"] == connection.invoke)
@@ -40,7 +42,6 @@ func set_existing_connection(from: Node, connection: Connection):
 	_on_function_item_selected(function_index)
 	
 	for i in range(%Args.get_child_count()):
-		print(connection.arguments[i])
 		%Args.get_child(i).text = connection.arguments[i]
 
 func _on_function_item_selected(index):
@@ -63,11 +64,15 @@ func _on_function_item_selected(index):
 func _on_done_pressed():
 	var args = %Args.get_children().map(func (c): return c.text)
 	var invoke = receiver.get_method_list()[%Function.selected]["name"]
+	
+	if invoke.length() == 0 or args.any(func (a): return a.length() == 0):
+		return
+	
 	if existing_connection:
 		existing_connection.arguments = args
 		existing_connection.invoke = invoke
 	else:
-		Connection.connect_target(from, %Signal.text, from.get_path_to(receiver), invoke, args)
+		Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args)
 	queue_free()
 
 func _on_remove_pressed():
