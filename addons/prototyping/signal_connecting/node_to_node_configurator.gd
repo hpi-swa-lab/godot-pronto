@@ -1,6 +1,11 @@
 @tool
 extends PanelContainer
 
+var anchor: Node
+
+func _process(delta):
+	position = anchor.get_viewport_transform() * anchor.global_position
+
 var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value

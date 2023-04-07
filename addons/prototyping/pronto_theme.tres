@@ -3,4 +3,5 @@
 [ext_resource type="StyleBox" uid="uid://bdy781xybq8da" path="res://addons/prototyping/pronto_panel_style.tres" id="1_madtj"]
 
 [resource]
+Label/colors/font_color = Color(1, 1, 1, 1)
 PanelContainer/styles/panel = ExtResource("1_madtj")

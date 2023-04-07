@@ -89,6 +89,6 @@ func show_signals(component: Node):
 	component.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(popup, false, Node.INTERNAL_MODE_BACK)
 	
 	var anchor = Utils.parent_that(component, func (p): return p is Node2D or p is Control)
-	popup.position = anchor.get_viewport_transform() * anchor.global_position
+	popup.anchor = anchor
 	
 	return popup
