@@ -10,14 +10,14 @@ func _process(delta):
 var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value
-		$MarginContainer/VBoxContainer/HBoxContainer/Signal.text = Utils.print_signal(value)
+		%Signal.text = Utils.print_signal(value)
 
 var receiver: Object:
 	set(value):
 		receiver = value
 		receiver_methods = Dictionary()
 		for method in receiver.get_method_list():
-			$MarginContainer/VBoxContainer/Receiver/Function.add_item(method["name"])
+			%Function.add_item(method["name"])
 			receiver_methods[method["name"]] = method
 
 var receiver_methods
@@ -25,10 +25,10 @@ var receiver_methods
 func _on_function_item_selected(index):
 	if receiver_methods == null:
 		return
-	var method = receiver_methods[$MarginContainer/VBoxContainer/Receiver/Function.get_item_text(index)]
+	var method = receiver_methods[%Function.get_item_text(index)]
 	
-	for child in $MarginContainer/VBoxContainer/Receiver/Args.get_children():
-		$MarginContainer/VBoxContainer/Receiver/Args.remove_child(child)
+	for child in %Args.get_children():
+		%Args.remove_child(child)
 		child.queue_free()
 	
 	var ArgUI = load("res://addons/prototyping/signal_connecting/argument.tscn")
@@ -36,8 +36,9 @@ func _on_function_item_selected(index):
 		print(arg)
 		var arg_ui = ArgUI.instantiate()
 		arg_ui.arg_name = arg["name"]
-		$MarginContainer/VBoxContainer/Receiver/Args.add_child(arg_ui)
-	$MarginContainer/VBoxContainer/Receiver/Args.get_children().back().is_last = true
+		%Args.add_child(arg_ui)
+	if not %Args.get_children().is_empty():
+		%Args.get_children().back().is_last = true
 
 func _on_done_pressed():
 	queue_free()

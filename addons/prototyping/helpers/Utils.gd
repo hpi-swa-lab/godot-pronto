@@ -11,8 +11,19 @@ static func all_nodes_do(node: Node, do: Callable):
 		all_nodes_do(c, do)
 	do.call(node)
 
+static func all_nodes(node: Node):
+	var list = []
+	all_nodes_do(node, func (c): list.append(c))
+	return list
+
 static func print_signal(data: Dictionary):
 	return data["name"] + "(" + ", ".join(data["args"].map(func (arg): return arg["name"])) + ")"
+
+static func sum(list: Array):
+	return list.reduce(func (accum, i): return accum + i, 0)
+
+static func max(list: Array):
+	return list.reduce(func (accum, i): return max(accum, i), list[0])
 
 static func all_nodes_that(root: Node, cond: Callable, list: Array[Node] = []):
 	if cond.call(root):

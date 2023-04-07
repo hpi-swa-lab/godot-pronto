@@ -28,11 +28,11 @@ func _on_add_mouse_entered():
 	if node.get_script():
 		%signal_list.add_child(build_class_row(node.get_script().resource_path.get_file()))
 		for s in node.get_script().get_script_signal_list():
-			%signal_list.add_child(PSignal.new(s, node))
+			%signal_list.add_child(DragSignal.new(s, node))
 	for c in all_classes_of(node):
 		%signal_list.add_child(build_class_row(c))
 		for s in ClassDB.class_get_signal_list(c, false):
-			%signal_list.add_child(PSignal.new(s, node))
+			%signal_list.add_child(DragSignal.new(s, node))
 	%signals.visible = true
 	%add.visible = false
 
