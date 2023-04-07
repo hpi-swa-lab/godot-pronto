@@ -12,5 +12,8 @@ func _init(component: Node, image: Texture2D):
 	thumb.texture = image
 	thumb.scale = Vector2(2, 2)
 	component.get_parent().add_child.call_deferred(thumb, false, Node.INTERNAL_MODE_BACK)
-	component.tree_exiting.connect(func ():
-		thumb.queue_free())
+	component.tree_exiting.connect(remove)
+
+func remove():
+	thumb.queue_free()
+	component.tree_exiting.disconnect(remove)

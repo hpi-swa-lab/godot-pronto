@@ -19,6 +19,7 @@ func _drop_data(at_position, data):
 	
 	var popup = NodeToNodeConfigurator.instantiate()
 	popup.selected_signal = source_signal
+	popup.from = data["source"]
 	popup.receiver = node
-	popup.anchor = node
+	popup.anchor = Utils.parent_that(node, func (n): return Utils.has_position(n))
 	Utils.spawn_popup_from_canvas(node, popup)

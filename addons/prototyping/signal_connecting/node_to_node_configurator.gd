@@ -5,9 +5,14 @@ var anchor: Node
 var from: Node
 var existing_connection = null
 
+func _gui_input(event):
+	if event is InputEventKey and event.key == KEY_ESCAPE:
+		_on_cancel_pressed()
+
 var receiver: Object:
 	set(value):
 		receiver = value
+		%ReceiverPath.text = "${0}.".format([from.get_path_to(receiver)])
 		receiver_methods = Dictionary()
 		for method in receiver.get_method_list():
 			%Function.add_item(method["name"])
@@ -68,4 +73,7 @@ func _on_done_pressed():
 func _on_remove_pressed():
 	if existing_connection:
 		existing_connection.delete(from)
+	queue_free()
+
+func _on_cancel_pressed():
 	queue_free()

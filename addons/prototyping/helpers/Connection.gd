@@ -43,8 +43,8 @@ static func get_connections(node: Node) -> Array:
 @export var to: NodePath = ^""
 ## (Optional) The method to invoke on [member to].
 @export var invoke: String = ""
-## (Optional) The arguments to pass to method [member invoke].
-@export var arguments: Array[String] = []
+## (Optional) The arguments to pass to method [member invoke] as [String]s.
+@export var arguments: Array = []
 ## (Optional) Only used when neither [member to], [member invoke], or [member arguments] is not set.
 ## A string describing the [Expression] that is to be run when [member signal_name] triggers.
 @export_multiline var expression: String = ""
@@ -67,7 +67,7 @@ func _store(from: Node):
 	connections.append(self)
 
 func _ensure_connections(from: Node):
-	var connections: Array[Connection]
+	var connections: Array
 	if from.has_meta("pronto_connections"):
 		connections = from.get_meta("pronto_connections")
 	else:

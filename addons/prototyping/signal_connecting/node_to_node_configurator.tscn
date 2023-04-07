@@ -42,9 +42,10 @@ icon = ExtResource("3_60vnm")
 [node name="Receiver" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
+[node name="ReceiverPath" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Connected Method:"
+text = "$../../node_name."
 
 [node name="Function" type="OptionButton" parent="MarginContainer/VBoxContainer/Receiver"]
 unique_name_in_owner = true
@@ -63,11 +64,21 @@ layout_mode = 2
 layout_mode = 2
 text = ")"
 
-[node name="done" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="CheckButton" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="cancel" type="Button" parent="MarginContainer/VBoxContainer/CheckButton"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Done"
+text = "Cancel"
+
+[node name="done" type="Button" parent="MarginContainer/VBoxContainer/CheckButton"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Connect"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/Receiver/Function" to="." method="_on_function_item_selected"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/done" to="." method="_on_done_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CheckButton/cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CheckButton/done" to="." method="_on_done_pressed"]
