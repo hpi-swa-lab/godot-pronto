@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://ba3n8yanx3gyq"]
+[gd_scene load_steps=8 format=3 uid="uid://ba3n8yanx3gyq"]
 
 [ext_resource type="Script" path="res://addons/prototyping/Move.gd" id="1_vatae"]
 [ext_resource type="Script" path="res://addons/prototyping/Controls.gd" id="2_43x17"]
 [ext_resource type="Script" path="res://addons/prototyping/helpers/Connection.gd" id="3_wl6q4"]
 [ext_resource type="Script" path="res://addons/prototyping/Spawner.gd" id="4_ncwv5"]
-[ext_resource type="PackedScene" uid="uid://45p6sfudyotr" path="res://example_magnet/magnet.tscn" id="5_4oas6"]
 
 [sub_resource type="Resource" id="Resource_jk3jp"]
 script = ExtResource("3_wl6q4")
@@ -47,4 +46,3 @@ offset_bottom = 40.0
 [node name="Spawner" type="Node2D" parent="."]
 position = Vector2(21, 20)
 script = ExtResource("4_ncwv5")
-scene = ExtResource("5_4oas6")

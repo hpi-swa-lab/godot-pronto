@@ -10,11 +10,11 @@ func _enter_tree():
 	
 	var base = get_editor_interface().get_base_control()
 	add_custom_type("Move", "Node", preload("Move.gd"), base.get_theme_icon("ToolMove"))
-	add_custom_type("Spawner", "Node2D", preload("Spawner.gd"), base.get_theme_icon("Shortcut"))
+	add_custom_type("Spawner", "TextureRect", preload("Spawner.gd"), base.get_theme_icon("GPUParticles3D", &"EditorIcons"))
 	add_custom_type("Controls", "Node", preload("Controls.gd"), base.get_theme_icon("Shortcut"))
 	add_custom_type("Bind", "Node", preload("Bind.gd"), base.get_theme_icon("Shortcut"))
 	add_custom_type("State", "Node", preload("State.gd"), base.get_theme_icon("Shortcut"))
-	add_custom_type("Collision", "Node", preload("Collision.gd"), preload("res://addons/prototyping/icons/Collision.svg"))
+	add_custom_type("Collision", "TextureRect", preload("Collision.gd"), preload("res://addons/prototyping/icons/Collision.svg"))
 	add_custom_type("Invoker", "Node", preload("Invoker.gd"), base.get_theme_icon("Shortcut"))
 	add_custom_type("Clock", "TextureRect", preload("Clock.gd"), base.get_theme_icon("Timer", &"EditorIcons"))
 

@@ -1,15 +1,23 @@
-extends Node2D
+@tool
+extends TextureRect
 
-@export var scene: PackedScene
+var scene = null
+
+func _ready():
+	texture = Utils.icon_from_theme("GPUParticles3D", self)
+	
+	if not Engine.is_editor_hint():
+		scene = get_child(0)
+		remove_child(scene)
 
 func spawn():
-	var instance = scene.instantiate()
-	instance.position = position
+	var instance = scene.duplicate(DUPLICATE_USE_INSTANTIATION)
+	instance.position = position + size / 2
 	get_parent().add_child(instance)
 
 func spawn_toward(pos: Vector2):
-	var instance: Node2D = scene.instantiate()
+	var instance: Node2D = scene.duplicate(DUPLICATE_USE_INSTANTIATION)
 	instance.top_level = true
-	instance.global_position = global_position
+	instance.global_position = global_position + size / 2
 	instance.rotation = global_position.angle_to_point(pos)
 	get_parent().add_child(instance)

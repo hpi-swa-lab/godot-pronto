@@ -28,4 +28,5 @@ func _ready():
 	if not Engine.is_editor_hint():
 		_timer = Timer.new()
 		_timer.autostart = true
+		_timer.timeout.connect(func(): elapsed.emit())
 		add_child(_timer)

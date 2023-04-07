@@ -1,12 +1,156 @@
-[gd_scene load_steps=3 format=3 uid="uid://bphsu3p8jbxlx"]
+[gd_scene load_steps=19 format=3 uid="uid://bphsu3p8jbxlx"]
 
-[ext_resource type="PackedScene" uid="uid://ba3n8yanx3gyq" path="res://example_magnet/magnet_player.tscn" id="1_fqspb"]
+[ext_resource type="Script" path="res://addons/prototyping/Move.gd" id="1_bq1sb"]
+[ext_resource type="Script" path="res://addons/prototyping/Controls.gd" id="2_id64q"]
 [ext_resource type="PackedScene" uid="uid://cuw85xlxw1fxj" path="res://example_magnet/metal.tscn" id="2_iqm6o"]
+[ext_resource type="Script" path="res://addons/prototyping/helpers/Connection.gd" id="3_n73u7"]
+[ext_resource type="Script" path="res://addons/prototyping/Spawner.gd" id="4_xrhaj"]
+[ext_resource type="Texture2D" uid="uid://cibms0xjdi6oq" path="res://addons/prototyping/icons/Collision.svg" id="5_rnyoe"]
+[ext_resource type="Script" path="res://addons/prototyping/Collision.gd" id="5_s3xaf"]
+
+[sub_resource type="Resource" id="Resource_jk3jp"]
+script = ExtResource("3_n73u7")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "move_left"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_fdsg5"]
+script = ExtResource("3_n73u7")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "move_right"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_gvjcq"]
+script = ExtResource("3_n73u7")
+signal_name = "click"
+to = NodePath("../Spawner")
+invoke = "spawn_toward"
+arguments = ["pos"]
+expression = ""
+
+[sub_resource type="Image" id="Image_ewf75"]
+data = {
+"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 210, 60, 60, 34, 206, 57, 57, 170, 205, 56, 56, 231, 205, 56, 56, 231, 205, 56, 56, 168, 208, 56, 56, 32, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 208, 58, 58, 48, 205, 56, 56, 244, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 242, 208, 59, 59, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 1, 205, 56, 56, 218, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 212, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 206, 57, 57, 62, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 59, 59, 56, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 102, 102, 5, 205, 56, 56, 141, 205, 56, 56, 239, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 236, 205, 56, 56, 137, 255, 102, 102, 5, 255, 255, 255, 0, 255, 255, 255, 0, 205, 57, 57, 142, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 137, 255, 255, 255, 0, 255, 255, 255, 0, 205, 56, 56, 236, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 231, 255, 255, 255, 0, 255, 255, 255, 0, 205, 56, 56, 233, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 228, 255, 255, 255, 0, 255, 255, 255, 0, 205, 56, 56, 136, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 131, 255, 255, 255, 0, 255, 255, 255, 0, 255, 102, 102, 5, 206, 57, 57, 134, 205, 57, 57, 229, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 56, 56, 255, 205, 57, 57, 229, 205, 56, 56, 131, 255, 102, 102, 5, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 205, 57, 57, 183, 205, 56, 56, 181, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 205, 57, 57, 184, 205, 56, 56, 181, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 205, 56, 56, 181, 206, 56, 56, 180, 255, 255, 255, 0, 255, 255, 255, 0, 205, 57, 57, 184, 205, 56, 56, 181, 255, 255, 255, 0, 255, 255, 255, 0, 205, 56, 56, 181, 206, 56, 56, 180, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 205, 56, 56, 181, 206, 56, 56, 180, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_media"]
+image = SubResource("Image_ewf75")
+
+[sub_resource type="Resource" id="Resource_t47d0"]
+resource_local_to_scene = true
+script = ExtResource("3_n73u7")
+signal_name = "timeout"
+to = NodePath("../Move")
+invoke = "move_right"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_co8gn"]
+script = ExtResource("3_n73u7")
+signal_name = "timeout"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_8suk4"]
+script = ExtResource("3_n73u7")
+signal_name = "timeout"
+to = NodePath("")
+invoke = ""
+arguments = []
+expression = "for m in from.get_tree().get_nodes_in_group(\"metal\"):
+	m.get_node(\"State\").put(\"attached\", false)"
+
+[sub_resource type="Resource" id="Resource_x7ukk"]
+script = ExtResource("3_n73u7")
+signal_name = "collided"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_co4dq"]
+script = ExtResource("3_n73u7")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+expression = "for m in from.get_tree().get_nodes_in_group(\"metal\"):
+	m.get_node(\"State\").put(\"attached\", false)
+other.get_node(\"State\").put(\"attached\", true)"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ul02o"]
 
 [node name="magnet_level" type="Node2D"]
 
-[node name="magnet_player" parent="." instance=ExtResource("1_fqspb")]
+[node name="magnet_player" type="Node2D" parent="."]
 position = Vector2(537, 285)
+
+[node name="Move" type="Node" parent="magnet_player"]
+script = ExtResource("1_bq1sb")
+speed = 400.0
+
+[node name="Controls" type="Node" parent="magnet_player"]
+script = ExtResource("2_id64q")
+metadata/pronto_connections = [SubResource("Resource_jk3jp"), SubResource("Resource_fdsg5"), SubResource("Resource_gvjcq")]
+
+[node name="ColorRect" type="ColorRect" parent="magnet_player"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Spawner" type="TextureRect" parent="magnet_player"]
+offset_left = 13.0
+offset_top = 12.0
+offset_right = 29.0
+offset_bottom = 28.0
+texture = SubResource("ImageTexture_media")
+script = ExtResource("4_xrhaj")
+
+[node name="magnet" type="Area2D" parent="magnet_player/Spawner"]
+position = Vector2(70, 7)
+
+[node name="ColorRect" type="ColorRect" parent="magnet_player/Spawner/magnet"]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 11.0
+offset_bottom = 12.0
+color = Color(1, 0, 0, 1)
+
+[node name="Move" type="Node" parent="magnet_player/Spawner/magnet"]
+script = ExtResource("1_bq1sb")
+speed = 1000.0
+rotated = true
+
+[node name="MoveTimer" type="Timer" parent="magnet_player/Spawner/magnet"]
+wait_time = 0.001
+autostart = true
+metadata/pronto_connections = [SubResource("Resource_t47d0")]
+
+[node name="FreeTimer" type="Timer" parent="magnet_player/Spawner/magnet"]
+wait_time = 0.3
+autostart = true
+metadata/pronto_connections = [SubResource("Resource_co8gn"), SubResource("Resource_8suk4")]
+
+[node name="Collision" type="TextureRect" parent="magnet_player/Spawner/magnet"]
+offset_left = 22.0
+offset_top = -5.0
+offset_right = 38.0
+offset_bottom = 11.0
+texture = ExtResource("5_rnyoe")
+script = ExtResource("5_s3xaf")
+metadata/pronto_connections = [SubResource("Resource_x7ukk"), SubResource("Resource_co4dq")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="magnet_player/Spawner/magnet"]
+shape = SubResource("RectangleShape2D_ul02o")
 
 [node name="metal" parent="." instance=ExtResource("2_iqm6o")]
 position = Vector2(104, 122)

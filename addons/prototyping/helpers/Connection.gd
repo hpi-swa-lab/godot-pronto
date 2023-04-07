@@ -79,9 +79,7 @@ func _install_in_game(from: Node):
 	if Engine.is_editor_hint():
 		return
 	
-	var signal_arguments: Array = (from.get_signal_list()
-		.filter(func (s): return s["name"] == signal_name)
-		.map(func (s): return s["args"].map(func (a): return a["name"])))[0]
+	var signal_arguments: Array = Utils.find(from.get_signal_list(), func (s): return s["name"] == signal_name)["args"].map(func (a): return a["name"])
 	
 	var s = signal_arguments
 	match signal_arguments.size():

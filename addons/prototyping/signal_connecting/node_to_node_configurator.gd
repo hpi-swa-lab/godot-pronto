@@ -14,7 +14,7 @@ func _input(event):
 var receiver: Object:
 	set(value):
 		receiver = value
-		%ReceiverPath.text = "${0}.".format([from.get_path_to(receiver)])
+		%ReceiverPath.text = "${0} ({1})".format([from.get_path_to(receiver), receiver.name])
 		receiver_methods = Dictionary()
 		for method in receiver.get_method_list():
 			%Function.add_item(method["name"])

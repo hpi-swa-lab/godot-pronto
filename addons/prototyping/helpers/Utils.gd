@@ -55,7 +55,10 @@ static func popup_position(anchor: Node):
 	return anchor.get_viewport_transform() * anchor.global_position
 
 static func icon_from_theme(name: StringName, reference: Node):
-	return reference.get_viewport().get_parent().get_parent().get_theme_icon(name, &"EditorIcons")
+	if Engine.is_editor_hint():
+		return reference.get_viewport().get_parent().get_parent().get_theme_icon(name, &"EditorIcons")
+	else:
+		return null
 
 static func icon_for_class(name: StringName, reference: Node):
 	return icon_from_theme(name, reference)
