@@ -2,6 +2,18 @@
 extends PanelContainer
 
 var anchor: Node
+var from: Node
+var existing_connection = null
+
+var receiver: Object:
+	set(value):
+		receiver = value
+		receiver_methods = Dictionary()
+		for method in receiver.get_method_list():
+			%Function.add_item(method["name"])
+			receiver_methods[method["name"]] = method
+
+var receiver_methods
 
 func _process(delta):
 	if anchor:
@@ -13,7 +25,9 @@ var selected_signal: Dictionary:
 		%Signal.text = Utils.print_signal(value)
 
 func set_existing_connection(from: Node, connection: Connection):
-	receiver = from
+	existing_connection = connection
+	receiver = from.get_node(connection.to)
+	self.from = from
 	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
 	
 	var function_index = Utils.find_index(receiver.get_method_list(), func (i): return i["name"] == connection.invoke)
@@ -23,16 +37,6 @@ func set_existing_connection(from: Node, connection: Connection):
 	for i in range(%Args.get_child_count()):
 		print(connection.arguments[i])
 		%Args.get_child(i).text = connection.arguments[i]
-
-var receiver: Object:
-	set(value):
-		receiver = value
-		receiver_methods = Dictionary()
-		for method in receiver.get_method_list():
-			%Function.add_item(method["name"])
-			receiver_methods[method["name"]] = method
-
-var receiver_methods
 
 func _on_function_item_selected(index):
 	if receiver_methods == null:
@@ -52,4 +56,16 @@ func _on_function_item_selected(index):
 		%Args.get_children().back().is_last = true
 
 func _on_done_pressed():
+	var args = %Args.get_children().map(func (c): return c.text)
+	var invoke = receiver.get_method_list()[%Function.selected]["name"]
+	if existing_connection:
+		existing_connection.arguments = args
+		existing_connection.invoke = invoke
+	else:
+		Connection.connect_target(from, %Signal.text, from.get_path_to(receiver), invoke, args)
+	queue_free()
+
+func _on_remove_pressed():
+	if existing_connection:
+		existing_connection.delete(from)
 	queue_free()

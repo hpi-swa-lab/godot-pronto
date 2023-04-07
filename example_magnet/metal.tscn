@@ -13,7 +13,7 @@ script = ExtResource("4_pujtg")
 signal_name = "moved"
 to = NodePath("../State")
 invoke = "put"
-arguments = Array[String](["\"target\"", "pos"])
+arguments = ["\"target\"", "pos"]
 expression = ""
 
 [sub_resource type="Resource" id="Resource_jq1sq"]
@@ -21,7 +21,7 @@ script = ExtResource("4_pujtg")
 signal_name = "timeout"
 to = NodePath("..")
 invoke = "set"
-arguments = Array[String](["\"position\"", "lerp(target.position, target.get_node(\"State\").at(\"target\"), 0.01)"])
+arguments = ["\"position\"", "lerp(target.position, target.get_node(\"State\").at(\"target\"), 0.01)"]
 expression = ""
 
 [node name="metal" type="Area2D" groups=["metal"]]

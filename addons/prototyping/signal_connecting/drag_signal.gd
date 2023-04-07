@@ -10,7 +10,7 @@ var DropList = load("res://addons/prototyping/signal_connecting/drop_list.tscn")
 func _init(s: Dictionary, from: Node):
 	source_signal = s
 	var l = Label.new()
-	l.text = s['name']
+	l.text = Utils.print_signal(s)
 	add_child(l)
 	self.from = from
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=4 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Theme" uid="uid://bos6jdoh4ueyq" path="res://addons/prototyping/pronto_theme.tres" id="1_vs0ja"]
 [ext_resource type="Script" path="res://addons/prototyping/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
+[ext_resource type="Texture2D" uid="uid://c7ur4fr8ghq8a" path="res://addons/prototyping/icons/Remove.svg" id="3_60vnm"]
 
 [node name="Node To Node Configurator" type="PanelContainer"]
-offset_right = 292.0
+offset_right = 328.0
 offset_bottom = 103.0
 theme = ExtResource("1_vs0ja")
 script = ExtResource("2_fmteu")
@@ -31,7 +32,12 @@ text = "Signal:"
 [node name="Signal" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 text = "area_entered( Area2D area )"
+
+[node name="remove" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_60vnm")
 
 [node name="Receiver" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -62,5 +68,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Done"
 
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/Receiver/Function" to="." method="_on_function_item_selected"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/done" to="." method="_on_done_pressed"]
