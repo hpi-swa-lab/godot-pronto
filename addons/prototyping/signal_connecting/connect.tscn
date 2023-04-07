@@ -16,20 +16,22 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+allow_reselect = true
 auto_height = true
 
 [node name="add" type="TextureRect" parent="edit"]
+unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("1_j4o26")
 stretch_mode = 2
 
-[node name="signals" type="Panel" parent="."]
+[node name="signals" type="Panel" parent="edit"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(180, 200)
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="signals"]
+[node name="ScrollContainer" type="ScrollContainer" parent="edit/signals"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,24 +39,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="signal_list" type="VBoxContainer" parent="signals/ScrollContainer"]
+[node name="signal_list" type="VBoxContainer" parent="edit/signals/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = -5
 
-[node name="title_text" type="HBoxContainer" parent="signals/ScrollContainer/signal_list"]
+[node name="title_text" type="HBoxContainer" parent="edit/signals/ScrollContainer/signal_list"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="signals/ScrollContainer/signal_list/title_text"]
+[node name="TextureRect" type="TextureRect" parent="edit/signals/ScrollContainer/signal_list/title_text"]
 layout_mode = 2
 texture = ExtResource("1_j4o26")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="signals/ScrollContainer/signal_list/title_text"]
+[node name="Label" type="Label" parent="edit/signals/ScrollContainer/signal_list/title_text"]
 layout_mode = 2
 text = "Drag a connection from ..."
 
-[node name="HSeparator" type="HSeparator" parent="signals/ScrollContainer/signal_list"]
+[node name="HSeparator" type="HSeparator" parent="edit/signals/ScrollContainer/signal_list"]
 layout_mode = 2
 
+[connection signal="item_selected" from="edit/connections" to="." method="_on_connections_item_selected"]
 [connection signal="mouse_entered" from="edit/add" to="." method="_on_add_mouse_entered"]

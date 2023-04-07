@@ -1,6 +1,8 @@
 @tool
 extends VBoxContainer
 
+var NodeToNodeConfigurator = load("res://addons/prototyping/signal_connecting/node_to_node_configurator.tscn")
+
 var anchor: Node
 var node: Node:
 	set(value):
@@ -16,7 +18,7 @@ func _process(delta):
 	if %signals.visible:
 		if not get_global_rect().has_point(get_viewport().get_mouse_position()):
 			%signals.visible = false
-			%edit.visible = true
+			%add.visible = true
 
 func all_classes_of(node: Node):
 	var l = []
@@ -39,7 +41,7 @@ func _on_add_mouse_entered():
 		for s in ClassDB.class_get_signal_list(c, false):
 			%signal_list.add_child(DragSignal.new(s, node))
 	%signals.visible = true
-	%edit.visible = false
+	%add.visible = false
 
 func build_class_row(c: StringName):
 	var label = Label.new()
@@ -53,3 +55,9 @@ func build_class_row(c: StringName):
 	row.add_child(icon)
 	row.add_child(label)
 	return row
+
+func _on_connections_item_selected(index):
+	var popup = NodeToNodeConfigurator.instantiate()
+	popup.set_existing_connection(node, Connection.get_connections(node)[index])
+	popup.anchor = Utils.parent_that(node, func (n): return Utils.has_position(n))
+	Utils.spawn_popup_from_canvas(node, popup)

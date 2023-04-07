@@ -18,8 +18,6 @@ func _drop_data(at_position, data):
 	var source_signal = data["signal"]
 	
 	var popup = NodeToNodeConfigurator.instantiate()
-	print(node)
-	print(source_signal)
 	popup.selected_signal = source_signal
 	popup.receiver = node
 	popup.anchor = node

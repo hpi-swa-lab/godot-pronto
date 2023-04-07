@@ -25,6 +25,18 @@ static func sum(list: Array):
 static func max(list: Array):
 	return list.reduce(func (accum, i): return max(accum, i), list[0])
 
+static func find(list: Array, cond: Callable):
+	for i in list:
+		if cond.call(i):
+			return i
+	return null
+
+static func find_index(list: Array, cond: Callable):
+	for i in range(list.size()):
+		if cond.call(list[i]):
+			return i
+	return -1
+
 static func all_nodes_that(root: Node, cond: Callable, list: Array[Node] = []):
 	if cond.call(root):
 		list.append(root)
@@ -42,10 +54,8 @@ static func spawn_popup_from_canvas(reference: Node, popup: Node):
 static func popup_position(anchor: Node):
 	return anchor.get_viewport_transform() * anchor.global_position
 
-
 static func icon_from_theme(name: StringName, reference: Node):
 	return reference.get_viewport().get_parent().get_parent().get_theme_icon(name, &"EditorIcons")
-
 
 static func icon_for_class(name: StringName, reference: Node):
 	return icon_from_theme(name, reference)

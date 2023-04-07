@@ -12,6 +12,18 @@ var selected_signal: Dictionary:
 		selected_signal = value
 		%Signal.text = Utils.print_signal(value)
 
+func set_existing_connection(from: Node, connection: Connection):
+	receiver = from
+	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
+	
+	var function_index = Utils.find_index(receiver.get_method_list(), func (i): return i["name"] == connection.invoke)
+	%Function.select(function_index)
+	_on_function_item_selected(function_index)
+	
+	for i in range(%Args.get_child_count()):
+		print(connection.arguments[i])
+		%Args.get_child(i).text = connection.arguments[i]
+
 var receiver: Object:
 	set(value):
 		receiver = value
@@ -33,7 +45,6 @@ func _on_function_item_selected(index):
 	
 	var ArgUI = load("res://addons/prototyping/signal_connecting/argument.tscn")
 	for arg in method["args"]:
-		print(arg)
 		var arg_ui = ArgUI.instantiate()
 		arg_ui.arg_name = arg["name"]
 		%Args.add_child(arg_ui)
