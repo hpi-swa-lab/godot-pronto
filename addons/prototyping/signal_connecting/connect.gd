@@ -13,7 +13,10 @@ var node: Node:
 
 func _process(delta):
 	if anchor:
-		position = anchor.get_viewport_transform() * anchor.global_position
+		var offset = Vector2.ZERO
+		if "size" in anchor: offset = Vector2(0, anchor.size.y)
+		if "shape" in anchor: offset = anchor.shape.get_rect().size.y / 2 * Vector2(-1, 1)
+		position = anchor.get_viewport_transform() * (anchor.global_position + offset)
 	
 	if %signals.visible:
 		if not get_global_rect().has_point(get_viewport().get_mouse_position()):

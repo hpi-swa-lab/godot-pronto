@@ -50,7 +50,6 @@ static func has_position(node: Node):
 static func spawn_popup_from_canvas(reference: Node, popup: Node):
 	reference.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(popup, false, Node.INTERNAL_MODE_BACK)
 	popup.position = popup_position(parent_that(reference, func (c): return Utils.has_position(c)))
-	popup.grab_focus()
 
 static func popup_position(anchor: Node):
 	return anchor.get_viewport_transform() * anchor.global_position

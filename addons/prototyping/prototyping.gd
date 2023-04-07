@@ -16,6 +16,7 @@ func _enter_tree():
 	add_custom_type("State", "Node", preload("State.gd"), base.get_theme_icon("Shortcut"))
 	add_custom_type("Collision", "Node", preload("Collision.gd"), preload("res://addons/prototyping/icons/Collision.svg"))
 	add_custom_type("Invoker", "Node", preload("Invoker.gd"), base.get_theme_icon("Shortcut"))
+	add_custom_type("Clock", "TextureRect", preload("Clock.gd"), base.get_theme_icon("Timer", &"EditorIcons"))
 
 func _exit_tree():
 	remove_custom_type("Move")
@@ -25,6 +26,7 @@ func _exit_tree():
 	remove_custom_type("State")
 	remove_custom_type("Collision")
 	remove_custom_type("Invoker")
+	remove_custom_type("Clock")
 
 func pronto_should_ignore(object):
 	if not object is Node:
@@ -64,16 +66,12 @@ func _forward_canvas_gui_input(event):
 			captured_event = true
 	return false
 
-func _show_popup(new: Node, at: Node):
+func show_signals(node: Node):
 	if popup:
 		close()
 	
-	popup = new
-	Utils.spawn_popup_from_canvas(at, popup)
-	popup.anchor = Utils.parent_that(at, func (p): return p is Node2D or p is Control)
-
-func show_signals(node: Node):
 	var Connect = load("res://addons/prototyping/signal_connecting/connect.tscn")
-	var c = Connect.instantiate()
-	c.node = node
-	_show_popup(c, node)
+	popup = Connect.instantiate()
+	popup.node = node
+	popup.anchor = Utils.parent_that(node, func (p): return Utils.has_position(p))
+	Utils.spawn_popup_from_canvas(node, popup)

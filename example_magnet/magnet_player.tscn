@@ -11,7 +11,7 @@ script = ExtResource("3_wl6q4")
 signal_name = "left"
 to = NodePath("../Move")
 invoke = "move_left"
-arguments = Array[String]([])
+arguments = []
 expression = ""
 
 [sub_resource type="Resource" id="Resource_fdsg5"]
@@ -19,7 +19,7 @@ script = ExtResource("3_wl6q4")
 signal_name = "right"
 to = NodePath("../Move")
 invoke = "move_right"
-arguments = Array[String]([])
+arguments = []
 expression = ""
 
 [sub_resource type="Resource" id="Resource_gvjcq"]
@@ -27,7 +27,7 @@ script = ExtResource("3_wl6q4")
 signal_name = "click"
 to = NodePath("../Spawner")
 invoke = "spawn_toward"
-arguments = Array[String](["pos"])
+arguments = ["pos"]
 expression = ""
 
 [node name="magnet_player" type="Node2D"]
