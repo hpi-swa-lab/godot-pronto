@@ -22,8 +22,13 @@ var receiver: Object:
 
 var receiver_methods
 
+func set_expression_mode(expr: bool):
+	%Receiver.visible = not expr
+	%Expression.visible = expr
+	%Expression.text = ''
+
 func _process(delta):
-	if anchor:
+	if anchor and anchor.is_inside_tree():
 		position = Utils.popup_position(anchor)
 
 var selected_signal: Dictionary:
@@ -34,12 +39,17 @@ var selected_signal: Dictionary:
 func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
 	existing_connection = connection
-	receiver = from.get_node(connection.to)
 	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
+	if connection.is_target():
+		receiver = from.get_node(connection.to)
+		var function_index = Utils.find_index(receiver.get_method_list(), func (i): return i["name"] == connection.invoke)
+		%Function.select(function_index)
+		_on_function_item_selected(function_index)
+	else:
+		%Expression.text = connection.expression
 	
-	var function_index = Utils.find_index(receiver.get_method_list(), func (i): return i["name"] == connection.invoke)
-	%Function.select(function_index)
-	_on_function_item_selected(function_index)
+	%Receiver.visible = connection.is_target()
+	%Expression.visible = connection.is_expression()
 	
 	for i in range(%Args.get_child_count()):
 		%Args.get_child(i).text = connection.arguments[i]
@@ -62,17 +72,20 @@ func _on_function_item_selected(index):
 		%Args.get_children().back().is_last = true
 
 func _on_done_pressed():
-	var args = %Args.get_children().map(func (c): return c.text)
-	var invoke = receiver.get_method_list()[%Function.selected]["name"]
-	
-	if invoke.length() == 0 or args.any(func (a): return a.length() == 0):
-		return
-	
-	if existing_connection:
-		existing_connection.arguments = args
-		existing_connection.invoke = invoke
-	else:
-		Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args)
+	if %Receiver.visible:
+		var args = %Args.get_children().map(func (c): return c.text)
+		var invoke = receiver.get_method_list()[%Function.selected]["name"]
+		if invoke.length() == 0 or args.any(func (a): return a.length() == 0): return
+		if existing_connection:
+			existing_connection.arguments = args
+			existing_connection.invoke = invoke
+		else:
+			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args)
+	if %Expression.visible:
+		if existing_connection:
+			existing_connection.expression = %Expression.text
+		else:
+			Connection.connect_expr(from, selected_signal["name"], %Expression.text)
 	queue_free()
 
 func _on_remove_pressed():

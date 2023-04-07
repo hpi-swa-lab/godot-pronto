@@ -1,7 +1,10 @@
-extends Node
-class_name PState
+@tool
+extends TextureRect
 
 signal changed(prop: String, value: Variant)
+
+func _ready():
+	texture = Utils.icon_from_theme("CylinderMesh", self)
 
 func inc(prop: String, amount = 1):
 	var value = get_meta(prop) + amount

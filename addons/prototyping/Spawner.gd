@@ -16,7 +16,7 @@ func spawn():
 	get_parent().add_child(instance)
 
 func spawn_toward(pos: Vector2):
-	var instance: Node2D = scene.duplicate(DUPLICATE_USE_INSTANTIATION)
+	var instance: Node2D = scene.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
 	instance.top_level = true
 	instance.global_position = global_position + size / 2
 	instance.rotation = global_position.angle_to_point(pos)

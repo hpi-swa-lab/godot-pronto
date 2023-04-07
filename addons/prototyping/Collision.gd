@@ -6,7 +6,7 @@ extends TextureRect
 signal collided(other: Area2D)
 
 func _ready():
-	texture = preload("res://addons/prototyping/icons/Collision.svg")
+	texture = Utils.icon_from_theme("GPUParticlesCollisionBox3D", self)
 	
 	if not Engine.is_editor_hint():
 		(get_parent() as Area2D).area_entered.connect(func (other: Node):

@@ -22,8 +22,7 @@ signal elapsed()
 var _timer: Timer
 
 func _ready():
-	texture = preload("res://addons/prototyping/icons/Timer.svg")
-	size = Vector2(48, 48)
+	texture = Utils.icon_from_theme("Timer", self)
 	
 	if not Engine.is_editor_hint():
 		_timer = Timer.new()

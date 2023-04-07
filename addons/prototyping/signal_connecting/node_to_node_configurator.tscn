@@ -1,12 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=6 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Theme" uid="uid://bos6jdoh4ueyq" path="res://addons/prototyping/pronto_theme.tres" id="1_vs0ja"]
 [ext_resource type="Script" path="res://addons/prototyping/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
 [ext_resource type="Texture2D" uid="uid://c7ur4fr8ghq8a" path="res://addons/prototyping/icons/Remove.svg" id="3_60vnm"]
 
+[sub_resource type="SystemFont" id="SystemFont_hfv4m"]
+font_names = PackedStringArray("Monospace")
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_s6unu"]
+number_color = Color(1, 0, 0, 1)
+symbol_color = Color(0, 0.996078, 0, 1)
+function_color = Color(0.603922, 0.027451, 0.537255, 1)
+member_variable_color = Color(0.054902, 0.32549, 1, 1)
+
 [node name="Node To Node Configurator" type="PanelContainer"]
-offset_right = 328.0
-offset_bottom = 103.0
+offset_right = 432.0
+offset_bottom = 221.0
 focus_mode = 2
 theme = ExtResource("1_vs0ja")
 script = ExtResource("2_fmteu")
@@ -41,6 +50,7 @@ layout_mode = 2
 icon = ExtResource("3_60vnm")
 
 [node name="Receiver" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="ReceiverPath" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
@@ -64,6 +74,19 @@ layout_mode = 2
 [node name="RightParen" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
 layout_mode = 2
 text = ")"
+
+[node name="Expression" type="TextEdit" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_hfv4m")
+text = "2 + 3.squared()
+for i in range():
+	print(\"hello\")"
+placeholder_text = "Expression..."
+draw_tabs = true
+syntax_highlighter = SubResource("CodeHighlighter_s6unu")
+scroll_fit_content_height = true
 
 [node name="CheckButton" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -1,5 +1,5 @@
-extends Node
-class_name PBind
+@tool
+extends TextureRect
 
 @export var from: Array[NodePath]
 @export var from_prop: Array[String]
@@ -8,7 +8,12 @@ class_name PBind
 
 var last = []
 
+func _ready():
+	texture = Utils.icon_from_theme("EditBezier", self)
+
 func _process(delta):
+	if Engine.is_editor_hint():
+		return
 	var inputs = []
 	for i in range(from.size()):
 		var object = get_node(from[i])

@@ -1,7 +1,11 @@
-extends Node
+@tool
+extends TextureRect
 
-@export var speed = 1.0
+@export var speed = 500.0
 @export var rotated = false
+
+func _ready():
+	texture = Utils.icon_from_theme("ToolMove", self)
 
 func move_left():
 	get_parent().position -= speed_vector(true)

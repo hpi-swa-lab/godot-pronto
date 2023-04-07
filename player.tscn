@@ -1,7 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdb8co5bbceus"]
-
-[ext_resource type="Script" path="res://addons/prototyping/Move.gd" id="1_m70vd"]
-[ext_resource type="Script" path="res://addons/prototyping/Controls.gd" id="2_om7p7"]
+[gd_scene load_steps=2 format=3 uid="uid://cdb8co5bbceus"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1vvn"]
 size = Vector2(40, 40)
@@ -14,15 +11,5 @@ offset_top = -20.0
 offset_right = 20.0
 offset_bottom = 20.0
 
-[node name="Move" type="Node" parent="."]
-script = ExtResource("1_m70vd")
-speed = 400.0
-
-[node name="Controls" type="Node" parent="."]
-script = ExtResource("2_om7p7")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_s1vvn")
-
-[connection signal="left" from="Controls" to="Move" method="move_left"]
-[connection signal="right" from="Controls" to="Move" method="move_right"]
