@@ -14,4 +14,3 @@ func _init(component: Node, image: Texture2D):
 	component.get_parent().add_child.call_deferred(thumb, false, Node.INTERNAL_MODE_BACK)
 	component.tree_exiting.connect(func ():
 		thumb.queue_free())
-

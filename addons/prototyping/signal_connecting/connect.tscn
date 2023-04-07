@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://y65132ek88r5"]
+
+[ext_resource type="Texture2D" uid="uid://b8g3efosspx61" path="res://addons/prototyping/icons/Add.svg" id="1_j4o26"]
+[ext_resource type="Script" path="res://addons/prototyping/signal_connecting/connect.gd" id="1_qcj0a"]
+
+[node name="connect" type="VBoxContainer"]
+script = ExtResource("1_qcj0a")
+
+[node name="add" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("1_j4o26")
+stretch_mode = 2
+
+[node name="signals" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(180, 120)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="signals"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="signal_list" type="VBoxContainer" parent="signals/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[connection signal="mouse_entered" from="add" to="." method="_on_add_mouse_entered"]

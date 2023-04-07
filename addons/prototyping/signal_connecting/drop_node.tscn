@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd725c7terfhn"]
+
+[ext_resource type="Script" path="res://addons/prototyping/signal_connecting/drop_node.gd" id="1_2bie6"]
+
+[node name="drop_node" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2bie6")
+
+[node name="icon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+stretch_mode = 3
+
+[node name="label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2

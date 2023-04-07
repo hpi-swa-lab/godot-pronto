@@ -4,8 +4,6 @@ extends EditorPlugin
 var edited_object
 var popup
 
-var NodeToNodeConfigurator = load("res://addons/prototyping/signal_connecting/node_to_node_configurator.tscn")
-
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		return
@@ -66,29 +64,16 @@ func _forward_canvas_gui_input(event):
 			captured_event = true
 	return false
 
-func show_signals(component: Node):
-	print(component)
+func _show_popup(new: Node, at: Node):
 	if popup:
 		close()
 	
-	popup = NodeToNodeConfigurator.instantiate()
-	popup.selected_signal = component.get_signal_list()[0] # just for testing
-	popup.receiver = component # just for testing
-#	popup = Panel.new()
-#	popup.custom_minimum_size = Vector2(200, 400)
-#	var container = VBoxContainer.new()
-#	container.add_theme_constant_override("separation", -10)
-#	for s in component.get_signal_list():
-#		container.add_child(PSignal.new(s, component))
-#
-#	var scroll = ScrollContainer.new()
-#	scroll.set_anchors_preset(Control.PRESET_FULL_RECT)
-#	scroll.add_child(container)
-#	popup.add_child(scroll)
-	
-	component.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(popup, false, Node.INTERNAL_MODE_BACK)
-	
-	var anchor = Utils.parent_that(component, func (p): return p is Node2D or p is Control)
-	popup.anchor = anchor
-	
-	return popup
+	popup = new
+	Utils.spawn_popup_from_canvas(at, popup)
+	popup.anchor = Utils.parent_that(at, func (p): return p is Node2D or p is Control)
+
+func show_signals(node: Node):
+	var Connect = load("res://addons/prototyping/signal_connecting/connect.tscn")
+	var c = Connect.instantiate()
+	c.node = node
+	_show_popup(c, node)

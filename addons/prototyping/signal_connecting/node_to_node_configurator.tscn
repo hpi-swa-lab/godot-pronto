@@ -54,9 +54,10 @@ layout_mode = 2
 layout_mode = 2
 text = ")"
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="done" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Done"
 
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/Receiver/Function" to="." method="_on_function_item_selected"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/done" to="." method="_on_done_pressed"]

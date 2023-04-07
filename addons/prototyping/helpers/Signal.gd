@@ -5,6 +5,8 @@ var from: Node
 var drop_destinations: Array
 var source_signal
 
+var DropList = load("res://addons/prototyping/signal_connecting/drop_list.tscn")
+
 func _init(s: Dictionary, from: Node):
 	source_signal = s
 	var l = Label.new()
@@ -17,18 +19,13 @@ func _get_drag_data(at_position):
 	return {"type": "P_CONNECT_SIGNAL", "signal": source_signal, "source": from}
 
 func show_drop_destinations():
-	drop_destinations = (all_nodes_that(from.get_viewport(), is_visible_node)
-		.map(func (drop): return PDrop.new(drop)))
-
-func is_visible_node(node: Node):
-	return node is Node3D or node is Control or node is Node2D
-
-func all_nodes_that(root: Node, cond: Callable, list: Array[Node] = []):
-	if cond.call(root):
-		list.append(root)
-	for c in root.get_children():
-		all_nodes_that(c, cond, list)
-	return list
+	# TODO merge by distance instead
+	drop_destinations = (Utils.all_nodes_that(from.get_viewport(), func (c): return Utils.has_position(c))
+		.map(func (drop):
+			var list = DropList.instantiate()
+			list.node = drop
+			Utils.spawn_popup_from_canvas(drop, list)
+			return list))
 
 func _notification(what):
 	if what == NOTIFICATION_DRAG_END:

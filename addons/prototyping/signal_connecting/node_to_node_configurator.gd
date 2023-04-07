@@ -4,16 +4,13 @@ extends PanelContainer
 var anchor: Node
 
 func _process(delta):
-	position = anchor.get_viewport_transform() * anchor.global_position
+	if anchor:
+		position = Utils.popup_position(anchor)
 
 var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value
-		var desc = selected_signal["name"] + "( "
-		var args = selected_signal["args"]
-		desc += args.slice(1).reduce(func(acc, arg): return acc + ", " + arg["name"], args.front()["name"])
-		desc += " )"
-		$MarginContainer/VBoxContainer/HBoxContainer/Signal.text = desc
+		$MarginContainer/VBoxContainer/HBoxContainer/Signal.text = Utils.print_signal(value)
 
 var receiver: Object:
 	set(value):
@@ -41,3 +38,6 @@ func _on_function_item_selected(index):
 		arg_ui.arg_name = arg["name"]
 		$MarginContainer/VBoxContainer/Receiver/Args.add_child(arg_ui)
 	$MarginContainer/VBoxContainer/Receiver/Args.get_children().back().is_last = true
+
+func _on_done_pressed():
+	queue_free()
