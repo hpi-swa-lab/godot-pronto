@@ -27,6 +27,6 @@ var _cache = {}
 func _indent(s: String):
 	return '\n\t'.join(s.split('\n'))
 
-# shaky heuristic
+# FIXME very shaky heuristic
 func _is_statement(source: String):
-	return source.begins_with("for ") or source.begins_with("var ")
+	return source.begins_with("for ") or source.begins_with("var ") or " = " in source
