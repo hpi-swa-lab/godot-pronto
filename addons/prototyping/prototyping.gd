@@ -17,6 +17,7 @@ func _enter_tree():
 	add_custom_type("Collision", "TextureRect", preload("Collision.gd"), base.get_theme_icon("GPUParticlesCollisionBox3D", &"EditorIcons"))
 	add_custom_type("Clock", "TextureRect", preload("Clock.gd"), base.get_theme_icon("Timer", &"EditorIcons"))
 	add_custom_type("Always", "TextureRect", preload("Always.gd"), base.get_theme_icon("Loop", &"EditorIcons"))
+	add_custom_type("Placeholder", "TextureRect", preload("Placeholder.gd"), base.get_theme_icon("Skeleton2D", &"EditorIcons"))
 
 func _exit_tree():
 	remove_custom_type("Move")
@@ -27,6 +28,7 @@ func _exit_tree():
 	remove_custom_type("Collision")
 	remove_custom_type("Clock")
 	remove_custom_type("Always")
+	remove_custom_type("Placeholder")
 
 func pronto_should_ignore(object):
 	if not object is Node:
