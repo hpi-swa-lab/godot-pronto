@@ -11,7 +11,23 @@ var node: Node:
 			%connections.add_item(c.signal_name, Utils.icon_from_theme("Signals", node))
 		%connections.visible = %connections.item_count > 0
 
+func _draw():
+	if not node:
+		return
+	
+	for connection in node.get_meta("pronto_connections", []):
+		var other = node.get_node_or_null(connection.to)
+		if not other:
+			continue
+		var begin = Vector2.ZERO
+		var end = other.global_position - node.global_position
+		print(begin, end)
+		draw_line(begin, end, Color.RED, 5)
+
+
 func _process(delta):
+	queue_redraw() # TODO: don't always redraw
+	
 	if anchor:
 		var offset = Vector2.ZERO
 		if "size" in anchor: offset = Vector2(0, anchor.size.y)
