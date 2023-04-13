@@ -15,21 +15,23 @@ var receiver: Object:
 	set(value):
 		receiver = value
 		%ReceiverPath.text = "${0} ({1})".format([from.get_path_to(receiver), receiver.name])
-		receiver_methods = Dictionary()
-		for method in receiver.get_method_list():
-			%Function.add_item(method["name"])
-			receiver_methods[method["name"]] = method
-
-var receiver_methods
+		%FunctionName.node = receiver
 
 func set_expression_mode(expr: bool):
 	%Receiver.visible = not expr
 	%Expression.visible = expr
 	%Expression.text = ''
 
+func default_focus():
+	if %Expression.visible:
+		%Expression.grab_focus()
+	else:
+		%FunctionName.grab_focus()
+
 func _process(delta):
 	if anchor and anchor.is_inside_tree():
 		position = Utils.popup_position(anchor)
+		%FunctionName.anchor = anchor
 
 var selected_signal: Dictionary:
 	set(value):
@@ -42,9 +44,8 @@ func set_existing_connection(from: Node, connection: Connection):
 	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
 	if connection.is_target():
 		receiver = from.get_node(connection.to)
-		var function_index = Utils.find_index(receiver.get_method_list(), func (i): return i["name"] == connection.invoke)
-		%Function.select(function_index)
-		_on_function_item_selected(function_index)
+		%FunctionName.text = connection.invoke
+		_on_function_selected(connection.invoke)
 	else:
 		%Expression.text = connection.expression
 	
@@ -52,16 +53,17 @@ func set_existing_connection(from: Node, connection: Connection):
 	%Expression.visible = connection.is_expression()
 	
 	for i in range(%Args.get_child_count()):
-		%Args.get_child(i).text = connection.arguments[i]
+		%Args.get_child(i).text = connection.arguments[i] if i <= connection.arguments.size() - 1 else ""
 
-func _on_function_item_selected(index):
-	if receiver_methods == null:
-		return
-	var method = receiver_methods[%Function.get_item_text(index)]
+func _on_function_selected(name: String):
+	var method = Utils.find(receiver.get_method_list(), func (m): return m["name"] == name)
 	
 	for child in %Args.get_children():
 		%Args.remove_child(child)
 		child.queue_free()
+	
+	if method == null:
+		return
 	
 	var ArgUI = load("res://addons/prototyping/signal_connecting/argument.tscn")
 	for arg in method["args"]:
@@ -74,7 +76,7 @@ func _on_function_item_selected(index):
 func _on_done_pressed():
 	if %Receiver.visible:
 		var args = %Args.get_children().map(func (c): return c.text)
-		var invoke = receiver.get_method_list()[%Function.selected]["name"]
+		var invoke = %FunctionName.text
 		if invoke.length() == 0 or args.any(func (a): return a.length() == 0): return
 		if existing_connection:
 			existing_connection.arguments = args

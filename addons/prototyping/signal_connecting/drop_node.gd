@@ -24,3 +24,4 @@ func _drop_data(at_position, data):
 	popup.set_expression_mode(false)
 	popup.anchor = Utils.parent_that(node, func (n): return Utils.has_position(n))
 	Utils.spawn_popup_from_canvas(node, popup)
+	popup.default_focus()

@@ -62,3 +62,24 @@ static func icon_from_theme(name: StringName, reference: Node):
 
 static func icon_for_class(name: StringName, reference: Node):
 	return icon_from_theme(name, reference)
+
+static func all_classes_of(node: Node):
+	var l = []
+	var c = node.get_class()
+	while c:
+		l.append(c)
+		c = ClassDB.get_parent_class(c)
+	return l
+
+static func build_class_row(c: StringName, ref: Node):
+	var label = Label.new()
+	label.text = c
+	
+	var icon = TextureRect.new()
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	icon.texture = Utils.icon_for_class(c, ref)
+	
+	var row = HBoxContainer.new()
+	row.add_child(icon)
+	row.add_child(label)
+	return row

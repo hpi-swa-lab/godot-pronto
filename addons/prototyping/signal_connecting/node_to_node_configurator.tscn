@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=7 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Theme" uid="uid://bos6jdoh4ueyq" path="res://addons/prototyping/pronto_theme.tres" id="1_vs0ja"]
 [ext_resource type="Script" path="res://addons/prototyping/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
 [ext_resource type="Texture2D" uid="uid://c7ur4fr8ghq8a" path="res://addons/prototyping/icons/Remove.svg" id="3_60vnm"]
+[ext_resource type="PackedScene" uid="uid://1ubsx3vbyfwv" path="res://addons/prototyping/signal_connecting/function_name.tscn" id="4_x4sfm"]
 
 [sub_resource type="SystemFont" id="SystemFont_hfv4m"]
 font_names = PackedStringArray("Monospace")
@@ -58,10 +59,10 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "$../../node_name."
 
-[node name="Function" type="OptionButton" parent="MarginContainer/VBoxContainer/Receiver"]
+[node name="FunctionName" parent="MarginContainer/VBoxContainer/Receiver" instance=ExtResource("4_x4sfm")]
 unique_name_in_owner = true
 layout_mode = 2
-fit_to_longest_item = false
+text = ""
 
 [node name="LeftParen" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
 layout_mode = 2
@@ -75,7 +76,7 @@ layout_mode = 2
 layout_mode = 2
 text = ")"
 
-[node name="Expression" type="TextEdit" parent="MarginContainer/VBoxContainer"]
+[node name="Expression" type="CodeEdit" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
@@ -87,6 +88,8 @@ placeholder_text = "Expression..."
 draw_tabs = true
 syntax_highlighter = SubResource("CodeHighlighter_s6unu")
 scroll_fit_content_height = true
+indent_automatic = true
+auto_brace_completion_enabled = true
 
 [node name="CheckButton" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -103,6 +106,6 @@ size_flags_horizontal = 0
 text = "Connect"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
-[connection signal="item_selected" from="MarginContainer/VBoxContainer/Receiver/Function" to="." method="_on_function_item_selected"]
+[connection signal="method_selected" from="MarginContainer/VBoxContainer/Receiver/FunctionName" to="." method="_on_function_selected"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CheckButton/cancel" to="." method="_on_cancel_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CheckButton/done" to="." method="_on_done_pressed"]
