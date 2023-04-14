@@ -43,7 +43,7 @@ func _on_add_mouse_entered():
 		c.queue_free()
 	
 	if node.get_script():
-		%signal_list.add_child(Utils.build_class_row(node.get_script().resource_path.get_file(), anchor))
+		%signal_list.add_child(Utils.build_class_row(node.get_script().resource_path.get_file().split('.')[0], anchor))
 		for s in node.get_script().get_script_signal_list():
 			%signal_list.add_child(DragSignal.new(s, node))
 	for c in Utils.all_classes_of(node):

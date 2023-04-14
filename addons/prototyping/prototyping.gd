@@ -1,5 +1,18 @@
 @tool
 extends EditorPlugin
+class_name Pronto
+
+const COMPONENTS = {
+	"Move": "ToolMove",
+	"Spawner": "GPUParticles3D",
+	"Controls": "Joypad",
+	"Bind": "EditBezier",
+	"State": "CylinderMesh",
+	"Collision": "GPUParticlesCollisionBox3D",
+	"Clock": "Timer",
+	"Always": "Loop",
+	"Placeholder": "Skeleton2D"
+}
 
 var edited_object
 var popup
@@ -9,26 +22,12 @@ func _enter_tree():
 		return
 	
 	var base = get_editor_interface().get_base_control()
-	add_custom_type("Move", "TextureRect", preload("Move.gd"), base.get_theme_icon("ToolMove", &"EditorIcons"))
-	add_custom_type("Spawner", "TextureRect", preload("Spawner.gd"), base.get_theme_icon("GPUParticles3D", &"EditorIcons"))
-	add_custom_type("Controls", "TextureRect", preload("Controls.gd"), base.get_theme_icon("Joypad", &"EditorIcons"))
-	add_custom_type("Bind", "TextureRect", preload("Bind.gd"), base.get_theme_icon("EditBezier", &"EditorIcons"))
-	add_custom_type("State", "TextureRect", preload("State.gd"), base.get_theme_icon("CylinderMesh", &"EditorIcons"))
-	add_custom_type("Collision", "TextureRect", preload("Collision.gd"), base.get_theme_icon("GPUParticlesCollisionBox3D", &"EditorIcons"))
-	add_custom_type("Clock", "TextureRect", preload("Clock.gd"), base.get_theme_icon("Timer", &"EditorIcons"))
-	add_custom_type("Always", "TextureRect", preload("Always.gd"), base.get_theme_icon("Loop", &"EditorIcons"))
-	add_custom_type("Placeholder", "TextureRect", preload("Placeholder.gd"), base.get_theme_icon("Skeleton2D", &"EditorIcons"))
+	for key in COMPONENTS:
+		add_custom_type(key, "TextureRect", load(key + ".gd"), base.get_theme_icon(COMPONENTS[key], &"EditorIcons"))
 
 func _exit_tree():
-	remove_custom_type("Move")
-	remove_custom_type("Spawner")
-	remove_custom_type("Controls")
-	remove_custom_type("Bind")
-	remove_custom_type("State")
-	remove_custom_type("Collision")
-	remove_custom_type("Clock")
-	remove_custom_type("Always")
-	remove_custom_type("Placeholder")
+	for key in COMPONENTS:
+		remove_custom_type(key)
 
 func pronto_should_ignore(object):
 	if not object is Node:

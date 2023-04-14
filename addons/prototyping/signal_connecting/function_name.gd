@@ -7,7 +7,7 @@ var anchor
 signal method_selected(name: String)
 
 func add_class_item(name):
-	%list.add_icon_item(Utils.icon_for_class(name, anchor), name)
+	%list.add_icon_item(Utils.icon_from_theme(Pronto.COMPONENTS[name], anchor) if name in Pronto.COMPONENTS else Utils.icon_for_class(name, anchor), name)
 	%list.set_item_disabled(%list.item_count - 1, true)
 
 func _gui_input(event):
@@ -36,6 +36,8 @@ func _ready():
 		build_list(""))
 
 func build_list(filter: String):
+	assert(anchor != null)
+	
 	%list.clear()
 	
 	if not %list.visible:
@@ -46,10 +48,13 @@ func build_list(filter: String):
 		grab_focus()
 	
 	if node.get_script():
-		add_class_item(node.get_script().resource_path.get_file())
+		add_class_item(node.get_script().resource_path.get_file().split('.')[0])
 		for s in node.get_script().get_script_method_list():
 			if s["name"].begins_with(filter): %list.add_item(s["name"])
 	for c in Utils.all_classes_of(node):
 		add_class_item(c)
 		for s in ClassDB.class_get_method_list(c, true):
 			if s["name"].begins_with(filter): %list.add_item(s["name"])
+	
+	if %list.get_focused_item() == -1:
+		move_focus(1)

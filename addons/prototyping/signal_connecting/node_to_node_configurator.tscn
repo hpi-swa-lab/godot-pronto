@@ -91,21 +91,20 @@ scroll_fit_content_height = true
 indent_automatic = true
 auto_brace_completion_enabled = true
 
-[node name="CheckButton" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ButtonList" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-alignment = 2
 
-[node name="cancel" type="Button" parent="MarginContainer/VBoxContainer/CheckButton"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Cancel"
-
-[node name="done" type="Button" parent="MarginContainer/VBoxContainer/CheckButton"]
+[node name="done" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Connect"
 
+[node name="cancel" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Cancel"
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="method_selected" from="MarginContainer/VBoxContainer/Receiver/FunctionName" to="." method="_on_function_selected"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/CheckButton/cancel" to="." method="_on_cancel_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/CheckButton/done" to="." method="_on_done_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/done" to="." method="_on_done_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/cancel" to="." method="_on_cancel_pressed"]

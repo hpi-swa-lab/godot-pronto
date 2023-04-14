@@ -1,20 +1,24 @@
 @tool
 extends PanelContainer
 
-var anchor: Node
+var anchor: Node:
+	set(n):
+		anchor = n
+		%FunctionName.anchor = n
 var from: Node
 var existing_connection = null
 
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
 		_on_cancel_pressed()
-	if event is InputEventKey and event.keycode == KEY_ENTER and event.pressed:
+	if event is InputEventKey and event.keycode == KEY_ENTER and event.pressed and not %FunctionName.has_focus():
 		_on_done_pressed()
 
 var receiver: Object:
 	set(value):
 		receiver = value
 		%ReceiverPath.text = "${0} ({1})".format([from.get_path_to(receiver), receiver.name])
+		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 
 func set_expression_mode(expr: bool):
@@ -44,6 +48,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
 	if connection.is_target():
 		receiver = from.get_node(connection.to)
+		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke
 		_on_function_selected(connection.invoke)
 	else:

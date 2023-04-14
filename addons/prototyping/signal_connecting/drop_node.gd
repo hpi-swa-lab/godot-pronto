@@ -7,7 +7,7 @@ var node: Node:
 	set(value):
 		node = value
 		%label.text = node.name
-		var icon = Utils.icon_for_class(node.get_class(), node)
+		var icon = Utils.icon_for_node(node, node)
 		if icon:
 			%icon.texture = icon
 
