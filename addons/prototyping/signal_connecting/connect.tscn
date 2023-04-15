@@ -54,7 +54,7 @@ stretch_mode = 3
 
 [node name="Label" type="Label" parent="edit/signals/ScrollContainer/signal_list/title_text"]
 layout_mode = 2
-text = "Drag a connection from ..."
+text = "Drag or double click"
 
 [node name="HSeparator" type="HSeparator" parent="edit/signals/ScrollContainer/signal_list"]
 layout_mode = 2

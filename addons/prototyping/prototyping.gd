@@ -11,7 +11,9 @@ const COMPONENTS = {
 	"Collision": "GPUParticlesCollisionBox3D",
 	"Clock": "Timer",
 	"Always": "Loop",
-	"Placeholder": "Skeleton2D"
+	"Placeholder": "Skeleton2D",
+	"Key": "KeyboardPhysical",
+	"Stopwatch": "Time"
 }
 
 var edited_object

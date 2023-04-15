@@ -90,3 +90,7 @@ static func build_class_row(c: StringName, ref: Node):
 	row.add_child(icon)
 	row.add_child(label)
 	return row
+
+static func setup(comp: TextureRect):
+	var name = comp.get_script().resource_path.get_file().split('.')[0]
+	comp.texture = Utils.icon_from_theme(Pronto.COMPONENTS[name], comp)
