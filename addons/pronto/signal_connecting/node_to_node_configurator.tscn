@@ -9,10 +9,15 @@
 font_names = PackedStringArray("Monospace")
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_s6unu"]
-number_color = Color(1, 0, 0, 1)
-symbol_color = Color(0, 0.996078, 0, 1)
-function_color = Color(0.603922, 0.027451, 0.537255, 1)
+number_color = Color(0, 0.647059, 0.215686, 1)
+symbol_color = Color(0.921569, 1, 0.913725, 1)
+function_color = Color(0.964706, 0.458824, 0.878431, 1)
 member_variable_color = Color(0.054902, 0.32549, 1, 1)
+keyword_colors = {
+"for": Color(0.984314, 0, 0.490196, 1),
+"from": Color(0.92549, 0.427451, 0, 1),
+"in": Color(0.984314, 0, 0.490196, 1)
+}
 
 [node name="Node To Node Configurator" type="PanelContainer"]
 offset_right = 432.0
@@ -78,12 +83,12 @@ text = ")"
 
 [node name="Expression" type="CodeEdit" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_hfv4m")
 text = "2 + 3.squared()
 for i in range():
-	print(\"hello\")"
+	print(\"hello\" + str(from))"
 placeholder_text = "Expression..."
 draw_tabs = true
 syntax_highlighter = SubResource("CodeHighlighter_s6unu")
