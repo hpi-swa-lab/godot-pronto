@@ -28,7 +28,7 @@ stretch_mode = 2
 [node name="signals" type="Panel" parent="edit"]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(180, 200)
+custom_minimum_size = Vector2(210, 200)
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="edit/signals"]

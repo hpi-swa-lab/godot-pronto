@@ -4,6 +4,7 @@ extends PanelContainer
 var anchor: Node:
 	set(n):
 		anchor = n
+		size = Vector2.ZERO
 		%FunctionName.anchor = n
 var from: Node
 var existing_connection = null

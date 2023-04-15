@@ -23,7 +23,9 @@ func _enter_tree():
 	
 	var base = get_editor_interface().get_base_control()
 	for key in COMPONENTS:
-		add_custom_type(key, "TextureRect", load(key + ".gd"), base.get_theme_icon(COMPONENTS[key], &"EditorIcons"))
+		add_custom_type(key,
+			"TextureRect", load("res://addons/prototyping/" + key + ".gd"),
+			base.get_theme_icon(COMPONENTS[key], &"EditorIcons"))
 
 func _exit_tree():
 	for key in COMPONENTS:

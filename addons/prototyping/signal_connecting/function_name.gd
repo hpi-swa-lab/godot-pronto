@@ -16,9 +16,12 @@ func _gui_input(event):
 			KEY_DOWN: move_focus(1)
 			KEY_UP: move_focus(-1)
 			KEY_ENTER:
-				text = %list.get_item_text(%list.get_focused_item())
-				find_next_valid_focus().grab_focus()
-				method_selected.emit(text)
+				selected(%list.get_focused_item())
+
+func selected(index: int):
+	text = %list.get_item_text(index)
+	find_next_valid_focus().grab_focus()
+	method_selected.emit(text)
 
 func move_focus(dir: int):
 	var current = %list.get_focused_item() + dir
@@ -58,3 +61,7 @@ func build_list(filter: String):
 	
 	if %list.get_focused_item() == -1:
 		move_focus(1)
+
+func _on_list_index_pressed(index):
+	print(index)
+	selected(index)

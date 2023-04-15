@@ -2,6 +2,7 @@
 extends TextureRect
 
 @export var speed = 500.0
+@export var rotation_speed = 300.0
 @export var rotated = false
 
 func _ready():
@@ -29,3 +30,9 @@ func speed_vector(horizontal: bool):
 		return v.rotated(get_parent().rotation)
 	else:
 		return v
+
+func rotate_left():
+	get_parent().rotation_degrees -= rotation_speed * get_process_delta_time()
+
+func rotate_right():
+	get_parent().rotation_degrees += rotation_speed * get_process_delta_time()

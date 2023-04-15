@@ -3,7 +3,11 @@ extends VBoxContainer
 
 var NodeToNodeConfigurator = load("res://addons/prototyping/signal_connecting/node_to_node_configurator.tscn")
 
-var anchor: Node
+var anchor: Node:
+	set(a):
+		anchor = a
+		size = Vector2.ZERO
+
 var node: Node:
 	set(value):
 		node = value
@@ -22,7 +26,6 @@ func _draw():
 		var begin = Vector2.ZERO
 		var end = other.global_position - node.global_position
 		draw_line(begin, end, Color.RED, 5)
-
 
 func _process(delta):
 	queue_redraw() # TODO: don't always redraw

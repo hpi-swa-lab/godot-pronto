@@ -11,3 +11,5 @@ script = ExtResource("1_1ki2o")
 unique_name_in_owner = true
 popup_window = false
 max_size = Vector2i(16384, 300)
+
+[connection signal="index_pressed" from="list" to="." method="_on_list_index_pressed"]
