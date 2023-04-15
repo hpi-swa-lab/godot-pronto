@@ -10,15 +10,15 @@ config_version=5
 
 [application]
 
-config/name="catcher"
-run/main_scene="res://example_magnet/magnet_level.tscn"
+config/name="pronto"
+run/main_scene="res://example_magnet_old/magnet_level.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-ConnectionsList="*res://addons/prototyping/helpers/ConnectionsList.gd"
+ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/prototyping/plugin.cfg")
+enabled=PackedStringArray("res://addons/pronto/plugin.cfg")

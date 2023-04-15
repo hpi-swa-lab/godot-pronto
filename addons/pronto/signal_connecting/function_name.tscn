@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://1ubsx3vbyfwv"]
+
+[ext_resource type="Script" path="res://addons/pronto/signal_connecting/function_name.gd" id="1_1ki2o"]
+
+[node name="FunctionName" type="LineEdit"]
+text = "moveand_codasdllide"
+expand_to_text_length = true
+script = ExtResource("1_1ki2o")
+
+[node name="list" type="ItemList" parent="."]
+unique_name_in_owner = true
+visible = false
+top_level = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+allow_reselect = true
+
+[connection signal="item_selected" from="list" to="." method="_on_list_pressed"]
