@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="pronto"
-run/main_scene="res://example_magnet_old/magnet_level.tscn"
+run/main_scene="res://example_magnet/example_magnet.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,3 +22,7 @@ ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/pronto/plugin.cfg")
+
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true

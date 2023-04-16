@@ -9,7 +9,7 @@
 font_names = PackedStringArray("Monospace")
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_s6unu"]
-number_color = Color(0, 0.647059, 0.215686, 1)
+number_color = Color(0, 0.886275, 0.352941, 1)
 symbol_color = Color(0.921569, 1, 0.913725, 1)
 function_color = Color(0.964706, 0.458824, 0.878431, 1)
 member_variable_color = Color(0.054902, 0.32549, 1, 1)
@@ -17,6 +17,9 @@ keyword_colors = {
 "for": Color(0.984314, 0, 0.490196, 1),
 "from": Color(0.92549, 0.427451, 0, 1),
 "in": Color(0.984314, 0, 0.490196, 1)
+}
+color_regions = {
+"\" \"": Color(0, 0.886275, 0.352941, 1)
 }
 
 [node name="Node To Node Configurator" type="PanelContainer"]

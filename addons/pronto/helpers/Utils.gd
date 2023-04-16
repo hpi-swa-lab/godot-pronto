@@ -44,6 +44,9 @@ static func all_nodes_that(root: Node, cond: Callable, list: Array[Node] = []):
 		all_nodes_that(c, cond, list)
 	return list
 
+static func between(x: float, min: float, max: float):
+	return x >= min and x <= max
+
 static func has_position(node: Node):
 	return node is Node3D or node is Control or node is Node2D
 
@@ -101,3 +104,10 @@ static func setup(comp: TextureRect):
 
 static func mouse_position():
 	return Engine.get_main_loop().root.get_mouse_position()
+
+static func global_rect_of(node: Node):
+	if "size" in node: return Rect2(node.global_position, node.size)
+	if "shape" in node and node.shape:
+		var s = node.shape.get_rect().size
+		return Rect2(node.global_position - s / -2, s)
+	return Rect2(node.global_position, Vector2.ZERO)
