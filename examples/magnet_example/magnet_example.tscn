@@ -97,7 +97,6 @@ metadata/pronto_connections = [SubResource("Resource_h48op"), SubResource("Resou
 [node name="Placeholder" type="Node2D" parent="player"]
 script = ExtResource("3_0ue3y")
 label = "player"
-placeholder_size = Vector2(30, 30)
 
 [node name="Spawner" type="Node2D" parent="player"]
 script = ExtResource("5_ctlig")

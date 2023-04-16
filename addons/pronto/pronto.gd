@@ -64,12 +64,16 @@ func _make_visible(visible):
 		close()
 
 func _forward_canvas_gui_input(event):
-	var captured_event = false
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-			# current_object = get_selection().get_selected_nodes()[0]
-			captured_event = true
+	if edited_object is Behavior:
+		var ret = edited_object._forward_canvas_gui_input(event)
+		if ret:
+			update_overlays()
+		return ret
 	return false
+
+func _forward_canvas_draw_over_viewport(viewport_control):
+	if edited_object is Behavior:
+		edited_object._forward_canvas_draw_over_viewport(viewport_control)
 
 func show_signals(node: Node):
 	if popup:

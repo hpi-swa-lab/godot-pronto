@@ -32,3 +32,10 @@ func _draw():
 		-1,
 		text_size,
 		Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
+
+func handles():
+	return [
+		Handle.new(placeholder_size / 2,
+			Utils.icon_from_theme("EditorHandle", self),
+			func (coord): placeholder_size = floor(coord * 2).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+	]
