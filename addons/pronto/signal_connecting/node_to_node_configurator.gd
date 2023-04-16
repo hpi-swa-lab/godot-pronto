@@ -1,5 +1,38 @@
 @tool
 extends PanelContainer
+class_name NodeToNodeConfigurator
+
+static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
+	var i = preload("res://addons/pronto/signal_connecting/node_to_node_configurator.tscn").instantiate()
+	i.anchor = anchor
+	i.undo_redo = undo_redo
+	return i
+
+static func open_existing(undo_redo: EditorUndoRedoManager, from: Node, connection: Connection):
+	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
+	i.set_existing_connection(from, connection)
+	Utils.spawn_popup_from_canvas(from, i)
+	i.default_focus()
+
+static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary, receiver: Node):
+	var i = _open(Utils.parent_that(receiver, func (n): return Utils.has_position(n)), undo_redo)
+	i.selected_signal = source_signal
+	i.from = from
+	i.receiver = receiver
+	i.set_expression_mode(false)
+	Utils.spawn_popup_from_canvas(receiver, i)
+	i.default_focus()
+
+static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary):
+	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
+	i.selected_signal = source_signal
+	i.from = from
+	i.set_expression_mode(true)
+	Utils.spawn_popup_from_canvas(from, i)
+	i.default_focus()
+
+
+var undo_redo: EditorUndoRedoManager
 
 var anchor: Node:
 	set(n):
@@ -8,6 +41,11 @@ var anchor: Node:
 		%FunctionName.anchor = n
 var from: Node
 var existing_connection = null
+
+var selected_signal: Dictionary:
+	set(value):
+		selected_signal = value
+		%Signal.text = Utils.print_signal(value)
 
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
@@ -30,6 +68,7 @@ func set_expression_mode(expr: bool):
 	%Expression.text = ''
 
 func default_focus():
+	await get_tree().process_frame
 	if %Expression.visible:
 		%Expression.grab_focus()
 	else:
@@ -39,11 +78,6 @@ func _process(delta):
 	if anchor and anchor.is_inside_tree():
 		position = Utils.popup_position(anchor)
 		%FunctionName.anchor = anchor
-
-var selected_signal: Dictionary:
-	set(value):
-		selected_signal = value
-		%Signal.text = Utils.print_signal(value)
 
 func set_existing_connection(from: Node, connection: Connection):
 	self.from = from

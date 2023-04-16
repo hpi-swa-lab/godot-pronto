@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://0dcwrlbjfgql"]
 
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/drop_list.gd" id="1_22cke"]
-[ext_resource type="Theme" uid="uid://bos6jdoh4ueyq" path="res://addons/pronto/pronto_theme.tres" id="1_xrqxp"]
+[ext_resource type="Theme" uid="uid://bos6jdoh4ueyq" path="res://addons/pronto/signal_connecting/pronto_theme.tres" id="1_xrqxp"]
 
 [node name="drop_list" type="PanelContainer"]
 theme = ExtResource("1_xrqxp")

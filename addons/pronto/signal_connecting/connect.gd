@@ -1,7 +1,7 @@
 @tool
 extends VBoxContainer
 
-var NodeToNodeConfigurator = load("res://addons/pronto/signal_connecting/node_to_node_configurator.tscn")
+var undo_redo: EditorUndoRedoManager
 
 var anchor: Node:
 	set(a):
@@ -33,17 +33,13 @@ func _on_add_mouse_entered():
 	if node.get_script():
 		%signal_list.add_child(Utils.build_class_row(node.get_script().resource_path.get_file().split('.')[0], anchor))
 		for s in node.get_script().get_script_signal_list():
-			%signal_list.add_child(DragSignal.new(s, node))
+			%signal_list.add_child(DragSignal.new(s, node, undo_redo))
 	for c in Utils.all_classes_of(node):
 		%signal_list.add_child(Utils.build_class_row(c, anchor))
 		for s in ClassDB.class_get_signal_list(c, true):
-			%signal_list.add_child(DragSignal.new(s, node))
+			%signal_list.add_child(DragSignal.new(s, node, undo_redo))
 	%signals.visible = true
 	%add.visible = false
 
 func _on_connections_item_selected(index):
-	var popup = NodeToNodeConfigurator.instantiate()
-	popup.set_existing_connection(node, Connection.get_connections(node)[index])
-	popup.anchor = Utils.parent_that(node, func (n): return Utils.has_position(n))
-	Utils.spawn_popup_from_canvas(node, popup)
-	popup.default_focus()
+	NodeToNodeConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])

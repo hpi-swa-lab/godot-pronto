@@ -1,7 +1,9 @@
 @tool
 extends PanelContainer
 
-var DropNode = load("res://addons/pronto/signal_connecting/drop_node.tscn")
+var DropNode = preload("res://addons/pronto/signal_connecting/drop_node.tscn")
+
+var undo_redo: EditorUndoRedoManager
 
 var nodes: Array:
 	set(value):
@@ -13,6 +15,7 @@ var nodes: Array:
 
 func add(node: Node):
 	var row = DropNode.instantiate()
+	row.undo_redo = undo_redo
 	row.node = node
 	%list.add_child(row)
 

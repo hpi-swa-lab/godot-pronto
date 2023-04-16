@@ -82,8 +82,9 @@ func show_signals(node: Node):
 	if popup:
 		close()
 	
-	var Connect = load("res://addons/pronto/signal_connecting/connect.tscn")
+	var Connect = preload("res://addons/pronto/signal_connecting/connect.tscn")
 	popup = Connect.instantiate()
+	popup.undo_redo = get_undo_redo()
 	popup.node = node
 	popup.anchor = Utils.parent_that(node, func (p): return Utils.has_position(p))
 	Utils.spawn_popup_from_canvas(node, popup)

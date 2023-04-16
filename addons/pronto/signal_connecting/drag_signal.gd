@@ -3,13 +3,14 @@ class_name DragSignal
 
 var from: Node
 var drop_destinations: Array
-var source_signal
+var source_signal: Dictionary
+var undo_redo: EditorUndoRedoManager
 
-var NodeToNodeConfigurator = load("res://addons/pronto/signal_connecting/node_to_node_configurator.tscn")
-var DropList = load("res://addons/pronto/signal_connecting/drop_list.tscn")
+var DropList = preload("res://addons/pronto/signal_connecting/drop_list.tscn")
 
-func _init(s: Dictionary, from: Node):
+func _init(s: Dictionary, from: Node, undo_redo: EditorUndoRedoManager):
 	source_signal = s
+	self.undo_redo = undo_redo
 	var l = Label.new()
 	l.text = Utils.print_signal(s)
 	add_child(l)
@@ -17,12 +18,7 @@ func _init(s: Dictionary, from: Node):
 
 func _gui_input(event):
 	if event is InputEventMouseButton and event.double_click:
-		var popup = NodeToNodeConfigurator.instantiate()
-		popup.selected_signal = source_signal
-		popup.from = from
-		popup.set_expression_mode(true)
-		popup.anchor = Utils.parent_that(from, func (n): return Utils.has_position(n))
-		Utils.spawn_popup_from_canvas(from, popup)
+		NodeToNodeConfigurator.open_new_expression(undo_redo, from, source_signal)
 
 func _get_drag_data(at_position):
 	show_drop_destinations()
@@ -32,6 +28,7 @@ func show_drop_destinations():
 	var groups = []
 	drop_destinations = cluster(from.get_viewport(), 40 / from.get_viewport_transform().get_scale().x).map(func (cluster):
 		var list = DropList.instantiate()
+		list.undo_redo = undo_redo
 		list.nodes = cluster
 		Utils.spawn_popup_from_canvas(cluster[0], list)
 		return list)

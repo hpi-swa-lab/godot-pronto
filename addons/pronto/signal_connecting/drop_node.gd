@@ -1,7 +1,7 @@
 @tool
 extends HBoxContainer
 
-var NodeToNodeConfigurator = load("res://addons/pronto/signal_connecting/node_to_node_configurator.tscn")
+var undo_redo: EditorUndoRedoManager
 
 var node: Node:
 	set(value):
@@ -17,11 +17,4 @@ func _can_drop_data(at_position, data):
 func _drop_data(at_position, data):
 	var source_signal = data["signal"]
 	
-	var popup = NodeToNodeConfigurator.instantiate()
-	popup.selected_signal = source_signal
-	popup.from = data["source"]
-	popup.receiver = node
-	popup.set_expression_mode(false)
-	popup.anchor = Utils.parent_that(node, func (n): return Utils.has_position(n))
-	Utils.spawn_popup_from_canvas(node, popup)
-	popup.default_focus()
+	NodeToNodeConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
