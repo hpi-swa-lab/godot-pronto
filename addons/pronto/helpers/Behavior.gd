@@ -3,6 +3,7 @@ extends Node2D
 class_name Behavior
 
 var _icon
+var _handles := Handles.new()
 var _cached_pos = []
 
 func _ready():
@@ -30,42 +31,14 @@ func _process(delta):
 		queue_redraw()
 		_cached_pos = current_pos
 
-class Handle:
-	var position
-	var icon
-	var apply
-	
-	func _init(position: Vector2, icon: Texture, apply: Callable):
-		self.position = position
-		self.icon = icon
-		self.apply = apply
-	
-	func rect_in(node: CanvasItem):
-		return Rect2(
-			node.get_viewport_transform() * node.get_canvas_transform() * (node.global_position + position) - icon.get_size() / 2,
-			icon.get_size())
-
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
-	for handle in handles():
-		viewport_control.draw_texture(handle.icon, handle.rect_in(self).position)
+	_handles._forward_canvas_draw_over_viewport(self, viewport_control)
 
-var _dragging = null
+func _forward_canvas_gui_input(event: InputEvent, undo_redo: EditorUndoRedoManager):
+	return _handles._forward_canvas_gui_input(self, event, undo_redo)
 
-func _forward_canvas_gui_input(event):
-	if event is InputEventMouse:
-		if _dragging != null:
-			if event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-				_dragging = null
-				return true
-			if event is InputEventMouseMotion:
-				_dragging.apply.call(get_viewport().get_global_canvas_transform().affine_inverse() * event.position - global_position)
-				return true
-		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			for handle in handles():
-				if handle.rect_in(self).has_point(event.position):
-					_dragging = handle
-					return true
-	return false
+func deselected():
+	_handles.deselected()
 
 func handles():
 	return []

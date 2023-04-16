@@ -49,6 +49,9 @@ func _handles(object):
 	return !pronto_should_ignore(object)
 
 func _edit(object):
+	if edited_object and edited_object is Behavior:
+		edited_object.deselected()
+	
 	edited_object = object
 	if edited_object and edited_object is Node:
 		show_signals(edited_object)
@@ -65,7 +68,7 @@ func _make_visible(visible):
 
 func _forward_canvas_gui_input(event):
 	if edited_object is Behavior:
-		var ret = edited_object._forward_canvas_gui_input(event)
+		var ret = edited_object._forward_canvas_gui_input(event, get_undo_redo())
 		if ret:
 			update_overlays()
 		return ret

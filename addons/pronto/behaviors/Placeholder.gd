@@ -35,7 +35,9 @@ func _draw():
 
 func handles():
 	return [
-		Handle.new(placeholder_size / 2,
+		Handles.SetPropHandle.new(placeholder_size / 2,
 			Utils.icon_from_theme("EditorHandle", self),
-			func (coord): placeholder_size = floor(coord * 2).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+			self,
+			"placeholder_size",
+			func (coord): return floor(coord * 2).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
