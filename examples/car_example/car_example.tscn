@@ -1,0 +1,143 @@
+[gd_scene load_steps=21 format=3 uid="uid://fegvnevn4cyu"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_wxlom"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_vc300"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_v6c42"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_k0n5o"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_cc23q"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_lroqb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="6_wop4v"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="6_ys06d"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="9_hmnix"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="10_fbpok"]
+
+[sub_resource type="Resource" id="Resource_lj6v2"]
+script = ExtResource("4_k0n5o")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "rotate_left"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_2sp7y"]
+script = ExtResource("4_k0n5o")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "rotate_right"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_munmv"]
+script = ExtResource("4_k0n5o")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "move_up"
+arguments = []
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qoohd"]
+size = Vector2(30, 30)
+
+[sub_resource type="Resource" id="Resource_cq8lk"]
+script = ExtResource("4_k0n5o")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+expression = "other.queue_free()"
+
+[sub_resource type="Resource" id="Resource_pyv4p"]
+script = ExtResource("4_k0n5o")
+signal_name = "collided"
+to = NodePath("../State")
+invoke = "inc"
+arguments = ["\"score\"", "1"]
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w8yyu"]
+
+[sub_resource type="Resource" id="Resource_p67uv"]
+script = ExtResource("4_k0n5o")
+signal_name = "elapsed"
+to = NodePath("../Spawner")
+invoke = "spawn"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_wi61u"]
+script = ExtResource("4_k0n5o")
+signal_name = "elapsed"
+to = NodePath("../Spawner")
+invoke = "set_position"
+arguments = ["Utils.random_point_on_screen()"]
+expression = ""
+
+[sub_resource type="Resource" id="Resource_h84ri"]
+script = ExtResource("10_fbpok")
+from = NodePath("../../car/State")
+prop = "score"
+
+[node name="car_example" type="Node2D"]
+
+[node name="car" type="Area2D" parent="."]
+position = Vector2(329, 265)
+
+[node name="Move" type="Node2D" parent="car"]
+position = Vector2(140, -7)
+script = ExtResource("2_vc300")
+rotated = true
+
+[node name="Placeholder" type="Node2D" parent="car"]
+script = ExtResource("1_wxlom")
+label = "car"
+
+[node name="Controls" type="Node2D" parent="car"]
+position = Vector2(206, -3)
+script = ExtResource("3_v6c42")
+metadata/pronto_connections = [SubResource("Resource_lj6v2"), SubResource("Resource_2sp7y"), SubResource("Resource_munmv")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="car"]
+shape = SubResource("RectangleShape2D_qoohd")
+
+[node name="Collision" type="Node2D" parent="car"]
+position = Vector2(29, -7)
+script = ExtResource("5_cc23q")
+limit_to_group = "pickup"
+metadata/pronto_connections = [SubResource("Resource_cq8lk"), SubResource("Resource_pyv4p")]
+
+[node name="State" type="Node2D" parent="car"]
+position = Vector2(22, 41)
+script = ExtResource("6_ys06d")
+metadata/score = 0
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(420, 118)
+script = ExtResource("5_lroqb")
+
+[node name="pickup" type="Area2D" parent="Spawner" groups=["pickup"]]
+position = Vector2(24, -2)
+
+[node name="Placeholder" type="Node2D" parent="Spawner/pickup"]
+script = ExtResource("1_wxlom")
+label = "pickup"
+color = Color(0.960784, 0.819608, 0, 1)
+placeholder_size = Vector2(20, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/pickup"]
+shape = SubResource("RectangleShape2D_w8yyu")
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(368, 103)
+script = ExtResource("6_wop4v")
+metadata/pronto_connections = [SubResource("Resource_p67uv"), SubResource("Resource_wi61u")]
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "score: 2"
+
+[node name="Bind" type="Node2D" parent="Label"]
+script = ExtResource("9_hmnix")
+from = Array[ExtResource("10_fbpok")]([SubResource("Resource_h84ri")])
+to_prop = "text"
+convert = "\"Score: \" + str(value0)"

@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://dxxhadx8d7crm"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_3fl4v"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="2_k1sqv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="3_an622"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_l7gg2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="5_6e2o2"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="6_a7v6i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tamtl"]
+
+[sub_resource type="Resource" id="Resource_dfd2o"]
+script = ExtResource("4_l7gg2")
+signal_name = "always"
+to = NodePath("")
+invoke = ""
+arguments = []
+expression = "from.get_parent().position = lerp(from.get_parent().position, Utils.mouse_position(), delta * 2)"
+
+[sub_resource type="Resource" id="Resource_2emeu"]
+script = ExtResource("6_a7v6i")
+from = NodePath("../../State")
+prop = "attached"
+
+[node name="metal" type="Area2D" groups=["magnetic"]]
+position = Vector2(92, 44)
+
+[node name="Placeholder" type="Node2D" parent="."]
+script = ExtResource("1_3fl4v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tamtl")
+
+[node name="State" type="Node2D" parent="."]
+position = Vector2(31, 24)
+script = ExtResource("2_k1sqv")
+metadata/attached = false
+
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(47, -24)
+script = ExtResource("3_an622")
+metadata/pronto_connections = [SubResource("Resource_dfd2o")]
+
+[node name="Bind" type="Node2D" parent="Always"]
+position = Vector2(11, 29)
+script = ExtResource("5_6e2o2")
+from = Array[ExtResource("6_a7v6i")]([SubResource("Resource_2emeu")])
+to_prop = "paused"
+convert = "not value0"

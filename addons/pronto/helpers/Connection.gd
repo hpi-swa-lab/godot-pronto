@@ -32,10 +32,7 @@ static func connect_expr(from: Node, signal_name: String, expression: String):
 
 ## Returns list of all connections from [param node]
 static func get_connections(node: Node) -> Array:
-	if not node.has_meta("pronto_connections"):
-		return []
-	else:
-		return node.get_meta("pronto_connections")
+	return node.get_meta("pronto_connections", [])
 
 ## The signal name of the node that this connection is added on to connect to.
 @export var signal_name: String = ""

@@ -98,10 +98,6 @@ static func random_point_on_screen():
 	var size = Engine.get_main_loop().root.size
 	return Vector2(randf_range(0, size.x), randf_range(0, size.y))
 
-static func setup(comp: TextureRect):
-	var name = comp.get_script().resource_path.get_file().split('.')[0]
-	comp.texture = Utils.icon_from_theme(Pronto.COMPONENTS[name], comp)
-
 static func mouse_position():
 	return Engine.get_main_loop().root.get_mouse_position()
 

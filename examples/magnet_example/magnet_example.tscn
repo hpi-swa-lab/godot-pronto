@@ -1,0 +1,147 @@
+[gd_scene load_steps=19 format=3 uid="uid://cah2fne75vtl2"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="1_7jvq5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_cv5ua"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_0ue3y"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_5tqxr"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_ctlig"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_p8gb0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="7_kmjgj"]
+[ext_resource type="PackedScene" uid="uid://dxxhadx8d7crm" path="res://examples/magnet_example/metal.tscn" id="8_ks3lw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_rvmy5"]
+
+[sub_resource type="Resource" id="Resource_h48op"]
+script = ExtResource("3_5tqxr")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "move_left"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ma76l"]
+script = ExtResource("3_5tqxr")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "move_right"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_dv1mp"]
+script = ExtResource("3_5tqxr")
+signal_name = "click"
+to = NodePath("../Spawner")
+invoke = "spawn_toward"
+arguments = ["pos"]
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rckk8"]
+size = Vector2(30, 30)
+
+[sub_resource type="Resource" id="Resource_38k5r"]
+script = ExtResource("3_5tqxr")
+signal_name = "always"
+to = NodePath("../Move")
+invoke = "move_right"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_fbc0p"]
+script = ExtResource("3_5tqxr")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
+	n.get_node(\"State\").put(\"attached\", false)
+other.get_node(\"State\").put(\"attached\", true)"
+
+[sub_resource type="Resource" id="Resource_g462o"]
+script = ExtResource("3_5tqxr")
+signal_name = "collided"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_32of2"]
+script = ExtResource("3_5tqxr")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+expression = ""
+
+[sub_resource type="Resource" id="Resource_bowqy"]
+script = ExtResource("3_5tqxr")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
+	n.get_node(\"State\").put(\"attached\", false)"
+
+[node name="magnet_example" type="Node2D"]
+
+[node name="player" type="Area2D" parent="."]
+position = Vector2(535, 428)
+
+[node name="Move" type="Node2D" parent="player"]
+position = Vector2(23, 37)
+script = ExtResource("1_7jvq5")
+
+[node name="Controls" type="Node2D" parent="player"]
+position = Vector2(68, -24)
+script = ExtResource("2_cv5ua")
+metadata/pronto_connections = [SubResource("Resource_h48op"), SubResource("Resource_ma76l"), SubResource("Resource_dv1mp")]
+
+[node name="Placeholder" type="Node2D" parent="player"]
+script = ExtResource("3_0ue3y")
+label = "player"
+placeholder_size = Vector2(30, 30)
+
+[node name="Spawner" type="Node2D" parent="player"]
+script = ExtResource("5_ctlig")
+
+[node name="magnet" type="Area2D" parent="player/Spawner"]
+position = Vector2(-79, -10)
+
+[node name="Placeholder" type="Node2D" parent="player/Spawner/magnet"]
+script = ExtResource("3_0ue3y")
+label = "magnet"
+color = Color(0.470588, 0.211765, 0.0509804, 1)
+placeholder_size = Vector2(30, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player/Spawner/magnet"]
+shape = SubResource("RectangleShape2D_rckk8")
+
+[node name="Move" type="Node2D" parent="player/Spawner/magnet"]
+position = Vector2(-49, 49)
+script = ExtResource("1_7jvq5")
+speed = 1200.0
+rotated = true
+
+[node name="Always" type="Node2D" parent="player/Spawner/magnet"]
+position = Vector2(-32, -9)
+script = ExtResource("6_p8gb0")
+metadata/pronto_connections = [SubResource("Resource_38k5r")]
+
+[node name="Collision" type="Node2D" parent="player/Spawner/magnet"]
+position = Vector2(-35, 65)
+script = ExtResource("7_kmjgj")
+limit_to_group = "magnetic"
+metadata/pronto_connections = [SubResource("Resource_fbc0p"), SubResource("Resource_g462o")]
+
+[node name="Clock" type="Node2D" parent="player/Spawner/magnet"]
+position = Vector2(23, 63)
+script = ExtResource("8_rvmy5")
+duration_seconds = 0.2
+metadata/pronto_connections = [SubResource("Resource_32of2"), SubResource("Resource_bowqy")]
+
+[node name="metal" parent="." instance=ExtResource("8_ks3lw")]
+position = Vector2(333, 321)
+
+[node name="metal2" parent="." instance=ExtResource("8_ks3lw")]
+position = Vector2(612, 282)
+
+[node name="metal3" parent="." instance=ExtResource("8_ks3lw")]
+position = Vector2(916, 388)

@@ -26,7 +26,7 @@ func _enter_tree():
 	var base = get_editor_interface().get_base_control()
 	for key in COMPONENTS:
 		add_custom_type(key,
-			"TextureRect", load("res://addons/pronto/behaviors/" + key + ".gd"),
+			"Node2D", load("res://addons/pronto/behaviors/" + key + ".gd"),
 			base.get_theme_icon(COMPONENTS[key], &"EditorIcons"))
 
 func _exit_tree():

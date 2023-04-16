@@ -8,6 +8,8 @@ extends Behavior
 var last = []
 
 func _process(delta):
+	super._process(delta)
+	
 	if Engine.is_editor_hint():
 		return
 	var inputs = []
