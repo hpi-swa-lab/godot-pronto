@@ -14,21 +14,23 @@ class_name Connection
 
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
-static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array):
+## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
+static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
 	c.invoke = invoke
 	c.arguments = arguments
-	c._store(from)
+	c._store(from, undo_redo)
 
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
-static func connect_expr(from: Node, signal_name: String, expression: String):
+## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
+static func connect_expr(from: Node, signal_name: String, expression: String, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.expression = expression
-	c._store(from)
+	c._store(from, undo_redo)
 
 ## Returns list of all connections from [param node]
 static func get_connections(node: Node) -> Array:
@@ -58,10 +60,20 @@ func is_target() -> bool:
 func delete(from: Node):
 	_ensure_connections(from).erase(self)
 
-func _store(from: Node):
+func _store(from: Node, undo_redo: EditorUndoRedoManager = null):
 	var connections = _ensure_connections(from)
 	if connections.any(func (c: Connection): return c == self): return
-	connections.append(self)
+	
+	if undo_redo != null:
+		undo_redo.create_action("Create connection")
+		undo_redo.add_do_method(self, "_append_connection", from)
+		undo_redo.add_undo_method(self, "_remove_connection", from)
+		undo_redo.commit_action()
+	else:
+		connections.append(self)
+
+func _append_connection(from: Node):_ensure_connections(from).append(self)
+func _remove_connection(from: Node): _ensure_connections(from).erase(self)
 
 func _ensure_connections(from: Node):
 	var connections: Array

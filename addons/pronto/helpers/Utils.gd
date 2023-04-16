@@ -94,6 +94,13 @@ static func build_class_row(c: StringName, ref: Node):
 	row.add_child(label)
 	return row
 
+static func commit_undoable(undo_redo: EditorUndoRedoManager, title: String, object: Object, props: Dictionary):
+	undo_redo.create_action(title)
+	for prop in props:
+		undo_redo.add_undo_property(object, prop, object.get(prop))
+		undo_redo.add_do_property(object, prop, props[prop])
+	undo_redo.commit_action()
+
 static func random_point_on_screen():
 	var size = Engine.get_main_loop().root.size
 	return Vector2(randf_range(0, size.x), randf_range(0, size.y))
