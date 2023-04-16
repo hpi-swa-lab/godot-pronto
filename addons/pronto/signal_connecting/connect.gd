@@ -32,7 +32,7 @@ func _process(delta):
 			%add.visible = true
 			size = Vector2.ZERO
 	
-	if Connection.get_connections(node) != _displayed_connections:
+	if node and Connection.get_connections(node) != _displayed_connections:
 		build_list()
 
 func _on_add_mouse_entered():

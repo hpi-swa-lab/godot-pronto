@@ -21,6 +21,8 @@ func show_icon():
 	return false
 
 func _draw():
+	super._draw()
+	
 	var default_font = ThemeDB.fallback_font
 	var height = placeholder_size.y
 	var text_size = min(height, placeholder_size.x / label.length() * 1.8)

@@ -8,15 +8,17 @@ class Handle:
 	var position: Vector2
 	var icon: Texture
 	var apply: Callable
+	var local_space: bool
 	
-	func _init(position: Vector2, icon: Texture, apply: Callable):
+	func _init(position: Vector2, icon: Texture, apply: Callable, local_space = true):
 		self.position = position
 		self.icon = icon
 		self.apply = apply
+		self.local_space = local_space
 	
 	func rect_in(node: CanvasItem):
 		return Rect2(
-			node.get_viewport_transform() * node.get_canvas_transform() * (node.global_position + position) - icon.get_size() / 2,
+			node.get_viewport_transform() * node.get_canvas_transform() * (node.global_position + (position if local_space else Vector2.ZERO)) - icon.get_size() / 2 + (Vector2.ZERO if local_space else position),
 			icon.get_size())
 	
 	func begin():
@@ -31,9 +33,9 @@ class SetPropHandle extends Handle:
 	var map: Callable
 	var _initial: Variant
 	
-	func _init(position: Vector2, icon: Texture, object: Object, property: String, map: Callable):
+	func _init(position: Vector2, icon: Texture, object: Object, property: String, map: Callable, local_space = true):
 		super._init(position, icon, func (new_prop):
-			object.set(property, map.call(new_prop)))
+			object.set(property, map.call(new_prop)), local_space)
 		self.object = object
 		self.property = property
 		self.map = map
@@ -62,7 +64,10 @@ func _forward_canvas_gui_input(node: Behavior, event: InputEvent, undo_redo: Edi
 				_dragging = null
 				return true
 			if event is InputEventMouseMotion:
-				_dragging.apply.call(node.get_viewport().get_global_canvas_transform().affine_inverse() * event.position -  node.global_position)
+				if _dragging.local_space:
+					_dragging.apply.call(node.get_viewport().get_global_canvas_transform().affine_inverse() * event.position -  node.global_position)
+				else:
+					_dragging.apply.call(event.position - node.get_viewport_transform() * node.global_position)
 				return true
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			for handle in node.handles():

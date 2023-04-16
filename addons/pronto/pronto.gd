@@ -13,7 +13,8 @@ const COMPONENTS = {
 	"Always": "Loop",
 	"Placeholder": "Skeleton2D",
 	"Key": "KeyboardPhysical",
-	"Stopwatch": "Time"
+	"Stopwatch": "Time",
+	"Value": "PinJoint2D"
 }
 
 var edited_object

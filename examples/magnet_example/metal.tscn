@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dxxhadx8d7crm"]
+[gd_scene load_steps=11 format=3 uid="uid://dxxhadx8d7crm"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_3fl4v"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="2_k1sqv"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_l7gg2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="5_6e2o2"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="6_a7v6i"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="7_n4uru"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tamtl"]
 
@@ -15,7 +16,10 @@ signal_name = "always"
 to = NodePath("")
 invoke = ""
 arguments = []
-expression = "from.get_parent().position = lerp(from.get_parent().position, Utils.mouse_position(), delta * 2)"
+expression = "from.get_parent().position = lerp(
+	from.get_parent().position,
+	Utils.mouse_position(),
+	delta * G.at(\"LerpSpeed\"))"
 
 [sub_resource type="Resource" id="Resource_2emeu"]
 script = ExtResource("6_a7v6i")
@@ -47,3 +51,9 @@ script = ExtResource("5_6e2o2")
 from = Array[ExtResource("6_a7v6i")]([SubResource("Resource_2emeu")])
 to_prop = "paused"
 convert = "not value0"
+
+[node name="LerpSpeed" type="Node2D" parent="."]
+position = Vector2(1, -37)
+script = ExtResource("7_n4uru")
+to = 5.0
+value = 4.63185
