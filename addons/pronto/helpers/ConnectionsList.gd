@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 func check_install(node: Node):

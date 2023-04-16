@@ -2,6 +2,7 @@
 extends VBoxContainer
 
 var undo_redo: EditorUndoRedoManager
+var _displayed_connections = []
 
 var anchor: Node:
 	set(a):
@@ -11,9 +12,14 @@ var anchor: Node:
 var node: Node:
 	set(value):
 		node = value
-		for c in Connection.get_connections(node):
-			%connections.add_item(c.signal_name, Utils.icon_from_theme("Signals", node))
-		%connections.visible = %connections.item_count > 0
+		build_list()
+
+func build_list():
+	%connections.clear()
+	_displayed_connections = Connection.get_connections(node).duplicate()
+	for c in _displayed_connections:
+		%connections.add_item(c.signal_name, Utils.icon_from_theme("Signals", node))
+	%connections.visible = %connections.item_count > 0
 
 func _process(delta):
 	if anchor:
@@ -25,6 +31,9 @@ func _process(delta):
 			%signals.visible = false
 			%add.visible = true
 			size = Vector2.ZERO
+	
+	if Connection.get_connections(node) != _displayed_connections:
+		build_list()
 
 func _on_add_mouse_entered():
 	for c in %signal_list.get_children().slice(2):
