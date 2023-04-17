@@ -6,7 +6,7 @@ signal elapsed()
 
 @export var one_shot: bool:
 	get: return _timer.one_shot
-	set(value): _timer.one_shot
+	set(value): _timer.one_shot = value
 @export var duration_seconds: float = 1.0:
 	get: return _timer.wait_time
 	set(value): _timer.wait_time = max(value, 0.0001)

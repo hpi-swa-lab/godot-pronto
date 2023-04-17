@@ -137,10 +137,10 @@ duration_seconds = 0.2
 metadata/pronto_connections = [SubResource("Resource_32of2"), SubResource("Resource_bowqy")]
 
 [node name="metal" parent="." instance=ExtResource("8_ks3lw")]
-position = Vector2(333, 321)
+position = Vector2(307, 284)
 
 [node name="metal2" parent="." instance=ExtResource("8_ks3lw")]
-position = Vector2(612, 282)
+position = Vector2(621, 225)
 
 [node name="metal3" parent="." instance=ExtResource("8_ks3lw")]
 position = Vector2(916, 388)

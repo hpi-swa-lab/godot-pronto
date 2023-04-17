@@ -64,6 +64,7 @@ func close():
 func _make_visible(visible):
 	if not visible:
 		close()
+	edited_object = null
 
 func _forward_canvas_gui_input(event):
 	if edited_object is Behavior:

@@ -16,6 +16,7 @@ func _process(delta):
 	var inputs = []
 	for f in from:
 		var object = get_node(f.from)
+		assert(object != null, "Object is no longer at path {0}".format([f.from]))
 		var current
 		if f.prop in object:
 			current = object.get(f.prop)
