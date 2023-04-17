@@ -105,7 +105,7 @@ func _trigger(from: Object, argument_names: Array, argument_values: Array):
 	values.append(from)
 	if to:
 		var target = from.get_node(to)
-		names.append("target")
+		names.append("to")
 		values.append(target)
 		target.callv(invoke, arguments.map(func (arg): return ConnectionsList.eval(arg, names, values)))
 	else:
