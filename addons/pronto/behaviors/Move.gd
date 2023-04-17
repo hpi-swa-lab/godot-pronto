@@ -1,4 +1,5 @@
 @tool
+#thumb("ToolMove")
 extends Behavior
 
 @export var speed = 500.0

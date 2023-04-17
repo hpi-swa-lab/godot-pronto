@@ -10,7 +10,7 @@ func _ready():
 	if Engine.is_editor_hint() and show_icon():
 		_icon = TextureRect.new()
 		var name = get_script().resource_path.get_file().split('.')[0]
-		_icon.texture = Utils.icon_from_theme(Pronto.COMPONENTS[name], self)
+		_icon.texture = Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
 		_icon.position = _icon.texture.get_size() / -2
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
 

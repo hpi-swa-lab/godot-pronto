@@ -1,4 +1,5 @@
 @tool
+#thumb("Timer")
 extends Behavior
 
 signal elapsed()

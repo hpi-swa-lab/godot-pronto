@@ -1,4 +1,5 @@
 @tool
+#thumb("GPUParticles3D")
 extends Behavior
 
 var scene = null

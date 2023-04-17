@@ -1,4 +1,5 @@
 @tool
+#thumb("Skeleton2D")
 extends Behavior
 
 @export var label = "":

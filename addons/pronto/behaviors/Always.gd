@@ -1,4 +1,5 @@
 @tool
+#thumb("Loop")
 extends Behavior
 
 signal always(delta)

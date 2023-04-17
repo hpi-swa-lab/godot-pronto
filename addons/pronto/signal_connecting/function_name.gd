@@ -7,7 +7,8 @@ var anchor
 signal method_selected(name: String)
 
 func add_class_item(name):
-	%list.add_item(name, Utils.icon_from_theme(Pronto.COMPONENTS[name], anchor) if name in Pronto.COMPONENTS else Utils.icon_for_class(name, anchor), false)
+	var behaviors = G.at("_pronto_behaviors")
+	%list.add_item(name, Utils.icon_from_theme(behaviors[name], anchor) if name in behaviors else Utils.icon_for_class(name, anchor), false)
 
 func _gui_input(event):
 	if event is InputEventKey and event.pressed:

@@ -2,37 +2,35 @@
 extends EditorPlugin
 class_name Pronto
 
-const COMPONENTS = {
-	"Move": "ToolMove",
-	"Spawner": "GPUParticles3D",
-	"Controls": "Joypad",
-	"Bind": "EditBezier",
-	"State": "CylinderMesh",
-	"Collision": "GPUParticlesCollisionBox3D",
-	"Clock": "Timer",
-	"Always": "Loop",
-	"Placeholder": "Skeleton2D",
-	"Key": "KeyboardPhysical",
-	"Stopwatch": "Time",
-	"Value": "PinJoint2D"
-}
-
 var edited_object
 var popup
+var behaviors = {}
 
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		return
 	
+	var regex = RegEx.new()
+	regex.compile("#thumb\\(\"(.+)\"\\)")
 	var base = get_editor_interface().get_base_control()
-	for key in COMPONENTS:
-		add_custom_type(key,
-			"Node2D", load("res://addons/pronto/behaviors/" + key + ".gd"),
-			base.get_theme_icon(COMPONENTS[key], &"EditorIcons"))
+	
+	for file in DirAccess.get_files_at("res://addons/pronto/behaviors"):
+		var name = file.get_basename()
+		var icon = ""
+		var script = load("res://addons/pronto/behaviors/" + file)
+		var result = regex.search(script.source_code)
+		if result:
+			icon = result.strings[1]
+		else:
+			push_error("Behavior {0} is missing #thumb(\"...\") annotation".format([name]))
+		add_custom_type(name, "Node2D", script,	base.get_theme_icon(icon, &"EditorIcons"))
+		behaviors[name] = icon
+	G.put("_pronto_behaviors", behaviors)
 
 func _exit_tree():
-	for key in COMPONENTS:
+	for key in behaviors:
 		remove_custom_type(key)
+	behaviors.clear()
 
 func pronto_should_ignore(object):
 	if not object is Node:

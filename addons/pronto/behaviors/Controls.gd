@@ -1,4 +1,5 @@
 @tool
+#thumb("Joypad")
 extends Behavior
 
 signal left

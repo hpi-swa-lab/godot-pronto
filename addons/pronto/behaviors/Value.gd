@@ -1,4 +1,5 @@
 @tool
+#thumb("PinJoint2D")
 extends Behavior
 
 signal value_changed(value: float)

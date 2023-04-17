@@ -66,8 +66,9 @@ static func icon_from_theme(name: StringName, reference: Node):
 static func icon_for_node(node: Node, reference: Node):
 	if node.get_script():
 		var name = node.get_script().resource_path.get_file().split('.')[0]
-		if name in Pronto.COMPONENTS:
-			return icon_from_theme(Pronto.COMPONENTS[name], reference)
+		var behaviors = G.at("_pronto_behaviors")
+		if name in behaviors:
+			return icon_from_theme(behaviors[name], reference)
 	return icon_for_class(node.get_class(), reference)
 
 static func icon_for_class(name: StringName, reference: Node):
@@ -87,7 +88,8 @@ static func build_class_row(c: StringName, ref: Node):
 	
 	var icon = TextureRect.new()
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
-	icon.texture = Utils.icon_from_theme(Pronto.COMPONENTS[c], ref) if c  in Pronto.COMPONENTS else Utils.icon_for_class(c, ref)
+	var behaviors = G.at("_pronto_behaviors")
+	icon.texture = Utils.icon_from_theme(behaviors[c], ref) if c  in behaviors else Utils.icon_for_class(c, ref)
 	
 	var row = HBoxContainer.new()
 	row.add_child(icon)

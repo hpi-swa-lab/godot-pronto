@@ -1,4 +1,5 @@
 @tool
+#thumb("Time")
 extends Behavior
 
 var _start: int = 0

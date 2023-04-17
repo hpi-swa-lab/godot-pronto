@@ -1,4 +1,5 @@
 @tool
+#thumb("EditBezier")
 extends Behavior
 
 @export var from: Array[SourceProp]

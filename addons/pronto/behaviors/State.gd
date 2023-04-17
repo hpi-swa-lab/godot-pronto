@@ -1,4 +1,5 @@
 @tool
+#thumb("CylinderMesh")
 extends Behavior
 
 signal changed(prop: String, value: Variant)
