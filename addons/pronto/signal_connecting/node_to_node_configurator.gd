@@ -83,6 +83,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
 	existing_connection = connection
 	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
+	%Condition.text = connection.only_if
 	if connection.is_target():
 		receiver = from.get_node(connection.to)
 		%FunctionName.anchor = anchor
@@ -126,15 +127,16 @@ func _on_done_pressed():
 				existing_connection,
 				{"arguments": args, "invoke": invoke, "only_if": %Condition.text})
 		else:
-			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args, undo_redo)
+			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args, %Condition.text, undo_redo)
 	if %Expression.visible:
 		if existing_connection:
+			print(%Condition.text)
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
 				{"expression": %Expression.text, "only_if": %Condition.text})
 		else:
-			Connection.connect_expr(from, selected_signal["name"], %Expression.text, undo_redo)
+			Connection.connect_expr(from, selected_signal["name"], %Expression.text, %Condition.text, undo_redo)
 	queue_free()
 
 func _on_remove_pressed():

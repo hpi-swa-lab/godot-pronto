@@ -15,21 +15,23 @@ class_name Connection
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, undo_redo: EditorUndoRedoManager = null):
+static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, only_if: String, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
 	c.invoke = invoke
 	c.arguments = arguments
+	c.only_if = only_if
 	c._store(from, undo_redo)
 
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, expression: String, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, expression: String, only_if: String, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.expression = expression
+	c.only_if = only_if
 	c._store(from, undo_redo)
 
 ## Returns list of all connections from [param node]
@@ -115,5 +117,8 @@ func _trigger(from: Object, argument_names: Array, argument_values: Array):
 		if should_trigger(names, values):
 			ConnectionsList.eval(expression, names, values, false)
 
+func has_condition():
+	return only_if != "true" and only_if != ""
+
 func should_trigger(names, values):
-	return only_if == "true" or only_if == "" or ConnectionsList.eval(only_if, names, values)
+	return not has_condition() or ConnectionsList.eval(only_if, names, values)

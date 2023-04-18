@@ -10,8 +10,9 @@ func _ready():
 	get_tree().node_added.connect(check_install)
 
 func eval(source: String, argument_names: Array, argument_values: Array, return_value = true):
-	# FIXME could have different order of argument names
-	if not source in _cache:
+	assert(argument_names.size() == argument_values.size(), "Argument names and values for eval need to have the same size.")
+	var key = source + ":" + ','.join(argument_names)
+	if not key in _cache:
 		var script = GDScript.new()
 		var do_ret = return_value and not _is_statement(source)
 		script.source_code = 'extends Object
@@ -20,8 +21,8 @@ func run({0}):
 		script.reload()
 		var object = _Dummy.new()
 		object.set_script(script)
-		_cache[source] = object
-	return _cache[source].callv("run", argument_values)
+		_cache[key] = object
+	return _cache[key].callv("run", argument_values)
 
 class _Dummy extends Node: pass
 var _cache = {}
