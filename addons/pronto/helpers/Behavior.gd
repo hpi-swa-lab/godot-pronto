@@ -15,7 +15,7 @@ func _ready():
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
 
 func is_active_scene() -> bool:
-	return get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
+	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
 
 func get_editor_plugin() -> EditorPlugin:
 	return G.at("_pronto_editor_plugin")

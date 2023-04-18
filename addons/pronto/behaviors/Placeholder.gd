@@ -16,27 +16,30 @@ extends Behavior
 	set(v):
 		placeholder_size = v
 		queue_redraw()
+		_update_shape()
 
 func _ready():
 	super._ready()
 
 func _update_shape():
-	_parent.shape_owner_set_transform(_owner_id, transform)
-	_parent.shape_owner_get_shape(_owner_id, 0).size = placeholder_size
+	if _parent:
+		_parent.shape_owner_set_transform(_owner_id, transform)
+		_parent.shape_owner_get_shape(_owner_id, 0).size = placeholder_size
 
 var _owner_id: int = 0
 var _parent: CollisionObject2D = null
 func _notification(what):
 	match what:
 		NOTIFICATION_PARENTED:
-			var shape = RectangleShape2D.new()
-			shape.size = placeholder_size
 			_parent = get_parent() as CollisionObject2D
-			_owner_id = _parent.create_shape_owner(self)
-			_parent.shape_owner_add_shape(_owner_id, shape)
-			_update_shape()
+			if _parent:
+				var shape = RectangleShape2D.new()
+				shape.size = placeholder_size
+				_owner_id = _parent.create_shape_owner(self)
+				_parent.shape_owner_add_shape(_owner_id, shape)
+				_update_shape()
 		NOTIFICATION_ENTER_TREE, NOTIFICATION_LOCAL_TRANSFORM_CHANGED:
-			if _parent: _update_shape()
+			_update_shape()
 		NOTIFICATION_UNPARENTED:
 			if _parent:
 				_parent.remove_shape_owner(_owner_id)
