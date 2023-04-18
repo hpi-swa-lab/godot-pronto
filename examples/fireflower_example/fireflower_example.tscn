@@ -1,0 +1,234 @@
+[gd_scene load_steps=28 format=3 uid="uid://dxy6oko6qcqub"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_jehaj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="2_rmt8h"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="3_u0421"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="3_uo1n7"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="4_j0m6u"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_wgrup"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="5_yiaec"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="6_ekkm6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="9_uqdto"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="10_cb0w0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="11_5ifkr"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="12_h1pcc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1aco5"]
+size = Vector2(667.75, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjlv0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ophth"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_khqx5"]
+size = Vector2(10, 10)
+
+[sub_resource type="Resource" id="Resource_wpa4s"]
+script = ExtResource("4_j0m6u")
+from = NodePath("../FlowerSpeed")
+prop = "value"
+
+[sub_resource type="Resource" id="Resource_w5qmb"]
+script = ExtResource("4_wgrup")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_mq1c5"]
+script = ExtResource("4_wgrup")
+signal_name = "down"
+to = NodePath("../Spawner")
+invoke = "spawn"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_gng3n"]
+script = ExtResource("4_wgrup")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "move_left"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_lieqc"]
+script = ExtResource("4_wgrup")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "move_right"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ox177"]
+script = ExtResource("4_wgrup")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "jump"
+arguments = []
+only_if = "from.get_parent().is_on_floor()"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_fsrlr"]
+script = ExtResource("4_wgrup")
+signal_name = "elapsed"
+to = NodePath("../EnemySpawner")
+invoke = "spawn"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pr2ea"]
+
+[sub_resource type="Resource" id="Resource_48yak"]
+script = ExtResource("4_wgrup")
+signal_name = "always"
+to = NodePath("../Move")
+invoke = "move_left"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_hxokq"]
+script = ExtResource("4_wgrup")
+signal_name = "collided"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_bvbxs"]
+script = ExtResource("4_wgrup")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "other.queue_free()"
+
+[node name="fireflower_example" type="Node2D"]
+
+[node name="floor" type="StaticBody2D" parent="."]
+position = Vector2(525, 579)
+
+[node name="Placeholder" type="Node2D" parent="floor"]
+script = ExtResource("1_jehaj")
+placeholder_size = Vector2(667, 14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
+shape = SubResource("RectangleShape2D_1aco5")
+
+[node name="player" type="CharacterBody2D" parent="."]
+position = Vector2(298, 324)
+
+[node name="Placeholder" type="Node2D" parent="player"]
+script = ExtResource("1_jehaj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource("RectangleShape2D_fjlv0")
+
+[node name="Spawner" type="Node2D" parent="player"]
+position = Vector2(20, -5)
+script = ExtResource("2_rmt8h")
+
+[node name="flower" type="RigidBody2D" parent="player/Spawner" groups=["flower"]]
+position = Vector2(87, 12)
+physics_material_override = SubResource("PhysicsMaterial_ophth")
+linear_velocity = Vector2(900, 300)
+linear_damp_mode = 1
+
+[node name="Placeholder" type="Node2D" parent="player/Spawner/flower"]
+script = ExtResource("1_jehaj")
+color = Color(0.137255, 0.729412, 0, 1)
+placeholder_size = Vector2(10, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player/Spawner/flower"]
+shape = SubResource("RectangleShape2D_khqx5")
+
+[node name="Bind" type="Node2D" parent="player/Spawner/flower"]
+position = Vector2(13, 20)
+script = ExtResource("3_u0421")
+from = Array[ExtResource("4_j0m6u")]([SubResource("Resource_wpa4s")])
+to_prop = "linear_velocity"
+convert = "Vector2(value0, 0)"
+
+[node name="FlowerSpeed" type="Node2D" parent="player/Spawner/flower"]
+position = Vector2(39, -19)
+script = ExtResource("5_yiaec")
+from = 300.0
+to = 1000.0
+value = 797.083
+
+[node name="Clock" type="Node2D" parent="player/Spawner/flower"]
+position = Vector2(14, -43)
+script = ExtResource("6_ekkm6")
+duration_seconds = 3.0
+metadata/pronto_connections = [SubResource("Resource_w5qmb")]
+
+[node name="SpawnFlower" type="Node2D" parent="player"]
+position = Vector2(70, 18)
+script = ExtResource("3_uo1n7")
+key = "Space"
+metadata/pronto_connections = [SubResource("Resource_mq1c5")]
+
+[node name="Move" type="Node2D" parent="player"]
+position = Vector2(8, 41)
+script = ExtResource("9_uqdto")
+gravity = 600.0
+jump_speed = 400.0
+
+[node name="Controls" type="Node2D" parent="player"]
+position = Vector2(-44, 78)
+script = ExtResource("10_cb0w0")
+metadata/pronto_connections = [SubResource("Resource_gng3n"), SubResource("Resource_lieqc"), SubResource("Resource_ox177")]
+
+[node name="JumpHeight" type="Node2D" parent="player"]
+position = Vector2(-51, 5)
+script = ExtResource("5_yiaec")
+to = 600.0
+value = 475.115
+
+[node name="EnemySpawnClock" type="Node2D" parent="."]
+position = Vector2(698, 540)
+script = ExtResource("6_ekkm6")
+duration_seconds = 3.0
+metadata/pronto_connections = [SubResource("Resource_fsrlr")]
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+position = Vector2(659, 561)
+script = ExtResource("2_rmt8h")
+
+[node name="Area2D" type="Area2D" parent="EnemySpawner"]
+position = Vector2(81, -57)
+
+[node name="Placeholder" type="Node2D" parent="EnemySpawner/Area2D"]
+script = ExtResource("1_jehaj")
+label = "Enemy!"
+color = Color(0.898039, 0, 0.34902, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySpawner/Area2D"]
+shape = SubResource("RectangleShape2D_pr2ea")
+
+[node name="Move" type="Node2D" parent="EnemySpawner/Area2D"]
+position = Vector2(34, -16)
+script = ExtResource("9_uqdto")
+speed = 50.0
+jump_speed = null
+
+[node name="Always" type="Node2D" parent="EnemySpawner/Area2D"]
+position = Vector2(22, 21)
+script = ExtResource("11_5ifkr")
+metadata/pronto_connections = [SubResource("Resource_48yak")]
+
+[node name="Collision" type="Node2D" parent="EnemySpawner/Area2D"]
+position = Vector2(14, -23)
+script = ExtResource("12_h1pcc")
+limit_to_group = "flower"
+metadata/pronto_connections = [SubResource("Resource_hxokq"), SubResource("Resource_bvbxs")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cah2fne75vtl2"]
+[gd_scene load_steps=29 format=3 uid="uid://cah2fne75vtl2"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="1_7jvq5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_cv5ua"]
@@ -14,6 +14,10 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="12_1r3e1"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="13_8euxs"]
 [ext_resource type="PackedScene" uid="uid://bgdq8ccgxw11i" path="res://.scene-instances/examples_magnet_example_magnet_example__Instance.tscn" id="14_jqnpr"]
+
+[sub_resource type="Curve" id="Curve_qd5gd"]
+
+[sub_resource type="Curve" id="Curve_dyuo3"]
 
 [sub_resource type="Resource" id="Resource_h48op"]
 script = ExtResource("3_5tqxr")
@@ -41,6 +45,10 @@ invoke = "spawn_toward"
 arguments = ["pos"]
 only_if = "true"
 expression = ""
+
+[sub_resource type="Curve" id="Curve_c32ki"]
+
+[sub_resource type="Curve" id="Curve_emh1m"]
 
 [sub_resource type="Resource" id="Resource_38k5r"]
 script = ExtResource("3_5tqxr")
@@ -115,6 +123,8 @@ position = Vector2(535, 428)
 [node name="Move" type="Node2D" parent="player"]
 position = Vector2(23, 37)
 script = ExtResource("1_7jvq5")
+acceleration_curve = SubResource("Curve_qd5gd")
+deceleration_curve = SubResource("Curve_dyuo3")
 
 [node name="Controls" type="Node2D" parent="player"]
 position = Vector2(68, -24)
@@ -142,6 +152,8 @@ position = Vector2(-49, 49)
 script = ExtResource("1_7jvq5")
 speed = 1200.0
 rotated = true
+acceleration_curve = SubResource("Curve_c32ki")
+deceleration_curve = SubResource("Curve_emh1m")
 
 [node name="Always" type="Node2D" parent="player/Spawner/magnet"]
 position = Vector2(-32, -9)
