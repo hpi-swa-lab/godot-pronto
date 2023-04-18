@@ -39,6 +39,11 @@ func _on_add_mouse_entered():
 	for c in %signal_list.get_children().slice(2):
 		c.queue_free()
 	
+	if node is Behavior:
+		var ui = node.connect_ui()
+		if ui != null:
+			%signal_list.add_child(ui)
+	
 	if node.get_script():
 		%signal_list.add_child(Utils.build_class_row(node.get_script().resource_path.get_file().split('.')[0], anchor))
 		for s in node.get_script().get_script_signal_list():

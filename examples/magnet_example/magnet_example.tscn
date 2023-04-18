@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cah2fne75vtl2"]
+[gd_scene load_steps=27 format=3 uid="uid://cah2fne75vtl2"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="1_7jvq5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_cv5ua"]
@@ -7,8 +7,13 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_ctlig"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_p8gb0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="7_kmjgj"]
-[ext_resource type="PackedScene" uid="uid://dxxhadx8d7crm" path="res://examples/magnet_example/metal.tscn" id="8_ks3lw"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_rvmy5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Instance.gd" id="9_ob15j"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="10_u6lea"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="11_dnfs3"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="12_1r3e1"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="13_8euxs"]
+[ext_resource type="PackedScene" uid="uid://bgdq8ccgxw11i" path="res://.scene-instances/examples_magnet_example_magnet_example__Instance.tscn" id="14_jqnpr"]
 
 [sub_resource type="Resource" id="Resource_h48op"]
 script = ExtResource("3_5tqxr")
@@ -80,6 +85,24 @@ arguments = []
 expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
 	n.get_node(\"State\").put(\"attached\", false)"
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tamtl"]
+
+[sub_resource type="Resource" id="Resource_dfd2o"]
+script = ExtResource("3_5tqxr")
+signal_name = "always"
+to = NodePath("")
+invoke = ""
+arguments = []
+expression = "from.get_parent().global_position = lerp(
+	from.get_parent().global_position,
+	Utils.mouse_position(),
+	delta * G.at(\"LerpSpeed\"))"
+
+[sub_resource type="Resource" id="Resource_2emeu"]
+script = ExtResource("12_1r3e1")
+from = NodePath("../../State")
+prop = "attached"
+
 [node name="magnet_example" type="Node2D"]
 
 [node name="player" type="Area2D" parent="."]
@@ -136,11 +159,47 @@ script = ExtResource("8_rvmy5")
 duration_seconds = 0.2
 metadata/pronto_connections = [SubResource("Resource_32of2"), SubResource("Resource_bowqy")]
 
-[node name="metal" parent="." instance=ExtResource("8_ks3lw")]
-position = Vector2(307, 284)
+[node name="Instance" type="Node2D" parent="."]
+position = Vector2(262, 153)
+script = ExtResource("9_ob15j")
 
-[node name="metal2" parent="." instance=ExtResource("8_ks3lw")]
-position = Vector2(621, 225)
+[node name="metal" type="Area2D" parent="Instance" groups=["magnetic"]]
+position = Vector2(50, -14)
 
-[node name="metal3" parent="." instance=ExtResource("8_ks3lw")]
-position = Vector2(916, 388)
+[node name="Placeholder" type="Node2D" parent="Instance/metal"]
+script = ExtResource("3_0ue3y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Instance/metal"]
+shape = SubResource("RectangleShape2D_tamtl")
+
+[node name="State" type="Node2D" parent="Instance/metal"]
+position = Vector2(20, 21)
+script = ExtResource("10_u6lea")
+metadata/attached = false
+
+[node name="Always" type="Node2D" parent="Instance/metal"]
+position = Vector2(47, -24)
+script = ExtResource("6_p8gb0")
+metadata/pronto_connections = [SubResource("Resource_dfd2o")]
+
+[node name="Bind" type="Node2D" parent="Instance/metal/Always"]
+position = Vector2(11, 29)
+script = ExtResource("11_dnfs3")
+from = Array[ExtResource("12_1r3e1")]([SubResource("Resource_2emeu")])
+to_prop = "paused"
+convert = "not value0"
+
+[node name="LerpSpeed" type="Node2D" parent="Instance/metal"]
+position = Vector2(1, -37)
+script = ExtResource("13_8euxs")
+to = 5.0
+value = 4.63185
+
+[node name="metal24261" parent="Instance" instance=ExtResource("14_jqnpr")]
+position = Vector2(-157, 253)
+
+[node name="metal37977" parent="Instance" instance=ExtResource("14_jqnpr")]
+position = Vector2(480, 162)
+
+[node name="metal39241" parent="Instance" instance=ExtResource("14_jqnpr")]
+position = Vector2(97, 126)

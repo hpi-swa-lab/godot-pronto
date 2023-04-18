@@ -37,7 +37,7 @@ func handles():
 func _draw():
 	super._draw()
 	
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() and is_active_scene():
 		var str = name + " = " + String.num(value, 2)
 		var font := ThemeDB.fallback_font
 		var text_size = 4

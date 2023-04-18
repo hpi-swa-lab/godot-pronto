@@ -12,7 +12,6 @@ extends Behavior
 		color = v
 		queue_redraw()
 
-# TODO make configurable via handle
 @export var placeholder_size = Vector2(20, 20):
 	set(v):
 		placeholder_size = v

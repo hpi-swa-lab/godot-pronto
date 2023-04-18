@@ -26,6 +26,7 @@ func _enter_tree():
 		add_custom_type(name, "Node2D", script,	base.get_theme_icon(icon, &"EditorIcons"))
 		behaviors[name] = icon
 	G.put("_pronto_behaviors", behaviors)
+	G.put("_pronto_editor_plugin", self)
 
 func _exit_tree():
 	for key in behaviors:

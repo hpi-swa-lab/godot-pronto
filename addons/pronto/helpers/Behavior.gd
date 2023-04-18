@@ -7,15 +7,24 @@ var _handles := Handles.new()
 var _cached_pos = []
 
 func _ready():
-	if Engine.is_editor_hint() and show_icon():
+	if Engine.is_editor_hint() and show_icon() and is_active_scene():
 		_icon = TextureRect.new()
 		var name = get_script().resource_path.get_file().split('.')[0]
 		_icon.texture = Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
 		_icon.position = _icon.texture.get_size() / -2
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
 
+func is_active_scene() -> bool:
+	return get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
+
+func get_editor_plugin() -> EditorPlugin:
+	return G.at("_pronto_editor_plugin")
+
 func show_icon():
 	return true
+
+func connect_ui():
+	return null
 
 func _process(delta):
 	var current_pos = Connection.get_connections(self).map(func (connection):
@@ -44,7 +53,7 @@ func handles():
 	return []
 
 func _draw():
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() or not _icon:
 		return
 	
 	var default_font := ThemeDB.fallback_font
