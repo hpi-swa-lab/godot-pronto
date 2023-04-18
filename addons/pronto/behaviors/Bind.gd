@@ -5,14 +5,12 @@ extends Behavior
 @export var from: Array[SourceProp]
 @export var to_prop: String
 @export var convert: String
+### Update only when the update() function is called.
+@export var one_shot: bool
 
 var last = []
 
-func _process(delta):
-	super._process(delta)
-	
-	if Engine.is_editor_hint():
-		return
+func update():
 	var inputs = []
 	for f in from:
 		var object = get_node(f.from)
@@ -35,3 +33,9 @@ func _process(delta):
 	get_parent().set(to_prop, value)
 	
 	last = inputs
+
+func _process(delta):
+	super._process(delta)
+	
+	if not Engine.is_editor_hint() and not one_shot:
+		update()
