@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgdq8ccgxw11i"]
+[gd_scene load_steps=10 format=3 uid="uid://bgdq8ccgxw11i"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_vgylc"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="2_eumoy"]
@@ -7,8 +7,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="5_l8tmg"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="6_kigmn"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="7_55lc0"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tamtl"]
 
 [sub_resource type="Resource" id="Resource_dfd2o"]
 script = ExtResource("4_orflh")
@@ -31,9 +29,6 @@ position = Vector2(50, -14)
 
 [node name="Placeholder" type="Node2D" parent="."]
 script = ExtResource("1_vgylc")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_tamtl")
 
 [node name="State" type="Node2D" parent="."]
 position = Vector2(20, 21)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cah2fne75vtl2"]
+[gd_scene load_steps=25 format=3 uid="uid://cah2fne75vtl2"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="1_7jvq5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_cv5ua"]
@@ -38,9 +38,6 @@ to = NodePath("../Spawner")
 invoke = "spawn_toward"
 arguments = ["pos"]
 expression = ""
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rckk8"]
-size = Vector2(30, 30)
 
 [sub_resource type="Resource" id="Resource_38k5r"]
 script = ExtResource("3_5tqxr")
@@ -84,8 +81,6 @@ invoke = ""
 arguments = []
 expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
 	n.get_node(\"State\").put(\"attached\", false)"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tamtl"]
 
 [sub_resource type="Resource" id="Resource_dfd2o"]
 script = ExtResource("3_5tqxr")
@@ -133,9 +128,6 @@ label = "magnet"
 color = Color(0.470588, 0.211765, 0.0509804, 1)
 placeholder_size = Vector2(30, 30)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="player/Spawner/magnet"]
-shape = SubResource("RectangleShape2D_rckk8")
-
 [node name="Move" type="Node2D" parent="player/Spawner/magnet"]
 position = Vector2(-49, 49)
 script = ExtResource("1_7jvq5")
@@ -168,9 +160,6 @@ position = Vector2(50, -14)
 
 [node name="Placeholder" type="Node2D" parent="Instance/metal"]
 script = ExtResource("3_0ue3y")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Instance/metal"]
-shape = SubResource("RectangleShape2D_tamtl")
 
 [node name="State" type="Node2D" parent="Instance/metal"]
 position = Vector2(20, 21)

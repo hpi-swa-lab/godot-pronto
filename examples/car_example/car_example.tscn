@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://fegvnevn4cyu"]
+[gd_scene load_steps=19 format=3 uid="uid://fegvnevn4cyu"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_wxlom"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_vc300"]
@@ -35,9 +35,6 @@ invoke = "move_up"
 arguments = []
 expression = ""
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qoohd"]
-size = Vector2(30, 30)
-
 [sub_resource type="Resource" id="Resource_cq8lk"]
 script = ExtResource("4_k0n5o")
 signal_name = "collided"
@@ -53,8 +50,6 @@ to = NodePath("../State")
 invoke = "inc"
 arguments = ["\"score\"", "1"]
 expression = ""
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w8yyu"]
 
 [sub_resource type="Resource" id="Resource_p67uv"]
 script = ExtResource("4_k0n5o")
@@ -96,9 +91,6 @@ position = Vector2(206, -3)
 script = ExtResource("3_v6c42")
 metadata/pronto_connections = [SubResource("Resource_lj6v2"), SubResource("Resource_2sp7y"), SubResource("Resource_munmv")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="car"]
-shape = SubResource("RectangleShape2D_qoohd")
-
 [node name="Collision" type="Node2D" parent="car"]
 position = Vector2(29, -7)
 script = ExtResource("5_cc23q")
@@ -121,10 +113,6 @@ position = Vector2(24, -2)
 script = ExtResource("1_wxlom")
 label = "pickup"
 color = Color(0.960784, 0.819608, 0, 1)
-placeholder_size = Vector2(20, 20)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/pickup"]
-shape = SubResource("RectangleShape2D_w8yyu")
 
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(368, 103)
