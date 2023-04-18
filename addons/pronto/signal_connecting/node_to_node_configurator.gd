@@ -45,7 +45,7 @@ var existing_connection = null
 var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value
-		%Signal.text = Utils.print_signal(value)
+		%Signal.text = Utils.print_signal(value) + " from, to"
 
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
