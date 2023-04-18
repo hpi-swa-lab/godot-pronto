@@ -4,23 +4,10 @@
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
 [ext_resource type="Texture2D" uid="uid://bnsh02iqx2bee" path="res://addons/pronto/icons/Remove.svg" id="3_60vnm"]
 [ext_resource type="PackedScene" uid="uid://1ubsx3vbyfwv" path="res://addons/pronto/signal_connecting/function_name.tscn" id="4_x4sfm"]
+[ext_resource type="CodeHighlighter" uid="uid://dnemcgakb23mp" path="res://addons/pronto/signal_connecting/syntax.tres" id="5_ghdya"]
 
 [sub_resource type="SystemFont" id="SystemFont_hfv4m"]
 font_names = PackedStringArray("Monospace")
-
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_s6unu"]
-number_color = Color(0, 0.886275, 0.352941, 1)
-symbol_color = Color(0.921569, 1, 0.913725, 1)
-function_color = Color(0.964706, 0.458824, 0.878431, 1)
-member_variable_color = Color(0.054902, 0.32549, 1, 1)
-keyword_colors = {
-"for": Color(0.984314, 0, 0.490196, 1),
-"from": Color(0.92549, 0.427451, 0, 1),
-"in": Color(0.984314, 0, 0.490196, 1)
-}
-color_regions = {
-"\" \"": Color(0, 0.886275, 0.352941, 1)
-}
 
 [node name="Node To Node Configurator" type="PanelContainer"]
 offset_right = 432.0
@@ -94,7 +81,27 @@ for i in range():
 	print(\"hello\" + str(from))"
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_s6unu")
+syntax_highlighter = ExtResource("5_ghdya")
+scroll_fit_content_height = true
+indent_automatic = true
+auto_brace_completion_enabled = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "only if: "
+
+[node name="Condition" type="CodeEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 30)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_hfv4m")
+text = "true"
+placeholder_text = "Conditional...q"
+draw_tabs = true
+syntax_highlighter = ExtResource("5_ghdya")
 scroll_fit_content_height = true
 indent_automatic = true
 auto_brace_completion_enabled = true

@@ -44,6 +44,8 @@ static func get_connections(node: Node) -> Array:
 @export var invoke: String = ""
 ## (Optional) The arguments to pass to method [member invoke] as [String]s.
 @export var arguments: Array = []
+## Only trigger this connection if this expression given as [String] evaluates to true.
+@export var only_if: String = "true"
 ## (Optional) Only used when neither [member to], [member invoke], or [member arguments] is not set.
 ## A string describing the [Expression] that is to be run when [member signal_name] triggers.
 @export_multiline var expression: String = ""
@@ -107,6 +109,11 @@ func _trigger(from: Object, argument_names: Array, argument_values: Array):
 		var target = from.get_node(to)
 		names.append("to")
 		values.append(target)
-		target.callv(invoke, arguments.map(func (arg): return ConnectionsList.eval(arg, names, values)))
+		if should_trigger(names, values):
+			target.callv(invoke, arguments.map(func (arg): return ConnectionsList.eval(arg, names, values)))
 	else:
-		ConnectionsList.eval(expression, names, values, false)
+		if should_trigger(names, values):
+			ConnectionsList.eval(expression, names, values, false)
+
+func should_trigger(names, values):
+	return only_if == "true" or only_if == "" or ConnectionsList.eval(only_if, names, values)

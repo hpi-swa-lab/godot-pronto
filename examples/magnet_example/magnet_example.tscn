@@ -21,6 +21,7 @@ signal_name = "left"
 to = NodePath("../Move")
 invoke = "move_left"
 arguments = []
+only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_ma76l"]
@@ -29,6 +30,7 @@ signal_name = "right"
 to = NodePath("../Move")
 invoke = "move_right"
 arguments = []
+only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_dv1mp"]
@@ -37,6 +39,7 @@ signal_name = "click"
 to = NodePath("../Spawner")
 invoke = "spawn_toward"
 arguments = ["pos"]
+only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_38k5r"]
@@ -45,6 +48,7 @@ signal_name = "always"
 to = NodePath("../Move")
 invoke = "move_right"
 arguments = []
+only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_fbc0p"]
@@ -53,6 +57,7 @@ signal_name = "collided"
 to = NodePath("")
 invoke = ""
 arguments = []
+only_if = "true"
 expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
 	n.get_node(\"State\").put(\"attached\", false)
 other.get_node(\"State\").put(\"attached\", true)"
@@ -63,6 +68,7 @@ signal_name = "collided"
 to = NodePath("..")
 invoke = "queue_free"
 arguments = []
+only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_32of2"]
@@ -71,6 +77,7 @@ signal_name = "elapsed"
 to = NodePath("..")
 invoke = "queue_free"
 arguments = []
+only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_bowqy"]
@@ -79,6 +86,7 @@ signal_name = "elapsed"
 to = NodePath("")
 invoke = ""
 arguments = []
+only_if = "true"
 expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
 	n.get_node(\"State\").put(\"attached\", false)"
 
@@ -88,6 +96,7 @@ signal_name = "always"
 to = NodePath("")
 invoke = ""
 arguments = []
+only_if = "true"
 expression = "from.get_parent().global_position = lerp(
 	from.get_parent().global_position,
 	Utils.mouse_position(),

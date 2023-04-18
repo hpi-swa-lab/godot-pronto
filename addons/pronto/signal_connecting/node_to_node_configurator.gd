@@ -124,7 +124,7 @@ func _on_done_pressed():
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
-				{"arguments": args, "invoke": invoke})
+				{"arguments": args, "invoke": invoke, "only_if": %Condition.text})
 		else:
 			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args, undo_redo)
 	if %Expression.visible:
@@ -132,7 +132,7 @@ func _on_done_pressed():
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
-				{"expression": %Expression.text})
+				{"expression": %Expression.text, "only_if": %Condition.text})
 		else:
 			Connection.connect_expr(from, selected_signal["name"], %Expression.text, undo_redo)
 	queue_free()
