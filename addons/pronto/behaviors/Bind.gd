@@ -6,7 +6,7 @@ extends Behavior
 @export var to_prop: String
 @export var convert: String
 ### Update only when the update() function is called.
-@export var one_shot: bool
+@export var one_shot: bool = false
 
 var last = []
 
