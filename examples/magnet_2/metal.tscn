@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct11bj80ej44o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h0jnf"]
+size = Vector2(40, 40)
+
+[node name="metal" type="Area2D" groups=["metal"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_h0jnf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -19.0
+offset_right = 20.0
+offset_bottom = 21.0
+color = Color(0.635294, 0.635294, 0.635294, 1)

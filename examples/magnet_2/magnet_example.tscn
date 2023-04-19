@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3detbvb6hss4"]
+
+[ext_resource type="Script" path="res://examples/magnet_2/player.gd" id="1_2edeb"]
+[ext_resource type="PackedScene" uid="uid://ct11bj80ej44o" path="res://examples/magnet_2/metal.tscn" id="1_b5ixk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ror2a"]
+size = Vector2(42, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2k5h"]
+size = Vector2(40, 14)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" type="Area2D" parent="."]
+position = Vector2(540, 494)
+script = ExtResource("1_2edeb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource("RectangleShape2D_ror2a")
+
+[node name="ColorRect" type="ColorRect" parent="player"]
+offset_left = -21.0
+offset_top = -20.0
+offset_right = 21.0
+offset_bottom = 20.0
+color = Color(0.0745098, 0.682353, 1, 1)
+
+[node name="magnet" type="Area2D" parent="."]
+position = Vector2(636, 442)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="magnet"]
+shape = SubResource("RectangleShape2D_x2k5h")
+
+[node name="ColorRect" type="ColorRect" parent="magnet"]
+offset_left = -20.0
+offset_top = -7.0
+offset_right = 20.0
+offset_bottom = 7.0
+color = Color(0.647059, 0.172549, 0.0627451, 1)
+
+[node name="metal" parent="." instance=ExtResource("1_b5ixk")]
+position = Vector2(328, 196)
+
+[node name="metal2" parent="." instance=ExtResource("1_b5ixk")]
+position = Vector2(539, 157)
+
+[node name="metal3" parent="." instance=ExtResource("1_b5ixk")]
+position = Vector2(698, 200)
