@@ -25,8 +25,8 @@ func get_focused_index():
 func selected(index: int):
 	%list.visible = false
 	text = %list.get_item_text(index)
-	find_next_valid_focus().grab_focus()
 	method_selected.emit(text)
+	find_next_valid_focus().grab_focus()
 
 func move_focus(dir: int):
 	var current = get_focused_index() + dir
@@ -47,6 +47,7 @@ func _ready():
 func build_list(filter: String):
 	assert(anchor != null)
 	
+	var do_apply = false
 	%list.clear()
 	
 	if not %list.visible:
@@ -56,14 +57,40 @@ func build_list(filter: String):
 	if node.get_script():
 		add_class_item(node.get_script().resource_path.get_file().split('.')[0])
 		for s in node.get_script().get_script_method_list():
-			if s["name"].begins_with(filter) and s["name"][0] != "_": %list.add_item(s["name"])
+			do_apply = do_apply or s["name"] == filter
+			if fuzzy_match(s["name"], filter) and s["name"][0] != "_": %list.add_item(s["name"])
 	for c in Utils.all_classes_of(node):
 		add_class_item(c)
 		for s in ClassDB.class_get_method_list(c, true):
-			if s["name"].begins_with(filter) and s["name"][0] != "_": %list.add_item(s["name"])
+			do_apply = do_apply or s["name"] == filter
+			if fuzzy_match(s["name"], filter) and s["name"][0] != "_": %list.add_item(s["name"])
 	
 	if get_focused_index() == -1:
 		move_focus(1)
+	
+	if do_apply:
+		method_selected.emit(filter)
+
+func fuzzy_match(name: String, search: String):
+	if search.length() == 0:
+		return true
+	if name.length() == 0:
+		return false
+	var _name = name.to_lower()
+	var _search = search.to_lower()
+	if _name[0] != _search[0]:
+		return false
+	var name_index = 0
+	var search_index = 0
+	while true:
+		if _search[search_index] == _name[name_index]:
+			search_index += 1
+		name_index += 1
+		if search_index == _search.length():
+			return true
+		if name_index == _name.length():
+			return false
+	assert(false, "not reached")
 
 func _on_list_pressed(index):
 	if %list.is_item_selectable(index):
