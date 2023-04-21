@@ -1,6 +1,7 @@
 @tool
 #thumb("EditBezier")
 extends Behavior
+class_name Bind
 
 @export var from: Array[SourceProp]
 @export var to_prop: String
@@ -8,7 +9,7 @@ extends Behavior
 ### Update only when the update() function is called.
 @export var one_shot: bool = false
 
-var last = []
+var last = null
 
 func update():
 	var inputs = []
@@ -21,15 +22,15 @@ func update():
 		else:
 			current = object.get_meta(f.prop)
 		inputs.append(current)
-
+	
 	if last == inputs:
 		return
 	
-	var value = inputs[0] if inputs.is_empty() else null
+	var value = null if inputs.is_empty() else inputs[0]
 	if convert:
-		var e = Expression.new()
-		e.parse(convert, range(from.size()).map(func (index): return "value" + str(index)))
-		value = e.execute(inputs)
+		value = ConnectionsList.eval(convert,
+			range(from.size()).map(func (index): return "value" + str(index)),
+			inputs)
 	get_parent().set(to_prop, value)
 	
 	last = inputs

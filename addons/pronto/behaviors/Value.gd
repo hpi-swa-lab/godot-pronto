@@ -1,6 +1,7 @@
 @tool
 #thumb("PinJoint2D")
 extends Behavior
+class_name Value
 
 signal value_changed(value: float)
 
@@ -47,3 +48,41 @@ func _draw():
 			HORIZONTAL_ALIGNMENT_CENTER,
 			-1,
 			text_size)
+
+class DropPropertyPrompt extends ColorRect:
+	var editor_interface: EditorInterface
+	
+	func _init(editor_interface):
+		self.editor_interface = editor_interface
+		
+		color = Color.WHITE
+		custom_minimum_size = Vector2(200, 30)
+		
+		var l = Label.new()
+		l.text = "Drop here to create slider"
+		add_child(l)
+	
+	func _can_drop_data(at_position, data):
+		# the prompt is only displayed if we have a drag operation with a valid object
+		return true
+	
+	func _drop_data(at_position, data):
+		var root = editor_interface.get_edited_scene_root()
+		var current = data["object"].get(data["property"])
+		
+		var v = Value.new()
+		v.from = min(0.0, current)
+		v.to = max(1.0, current)
+		v.value = current
+		v.name = data["property"]
+		v.position = Vector2(50, 50)
+		data["object"].add_child(v)
+		v.owner = root
+		
+		var b = Bind.new()
+		b.to_prop = data["property"]
+		b.name = "bind_" + b.to_prop
+		b.position = Vector2(100, 50)
+		b.convert = "G.at('{0}')".format([data["property"]])
+		data["object"].add_child(b)
+		b.owner = root

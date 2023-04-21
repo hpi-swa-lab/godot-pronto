@@ -89,3 +89,23 @@ func show_signals(node: Node):
 	popup.node = node
 	popup.anchor = Utils.parent_that(node, func (p): return Utils.has_position(p))
 	Utils.spawn_popup_from_canvas(node, popup)
+
+func _valid_drop_for_slider(data: Dictionary):
+	if not (data["type"] == "obj_property" and data["object"] is Node):
+		return false
+	var current = data["object"].get(data["property"])
+	return current is int or current is float
+
+var _drop_popup
+func _notification(what):
+	if what == NOTIFICATION_DRAG_BEGIN:
+		var data = get_viewport().gui_get_drag_data()
+		if _valid_drop_for_slider(data):
+			_drop_popup = Value.DropPropertyPrompt.new(get_editor_interface())
+			var scene = get_editor_interface().get_edited_scene_root()
+			Utils.spawn_popup_from_canvas(scene, _drop_popup)
+			var anchor = scene.get_viewport().get_parent().get_parent()
+			_drop_popup.position = anchor.global_position + anchor.size / 2
+	if what == NOTIFICATION_DRAG_END and _drop_popup:
+		_drop_popup.queue_free()
+		_drop_popup = null
