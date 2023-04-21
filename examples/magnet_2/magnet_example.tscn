@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b3detbvb6hss4"]
+[gd_scene load_steps=16 format=3 uid="uid://b3detbvb6hss4"]
 
 [ext_resource type="PackedScene" uid="uid://ct11bj80ej44o" path="res://examples/magnet_2/metal.tscn" id="1_b5ixk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="1_jnbkj"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="2_h2j48"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="4_nyax3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="6_d0ant"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="7_2w2xs"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="7_erlvi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_btbvf"]
 
@@ -90,6 +91,10 @@ position = Vector2(119, 0)
 script = ExtResource("8_btbvf")
 one_shot = true
 metadata/pronto_connections = [SubResource("Resource_mq5k1")]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("7_2w2xs")
+color = Color(0.121569, 0.701961, 0.360784, 1)
 
 [node name="player" type="Area2D" parent="."]
 position = Vector2(540, 494)

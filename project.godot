@@ -27,7 +27,3 @@ enabled=PackedStringArray("res://addons/pronto/plugin.cfg")
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true
-
-[rendering]
-
-environment/defaults/default_clear_color=Color(0, 0.588235, 0.137255, 1)

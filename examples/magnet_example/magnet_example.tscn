@@ -1,6 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://cah2fne75vtl2"]
+[gd_scene load_steps=26 format=3 uid="uid://cah2fne75vtl2"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="1_7jvq5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_phj7d"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_cv5ua"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_0ue3y"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_5tqxr"]
@@ -108,6 +109,10 @@ from = NodePath("../../State")
 prop = "attached"
 
 [node name="magnet_example" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_phj7d")
+color = Color(0.435294, 0.435294, 0.866667, 1)
 
 [node name="player" type="Area2D" parent="."]
 position = Vector2(535, 428)
