@@ -52,6 +52,25 @@ arguments = []
 only_if = "true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_32of2"]
+script = ExtResource("3_5tqxr")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_bowqy"]
+script = ExtResource("3_5tqxr")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
+	n.get_node(\"State\").put(\"attached\", false)"
+
 [sub_resource type="Resource" id="Resource_fbc0p"]
 script = ExtResource("3_5tqxr")
 signal_name = "collided"
@@ -71,25 +90,6 @@ invoke = "queue_free"
 arguments = []
 only_if = "true"
 expression = ""
-
-[sub_resource type="Resource" id="Resource_32of2"]
-script = ExtResource("3_5tqxr")
-signal_name = "elapsed"
-to = NodePath("..")
-invoke = "queue_free"
-arguments = []
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_bowqy"]
-script = ExtResource("3_5tqxr")
-signal_name = "elapsed"
-to = NodePath("")
-invoke = ""
-arguments = []
-only_if = "true"
-expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
-	n.get_node(\"State\").put(\"attached\", false)"
 
 [sub_resource type="Resource" id="Resource_dfd2o"]
 script = ExtResource("3_5tqxr")
@@ -153,17 +153,17 @@ position = Vector2(-32, -9)
 script = ExtResource("6_p8gb0")
 metadata/pronto_connections = [SubResource("Resource_38k5r")]
 
-[node name="Collision" type="Node2D" parent="player/Spawner/magnet"]
-position = Vector2(-35, 65)
-script = ExtResource("7_kmjgj")
-limit_to_group = "magnetic"
-metadata/pronto_connections = [SubResource("Resource_fbc0p"), SubResource("Resource_g462o")]
-
 [node name="Clock" type="Node2D" parent="player/Spawner/magnet"]
 position = Vector2(23, 63)
 script = ExtResource("8_rvmy5")
 duration_seconds = 0.2
 metadata/pronto_connections = [SubResource("Resource_32of2"), SubResource("Resource_bowqy")]
+
+[node name="Collision" type="Node2D" parent="player/Spawner/magnet"]
+position = Vector2(-36, 75)
+script = ExtResource("7_kmjgj")
+limit_to_group = "magnetic"
+metadata/pronto_connections = [SubResource("Resource_fbc0p"), SubResource("Resource_g462o")]
 
 [node name="Instance" type="Node2D" parent="."]
 position = Vector2(262, 153)
