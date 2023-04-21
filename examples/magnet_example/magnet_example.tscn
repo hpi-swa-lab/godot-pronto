@@ -186,7 +186,7 @@ script = ExtResource("6_p8gb0")
 metadata/pronto_connections = [SubResource("Resource_dfd2o")]
 
 [node name="Bind" type="Node2D" parent="Instance/metal/Always"]
-position = Vector2(11, 29)
+position = Vector2(28, -36)
 script = ExtResource("11_dnfs3")
 from = Array[ExtResource("12_1r3e1")]([SubResource("Resource_2emeu")])
 to_prop = "paused"

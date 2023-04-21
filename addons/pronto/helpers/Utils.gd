@@ -110,6 +110,11 @@ static func random_point_on_screen():
 static func mouse_position():
 	return Engine.get_main_loop().root.get_mouse_position()
 
+static func ellipsize(s: String, max: int):
+	if s.length() <= max:
+		return s
+	return s.substr(0, s.length() - 3) + "..."
+
 static func global_rect_of(node: Node):
 	if "size" in node: return Rect2(node.global_position, node.size)
 	if "shape" in node and node.shape:

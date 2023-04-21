@@ -2,6 +2,24 @@
 extends Node
 class_name Lines
 
+var _last_pos = []
+var _last_zoom = 1.0
+
+func _needs_update(lines: Array):
+	if lines.is_empty():
+		return false
+	var new_zoom = lines[0].from.get_viewport_transform().get_scale().x
+	var needs_update = _last_zoom != new_zoom
+	_last_zoom = new_zoom
+	
+	var new_pos = []
+	for l in lines:
+		new_pos.append(l.from.global_position)
+		new_pos.append(l.to.global_position)
+	needs_update = needs_update or _last_pos != new_pos
+	_last_pos = new_pos
+	return needs_update
+
 func _draw_lines(c: CanvasItem, lines: Array):
 		var text_size = 4
 		var font = ThemeDB.fallback_font
@@ -32,7 +50,7 @@ class Line:
 			return
 		
 		c.draw_set_transform(Vector2.ZERO)
-	
+		
 		var begin = Vector2.ZERO
 		var end = Utils.global_rect_of(to).get_center() - from.global_position
 		c.draw_line(begin, end, Color.WHITE, lerp(0.02, 1.0, 1.0 / from.get_viewport_transform().get_scale().x), true)

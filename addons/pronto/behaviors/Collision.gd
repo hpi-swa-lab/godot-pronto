@@ -20,3 +20,6 @@ func _ready():
 func on_collision(other: Node):
 	if limit_to_group == "" or other.is_in_group(limit_to_group):
 		collided.emit(other)
+
+func lines():
+	return super.lines() + [Lines.Line.new(self, get_parent(), func (f): return "")]

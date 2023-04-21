@@ -42,7 +42,7 @@ script = ExtResource("3_60fpr")
 metadata/pronto_connections = [SubResource("Resource_dfd2o")]
 
 [node name="Bind" type="Node2D" parent="Always"]
-position = Vector2(11, 29)
+position = Vector2(28, -36)
 script = ExtResource("5_l8tmg")
 from = Array[ExtResource("6_w7xk0")]([SubResource("Resource_2emeu")])
 to_prop = "paused"

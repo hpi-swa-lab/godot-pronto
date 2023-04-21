@@ -40,3 +40,6 @@ func _process(delta):
 	
 	if not Engine.is_editor_hint() and not one_shot:
 		update()
+
+func lines():
+	return super.lines() + [Lines.Line.new(self, get_parent(), func (flip): return Utils.ellipsize(convert, 20))]

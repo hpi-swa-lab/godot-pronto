@@ -5,7 +5,6 @@ class_name Behavior
 var _icon
 var _handles := Handles.new()
 var _lines := Lines.new()
-var _cached_pos = []
 
 func _ready():
 	if Engine.is_editor_hint() and show_icon() and is_active_scene():
@@ -28,18 +27,8 @@ func connect_ui():
 	return null
 
 func _process(delta):
-	var current_pos = Connection.get_connections(self).map(func (connection):
-		if connection.expression:
-			return global_position
-		var other = get_node_or_null(connection.to)
-		if other:
-			return other.global_position
-		return Vector2.ZERO)
-	current_pos.append(global_position)
-	
-	if current_pos != _cached_pos:
+	if _lines._needs_update(lines()):
 		queue_redraw()
-		_cached_pos = current_pos
 
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	_handles._forward_canvas_draw_over_viewport(self, viewport_control)

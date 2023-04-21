@@ -91,13 +91,13 @@ script = ExtResource("2_vc300")
 rotated = true
 
 [node name="speed" type="Node2D" parent="car/Move"]
-position = Vector2(50, 50)
+position = Vector2(43, 55)
 script = ExtResource("2_5xtke")
 to = 500.0
 value = 500.0
 
 [node name="bind_speed" type="Node2D" parent="car/Move"]
-position = Vector2(100, 50)
+position = Vector2(107, 52)
 script = ExtResource("9_hmnix")
 to_prop = "speed"
 convert = "G.at('speed')"
@@ -112,7 +112,7 @@ script = ExtResource("3_v6c42")
 metadata/pronto_connections = [SubResource("Resource_lj6v2"), SubResource("Resource_2sp7y"), SubResource("Resource_munmv")]
 
 [node name="Collision" type="Node2D" parent="car"]
-position = Vector2(29, -7)
+position = Vector2(33, -10)
 script = ExtResource("5_cc23q")
 limit_to_group = "pickup"
 metadata/pronto_connections = [SubResource("Resource_cq8lk"), SubResource("Resource_pyv4p")]
@@ -123,11 +123,11 @@ script = ExtResource("6_ys06d")
 metadata/score = 0
 
 [node name="Spawner" type="Node2D" parent="."]
-position = Vector2(420, 118)
+position = Vector2(441, 98)
 script = ExtResource("5_lroqb")
 
 [node name="pickup" type="Area2D" parent="Spawner" groups=["pickup"]]
-position = Vector2(24, -2)
+position = Vector2(52, -27)
 
 [node name="Placeholder" type="Node2D" parent="Spawner/pickup"]
 script = ExtResource("1_wxlom")
@@ -145,6 +145,7 @@ offset_bottom = 22.3333
 text = "score: 2"
 
 [node name="Bind" type="Node2D" parent="Label"]
+position = Vector2(-34, 53)
 script = ExtResource("9_hmnix")
 from = Array[ExtResource("10_fbpok")]([SubResource("Resource_h84ri")])
 to_prop = "text"

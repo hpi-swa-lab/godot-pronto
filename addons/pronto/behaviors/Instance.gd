@@ -65,3 +65,6 @@ func create_instance():
 	instance.owner = owner
 	# owner.set_editable_instance(instance, true)
 	instance.position = Vector2(30, 30)
+
+func lines():
+	return super.lines() + ([Lines.Line.new(self, get_child(0), func (f): return "instances")] if get_child_count() > 0 else [])
