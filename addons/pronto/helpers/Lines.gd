@@ -46,6 +46,9 @@ class Line:
 		self.from = from
 		self.to = to
 	
+	func draw_line(c: CanvasItem, begin: Vector2, end: Vector2, color: Color, width: float):
+		c.draw_line(begin, end, color, width, true)
+	
 	func _draw(c: CanvasItem, font: Font, text_size: int):
 		if from == to:
 			return
@@ -54,7 +57,7 @@ class Line:
 		
 		var begin = Vector2.ZERO
 		var end = Utils.global_rect_of(to).get_center() - from.global_position
-		c.draw_line(begin, end, Color.WHITE, lerp(0.02, 1.0, 1.0 / from.get_viewport_transform().get_scale().x), true)
+		draw_line(c, begin, end, Color.WHITE, lerp(0.02, 1.0, 1.0 / from.get_viewport_transform().get_scale().x))
 		
 		var angle = begin.angle_to_point(end)
 		var flip = Utils.between(angle, PI / 2, PI) or Utils.between(angle, -PI, -PI / 2)
@@ -66,3 +69,7 @@ class Line:
 				Vector2(-font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size).x - 12, -2) if flip else Vector2(12, -2),
 				text,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, Color.WHITE)
+
+class DashedLine extends Line:
+	func draw_line(c: CanvasItem, begin: Vector2, end: Vector2, color: Color, width: float):
+		c.draw_dashed_line(begin, end, color, width * 2, 2.0)
