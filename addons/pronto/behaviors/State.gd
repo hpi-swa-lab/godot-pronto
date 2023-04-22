@@ -8,6 +8,7 @@ extends Behavior
 signal changed(prop: String, value: Variant)
 
 func _ready():
+	super._ready()
 	if global:
 		for prop in get_meta_list():
 			G.put(prop, get_meta(prop))
