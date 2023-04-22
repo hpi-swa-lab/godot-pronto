@@ -143,7 +143,7 @@ func _on_done_pressed():
 
 func _on_remove_pressed():
 	if existing_connection:
-		existing_connection.delete(from)
+		existing_connection.delete(from, undo_redo)
 	queue_free()
 
 func _on_cancel_pressed():
