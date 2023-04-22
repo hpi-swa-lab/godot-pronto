@@ -6,9 +6,7 @@ var _last_pos = []
 var _last_zoom = 1.0
 
 func _needs_update(lines: Array):
-	if lines.is_empty():
-		return false
-	var new_zoom = lines[0].from.get_viewport_transform().get_scale().x
+	var new_zoom = lines[0].from.get_viewport_transform().get_scale().x if not lines.is_empty() else 1.0
 	var needs_update = _last_zoom != new_zoom
 	_last_zoom = new_zoom
 	
@@ -16,8 +14,11 @@ func _needs_update(lines: Array):
 	for l in lines:
 		new_pos.append(l.from.global_position)
 		new_pos.append(l.to.global_position)
+		new_pos.append(l.text_fn.call(false))
 	needs_update = needs_update or _last_pos != new_pos
 	_last_pos = new_pos
+	if name == "Clock":
+		print(needs_update)
 	return needs_update
 
 func _draw_lines(c: CanvasItem, lines: Array):
