@@ -1,6 +1,8 @@
 @tool
 extends HBoxContainer
 
+signal text_changed()
+
 @export var argument_names: Array = []
 @export var return_value: bool = true
 @export var placeholder_text: String:
@@ -27,3 +29,7 @@ func open_file():
 
 func grab_focus():
 	$Expression.grab_focus()
+
+
+func _on_expression_text_changed():
+	text_changed.emit()

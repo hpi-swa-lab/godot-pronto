@@ -6,6 +6,7 @@ var edited_object
 var popup
 var behaviors = {}
 var debugger: ConnectionDebug
+var inspectors = [ExpressionInspector.new()]
 
 func _enter_tree():
 	if not Engine.is_editor_hint():
@@ -31,12 +32,14 @@ func _enter_tree():
 	
 	debugger = ConnectionDebug.new(get_editor_interface())
 	add_debugger_plugin(debugger)
+	for i in inspectors: add_inspector_plugin(i)
 
 func _exit_tree():
 	for key in behaviors:
 		remove_custom_type(key)
 	behaviors.clear()
 	remove_debugger_plugin(debugger)
+	for i in inspectors: remove_inspector_plugin(i)
 
 func pronto_should_ignore(object):
 	if not object is Node:

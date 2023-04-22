@@ -63,4 +63,5 @@ tooltip_text = "Open file for placing breakpoints (cannot edit)"
 icon = SubResource("ImageTexture_kdq5a")
 flat = true
 
+[connection signal="text_changed" from="Expression" to="." method="_on_expression_text_changed"]
 [connection signal="pressed" from="OpenFile" to="." method="open_file"]
