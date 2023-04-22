@@ -68,7 +68,8 @@ static func popup_position(anchor: Node):
 
 static func icon_from_theme(name: StringName, reference: Node):
 	if Engine.is_editor_hint():
-		return reference.get_viewport().get_parent().get_parent().get_theme_icon(name, &"EditorIcons")
+		var ref = reference if reference.get_viewport().get_parent() == null else reference.get_viewport().get_parent().get_parent()
+		return ref.get_theme_icon(name, &"EditorIcons")
 	else:
 		return null
 

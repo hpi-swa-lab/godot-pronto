@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=8 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Theme" uid="uid://bos6jdoh4ueyq" path="res://addons/pronto/signal_connecting/pronto_theme.tres" id="1_vs0ja"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
 [ext_resource type="Texture2D" uid="uid://bnsh02iqx2bee" path="res://addons/pronto/icons/Remove.svg" id="3_60vnm"]
 [ext_resource type="PackedScene" uid="uid://1ubsx3vbyfwv" path="res://addons/pronto/signal_connecting/function_name.tscn" id="4_x4sfm"]
 [ext_resource type="CodeHighlighter" uid="uid://dnemcgakb23mp" path="res://addons/pronto/signal_connecting/syntax.tres" id="5_ghdya"]
+[ext_resource type="PackedScene" uid="uid://d1jujxfamsekk" path="res://addons/pronto/signal_connecting/expression_edit.tscn" id="5_ujudk"]
 
 [sub_resource type="SystemFont" id="SystemFont_hfv4m"]
 font_names = PackedStringArray("Monospace")
@@ -71,20 +72,10 @@ layout_mode = 2
 layout_mode = 2
 text = ")"
 
-[node name="Expression" type="CodeEdit" parent="MarginContainer/VBoxContainer"]
+[node name="Expression" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_hfv4m")
-text = "2 + 3.squared()
-for i in range():
-	print(\"hello\" + str(from))"
-placeholder_text = "Expression..."
-draw_tabs = true
-syntax_highlighter = ExtResource("5_ghdya")
-scroll_fit_content_height = true
-indent_automatic = true
-auto_brace_completion_enabled = true
+return_value = false
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

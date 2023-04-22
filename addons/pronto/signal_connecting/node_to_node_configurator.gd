@@ -46,6 +46,7 @@ var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value
 		%Signal.text = Utils.print_signal(value)
+		update_argument_names()
 
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
@@ -66,6 +67,7 @@ func set_expression_mode(expr: bool):
 	%Receiver.visible = not expr
 	%Expression.visible = expr
 	%Expression.text = ''
+	update_argument_names()
 	%Signal.text +=  " from" if expr else " from, to"
 
 func default_focus():
@@ -74,6 +76,9 @@ func default_focus():
 		%Expression.grab_focus()
 	else:
 		%FunctionName.grab_focus()
+
+func update_argument_names():
+	%Expression.argument_names = selected_signal["args"].map(func (a): return a["name"]) + ["from"] + ([] if %Expression.visible else ["to"])
 
 func _process(delta):
 	if anchor and anchor.is_inside_tree():

@@ -95,8 +95,8 @@ func show_signals(node: Node):
 	popup.anchor = Utils.parent_that(node, func (p): return Utils.has_position(p))
 	Utils.spawn_popup_from_canvas(node, popup)
 
-func _valid_drop_for_slider(data: Dictionary):
-	if not (data["type"] == "obj_property" and data["object"] is Node):
+func _valid_drop_for_slider(data):
+	if not data is Dictionary or data["type"] != "obj_property" or not data["object"] is Node:
 		return false
 	var current = data["object"].get(data["property"])
 	return current is int or current is float
