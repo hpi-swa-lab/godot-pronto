@@ -11,6 +11,15 @@ static func all_nodes_do(node: Node, do: Callable):
 		all_nodes_do(c, do)
 	do.call(node)
 
+static func first_node_that(node: Node, cond: Callable):
+	for c in node.get_children():
+		if cond.call(c):
+			return c
+		var ret = first_node_that(c, cond)
+		if ret != null:
+			return ret
+	return null
+
 static func all_nodes(node: Node):
 	var list = []
 	all_nodes_do(node, func (c): list.append(c))

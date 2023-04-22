@@ -42,6 +42,10 @@ func deselected():
 func handles():
 	return []
 
+func connection_activated(c: Connection):
+	# TODO visualize
+	pass
+
 func lines():
 	var lines := {}
 	var self_connected := []
