@@ -8,7 +8,7 @@ func find_connection_by_path(path: String):
 	var node = Utils.first_node_that(ConnectionsList.get_viewport(),
 		func(n): return Connection.get_connections(n).any(func(c): return c.resource_path == path))
 	if node == null:
-		print("Connection {0} not found locally. Created at runtime?".format([path]))
+		# print("Connection {0} not found locally. Created at runtime?".format([path]))
 		return null
 	return [node, Utils.find(Connection.get_connections(node), func(c): return c.resource_path == path)]
 
