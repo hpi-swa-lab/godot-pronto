@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b0hh2suib87v3"]
+[gd_scene load_steps=9 format=3 uid="uid://b0hh2suib87v3"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_5wrqe"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_wam8i"]
@@ -36,9 +36,6 @@ arguments = []
 only_if = "true"
 expression = ""
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ma70r"]
-size = Vector2(20, 146)
-
 [node name="Area2D" type="Area2D"]
 
 [node name="Collision" type="Node2D" parent="."]
@@ -51,22 +48,18 @@ position = Vector2(65, 41)
 script = ExtResource("1_5wrqe")
 placeholder_size = Vector2(40, 120)
 
-[node name="Move" type="Node2D" parent="Placeholder"]
-position = Vector2(-50, 18)
+[node name="Move" type="Node2D" parent="."]
+position = Vector2(15, 59)
 script = ExtResource("2_wam8i")
 
-[node name="up" type="Node2D" parent="Placeholder"]
-position = Vector2(-93, -25)
+[node name="up" type="Node2D" parent="."]
+position = Vector2(-28, 16)
 script = ExtResource("3_1rwvu")
 key = "Up"
 metadata/pronto_connections = [SubResource("Resource_tvw6b")]
 
-[node name="down" type="Node2D" parent="Placeholder"]
-position = Vector2(-50, -33)
+[node name="down" type="Node2D" parent="."]
+position = Vector2(15, 8)
 script = ExtResource("3_1rwvu")
 key = "Down"
 metadata/pronto_connections = [SubResource("Resource_gkw8x")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(66, 42)
-shape = SubResource("RectangleShape2D_ma70r")
