@@ -13,10 +13,9 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "var state = from.get_node(\"../../ball/State\")
-var dir = state.get_meta(\"dir\")
+expression = "var dir = G.at(\"dir\")
 dir.y *= -1
-state.set_meta(\"dir\", dir)"
+G.put(\"dir\", dir)"
 
 [node name="wall" type="Area2D"]
 
@@ -28,4 +27,5 @@ shape = SubResource("RectangleShape2D_6wxci")
 [node name="Collision" type="Node2D" parent="."]
 position = Vector2(-49, 32)
 script = ExtResource("1_4fgwn")
+limit_to_group = "ball"
 metadata/pronto_connections = [SubResource("Resource_2g1j7")]

@@ -19,6 +19,10 @@ func at(name: String, default = null):
 	else:
 		return default
 
+func inc(prop: String, amount = 1):
+	var value = values[prop] + amount
+	put(prop, value)
+
 func _put(name: String, value: Variant):
 	values[name] = value
 
