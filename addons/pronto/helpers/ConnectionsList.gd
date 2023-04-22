@@ -13,12 +13,21 @@ func eval(source: String, argument_names: Array, argument_values: Array, return_
 	assert(argument_names.size() == argument_values.size(), "Argument names and values for eval need to have the same size.")
 	var key = source + ":" + ','.join(argument_names)
 	if not key in _cache:
-		var script = GDScript.new()
 		var do_ret = return_value and not _is_statement(source)
-		script.source_code = 'extends Object
+		var source_code = '# GENERATED, DO NOT EDIT
+extends Object
 func run({0}):
 	{2}{1}'.format([', '.join(argument_names), _indent(source), 'return ' if do_ret else ''])
-		script.reload()
+		var source_filename = "res://script-instances/" + str(source_code.hash()) + ".gd"
+		var script
+		if FileAccess.file_exists(source_filename):
+			script = load(source_filename)
+		else:
+			script = GDScript.new()
+			DirAccess.make_dir_absolute("res://script-instances")
+			script.source_code = source_code
+			ResourceSaver.save(script, source_filename)
+			script = load(source_filename)
 		var object = _Dummy.new()
 		object.set_script(script)
 		_cache[key] = object
