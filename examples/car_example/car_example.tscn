@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://fegvnevn4cyu"]
+[gd_scene load_steps=18 format=3 uid="uid://fegvnevn4cyu"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_wxlom"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="2_5xtke"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="6_wop4v"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="6_ys06d"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="9_hmnix"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="10_fbpok"]
 
 [sub_resource type="Resource" id="Resource_lj6v2"]
 script = ExtResource("4_k0n5o")
@@ -75,11 +74,6 @@ arguments = ["Utils.random_point_on_screen()"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_h84ri"]
-script = ExtResource("10_fbpok")
-from = NodePath("../../car/State")
-prop = "score"
-
 [node name="car_example" type="Node2D"]
 
 [node name="car" type="Area2D" parent="."]
@@ -120,6 +114,7 @@ metadata/pronto_connections = [SubResource("Resource_cq8lk"), SubResource("Resou
 [node name="State" type="Node2D" parent="car"]
 position = Vector2(22, 41)
 script = ExtResource("6_ys06d")
+global = true
 metadata/score = 0
 
 [node name="Spawner" type="Node2D" parent="."]
@@ -147,9 +142,8 @@ text = "score: 2"
 [node name="Bind" type="Node2D" parent="Label"]
 position = Vector2(-34, 53)
 script = ExtResource("9_hmnix")
-from = Array[ExtResource("10_fbpok")]([SubResource("Resource_h84ri")])
 to_prop = "text"
-convert = "\"Score: \" + str(value0)"
+convert = "\"Score: \" + str(G.at(\"score\"))"
 
 [node name="FPS" type="Label" parent="."]
 offset_left = 1067.0
