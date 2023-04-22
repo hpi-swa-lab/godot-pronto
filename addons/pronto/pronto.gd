@@ -5,7 +5,7 @@ class_name Pronto
 var edited_object
 var popup
 var behaviors = {}
-var debugger = ConnectionDebug.new()
+var debugger: ConnectionDebug
 
 func _enter_tree():
 	if not Engine.is_editor_hint():
@@ -29,6 +29,7 @@ func _enter_tree():
 	G.put("_pronto_behaviors", behaviors)
 	G.put("_pronto_editor_plugin", self)
 	
+	debugger = ConnectionDebug.new(get_editor_interface())
 	add_debugger_plugin(debugger)
 
 func _exit_tree():
