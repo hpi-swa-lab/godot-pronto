@@ -61,8 +61,14 @@ func is_target() -> bool:
 	return not is_expression()
 
 ## Remove this connection from [param node].
-func delete(from: Node):
-	_ensure_connections(from).erase(self)
+func delete(from: Node, undo_redo: EditorUndoRedoManager = null):
+	if undo_redo == null:
+		_ensure_connections(from).erase(self)
+	else:
+		undo_redo.create_action("Delete connection")
+		undo_redo.add_do_method(self, "_remove_connection", from)
+		undo_redo.add_undo_method(self, "_append_connection", from)
+		undo_redo.commit_action()
 
 func _store(from: Node, undo_redo: EditorUndoRedoManager = null):
 	var connections = _ensure_connections(from)
@@ -113,11 +119,11 @@ func _trigger(from: Object, argument_names: Array, argument_values: Array):
 		values.append(target)
 		if should_trigger(names, values):
 			target.callv(invoke, arguments.map(func (arg): return ConnectionsList.eval(arg, names, values)))
-#			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
+			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
 	else:
 		if should_trigger(names, values):
 			ConnectionsList.eval(expression, names, values, false)
-#			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
+			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
 
 func has_condition():
 	return only_if != "true" and only_if != ""
