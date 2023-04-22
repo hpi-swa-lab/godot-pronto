@@ -2,9 +2,9 @@
 #thumb("PlayStart")
 extends Behavior
 
-signal gameStart
+signal nodeReady
 
 func _ready():
 	super._ready()
 	await get_tree().process_frame
-	gameStart.emit()
+	nodeReady.emit()

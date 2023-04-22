@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://d0fw0qucdk77m"]
+[gd_scene load_steps=29 format=3 uid="uid://ctjo4a1oq77g1"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_wdilg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_6eybi"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://baom0bqbudtp6" path="res://.scene-instances/examples_pong__Instance2.tscn" id="11_1xd55"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="12_3pt27"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="13_7xsb2"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/GameStart.gd" id="15_boxau"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReady.gd" id="14_k6tu2"]
 
 [sub_resource type="Resource" id="Resource_8ewsv"]
 script = ExtResource("5_kl4mf")
@@ -99,19 +99,6 @@ arguments = []
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_suj6w"]
-script = ExtResource("5_kl4mf")
-signal_name = "gameStart"
-to = NodePath("")
-invoke = ""
-arguments = []
-only_if = "true"
-expression = "var x = [-1, 1].pick_random()
-var y = [-1, 1].pick_random()
-var dir = Vector2(x, y).normalized()
-G.at(\"dir\", dir)
-print(dir)"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bw6pk"]
 size = Vector2(40, 40)
 
@@ -124,9 +111,21 @@ arguments = ["G.at(\"dir\")"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_ah7wo"]
+[sub_resource type="Resource" id="Resource_olwft"]
 script = ExtResource("5_kl4mf")
-signal_name = "gameStart"
+signal_name = "nodeReady"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "var x = [-1, 1].pick_random()
+var y = [-1, 1].pick_random()
+var dir = Vector2(x, y).normalized()
+G.put(\"dir\", dir)"
+
+[sub_resource type="Resource" id="Resource_sf2vn"]
+script = ExtResource("5_kl4mf")
+signal_name = "nodeReady"
 to = NodePath("..")
 invoke = "spawn"
 arguments = []
@@ -259,11 +258,6 @@ script = ExtResource("13_7xsb2")
 [node name="ball" type="Area2D" parent="Spawner" groups=["ball"]]
 position = Vector2(175, 43)
 
-[node name="GameStart" type="Node2D" parent="Spawner/ball"]
-position = Vector2(47, 14)
-script = ExtResource("15_boxau")
-metadata/pronto_connections = [SubResource("Resource_suj6w")]
-
 [node name="Placeholder" type="Node2D" parent="Spawner/ball"]
 script = ExtResource("2_6eybi")
 placeholder_size = Vector2(40, 40)
@@ -280,10 +274,15 @@ metadata/pronto_connections = [SubResource("Resource_f6cfy")]
 position = Vector2(-59, -40)
 script = ExtResource("3_eaw55")
 
-[node name="GameStart" type="Node2D" parent="Spawner"]
-position = Vector2(32, -39)
-script = ExtResource("15_boxau")
-metadata/pronto_connections = [SubResource("Resource_ah7wo")]
+[node name="NodeReady" type="Node2D" parent="Spawner/ball"]
+position = Vector2(-13, 50)
+script = ExtResource("14_k6tu2")
+metadata/pronto_connections = [SubResource("Resource_olwft")]
+
+[node name="NodeReady" type="Node2D" parent="Spawner"]
+position = Vector2(-12, 38)
+script = ExtResource("14_k6tu2")
+metadata/pronto_connections = [SubResource("Resource_sf2vn")]
 
 [node name="State" type="Node2D" parent="."]
 position = Vector2(753, 421)
