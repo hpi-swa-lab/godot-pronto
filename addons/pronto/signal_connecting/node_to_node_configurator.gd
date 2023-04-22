@@ -53,7 +53,8 @@ func _input(event):
 		_on_cancel_pressed()
 	if (event is InputEventKey and event.keycode == KEY_ENTER and event.pressed
 		and not %FunctionName.has_focus()
-		and (not %Expression.visible or event.ctrl_pressed)):
+		and (not %Expression.visible or event.ctrl_pressed)
+		and not event.shift_pressed):
 		_on_done_pressed()
 
 var receiver: Object:
@@ -78,7 +79,9 @@ func default_focus():
 		%FunctionName.grab_focus()
 
 func update_argument_names():
-	%Expression.argument_names = selected_signal["args"].map(func (a): return a["name"]) + ["from"] + ([] if %Expression.visible else ["to"])
+	var names = selected_signal["args"].map(func (a): return a["name"]) + ["from"] + ([] if %Expression.visible else ["to"])
+	%Expression.argument_names = names
+	for c in %Args.get_children(): c.argument_names = names
 
 func _process(delta):
 	if anchor and anchor.is_inside_tree():
@@ -115,13 +118,12 @@ func _on_function_selected(name: String):
 	if method == null:
 		return
 	
-	var ArgUI = load("res://addons/pronto/signal_connecting/argument.tscn")
+	var ExpressionEdit = preload("res://addons/pronto/signal_connecting/expression_edit.tscn")
 	for arg in method["args"]:
-		var arg_ui = ArgUI.instantiate()
-		arg_ui.arg_name = arg["name"]
+		var arg_ui = ExpressionEdit.instantiate()
+		arg_ui.placeholder_text = arg["name"]
 		%Args.add_child(arg_ui)
-	if not %Args.get_children().is_empty():
-		%Args.get_children().back().is_last = true
+	update_argument_names()
 
 func _on_done_pressed():
 	if %Receiver.visible:

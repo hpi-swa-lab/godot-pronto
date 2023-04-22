@@ -3,11 +3,17 @@ extends HBoxContainer
 
 @export var argument_names: Array = []
 @export var return_value: bool = true
-
-var text: String:
-	get:
-		return $Expression.text
+@export var placeholder_text: String:
+	get: return $Expression.placeholder_text
 	set(v):
+		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
+		if not is_inside_tree(): await ready
+		$Expression.placeholder_text = v
+@export var text: String:
+	get: return $Expression.text
+	set(v):
+		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
+		if not is_inside_tree(): await ready
 		$Expression.text = v
 
 func _ready():
