@@ -63,6 +63,14 @@ func _draw():
 		-1,
 		text_size,
 		Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
+	
+	if get_tree().debug_collisions_hint:
+		var debug_color = Color.LIGHT_BLUE
+		debug_color.a = 0.5
+		var r = Rect2(placeholder_size / -2, placeholder_size)
+		draw_rect(r, debug_color, true)
+		debug_color.a = 1
+		draw_rect(r, debug_color, false)
 
 func handles():
 	return [

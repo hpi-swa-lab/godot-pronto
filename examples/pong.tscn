@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d0fw0qucdk77m"]
+[gd_scene load_steps=20 format=3 uid="uid://d0fw0qucdk77m"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_wdilg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_6eybi"]
@@ -41,6 +41,9 @@ invoke = "move_down"
 arguments = []
 only_if = "true"
 expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ma70r"]
+size = Vector2(20, 146)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bw6pk"]
 size = Vector2(40, 40)
@@ -114,6 +117,10 @@ position = Vector2(-50, -33)
 script = ExtResource("5_4dq8j")
 key = "Down"
 metadata/pronto_connections = [SubResource("Resource_gkw8x")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Instance/Area2D"]
+position = Vector2(66, 42)
+shape = SubResource("RectangleShape2D_ma70r")
 
 [node name="Background" type="Node2D" parent="."]
 script = ExtResource("1_wdilg")
