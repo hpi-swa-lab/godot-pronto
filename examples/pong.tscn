@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0fw0qucdk77m"]
+[gd_scene load_steps=31 format=3 uid="uid://d0fw0qucdk77m"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_wdilg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_6eybi"]
@@ -11,6 +11,10 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="8_rccw5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="9_nvvjn"]
 [ext_resource type="PackedScene" uid="uid://baom0bqbudtp6" path="res://.scene-instances/examples_pong__Instance2.tscn" id="11_1xd55"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="12_3pt27"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="13_2glp4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="13_7xsb2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/GameStart.gd" id="15_boxau"]
 
 [sub_resource type="Resource" id="Resource_8ewsv"]
 script = ExtResource("5_kl4mf")
@@ -42,21 +46,6 @@ arguments = []
 only_if = "true"
 expression = ""
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ma70r"]
-size = Vector2(20, 146)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw6pk"]
-size = Vector2(40, 40)
-
-[sub_resource type="Resource" id="Resource_f6cfy"]
-script = ExtResource("5_kl4mf")
-signal_name = "always"
-to = NodePath("../Move")
-invoke = "move_direction"
-arguments = ["from.get_node(\"../State\").get_meta(\"dir\")"]
-only_if = "true"
-expression = ""
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6wxci"]
 size = Vector2(1171, 73)
 
@@ -72,6 +61,78 @@ var dir = state.get_meta(\"dir\")
 dir.y *= -1
 state.set_meta(\"dir\", dir)"
 
+[sub_resource type="Resource" id="Resource_ug5cl"]
+script = ExtResource("13_2glp4")
+from = NodePath("../../score")
+prop = "score_left"
+
+[sub_resource type="Resource" id="Resource_8ipgr"]
+script = ExtResource("13_2glp4")
+from = NodePath("../../score")
+prop = "score_right"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hyfb0"]
+size = Vector2(136, 608)
+
+[sub_resource type="Resource" id="Resource_w6otu"]
+script = ExtResource("5_kl4mf")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "from.get_node(\"../../score\").inc(\"score_left\")
+other.queue_free()"
+
+[sub_resource type="Resource" id="Resource_rx7j6"]
+script = ExtResource("5_kl4mf")
+signal_name = "collided"
+to = NodePath("../../Spawner")
+invoke = "spawn"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_4aapo"]
+script = ExtResource("5_kl4mf")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "from.get_node(\"../../score\").inc(\"score_right\")
+other.queue_free()"
+
+[sub_resource type="Resource" id="Resource_uq2sn"]
+script = ExtResource("5_kl4mf")
+signal_name = "collided"
+to = NodePath("../../Spawner")
+invoke = "spawn"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw6pk"]
+size = Vector2(40, 40)
+
+[sub_resource type="Resource" id="Resource_f6cfy"]
+script = ExtResource("5_kl4mf")
+signal_name = "always"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["from.get_node(\"../State\").get_meta(\"dir\")"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ah7wo"]
+script = ExtResource("5_kl4mf")
+signal_name = "gameStart"
+to = NodePath("..")
+invoke = "spawn"
+arguments = []
+only_if = "true"
+expression = ""
+
 [node name="pong" type="Node2D"]
 
 [node name="right" parent="." instance=ExtResource("5_gskb4")]
@@ -80,14 +141,14 @@ position = Vector2(970, 307)
 [node name="left" parent="." instance=ExtResource("5_gskb4")]
 position = Vector2(33, 304)
 
-[node name="up" parent="left/Placeholder" index="1"]
+[node name="up" parent="left" index="3"]
 key = "W"
 
-[node name="down" parent="left/Placeholder" index="2"]
+[node name="down" parent="left" index="4"]
 key = "S"
 
 [node name="Instance" type="Node2D" parent="."]
-position = Vector2(-296, 142)
+position = Vector2(-358, 123)
 script = ExtResource("2_bwuoa")
 
 [node name="Area2D" type="Area2D" parent="Instance"]
@@ -102,53 +163,25 @@ position = Vector2(65, 41)
 script = ExtResource("2_6eybi")
 placeholder_size = Vector2(40, 120)
 
-[node name="Move" type="Node2D" parent="Instance/Area2D/Placeholder"]
-position = Vector2(-50, 18)
+[node name="Move" type="Node2D" parent="Instance/Area2D"]
+position = Vector2(15, 59)
 script = ExtResource("3_eaw55")
 
-[node name="up" type="Node2D" parent="Instance/Area2D/Placeholder"]
-position = Vector2(-93, -25)
+[node name="up" type="Node2D" parent="Instance/Area2D"]
+position = Vector2(-28, 16)
 script = ExtResource("5_4dq8j")
 key = "Up"
 metadata/pronto_connections = [SubResource("Resource_tvw6b")]
 
-[node name="down" type="Node2D" parent="Instance/Area2D/Placeholder"]
-position = Vector2(-50, -33)
+[node name="down" type="Node2D" parent="Instance/Area2D"]
+position = Vector2(15, 8)
 script = ExtResource("5_4dq8j")
 key = "Down"
 metadata/pronto_connections = [SubResource("Resource_gkw8x")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Instance/Area2D"]
-position = Vector2(66, 42)
-shape = SubResource("RectangleShape2D_ma70r")
-
 [node name="Background" type="Node2D" parent="."]
 script = ExtResource("1_wdilg")
 color = Color(0, 0, 0, 1)
-
-[node name="ball" type="Area2D" parent="."]
-position = Vector2(253, 111)
-
-[node name="Placeholder" type="Node2D" parent="ball"]
-script = ExtResource("2_6eybi")
-placeholder_size = Vector2(40, 40)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ball"]
-shape = SubResource("RectangleShape2D_bw6pk")
-
-[node name="State" type="Node2D" parent="ball"]
-position = Vector2(33, 43)
-script = ExtResource("9_nvvjn")
-metadata/dir = Vector2(1, -1)
-
-[node name="Always" type="Node2D" parent="ball"]
-position = Vector2(-72, 15)
-script = ExtResource("8_rccw5")
-metadata/pronto_connections = [SubResource("Resource_f6cfy")]
-
-[node name="Move" type="Node2D" parent="ball"]
-position = Vector2(-59, -40)
-script = ExtResource("3_eaw55")
 
 [node name="Instance2" type="Node2D" parent="."]
 position = Vector2(118, -366)
@@ -171,5 +204,81 @@ position = Vector2(105, 721)
 
 [node name="ceil" parent="." instance=ExtResource("11_1xd55")]
 position = Vector2(95, 1)
+
+[node name="score display" type="Label" parent="."]
+offset_left = 521.0
+offset_top = 54.0
+offset_right = 561.0
+offset_bottom = 76.3333
+text = "10 -10"
+
+[node name="Bind" type="Node2D" parent="score display"]
+position = Vector2(55, 39)
+script = ExtResource("12_3pt27")
+from = Array[ExtResource("13_2glp4")]([SubResource("Resource_ug5cl"), SubResource("Resource_8ipgr")])
+to_prop = "text"
+convert = "str(value0) + \" - \" + str(value1)"
+
+[node name="score" type="Node2D" parent="."]
+script = ExtResource("9_nvvjn")
+metadata/score_left = 0
+metadata/score_right = 0
+
+[node name="goal" type="Area2D" parent="."]
+position = Vector2(1351, 341)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="goal"]
+position = Vector2(-13, -20)
+shape = SubResource("RectangleShape2D_hyfb0")
+
+[node name="Collision" type="Node2D" parent="goal"]
+position = Vector2(112, -35)
+script = ExtResource("8_o7kee")
+metadata/pronto_connections = [SubResource("Resource_w6otu"), SubResource("Resource_rx7j6")]
+
+[node name="goal2" type="Area2D" parent="."]
+position = Vector2(-141, 341)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="goal2"]
+position = Vector2(-13, -20)
+shape = SubResource("RectangleShape2D_hyfb0")
+
+[node name="Collision" type="Node2D" parent="goal2"]
+position = Vector2(-146, -18)
+script = ExtResource("8_o7kee")
+metadata/pronto_connections = [SubResource("Resource_4aapo"), SubResource("Resource_uq2sn")]
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(545, 335)
+script = ExtResource("13_7xsb2")
+
+[node name="ball" type="Area2D" parent="Spawner"]
+position = Vector2(175, 43)
+
+[node name="Placeholder" type="Node2D" parent="Spawner/ball"]
+script = ExtResource("2_6eybi")
+placeholder_size = Vector2(40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/ball"]
+shape = SubResource("RectangleShape2D_bw6pk")
+
+[node name="State" type="Node2D" parent="Spawner/ball"]
+position = Vector2(33, 43)
+script = ExtResource("9_nvvjn")
+metadata/dir = Vector2(1, -1)
+
+[node name="Always" type="Node2D" parent="Spawner/ball"]
+position = Vector2(-72, 15)
+script = ExtResource("8_rccw5")
+metadata/pronto_connections = [SubResource("Resource_f6cfy")]
+
+[node name="Move" type="Node2D" parent="Spawner/ball"]
+position = Vector2(-59, -40)
+script = ExtResource("3_eaw55")
+
+[node name="GameStart" type="Node2D" parent="Spawner"]
+position = Vector2(32, -39)
+script = ExtResource("15_boxau")
+metadata/pronto_connections = [SubResource("Resource_ah7wo")]
 
 [editable path="left"]
