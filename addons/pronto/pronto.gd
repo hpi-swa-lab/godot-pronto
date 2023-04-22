@@ -29,13 +29,13 @@ func _enter_tree():
 	G.put("_pronto_behaviors", behaviors)
 	G.put("_pronto_editor_plugin", self)
 	
-	#add_debugger_plugin(debugger)
+	add_debugger_plugin(debugger)
 
 func _exit_tree():
 	for key in behaviors:
 		remove_custom_type(key)
 	behaviors.clear()
-	#remove_debugger_plugin(debugger)
+	remove_debugger_plugin(debugger)
 
 func pronto_should_ignore(object):
 	if not object is Node:

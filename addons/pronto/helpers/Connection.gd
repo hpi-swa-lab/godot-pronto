@@ -119,11 +119,11 @@ func _trigger(from: Object, argument_names: Array, argument_values: Array):
 		values.append(target)
 		if should_trigger(names, values):
 			target.callv(invoke, arguments.map(func (arg): return ConnectionsList.eval(arg, names, values)))
-#			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
+			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
 	else:
 		if should_trigger(names, values):
 			ConnectionsList.eval(expression, names, values, false)
-#			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
+			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
 
 func has_condition():
 	return only_if != "true" and only_if != ""

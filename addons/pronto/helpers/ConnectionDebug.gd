@@ -19,6 +19,8 @@ func _capture(message, data, session_id):
 	if message == "pronto:connection_activated":
 		var path = data[0]
 		var c = find_connection_by_path(path)
+		if c == null:
+			return true
 		var from = c[0]
 		var connection = c[1]
 		add_to_list(session_id, from, connection)
@@ -27,7 +29,9 @@ func _capture(message, data, session_id):
 		return true
 
 func add_to_list(session_id, from, connection):
-	var list: ItemList = debug_lists[session_id]
+	var list: ItemList = debug_lists.get(session_id)
+	if list == null:
+		return
 	var at_bottom = list.get_v_scroll_bar().value >= (list.get_v_scroll_bar().max_value - list.size.y - 12)
 	list.add_item(
 		"{0}:{1} -> {2}:{3}".format([from, connection.signal_name, connection.to, connection.invoke])
