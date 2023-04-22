@@ -45,7 +45,7 @@ var existing_connection = null
 var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value
-		%Signal.text = Utils.print_signal(value) + " from, to"
+		%Signal.text = Utils.print_signal(value)
 
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
@@ -66,6 +66,7 @@ func set_expression_mode(expr: bool):
 	%Receiver.visible = not expr
 	%Expression.visible = expr
 	%Expression.text = ''
+	%Signal.text +=  " from" if expr else " from, to"
 
 func default_focus():
 	await get_tree().process_frame
@@ -83,6 +84,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
 	existing_connection = connection
 	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
+	set_expression_mode(connection.is_expression())
 	%Condition.text = connection.only_if
 	if connection.is_target():
 		receiver = from.get_node(connection.to)
