@@ -271,12 +271,6 @@ placeholder_size = Vector2(40, 40)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/ball"]
 shape = SubResource("RectangleShape2D_bw6pk")
 
-[node name="State" type="Node2D" parent="Spawner/ball"]
-position = Vector2(33, 43)
-script = ExtResource("9_nvvjn")
-global = true
-metadata/dir = Vector2(1, -1)
-
 [node name="Always" type="Node2D" parent="Spawner/ball"]
 position = Vector2(-72, 15)
 script = ExtResource("8_rccw5")
@@ -290,5 +284,11 @@ script = ExtResource("3_eaw55")
 position = Vector2(32, -39)
 script = ExtResource("15_boxau")
 metadata/pronto_connections = [SubResource("Resource_ah7wo")]
+
+[node name="State" type="Node2D" parent="."]
+position = Vector2(753, 421)
+script = ExtResource("9_nvvjn")
+global = true
+metadata/dir = Vector2(1, -1)
 
 [editable path="left"]
