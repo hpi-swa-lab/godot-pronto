@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://d0fw0qucdk77m"]
+[gd_scene load_steps=29 format=3 uid="uid://d0fw0qucdk77m"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_wdilg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_6eybi"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="9_nvvjn"]
 [ext_resource type="PackedScene" uid="uid://baom0bqbudtp6" path="res://.scene-instances/examples_pong__Instance2.tscn" id="11_1xd55"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="12_3pt27"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="13_2glp4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="13_7xsb2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/GameStart.gd" id="15_boxau"]
 
@@ -23,10 +22,9 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "var state = from.get_node(\"../../ball/State\")
-var dir = state.get_meta(\"dir\")
+expression = "var dir = G.at(\"dir\")
 dir.x *= -1
-state.set_meta(\"dir\", dir)"
+G.put(\"dir\", dir)"
 
 [sub_resource type="Resource" id="Resource_tvw6b"]
 script = ExtResource("5_kl4mf")
@@ -56,20 +54,9 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "var state = from.get_node(\"../../ball/State\")
-var dir = state.get_meta(\"dir\")
+expression = "var dir = G.at(\"dir\")
 dir.y *= -1
-state.set_meta(\"dir\", dir)"
-
-[sub_resource type="Resource" id="Resource_ug5cl"]
-script = ExtResource("13_2glp4")
-from = NodePath("../../score")
-prop = "score_left"
-
-[sub_resource type="Resource" id="Resource_8ipgr"]
-script = ExtResource("13_2glp4")
-from = NodePath("../../score")
-prop = "score_right"
+G.put(\"dir\", dir)"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hyfb0"]
 size = Vector2(136, 608)
@@ -81,7 +68,7 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "from.get_node(\"../../score\").inc(\"score_left\")
+expression = "G.inc(\"score_left\")
 other.queue_free()"
 
 [sub_resource type="Resource" id="Resource_rx7j6"]
@@ -100,7 +87,7 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "from.get_node(\"../../score\").inc(\"score_right\")
+expression = "G.inc(\"score_right\")
 other.queue_free()"
 
 [sub_resource type="Resource" id="Resource_uq2sn"]
@@ -112,6 +99,19 @@ arguments = []
 only_if = "true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_suj6w"]
+script = ExtResource("5_kl4mf")
+signal_name = "gameStart"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "var x = [-1, 1].pick_random()
+var y = [-1, 1].pick_random()
+var dir = Vector2(x, y).normalized()
+G.at(\"dir\", dir)
+print(dir)"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bw6pk"]
 size = Vector2(40, 40)
 
@@ -120,7 +120,7 @@ script = ExtResource("5_kl4mf")
 signal_name = "always"
 to = NodePath("../Move")
 invoke = "move_direction"
-arguments = ["from.get_node(\"../State\").get_meta(\"dir\")"]
+arguments = ["G.at(\"dir\")"]
 only_if = "true"
 expression = ""
 
@@ -156,6 +156,7 @@ script = ExtResource("2_bwuoa")
 [node name="Collision" type="Node2D" parent="Instance/Area2D"]
 position = Vector2(36, -47)
 script = ExtResource("8_o7kee")
+limit_to_group = "ball"
 metadata/pronto_connections = [SubResource("Resource_8ewsv")]
 
 [node name="Placeholder" type="Node2D" parent="Instance/Area2D"]
@@ -197,6 +198,7 @@ shape = SubResource("RectangleShape2D_6wxci")
 [node name="Collision" type="Node2D" parent="Instance2/wall"]
 position = Vector2(-49, 32)
 script = ExtResource("8_o7kee")
+limit_to_group = "ball"
 metadata/pronto_connections = [SubResource("Resource_2g1j7")]
 
 [node name="floor" parent="." instance=ExtResource("11_1xd55")]
@@ -215,12 +217,12 @@ text = "10 -10"
 [node name="Bind" type="Node2D" parent="score display"]
 position = Vector2(55, 39)
 script = ExtResource("12_3pt27")
-from = Array[ExtResource("13_2glp4")]([SubResource("Resource_ug5cl"), SubResource("Resource_8ipgr")])
 to_prop = "text"
-convert = "str(value0) + \" - \" + str(value1)"
+convert = "str(G.at(\"score_left\")) + \" - \" + str(G.at(\"score_right\"))"
 
 [node name="score" type="Node2D" parent="."]
 script = ExtResource("9_nvvjn")
+global = true
 metadata/score_left = 0
 metadata/score_right = 0
 
@@ -234,6 +236,7 @@ shape = SubResource("RectangleShape2D_hyfb0")
 [node name="Collision" type="Node2D" parent="goal"]
 position = Vector2(112, -35)
 script = ExtResource("8_o7kee")
+limit_to_group = "ball"
 metadata/pronto_connections = [SubResource("Resource_w6otu"), SubResource("Resource_rx7j6")]
 
 [node name="goal2" type="Area2D" parent="."]
@@ -246,14 +249,20 @@ shape = SubResource("RectangleShape2D_hyfb0")
 [node name="Collision" type="Node2D" parent="goal2"]
 position = Vector2(-146, -18)
 script = ExtResource("8_o7kee")
+limit_to_group = "ball"
 metadata/pronto_connections = [SubResource("Resource_4aapo"), SubResource("Resource_uq2sn")]
 
 [node name="Spawner" type="Node2D" parent="."]
 position = Vector2(545, 335)
 script = ExtResource("13_7xsb2")
 
-[node name="ball" type="Area2D" parent="Spawner"]
+[node name="ball" type="Area2D" parent="Spawner" groups=["ball"]]
 position = Vector2(175, 43)
+
+[node name="GameStart" type="Node2D" parent="Spawner/ball"]
+position = Vector2(47, 14)
+script = ExtResource("15_boxau")
+metadata/pronto_connections = [SubResource("Resource_suj6w")]
 
 [node name="Placeholder" type="Node2D" parent="Spawner/ball"]
 script = ExtResource("2_6eybi")
@@ -265,6 +274,7 @@ shape = SubResource("RectangleShape2D_bw6pk")
 [node name="State" type="Node2D" parent="Spawner/ball"]
 position = Vector2(33, 43)
 script = ExtResource("9_nvvjn")
+global = true
 metadata/dir = Vector2(1, -1)
 
 [node name="Always" type="Node2D" parent="Spawner/ball"]

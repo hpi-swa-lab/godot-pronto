@@ -15,3 +15,7 @@ func at(name: String, default = null):
 		return values[name]
 	else:
 		return default
+
+func inc(prop: String, amount = 1):
+	var value = values[prop] + amount
+	put(prop, value)
