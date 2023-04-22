@@ -42,4 +42,4 @@ func _process(delta):
 		update()
 
 func lines():
-	return super.lines() + [Lines.Line.new(self, get_parent(), func (flip): return Utils.ellipsize(convert, 20))]
+	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (flip): return Utils.ellipsize(convert, 20))]

@@ -26,7 +26,7 @@ func is_valid_parent():
 	return p is Area2D or p is RigidBody2D
 
 func lines():
-	return super.lines() + ([Lines.Line.new(self, get_parent(), func (f): return "")] if is_valid_parent() else [])
+	return super.lines() + ([Lines.DashedLine.new(self, get_parent(), func (f): return "")] if is_valid_parent() else [])
 
 func _notification(what):
 	if what == NOTIFICATION_PARENTED:

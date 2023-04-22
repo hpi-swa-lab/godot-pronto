@@ -27,4 +27,4 @@ func spawn_toward(pos: Vector2):
 	get_parent().add_child(instance)
 
 func lines():
-	return super.lines() + ([Lines.Line.new(self, get_child(0), func (f): return "spawns")] if get_child_count() > 0 else [])
+	return super.lines() + ([Lines.DashedLine.new(self, get_child(0), func (f): return "spawns")] if get_child_count() > 0 else [])
