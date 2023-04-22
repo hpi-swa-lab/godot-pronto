@@ -27,5 +27,5 @@ func _put(name: String, value: Variant):
 	values[name] = value
 
 func _register_state(state: State, prop: String):
-	assert(not prop in _state_update, "Property {0} has already been registered by a state node.".format([prop]))
+	assert(not prop in _state_update, "Property {0} has already been registered by a state node. Are you spawning the same State mutliple times?".format([prop]))
 	_state_update[prop] = state

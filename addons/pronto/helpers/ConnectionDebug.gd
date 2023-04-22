@@ -3,6 +3,10 @@ extends EditorDebuggerPlugin
 class_name ConnectionDebug
 
 var debug_lists: Dictionary
+var editor_interface: EditorInterface
+
+func _init(editor_interface: EditorInterface):
+	self.editor_interface = editor_interface
 
 func find_connection_by_path(path: String):
 	var node = Utils.first_node_that(ConnectionsList.get_viewport(),
@@ -26,6 +30,11 @@ func _capture(message, data, session_id):
 		add_to_list(session_id, from, connection)
 		if from is Behavior:
 			from.connection_activated(connection)
+		return true
+	if message == "pronto:state_put":
+		var state = editor_interface.get_edited_scene_root().get_parent().get_node(str(data[0]).substr(6))
+		assert(state is State)
+		state._report_game_value(data[1], data[2])
 		return true
 
 func add_to_list(session_id, from, connection):
