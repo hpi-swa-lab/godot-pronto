@@ -15,7 +15,7 @@ func _init():
 
 func _enter_tree():
 	get_parent().add_child.call_deferred(_tex, false, Node.INTERNAL_MODE_FRONT)
-	_tex.size = get_viewport_rect().size
+	_tex.size = Utils.get_game_size()
 	_tex.position = Vector2.ZERO
 
 func _exit_tree():

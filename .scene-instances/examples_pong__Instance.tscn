@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://b0hh2suib87v3"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_5wrqe"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_wam8i"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="3_1rwvu"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_jrd43"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_alsvk"]
+
+[sub_resource type="Resource" id="Resource_8ewsv"]
+script = ExtResource("4_jrd43")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "var state = from.get_node(\"../../ball/State\")
+var dir = state.get_meta(\"dir\")
+dir.x *= -1
+state.set_meta(\"dir\", dir)"
+
+[sub_resource type="Resource" id="Resource_tvw6b"]
+script = ExtResource("4_jrd43")
+signal_name = "pressed"
+to = NodePath("../Move")
+invoke = "move_up"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_gkw8x"]
+script = ExtResource("4_jrd43")
+signal_name = "pressed"
+to = NodePath("../Move")
+invoke = "move_down"
+arguments = []
+only_if = "true"
+expression = ""
+
+[node name="Area2D" type="Area2D"]
+
+[node name="Collision" type="Node2D" parent="."]
+position = Vector2(36, -47)
+script = ExtResource("5_alsvk")
+metadata/pronto_connections = [SubResource("Resource_8ewsv")]
+
+[node name="Placeholder" type="Node2D" parent="."]
+position = Vector2(65, 41)
+script = ExtResource("1_5wrqe")
+placeholder_size = Vector2(40, 120)
+
+[node name="Move" type="Node2D" parent="Placeholder"]
+position = Vector2(-50, 18)
+script = ExtResource("2_wam8i")
+
+[node name="up" type="Node2D" parent="Placeholder"]
+position = Vector2(-93, -25)
+script = ExtResource("3_1rwvu")
+key = "Up"
+metadata/pronto_connections = [SubResource("Resource_tvw6b")]
+
+[node name="down" type="Node2D" parent="Placeholder"]
+position = Vector2(-50, -33)
+script = ExtResource("3_1rwvu")
+key = "Down"
+metadata/pronto_connections = [SubResource("Resource_gkw8x")]

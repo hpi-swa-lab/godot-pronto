@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://baom0bqbudtp6"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="1_4fgwn"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="2_byymx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6wxci"]
+size = Vector2(1171, 73)
+
+[sub_resource type="Resource" id="Resource_2g1j7"]
+script = ExtResource("2_byymx")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "var state = from.get_node(\"../../ball/State\")
+var dir = state.get_meta(\"dir\")
+dir.y *= -1
+state.set_meta(\"dir\", dir)"
+
+[node name="wall" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(571, -37)
+scale = Vector2(1.36, 1)
+shape = SubResource("RectangleShape2D_6wxci")
+
+[node name="Collision" type="Node2D" parent="."]
+position = Vector2(-49, 32)
+script = ExtResource("1_4fgwn")
+metadata/pronto_connections = [SubResource("Resource_2g1j7")]
