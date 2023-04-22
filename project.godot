@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
 G="*res://addons/pronto/helpers/G.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/pronto/plugin.cfg")

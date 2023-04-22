@@ -23,17 +23,17 @@ func update():
 			current = object.get_meta(f.prop)
 		inputs.append(current)
 	
-	if last == inputs:
-		return
-	
 	var value = null if inputs.is_empty() else inputs[0]
 	if convert:
 		value = ConnectionsList.eval(convert,
 			range(from.size()).map(func (index): return "value" + str(index)),
 			inputs)
-	get_parent().set(to_prop, value)
 	
-	last = inputs
+	if last == value:
+		return
+	
+	get_parent().set(to_prop, value)
+	last = value
 
 func _process(delta):
 	super._process(delta)

@@ -103,9 +103,11 @@ static func commit_undoable(undo_redo: EditorUndoRedoManager, title: String, obj
 		undo_redo.add_do_property(object, prop, props[prop])
 	undo_redo.commit_action()
 
+static func get_game_size():
+	return Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"), ProjectSettings.get_setting("display/window/size/viewport_height"))
+
 static func random_point_on_screen():
-	var size = Engine.get_main_loop().root.size
-	return Vector2(randf_range(0, size.x), randf_range(0, size.y))
+	return Vector2(randf(), randf()) * get_game_size()
 
 static func mouse_position():
 	return Engine.get_main_loop().root.get_mouse_position()
