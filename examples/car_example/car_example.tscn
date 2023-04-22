@@ -150,3 +150,16 @@ script = ExtResource("9_hmnix")
 from = Array[ExtResource("10_fbpok")]([SubResource("Resource_h84ri")])
 to_prop = "text"
 convert = "\"Score: \" + str(value0)"
+
+[node name="FPS" type="Label" parent="."]
+offset_left = 1067.0
+offset_top = 13.0
+offset_right = 1136.0
+offset_bottom = 39.0
+text = "fps: 9000"
+
+[node name="Bind" type="Node2D" parent="FPS"]
+position = Vector2(-34, 53)
+script = ExtResource("9_hmnix")
+to_prop = "text"
+convert = "\"FPS: \" + str(Engine.get_frames_per_second())"
