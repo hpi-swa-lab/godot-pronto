@@ -1,6 +1,7 @@
 @tool
 #thumb("Skeleton2D")
 extends Behavior
+class_name Placeholder
 
 @export var label = "":
 	set(v):

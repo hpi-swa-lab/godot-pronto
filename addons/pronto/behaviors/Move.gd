@@ -36,3 +36,12 @@ func rotate_left():
 
 func rotate_right():
 	get_parent().rotation_degrees += rotation_speed * get_process_delta_time()
+
+func _notification(what):
+	if what == NOTIFICATION_PARENTED:
+		update_configuration_warnings()
+
+func _get_configuration_warnings():
+	if get_parent() is Placeholder and get_parent().get_parent() is CollisionObject2D:
+		return ["Do not move the Placeholder, instead move the CollisionObject (Area, Character, Rigid, ...). Otherwise, the collision shape is out-of-sync."]
+	return ""

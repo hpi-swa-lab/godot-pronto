@@ -30,6 +30,5 @@ func open_file():
 func grab_focus():
 	$Expression.grab_focus()
 
-
 func _on_expression_text_changed():
 	text_changed.emit()
