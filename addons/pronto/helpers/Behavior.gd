@@ -44,31 +44,22 @@ func handles():
 
 func connection_activated(c: Connection):
 	# TODO visualize
-	pass
+	var t = create_tween()
+	t.tween_method(flash_line.bind(c), 0.0, 1.0, 0.2)
+	t.tween_method(flash_line.bind(c), 1.0, 0.0, 0.2)
+
+func flash_line(value: float, key: Variant):
+	_lines.flash_line(value, key)
+	queue_redraw()
 
 func lines():
-	var lines := {}
-	var self_connected := []
-	
-	for connection in Connection.get_connections(self):
-		if connection.expression:
-			self_connected.append(connection)
-			continue
-		var other = get_node_or_null(connection.to)
-		if not other:
-			continue
-		if not other in lines:
-			lines[other] = []
-		lines[other].append(connection)
-	
-	var l = lines.keys().map(func (other):
-		return Lines.Line.new(self, other, func (flip):
-			return '\n'.join(lines[other].map(func(connection): return Utils.print_connection(connection, flip))))
-		)
-	var s = self_connected.map(func (connection):
-		return Lines.Line.new(self, self, func (flip): return Utils.print_connection(connection, flip)))
-	l.append_array(s)
-	return l
+	return Connection.get_connections(self).map(func (connection):
+		if connection.is_expression():
+			return Lines.Line.new(self, self, func (flipped): return Utils.print_connection(connection, flipped), connection)
+		else:
+			var other = get_node_or_null(connection.to)
+			if not other: return null
+			return Lines.Line.new(self, other, func (flipped): return Utils.print_connection(connection, flipped), connection))
 
 func _draw():
 	if not Engine.is_editor_hint() or not _icon:

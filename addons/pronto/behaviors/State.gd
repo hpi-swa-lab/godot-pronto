@@ -35,7 +35,7 @@ func _report_game_value(prop: String, value: Variant):
 	_last_reported_game_values[prop] = value
 
 func lines():
-	return super.lines() + [Lines.Line.new(self, self, func (flip): return _print_values())]
+	return super.lines() + [Lines.Line.new(self, self, func (flip): return _print_values(), "value")]
 
 func _print_values():
 	return "\n".join(Array(get_meta_list()).map(func (prop):
