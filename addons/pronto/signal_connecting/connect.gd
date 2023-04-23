@@ -7,7 +7,10 @@ var _displayed_connections = []
 var anchor: Node:
 	set(a):
 		anchor = a
-		size = Vector2.ZERO
+		# Hi-DPI doesn't size this correctly for unknown reasons
+		%connections.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
+		%signals.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
+		reset_size()
 
 var node: Node:
 	set(value):

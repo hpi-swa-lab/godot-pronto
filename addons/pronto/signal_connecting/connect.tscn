@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/connect.gd" id="1_qcj0a"]
 
 [node name="connect" type="VBoxContainer"]
-offset_right = 207.0
-offset_bottom = 152.0
+offset_right = 16.0
+offset_bottom = 16.0
 script = ExtResource("1_qcj0a")
 
 [node name="edit" type="VBoxContainer" parent="."]

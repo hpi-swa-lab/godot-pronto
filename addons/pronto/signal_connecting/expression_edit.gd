@@ -20,7 +20,8 @@ signal text_changed()
 
 func _ready():
 	$OpenFile.icon = Utils.icon_from_theme("DebugSkipBreakpointsOff", self)
-	get_a_godot_highlighter()
+	# causes crashes
+	# get_a_godot_highlighter()
 
 func get_a_godot_highlighter():
 	# GDScriptHighlighter is a private cpp class. We can obtain an instance however.

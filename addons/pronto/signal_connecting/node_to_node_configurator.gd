@@ -37,7 +37,7 @@ var undo_redo: EditorUndoRedoManager
 var anchor: Node:
 	set(n):
 		anchor = n
-		size = Vector2.ZERO
+		reset_size()
 		%FunctionName.anchor = n
 var from: Node
 var existing_connection = null
