@@ -19,7 +19,6 @@ signal text_changed()
 		$Expression.text = v
 
 func _ready():
-	$OpenFile.icon = Utils.icon_from_theme("DebugSkipBreakpointsOff", self)
 	fake_a_godot_highlighter()
 
 func fake_a_godot_highlighter():
