@@ -42,10 +42,15 @@ func deselected():
 func handles():
 	return []
 
+var _running_tweens = {}
 func connection_activated(c: Connection):
-	# TODO visualize
+	var current = _running_tweens.get(c)
+	if current != null: current.kill()
+	
 	var t = create_tween()
-	t.tween_method(flash_line.bind(c), 0.0, 1.0, 0.2)
+	_running_tweens[c] = t
+	if current == null:
+		t.tween_method(flash_line.bind(c), 0.0, 1.0, 0.2)
 	t.tween_method(flash_line.bind(c), 1.0, 0.0, 0.2)
 
 func flash_line(value: float, key: Variant):

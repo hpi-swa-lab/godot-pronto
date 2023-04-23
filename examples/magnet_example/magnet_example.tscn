@@ -118,11 +118,11 @@ color = Color(0.435294, 0.435294, 0.866667, 1)
 position = Vector2(535, 428)
 
 [node name="Move" type="Node2D" parent="player"]
-position = Vector2(23, 37)
+position = Vector2(133, -13)
 script = ExtResource("1_7jvq5")
 
 [node name="Controls" type="Node2D" parent="player"]
-position = Vector2(68, -24)
+position = Vector2(72, -40)
 script = ExtResource("2_cv5ua")
 metadata/pronto_connections = [SubResource("Resource_h48op"), SubResource("Resource_ma76l"), SubResource("Resource_dv1mp")]
 
@@ -154,13 +154,13 @@ script = ExtResource("6_p8gb0")
 metadata/pronto_connections = [SubResource("Resource_38k5r")]
 
 [node name="Clock" type="Node2D" parent="player/Spawner/magnet"]
-position = Vector2(23, 63)
+position = Vector2(30, 63)
 script = ExtResource("8_rvmy5")
 duration_seconds = 0.2
 metadata/pronto_connections = [SubResource("Resource_32of2"), SubResource("Resource_bowqy")]
 
 [node name="Collision" type="Node2D" parent="player/Spawner/magnet"]
-position = Vector2(-57, 83)
+position = Vector2(-65, 87)
 script = ExtResource("7_kmjgj")
 limit_to_group = "magnetic"
 metadata/pronto_connections = [SubResource("Resource_fbc0p"), SubResource("Resource_g462o")]
