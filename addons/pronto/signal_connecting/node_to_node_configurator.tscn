@@ -1,27 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=4 format=3 uid="uid://ig2ib85womvq"]
 
-[ext_resource type="Theme" uid="uid://bos6jdoh4ueyq" path="res://addons/pronto/signal_connecting/pronto_theme.tres" id="1_vs0ja"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
-[ext_resource type="Texture2D" uid="uid://bnsh02iqx2bee" path="res://addons/pronto/icons/Remove.svg" id="3_60vnm"]
 [ext_resource type="PackedScene" uid="uid://1ubsx3vbyfwv" path="res://addons/pronto/signal_connecting/function_name.tscn" id="4_x4sfm"]
 [ext_resource type="PackedScene" uid="uid://d1jujxfamsekk" path="res://addons/pronto/signal_connecting/expression_edit.tscn" id="5_ujudk"]
 
 [node name="Node To Node Configurator" type="PanelContainer"]
-offset_right = 432.0
-offset_bottom = 221.0
+custom_minimum_size = Vector2(100, 100)
+offset_right = 431.0
+offset_bottom = 175.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 focus_mode = 2
-theme = ExtResource("1_vs0ja")
+theme_type_variation = &"Panel"
 script = ExtResource("2_fmteu")
 metadata/pronto_ignore = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 theme_override_constants/separation = 6
 
@@ -39,8 +41,8 @@ size_flags_horizontal = 3
 text = "area_entered( Area2D area )"
 
 [node name="remove" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-icon = ExtResource("3_60vnm")
 
 [node name="Receiver" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -55,6 +57,8 @@ text = "$../../node_name."
 unique_name_in_owner = true
 layout_mode = 2
 text = ""
+caret_blink = true
+caret_blink_interval = 0.5
 
 [node name="LeftParen" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
 layout_mode = 2

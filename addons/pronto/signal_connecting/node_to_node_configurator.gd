@@ -64,6 +64,9 @@ var receiver: Object:
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 
+func _ready():
+	%remove.icon = Utils.icon_from_theme("Remove", self)
+
 func set_expression_mode(expr: bool):
 	%Receiver.visible = not expr
 	%Expression.visible = expr

@@ -1,7 +1,0 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bos6jdoh4ueyq"]
-
-[ext_resource type="StyleBox" uid="uid://bdy781xybq8da" path="res://addons/pronto/pronto_panel_style.tres" id="1_madtj"]
-
-[resource]
-Label/colors/font_color = Color(1, 1, 1, 1)
-PanelContainer/styles/panel = ExtResource("1_madtj")

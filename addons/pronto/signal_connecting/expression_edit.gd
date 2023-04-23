@@ -20,6 +20,14 @@ signal text_changed()
 
 func _ready():
 	$OpenFile.icon = Utils.icon_from_theme("DebugSkipBreakpointsOff", self)
+	get_a_godot_highlighter()
+
+func get_a_godot_highlighter():
+	# GDScriptHighlighter is a private cpp class. We can obtain an instance however.
+	var se = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor()
+	if not se.get_open_script_editors().is_empty():
+		var s = se.get_open_script_editors()[0].get_base_editor().syntax_highlighter
+		$Expression.syntax_highlighter = s
 
 func open_file():
 	var script = ConnectionsList.script_for_eval($Expression.text, argument_names, return_value)
