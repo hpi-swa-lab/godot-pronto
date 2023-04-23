@@ -31,7 +31,6 @@ static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, so
 	Utils.spawn_popup_from_canvas(from, i)
 	i.default_focus()
 
-
 var undo_redo: EditorUndoRedoManager
 
 var anchor: Node:
@@ -110,6 +109,14 @@ func set_existing_connection(from: Node, connection: Connection):
 	
 	for i in range(%Args.get_child_count()):
 		%Args.get_child(i).text = connection.arguments[i] if i <= connection.arguments.size() - 1 else ""
+	
+	# FIXME just increment total directly didn't work from the closure?!
+	var total = {"total": 0}
+	Utils.all_nodes_do(ConnectionsList.get_viewport(),
+		func(n):
+			total["total"] += Connection.get_connections(n).count(connection))
+	%SharedLinksNote.visible = total["total"] > 1
+	%SharedLinksCount.text = "This connection is linked to {0} other node{1}.".format([total["total"] - 1, "s" if total["total"] != 2 else ""])
 
 func _on_function_selected(name: String):
 	var method = Utils.find(receiver.get_method_list(), func (m): return m["name"] == name)
@@ -142,7 +149,6 @@ func _on_done_pressed():
 			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args, %Condition.text, undo_redo)
 	if %Expression.visible:
 		if existing_connection:
-			print(%Condition.text)
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
@@ -158,3 +164,8 @@ func _on_remove_pressed():
 
 func _on_cancel_pressed():
 	queue_free()
+
+func _on_make_unique_pressed():
+	var duplicate = existing_connection.make_unique(from, undo_redo)
+	queue_free()
+	open_existing(undo_redo, from, duplicate)

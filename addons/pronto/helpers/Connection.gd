@@ -147,3 +147,20 @@ func has_condition():
 
 func should_trigger(names, values):
 	return not has_condition() or ConnectionsList.eval(only_if, names, values)
+
+func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
+	var old = _ensure_connections(from)
+	var new = old.duplicate()
+	var new_connection = duplicate(true)
+	new[new.find(self)] = new_connection
+	
+	# FIXME does not work for some reason :(
+	# undo_redo.create_action("Make connection unique")
+	# undo_redo.add_do_method(from, "set_meta", "pronto_connections", new)
+	# undo_redo.add_undo_method(from, "set_meta", "pronto_connections", old)
+	# undo_redo.commit_action()
+	
+	from.set_meta("pronto_connections", new)
+	assert(_ensure_connections(from) == new)
+	
+	return new_connection
