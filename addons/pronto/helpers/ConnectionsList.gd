@@ -11,10 +11,12 @@ func _ready():
 
 func script_for_eval(source: String, argument_names: Array, return_value = true):
 	var do_ret = return_value and not _is_statement(source)
-	var source_code = '# GENERATED, DO NOT EDIT
-extends Object
+	var source_code = 'extends U
+
 func run({0}):
-	{2}{1}'.format([', '.join(argument_names), _indent(source), 'return ' if do_ret else ''])
+	# GENERATED, DO NOT EDIT
+	{2}{1}
+'.format([', '.join(argument_names), _indent(source), 'return ' if do_ret else ''])
 	var source_filename = "res://script-instances/" + str(source_code.hash()) + ".gd"
 	if FileAccess.file_exists(source_filename):
 		return load(source_filename)
@@ -25,16 +27,17 @@ func run({0}):
 		ResourceSaver.save(script, source_filename)
 		return load(source_filename)
 
-func eval(source: String, argument_names: Array, argument_values: Array, return_value = true):
+func eval(source: String, argument_names: Array, argument_values: Array, return_value = true, node_ref = null):
 	assert(argument_names.size() == argument_values.size(), "Argument names and values for eval need to have the same size.")
 	var key = source + ":" + ','.join(argument_names)
 	if not key in _cache:
-		var object = _Dummy.new()
+		var object = U.new(node_ref if node_ref != null else Engine.get_main_loop().root)
 		object.set_script(script_for_eval(source, argument_names, return_value))
 		_cache[key] = object
-	return _cache[key].callv("run", argument_values)
+	var i = _cache[key]
+	i.ref = node_ref
+	return i.callv("run", argument_values)
 
-class _Dummy extends Node: pass
 var _cache = {}
 
 func _indent(s: String):

@@ -134,19 +134,19 @@ func _trigger(from: Object, argument_names: Array, argument_values: Array):
 		var target = from.get_node(to)
 		names.append("to")
 		values.append(target)
-		if should_trigger(names, values):
-			target.callv(invoke, arguments.map(func (arg): return ConnectionsList.eval(arg, names, values)))
+		if should_trigger(names, values, from):
+			target.callv(invoke, arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, true, from)))
 			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
 	else:
-		if should_trigger(names, values):
-			ConnectionsList.eval(expression, names, values, false)
+		if should_trigger(names, values, from):
+			ConnectionsList.eval(expression, names, values, false, from)
 			EngineDebugger.send_message("pronto:connection_activated", [resource_path])
 
 func has_condition():
 	return only_if != "true" and only_if != ""
 
-func should_trigger(names, values):
-	return not has_condition() or ConnectionsList.eval(only_if, names, values)
+func should_trigger(names, values, from):
+	return not has_condition() or ConnectionsList.eval(only_if, names, values, true, from)
 
 func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	var old = _ensure_connections(from)

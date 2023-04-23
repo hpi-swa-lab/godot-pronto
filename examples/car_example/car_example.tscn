@@ -70,7 +70,7 @@ script = ExtResource("4_k0n5o")
 signal_name = "elapsed"
 to = NodePath("../Spawner")
 invoke = "set_position"
-arguments = ["Utils.random_point_on_screen()"]
+arguments = ["random_point_on_screen()"]
 only_if = "true"
 expression = ""
 
@@ -94,7 +94,7 @@ value = 500.0
 position = Vector2(107, 52)
 script = ExtResource("9_hmnix")
 to_prop = "speed"
-convert = "G.at('speed')"
+convert = "at('speed')"
 
 [node name="Placeholder" type="Node2D" parent="car"]
 script = ExtResource("1_wxlom")
@@ -143,7 +143,7 @@ text = "score: 2"
 position = Vector2(-34, 53)
 script = ExtResource("9_hmnix")
 to_prop = "text"
-convert = "\"Score: \" + str(G.at(\"score\"))"
+convert = "\"Score: \" + str(at(\"score\"))"
 
 [node name="FPS" type="Label" parent="."]
 offset_left = 1067.0

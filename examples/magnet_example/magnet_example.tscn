@@ -68,8 +68,8 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
-	n.get_node(\"State\").put(\"attached\", false)"
+expression = "group_do(\"magnetic\", func(n):
+	u(n).put(\"attached\", false))"
 
 [sub_resource type="Resource" id="Resource_fbc0p"]
 script = ExtResource("3_5tqxr")
@@ -78,9 +78,9 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "for n in from.get_tree().get_nodes_in_group(\"magnetic\"):
-	n.get_node(\"State\").put(\"attached\", false)
-other.get_node(\"State\").put(\"attached\", true)"
+expression = "group_do(\"magnetic\", func (n):
+	u(n).put(\"attached\", false))
+u(other).put(\"attached\", true)"
 
 [sub_resource type="Resource" id="Resource_g462o"]
 script = ExtResource("3_5tqxr")
@@ -98,10 +98,10 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "from.get_parent().global_position = lerp(
-	from.get_parent().global_position,
-	Utils.mouse_position(),
-	delta * G.at(\"LerpSpeed\"))"
+expression = "get_parent().global_position = lerp(
+	get_parent().global_position,
+	mouse_position(),
+	delta * at(\"LerpSpeed\"))"
 
 [sub_resource type="Resource" id="Resource_2emeu"]
 script = ExtResource("12_1r3e1")
@@ -160,7 +160,7 @@ duration_seconds = 0.2
 metadata/pronto_connections = [SubResource("Resource_32of2"), SubResource("Resource_bowqy")]
 
 [node name="Collision" type="Node2D" parent="player/Spawner/magnet"]
-position = Vector2(-36, 75)
+position = Vector2(-57, 83)
 script = ExtResource("7_kmjgj")
 limit_to_group = "magnetic"
 metadata/pronto_connections = [SubResource("Resource_fbc0p"), SubResource("Resource_g462o")]

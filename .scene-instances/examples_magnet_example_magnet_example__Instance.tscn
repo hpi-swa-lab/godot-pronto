@@ -15,10 +15,10 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "true"
-expression = "from.get_parent().global_position = lerp(
-	from.get_parent().global_position,
-	Utils.mouse_position(),
-	delta * G.at(\"LerpSpeed\"))"
+expression = "get_parent().global_position = lerp(
+	get_parent().global_position,
+	mouse_position(),
+	delta * at(\"LerpSpeed\"))"
 
 [sub_resource type="Resource" id="Resource_2emeu"]
 script = ExtResource("6_w7xk0")

@@ -27,7 +27,8 @@ func update():
 	if convert:
 		value = ConnectionsList.eval(convert,
 			range(from.size()).map(func (index): return "value" + str(index)),
-			inputs)
+			inputs,
+			self)
 	
 	if last == value:
 		return
