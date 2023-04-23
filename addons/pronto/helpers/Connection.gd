@@ -70,6 +70,19 @@ func delete(from: Node, undo_redo: EditorUndoRedoManager = null):
 		undo_redo.add_undo_method(self, "_append_connection", from)
 		undo_redo.commit_action()
 
+## Reorder the connection at the given index in its connection list to be the first.
+static func reorder_to_top(from: Node, index: int, undo_redo: EditorUndoRedoManager = null, update_display = null):
+	if undo_redo != null:
+		undo_redo.create_action("Move connection first")
+		undo_redo.add_do_method(Connection, "_move_connection", from, index, 0)
+		undo_redo.add_undo_method(Connection, "_move_connection", from, 0, index)
+		if update_display:
+			undo_redo.add_do_method(update_display.get_object(), update_display.get_method())
+			undo_redo.add_undo_method(update_display.get_object(), update_display.get_method())
+		undo_redo.commit_action()
+	else:
+		_move_connection(from, index, 0)
+
 func _store(from: Node, undo_redo: EditorUndoRedoManager = null):
 	var connections = _ensure_connections(from)
 	if connections.any(func (c: Connection): return c == self): return
@@ -82,10 +95,14 @@ func _store(from: Node, undo_redo: EditorUndoRedoManager = null):
 	else:
 		connections.append(self)
 
+static func _move_connection(from: Node, current: int, new: int):
+	var list = _ensure_connections(from)
+	var c = list.pop_at(current)
+	list.insert(new, c)
 func _append_connection(from: Node):_ensure_connections(from).append(self)
 func _remove_connection(from: Node): _ensure_connections(from).erase(self)
 
-func _ensure_connections(from: Node):
+static func _ensure_connections(from: Node):
 	var connections: Array
 	if from.has_meta("pronto_connections"):
 		connections = from.get_meta("pronto_connections")

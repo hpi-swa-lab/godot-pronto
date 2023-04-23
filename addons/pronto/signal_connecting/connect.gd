@@ -60,3 +60,14 @@ func _on_add_mouse_entered():
 
 func _on_connections_item_selected(index):
 	NodeToNodeConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
+
+func _on_connections_item_clicked(index, at_position, mouse_button_index):
+	if mouse_button_index == MOUSE_BUTTON_RIGHT:
+		var m = PopupMenu.new()
+		m.add_item("Move to top", 0)
+		m.id_pressed.connect(func (id):
+			if id == 0:
+				Connection.reorder_to_top(node, index, undo_redo, build_list))
+		add_child(m)
+		m.position = Vector2i(global_position + at_position)
+		m.popup()

@@ -60,5 +60,6 @@ text = "Drag or double click"
 [node name="HSeparator" type="HSeparator" parent="edit/signals/ScrollContainer/signal_list"]
 layout_mode = 2
 
+[connection signal="item_clicked" from="edit/connections" to="." method="_on_connections_item_clicked"]
 [connection signal="item_selected" from="edit/connections" to="." method="_on_connections_item_selected"]
 [connection signal="mouse_entered" from="edit/add" to="." method="_on_add_mouse_entered"]
