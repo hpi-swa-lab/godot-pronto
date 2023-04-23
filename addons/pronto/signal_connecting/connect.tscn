@@ -15,7 +15,7 @@ layout_mode = 2
 [node name="connections" type="ItemList" parent="edit"]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 allow_reselect = true
 auto_height = true

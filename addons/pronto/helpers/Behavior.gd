@@ -63,10 +63,10 @@ func lines():
 	
 	var l = lines.keys().map(func (other):
 		return Lines.Line.new(self, other, func (flip):
-			return '\n'.join(lines[other].map(func(connection): return _print_connection(connection, flip))))
+			return '\n'.join(lines[other].map(func(connection): return Utils.print_connection(connection, flip))))
 		)
 	var s = self_connected.map(func (connection):
-		return Lines.Line.new(self, self, func (flip): return _print_connection(connection, flip)))
+		return Lines.Line.new(self, self, func (flip): return Utils.print_connection(connection, flip)))
 	l.append_array(s)
 	return l
 
@@ -74,10 +74,3 @@ func _draw():
 	if not Engine.is_editor_hint() or not _icon:
 		return
 	_lines._draw_lines(self, lines())
-
-func _print_connection(connection: Connection, flip = false):
-	var prefix = "[?] " if connection.has_condition() else ""
-	if connection.invoke != "":
-		return ("{2}{1} ← {0}" if flip else "{0} → {1}").format([connection.signal_name, connection.invoke, prefix])
-	else:
-		return "{2}{0} ↺ {1}...".format([connection.signal_name, connection.expression.substr(0, 5), prefix])
