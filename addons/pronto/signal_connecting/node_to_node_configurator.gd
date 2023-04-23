@@ -63,9 +63,6 @@ var receiver: Object:
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 
-func _ready():
-	%remove.icon = Utils.icon_from_theme("Remove", self)
-
 func set_expression_mode(expr: bool):
 	%Receiver.visible = not expr
 	%Expression.visible = expr
@@ -88,6 +85,8 @@ func update_argument_names():
 func _process(delta):
 	if anchor and anchor.is_inside_tree():
 		position = Utils.popup_position(anchor)
+		var offscreen_delta = (position + size - get_parent().size).clamp(Vector2(0, 0), Vector2(1000000, 1000000))
+		position -= offscreen_delta
 		%FunctionName.anchor = anchor
 
 func set_existing_connection(from: Node, connection: Connection):
