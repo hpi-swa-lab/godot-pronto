@@ -25,12 +25,13 @@ func is_valid_parent():
 	var p = get_parent()
 	return p is Area2D or p is RigidBody2D
 
-func lines():
-	return super.lines() + ([Lines.DashedLine.new(self, get_parent(), func (f): return "")] if is_valid_parent() else [])
-
 func _notification(what):
-	if what == NOTIFICATION_PARENTED:
-		update_configuration_warnings()
+	match what:
+		NOTIFICATION_PARENTED:
+			update_configuration_warnings()
+			add_line(Lines.DashedLine.new(self, get_parent(), ""))
+		NOTIFICATION_UNPARENTED:
+			remove_line("")
 
 func _get_configuration_warnings():
 	if not is_valid_parent():

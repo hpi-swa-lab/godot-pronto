@@ -42,5 +42,15 @@ func _process(delta):
 	if not Engine.is_editor_hint() and not one_shot:
 		update()
 
-func lines():
-	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (flip): return Utils.ellipsize(convert, 20))]
+func _notification(what):
+	match what:
+		NOTIFICATION_PARENTED:
+			add_line(Lines.DashedLine.new(self, get_parent(), "parent"))
+		NOTIFICATION_UNPARENTED:
+			remove_line("parent")
+
+func text_for_line(line: Lines.Line, flipped: bool):
+	if line.has_key("parent"):
+		return Utils.ellipsize(convert, 20)
+	else:
+		return super.text_for_line(line, flipped)

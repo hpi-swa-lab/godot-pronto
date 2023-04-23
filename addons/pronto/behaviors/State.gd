@@ -10,6 +10,10 @@ var _last_reported_game_values = {}
 
 signal changed(prop: String, value: Variant)
 
+func _init():
+	super._init()
+	add_line(Lines.Line.new(self, self, "value"))
+
 func _ready():
 	super._ready()
 	if global and not Engine.is_editor_hint():
@@ -34,12 +38,12 @@ func at(prop: String):
 func _report_game_value(prop: String, value: Variant):
 	_last_reported_game_values[prop] = value
 
-func lines():
-	return super.lines() + [Lines.Line.new(self, self, func (flip): return _print_values())]
-
-func _print_values():
-	return "\n".join(Array(get_meta_list()).map(func (prop):
-		return "{0} = {1}{2}".format([prop, get_meta(prop), _last_reported_string(prop)])))
+func text_for_line(line: Lines.Line, flipped: bool):
+	if line.has_key("value"):
+		return "\n".join(Array(get_meta_list()).map(func (prop):
+			return "{0} = {1}{2}".format([prop, get_meta(prop), _last_reported_string(prop)])))
+	else:
+		return super.text_for_line(line, flipped)
 
 func _last_reported_string(prop: String):
 	var val = _last_reported_game_values.get(prop)

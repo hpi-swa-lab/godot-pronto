@@ -4,8 +4,16 @@ extends Behavior
 
 var scene_path: String = ""
 
+func _init():
+	child_entered_tree.connect(func (n):
+		add_line(Lines.DashedLine.new(self, get_child(0), "spawns")))
+	child_exiting_tree.connect(func (n):
+		if n.get_index() == 0:
+			add_line(Lines.DashedLine.new(self, get_child(1), "spawns")))
+
 func _ready():
 	super._ready()
+	
 	if not Engine.is_editor_hint():
 		get_child(0).queue_free()
 
@@ -20,10 +28,12 @@ func _get_editor_node():
 		func (n: Node): return n.get_class() == "EditorNode")
 
 func _enter_tree():
+	super._enter_tree()
 	if Engine.is_editor_hint():
 		_get_editor_node().scene_saved.connect(maybe_update_scene)
 
 func _exit_tree():
+	super._exit_tree()
 	if Engine.is_editor_hint():
 		_get_editor_node().scene_saved.disconnect(maybe_update_scene)
 
@@ -65,6 +75,3 @@ func create_instance():
 	instance.owner = owner
 	# owner.set_editable_instance(instance, true)
 	instance.position = Vector2(30, 30)
-
-func lines():
-	return super.lines() + ([Lines.DashedLine.new(self, get_child(0), func (f): return "instances")] if get_child_count() > 0 else [])

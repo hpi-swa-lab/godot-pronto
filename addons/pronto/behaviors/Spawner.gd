@@ -4,6 +4,15 @@ extends Behavior
 
 var scene = null
 
+func _init():
+	super._init()
+	
+	child_entered_tree.connect(func (n):
+		add_line(Lines.DashedLine.new(self, get_child(0), "instances")))
+	child_exiting_tree.connect(func (n):
+		if n.get_index() == 0:
+			add_line(Lines.DashedLine.new(self, get_child(1), "instances")))
+
 func _ready():
 	super._ready()
 	
@@ -25,6 +34,3 @@ func spawn_toward(pos: Vector2):
 	instance.global_position = global_position
 	instance.rotation = global_position.angle_to_point(pos)
 	get_parent().add_child(instance)
-
-func lines():
-	return super.lines() + ([Lines.DashedLine.new(self, get_child(0), func (f): return "spawns")] if get_child_count() > 0 else [])

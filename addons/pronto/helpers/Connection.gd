@@ -99,8 +99,13 @@ static func _move_connection(from: Node, current: int, new: int):
 	var list = _ensure_connections(from)
 	var c = list.pop_at(current)
 	list.insert(new, c)
-func _append_connection(from: Node):_ensure_connections(from).append(self)
-func _remove_connection(from: Node): _ensure_connections(from).erase(self)
+	ConnectionsList.emit_connections_changed(from)
+func _append_connection(from: Node):
+	_ensure_connections(from).append(self)
+	ConnectionsList.emit_connections_changed(from)
+func _remove_connection(from: Node):
+	_ensure_connections(from).erase(self)
+	ConnectionsList.emit_connections_changed(from)
 
 static func _ensure_connections(from: Node):
 	var connections: Array
@@ -162,5 +167,6 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	
 	from.set_meta("pronto_connections", new)
 	assert(_ensure_connections(from) == new)
+	ConnectionsList.emit_connections_changed(from)
 	
 	return new_connection

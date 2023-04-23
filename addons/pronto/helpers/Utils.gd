@@ -46,6 +46,14 @@ static func find_index(list: Array, cond: Callable):
 			return i
 	return -1
 
+static func group_by(list: Array, criterium: Callable):
+	var groups = {}
+	for i in list:
+		var key = criterium.call(i)
+		if not key in groups: groups[key] = [i]
+		else: groups[key].append(i)
+	return groups
+
 static func all_nodes_that(root: Node, cond: Callable, list: Array[Node] = []):
 	if cond.call(root):
 		list.append(root)
