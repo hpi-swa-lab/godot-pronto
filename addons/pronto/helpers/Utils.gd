@@ -20,6 +20,11 @@ static func first_node_that(node: Node, cond: Callable):
 			return ret
 	return null
 
+static func all_nodes_that(node: Node, cond: Callable):
+	var list = []
+	all_nodes_do(node, func (c): if cond.call(c): list.append(c))
+	return list
+
 static func all_nodes(node: Node):
 	var list = []
 	all_nodes_do(node, func (c): list.append(c))
@@ -33,6 +38,23 @@ static func sum(list: Array):
 
 static func max(list: Array):
 	return list.reduce(func (accum, i): return max(accum, i), list[0])
+
+static func remove_duplicates(list: Array):
+	var out = []
+	for i in list:
+		if out.find(i) < 0:
+			out.append(i)
+	return out
+
+static func remove_duplicates_by(list: Array, criterium: Callable):
+	var seen = {}
+	var out = []
+	for i in list:
+		var key = criterium.call(i)
+		if not key in seen:
+			seen[key] = true
+			out.append(i)
+	return out
 
 static func find(list: Array, cond: Callable):
 	for i in list:
@@ -53,13 +75,6 @@ static func group_by(list: Array, criterium: Callable):
 		if not key in groups: groups[key] = [i]
 		else: groups[key].append(i)
 	return groups
-
-static func all_nodes_that(root: Node, cond: Callable, list: Array[Node] = []):
-	if cond.call(root):
-		list.append(root)
-	for c in root.get_children():
-		all_nodes_that(c, cond, list)
-	return list
 
 static func between(x: float, min: float, max: float):
 	return x >= min and x <= max
@@ -148,3 +163,9 @@ static func global_rect_of(node: Node):
 		var s = node.shape.get_rect().size
 		return Rect2(node.global_position - s / -2, s)
 	return Rect2(node.global_position, Vector2.ZERO)
+
+static func log(s):
+	var a = FileAccess.open("res://log", FileAccess.READ_WRITE if FileAccess.file_exists("res://log") else FileAccess.WRITE_READ)
+	a.seek_end()
+	a.store_string(str(s) + "\n")
+	a.close()

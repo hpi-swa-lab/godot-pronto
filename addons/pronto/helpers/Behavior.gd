@@ -44,9 +44,14 @@ func handles():
 
 var _running_tweens = {}
 func connection_activated(c: Connection):
+	# FIXME not scheduling well yet on fast repeats
 	var current = _running_tweens.get(c)
-	if current != null: current.kill()
-	
+	if current != null and not current.is_running(): current = null
+	if current != null:
+		if current.get_total_elapsed_time() < 0.1:
+			return
+		else:
+			current.kill()
 	var t = create_tween()
 	_running_tweens[c] = t
 	if current == null:

@@ -8,13 +8,10 @@ var editor_interface: EditorInterface
 func _init(editor_interface: EditorInterface):
 	self.editor_interface = editor_interface
 
-func find_connection_by_path(path: String):
-	var node = Utils.first_node_that(ConnectionsList.get_viewport(),
-		func(n): return Connection.get_connections(n).any(func(c): return c.resource_path == path))
-	if node == null:
-		# print("Connection {0} not found locally. Created at runtime?".format([path]))
-		return null
-	return [node, Utils.find(Connection.get_connections(node), func(c): return c.resource_path == path)]
+func find_connections_by_path(path: String):
+	var list = Utils.all_nodes_that(ConnectionsList.get_viewport(),
+		func(n): return Connection.get_connections(n).any(func(c): return c.resource_path.split("::")[1] == path))
+	return list.map(func (node): return [node, Utils.find(Connection.get_connections(node), func(c): return c.resource_path.split("::")[1] == path)])
 
 func _has_capture(prefix):
 	return prefix == "pronto"
@@ -22,14 +19,13 @@ func _has_capture(prefix):
 func _capture(message, data, session_id):
 	if message == "pronto:connection_activated":
 		var path = data[0]
-		var c = find_connection_by_path(path)
-		if c == null:
-			return true
-		var from = c[0]
-		var connection = c[1]
-		add_to_list(session_id, from, connection)
-		if from is Behavior:
-			from.connection_activated(connection)
+		var list = Utils.remove_duplicates_by(find_connections_by_path(path.split("::")[1]), func (c): return c[1].resource_path.split("::")[1])
+		for c in list:
+			var from = c[0]
+			var connection = c[1]
+			add_to_list(session_id, from, connection)
+			if from is Behavior:
+				from.connection_activated(connection)
 		return true
 	if message == "pronto:state_put":
 		var state = editor_interface.get_edited_scene_root().get_parent().get_node(str(data[0]).substr(6))
@@ -54,6 +50,8 @@ func _setup_session(session_id):
 	var list = ItemList.new()
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
+	# TODO modify interface/editor/unfocused_low_processor_mode_sleep_usec
+	# while the game is running
 	var session = get_session(session_id)
 	session.started.connect(list.clear)
 	# session.stopped.connect(func (): pass)
