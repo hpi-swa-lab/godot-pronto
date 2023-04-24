@@ -1,0 +1,136 @@
+[gd_scene load_steps=18 format=3 uid="uid://tcdhfecj8fw5"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_3qfj4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_uhcqt"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_wf515"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_fbp5v"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="5_co6ql"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="6_1ixte"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_u4aqk"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="8_16ug4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReady.gd" id="8_nnihf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gnpr5"]
+size = Vector2(32, 48)
+
+[sub_resource type="Resource" id="Resource_u023a"]
+script = ExtResource("4_fbp5v")
+signal_name = "direction"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["dir"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_25lm8"]
+script = ExtResource("4_fbp5v")
+signal_name = "left"
+to = NodePath("../../facing_right")
+invoke = "put"
+arguments = ["\"fr\"", "true"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ca0pr"]
+script = ExtResource("4_fbp5v")
+signal_name = "right"
+to = NodePath("../../facing_right")
+invoke = "put"
+arguments = ["\"fr\"", "false"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xavmv"]
+size = Vector2(112, 44)
+
+[sub_resource type="Resource" id="Resource_dow5e"]
+script = ExtResource("4_fbp5v")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_7w028"]
+script = ExtResource("4_fbp5v")
+signal_name = "nodeReady"
+to = NodePath("..")
+invoke = "set_rotation_degrees"
+arguments = ["180"]
+only_if = "G.at(\"fr\")"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_bstlt"]
+script = ExtResource("4_fbp5v")
+signal_name = "elapsed"
+to = NodePath("../Spawner")
+invoke = "spawn"
+arguments = []
+only_if = "true"
+expression = ""
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_3qfj4")
+color = Color(0.231373, 0.678431, 0.317647, 1)
+
+[node name="antonio" type="Area2D" parent="."]
+position = Vector2(547, 301)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="antonio"]
+shape = SubResource("RectangleShape2D_gnpr5")
+
+[node name="Placeholder" type="Node2D" parent="antonio"]
+script = ExtResource("2_uhcqt")
+color = Color(0.831373, 1, 0.329412, 1)
+placeholder_size = Vector2(32, 49)
+
+[node name="Controls" type="Node2D" parent="antonio"]
+position = Vector2(-75, 55)
+script = ExtResource("3_wf515")
+metadata/pronto_connections = [SubResource("Resource_u023a"), SubResource("Resource_25lm8"), SubResource("Resource_ca0pr")]
+
+[node name="Move" type="Node2D" parent="antonio"]
+position = Vector2(13, 54)
+script = ExtResource("5_co6ql")
+
+[node name="Spawner" type="Node2D" parent="antonio"]
+position = Vector2(0, -9)
+script = ExtResource("6_1ixte")
+
+[node name="whip" type="Area2D" parent="antonio/Spawner"]
+position = Vector2(113, 34)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="antonio/Spawner/whip"]
+position = Vector2(49, 0)
+shape = SubResource("RectangleShape2D_xavmv")
+
+[node name="Placeholder" type="Node2D" parent="antonio/Spawner/whip"]
+position = Vector2(48, 0)
+script = ExtResource("2_uhcqt")
+color = Color(0.647059, 0.647059, 0.647059, 0.564706)
+placeholder_size = Vector2(111, 44)
+
+[node name="Clock" type="Node2D" parent="antonio/Spawner/whip"]
+position = Vector2(59, 34)
+script = ExtResource("7_u4aqk")
+duration_seconds = 0.5
+metadata/pronto_connections = [SubResource("Resource_dow5e")]
+
+[node name="NodeReady" type="Node2D" parent="antonio/Spawner/whip"]
+position = Vector2(41, -50)
+script = ExtResource("8_nnihf")
+metadata/pronto_connections = [SubResource("Resource_7w028")]
+
+[node name="Clock" type="Node2D" parent="antonio"]
+position = Vector2(-103, -10)
+script = ExtResource("7_u4aqk")
+duration_seconds = 2.0
+metadata/pronto_connections = [SubResource("Resource_bstlt")]
+
+[node name="facing_right" type="Node2D" parent="."]
+position = Vector2(560, 402)
+script = ExtResource("8_16ug4")
+global = true
