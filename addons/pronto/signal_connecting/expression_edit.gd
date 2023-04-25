@@ -17,6 +17,10 @@ signal text_changed()
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
 		$Expression.text = v
+		resize()
+
+@export var min_width = 80
+@export var max_width = 260
 
 func _ready():
 	fake_a_godot_highlighter()
@@ -99,5 +103,17 @@ func open_file():
 func grab_focus():
 	$Expression.grab_focus()
 
+func extra_width():
+	return 100
+
 func _on_expression_text_changed():
+	if self != owner:
+		resize()
+	
 	text_changed.emit()
+
+func resize():
+	var size = get_theme_default_font().get_multiline_string_size(text)
+	custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
+	Utils.fix_minimum_size(self)
+	reset_size()

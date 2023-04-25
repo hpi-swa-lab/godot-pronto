@@ -6,7 +6,7 @@
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_1vnhi"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_4l1ge"]
 number_color = Color(0.63, 1, 0.88, 1)
 symbol_color = Color(0.67, 0.79, 1, 1)
 function_color = Color(0.34, 0.7, 1, 1)
@@ -63,7 +63,7 @@ script = ExtResource("2_au0w8")
 name = "DebugSkipBreakpointsOff"
 
 [node name="expression_edit" type="HBoxContainer"]
-custom_minimum_size = Vector2(180, 32)
+custom_minimum_size = Vector2(80, 32)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -79,7 +79,7 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_1vnhi")
+syntax_highlighter = SubResource("CodeHighlighter_4l1ge")
 scroll_fit_content_height = true
 indent_automatic = true
 auto_brace_completion_enabled = true
