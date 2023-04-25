@@ -111,9 +111,9 @@ arguments = ["G.at(\"dir\")"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_olwft"]
+[sub_resource type="Resource" id="Resource_ih2ky"]
 script = ExtResource("5_kl4mf")
-signal_name = "nodeReady"
+signal_name = "node_ready"
 to = NodePath("")
 invoke = ""
 arguments = []
@@ -121,11 +121,11 @@ only_if = "true"
 expression = "var x = [-1, 1].pick_random()
 var y = [-1, 1].pick_random()
 var dir = Vector2(x, y).normalized()
-G.put(\"dir\", dir)"
+put(\"dir\", dir)"
 
-[sub_resource type="Resource" id="Resource_sf2vn"]
+[sub_resource type="Resource" id="Resource_osic4"]
 script = ExtResource("5_kl4mf")
-signal_name = "nodeReady"
+signal_name = "node_ready"
 to = NodePath("..")
 invoke = "spawn"
 arguments = []
@@ -277,12 +277,12 @@ script = ExtResource("3_eaw55")
 [node name="NodeReady" type="Node2D" parent="Spawner/ball"]
 position = Vector2(-13, 50)
 script = ExtResource("14_k6tu2")
-metadata/pronto_connections = [SubResource("Resource_olwft")]
+metadata/pronto_connections = [SubResource("Resource_ih2ky")]
 
 [node name="NodeReady" type="Node2D" parent="Spawner"]
 position = Vector2(-12, 38)
 script = ExtResource("14_k6tu2")
-metadata/pronto_connections = [SubResource("Resource_sf2vn")]
+metadata/pronto_connections = [SubResource("Resource_osic4")]
 
 [node name="State" type="Node2D" parent="."]
 position = Vector2(753, 421)
