@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3nujwdlfc1cp"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_amyfm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o4oa3"]
+
+[node name="xp" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_o4oa3")
+
+[node name="Placeholder" type="Node2D" parent="."]
+script = ExtResource("1_amyfm")
+color = Color(0, 0.592157, 0.921569, 1)

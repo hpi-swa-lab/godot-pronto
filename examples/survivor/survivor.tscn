@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://tcdhfecj8fw5"]
+[gd_scene load_steps=23 format=3 uid="uid://tcdhfecj8fw5"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_3qfj4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_uhcqt"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_u4aqk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="8_16ug4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReady.gd" id="8_nnihf"]
+[ext_resource type="PackedScene" uid="uid://bjav4pfwng5lu" path="res://examples/survivor/enemy.tscn" id="10_dn6f3"]
+[ext_resource type="PackedScene" uid="uid://d3nujwdlfc1cp" path="res://examples/survivor/xp.tscn" id="12_brsud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gnpr5"]
 size = Vector2(32, 48)
@@ -70,7 +72,37 @@ arguments = []
 only_if = "true"
 expression = ""
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="Curve2D" id="Curve2D_qalvk"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -621, -374, 0, 0, 0, 0, 711, -391, 0, 0, 0, 0, 731, 474, 0, 0, 0, 0, -653, 470, 0, 0, 0, 0, -621, -374, 0, 0, 0, 0, -621, -377)
+}
+point_count = 6
+
+[sub_resource type="Resource" id="Resource_irdbg"]
+script = ExtResource("4_fbp5v")
+signal_name = "elapsed"
+to = NodePath("../Spawner")
+invoke = "spawn"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_2thae"]
+script = ExtResource("4_fbp5v")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "var field = from.get_tree().get_root().get_node('field')
+var path = field.get_node('antonio').get_node('enemySpawnPath')
+var spawner = field.get_node('Spawner')
+var point : PathFollow2D = PathFollow2D.new()
+path.add_child(point)
+point.offset = randi()
+spawner.set_position(point.get_global_position())"
+
+[node name="field" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
 script = ExtResource("1_3qfj4")
@@ -130,7 +162,39 @@ script = ExtResource("7_u4aqk")
 duration_seconds = 2.0
 metadata/pronto_connections = [SubResource("Resource_bstlt")]
 
+[node name="Camera2D" type="Camera2D" parent="antonio"]
+
+[node name="enemySpawnPath" type="Path2D" parent="antonio"]
+curve = SubResource("Curve2D_qalvk")
+
 [node name="facing_right" type="Node2D" parent="."]
 position = Vector2(560, 402)
 script = ExtResource("8_16ug4")
 global = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 875.0
+offset_top = 461.0
+offset_right = 898.0
+offset_bottom = 495.0
+color = Color(0.490196, 0.490196, 0.490196, 1)
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(136, 289)
+script = ExtResource("6_1ixte")
+
+[node name="Node2D" parent="Spawner" instance=ExtResource("10_dn6f3")]
+position = Vector2(116, 73)
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(61, 286)
+script = ExtResource("7_u4aqk")
+duration_seconds = 0.5
+metadata/pronto_connections = [SubResource("Resource_irdbg"), SubResource("Resource_2thae")]
+
+[node name="xpSpawner" type="Node2D" parent="." groups=["xpSpawner"]]
+position = Vector2(658, 487)
+script = ExtResource("6_1ixte")
+
+[node name="xp" parent="xpSpawner" instance=ExtResource("12_brsud")]
+position = Vector2(43, 13)

@@ -24,6 +24,9 @@ func move_up():
 func move_toward(pos: Vector2):
 	get_parent().position += (pos - get_parent().global_position).normalized() * speed
 
+func move_to(pos: Vector2):
+	get_parent().position += (pos - get_parent().global_position).normalized() * speed * get_process_delta_time()
+
 func _speed_vector(horizontal: bool):
 	return _speed_vector_dir(Vector2(1 if horizontal else 0, 0 if horizontal else 1))
 
