@@ -92,6 +92,10 @@ class DashedLine extends Line:
 
 class CombinedLine extends Line:
 	var lines
+	
+	func color(flashed: Dictionary):
+		return Color.WHITE.lerp(Color.RED, Utils.max(lines.map(func (l): return flashed.get(l.key, 0.0))))
+	
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, flashed: Dictionary):
 		var y = 0
 		for line in lines:
