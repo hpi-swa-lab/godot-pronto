@@ -36,6 +36,7 @@ theme_override_constants/separation = 6
 
 [node name="SharedLinksNote" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="SharedLinksCount" type="Label" parent="MarginContainer/VBoxContainer/SharedLinksNote"]

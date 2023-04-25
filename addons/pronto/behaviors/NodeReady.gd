@@ -2,9 +2,11 @@
 #thumb("PlayStart")
 extends Behavior
 
-signal nodeReady
+signal node_ready
 
 func _ready():
 	super._ready()
 	await get_tree().process_frame
-	nodeReady.emit()
+	# we may have been removed from the tree
+	if is_inside_tree():
+		node_ready.emit()

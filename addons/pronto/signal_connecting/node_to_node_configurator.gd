@@ -130,6 +130,7 @@ func _on_function_selected(name: String):
 	var ExpressionEdit = preload("res://addons/pronto/signal_connecting/expression_edit.tscn")
 	for arg in method["args"]:
 		var arg_ui = ExpressionEdit.instantiate()
+		Utils.fix_minimum_size(arg_ui)
 		arg_ui.placeholder_text = arg["name"]
 		%Args.add_child(arg_ui)
 	update_argument_names()

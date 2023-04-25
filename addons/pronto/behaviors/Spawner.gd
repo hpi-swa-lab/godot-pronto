@@ -4,6 +4,8 @@ extends Behavior
 
 var scene = null
 
+signal spawned(instance: Node)
+
 func _ready():
 	super._ready()
 	
@@ -18,6 +20,8 @@ func spawn():
 	var instance = _spawn()
 	instance.position = position
 	get_parent().add_child(instance)
+	spawned.emit(instance)
+	return instance
 
 func spawn_toward(pos: Vector2):
 	var instance = _spawn()
@@ -25,6 +29,8 @@ func spawn_toward(pos: Vector2):
 	instance.global_position = global_position
 	instance.rotation = global_position.angle_to_point(pos)
 	get_parent().add_child(instance)
+	spawned.emit(instance)
+	return instance
 
 func lines():
 	return super.lines() + ([Lines.DashedLine.new(self, get_child(0), func (f): return "spawns", "spawns")] if get_child_count() > 0 else [])

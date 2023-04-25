@@ -164,6 +164,9 @@ static func global_rect_of(node: Node):
 		return Rect2(node.global_position - s / -2, s)
 	return Rect2(node.global_position, Vector2.ZERO)
 
+static func fix_minimum_size(n: Control):
+	n.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
+
 static func log(s):
 	var a = FileAccess.open("res://log", FileAccess.READ_WRITE if FileAccess.file_exists("res://log") else FileAccess.WRITE_READ)
 	a.seek_end()
