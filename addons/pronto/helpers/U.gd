@@ -21,7 +21,7 @@ func get_parent() -> Node:
 func closest(name: String) -> Node:
 	return closest_that(func (n): return n.name == name)
 
-## Find the closest node with the given name. First checks children, then children of parents
+## Find the closest node that matches the given criterium. First checks children, then children of parents
 ## in a breadth-first search.
 func closest_that(cond: Callable) -> Node:
 	var root = ref
