@@ -8,8 +8,8 @@ var anchor: Node:
 	set(a):
 		anchor = a
 		# Hi-DPI doesn't size this correctly for unknown reasons
-		%connections.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
-		%signals.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
+		Utils.fix_minimum_size(%connections)
+		Utils.fix_minimum_size(%signals)
 		reset_size()
 
 var node: Node:
