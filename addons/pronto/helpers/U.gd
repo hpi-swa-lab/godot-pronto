@@ -74,5 +74,4 @@ func put(name: String, value: Variant) -> void:
 	if state != null:
 		state.put(name, value)
 	else:
-		print("STORING IN GLOBAL " + name)
 		G.put(name, value)
