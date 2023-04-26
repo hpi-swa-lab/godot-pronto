@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://88vl7ypda1n1"]
+[gd_scene load_steps=11 format=3 uid="uid://88vl7ypda1n1"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_rpa0n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_pahj6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_vo8i5"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_7c7a3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_5l8ei"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_euwxy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="7_wp8p8"]
 
 [sub_resource type="Resource" id="Resource_labnx"]
@@ -13,7 +12,7 @@ script = ExtResource("4_7c7a3")
 signal_name = "touched_floor"
 to = NodePath("../State")
 invoke = "put"
-arguments = ["\"has_double_jump\"", "true"]
+arguments = ["\"jumps_remaining\"", "2"]
 only_if = "true"
 expression = ""
 
@@ -23,25 +22,16 @@ signal_name = "just_down"
 to = NodePath("../Move")
 invoke = "set_velocity_y"
 arguments = ["-1200"]
-only_if = "to.is_on_floor() or at(\"has_double_jump\")"
+only_if = "at(\"jumps_remaining\") > 0"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_1a7yi"]
 script = ExtResource("4_7c7a3")
-signal_name = "down"
-to = NodePath("../State")
-invoke = "put"
-arguments = ["\"has_double_jump\"", "false"]
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_0t128"]
-script = ExtResource("4_7c7a3")
 signal_name = "just_down"
-to = NodePath("../Clock")
-invoke = "reset_and_start"
-arguments = []
-only_if = "closest(\"Move\").is_on_floor()"
+to = NodePath("../State")
+invoke = "inc"
+arguments = ["\"jumps_remaining\"", "-1"]
+only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_p8223"]
@@ -51,15 +41,6 @@ to = NodePath("../Move")
 invoke = "move_direction"
 arguments = ["dir"]
 only_if = ""
-expression = ""
-
-[sub_resource type="Resource" id="Resource_3b5rb"]
-script = ExtResource("4_7c7a3")
-signal_name = "elapsed"
-to = NodePath("../State")
-invoke = "put"
-arguments = ["\"has_double_jump\"", "true"]
-only_if = "true"
 expression = ""
 
 [node name="platformer" type="Node2D"]
@@ -89,7 +70,7 @@ metadata/pronto_connections = [SubResource("Resource_labnx")]
 position = Vector2(170, 56)
 script = ExtResource("7_wp8p8")
 key = "Up"
-metadata/pronto_connections = [SubResource("Resource_afj6g"), SubResource("Resource_1a7yi"), SubResource("Resource_0t128")]
+metadata/pronto_connections = [SubResource("Resource_afj6g"), SubResource("Resource_1a7yi")]
 
 [node name="Controls" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(173, 92)
@@ -99,14 +80,7 @@ metadata/pronto_connections = [SubResource("Resource_p8223")]
 [node name="State" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(48, 5)
 script = ExtResource("5_5l8ei")
-metadata/has_double_jump = true
-
-[node name="Clock" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(136, -22)
-script = ExtResource("7_euwxy")
-one_shot = true
-duration_seconds = 0.1
-metadata/pronto_connections = [SubResource("Resource_3b5rb")]
+metadata/jumps_remaining = 2
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(525, 619)
