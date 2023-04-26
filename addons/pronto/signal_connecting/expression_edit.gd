@@ -22,8 +22,21 @@ signal text_changed()
 @export var min_width = 80
 @export var max_width = 260
 
+func _input(event):
+	if not $Expression.has_focus():
+		return
+	if event is InputEventKey and event.pressed and not event.is_echo() and event.keycode == KEY_TAB and text.count("\n") < 1:
+		var focus
+		if event.shift_pressed:
+			focus = $Expression.find_prev_valid_focus()
+		else:
+			focus = $Expression.find_next_valid_focus()
+		get_viewport().set_input_as_handled()
+		if focus: focus.grab_focus()
+
 func _ready():
-	fake_a_godot_highlighter()
+	if owner != self:
+		fake_a_godot_highlighter()
 
 func fake_a_godot_highlighter():
 	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
@@ -107,13 +120,14 @@ func extra_width():
 	return 100
 
 func _on_expression_text_changed():
-	if self != owner:
-		resize()
-	
+	resize()
 	text_changed.emit()
 
 func resize():
+	if self == owner:
+		return
 	var size = get_theme_default_font().get_multiline_string_size(text)
 	custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
 	Utils.fix_minimum_size(self)
-	reset_size()
+	if size_flags_horizontal != SIZE_EXPAND_FILL:
+		reset_size()

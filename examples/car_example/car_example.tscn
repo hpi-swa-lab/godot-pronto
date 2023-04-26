@@ -1,7 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://fegvnevn4cyu"]
+[gd_scene load_steps=17 format=3 uid="uid://fegvnevn4cyu"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_wxlom"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="2_5xtke"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_vc300"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_v6c42"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_k0n5o"]
@@ -83,18 +82,7 @@ position = Vector2(329, 265)
 position = Vector2(140, -7)
 script = ExtResource("2_vc300")
 rotated = true
-
-[node name="speed" type="Node2D" parent="car/Move"]
-position = Vector2(43, 55)
-script = ExtResource("2_5xtke")
-to = 500.0
-value = 500.0
-
-[node name="bind_speed" type="Node2D" parent="car/Move"]
-position = Vector2(107, 52)
-script = ExtResource("9_hmnix")
-to_prop = "speed"
-convert = "at('speed')"
+acceleration = 10.0
 
 [node name="Placeholder" type="Node2D" parent="car"]
 script = ExtResource("1_wxlom")

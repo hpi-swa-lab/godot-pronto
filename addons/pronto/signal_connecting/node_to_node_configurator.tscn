@@ -110,6 +110,7 @@ text = "only if: "
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "true"

@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://88vl7ypda1n1"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_rpa0n"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_pahj6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_vo8i5"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_7c7a3"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_5l8ei"]
+
+[sub_resource type="Resource" id="Resource_dsxhs"]
+script = ExtResource("4_7c7a3")
+signal_name = "touched_floor"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["\"has_double_jump\"", "true"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_p8223"]
+script = ExtResource("4_7c7a3")
+signal_name = "horizontal_direction"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["dir"]
+only_if = ""
+expression = ""
+
+[sub_resource type="Resource" id="Resource_sewq8"]
+script = ExtResource("4_7c7a3")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "add_velocity"
+arguments = ["Vector2(0, -800)"]
+only_if = "to.is_on_floor()"
+expression = ""
+
+[node name="platformer" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(346, 141)
+velocity = Vector2(0, 23520)
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("1_rpa0n")
+label = "player"
+
+[node name="Move" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(-14, 65)
+script = ExtResource("2_pahj6")
+max_velocity = 800.0
+acceleration = 5.0
+gravity = 2400.0
+acceleration_air = 1.0
+metadata/pronto_connections = [SubResource("Resource_dsxhs")]
+
+[node name="Controls" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(83, 37)
+script = ExtResource("3_vo8i5")
+metadata/pronto_connections = [SubResource("Resource_p8223"), SubResource("Resource_sewq8")]
+
+[node name="State" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(48, 5)
+script = ExtResource("5_5l8ei")
+metadata/has_double_jump = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(525, 619)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D"]
+position = Vector2(1, 0)
+script = ExtResource("1_rpa0n")
+placeholder_size = Vector2(1534, 7)

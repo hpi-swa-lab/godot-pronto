@@ -10,7 +10,8 @@ func _init(editor_interface: EditorInterface):
 
 func find_connections_by_path(path: String):
 	var list = Utils.all_nodes_that(editor_interface.get_edited_scene_root(),
-		func(n): return Connection.get_connections(n).any(func(c): return c.resource_path.split("::")[1] == path))
+		func(n): return Connection.get_connections(n).any(func(c):
+			return not c.resource_path.is_empty() and c.resource_path.split("::")[1] == path))
 	return list.map(func (node): return [node, Utils.find(Connection.get_connections(node), func(c): return c.resource_path.split("::")[1] == path)])
 
 func _has_capture(prefix):

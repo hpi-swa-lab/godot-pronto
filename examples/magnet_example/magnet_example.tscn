@@ -145,8 +145,10 @@ placeholder_size = Vector2(30, 30)
 [node name="Move" type="Node2D" parent="player/Spawner/magnet"]
 position = Vector2(-49, 49)
 script = ExtResource("1_7jvq5")
-speed = 1200.0
+max_velocity = 1200.0
 rotated = true
+acceleration = 10000.0
+friction = 0.0
 
 [node name="Always" type="Node2D" parent="player/Spawner/magnet"]
 position = Vector2(-32, -9)

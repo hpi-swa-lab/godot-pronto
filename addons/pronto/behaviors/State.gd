@@ -28,8 +28,8 @@ func put(prop: String, value: Variant):
 	changed.emit(prop, value)
 	EngineDebugger.send_message("pronto:state_put", [get_path(), prop, value])
 
-func at(prop: String):
-	return get_meta(prop)
+func at(prop: String, default = null):
+	return get_meta(prop, default)
 
 func _report_game_value(prop: String, value: Variant):
 	_last_reported_game_values[prop] = value
