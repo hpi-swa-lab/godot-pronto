@@ -1,18 +1,38 @@
-[gd_scene load_steps=9 format=3 uid="uid://88vl7ypda1n1"]
+[gd_scene load_steps=13 format=3 uid="uid://88vl7ypda1n1"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_rpa0n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_pahj6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_vo8i5"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_7c7a3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_5l8ei"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_euwxy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="7_wp8p8"]
 
-[sub_resource type="Resource" id="Resource_dsxhs"]
+[sub_resource type="Resource" id="Resource_afj6g"]
 script = ExtResource("4_7c7a3")
-signal_name = "touched_floor"
+signal_name = "down"
+to = NodePath("../Move")
+invoke = "add_velocity"
+arguments = ["Vector2(0, -800)"]
+only_if = "to.is_on_floor() or at(\"has_double_jump\")"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_1a7yi"]
+script = ExtResource("4_7c7a3")
+signal_name = "down"
 to = NodePath("../State")
 invoke = "put"
-arguments = ["\"has_double_jump\"", "true"]
+arguments = ["\"has_double_jump\"", "false"]
 only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_0t128"]
+script = ExtResource("4_7c7a3")
+signal_name = "down"
+to = NodePath("../Clock")
+invoke = "reset_and_start"
+arguments = []
+only_if = "closest(\"Move\").is_on_floor()"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_p8223"]
@@ -24,13 +44,13 @@ arguments = ["dir"]
 only_if = ""
 expression = ""
 
-[sub_resource type="Resource" id="Resource_sewq8"]
+[sub_resource type="Resource" id="Resource_3b5rb"]
 script = ExtResource("4_7c7a3")
-signal_name = "up"
-to = NodePath("../Move")
-invoke = "add_velocity"
-arguments = ["Vector2(0, -800)"]
-only_if = "to.is_on_floor()"
+signal_name = "elapsed"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["\"has_double_jump\"", "true"]
+only_if = "true"
 expression = ""
 
 [node name="platformer" type="Node2D"]
@@ -44,23 +64,36 @@ script = ExtResource("1_rpa0n")
 label = "player"
 
 [node name="Move" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(-14, 65)
+position = Vector2(70, 75)
 script = ExtResource("2_pahj6")
 max_velocity = 800.0
 acceleration = 5.0
 gravity = 2400.0
 acceleration_air = 1.0
-metadata/pronto_connections = [SubResource("Resource_dsxhs")]
+metadata/pronto_connections = []
+
+[node name="Key" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(170, 56)
+script = ExtResource("7_wp8p8")
+key = "Up"
+metadata/pronto_connections = [SubResource("Resource_afj6g"), SubResource("Resource_1a7yi"), SubResource("Resource_0t128")]
 
 [node name="Controls" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(83, 37)
+position = Vector2(173, 92)
 script = ExtResource("3_vo8i5")
-metadata/pronto_connections = [SubResource("Resource_p8223"), SubResource("Resource_sewq8")]
+metadata/pronto_connections = [SubResource("Resource_p8223")]
 
 [node name="State" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(48, 5)
 script = ExtResource("5_5l8ei")
 metadata/has_double_jump = true
+
+[node name="Clock" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(136, -22)
+script = ExtResource("7_euwxy")
+one_shot = true
+duration_seconds = 0.3
+metadata/pronto_connections = [SubResource("Resource_3b5rb")]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(525, 619)
@@ -69,3 +102,27 @@ position = Vector2(525, 619)
 position = Vector2(1, 0)
 script = ExtResource("1_rpa0n")
 placeholder_size = Vector2(1534, 7)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(777, 446)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D2"]
+position = Vector2(1, 0)
+script = ExtResource("1_rpa0n")
+placeholder_size = Vector2(227, 25)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(504, 326)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D3"]
+position = Vector2(1, 0)
+script = ExtResource("1_rpa0n")
+placeholder_size = Vector2(227, 25)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(231, 530)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D4"]
+position = Vector2(1, 0)
+script = ExtResource("1_rpa0n")
+placeholder_size = Vector2(227, 25)

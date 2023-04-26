@@ -26,21 +26,27 @@ func _capture(message, data, session_id):
 			var connection = c[1]
 			if from is Behavior:
 				from.connection_activated(connection)
-			add_to_list(session_id, from, connection)
+			add_to_list(session_id, from, connection, data[1])
 		return true
 	if message == "pronto:state_put":
 		var state = editor_interface.get_edited_scene_root().get_parent().get_node(str(data[0]).substr(6))
 		assert(state is State)
 		state._report_game_value(data[1], data[2])
 		return true
+	if message == "pronto:watch_put":
+		var state = editor_interface.get_edited_scene_root().get_parent().get_node(str(data[0]).substr(6))
+		assert(state is Watch)
+		state._report_game_value(data[1])
+		return true
+	return true
 
-func add_to_list(session_id, from, connection):
+func add_to_list(session_id, from, connection, args_string):
 	var list: ItemList = debug_lists.get(session_id)
 	if list == null:
 		return
 	var at_bottom = list.get_v_scroll_bar().value >= (list.get_v_scroll_bar().max_value - list.size.y - 12)
 	list.add_item(
-		"{0}:{1} -> {2}:{3}".format([from, connection.signal_name, connection.to, connection.invoke])
+		"{0}:{1} -> {2}.{3}({4})".format([from, connection.signal_name, connection.to, connection.invoke, args_string])
 		if connection.is_target()
 		else "{0}:{1} ↺ {2}".format([from, connection.signal_name, connection.expression]))
 	if at_bottom:

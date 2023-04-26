@@ -19,6 +19,7 @@ func _needs_update(lines: Array):
 		new_pos.append(l.from.global_position)
 		new_pos.append(l.to.global_position)
 		new_pos.append(l.text_fn.call(false))
+	
 	needs_update = needs_update or _last_pos != new_pos
 	_last_pos = new_pos
 	return needs_update

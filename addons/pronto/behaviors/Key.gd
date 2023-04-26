@@ -14,6 +14,7 @@ signal just_down
 signal just_up
 
 func _process(_delta):
+	super._process(_delta)
 	if is_pressed:
 		pressed.emit()
 

@@ -1,0 +1,20 @@
+@tool
+#thumb("Search")
+extends Behavior
+class_name Watch
+
+@export var expression: String
+
+var _value = ""
+
+func _process(delta):
+	super._process(delta)
+	if not Engine.is_editor_hint():
+		var val = str(ConnectionsList.eval(expression, [], [], true, self))
+		EngineDebugger.send_message("pronto:watch_put", [get_path(), val])
+
+func _report_game_value(val):
+	_value = val
+
+func lines():
+	return [Lines.Line.new(self, self, func (f): return Utils.ellipsize(expression, 12) + "=" + _value, "value")]

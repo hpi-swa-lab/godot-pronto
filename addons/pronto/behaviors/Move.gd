@@ -18,6 +18,7 @@ signal touched_floor
 
 var _velocity = Vector2.ZERO
 var _did_accelerate = false
+var _was_on_floor = false
 
 func is_on_floor():
 	if get_parent() is CharacterBody2D:
@@ -48,6 +49,11 @@ func _physics_process(delta):
 	else:
 		get_parent().position += _velocity * delta
 	_did_accelerate = false
+	
+	if _was_on_floor != is_on_floor():
+		_was_on_floor = is_on_floor()
+		if is_on_floor():
+			touched_floor.emit()
 
 func move_direction(direction: Vector2):
 	var _accel = acceleration if is_on_floor() else acceleration_air

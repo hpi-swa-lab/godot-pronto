@@ -19,6 +19,9 @@ var _timer: Timer:
 		if not _timer: _timer = Timer.new()
 		return _timer
 
+func reset_and_start():
+	_timer.start(duration_seconds)
+
 func _ready():
 	super._ready()
 	if not Engine.is_editor_hint():

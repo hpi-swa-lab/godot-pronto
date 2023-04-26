@@ -155,7 +155,7 @@ static func print_connection(connection: Connection, flip = false):
 static func ellipsize(s: String, max: int):
 	if s.length() <= max:
 		return s
-	return s.substr(0, s.length() - 3) + "..."
+	return s.substr(0, max - 3) + "..."
 
 static func global_rect_of(node: Node):
 	if "size" in node: return Rect2(node.global_position, node.size)
