@@ -18,6 +18,9 @@ func _process(_delta):
 	if is_pressed:
 		pressed.emit()
 
+func lines():
+	return super.lines() + [Lines.BottomText.new(self, str(key))]
+
 func _input(event):
 	if event is InputEventKey and event.as_text_keycode() == key:
 		if event.pressed and !is_pressed:

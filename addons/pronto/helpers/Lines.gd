@@ -108,3 +108,7 @@ class CombinedLine extends Line:
 				text,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color)
 			y += size.y
+
+class BottomText extends Line:
+	func _init(node: Node, label: String):
+		super._init(node, node, func (f): return label, label)

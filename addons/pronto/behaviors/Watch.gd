@@ -17,4 +17,4 @@ func _report_game_value(val):
 	_value = val
 
 func lines():
-	return [Lines.Line.new(self, self, func (f): return Utils.ellipsize(expression, 12) + "=" + _value, "value")]
+	return super.lines() + [Lines.BottomText.new(self, Utils.ellipsize(expression, 12) + "=" + _value)]
