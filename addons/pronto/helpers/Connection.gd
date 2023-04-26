@@ -116,32 +116,43 @@ func _install_in_game(from: Node):
 		return
 	
 	var signal_arguments: Array = Utils.find(from.get_signal_list(), func (s): return s["name"] == signal_name)["args"].map(func (a): return a["name"])
-	
-	var s = signal_arguments
-	match signal_arguments.size():
-		0: from.connect(signal_name, func (): _trigger(from, s, []))
-		1: from.connect(signal_name, func (arg1): _trigger(from, s, [arg1]))
-		2: from.connect(signal_name, func (arg1, arg2): _trigger(from, s, [arg1, arg2]))
-		3: from.connect(signal_name, func (arg1, arg2, arg3): _trigger(from, s, [arg1, arg2, arg3]))
-		4: from.connect(signal_name, func (arg1, arg2, arg3, arg4): _trigger(from, s, [arg1, arg2, arg3, arg4]))
+	if not from.get_signal_connection_list(signal_name).any(func (dict): return dict["callable"].get_method().begins_with("_pronto_dispatch_connections")):
+		var name = "_pronto_dispatch_connections" + str(signal_arguments.size())
+		from.connect(signal_name, Callable(self, name).bind(from, signal_name, signal_arguments))
 
-func _trigger(from: Object, argument_names: Array, argument_values: Array):
-	var names = argument_names.duplicate()
-	var values = argument_values.duplicate()
-	names.append("from")
-	values.append(from)
-	if to:
-		var target = from.get_node(to)
-		names.append("to")
-		values.append(target)
-		if should_trigger(names, values, from):
-			var args = arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, true, from))
-			target.callv(invoke, args)
-			EngineDebugger.send_message("pronto:connection_activated", [resource_path, ",".join(args.map(func (s): return str(s)))])
-	else:
-		if should_trigger(names, values, from):
-			ConnectionsList.eval(expression, names, values, false, from)
-			EngineDebugger.send_message("pronto:connection_activated", [resource_path, ""])
+func _pronto_dispatch_connections0(from: Node, signal_name: String, signal_arguments):
+	_trigger(from, signal_name, signal_arguments, [])
+func _pronto_dispatch_connections1(arg1, from: Node, signal_name: String, signal_arguments):
+	_trigger(from, signal_name, signal_arguments, [arg1])
+func _pronto_dispatch_connections2(arg1, arg2, from: Node, signal_name: String, signal_arguments):
+	_trigger(from, signal_name, signal_arguments, [arg1, arg2])
+func _pronto_dispatch_connections3(arg1, arg2, arg3, from: Node, signal_name: String, signal_arguments):
+	_trigger(from, signal_name, signal_arguments, [arg1, arg2, arg3])
+func _pronto_dispatch_connections4(arg1, arg2, arg3, arg4, from: Node, signal_name: String, signal_arguments):
+	_trigger(from, signal_name, signal_arguments, [arg1, arg2, arg3, arg4])
+func _pronto_dispatch_connections5(arg1, arg2, arg3, arg4, arg5, from: Node, signal_name: String, signal_arguments):
+	_trigger(from, signal_name, signal_arguments, [arg1, arg2, arg3, arg4, arg5])
+
+func _trigger(from: Object, signal_name: String, argument_names: Array, argument_values: Array):
+	for c in Connection.get_connections(from):
+		if c.signal_name != signal_name:
+			continue
+		var names = argument_names.duplicate()
+		var values = argument_values.duplicate()
+		names.append("from")
+		values.append(from)
+		if c.to:
+			var target = from.get_node(c.to)
+			names.append("to")
+			values.append(target)
+			if c.should_trigger(names, values, from):
+				var args = c.arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, true, from))
+				target.callv(c.invoke, args)
+				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
+		else:
+			if c.should_trigger(names, values, from):
+				ConnectionsList.eval(c.expression, names, values, false, from)
+				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
 func has_condition():
 	return only_if != "true" and only_if != ""

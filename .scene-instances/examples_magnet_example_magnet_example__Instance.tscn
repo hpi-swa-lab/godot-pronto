@@ -22,6 +22,7 @@ expression = "get_parent().global_position = lerp(
 
 [sub_resource type="Resource" id="Resource_2emeu"]
 script = ExtResource("6_w7xk0")
+name = ""
 from = NodePath("../../State")
 prop = "attached"
 
