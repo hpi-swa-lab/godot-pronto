@@ -43,9 +43,12 @@ func set_velocity_x(num: float):
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
-	var _friction = friction if is_on_floor() else friction_air
-	if not _did_accelerate:
-		velocity = velocity.lerp(Vector2.ZERO, min(1.0, _friction * delta))
+	# on the floor, we only want to apply friction is we did not accelerate this frame
+	if not _did_accelerate and is_on_floor():
+		velocity = velocity.lerp(Vector2.ZERO, min(1.0, friction * delta))
+	# in the air, we always want to apply friction
+	if not is_on_floor():
+		velocity.x = lerp(velocity.x, 0.0, min(1.0, friction_air * delta))
 	
 	if gravity > 0.0:
 		velocity.y += gravity * delta

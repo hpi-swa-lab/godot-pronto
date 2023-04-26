@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://88vl7ypda1n1"]
+[gd_scene load_steps=12 format=3 uid="uid://88vl7ypda1n1"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_rpa0n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_pahj6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_vo8i5"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_7c7a3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_5l8ei"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="7_flr1a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="7_wp8p8"]
 
 [sub_resource type="Resource" id="Resource_labnx"]
@@ -21,7 +22,7 @@ script = ExtResource("4_7c7a3")
 signal_name = "just_down"
 to = NodePath("../Move")
 invoke = "set_velocity_y"
-arguments = ["-1200"]
+arguments = ["-at(\"jump_speed\")"]
 only_if = "at(\"jumps_remaining\") > 0"
 expression = ""
 
@@ -56,11 +57,12 @@ label = "player"
 [node name="Move" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(70, 75)
 script = ExtResource("2_pahj6")
-max_velocity = 400.0
+max_velocity = 600.0
 acceleration = 5.0
-gravity = 4000.0
+friction = 40.0
+gravity = 3000.0
 friction_air = 2.0
-acceleration_air = 3.0
+acceleration_air = 2.0
 rotated = null
 rotation_speed = 300.0
 rotate_velocity = null
@@ -81,6 +83,13 @@ metadata/pronto_connections = [SubResource("Resource_p8223")]
 position = Vector2(48, 5)
 script = ExtResource("5_5l8ei")
 metadata/jumps_remaining = 2
+
+[node name="jump_speed" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(181, 7)
+script = ExtResource("7_flr1a")
+from = 500.0
+to = 2000.0
+value = 909.179
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(525, 619)
