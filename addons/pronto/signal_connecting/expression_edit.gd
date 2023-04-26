@@ -37,6 +37,7 @@ func _input(event):
 func _ready():
 	if owner != self:
 		fake_a_godot_highlighter()
+		resize()
 
 func fake_a_godot_highlighter():
 	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()

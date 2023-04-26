@@ -21,7 +21,7 @@ func build_list():
 	%connections.clear()
 	_displayed_connections = Connection.get_connections(node).duplicate()
 	for c in _displayed_connections:
-		%connections.add_item(Utils.print_connection(c), Utils.icon_from_theme("Signals", node))
+		%connections.add_item(Utils.print_connection(c, false, false), Utils.icon_from_theme("Signals", node))
 	%connections.visible = %connections.item_count > 0
 
 func _process(delta):

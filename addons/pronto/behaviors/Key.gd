@@ -22,7 +22,7 @@ func lines():
 	return super.lines() + [Lines.BottomText.new(self, str(key))]
 
 func _input(event):
-	if event is InputEventKey and event.as_text_keycode() == key:
+	if event is InputEventKey and event.as_text_keycode() == key and not event.echo:
 		if event.pressed and !is_pressed:
 			just_down.emit()
 		if !event.pressed and is_pressed:

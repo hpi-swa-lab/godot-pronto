@@ -6,8 +6,6 @@ signal touched_floor
 
 @export_category("Ground")
 @export var max_velocity = 500.0
-@export var rotation_speed = 300.0
-@export var rotated = false
 @export var acceleration = 100.0
 @export var friction = 20.0
 
@@ -16,7 +14,12 @@ signal touched_floor
 @export var friction_air = 0.0
 @export var acceleration_air = 0.0
 
-var _velocity = Vector2.ZERO
+@export_category("Rotation")
+@export var rotated = false
+@export var rotation_speed = 0.0
+@export var rotate_velocity = true
+
+var velocity = Vector2.ZERO
 var _did_accelerate = false
 var _was_on_floor = false
 
@@ -27,27 +30,35 @@ func is_on_floor():
 
 func add_velocity(velocity: Vector2):
 	_did_accelerate = true
-	_velocity += velocity
+	self.velocity += velocity
+
+func set_velocity_y(num: float):
+	_did_accelerate = true
+	self.velocity.y = num
+
+func set_velocity_x(num: float):
+	_did_accelerate = true
+	self.velocity.x = num
 
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
 	var _friction = friction if is_on_floor() else friction_air
 	if not _did_accelerate:
-		_velocity = _velocity.lerp(Vector2.ZERO, min(1.0, _friction * delta))
+		velocity = velocity.lerp(Vector2.ZERO, min(1.0, _friction * delta))
 	
 	if gravity > 0.0:
-		_velocity.y += gravity * delta
+		velocity.y += gravity * delta
 	
 	if get_parent() is CharacterBody2D:
 		var char := get_parent() as CharacterBody2D
-		char.velocity = _velocity
+		char.velocity = velocity
 		char.move_and_slide()
-		_velocity = char.velocity
+		velocity = char.velocity
 	elif get_parent() is PhysicsBody2D:
-		get_parent().move_and_collide(_velocity * delta)
+		get_parent().move_and_collide(velocity * delta)
 	else:
-		get_parent().position += _velocity * delta
+		get_parent().position += velocity * delta
 	_did_accelerate = false
 	
 	if _was_on_floor != is_on_floor():
@@ -60,10 +71,7 @@ func move_direction(direction: Vector2):
 	_did_accelerate = true
 	if rotated:
 		direction = direction.rotated(get_parent().rotation)
-	_velocity = Vector2(
-		lerp(_velocity.x, direction.x * max_velocity, min(1.0, abs(direction.x) * _accel * get_process_delta_time())),
-		lerp(_velocity.y, direction.y * max_velocity, min(1.0, abs(direction.y) * _accel * get_process_delta_time())),
-	)
+	velocity = velocity.lerp(direction * max_velocity, min(1.0, _accel * get_process_delta_time()))
 
 func move_left():
 	move_direction(Vector2.LEFT)
@@ -81,10 +89,16 @@ func move_toward(pos: Vector2):
 	move_direction((pos - get_parent().global_position).normalized())
 
 func rotate_left():
-	get_parent().rotation_degrees -= rotation_speed * get_process_delta_time()
+	var s = rotation_speed * get_process_delta_time()
+	get_parent().rotation_degrees -= s
+	if rotate_velocity:
+		velocity = velocity.rotated(-deg_to_rad(s))
 
 func rotate_right():
-	get_parent().rotation_degrees += rotation_speed * get_process_delta_time()
+	var s = rotation_speed * get_process_delta_time()
+	get_parent().rotation_degrees += s
+	if rotate_velocity:
+		velocity = velocity.rotated(deg_to_rad(s))
 
 func _notification(what):
 	if what == NOTIFICATION_PARENTED:

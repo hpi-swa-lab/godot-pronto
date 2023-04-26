@@ -1,14 +1,24 @@
-[gd_scene load_steps=17 format=3 uid="uid://fegvnevn4cyu"]
+[gd_scene load_steps=19 format=3 uid="uid://fegvnevn4cyu"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_wxlom"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_vc300"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_v6c42"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="3_ymgvk"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_k0n5o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_cc23q"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_lroqb"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="6_wop4v"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="6_ys06d"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="9_hmnix"]
+
+[sub_resource type="Resource" id="Resource_p1d5d"]
+script = ExtResource("4_k0n5o")
+signal_name = "toggled"
+to = NodePath("..")
+invoke = "set"
+arguments = ["\"rotate_velocity\"", "not down"]
+only_if = "true"
+expression = ""
 
 [sub_resource type="Resource" id="Resource_lj6v2"]
 script = ExtResource("4_k0n5o")
@@ -81,15 +91,30 @@ position = Vector2(329, 265)
 [node name="Move" type="Node2D" parent="car"]
 position = Vector2(140, -7)
 script = ExtResource("2_vc300")
+max_velocity = 600.0
+acceleration = 2.0
+friction = 1.0
 rotated = true
-acceleration = 10.0
+rotation_speed = 300.0
+
+[node name="Bind" type="Node2D" parent="car/Move"]
+position = Vector2(-35, 54)
+script = ExtResource("9_hmnix")
+to_prop = "rotation_speed"
+convert = "0 if closest(\"Move\").velocity.length() < 90 else 300"
+
+[node name="Key" type="Node2D" parent="car/Move"]
+position = Vector2(82, 55)
+script = ExtResource("3_ymgvk")
+key = "Shift"
+metadata/pronto_connections = [SubResource("Resource_p1d5d")]
 
 [node name="Placeholder" type="Node2D" parent="car"]
 script = ExtResource("1_wxlom")
 label = "car"
 
 [node name="Controls" type="Node2D" parent="car"]
-position = Vector2(206, -3)
+position = Vector2(213, -12)
 script = ExtResource("3_v6c42")
 metadata/pronto_connections = [SubResource("Resource_lj6v2"), SubResource("Resource_2sp7y"), SubResource("Resource_munmv")]
 
@@ -100,7 +125,7 @@ limit_to_group = "pickup"
 metadata/pronto_connections = [SubResource("Resource_cq8lk"), SubResource("Resource_pyv4p")]
 
 [node name="State" type="Node2D" parent="car"]
-position = Vector2(22, 41)
+position = Vector2(14, 56)
 script = ExtResource("6_ys06d")
 global = true
 metadata/score = 0

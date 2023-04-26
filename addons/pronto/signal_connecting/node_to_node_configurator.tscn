@@ -51,16 +51,25 @@ text = "Make unique"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Signal:"
 
-[node name="Signal" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Signal" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "area_entered"
+alignment = 1
+expand_to_text_length = true
+flat = true
+
+[node name="SignalArgs" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "area_entered( Area2D area )"
+text = "(area)"
 
 [node name="remove" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true

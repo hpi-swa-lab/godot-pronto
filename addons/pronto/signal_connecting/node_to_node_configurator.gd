@@ -44,7 +44,8 @@ var existing_connection = null
 var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value
-		%Signal.text = Utils.print_signal(value)
+		%Signal.text = value["name"]
+		%SignalArgs.text = "({0})".format([Utils.print_args(value)])
 		update_argument_names()
 
 func _input(event):
@@ -65,7 +66,7 @@ func set_expression_mode(expr: bool):
 	%Expression.visible = expr
 	%Expression.text = ''
 	update_argument_names()
-	%Signal.text +=  " from" if expr else " from, to"
+	%SignalArgs.text +=  " from" if expr else " from, to"
 
 func default_focus():
 	await get_tree().process_frame
@@ -141,7 +142,7 @@ func _on_done_pressed():
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
-				{"arguments": args, "invoke": invoke, "only_if": %Condition.text})
+				{"arguments": args, "invoke": invoke, "only_if": %Condition.text, "signal_name": %Signal.text})
 		else:
 			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args, %Condition.text, undo_redo)
 	if %Expression.visible:
@@ -149,7 +150,7 @@ func _on_done_pressed():
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
-				{"expression": %Expression.text, "only_if": %Condition.text})
+				{"expression": %Expression.text, "only_if": %Condition.text, "signal_name": %Signal.text})
 		else:
 			Connection.connect_expr(from, selected_signal["name"], %Expression.text, %Condition.text, undo_redo)
 	queue_free()

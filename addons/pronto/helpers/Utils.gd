@@ -31,7 +31,10 @@ static func all_nodes(node: Node):
 	return list
 
 static func print_signal(data: Dictionary):
-	return data["name"] + "(" + ", ".join(data["args"].map(func (arg): return arg["name"])) + ")"
+	return data["name"] + "(" + print_args(data) + ")"
+
+static func print_args(data: Dictionary):
+	return ", ".join(data["args"].map(func (arg): return arg["name"]))
 
 static func sum(list: Array):
 	return list.reduce(func (accum, i): return accum + i, 0)
@@ -145,15 +148,19 @@ static func random_point_on_screen():
 static func mouse_position():
 	return Engine.get_main_loop().root.get_mouse_position()
 
-static func print_connection(connection: Connection, flip = false):
+static func print_connection(connection: Connection, flip = false, shorten = true):
 	var prefix = "[?] " if connection.has_condition() else ""
 	if connection.invoke != "":
-		return ("{2}{1} ← {0}" if flip else "{0} → {1}").format([connection.signal_name, connection.invoke, prefix])
+		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2})").format([
+			connection.signal_name,
+			prefix,
+			Utils.ellipsize("{0}({1})".format([connection.invoke, ",".join(connection.arguments.map(func (a): return str(a)))]), 16 if shorten else -1)
+		])
 	else:
-		return "{2}{0} ↺ {1}".format([connection.signal_name, Utils.ellipsize(connection.expression.split('\n')[0], 8), prefix])
+		return "{2}{0} ↺ {1}".format([connection.signal_name, Utils.ellipsize(connection.expression.split('\n')[0], 8 if shorten else -1), prefix])
 
-static func ellipsize(s: String, max: int):
-	if s.length() <= max:
+static func ellipsize(s: String, max: int = 16):
+	if s.length() <= max or max < 0:
 		return s
 	return s.substr(0, max - 3) + "..."
 
