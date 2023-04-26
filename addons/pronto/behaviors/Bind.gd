@@ -26,7 +26,7 @@ func update():
 	var value = null if inputs.is_empty() else inputs[0]
 	if convert:
 		value = ConnectionsList.eval(convert,
-			range(from.size()).map(func (index): return "value" + str(index)),
+			range(from.size()).map(func (index): return "value" + str(index) if from[index].name == "" else from[index].name),
 			inputs,
 			true,
 			self)
