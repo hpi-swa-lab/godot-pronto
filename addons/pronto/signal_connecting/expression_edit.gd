@@ -127,8 +127,11 @@ func _on_expression_text_changed():
 func resize():
 	if self == owner:
 		return
-	var size = get_theme_default_font().get_multiline_string_size(text)
-	custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
-	Utils.fix_minimum_size(self)
-	if size_flags_horizontal != SIZE_EXPAND_FILL:
+	if size_flags_horizontal == SIZE_FILL or size_flags_horizontal == SIZE_EXPAND_FILL:
+		custom_minimum_size = Vector2(0, 43)
+		Utils.fix_minimum_size(self)
+	else:
+		var size = get_theme_default_font().get_multiline_string_size(text)
+		custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
+		Utils.fix_minimum_size(self)
 		reset_size()
