@@ -3,6 +3,7 @@
 extends Behavior
 
 @export var limit_to_group: String = ""
+@export var collision_power: float = 0
 
 signal collided(other: Area2D)
 

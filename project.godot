@@ -10,7 +10,12 @@ config_version=5
 
 [application]
 
+<<<<<<< HEAD
 config/name="Godot-pronto"
+=======
+config/name="pronto"
+run/main_scene="res://prototypes/wwek-0-kart-Bumper.tscn"
+>>>>>>> 3bab531 (first collision test)
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 

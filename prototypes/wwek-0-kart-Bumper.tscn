@@ -1,5 +1,81 @@
-[gd_scene format=3 uid="uid://bnb0gnvqosgjr"]
+[gd_scene load_steps=10 format=3 uid="uid://ci6seot6pdr7a"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_25c8b"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_q37re"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_wx32m"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_flp7b"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_7rj3v"]
+
+[sub_resource type="Resource" id="Resource_ox21v"]
+script = ExtResource("4_flp7b")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "move_up"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ubtfn"]
+script = ExtResource("4_flp7b")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "rotate_right"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_jw3no"]
+script = ExtResource("4_flp7b")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "rotate_left"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_wrc5f"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("../../enemy_kart/Move")
+invoke = "add_velocity"
+arguments = ["other.get_node(\"Move\").add_velocity(self.velocity * 10)"]
+only_if = "true"
+expression = ""
 
 [node name="week-0-kart-Bumper" type="Node2D"]
 
-[node name="kart" type="CharacterBody2D" parent="."]
+[node name="kart" type="Area2D" parent="."]
+position = Vector2(27, 86)
+
+[node name="Placeholder" type="Node2D" parent="kart"]
+script = ExtResource("1_25c8b")
+label = "kart"
+placeholder_size = Vector2(40, 70)
+
+[node name="Move" type="Node2D" parent="kart"]
+position = Vector2(119, 29)
+script = ExtResource("2_q37re")
+rotated = true
+rotation_speed = 200.0
+
+[node name="Controls" type="Node2D" parent="kart"]
+position = Vector2(35, -30)
+script = ExtResource("3_wx32m")
+metadata/pronto_connections = [SubResource("Resource_ox21v"), SubResource("Resource_ubtfn"), SubResource("Resource_jw3no")]
+
+[node name="Collision" type="Node2D" parent="kart"]
+position = Vector2(73, 80)
+script = ExtResource("5_7rj3v")
+collision_power = 2000.0
+metadata/pronto_connections = [SubResource("Resource_wrc5f")]
+
+[node name="enemy_kart" type="Area2D" parent="."]
+position = Vector2(190, 65)
+
+[node name="Placeholder" type="Node2D" parent="enemy_kart"]
+script = ExtResource("1_25c8b")
+placeholder_size = Vector2(40, 70)
+
+[node name="Move" type="Node2D" parent="enemy_kart"]
+position = Vector2(36, -6)
+script = ExtResource("2_q37re")

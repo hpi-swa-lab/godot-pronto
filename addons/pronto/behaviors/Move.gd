@@ -25,7 +25,7 @@ var _was_on_floor = false
 
 func is_on_floor():
 	if get_parent() is CharacterBody2D:
-		return get_parent().is_on_floor()
+		return true
 	return false if gravity > 0.0 else true
 
 func add_velocity(velocity: Vector2):
@@ -87,6 +87,7 @@ func move_down():
 	move_direction(Vector2.DOWN)
 
 func move_up():
+	print("pos:", get_parent().rotation)
 	move_direction(Vector2.UP)
 
 func move_toward(pos: Vector2):
