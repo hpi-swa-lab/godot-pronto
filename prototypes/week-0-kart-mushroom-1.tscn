@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://c34lmqiprmmf5"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_bhuw1"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_yq34s"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_3w6l4"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_q8ryo"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_eq0ye"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_e6rx4"]
+
+[sub_resource type="Resource" id="Resource_fymss"]
+script = ExtResource("4_q8ryo")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "move_up"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ab8d3"]
+script = ExtResource("4_q8ryo")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "rotate_right"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ayatp"]
+script = ExtResource("4_q8ryo")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "rotate_left"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_jxh4f"]
+script = ExtResource("4_q8ryo")
+signal_name = "pressed"
+to = NodePath("../Move")
+invoke = "add_velocity"
+arguments = ["Vector2(0,-50).rotated(from.get_parent().rotation)"]
+only_if = "true"
+expression = ""
+
+[node name="week-0-kart-mushroom-1" type="Node2D"]
+
+[node name="Kart" type="CharacterBody2D" parent="."]
+position = Vector2(551, 576)
+
+[node name="Placeholder" type="Node2D" parent="Kart"]
+script = ExtResource("1_bhuw1")
+label = "Kart"
+color = Color(0.313726, 1, 1, 1)
+placeholder_size = Vector2(19, 35)
+
+[node name="Move" type="Node2D" parent="Kart"]
+position = Vector2(37, -67)
+script = ExtResource("2_yq34s")
+max_velocity = 50000.0
+acceleration = 0.0
+friction = 2.5
+rotated = true
+rotation_speed = 200.0
+
+[node name="Controls" type="Node2D" parent="Kart"]
+position = Vector2(23, 8)
+script = ExtResource("3_3w6l4")
+metadata/pronto_connections = [SubResource("Resource_fymss"), SubResource("Resource_ab8d3"), SubResource("Resource_ayatp")]
+
+[node name="Key" type="Node2D" parent="Kart"]
+position = Vector2(56, 9)
+script = ExtResource("5_eq0ye")
+key = "Space"
+metadata/pronto_connections = [SubResource("Resource_jxh4f")]
+
+[node name="Speed" type="Node2D" parent="Kart"]
+position = Vector2(-33, 3)
+script = ExtResource("6_e6rx4")
+to = 1000.0
+value = 50.0
+
+[node name="Key2" type="Node2D" parent="Kart"]
+position = Vector2(98, -36)
+script = ExtResource("5_eq0ye")
