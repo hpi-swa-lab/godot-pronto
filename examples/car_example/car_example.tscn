@@ -153,7 +153,7 @@ offset_bottom = 22.3333
 text = "score: 2"
 
 [node name="Bind" type="Node2D" parent="Label"]
-position = Vector2(-34, 53)
+position = Vector2(-80, 91)
 script = ExtResource("9_hmnix")
 to_prop = "text"
 convert = "\"Score: \" + str(at(\"score\"))"
