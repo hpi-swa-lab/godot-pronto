@@ -87,7 +87,6 @@ func move_down():
 	move_direction(Vector2.DOWN)
 
 func move_up():
-	print("pos:", get_parent().rotation)
 	move_direction(Vector2.UP)
 
 func move_toward(pos: Vector2):
