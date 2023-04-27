@@ -90,7 +90,6 @@ rotation_speed = 200.0
 [node name="Controls" type="Node2D" parent="kart"]
 position = Vector2(35, -30)
 script = ExtResource("3_wx32m")
-use_WASD = null
 metadata/pronto_connections = [SubResource("Resource_ox21v"), SubResource("Resource_ubtfn"), SubResource("Resource_jw3no")]
 
 [node name="Collision" type="Node2D" parent="kart"]
@@ -117,5 +116,5 @@ rotation_speed = 200.0
 [node name="Controls" type="Node2D" parent="enemy_kart"]
 position = Vector2(41, 38)
 script = ExtResource("3_wx32m")
-use_WASD = true
+player = 1
 metadata/pronto_connections = [SubResource("Resource_gfov1"), SubResource("Resource_rj0ai"), SubResource("Resource_1ksq7")]

@@ -2,7 +2,7 @@
 #thumb("Joypad")
 extends Behavior
 
-@export var use_WASD = false
+@export_enum("Player 1", "Player 2", "Player 3") var player: int = 0
 
 signal left
 signal right
@@ -14,42 +14,49 @@ signal vertical_direction(dir: Vector2)
 signal click(pos: Vector2)
 signal moved(pos: Vector2)
 
+func _is_key_pressed(direction):
+	var key_map = [{
+		"function": Input.is_action_pressed,
+		"left": "ui_left",
+		"right": "ui_right",
+		"up": "ui_up",
+		"down": "ui_down"
+	},
+	{
+		"function": Input.is_physical_key_pressed,
+		"left": KEY_A,
+		"right": KEY_D,
+		"up": KEY_W,
+		"down": KEY_S
+	},
+	{
+		"function": Input.is_physical_key_pressed,
+		"left": KEY_J,
+		"right": KEY_L,
+		"up": KEY_I,
+		"down": KEY_K
+	}]
+	var keys = key_map[player]
+	return keys["function"].call(keys[direction])
+
 func _process(delta):
 	super._process(delta)
-	if (use_WASD):
-		if Input.is_physical_key_pressed(KEY_A):
-			left.emit()
-			direction.emit(Vector2.LEFT)
-			horizontal_direction.emit(Vector2.LEFT)
-		if Input.is_physical_key_pressed(KEY_D):
-			right.emit()
-			direction.emit(Vector2.RIGHT)
-			horizontal_direction.emit(Vector2.RIGHT)
-		if Input.is_physical_key_pressed(KEY_W):
-			up.emit()
-			direction.emit(Vector2.UP)
-			vertical_direction.emit(Vector2.UP)
-		if Input.is_physical_key_pressed(KEY_S):
-			down.emit()
-			direction.emit(Vector2.DOWN)
-			vertical_direction.emit(Vector2.DOWN)
-	else:
-		if Input.is_action_pressed("ui_left"):
-			left.emit()
-			direction.emit(Vector2.LEFT)
-			horizontal_direction.emit(Vector2.LEFT)
-		if Input.is_action_pressed("ui_right"):
-			right.emit()
-			direction.emit(Vector2.RIGHT)
-			horizontal_direction.emit(Vector2.RIGHT)
-		if Input.is_action_pressed("ui_up"):
-			up.emit()
-			direction.emit(Vector2.UP)
-			vertical_direction.emit(Vector2.UP)
-		if Input.is_action_pressed("ui_down"):
-			down.emit()
-			direction.emit(Vector2.DOWN)
-			vertical_direction.emit(Vector2.DOWN)
+	if _is_key_pressed("left"):
+		left.emit()
+		direction.emit(Vector2.LEFT)
+		horizontal_direction.emit(Vector2.LEFT)
+	if _is_key_pressed("right"):
+		right.emit()
+		direction.emit(Vector2.RIGHT)
+		horizontal_direction.emit(Vector2.RIGHT)
+	if _is_key_pressed("up"):
+		up.emit()
+		direction.emit(Vector2.UP)
+		vertical_direction.emit(Vector2.UP)
+	if _is_key_pressed("down"):
+		down.emit()
+		direction.emit(Vector2.DOWN)
+		vertical_direction.emit(Vector2.DOWN)
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed:
