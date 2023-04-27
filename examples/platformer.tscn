@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://88vl7ypda1n1"]
+[gd_scene load_steps=14 format=3 uid="uid://88vl7ypda1n1"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_rpa0n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_pahj6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_5l8ei"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="7_flr1a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="7_wp8p8"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShake.gd" id="8_m4ien"]
 
 [sub_resource type="Resource" id="Resource_labnx"]
 script = ExtResource("4_7c7a3")
@@ -14,6 +15,15 @@ signal_name = "touched_floor"
 to = NodePath("../State")
 invoke = "put"
 arguments = ["\"jumps_remaining\"", "2"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_72k2r"]
+script = ExtResource("4_7c7a3")
+signal_name = "touched_floor"
+to = NodePath("../Camera2D/CameraShake")
+invoke = "add_trauma"
+arguments = ["velocity.y * 0.0003"]
 only_if = "true"
 expression = ""
 
@@ -66,7 +76,7 @@ acceleration_air = 2.0
 rotated = null
 rotation_speed = 300.0
 rotate_velocity = null
-metadata/pronto_connections = [SubResource("Resource_labnx")]
+metadata/pronto_connections = [SubResource("Resource_labnx"), SubResource("Resource_72k2r")]
 
 [node name="Key" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(170, 56)
@@ -90,6 +100,15 @@ script = ExtResource("7_flr1a")
 from = 500.0
 to = 2000.0
 value = 909.179
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+ignore_rotation = false
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="CameraShake" type="Node2D" parent="CharacterBody2D/Camera2D"]
+position = Vector2(-8, 33)
+script = ExtResource("8_m4ien")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(525, 619)

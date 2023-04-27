@@ -2,7 +2,7 @@
 #thumb("ToolMove")
 extends Behavior
 
-signal touched_floor
+signal touched_floor(velocity: float)
 
 @export_category("Ground")
 @export var max_velocity = 500.0
@@ -53,6 +53,7 @@ func _physics_process(delta):
 	if gravity > 0.0:
 		velocity.y += gravity * delta
 	
+	var _current_velocity = velocity
 	if get_parent() is CharacterBody2D:
 		var char := get_parent() as CharacterBody2D
 		char.velocity = velocity
@@ -67,7 +68,7 @@ func _physics_process(delta):
 	if _was_on_floor != is_on_floor():
 		_was_on_floor = is_on_floor()
 		if is_on_floor():
-			touched_floor.emit()
+			touched_floor.emit(_current_velocity)
 
 func move_direction(direction: Vector2):
 	var _accel = acceleration if is_on_floor() else acceleration_air
