@@ -83,6 +83,7 @@ placeholder_size = Vector2(40, 70)
 [node name="Move" type="Node2D" parent="kart"]
 position = Vector2(119, 28)
 script = ExtResource("2_q37re")
+acceleration = 1.0
 friction = 2.0
 rotated = true
 rotation_speed = 200.0
@@ -109,6 +110,7 @@ placeholder_size = Vector2(40, 70)
 [node name="Move" type="Node2D" parent="enemy_kart"]
 position = Vector2(36, -6)
 script = ExtResource("2_q37re")
+acceleration = 1.0
 friction = 2.0
 rotated = true
 rotation_speed = 200.0
