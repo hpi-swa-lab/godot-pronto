@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ci6seot6pdr7a"]
+[gd_scene load_steps=13 format=3 uid="uid://ci6seot6pdr7a"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_25c8b"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_q37re"]
@@ -42,40 +42,80 @@ arguments = ["other.get_node(\"Move\").add_velocity(self.velocity * 10)"]
 only_if = "true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_gfov1"]
+script = ExtResource("4_flp7b")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "move_up"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_rj0ai"]
+script = ExtResource("4_flp7b")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "rotate_left"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_1ksq7"]
+script = ExtResource("4_flp7b")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "rotate_right"
+arguments = []
+only_if = "true"
+expression = ""
+
 [node name="week-0-kart-Bumper" type="Node2D"]
 
 [node name="kart" type="Area2D" parent="."]
-position = Vector2(27, 86)
+position = Vector2(428, 326)
 
 [node name="Placeholder" type="Node2D" parent="kart"]
 script = ExtResource("1_25c8b")
-label = "kart"
+label = "bumper"
+color = Color(0.447059, 1, 1, 1)
 placeholder_size = Vector2(40, 70)
 
 [node name="Move" type="Node2D" parent="kart"]
-position = Vector2(119, 29)
+position = Vector2(119, 28)
 script = ExtResource("2_q37re")
+friction = 2.0
 rotated = true
 rotation_speed = 200.0
 
 [node name="Controls" type="Node2D" parent="kart"]
 position = Vector2(35, -30)
 script = ExtResource("3_wx32m")
+use_WASD = null
 metadata/pronto_connections = [SubResource("Resource_ox21v"), SubResource("Resource_ubtfn"), SubResource("Resource_jw3no")]
 
 [node name="Collision" type="Node2D" parent="kart"]
 position = Vector2(73, 80)
 script = ExtResource("5_7rj3v")
-collision_power = 2000.0
+collision_power = 500.0
 metadata/pronto_connections = [SubResource("Resource_wrc5f")]
 
 [node name="enemy_kart" type="Area2D" parent="."]
-position = Vector2(190, 65)
+position = Vector2(623, 322)
 
 [node name="Placeholder" type="Node2D" parent="enemy_kart"]
 script = ExtResource("1_25c8b")
+label = "other"
 placeholder_size = Vector2(40, 70)
 
 [node name="Move" type="Node2D" parent="enemy_kart"]
 position = Vector2(36, -6)
 script = ExtResource("2_q37re")
+friction = 2.0
+rotated = true
+rotation_speed = 200.0
+
+[node name="Controls" type="Node2D" parent="enemy_kart"]
+position = Vector2(41, 38)
+script = ExtResource("3_wx32m")
+use_WASD = true
+metadata/pronto_connections = [SubResource("Resource_gfov1"), SubResource("Resource_rj0ai"), SubResource("Resource_1ksq7")]
