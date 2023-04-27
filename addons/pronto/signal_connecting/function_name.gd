@@ -15,7 +15,7 @@ func _gui_input(event):
 		match event.keycode:
 			KEY_DOWN: move_focus(1)
 			KEY_UP: move_focus(-1)
-			KEY_ENTER:
+			KEY_ENTER, KEY_KP_ENTER:
 				selected(get_focused_index())
 
 func get_focused_index():
