@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c34lmqiprmmf5"]
+[gd_scene load_steps=12 format=3 uid="uid://c34lmqiprmmf5"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_bhuw1"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_yq34s"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_eq0ye"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_e6rx4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="7_c0unn"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="8_ise3x"]
 
 [sub_resource type="Resource" id="Resource_fymss"]
 script = ExtResource("4_q8ryo")
@@ -132,8 +131,4 @@ offset_bottom = 22.3333
 position = Vector2(10, 45)
 script = ExtResource("7_c0unn")
 to_prop = "text"
-convert = "get_node(\"../../Kart\").get_real_velocity()"
-
-[node name="State" type="Node2D" parent="."]
-position = Vector2(83, 78)
-script = ExtResource("8_ise3x")
+convert = "\"Speed: \" + str(int(pow(pow(G.get_node(\"/root/week-0-kart-mushroom-1/Kart\").get_real_velocity().x,2) + pow(G.get_node(\"/root/week-0-kart-mushroom-1/Kart\").get_real_velocity().y,2),0.5)))"
