@@ -8,6 +8,11 @@ var behaviors = {}
 var debugger: ConnectionDebug
 var inspectors = [ExpressionInspector.new()]
 
+var G
+
+func _ready():
+	G = load("res://addons/pronto/helpers/G.gd")
+
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		return

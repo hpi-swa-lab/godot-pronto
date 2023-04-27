@@ -10,23 +10,10 @@ config_version=5
 
 [application]
 
-config/name="pronto"
+config/name="Godot-pronto"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
-
-[autoload]
-
-ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
-G="*res://addons/pronto/helpers/G.gd"
-
-[display]
-
-window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/pronto/plugin.cfg")
-
-[gui]
-
-theme/default_font_multichannel_signed_distance_field=true

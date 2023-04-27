@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bnb0gnvqosgjr"]
+
+[node name="week-0-kart-Bumper" type="Node2D"]
+
+[node name="kart" type="CharacterBody2D" parent="."]
