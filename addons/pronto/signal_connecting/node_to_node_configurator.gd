@@ -51,7 +51,7 @@ var selected_signal: Dictionary:
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
 		_on_cancel_pressed()
-	if event is InputEventKey and event.keycode == KEY_ENTER and event.pressed and event.ctrl_pressed:
+	if event is InputEventKey and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and event.pressed and event.ctrl_pressed:
 		_on_done_pressed()
 
 var receiver: Object:
