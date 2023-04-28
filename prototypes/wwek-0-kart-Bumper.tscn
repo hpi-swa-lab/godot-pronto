@@ -1,10 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://ci6seot6pdr7a"]
+[gd_scene load_steps=18 format=3 uid="uid://ci6seot6pdr7a"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_25c8b"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_q37re"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_wx32m"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_flp7b"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_7rj3v"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="6_15x11"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="6_40ngx"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_r8mab"]
 
 [sub_resource type="Resource" id="Resource_ox21v"]
 script = ExtResource("4_flp7b")
@@ -69,6 +72,24 @@ arguments = []
 only_if = "true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_uytno"]
+script = ExtResource("4_flp7b")
+signal_name = "elapsed"
+to = NodePath("../Spawner")
+invoke = "spawn"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_50rvt"]
+script = ExtResource("4_flp7b")
+signal_name = "elapsed"
+to = NodePath("../Spawner")
+invoke = "set_position"
+arguments = ["random_point_on_screen()"]
+only_if = "true"
+expression = ""
+
 [node name="week-0-kart-Bumper" type="Node2D"]
 
 [node name="kart" type="Area2D" parent="."]
@@ -96,8 +117,16 @@ metadata/pronto_connections = [SubResource("Resource_ox21v"), SubResource("Resou
 [node name="Collision" type="Node2D" parent="kart"]
 position = Vector2(73, 80)
 script = ExtResource("5_7rj3v")
-collision_power = 500.0
+collision_power = 1000.0
 metadata/pronto_connections = [SubResource("Resource_wrc5f")]
+
+[node name="Collision2" type="Node2D" parent="kart"]
+position = Vector2(3, 83)
+script = ExtResource("5_7rj3v")
+limit_to_group = "Item"
+
+[node name="State" type="Node2D" parent="kart"]
+script = ExtResource("6_40ngx")
 
 [node name="enemy_kart" type="Area2D" parent="."]
 position = Vector2(623, 322)
@@ -120,3 +149,21 @@ position = Vector2(41, 38)
 script = ExtResource("3_wx32m")
 player = 1
 metadata/pronto_connections = [SubResource("Resource_gfov1"), SubResource("Resource_rj0ai"), SubResource("Resource_1ksq7")]
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(104, 23)
+script = ExtResource("6_15x11")
+
+[node name="pickup" type="Area2D" parent="Spawner"]
+position = Vector2(42, -1)
+
+[node name="Placeholder" type="Node2D" parent="Spawner/pickup"]
+script = ExtResource("1_25c8b")
+label = "Item"
+color = Color(1, 1, 0.0627451, 1)
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(54, 33)
+script = ExtResource("7_r8mab")
+duration_seconds = 20.0
+metadata/pronto_connections = [SubResource("Resource_uytno"), SubResource("Resource_50rvt")]
