@@ -178,7 +178,7 @@ script = ExtResource("3_wx32m")
 metadata/pronto_connections = [SubResource("Resource_ox21v"), SubResource("Resource_ubtfn"), SubResource("Resource_jw3no")]
 
 [node name="Collision" type="Node2D" parent="kart"]
-position = Vector2(73, 80)
+position = Vector2(92, 140)
 script = ExtResource("5_7rj3v")
 limit_to_group = "enemy_kart"
 collision_power = 1000.0
@@ -191,7 +191,7 @@ limit_to_group = "item"
 metadata/pronto_connections = [SubResource("Resource_wcw7t"), SubResource("Resource_6hspp")]
 
 [node name="State" type="Node2D" parent="kart"]
-position = Vector2(-95, 126)
+position = Vector2(-53, 143)
 script = ExtResource("6_40ngx")
 metadata/kart_bumper_active = false
 
@@ -204,7 +204,7 @@ label = "other"
 placeholder_size = Vector2(40, 70)
 
 [node name="Move" type="Node2D" parent="enemy_kart"]
-position = Vector2(97, 55)
+position = Vector2(-47, 34)
 script = ExtResource("2_q37re")
 acceleration = 1.0
 friction = 2.0
@@ -212,25 +212,25 @@ rotated = true
 rotation_speed = 200.0
 
 [node name="Controls" type="Node2D" parent="enemy_kart"]
-position = Vector2(96, -33)
+position = Vector2(-49, -29)
 script = ExtResource("3_wx32m")
 player = 1
 metadata/pronto_connections = [SubResource("Resource_gfov1"), SubResource("Resource_rj0ai"), SubResource("Resource_1ksq7")]
 
 [node name="Collision" type="Node2D" parent="enemy_kart"]
-position = Vector2(61, 84)
+position = Vector2(-8, 139)
 script = ExtResource("5_7rj3v")
 limit_to_group = "kart"
 collision_power = 1000.0
 metadata/pronto_connections = [SubResource("Resource_lcrj0"), SubResource("Resource_008h4")]
 
 [node name="State" type="Node2D" parent="enemy_kart"]
-position = Vector2(159, 109)
+position = Vector2(79, 140)
 script = ExtResource("6_40ngx")
 metadata/enemy_kart_bumper_active = false
 
 [node name="Collision2" type="Node2D" parent="enemy_kart"]
-position = Vector2(39, 122)
+position = Vector2(81, 58)
 script = ExtResource("5_7rj3v")
 limit_to_group = "item"
 metadata/pronto_connections = [SubResource("Resource_5a3h3"), SubResource("Resource_u6owv")]
@@ -250,5 +250,13 @@ color = Color(1, 1, 0.0627451, 1)
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(153, 397)
 script = ExtResource("7_r8mab")
-duration_seconds = 5.0
+duration_seconds = 15.0
 metadata/pronto_connections = [SubResource("Resource_uytno"), SubResource("Resource_50rvt")]
+
+[node name="item" type="Area2D" parent="." groups=["item"]]
+position = Vector2(248, 341)
+
+[node name="Placeholder" type="Node2D" parent="item"]
+script = ExtResource("1_25c8b")
+label = "Item"
+color = Color(1, 1, 0.0627451, 1)
