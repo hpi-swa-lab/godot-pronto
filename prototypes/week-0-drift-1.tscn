@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dywwthgpsk1a2"]
+[gd_scene load_steps=17 format=3 uid="uid://dywwthgpsk1a2"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_len7c"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_us8qt"]
@@ -58,7 +58,25 @@ script = ExtResource("4_cin3a")
 signal_name = "up"
 to = NodePath("../Move")
 invoke = "add_velocity"
-arguments = ["Vector2.from_angle(from.get_parent().get_rotation())*G.at(\"drift_tick\")"]
+arguments = ["Vector2.from_angle(from.get_parent().get_rotation())*(G.at(\"drift_tick\")*G.at(\"max_boost\"))"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_hy4if"]
+script = ExtResource("4_cin3a")
+signal_name = "pressed"
+to = NodePath("../Placeholder")
+invoke = "@color_setter"
+arguments = ["Color(G.at(\"drift_tick\"),1.0-G.at(\"drift_tick\"),0.3)"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_5ad6u"]
+script = ExtResource("4_cin3a")
+signal_name = "up"
+to = NodePath("../Placeholder")
+invoke = "@color_setter"
+arguments = ["Color(0.0,1.0,0.3)"]
 only_if = "true"
 expression = ""
 
@@ -68,7 +86,7 @@ signal_name = "always"
 to = NodePath("../State")
 invoke = "inc"
 arguments = ["\"drift_tick\"", "G.at(\"drift_incr\")"]
-only_if = "G.at(\"drift_tick\") < G.at(\"max_boost\")"
+only_if = "G.at(\"drift_tick\") < 1.0"
 expression = ""
 
 [node name="week-0-kart-drift-1" type="Node2D"]
@@ -79,7 +97,7 @@ position = Vector2(620, 530)
 [node name="Placeholder" type="Node2D" parent="kart"]
 script = ExtResource("1_len7c")
 label = "Schnuddl"
-color = Color(0.321569, 1, 0.560784, 1)
+color = Color(0, 1, 0.3, 1)
 placeholder_size = Vector2(21, 15)
 
 [node name="Move" type="Node2D" parent="kart"]
@@ -97,10 +115,10 @@ script = ExtResource("3_umjhj")
 metadata/pronto_connections = [SubResource("Resource_edcn2"), SubResource("Resource_umq23"), SubResource("Resource_l0i8g")]
 
 [node name="Key" type="Node2D" parent="kart"]
-position = Vector2(9, -62)
+position = Vector2(-1, -64)
 script = ExtResource("5_7la7j")
 key = "Shift"
-metadata/pronto_connections = [SubResource("Resource_pbqyp"), SubResource("Resource_x3530"), SubResource("Resource_ciwj3")]
+metadata/pronto_connections = [SubResource("Resource_pbqyp"), SubResource("Resource_x3530"), SubResource("Resource_ciwj3"), SubResource("Resource_hy4if"), SubResource("Resource_5ad6u")]
 
 [node name="Always" type="Node2D" parent="kart"]
 position = Vector2(122, -101)
@@ -115,4 +133,4 @@ metadata/drift_tick = -1
 metadata/velocity = 15.0
 metadata/max_boost = 500
 metadata/max_speed = 400
-metadata/drift_incr = 5
+metadata/drift_incr = 0.01
