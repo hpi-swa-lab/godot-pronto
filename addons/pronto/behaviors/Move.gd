@@ -25,6 +25,7 @@ var _was_on_floor = false
 
 func is_on_floor():
 	if get_parent() is CharacterBody2D:
+		return true
 		return get_parent().is_on_floor()
 	return false if gravity > 0.0 else true
 
