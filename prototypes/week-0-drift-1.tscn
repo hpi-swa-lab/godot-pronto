@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dywwthgpsk1a2"]
+[gd_scene load_steps=15 format=3 uid="uid://dywwthgpsk1a2"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_len7c"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_us8qt"]
@@ -44,21 +44,21 @@ arguments = ["\"drift_tick\"", "0"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_8oees"]
-script = ExtResource("4_cin3a")
-signal_name = "up"
-to = NodePath("../State")
-invoke = "put"
-arguments = ["\"drift_tick\"", "-1"]
-only_if = "true"
-expression = ""
-
 [sub_resource type="Resource" id="Resource_x3530"]
 script = ExtResource("4_cin3a")
 signal_name = "toggled"
 to = NodePath("../Move")
 invoke = "set"
 arguments = ["\"rotate_velocity\"", "not down"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ciwj3"]
+script = ExtResource("4_cin3a")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "add_velocity"
+arguments = ["Vector2.from_angle(from.get_parent().get_rotation())* (G.at(\"drift_tick\") * 10.0)"]
 only_if = "true"
 expression = ""
 
@@ -69,15 +69,6 @@ to = NodePath("../State")
 invoke = "inc"
 arguments = ["\"drift_tick\"", "1"]
 only_if = "G.at(\"drift_tick\") >= 0 and G.at(\"drift_tick\") < 500"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_c6blw"]
-script = ExtResource("4_cin3a")
-signal_name = "changed"
-to = NodePath("../Move")
-invoke = "add_velocity"
-arguments = ["Vector2.from_angle(from.get_parent().get_rotation())* 100.0"]
-only_if = "true"
 expression = ""
 
 [node name="week-0-kart-drift-1" type="Node2D"]
@@ -96,6 +87,7 @@ position = Vector2(126, -38)
 script = ExtResource("2_us8qt")
 max_velocity = 20.0
 acceleration = 1.0
+friction = 5.0
 rotated = true
 rotation_speed = 400.0
 
@@ -108,16 +100,15 @@ metadata/pronto_connections = [SubResource("Resource_edcn2"), SubResource("Resou
 position = Vector2(9, -62)
 script = ExtResource("5_7la7j")
 key = "Shift"
-metadata/pronto_connections = [SubResource("Resource_pbqyp"), SubResource("Resource_8oees"), SubResource("Resource_x3530")]
+metadata/pronto_connections = [SubResource("Resource_pbqyp"), SubResource("Resource_x3530"), SubResource("Resource_ciwj3")]
 
 [node name="Always" type="Node2D" parent="kart"]
-position = Vector2(80, -91)
+position = Vector2(122, -101)
 script = ExtResource("6_b8f8v")
 metadata/pronto_connections = [SubResource("Resource_4hpdc")]
 
 [node name="State" type="Node2D" parent="kart"]
-position = Vector2(16, -103)
+position = Vector2(41, -99)
 script = ExtResource("7_0c3qw")
 global = true
-metadata/pronto_connections = [SubResource("Resource_c6blw")]
 metadata/drift_tick = -1
