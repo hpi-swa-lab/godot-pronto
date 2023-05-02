@@ -13,8 +13,8 @@ script = ExtResource("4_cin3a")
 signal_name = "up"
 to = NodePath("../Move")
 invoke = "add_velocity"
-arguments = ["Vector2.from_angle(from.get_parent().get_rotation())* 10.0"]
-only_if = "to.get_parent().get_velocity().length() < 700"
+arguments = ["Vector2.from_angle(from.get_parent().get_rotation())* G.at(\"velocity\")"]
+only_if = "to.get_parent().get_velocity().length() < G.at(\"max_speed\")"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_umq23"]
@@ -58,7 +58,7 @@ script = ExtResource("4_cin3a")
 signal_name = "up"
 to = NodePath("../Move")
 invoke = "add_velocity"
-arguments = ["Vector2.from_angle(from.get_parent().get_rotation())* (G.at(\"drift_tick\") * 10.0)"]
+arguments = ["Vector2.from_angle(from.get_parent().get_rotation())*G.at(\"drift_tick\")"]
 only_if = "true"
 expression = ""
 
@@ -67,8 +67,8 @@ script = ExtResource("4_cin3a")
 signal_name = "always"
 to = NodePath("../State")
 invoke = "inc"
-arguments = ["\"drift_tick\"", "1"]
-only_if = "G.at(\"drift_tick\") >= 0 and G.at(\"drift_tick\") < 500"
+arguments = ["\"drift_tick\"", "G.at(\"drift_incr\")"]
+only_if = "G.at(\"drift_tick\") < G.at(\"max_boost\")"
 expression = ""
 
 [node name="week-0-kart-drift-1" type="Node2D"]
@@ -80,14 +80,14 @@ position = Vector2(620, 530)
 script = ExtResource("1_len7c")
 label = "Schnuddl"
 color = Color(0.321569, 1, 0.560784, 1)
-placeholder_size = Vector2(65, 20)
+placeholder_size = Vector2(21, 15)
 
 [node name="Move" type="Node2D" parent="kart"]
 position = Vector2(126, -38)
 script = ExtResource("2_us8qt")
 max_velocity = 20.0
 acceleration = 1.0
-friction = 5.0
+friction = 1.0
 rotated = true
 rotation_speed = 400.0
 
@@ -112,3 +112,7 @@ position = Vector2(41, -99)
 script = ExtResource("7_0c3qw")
 global = true
 metadata/drift_tick = -1
+metadata/velocity = 15.0
+metadata/max_boost = 500
+metadata/max_speed = 400
+metadata/drift_incr = 5
