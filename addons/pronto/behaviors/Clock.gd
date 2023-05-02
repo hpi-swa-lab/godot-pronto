@@ -22,9 +22,6 @@ var _timer: Timer:
 func reset_and_start():
 	_timer.start(duration_seconds)
 
-func stop():
-	_timer.stop()
-
 func _ready():
 	super._ready()
 	if not Engine.is_editor_hint():
