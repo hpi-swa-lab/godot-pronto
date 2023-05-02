@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b67ap1f4mkpbr"]
+[gd_scene load_steps=16 format=3 uid="uid://b67ap1f4mkpbr"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_uwmpi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_vu0ow"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_qeb4k"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_dq4qn"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="7_mxbwt"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="9_e3frx"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="11_huetj"]
 
 [sub_resource type="Resource" id="Resource_8j30p"]
@@ -54,6 +55,15 @@ arguments = ["Vector2(0, -1).rotated(closest(\"kart\").rotation)"]
 only_if = "true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_pfsqa"]
+script = ExtResource("4_qeb4k")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "true"
+expression = ""
+
 [node name="week-0-grappling-hook" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
@@ -88,7 +98,7 @@ key = "A"
 metadata/pronto_connections = [SubResource("Resource_bgtva")]
 
 [node name="Spawner" type="Node2D" parent="kart"]
-position = Vector2(1, -37)
+position = Vector2(0, -40)
 script = ExtResource("7_mxbwt")
 metadata/pronto_connections = []
 
@@ -107,6 +117,13 @@ script = ExtResource("2_f2ou7")
 position = Vector2(119, -15.0403)
 script = ExtResource("11_huetj")
 metadata/pronto_connections = [SubResource("Resource_f0b6f")]
+
+[node name="Clock" type="Node2D" parent="kart/Spawner/Grappling hook"]
+position = Vector2(45, -66.6074)
+script = ExtResource("9_e3frx")
+one_shot = true
+duration_seconds = 5.0
+metadata/pronto_connections = [SubResource("Resource_pfsqa")]
 
 [node name="Pipe" type="StaticBody2D" parent="."]
 position = Vector2(568, 149)
