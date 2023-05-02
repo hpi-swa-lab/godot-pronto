@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ci6seot6pdr7a"]
+[gd_scene load_steps=25 format=3 uid="uid://ci6seot6pdr7a"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_25c8b"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_q37re"]
@@ -36,14 +36,41 @@ arguments = []
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_wrc5f"]
+[sub_resource type="Resource" id="Resource_tc68h"]
 script = ExtResource("4_flp7b")
 signal_name = "collided"
 to = NodePath("../../enemy_kart/Move")
 invoke = "add_velocity"
-arguments = ["other.get_node(\"Move\").add_velocity(self.velocity * 10)"]
+arguments = ["other.get_node(\"Move\").add_velocity((to.get_parent().position - from.get_parent().position).normalized() * from.collision_power)"]
+only_if = "at(\"kart_bumper_active\")"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_c4pa4"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["\"kart_bumper_active\"", "false"]
 only_if = "true"
 expression = ""
+
+[sub_resource type="Resource" id="Resource_wcw7t"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["\"kart_bumper_active\"", "true"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_6hspp"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "other.queue_free()"
 
 [sub_resource type="Resource" id="Resource_gfov1"]
 script = ExtResource("4_flp7b")
@@ -72,6 +99,42 @@ arguments = []
 only_if = "true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_lcrj0"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("../../kart/Move")
+invoke = "add_velocity"
+arguments = ["other.get_node(\"Move\").add_velocity((to.get_parent().position - from.get_parent().position).normalized() * from.collision_power)"]
+only_if = "at(\"enemy_kart_bumper_active\")"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_008h4"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["\"enemy_kart_bumper_active\"", "false"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_5a3h3"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["\"enemy_kart_bumper_active\"", "true"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_u6owv"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "other.queue_free()"
+
 [sub_resource type="Resource" id="Resource_uytno"]
 script = ExtResource("4_flp7b")
 signal_name = "elapsed"
@@ -92,7 +155,7 @@ expression = ""
 
 [node name="week-0-kart-Bumper" type="Node2D"]
 
-[node name="kart" type="Area2D" parent="."]
+[node name="kart" type="Area2D" parent="." groups=["kart"]]
 position = Vector2(428, 326)
 
 [node name="Placeholder" type="Node2D" parent="kart"]
@@ -102,7 +165,7 @@ color = Color(0.447059, 1, 1, 1)
 placeholder_size = Vector2(40, 70)
 
 [node name="Move" type="Node2D" parent="kart"]
-position = Vector2(119, 28)
+position = Vector2(57, 27)
 script = ExtResource("2_q37re")
 acceleration = 1.0
 friction = 2.0
@@ -110,25 +173,29 @@ rotated = true
 rotation_speed = 200.0
 
 [node name="Controls" type="Node2D" parent="kart"]
-position = Vector2(35, -30)
+position = Vector2(52, -31)
 script = ExtResource("3_wx32m")
 metadata/pronto_connections = [SubResource("Resource_ox21v"), SubResource("Resource_ubtfn"), SubResource("Resource_jw3no")]
 
 [node name="Collision" type="Node2D" parent="kart"]
 position = Vector2(73, 80)
 script = ExtResource("5_7rj3v")
+limit_to_group = "enemy_kart"
 collision_power = 1000.0
-metadata/pronto_connections = [SubResource("Resource_wrc5f")]
+metadata/pronto_connections = [SubResource("Resource_tc68h"), SubResource("Resource_c4pa4")]
 
 [node name="Collision2" type="Node2D" parent="kart"]
-position = Vector2(3, 83)
+position = Vector2(-52, 66)
 script = ExtResource("5_7rj3v")
-limit_to_group = "Item"
+limit_to_group = "item"
+metadata/pronto_connections = [SubResource("Resource_wcw7t"), SubResource("Resource_6hspp")]
 
 [node name="State" type="Node2D" parent="kart"]
+position = Vector2(-95, 126)
 script = ExtResource("6_40ngx")
+metadata/kart_bumper_active = false
 
-[node name="enemy_kart" type="Area2D" parent="."]
+[node name="enemy_kart" type="Area2D" parent="." groups=["enemy_kart"]]
 position = Vector2(623, 322)
 
 [node name="Placeholder" type="Node2D" parent="enemy_kart"]
@@ -137,7 +204,7 @@ label = "other"
 placeholder_size = Vector2(40, 70)
 
 [node name="Move" type="Node2D" parent="enemy_kart"]
-position = Vector2(36, -6)
+position = Vector2(97, 55)
 script = ExtResource("2_q37re")
 acceleration = 1.0
 friction = 2.0
@@ -145,25 +212,43 @@ rotated = true
 rotation_speed = 200.0
 
 [node name="Controls" type="Node2D" parent="enemy_kart"]
-position = Vector2(41, 38)
+position = Vector2(96, -33)
 script = ExtResource("3_wx32m")
 player = 1
 metadata/pronto_connections = [SubResource("Resource_gfov1"), SubResource("Resource_rj0ai"), SubResource("Resource_1ksq7")]
 
+[node name="Collision" type="Node2D" parent="enemy_kart"]
+position = Vector2(61, 84)
+script = ExtResource("5_7rj3v")
+limit_to_group = "kart"
+collision_power = 1000.0
+metadata/pronto_connections = [SubResource("Resource_lcrj0"), SubResource("Resource_008h4")]
+
+[node name="State" type="Node2D" parent="enemy_kart"]
+position = Vector2(159, 109)
+script = ExtResource("6_40ngx")
+metadata/enemy_kart_bumper_active = false
+
+[node name="Collision2" type="Node2D" parent="enemy_kart"]
+position = Vector2(39, 122)
+script = ExtResource("5_7rj3v")
+limit_to_group = "item"
+metadata/pronto_connections = [SubResource("Resource_5a3h3"), SubResource("Resource_u6owv")]
+
 [node name="Spawner" type="Node2D" parent="."]
-position = Vector2(104, 23)
+position = Vector2(203, 387)
 script = ExtResource("6_15x11")
 
-[node name="pickup" type="Area2D" parent="Spawner"]
+[node name="item" type="Area2D" parent="Spawner" groups=["item"]]
 position = Vector2(42, -1)
 
-[node name="Placeholder" type="Node2D" parent="Spawner/pickup"]
+[node name="Placeholder" type="Node2D" parent="Spawner/item"]
 script = ExtResource("1_25c8b")
 label = "Item"
 color = Color(1, 1, 0.0627451, 1)
 
 [node name="Clock" type="Node2D" parent="."]
-position = Vector2(54, 33)
+position = Vector2(153, 397)
 script = ExtResource("7_r8mab")
-duration_seconds = 20.0
+duration_seconds = 5.0
 metadata/pronto_connections = [SubResource("Resource_uytno"), SubResource("Resource_50rvt")]
