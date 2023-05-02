@@ -8,7 +8,7 @@ class_name State
 
 var _last_reported_game_values = {}
 
-signal changed(prop: String, value: Variant)
+signal changed(prop: String, old_value: Variant, new_value: Variant)
 
 func _ready():
 	super._ready()
@@ -21,11 +21,12 @@ func inc(prop: String, amount = 1):
 	var value = get_meta(prop) + amount
 	put(prop, value)
 
-func put(prop: String, value: Variant):
+func put(prop: String, value: Variant):#
+	var old_value = get_meta(prop)
 	set_meta(prop, value)
 	if global:
 		G._put(prop, value)
-	changed.emit(prop, value)
+	changed.emit(prop, old_value, value)
 	EngineDebugger.send_message("pronto:state_put", [get_path(), prop, value])
 
 func at(prop: String, default = null):
