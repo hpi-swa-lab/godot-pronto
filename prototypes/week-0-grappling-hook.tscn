@@ -1,0 +1,118 @@
+[gd_scene load_steps=14 format=3 uid="uid://b67ap1f4mkpbr"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_uwmpi"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_vu0ow"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_f2ou7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_3kefw"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_qeb4k"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_dq4qn"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="7_mxbwt"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="11_huetj"]
+
+[sub_resource type="Resource" id="Resource_8j30p"]
+script = ExtResource("4_qeb4k")
+signal_name = "vertical_direction"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["dir"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_80fnh"]
+script = ExtResource("4_qeb4k")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "rotate_left"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_xsegg"]
+script = ExtResource("4_qeb4k")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "rotate_right"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_bgtva"]
+script = ExtResource("4_qeb4k")
+signal_name = "up"
+to = NodePath("../Spawner")
+invoke = "spawn_toward"
+arguments = ["Vector2.UP.rotated(closest(\"kart\").rotation) * 100"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_f0b6f"]
+script = ExtResource("4_qeb4k")
+signal_name = "always"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["Vector2(0, -1).rotated(closest(\"kart\").rotation)"]
+only_if = "true"
+expression = ""
+
+[node name="week-0-grappling-hook" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_vu0ow")
+color = Color(1, 0.184314, 0.847059, 1)
+
+[node name="kart" type="CharacterBody2D" parent="."]
+position = Vector2(570, 480)
+
+[node name="Placeholder" type="Node2D" parent="kart"]
+script = ExtResource("1_uwmpi")
+label = "kart"
+placeholder_size = Vector2(33, 56)
+
+[node name="Move" type="Node2D" parent="kart"]
+position = Vector2(47, -13)
+script = ExtResource("2_f2ou7")
+rotated = true
+rotation_speed = 800.0
+rotate_velocity = false
+
+[node name="Controls" type="Node2D" parent="kart"]
+position = Vector2(118, -12)
+script = ExtResource("3_3kefw")
+metadata/pronto_connections = [SubResource("Resource_8j30p"), SubResource("Resource_80fnh"), SubResource("Resource_xsegg")]
+
+[node name="Key" type="Node2D" parent="kart"]
+position = Vector2(-70, -4)
+scale = Vector2(1, 0.903315)
+script = ExtResource("6_dq4qn")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_bgtva")]
+
+[node name="Spawner" type="Node2D" parent="kart"]
+position = Vector2(1, -37)
+script = ExtResource("7_mxbwt")
+metadata/pronto_connections = []
+
+[node name="Grappling hook" type="Area2D" parent="kart/Spawner"]
+scale = Vector2(1, 0.465414)
+
+[node name="Placeholder" type="Node2D" parent="kart/Spawner/Grappling hook"]
+script = ExtResource("1_uwmpi")
+color = Color(0.584314, 0.584314, 0.584314, 1)
+
+[node name="Move" type="Node2D" parent="kart/Spawner/Grappling hook"]
+position = Vector2(45, -17.189)
+script = ExtResource("2_f2ou7")
+
+[node name="Always" type="Node2D" parent="kart/Spawner/Grappling hook"]
+position = Vector2(119, -15.0403)
+script = ExtResource("11_huetj")
+metadata/pronto_connections = [SubResource("Resource_f0b6f")]
+
+[node name="Pipe" type="StaticBody2D" parent="."]
+position = Vector2(568, 149)
+
+[node name="Placeholder" type="Node2D" parent="Pipe"]
+script = ExtResource("1_uwmpi")
+label = "pipe"
+color = Color(0, 0.537255, 0.494118, 1)
+placeholder_size = Vector2(56, 32)
