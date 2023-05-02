@@ -1,13 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://b67ap1f4mkpbr"]
+[gd_scene load_steps=23 format=3 uid="uid://b67ap1f4mkpbr"]
 
+[ext_resource type="Script" path="res://prototypes/week-0-grappling-hook.gd" id="1_3ovfl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_uwmpi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_vu0ow"]
+[ext_resource type="Script" path="res://prototypes/kart.gd" id="2_5e1tw"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_f2ou7"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_3kefw"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_qeb4k"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_dq4qn"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="7_mxbwt"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="9_e3frx"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="10_6iv1s"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="11_huetj"]
 
@@ -40,32 +41,32 @@ expression = ""
 
 [sub_resource type="Resource" id="Resource_bgtva"]
 script = ExtResource("4_qeb4k")
-signal_name = "up"
+signal_name = "down"
 to = NodePath("../Spawner")
 invoke = "spawn_toward"
-arguments = ["Vector2.UP.rotated(closest(\"kart\").rotation) * 100"]
+arguments = ["Vector2.UP.rotated(closest(\"kart\").rotation)"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_f0b6f"]
+[sub_resource type="Resource" id="Resource_h3orl"]
+script = ExtResource("4_qeb4k")
+signal_name = "up"
+to = NodePath("..")
+invoke = "set_hook_pull"
+arguments = ["Vector2.ZERO", "0"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_j5h6y"]
 script = ExtResource("4_qeb4k")
 signal_name = "always"
 to = NodePath("../Move")
 invoke = "move_direction"
-arguments = ["Vector2(0, -1).rotated(closest(\"kart\").rotation)"]
+arguments = ["Vector2(0, -1).rotated(closest(\"kart\").rotation) * delta * closest(\"week-0-grappling-hook\").hook_flying_speed"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_pfsqa"]
-script = ExtResource("4_qeb4k")
-signal_name = "elapsed"
-to = NodePath("..")
-invoke = "queue_free"
-arguments = []
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_dk8mm"]
+[sub_resource type="Resource" id="Resource_js7ue"]
 script = ExtResource("4_qeb4k")
 signal_name = "collided"
 to = NodePath("../Always")
@@ -74,16 +75,45 @@ arguments = ["true"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_5h3mu"]
+[sub_resource type="Resource" id="Resource_7f8sd"]
 script = ExtResource("4_qeb4k")
 signal_name = "collided"
-to = NodePath("../Clock")
-invoke = "stop"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = "closest(\"kart\").set_hook_pull(from.global_position, closest(\"week-0-grappling-hook\").hook_pulling_speed)"
+
+[sub_resource type="Resource" id="Resource_3o1qh"]
+script = ExtResource("4_qeb4k")
+signal_name = "collided"
+to = NodePath("../Move")
+invoke = "set_velocity_y"
+arguments = ["0"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_anwr4"]
+script = ExtResource("4_qeb4k")
+signal_name = "collided"
+to = NodePath("../Move")
+invoke = "set_velocity_x"
+arguments = ["0"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_bupm4"]
+script = ExtResource("4_qeb4k")
+signal_name = "up"
+to = NodePath("..")
+invoke = "queue_free"
 arguments = []
 only_if = "true"
 expression = ""
 
 [node name="week-0-grappling-hook" type="Node2D"]
+script = ExtResource("1_3ovfl")
+hook_flying_speed = 150.0
 
 [node name="Background" type="Node2D" parent="."]
 script = ExtResource("1_vu0ow")
@@ -91,6 +121,8 @@ color = Color(0.615686, 0.603922, 0.658824, 1)
 
 [node name="kart" type="CharacterBody2D" parent="."]
 position = Vector2(570, 480)
+motion_mode = 1
+script = ExtResource("2_5e1tw")
 
 [node name="Placeholder" type="Node2D" parent="kart"]
 script = ExtResource("1_uwmpi")
@@ -115,7 +147,7 @@ position = Vector2(-75, -39)
 scale = Vector2(1, 0.903315)
 script = ExtResource("6_dq4qn")
 key = "A"
-metadata/pronto_connections = [SubResource("Resource_bgtva")]
+metadata/pronto_connections = [SubResource("Resource_bgtva"), SubResource("Resource_h3orl")]
 
 [node name="Spawner" type="Node2D" parent="kart"]
 position = Vector2(0, -40)
@@ -127,6 +159,7 @@ scale = Vector2(1, 0.465414)
 
 [node name="Placeholder" type="Node2D" parent="kart/Spawner/Grappling hook"]
 script = ExtResource("1_uwmpi")
+label = "hook "
 color = Color(0.866667, 0.231373, 0.980392, 1)
 
 [node name="Move" type="Node2D" parent="kart/Spawner/Grappling hook"]
@@ -136,19 +169,18 @@ script = ExtResource("2_f2ou7")
 [node name="Always" type="Node2D" parent="kart/Spawner/Grappling hook"]
 position = Vector2(120, -25.7835)
 script = ExtResource("11_huetj")
-metadata/pronto_connections = [SubResource("Resource_f0b6f")]
-
-[node name="Clock" type="Node2D" parent="kart/Spawner/Grappling hook"]
-position = Vector2(0, -90.2422)
-script = ExtResource("9_e3frx")
-one_shot = true
-duration_seconds = 5.0
-metadata/pronto_connections = [SubResource("Resource_pfsqa")]
+metadata/pronto_connections = [SubResource("Resource_j5h6y")]
 
 [node name="Collision" type="Node2D" parent="kart/Spawner/Grappling hook"]
 position = Vector2(44, 4.29724)
 script = ExtResource("10_6iv1s")
-metadata/pronto_connections = [SubResource("Resource_dk8mm"), SubResource("Resource_5h3mu")]
+metadata/pronto_connections = [SubResource("Resource_js7ue"), SubResource("Resource_7f8sd"), SubResource("Resource_3o1qh"), SubResource("Resource_anwr4")]
+
+[node name="Key" type="Node2D" parent="kart/Spawner/Grappling hook"]
+position = Vector2(-34, -62.3101)
+script = ExtResource("6_dq4qn")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_bupm4")]
 
 [node name="Pipe" type="StaticBody2D" parent="."]
 position = Vector2(568, 149)
