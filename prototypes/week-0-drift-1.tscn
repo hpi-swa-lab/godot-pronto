@@ -10,8 +10,8 @@ script = ExtResource("4_cin3a")
 signal_name = "up"
 to = NodePath("../Move")
 invoke = "add_velocity"
-arguments = ["Vector2.from_angle(from.get_parent().get_rotation())"]
-only_if = "true"
+arguments = ["Vector2.from_angle(from.get_parent().get_rotation())* 10.0"]
+only_if = "to.get_parent().get_velocity().length() < 800"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_umq23"]
@@ -46,7 +46,8 @@ placeholder_size = Vector2(65, 20)
 [node name="Move" type="Node2D" parent="kart"]
 position = Vector2(101, -16)
 script = ExtResource("2_us8qt")
-friction = 5.0
+max_velocity = 20.0
+acceleration = 1.0
 rotated = true
 rotation_speed = 800.0
 
