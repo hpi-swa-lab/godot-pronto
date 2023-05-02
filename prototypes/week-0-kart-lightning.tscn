@@ -1,26 +1,49 @@
-[gd_scene load_steps=19 format=3 uid="uid://dw4frlvr7ghss"]
+[gd_scene load_steps=18 format=3 uid="uid://dw4frlvr7ghss"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_8m86w"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_4g7h6"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="3_7p7ih"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_ev3hj"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_gty2v"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="4_u17nd"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_p6ay7"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_wlhs4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_k2jw4"]
 
-[sub_resource type="Resource" id="Resource_dn0yn"]
-script = ExtResource("4_u17nd")
-name = ""
-from = NodePath("../../../Slow")
-prop = "value"
+[sub_resource type="Animation" id="Animation_xftfa"]
+resource_name = "spin"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
 
-[sub_resource type="Resource" id="Resource_8lh2p"]
-script = ExtResource("4_u17nd")
-name = ""
-from = NodePath("../../../Fast")
-prop = "value"
+[sub_resource type="Animation" id="Animation_4mps3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ajm2n"]
+_data = {
+"RESET": SubResource("Animation_4mps3"),
+"spin": SubResource("Animation_xftfa")
+}
 
 [sub_resource type="Resource" id="Resource_5mx72"]
 script = ExtResource("4_gty2v")
@@ -49,16 +72,7 @@ arguments = []
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_sdh8h"]
-script = ExtResource("4_gty2v")
-signal_name = "just_down"
-to = NodePath("../CharacterBody2D/Move/SlowBind")
-invoke = "update"
-arguments = []
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_kkn0q"]
+[sub_resource type="Resource" id="Resource_215i0"]
 script = ExtResource("4_gty2v")
 signal_name = "just_down"
 to = NodePath("FastClock")
@@ -67,23 +81,32 @@ arguments = []
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_ih184"]
+[sub_resource type="Resource" id="Resource_3j73q"]
 script = ExtResource("4_gty2v")
-signal_name = "elapsed"
-to = NodePath("../../CharacterBody2D/Move/FastBind")
-invoke = "update"
-arguments = []
+signal_name = "just_down"
+to = NodePath("../CharacterBody2D/Move")
+invoke = "set"
+arguments = ["\"max_velocity\"", "from.get_node(\"../Slow\").value"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_gqmtt"]
+[sub_resource type="Resource" id="Resource_rbvv0"]
+script = ExtResource("4_gty2v")
+signal_name = "just_down"
+to = NodePath("../CharacterBody2D/Placeholder")
+invoke = "set_meta"
+arguments = ["\"foo\"", "(func(): to.get_node(\"AnimationPlayer\").play(\"spin\"); return 0).call()"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_b57bi"]
 script = ExtResource("4_gty2v")
 signal_name = "elapsed"
-to = NodePath("")
-invoke = ""
-arguments = []
+to = NodePath("../../CharacterBody2D/Move")
+invoke = "set"
+arguments = ["\"max_velocity\"", "from.get_node(\"../../Fast\").value"]
 only_if = "true"
-expression = "print(\"go fast\")"
+expression = ""
 
 [node name="week-0-kart-lightning" type="Node"]
 
@@ -96,28 +119,17 @@ label = "Kart"
 placeholder_size = Vector2(24, 52)
 metadata/_edit_lock_ = true
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D/Placeholder"]
+libraries = {
+"": SubResource("AnimationLibrary_ajm2n")
+}
+
 [node name="Move" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(103, 79)
 script = ExtResource("2_4g7h6")
 friction = 50.0
 rotated = true
 rotation_speed = 300.0
-
-[node name="SlowBind" type="Node2D" parent="CharacterBody2D/Move"]
-position = Vector2(-72, 31)
-script = ExtResource("3_7p7ih")
-from = Array[ExtResource("4_u17nd")]([SubResource("Resource_dn0yn")])
-to_prop = "max_velocity"
-convert = "value0"
-one_shot = true
-
-[node name="FastBind" type="Node2D" parent="CharacterBody2D/Move"]
-position = Vector2(-53, 68)
-script = ExtResource("3_7p7ih")
-from = Array[ExtResource("4_u17nd")]([SubResource("Resource_8lh2p")])
-to_prop = "max_velocity"
-convert = "value0"
-one_shot = true
 
 [node name="Controls" type="Node2D" parent="."]
 position = Vector2(691, 448)
@@ -128,14 +140,14 @@ metadata/pronto_connections = [SubResource("Resource_5mx72"), SubResource("Resou
 position = Vector2(525, 446)
 script = ExtResource("5_p6ay7")
 key = "Space"
-metadata/pronto_connections = [SubResource("Resource_sdh8h"), SubResource("Resource_kkn0q")]
+metadata/pronto_connections = [SubResource("Resource_215i0"), SubResource("Resource_3j73q"), SubResource("Resource_rbvv0")]
 
 [node name="FastClock" type="Node2D" parent="Trigger"]
 position = Vector2(80, 51)
 script = ExtResource("8_k2jw4")
 one_shot = true
 paused = true
-metadata/pronto_connections = [SubResource("Resource_ih184"), SubResource("Resource_gqmtt")]
+metadata/pronto_connections = [SubResource("Resource_b57bi")]
 
 [node name="Slow" type="Node2D" parent="."]
 position = Vector2(555, 511)
