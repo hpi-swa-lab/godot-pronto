@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b67ap1f4mkpbr"]
+[gd_scene load_steps=19 format=3 uid="uid://b67ap1f4mkpbr"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_uwmpi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_vu0ow"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_dq4qn"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="7_mxbwt"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="9_e3frx"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="10_6iv1s"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="11_huetj"]
 
 [sub_resource type="Resource" id="Resource_8j30p"]
@@ -64,11 +65,29 @@ arguments = []
 only_if = "true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_dk8mm"]
+script = ExtResource("4_qeb4k")
+signal_name = "collided"
+to = NodePath("../Always")
+invoke = "@paused_setter"
+arguments = ["true"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_5h3mu"]
+script = ExtResource("4_qeb4k")
+signal_name = "collided"
+to = NodePath("../Clock")
+invoke = "stop"
+arguments = []
+only_if = "true"
+expression = ""
+
 [node name="week-0-grappling-hook" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
 script = ExtResource("1_vu0ow")
-color = Color(1, 0.184314, 0.847059, 1)
+color = Color(0.615686, 0.603922, 0.658824, 1)
 
 [node name="kart" type="CharacterBody2D" parent="."]
 position = Vector2(570, 480)
@@ -76,22 +95,23 @@ position = Vector2(570, 480)
 [node name="Placeholder" type="Node2D" parent="kart"]
 script = ExtResource("1_uwmpi")
 label = "kart"
+color = Color(1, 0.211765, 0.172549, 1)
 placeholder_size = Vector2(33, 56)
 
 [node name="Move" type="Node2D" parent="kart"]
-position = Vector2(47, -13)
+position = Vector2(44, 17)
 script = ExtResource("2_f2ou7")
 rotated = true
 rotation_speed = 800.0
 rotate_velocity = false
 
 [node name="Controls" type="Node2D" parent="kart"]
-position = Vector2(118, -12)
+position = Vector2(140, 18)
 script = ExtResource("3_3kefw")
 metadata/pronto_connections = [SubResource("Resource_8j30p"), SubResource("Resource_80fnh"), SubResource("Resource_xsegg")]
 
 [node name="Key" type="Node2D" parent="kart"]
-position = Vector2(-70, -4)
+position = Vector2(-75, -39)
 scale = Vector2(1, 0.903315)
 script = ExtResource("6_dq4qn")
 key = "A"
@@ -107,23 +127,28 @@ scale = Vector2(1, 0.465414)
 
 [node name="Placeholder" type="Node2D" parent="kart/Spawner/Grappling hook"]
 script = ExtResource("1_uwmpi")
-color = Color(0.584314, 0.584314, 0.584314, 1)
+color = Color(0.866667, 0.231373, 0.980392, 1)
 
 [node name="Move" type="Node2D" parent="kart/Spawner/Grappling hook"]
-position = Vector2(45, -17.189)
+position = Vector2(45, -27.9322)
 script = ExtResource("2_f2ou7")
 
 [node name="Always" type="Node2D" parent="kart/Spawner/Grappling hook"]
-position = Vector2(119, -15.0403)
+position = Vector2(120, -25.7835)
 script = ExtResource("11_huetj")
 metadata/pronto_connections = [SubResource("Resource_f0b6f")]
 
 [node name="Clock" type="Node2D" parent="kart/Spawner/Grappling hook"]
-position = Vector2(45, -66.6074)
+position = Vector2(0, -90.2422)
 script = ExtResource("9_e3frx")
 one_shot = true
 duration_seconds = 5.0
 metadata/pronto_connections = [SubResource("Resource_pfsqa")]
+
+[node name="Collision" type="Node2D" parent="kart/Spawner/Grappling hook"]
+position = Vector2(44, 4.29724)
+script = ExtResource("10_6iv1s")
+metadata/pronto_connections = [SubResource("Resource_dk8mm"), SubResource("Resource_5h3mu")]
 
 [node name="Pipe" type="StaticBody2D" parent="."]
 position = Vector2(568, 149)
