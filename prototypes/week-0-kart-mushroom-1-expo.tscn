@@ -1,20 +1,20 @@
-[gd_scene load_steps=30 format=3 uid="uid://c34lmqiprmmf5"]
+[gd_scene load_steps=31 format=3 uid="uid://di2sshyyx1yf0"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_bhuw1"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_yq34s"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_3w6l4"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_q8ryo"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_eq0ye"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_e6rx4"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="7_5547x"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="7_c0unn"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="8_iv22h"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="9_18rme"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="9_j6vq7"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="10_m7ttb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_pnm3k"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_gipid"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_p6l3q"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_trt8o"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_khhjw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="6_v6axm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="7_3jdqq"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="8_wofjv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="9_hf3d8"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="10_c1hht"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="11_1gsk4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="12_y8y8e"]
 
 [sub_resource type="Resource" id="Resource_fymss"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "up"
 to = NodePath("../Move")
 invoke = "move_up"
@@ -23,7 +23,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_ab8d3"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "right"
 to = NodePath("../Move")
 invoke = "rotate_right"
@@ -32,7 +32,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_ayatp"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "left"
 to = NodePath("../Move")
 invoke = "rotate_left"
@@ -40,17 +40,8 @@ arguments = []
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_foops"]
-script = ExtResource("4_q8ryo")
-signal_name = "down"
-to = NodePath("State")
-invoke = "put"
-arguments = ["\"hasBoost\"", "true"]
-only_if = "G.at(\"hasBoost\")"
-expression = ""
-
 [sub_resource type="Resource" id="Resource_b2gll"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "down"
 to = NodePath("State")
 invoke = "put"
@@ -58,8 +49,17 @@ arguments = ["\"boosting\"", "true"]
 only_if = "G.at(\"hasBoost\")"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_i5ihh"]
+script = ExtResource("4_trt8o")
+signal_name = "down"
+to = NodePath("State")
+invoke = "put"
+arguments = ["\"hasBoost\"", "false"]
+only_if = "G.at(\"hasBoost\")"
+expression = ""
+
 [sub_resource type="Resource" id="Resource_8mc1o"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "collided"
 to = NodePath("../../State")
 invoke = "put"
@@ -68,7 +68,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_4qfv8"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "collided"
 to = NodePath("")
 invoke = ""
@@ -77,16 +77,16 @@ only_if = "true"
 expression = "other.queue_free()"
 
 [sub_resource type="Resource" id="Resource_vjjdl"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "always"
 to = NodePath("../Move")
 invoke = "add_velocity"
-arguments = ["Vector2(0,-at(\"BoosterSpeed\")).rotated(from.get_parent().rotation)"]
+arguments = ["Vector2(0,-(G.at(\"currentSpeed\")*G.at(\"BoosterFactor\"))).rotated(from.get_parent().rotation)"]
 only_if = "G.at(\"boosting\")"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_6gjt2"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "elapsed"
 to = NodePath("../Key/State")
 invoke = "put"
@@ -95,7 +95,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_kg3tk"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "elapsed"
 to = NodePath(".")
 invoke = "@paused_setter"
@@ -104,7 +104,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_6co3u"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "always"
 to = NodePath("..")
 invoke = "@paused_setter"
@@ -113,7 +113,7 @@ only_if = "G.at(\"boosting\")"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_nb6bh"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "always"
 to = NodePath("State")
 invoke = "put"
@@ -122,7 +122,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_etkbs"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "always"
 to = NodePath("../State")
 invoke = "put"
@@ -131,7 +131,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_86bi7"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "elapsed"
 to = NodePath("../State")
 invoke = "put"
@@ -140,7 +140,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_63mn2"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "always"
 to = NodePath("../Move")
 invoke = "add_velocity"
@@ -148,8 +148,17 @@ arguments = ["Vector2(0,G.at(\"VelocityDampening\")).rotated(from.get_parent().r
 only_if = "(G.at(\"currentSpeed\")) > G.at(\"MaxVelocity\") && !G.at(\"boosting\")"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_mnxeq"]
+script = ExtResource("4_trt8o")
+signal_name = "always"
+to = NodePath("../Write Position/State")
+invoke = "put"
+arguments = ["\"hasBoost\"", "true"]
+only_if = "true"
+expression = ""
+
 [sub_resource type="Resource" id="Resource_3j0yb"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "elapsed"
 to = NodePath("../Spawner")
 invoke = "spawn"
@@ -158,7 +167,7 @@ only_if = "true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_wsr11"]
-script = ExtResource("4_q8ryo")
+script = ExtResource("4_trt8o")
 signal_name = "elapsed"
 to = NodePath("../Spawner")
 invoke = "set_position"
@@ -172,14 +181,14 @@ expression = ""
 position = Vector2(551, 576)
 
 [node name="Placeholder" type="Node2D" parent="Kart"]
-script = ExtResource("1_bhuw1")
+script = ExtResource("1_pnm3k")
 label = "Kart"
 color = Color(0.313726, 1, 1, 1)
 placeholder_size = Vector2(19, 35)
 
 [node name="Move" type="Node2D" parent="Kart"]
 position = Vector2(37, -67)
-script = ExtResource("2_yq34s")
+script = ExtResource("2_gipid")
 acceleration = 0.1
 friction = 1.8
 rotated = true
@@ -187,85 +196,91 @@ rotation_speed = 200.0
 
 [node name="Controls" type="Node2D" parent="Kart"]
 position = Vector2(23, 8)
-script = ExtResource("3_3w6l4")
+script = ExtResource("3_p6l3q")
 metadata/pronto_connections = [SubResource("Resource_fymss"), SubResource("Resource_ab8d3"), SubResource("Resource_ayatp")]
 
 [node name="Key" type="Node2D" parent="Kart"]
 position = Vector2(56, 9)
-script = ExtResource("5_eq0ye")
+script = ExtResource("5_khhjw")
 key = "Space"
-metadata/pronto_connections = [SubResource("Resource_foops"), SubResource("Resource_b2gll")]
+metadata/pronto_connections = [SubResource("Resource_b2gll"), SubResource("Resource_i5ihh")]
 
 [node name="State" type="Node2D" parent="Kart/Key"]
 position = Vector2(80, -46)
-script = ExtResource("8_iv22h")
+script = ExtResource("6_v6axm")
 global = true
 
-[node name="BoosterSpeed" type="Node2D" parent="Kart"]
+[node name="BoosterFactor" type="Node2D" parent="Kart"]
 position = Vector2(-11, -258)
-script = ExtResource("6_e6rx4")
-to = 20.0
-value = 10.0
+script = ExtResource("7_3jdqq")
+to = 0.1
+value = 0.025
 
 [node name="Collision" type="Node2D" parent="Kart"]
 position = Vector2(2, -91)
-script = ExtResource("7_5547x")
+script = ExtResource("8_wofjv")
 metadata/pronto_connections = [SubResource("Resource_8mc1o"), SubResource("Resource_4qfv8")]
 
 [node name="Always" type="Node2D" parent="Kart"]
 position = Vector2(35, -131)
-script = ExtResource("9_j6vq7")
+script = ExtResource("9_hf3d8")
 metadata/pronto_connections = [SubResource("Resource_vjjdl")]
 
 [node name="Clock" type="Node2D" parent="Kart"]
 position = Vector2(83, -167)
-script = ExtResource("10_m7ttb")
+script = ExtResource("10_c1hht")
 paused = true
 metadata/pronto_connections = [SubResource("Resource_6gjt2"), SubResource("Resource_kg3tk")]
 
 [node name="Always" type="Node2D" parent="Kart/Clock"]
 position = Vector2(-29, 1)
-script = ExtResource("9_j6vq7")
+script = ExtResource("9_hf3d8")
 metadata/pronto_connections = [SubResource("Resource_6co3u")]
 
 [node name="Write Position" type="Node2D" parent="Kart"]
 position = Vector2(-408, -320)
-script = ExtResource("9_j6vq7")
+script = ExtResource("9_hf3d8")
 metadata/pronto_connections = [SubResource("Resource_nb6bh")]
 
 [node name="State" type="Node2D" parent="Kart/Write Position"]
-position = Vector2(46, -6)
-script = ExtResource("8_iv22h")
+position = Vector2(82, -2)
+script = ExtResource("6_v6axm")
 global = true
 
 [node name="Always" type="Node2D" parent="Kart/Write Position"]
 position = Vector2(20, 25)
-script = ExtResource("9_j6vq7")
+script = ExtResource("9_hf3d8")
 metadata/pronto_connections = [SubResource("Resource_etkbs")]
 
 [node name="Clock" type="Node2D" parent="Kart/Write Position"]
 position = Vector2(77, -21)
-script = ExtResource("10_m7ttb")
+script = ExtResource("10_c1hht")
 one_shot = true
 duration_seconds = 0.0001
 metadata/pronto_connections = [SubResource("Resource_86bi7")]
 
 [node name="Always2" type="Node2D" parent="Kart"]
 position = Vector2(78, -78)
-script = ExtResource("9_j6vq7")
+script = ExtResource("9_hf3d8")
 metadata/pronto_connections = [SubResource("Resource_63mn2")]
 
 [node name="MaxVelocity" type="Node2D" parent="Kart"]
 position = Vector2(47, -256)
-script = ExtResource("6_e6rx4")
+script = ExtResource("7_3jdqq")
 to = 1000.0
 value = 200.0
 
 [node name="VelocityDampening" type="Node2D" parent="Kart"]
 position = Vector2(101, -256)
-script = ExtResource("6_e6rx4")
+script = ExtResource("7_3jdqq")
 to = 100.0
 value = 10.0
+
+[node name="Always3" type="Node2D" parent="Kart"]
+position = Vector2(-247, -307)
+script = ExtResource("9_hf3d8")
+paused = true
+metadata/pronto_connections = [SubResource("Resource_mnxeq")]
 
 [node name="Walls" type="Node2D" parent="."]
 
@@ -273,7 +288,7 @@ value = 10.0
 
 [node name="Placeholder" type="Node2D" parent="Walls/Border"]
 position = Vector2(575, -11)
-script = ExtResource("1_bhuw1")
+script = ExtResource("1_pnm3k")
 color = Color(0.662745, 0.662745, 0.662745, 1)
 placeholder_size = Vector2(1193, 22)
 
@@ -282,7 +297,7 @@ position = Vector2(0, 670)
 
 [node name="Placeholder" type="Node2D" parent="Walls/Border2"]
 position = Vector2(575, -11)
-script = ExtResource("1_bhuw1")
+script = ExtResource("1_pnm3k")
 color = Color(0.662745, 0.662745, 0.662745, 1)
 placeholder_size = Vector2(1193, 22)
 
@@ -292,7 +307,7 @@ rotation = 1.57079
 
 [node name="Placeholder" type="Node2D" parent="Walls/Border3"]
 position = Vector2(575, -11)
-script = ExtResource("1_bhuw1")
+script = ExtResource("1_pnm3k")
 color = Color(0.662745, 0.662745, 0.662745, 1)
 placeholder_size = Vector2(1193, 22)
 
@@ -302,7 +317,7 @@ rotation = 1.57079
 
 [node name="Placeholder" type="Node2D" parent="Walls/Border4"]
 position = Vector2(575, -11)
-script = ExtResource("1_bhuw1")
+script = ExtResource("1_pnm3k")
 color = Color(0.662745, 0.662745, 0.662745, 1)
 placeholder_size = Vector2(1193, 22)
 
@@ -315,7 +330,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Bind" type="Node2D" parent="HasBoost"]
 position = Vector2(10, 45)
-script = ExtResource("7_c0unn")
+script = ExtResource("11_1gsk4")
 to_prop = "text"
 convert = "\"Has boost: \" + str(G.at(\"hasBoost\"))"
 
@@ -327,7 +342,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Bind" type="Node2D" parent="Boosting"]
 position = Vector2(10, 45)
-script = ExtResource("7_c0unn")
+script = ExtResource("11_1gsk4")
 to_prop = "text"
 convert = "\"Boosting: \" + str(G.at(\"boosting\"))"
 
@@ -340,30 +355,30 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Bind" type="Node2D" parent="Speed"]
 position = Vector2(10, 45)
-script = ExtResource("7_c0unn")
+script = ExtResource("11_1gsk4")
 to_prop = "text"
 convert = "\"Speed: \" + str(G.at(\"currentSpeed\"))"
 
 [node name="State" type="Node2D" parent="."]
 position = Vector2(473, 482)
-script = ExtResource("8_iv22h")
+script = ExtResource("6_v6axm")
 global = true
 
 [node name="Spawner" type="Node2D" parent="."]
 position = Vector2(689, 463)
-script = ExtResource("9_18rme")
+script = ExtResource("12_y8y8e")
 
 [node name="Area2D" type="Area2D" parent="Spawner"]
 position = Vector2(29, -28)
 
 [node name="Placeholder" type="Node2D" parent="Spawner/Area2D"]
-script = ExtResource("1_bhuw1")
+script = ExtResource("1_pnm3k")
 label = "Boost"
 color = Color(0.533333, 0.176471, 0.0117647, 1)
 placeholder_size = Vector2(12, 12)
 
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(690, 491)
-script = ExtResource("10_m7ttb")
+script = ExtResource("10_c1hht")
 duration_seconds = 2.0
 metadata/pronto_connections = [SubResource("Resource_3j0yb"), SubResource("Resource_wsr11")]
