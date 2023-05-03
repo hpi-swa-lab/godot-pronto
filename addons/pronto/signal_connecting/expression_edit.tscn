@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1jujxfamsekk"]
+[gd_scene load_steps=7 format=3 uid="uid://d1jujxfamsekk"]
 
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/expression_edit.gd" id="1_lndi8"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_au0w8"]
+[ext_resource type="Script" path="res://addons/pronto/signal_connecting/lsp_edit.gd" id="2_lla62"]
 
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_yn0mp"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_tp1bn"]
 number_color = Color(0, 0.55, 0.28, 1)
 symbol_color = Color(0, 0, 0.61, 1)
 function_color = Color(0, 0.225, 0.9, 1)
@@ -63,10 +64,12 @@ script = ExtResource("2_au0w8")
 name = "DebugSkipBreakpointsOff"
 
 [node name="expression_edit" type="HBoxContainer"]
-custom_minimum_size = Vector2(0, 43)
+custom_minimum_size = Vector2(180, 32)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -972.0
+offset_bottom = -614.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
@@ -80,10 +83,13 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_yn0mp")
+syntax_highlighter = SubResource("CodeHighlighter_tp1bn")
 scroll_fit_content_height = true
+code_completion_enabled = true
+code_completion_prefixes = Array[String]([".", "/"])
 indent_automatic = true
 auto_brace_completion_enabled = true
+script = ExtResource("2_lla62")
 
 [node name="OpenFile" type="Button" parent="."]
 layout_mode = 2

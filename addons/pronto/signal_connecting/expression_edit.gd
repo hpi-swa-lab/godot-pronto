@@ -22,6 +22,10 @@ signal text_changed()
 @export var min_width = 80
 @export var max_width = 260
 
+var edited_script
+
+var _LanguageClient: LanguageClient
+
 func _input(event):
 	if not $Expression.has_focus():
 		return
@@ -38,8 +42,27 @@ func _ready():
 	if owner != self:
 		fake_a_godot_highlighter()
 		resize()
+		add_child(LanguageClient.new())
+		
+		edited_script = GDScript.new()
+		edited_script.source_code = 'extends Object'
+		edited_script.reload()
+		edited_script.resource_path = "res://test-script.gd"
+		ResourceSaver.save(edited_script)
+		
+		# TODO
+		if not Engine.is_editor_hint():
+			# TODO move to autoload
+			_LanguageClient = LanguageClient.new()
+			add_child(_LanguageClient)
+			$Expression.code_completion_enabled = true
+			$Expression.code_completion_prefixes = ['.', '/'] # TODO
+			$Expression.language_client = _LanguageClient
+			$Expression.edited_script = edited_script
 
 func fake_a_godot_highlighter():
+	if G.at("_pronto_editor_plugin") == null:
+		return
 	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
 	var h = CodeHighlighter.new()
 	h.number_color = s.get("text_editor/theme/highlighting/number_color")
