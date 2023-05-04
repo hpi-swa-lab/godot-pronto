@@ -8,6 +8,21 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_wlhs4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_k2jw4"]
 
+[sub_resource type="Animation" id="Animation_4mps3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_xftfa"]
 resource_name = "spin"
 length = 0.5
@@ -22,21 +37,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 6.28319]
-}
-
-[sub_resource type="Animation" id="Animation_4mps3"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ajm2n"]
@@ -90,12 +90,12 @@ arguments = ["\"max_velocity\"", "from.get_node(\"../Slow\").value"]
 only_if = "true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_rbvv0"]
+[sub_resource type="Resource" id="Resource_3j06i"]
 script = ExtResource("4_gty2v")
 signal_name = "just_down"
-to = NodePath("../CharacterBody2D/Placeholder")
-invoke = "set_meta"
-arguments = ["\"foo\"", "(func(): to.get_node(\"AnimationPlayer\").play(\"spin\"); return 0).call()"]
+to = NodePath("../CharacterBody2D/Placeholder/AnimationPlayer")
+invoke = "play"
+arguments = ["\"spin\"", "-1", "1.0", "false"]
 only_if = "true"
 expression = ""
 
@@ -140,7 +140,7 @@ metadata/pronto_connections = [SubResource("Resource_5mx72"), SubResource("Resou
 position = Vector2(525, 446)
 script = ExtResource("5_p6ay7")
 key = "Space"
-metadata/pronto_connections = [SubResource("Resource_215i0"), SubResource("Resource_3j73q"), SubResource("Resource_rbvv0")]
+metadata/pronto_connections = [SubResource("Resource_215i0"), SubResource("Resource_3j73q"), SubResource("Resource_3j06i")]
 
 [node name="FastClock" type="Node2D" parent="Trigger"]
 position = Vector2(80, 51)
