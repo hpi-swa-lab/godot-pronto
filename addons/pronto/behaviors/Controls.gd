@@ -14,28 +14,29 @@ signal vertical_direction(dir: Vector2)
 signal click(pos: Vector2)
 signal moved(pos: Vector2)
 
+var key_map = [{
+	"function": Input.is_action_pressed,
+	"left": "ui_left",
+	"right": "ui_right",
+	"up": "ui_up",
+	"down": "ui_down"
+},
+{
+	"function": Input.is_physical_key_pressed,
+	"left": KEY_A,
+	"right": KEY_D,
+	"up": KEY_W,
+	"down": KEY_S
+},
+{
+	"function": Input.is_physical_key_pressed,
+	"left": KEY_J,
+	"right": KEY_L,
+	"up": KEY_I,
+	"down": KEY_K
+}]
+
 func _is_key_pressed(direction):
-	var key_map = [{
-		"function": Input.is_action_pressed,
-		"left": "ui_left",
-		"right": "ui_right",
-		"up": "ui_up",
-		"down": "ui_down"
-	},
-	{
-		"function": Input.is_physical_key_pressed,
-		"left": KEY_A,
-		"right": KEY_D,
-		"up": KEY_W,
-		"down": KEY_S
-	},
-	{
-		"function": Input.is_physical_key_pressed,
-		"left": KEY_J,
-		"right": KEY_L,
-		"up": KEY_I,
-		"down": KEY_K
-	}]
 	var keys = key_map[player]
 	return keys["function"].call(keys[direction])
 
