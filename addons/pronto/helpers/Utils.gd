@@ -162,17 +162,6 @@ static func random_point_on_screen():
 static func mouse_position():
 	return Engine.get_main_loop().root.get_mouse_position()
 
-static func print_connection(connection: Connection, flip = false, shorten = true):
-	var prefix = "[?] " if connection.has_condition() else ""
-	if connection.invoke != "":
-		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2})").format([
-			connection.signal_name,
-			prefix,
-			Utils.ellipsize("{0}({1})".format([connection.invoke, ",".join(connection.arguments.map(func (a): return str(a)))]), 16 if shorten else -1)
-		])
-	else:
-		return "{2}{0} ↺ {1}".format([connection.signal_name, Utils.ellipsize(connection.expression.split('\n')[0], 8 if shorten else -1), prefix])
-
 static func ellipsize(s: String, max: int = 16):
 	if s.length() <= max or max < 0:
 		return s

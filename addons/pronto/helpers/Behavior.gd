@@ -64,12 +64,12 @@ func flash_line(value: float, key: Variant):
 
 func lines():
 	return Connection.get_connections(self).map(func (connection):
-		if connection.is_expression():
-			return Lines.Line.new(self, self, func (flipped): return Utils.print_connection(connection, flipped), connection)
+		if not connection.is_target():
+			return Lines.Line.new(self, self, func (flipped): return connection.print(flipped), connection)
 		else:
 			var other = get_node_or_null(connection.to)
 			if not other: return null
-			return Lines.Line.new(self, other, func (flipped): return Utils.print_connection(connection, flipped), connection))
+			return Lines.Line.new(self, other, func (flipped): return connection.print(flipped), connection))
 
 func _draw():
 	if not Engine.is_editor_hint() or not _icon:
