@@ -4,7 +4,7 @@ extends Behavior
 
 @export var limit_to_group: String = ""
 
-signal collided(other: Area2D)
+signal collided(other: Area2D, direction: Vector2)
 
 func _ready():
 	super._ready()
@@ -19,7 +19,7 @@ func _ready():
 
 func on_collision(other: Node):
 	if limit_to_group == "" or other.is_in_group(limit_to_group):
-		collided.emit(other)
+		collided.emit(other, Vector2(other.position - get_parent().position).normalized())
 
 func is_valid_parent():
 	var p = get_parent()
