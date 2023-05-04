@@ -17,7 +17,7 @@ func _needs_update(lines: Array):
 	var new_pos = []
 	for l in lines:
 		new_pos.append(l.from.global_position)
-		new_pos.append(l.to.global_position)
+		new_pos.append(Utils.find_position(l.to))
 		new_pos.append(l.text_fn.call(false))
 	
 	needs_update = needs_update or _last_pos != new_pos
