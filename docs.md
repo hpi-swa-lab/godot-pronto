@@ -51,18 +51,18 @@ The following list of behaviors manage state or communicate visual properties.
 * Expose the crucial variation points of your mechanic via the Value behavior. You can drop any property of a Node onto the scene to create a Value automatically.
 * Focus on quick-and-dirty, especially when adding code. The second week is used to consolidate changes in the framework.
 * Don't be afraid of copy-and-paste. Copy even your entire prototype, if you want to try multiple directions. If that seems tedious in your use case, consider the `Instance` behavior.
-* Try to cram everything for your protoype in a single Godot scene so that changing any aspect is possible without having to switch scenes. Make use of the Spawner and Instance Behaviors to facilitate this.
+* Try to cram everything for your prototype in a single Godot scene so that changing any aspect is possible without having to switch scenes. Make use of the Spawner and Instance Behaviors to facilitate this.
 
 * You can use the `set` function to modify any properties when a connection triggers.
 
 ### Connections
 
-Connections are an extension of Godot signals to be more flexible. They are the primary means to assemble your game by wiring Behaviors together.
+Connections are an extension of Godot signals to be more flexible. Connections can be dragged from any behavior to any arbitrary node in a scene. They are the primary means to assemble your game by wiring Behaviors together.
 
 * Creating
     * Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
-    * The type `invoke`, is created by dragging a signal from the list onto its receiver.
-    * The type `expression` allows to execute arbitrary Godot code. Create an `expression` connection by double-clicking a signal in the list.
+    * The type `target`, is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `two`.
+    * The type `expression` allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
 * Deleting
     * Open the connection, then click on the trash icon in the top-right.
 
@@ -122,6 +122,9 @@ extends Behavior
     * When creating a new `_process` function.
 * Switch scenes back and forth
     * When updating a `_draw` function if no one calls `queue_redraw`.
+* If everything goes wrong :-)
+    * Reload the project from the main menu > Project > Reload Current Project
+    * TODO: reproduce in which cases this is necessary
 
 #### Helpers
 
