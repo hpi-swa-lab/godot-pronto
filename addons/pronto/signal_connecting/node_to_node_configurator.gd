@@ -90,7 +90,7 @@ func _process(delta):
 func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
 	existing_connection = connection
-	selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
+	self.selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
 	set_mode(connection.is_expression(), connection.is_target())
 	%Condition.text = connection.only_if
 	if connection.is_target():
