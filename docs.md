@@ -12,7 +12,14 @@ Pronto consists of a set of Godot Nodes called `Behavior` that can be added to a
 
 Build a tiny Godot game but focus on a single mechanic. Do not focus on visuals. Polish only where it is essential for the mechanic you are creating. Where possible, use the below advice and helpers instead of code for implementation.
 
-When choosing a mechanic, ask yourself first: Would it be better/faster to build a paper prototype? What is the minimal feature set I need to implement to see if the mechanic is good?
+When choosing a mechanic, ask yourself first: Would it be better/faster to build a paper prototype? (If so, consider another mechanic.) What is the minimal feature set I need to implement to see if the mechanic is good? Try and pick a mechanic that is not necessarily the core of the genre but adds an interesting aspect to it and only implement that.
+
+To get started, create a branch with the following pattern:
+```
+week-[week number]-[mechanic name]
+
+(e.g., week-0-kart-dash for the tutorial session)
+```
 
 ### Behaviors
 
@@ -32,9 +39,9 @@ The following list of behaviors primarily cause effects when triggered.
 | Behavior | Function |
 | -------- | -------- |
 | Stopwatch | Starts counting up time when triggered. Can be reset. |
-| Move | When triggered, moves its parent. Can be set to move along global or local axes. |
+| Move | When triggered, moves its parent. Can be set to move along global or local axes. Supports handling of gravity. |
 | Spawner | When triggered, spawns whatever its child node is at its current location in the scene. |
-| Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. |
+| Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. For example, create a Label node, add a Bind node as a child, use `text` as property and put any expression in its `convert` field. |
 
 The following list of behaviors manage state or communicate visual properties.
 
@@ -45,6 +52,7 @@ The following list of behaviors manage state or communicate visual properties.
 | Placeholder | Show a colored rectangle with a label. Useful as a quick means to communicate a game object's function. Functions as a collision shape, so you don't need to add another. |
 | Instance | Allows you to define a template subtree of Nodes that you want to repeat multiple times without copy-pasting. Add your template as a child of the Instance node, then hover the connection dialog and click the "Instance" button. Note: internally, this creates a "hidden" scene that you need to commit as well. You can thus use **"Editable children"** in Godot by right-clicking the instance and tweaking properties while inherting the rest. |
 | Background | Add to your scene to change the background color of the scene. |
+| CameraShake | Add as a child of a camera and call its `add_trauma` function to add shake. |
 
 ### Hints
 
@@ -138,6 +146,10 @@ You can return a list of handles (knobs on the canvas that you can move). See `P
 
 Handles can exist in local space of the nodes in the canvas or in the space of the overlay (independent of the canvas' zoom).
 
+##### Lines and Text Below a Beha
+
+You can draw lines between nodes or put text underneath your behavior by returning Line instances from the `lines()` function.
+
 ##### Canvas Override and Events
 
 If you need to add more controls to your behavior, you have to use the canvas override hooks. You can see the implementation of handles in `Behavior.gd` as an example of this.
@@ -148,11 +160,15 @@ Override `func _forward_canvas_gui_input(event: InputEvent, undo_redo: EditorUnd
 
 > ⚠️ make sure to call the super implementations if you override either of these, or handles will no longer work.
 
+##### Runtime Values
+
+In `ConnectionDebug.gd` you can communicate values from the game back to the engine.
 
 ##### Building UI
 
 * `EditorIcon`: a texture that will load any of the built-in icons and color it according to the configured theme.
+* In `ExpressionInspector.gd` you can specify that a property should get a GDScript code editor.
 
 ### Hints on Designing new Behaviors
 
-* Don't bundle too much. The idea is to give each concern its own behavior, e.g. appearance, movement, physics when falling. Design behaviors such that they are easy to connect to one another instead of pre-packaging them.
+* Don't bundle too much: give each concern its own behavior, e.g. appearance, movement, shooting. Design behaviors such that they are easy to connect to one another instead of pre-packaging them with lots of concerns.
