@@ -130,7 +130,8 @@ func _on_function_selected(name: String):
 	for arg in method["args"]:
 		var arg_ui = ExpressionEdit.instantiate()
 		Utils.fix_minimum_size(arg_ui)
-		arg_ui.placeholder_text = arg["name"]
+		arg_ui.placeholder_text = "return " + arg["name"]
+		arg_ui.text = "return " + arg["name"]
 		%Args.add_child(arg_ui)
 	update_argument_names()
 

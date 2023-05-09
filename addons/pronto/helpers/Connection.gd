@@ -147,7 +147,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			names.append("to")
 			values.append(target)
 			if c.should_trigger(names, values, from):
-				var args = c.arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, true, from))
+				var args = c.arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, from))
 				target.callv(c.invoke, args)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
 		else:
@@ -156,14 +156,14 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				names.append("to")
 				values.append(target)
 			if c.should_trigger(names, values, from):
-				ConnectionsList.eval(c.expression, names, values, false, from)
+				ConnectionsList.eval(c.expression, names, values, from)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
 func has_condition():
 	return only_if != "true" and only_if != ""
 
 func should_trigger(names, values, from):
-	return not has_condition() or ConnectionsList.eval(only_if, names, values, true, from)
+	return not has_condition() or ConnectionsList.eval(only_if, names, values, from)
 
 func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	var old = _ensure_connections(from)
