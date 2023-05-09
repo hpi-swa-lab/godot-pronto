@@ -182,7 +182,7 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	
 	return new_connection
 
-func print(flip = false, shorten = true):
+func print(flip = false, shorten = true, single_line = false):
 	var prefix = "[?] " if has_condition() else ""
 	if is_target():
 		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return str(a)))])
@@ -191,6 +191,6 @@ func print(flip = false, shorten = true):
 			signal_name,
 			prefix,
 			Utils.ellipsize(invocation_string if not is_expression() else statements_string, 16 if shorten else -1)
-		])
+		]).replace("\n" if single_line else "", "")
 	else:
-		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.split('\n')[0], 16 if shorten else -1), prefix])
+		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")
