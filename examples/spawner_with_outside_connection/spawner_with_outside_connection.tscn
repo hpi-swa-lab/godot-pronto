@@ -1,0 +1,83 @@
+[gd_scene load_steps=12 format=3 uid="uid://derf7h2bn4q73"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_ipoc4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="2_go5h6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_0aikm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="4_ueql2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_qc86o"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_qkgxs"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="7_apm0c"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="8_q31li"]
+
+[sub_resource type="Resource" id="Resource_rjrxd"]
+script = ExtResource("6_qkgxs")
+signal_name = "collided"
+to = NodePath("../../Spawner/CharacterBody2D/Move")
+invoke = "move_up"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_m3d0m"]
+script = ExtResource("6_qkgxs")
+signal_name = "direction"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["dir"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_caevb"]
+script = ExtResource("6_qkgxs")
+signal_name = "pressed"
+to = NodePath("../Spawner")
+invoke = "spawn"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[node name="spawner_with_outside_connection" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_ipoc4")
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(635, 262)
+script = ExtResource("2_go5h6")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Spawner"]
+
+[node name="Placeholder" type="Node2D" parent="Spawner/CharacterBody2D"]
+script = ExtResource("3_0aikm")
+label = "Wall"
+color = Color(0.921569, 0.239216, 0, 1)
+placeholder_size = Vector2(200, 15)
+
+[node name="Move" type="Node2D" parent="Spawner/CharacterBody2D"]
+script = ExtResource("4_ueql2")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(636, 364)
+
+[node name="Collision" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, -1)
+script = ExtResource("5_qc86o")
+metadata/pronto_connections = [SubResource("Resource_rjrxd")]
+
+[node name="Move" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("4_ueql2")
+
+[node name="Controls" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("7_apm0c")
+metadata/pronto_connections = [SubResource("Resource_m3d0m")]
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("3_0aikm")
+label = "Player"
+color = Color(1, 0.458824, 0.403922, 1)
+
+[node name="Key" type="Node2D" parent="."]
+position = Vector2(635, 224)
+script = ExtResource("8_q31li")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_caevb")]
