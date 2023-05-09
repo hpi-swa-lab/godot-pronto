@@ -109,7 +109,6 @@ text = ")"
 [node name="Expression" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
 placeholder_text = "Statement(s)..."
 max_width = 559
 
@@ -124,9 +123,8 @@ text = "only if: "
 unique_name_in_owner = true
 custom_minimum_size = Vector2(374, 64)
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 3
 text = "return true"
-max_width = 500
 
 [node name="ButtonList" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
