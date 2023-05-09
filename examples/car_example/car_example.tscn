@@ -101,7 +101,7 @@ rotation_speed = 300.0
 position = Vector2(-35, 54)
 script = ExtResource("9_hmnix")
 to_prop = "rotation_speed"
-convert = "0 if closest(\"Move\").velocity.length() < 90 else 300"
+convert = "return 0 if closest(\"Move\").velocity.length() < 90 else 300"
 
 [node name="Key" type="Node2D" parent="car/Move"]
 position = Vector2(82, 55)
@@ -169,4 +169,4 @@ text = "fps: 9000"
 position = Vector2(-34, 53)
 script = ExtResource("9_hmnix")
 to_prop = "text"
-convert = "\"FPS: \" + str(Engine.get_frames_per_second())"
+convert = "return \"FPS: \" + str(Engine.get_frames_per_second())"
