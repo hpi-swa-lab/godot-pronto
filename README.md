@@ -31,7 +31,7 @@ The following list of behaviors act primarily as triggers of events.
 | Clock | Triggers after a set time. Can be set to paused and to only trigger once. |
 | Key | Triggers when a single keyboard key is pressed or released. |
 | Controls | Triggers for mouse interactions and offers a convenient set of triggers for keyboard movement. Exact keybindings are chosen via the `Player` property which allows for up to 3 different controls (Player 1: `Arrowkeys`, Player 2: `WASD`, Player 3: `IJKL`).|
-| Collision | Triggers when something collides with its parent. The `collided` signal also provides the `direction` of the collision pointing in the direction from the parent to the node it collided with. NOTE: only works for Area2D and RigidBody2D as of now. |
+| Collision | Triggers when something collides with its parent. The `collided` signal also provides the `direction` of the collision pointing in the direction from the parent to the node it collided with. NOTE: only works for Area2D, RigidBody2D and CharacterBody2D as of now. |
 | NodeReady | Triggers once after the node (and all its siblings) are [ready](https://docs.godotengine.org/en/stable/classes/class_node.html#class-node-method-ready). |
 
 The following list of behaviors primarily cause effects when triggered.
