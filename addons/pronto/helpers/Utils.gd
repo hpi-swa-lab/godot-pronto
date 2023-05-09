@@ -83,7 +83,7 @@ static func between(x: float, min: float, max: float):
 	return x >= min and x <= max
 
 static func has_position(node: Node):
-	return node is Node3D or node is Control or node is Node2D
+	return 'global_position' in node
 
 static func find_position(node: Node):
 	var root = closest_parent_with_position(node)
