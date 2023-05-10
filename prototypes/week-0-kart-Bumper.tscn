@@ -9,154 +9,155 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="6_40ngx"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_r8mab"]
 
-[sub_resource type="Resource" id="Resource_ox21v"]
-script = ExtResource("4_flp7b")
-signal_name = "up"
-to = NodePath("../Move")
-invoke = "move_up"
-arguments = []
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_ubtfn"]
-script = ExtResource("4_flp7b")
-signal_name = "right"
-to = NodePath("../Move")
-invoke = "rotate_right"
-arguments = []
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_jw3no"]
+[sub_resource type="Resource" id="Resource_xwmf4"]
 script = ExtResource("4_flp7b")
 signal_name = "left"
 to = NodePath("../Move")
 invoke = "rotate_left"
 arguments = []
-only_if = "true"
+only_if = "return true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_tc68h"]
+[sub_resource type="Resource" id="Resource_ykaii"]
+script = ExtResource("4_flp7b")
+signal_name = "right"
+to = NodePath("../Move")
+invoke = "rotate_right"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_lkb16"]
+script = ExtResource("4_flp7b")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "move_up"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ejypr"]
 script = ExtResource("4_flp7b")
 signal_name = "collided"
 to = NodePath("../../enemy_kart/Move")
 invoke = "add_velocity"
-arguments = ["other.get_node(\"Move\").add_velocity((to.get_parent().position - from.get_parent().position).normalized() * from.collision_power)"]
-only_if = "at(\"kart_bumper_active\")"
+arguments = ["return direction * from.collision_power"]
+only_if = "return at(\"kart_bumper_active\")"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_c4pa4"]
+[sub_resource type="Resource" id="Resource_k4i7f"]
 script = ExtResource("4_flp7b")
 signal_name = "collided"
 to = NodePath("../State")
 invoke = "put"
-arguments = ["\"kart_bumper_active\"", "false"]
-only_if = "true"
+arguments = ["return \"kart_bumper_active\"", "return false"]
+only_if = "return true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_wcw7t"]
-script = ExtResource("4_flp7b")
-signal_name = "collided"
-to = NodePath("../State")
-invoke = "put"
-arguments = ["\"kart_bumper_active\"", "true"]
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_6hspp"]
+[sub_resource type="Resource" id="Resource_xlfnc"]
 script = ExtResource("4_flp7b")
 signal_name = "collided"
 to = NodePath("")
 invoke = ""
 arguments = []
-only_if = "true"
+only_if = "return true"
 expression = "other.queue_free()"
 
-[sub_resource type="Resource" id="Resource_gfov1"]
+[sub_resource type="Resource" id="Resource_32cna"]
 script = ExtResource("4_flp7b")
-signal_name = "up"
-to = NodePath("../Move")
-invoke = "move_up"
-arguments = []
-only_if = "true"
+signal_name = "collided"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["return \"kart_bumper_active\"", "return true"]
+only_if = "return true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_rj0ai"]
-script = ExtResource("4_flp7b")
-signal_name = "left"
-to = NodePath("../Move")
-invoke = "rotate_left"
-arguments = []
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_1ksq7"]
+[sub_resource type="Resource" id="Resource_5solj"]
 script = ExtResource("4_flp7b")
 signal_name = "right"
 to = NodePath("../Move")
 invoke = "rotate_right"
 arguments = []
-only_if = "true"
+only_if = "return true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_lcrj0"]
+[sub_resource type="Resource" id="Resource_bj520"]
+script = ExtResource("4_flp7b")
+signal_name = "left"
+to = NodePath("../Move")
+invoke = "rotate_left"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_sj465"]
+script = ExtResource("4_flp7b")
+signal_name = "up"
+to = NodePath("../Move")
+invoke = "move_up"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_5mlq4"]
 script = ExtResource("4_flp7b")
 signal_name = "collided"
 to = NodePath("../../kart/Move")
 invoke = "add_velocity"
-arguments = ["other.get_node(\"Move\").add_velocity((to.get_parent().position - from.get_parent().position).normalized() * from.collision_power)"]
-only_if = "at(\"enemy_kart_bumper_active\")"
+arguments = ["return direction * from.collision_power"]
+only_if = "return at(\"enemy_kart_bumper_active\")"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_008h4"]
+[sub_resource type="Resource" id="Resource_jifoq"]
 script = ExtResource("4_flp7b")
 signal_name = "collided"
 to = NodePath("../State")
 invoke = "put"
-arguments = ["\"enemy_kart_bumper_active\"", "false"]
-only_if = "true"
+arguments = ["return \"enemy_kart_bumper_active\"", "return false"]
+only_if = "return true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_5a3h3"]
-script = ExtResource("4_flp7b")
-signal_name = "collided"
-to = NodePath("../State")
-invoke = "put"
-arguments = ["\"enemy_kart_bumper_active\"", "true"]
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_u6owv"]
+[sub_resource type="Resource" id="Resource_vvlug"]
 script = ExtResource("4_flp7b")
 signal_name = "collided"
 to = NodePath("")
 invoke = ""
 arguments = []
-only_if = "true"
+only_if = "return true"
 expression = "other.queue_free()"
 
-[sub_resource type="Resource" id="Resource_uytno"]
+[sub_resource type="Resource" id="Resource_ccvh6"]
+script = ExtResource("4_flp7b")
+signal_name = "collided"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["return \"enemy_kart_bumper_active\"", "return true"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_y6f4w"]
+script = ExtResource("4_flp7b")
+signal_name = "elapsed"
+to = NodePath("../Spawner")
+invoke = "set_position"
+arguments = ["return random_point_on_screen()"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ujlmr"]
 script = ExtResource("4_flp7b")
 signal_name = "elapsed"
 to = NodePath("../Spawner")
 invoke = "spawn"
 arguments = []
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_50rvt"]
-script = ExtResource("4_flp7b")
-signal_name = "elapsed"
-to = NodePath("../Spawner")
-invoke = "set_position"
-arguments = ["random_point_on_screen()"]
-only_if = "true"
+only_if = "return true"
 expression = ""
 
 [node name="week-0-kart-Bumper" type="Node2D"]
 
-[node name="kart" type="Area2D" parent="." groups=["kart"]]
+[node name="kart" type="CharacterBody2D" parent="." groups=["kart"]]
 position = Vector2(428, 326)
+motion_mode = 1
 
 [node name="Placeholder" type="Node2D" parent="kart"]
 script = ExtResource("1_25c8b")
@@ -165,7 +166,7 @@ color = Color(0.447059, 1, 1, 1)
 placeholder_size = Vector2(40, 70)
 
 [node name="Move" type="Node2D" parent="kart"]
-position = Vector2(57, 27)
+position = Vector2(53, 26)
 script = ExtResource("2_q37re")
 acceleration = 1.0
 friction = 2.0
@@ -175,28 +176,29 @@ rotation_speed = 200.0
 [node name="Controls" type="Node2D" parent="kart"]
 position = Vector2(52, -31)
 script = ExtResource("3_wx32m")
-metadata/pronto_connections = [SubResource("Resource_ox21v"), SubResource("Resource_ubtfn"), SubResource("Resource_jw3no")]
+metadata/pronto_connections = [SubResource("Resource_xwmf4"), SubResource("Resource_ykaii"), SubResource("Resource_lkb16")]
 
 [node name="Collision" type="Node2D" parent="kart"]
 position = Vector2(92, 140)
 script = ExtResource("5_7rj3v")
 limit_to_group = "enemy_kart"
 collision_power = 1000.0
-metadata/pronto_connections = [SubResource("Resource_tc68h"), SubResource("Resource_c4pa4")]
+metadata/pronto_connections = [SubResource("Resource_ejypr"), SubResource("Resource_k4i7f")]
 
 [node name="Collision2" type="Node2D" parent="kart"]
 position = Vector2(-52, 66)
 script = ExtResource("5_7rj3v")
 limit_to_group = "item"
-metadata/pronto_connections = [SubResource("Resource_wcw7t"), SubResource("Resource_6hspp")]
+metadata/pronto_connections = [SubResource("Resource_xlfnc"), SubResource("Resource_32cna")]
 
 [node name="State" type="Node2D" parent="kart"]
 position = Vector2(-53, 143)
 script = ExtResource("6_40ngx")
 metadata/kart_bumper_active = false
 
-[node name="enemy_kart" type="Area2D" parent="." groups=["enemy_kart"]]
+[node name="enemy_kart" type="CharacterBody2D" parent="." groups=["enemy_kart"]]
 position = Vector2(623, 322)
+motion_mode = 1
 
 [node name="Placeholder" type="Node2D" parent="enemy_kart"]
 script = ExtResource("1_25c8b")
@@ -215,14 +217,14 @@ rotation_speed = 200.0
 position = Vector2(-49, -29)
 script = ExtResource("3_wx32m")
 player = 1
-metadata/pronto_connections = [SubResource("Resource_gfov1"), SubResource("Resource_rj0ai"), SubResource("Resource_1ksq7")]
+metadata/pronto_connections = [SubResource("Resource_5solj"), SubResource("Resource_bj520"), SubResource("Resource_sj465")]
 
 [node name="Collision" type="Node2D" parent="enemy_kart"]
-position = Vector2(-8, 139)
+position = Vector2(-22, 143)
 script = ExtResource("5_7rj3v")
 limit_to_group = "kart"
 collision_power = 1000.0
-metadata/pronto_connections = [SubResource("Resource_lcrj0"), SubResource("Resource_008h4")]
+metadata/pronto_connections = [SubResource("Resource_5mlq4"), SubResource("Resource_jifoq")]
 
 [node name="State" type="Node2D" parent="enemy_kart"]
 position = Vector2(79, 140)
@@ -233,13 +235,13 @@ metadata/enemy_kart_bumper_active = false
 position = Vector2(81, 58)
 script = ExtResource("5_7rj3v")
 limit_to_group = "item"
-metadata/pronto_connections = [SubResource("Resource_5a3h3"), SubResource("Resource_u6owv")]
+metadata/pronto_connections = [SubResource("Resource_vvlug"), SubResource("Resource_ccvh6")]
 
 [node name="Spawner" type="Node2D" parent="."]
 position = Vector2(203, 387)
 script = ExtResource("6_15x11")
 
-[node name="item" type="Area2D" parent="Spawner" groups=["item"]]
+[node name="item" type="StaticBody2D" parent="Spawner" groups=["item"]]
 position = Vector2(42, -1)
 
 [node name="Placeholder" type="Node2D" parent="Spawner/item"]
@@ -248,12 +250,12 @@ label = "Item"
 color = Color(1, 1, 0.0627451, 1)
 
 [node name="Clock" type="Node2D" parent="."]
-position = Vector2(153, 397)
+position = Vector2(131, 397)
 script = ExtResource("7_r8mab")
-duration_seconds = 15.0
-metadata/pronto_connections = [SubResource("Resource_uytno"), SubResource("Resource_50rvt")]
+duration_seconds = 106.0
+metadata/pronto_connections = [SubResource("Resource_y6f4w"), SubResource("Resource_ujlmr")]
 
-[node name="item" type="Area2D" parent="." groups=["item"]]
+[node name="item" type="StaticBody2D" parent="." groups=["item"]]
 position = Vector2(248, 341)
 
 [node name="Placeholder" type="Node2D" parent="item"]
