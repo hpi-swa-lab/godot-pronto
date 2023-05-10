@@ -15,6 +15,7 @@ name = "Remove"
 custom_minimum_size = Vector2(100, 100)
 offset_right = 431.0
 offset_bottom = 175.0
+scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
@@ -79,6 +80,7 @@ icon = SubResource("Texture2D_q6wk4")
 [node name="Receiver" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="ReceiverPath" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
 unique_name_in_owner = true
@@ -106,9 +108,10 @@ text = ")"
 
 [node name="Expression" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 32)
 layout_mode = 2
+size_flags_vertical = 3
 placeholder_text = "Statement(s)..."
+max_width = 559
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -119,9 +122,11 @@ text = "only if: "
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(374, 64)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 text = "return true"
+max_width = 500
 
 [node name="ButtonList" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
