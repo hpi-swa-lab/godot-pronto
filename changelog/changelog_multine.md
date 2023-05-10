@@ -2,11 +2,15 @@
 
 ## Iteration 1 Week 2
 
-### Multiline Feature
-- expressions in the pronto connection editor now support multiline editing
-- some expressions and all conditions and arguments require a return statement. A 'return' was previously automatically set in front of the whole statement. Now to allow multiple lines, the return is put directly in the respective text boxes. It can however be deleted and left out, in which case some things may not work, because the return is not being enforced atm.
-- text boxes get resized to fit the feature better
+### Multiline Editing with Side Effects
+* Expressions in the pronto connection editor now support multiline editing with responsive text boxes
+* All text fields where values are returned now require an explicit "return" statement
+	- Such return statements will be automatically placed inside text boxes where they are needed
+	- (Missing return statements will not throw an error during compilation)
 
-### stuff
-- older code still expects the return to be set automatically
-- to fix this users may have to manually add returns everywhere needed
+#### How this affects you
+* Old connections with custom code values will need to have the return statement added (this does not happen automatically)
+
+#### Misc
+* Previously, return statements were added in front of the text box code (based on the connection type). Now, the whole textbox is the executed code.
+* The responsiveness and behavior of text boxes seems to vary between different resolutions and UI scales. This is likely caused by Godot itself.
