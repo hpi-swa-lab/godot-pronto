@@ -52,5 +52,23 @@ placeholder_size = Vector2(20, 60)
 [node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(45, -12)
 script = ExtResource("2_qr0oj")
-jump_velocity = null
-horizontal_velocity = null
+show_trail = true
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(389, 306)
+rotation = 0.476859
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D5"]
+position = Vector2(1, 16)
+script = ExtResource("1_tc671")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(457, 36)
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2(978, 594)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D6"]
+position = Vector2(1, 16)
+script = ExtResource("1_tc671")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
