@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://b185xnr6xxyhc"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
+
+[node name="jumpnrun" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(563, 624)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D"]
+position = Vector2(1, 16)
+script = ExtResource("1_tc671")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(2000, 40)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(683, 443)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D2"]
+position = Vector2(1, 16)
+script = ExtResource("1_tc671")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(899, 528)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D3"]
+position = Vector2(1, 16)
+script = ExtResource("1_tc671")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(763, 590)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D4"]
+position = Vector2(1, 16)
+script = ExtResource("1_tc671")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(575, 558)
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("1_tc671")
+label = "guy"
+placeholder_size = Vector2(20, 60)
+
+[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(45, -12)
+script = ExtResource("2_qr0oj")
+jump_velocity = null
+horizontal_velocity = null

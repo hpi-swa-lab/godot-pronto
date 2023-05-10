@@ -20,6 +20,7 @@ var _timer: Timer:
 		return _timer
 
 func reset_and_start():
+	self.paused = false
 	_timer.start(duration_seconds)
 
 func _ready():

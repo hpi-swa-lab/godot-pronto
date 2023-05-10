@@ -5,7 +5,7 @@ class_name Bind
 
 @export var from: Array[SourceProp]
 @export var to_prop: String
-@export var convert: String
+@export var convert: String = "return Expression..."
 ### Update only when the update() function is called.
 @export var one_shot: bool = false
 
@@ -28,7 +28,6 @@ func update():
 		value = ConnectionsList.eval(convert,
 			range(from.size()).map(func (index): return "value" + str(index) if from[index].name == "" else from[index].name),
 			inputs,
-			true,
 			self)
 	
 	if last == value:

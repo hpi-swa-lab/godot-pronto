@@ -4,7 +4,6 @@ extends HBoxContainer
 signal text_changed()
 
 @export var argument_names: Array = []
-@export var return_value: bool = true
 @export var placeholder_text: String:
 	get: return $Expression.placeholder_text
 	set(v):
@@ -109,7 +108,7 @@ func get_a_godot_highlighter():
 		$Expression.syntax_highlighter = s
 
 func open_file():
-	var script = ConnectionsList.script_for_eval($Expression.text, argument_names, return_value)
+	var script = ConnectionsList.script_for_eval($Expression.text, argument_names)
 	var interface = G.at("_pronto_editor_plugin").get_editor_interface()
 	interface.edit_script(script)
 	interface.set_main_screen_editor("Script")

@@ -83,7 +83,21 @@ static func between(x: float, min: float, max: float):
 	return x >= min and x <= max
 
 static func has_position(node: Node):
-	return node is Node3D or node is Control or node is Node2D
+	return 'global_position' in node
+
+static func find_position(node: Node):
+	var root = closest_parent_with_position(node)
+	return root.global_position if root else null
+
+static func closest_parent_with_position(node: Node) -> Node:
+	return Utils.closest_parent_that(node, Callable(Utils, 'has_position'))
+
+static func closest_parent_that(node: Node, cond: Callable) -> Node:
+	while node != null:
+		if cond.call(node):
+			return node
+		node = node.get_parent()
+	return null
 
 static func spawn_popup_from_canvas(reference: Node, popup: Node):
 	reference.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(popup, false, Node.INTERNAL_MODE_BACK)
@@ -148,23 +162,13 @@ static func random_point_on_screen():
 static func mouse_position():
 	return Engine.get_main_loop().root.get_mouse_position()
 
-static func print_connection(connection: Connection, flip = false, shorten = true):
-	var prefix = "[?] " if connection.has_condition() else ""
-	if connection.invoke != "":
-		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2})").format([
-			connection.signal_name,
-			prefix,
-			Utils.ellipsize("{0}({1})".format([connection.invoke, ",".join(connection.arguments.map(func (a): return str(a)))]), 16 if shorten else -1)
-		])
-	else:
-		return "{2}{0} ↺ {1}".format([connection.signal_name, Utils.ellipsize(connection.expression.split('\n')[0], 8 if shorten else -1), prefix])
-
 static func ellipsize(s: String, max: int = 16):
 	if s.length() <= max or max < 0:
 		return s
 	return s.substr(0, max - 3) + "..."
 
 static func global_rect_of(node: Node):
+	node = Utils.closest_parent_with_position(node)
 	if "size" in node: return Rect2(node.global_position, node.size)
 	if "shape" in node and node.shape:
 		var s = node.shape.get_rect().size

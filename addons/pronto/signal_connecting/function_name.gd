@@ -54,6 +54,8 @@ func build_list(filter: String):
 		%list.visible = true
 		%list.global_position = global_position + Vector2(0, get_rect().size.y)
 	
+	%list.add_item("<statement(s)>")
+	
 	if node.get_script():
 		add_class_item(node.get_script().resource_path.get_file().split('.')[0])
 		for s in node.get_script().get_script_method_list():
