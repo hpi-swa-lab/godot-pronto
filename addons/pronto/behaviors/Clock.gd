@@ -20,7 +20,7 @@ var _time_since_last_trigger: float = 0
 	get: return _timer.paused
 	set(value): _timer.paused = value
 	
-@export_category("Until Ulapsed")
+@export_category("Until Elapsed")
 @export var active: bool:
 	get: return _until_elapsed_active
 	set(value): _until_elapsed_active = value
