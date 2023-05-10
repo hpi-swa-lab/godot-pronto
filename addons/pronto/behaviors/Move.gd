@@ -40,7 +40,7 @@ func set_velocity_x(num: float):
 	_did_accelerate = true
 	self.velocity.x = num
 
-func set_veleocity(velocity: Vector2):
+func set_velocity(velocity: Vector2):
 	_did_accelerate = true
 	self.velocity = velocity
 

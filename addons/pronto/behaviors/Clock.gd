@@ -21,13 +21,19 @@ var _time_since_last_trigger: float = 0
 	set(value): _timer.paused = value
 	
 @export_category("Until Elapsed")
-@export var active: bool:
+@export var trigger_every_frame: bool:
 	get: return _until_elapsed_active
-	set(value): _until_elapsed_active = value
-@export var use_trigger_inteval: bool:
+	set(value): 
+		_until_elapsed_active = value
+		if value:
+			_use_trigger_interval = false
+@export var trigger_every_x_seconds: bool:
 	get: return _use_trigger_interval
-	set(value): _use_trigger_interval = value
-@export var trigger_interval_in_s: float:
+	set(value): 
+		_use_trigger_interval = value
+		if value:
+			_until_elapsed_active = false
+@export var trigger_interval_in_seconds: float:
 	get: return _trigger_inteval
 	set(value): _trigger_inteval = value
 
@@ -41,7 +47,7 @@ func reset_and_start():
 	_timer.start(duration_seconds)
 
 func _process(delta):
-	if(_until_elapsed_active and not _timer.paused and not _timer.is_stopped()):
+	if((_until_elapsed_active or _use_trigger_interval) and not _timer.paused and not _timer.is_stopped()):
 		if(_use_trigger_interval):
 			_time_since_last_trigger += delta
 			if(_time_since_last_trigger > (_trigger_inteval-delta*1.1)):
