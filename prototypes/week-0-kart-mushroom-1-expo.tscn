@@ -214,7 +214,7 @@ global = true
 position = Vector2(-11, -258)
 script = ExtResource("7_3jdqq")
 to = 0.1
-value = 0.025
+value = 0.05
 
 [node name="Collision" type="Node2D" parent="Kart"]
 position = Vector2(2, -91)
