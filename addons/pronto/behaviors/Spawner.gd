@@ -18,9 +18,15 @@ func _spawn():
 
 func spawn():
 	var instance = _spawn()
-	instance.position = position
-	get_parent().add_child(instance)
+	
+	var path_corrector = Node2D.new() if instance is Node2D else Node3D.new()
+	path_corrector.add_child(instance)
+	path_corrector.position = position
+	instance.position = Vector2.ZERO if instance is Node2D else Vector3.ZERO
+	
+	get_parent().add_child(path_corrector)
 	spawned.emit(instance)
+	
 	return instance
 
 func spawn_toward(pos: Vector2):
