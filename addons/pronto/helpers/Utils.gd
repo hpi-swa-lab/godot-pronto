@@ -146,11 +146,16 @@ static func build_class_row(c: StringName, ref: Node):
 	row.add_child(label)
 	return row
 
-static func commit_undoable(undo_redo: EditorUndoRedoManager, title: String, object: Object, props: Dictionary):
+static func commit_undoable(undo_redo: EditorUndoRedoManager, title: String, object: Object, props: Dictionary, action = null):
+	if not props.keys().any(func (prop): return props[prop] != object.get(prop)):
+		return
 	undo_redo.create_action(title)
 	for prop in props:
 		undo_redo.add_undo_property(object, prop, object.get(prop))
 		undo_redo.add_do_property(object, prop, props[prop])
+	if action != null:
+		undo_redo.add_do_method(object, action)
+		undo_redo.add_undo_method(object, action)
 	undo_redo.commit_action()
 
 static func get_game_size():

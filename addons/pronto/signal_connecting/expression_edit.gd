@@ -10,21 +10,33 @@ signal text_changed()
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
 		$Expression.placeholder_text = v
-@export var text: String:
-	get: return $Expression.text
+@export var edit_script: GDScript:
+	get:
+		assert(edit_script != null, "Attempted to access uninitialized edit script")
+		return edit_script
 	set(v):
+		assert(v != null, "Must provide a script to expression_edit")
+		edit_script = v
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
-		$Expression.text = v
+		$Expression.text = Connection.print_script(v)
 		resize()
 
 @export var min_width = 80
 @export var max_width = 260
 
+func updated_script(from: Node, signal_name: String):
+	edit_script.source_code = get_script_source(from, signal_name)
+	edit_script.reload()
+	return edit_script
+
+func get_script_source(from: Node, signal_name: String):
+	return Connection.script_source_for(from, $Expression.text, signal_name)
+
 func _input(event):
 	if not $Expression.has_focus():
 		return
-	if event is InputEventKey and event.pressed and not event.is_echo() and event.keycode == KEY_TAB and text.count("\n") < 1:
+	if event is InputEventKey and event.pressed and not event.is_echo() and event.keycode == KEY_TAB and $Expression.text.count("\n") < 1:
 		var focus
 		if event.shift_pressed:
 			focus = $Expression.find_prev_valid_focus()
@@ -108,9 +120,8 @@ func get_a_godot_highlighter():
 		$Expression.syntax_highlighter = s
 
 func open_file():
-	var script = ConnectionsList.script_for_eval($Expression.text, argument_names)
 	var interface = G.at("_pronto_editor_plugin").get_editor_interface()
-	interface.edit_script(script)
+	interface.edit_script(edit_script)
 	interface.set_main_screen_editor("Script")
 
 func grab_focus():
@@ -130,7 +141,7 @@ func resize():
 		custom_minimum_size = Vector2(0, 43)
 		Utils.fix_minimum_size(self)
 	else:
-		var size = get_theme_default_font().get_multiline_string_size(text)
+		var size = get_theme_default_font().get_multiline_string_size($Expression.text)
 		custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
 		Utils.fix_minimum_size(self)
 		reset_size()

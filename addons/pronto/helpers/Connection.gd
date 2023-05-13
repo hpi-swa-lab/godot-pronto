@@ -15,7 +15,7 @@ class_name Connection
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, only_if: String, undo_redo: EditorUndoRedoManager = null):
+static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, only_if: GDScript, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -27,7 +27,7 @@ static func connect_target(from: Node, signal_name: String, to: NodePath, invoke
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: String, only_if: String, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: GDScript, only_if: GDScript, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -39,23 +39,44 @@ static func connect_expr(from: Node, signal_name: String, to: NodePath, expressi
 static func get_connections(node: Node) -> Array:
 	return node.get_meta("pronto_connections", [])
 
+func script_source(from: Node, body: String) -> String:
+	return script_source_for(from, body, signal_name)
+
+static func script_source_for(from: Node, body: String, signal_name: String) -> String:
+	return "extends U
+func run({1}):
+	{0}
+".format([_indent(body), ', '.join(_signal_args(from, signal_name) + ["from", "to"])])
+
+static func create_script_for(from: Node, body: String, signal_name: String) -> GDScript:
+	var s = GDScript.new()
+	s.source_code = script_source_for(from, body, signal_name)
+	s.reload()
+	return s
+
+func create_script(from: Node, body: String) -> GDScript:
+	return create_script_for(from, body, signal_name)
+
+static func _indent(s: String):
+	return '\n\t'.join(s.split('\n'))
+
 ## The signal name of the node that this connection is added on to connect to.
 @export var signal_name: String = ""
 ## (Optional) The path to the node that this connection emits to.
 @export var to: NodePath = ^""
 ## (Optional) The method to invoke on [member to].
-@export var invoke: String = ""
-## (Optional) The arguments to pass to method [member invoke] as [String]s.
+@export var invoke: String
+## (Optional) The arguments to pass to method [member invoke] as [GDScript]s.
 @export var arguments: Array = []
 ## Only trigger this connection if this expression given as [String] evaluates to true.
-@export var only_if: String = "true"
+@export var only_if: GDScript
 ## (Optional) Only used when neither [member to], [member invoke], or [member arguments] is not set.
 ## A string describing the [Expression] that is to be run when [member signal_name] triggers.
-@export_multiline var expression: String = ""
+@export var expression: GDScript
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
-	return expression != ""
+	return expression != null
 
 ## Return whether this connection will invoke a method on a target.
 func is_target() -> bool:
@@ -112,11 +133,14 @@ static func _ensure_connections(from: Node):
 		from.set_meta("pronto_connections", connections)
 	return connections
 
+static func _signal_args(from: Node, name: String) -> Array:
+	return Utils.find(from.get_signal_list(), func (s): return s["name"] == name)["args"].map(func (a): return a["name"])
+
 func _install_in_game(from: Node):
 	if Engine.is_editor_hint():
 		return
 	
-	var signal_arguments: Array = Utils.find(from.get_signal_list(), func (s): return s["name"] == signal_name)["args"].map(func (a): return a["name"])
+	var signal_arguments: Array = _signal_args(from, signal_name)
 	if not from.get_signal_connection_list(signal_name).any(func (dict): return dict["callable"].get_method().begins_with("_pronto_dispatch_connections")):
 		var name = "_pronto_dispatch_connections" + str(signal_arguments.size())
 		from.connect(signal_name, Callable(self, name).bind(from, signal_name, signal_arguments))
@@ -147,7 +171,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			names.append("to")
 			values.append(target)
 			if c.should_trigger(names, values, from):
-				var args = c.arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, from))
+				var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
 				target.callv(c.invoke, args)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
 		else:
@@ -156,14 +180,14 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				names.append("to")
 				values.append(target)
 			if c.should_trigger(names, values, from):
-				ConnectionsList.eval(c.expression, names, values, from)
+				_run_script(from, c.expression, values)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
 func has_condition():
-	return only_if != "return true" and only_if != ""
+	return print_script(only_if) != "return true"
 
 func should_trigger(names, values, from):
-	return not has_condition() or ConnectionsList.eval(only_if, names, values, from)
+	return not has_condition() or _run_script(from, only_if, values)
 
 func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	var old = _ensure_connections(from)
@@ -182,15 +206,27 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	
 	return new_connection
 
+## Heuristic to find the body of the script
+static func print_script(s: GDScript):
+	return s.source_code.substr(s.source_code.find(":\n\t") + 3).left(-1)
+
+var _dummy_objects = {}
+func _run_script(from: Node, s: GDScript, arguments: Array):
+	if not s in _dummy_objects:
+		_dummy_objects[s] = U.new(from)
+		_dummy_objects[s].set_script(s)
+	return _dummy_objects[s].callv("run", arguments)
+
 func print(flip = false, shorten = true, single_line = false):
 	var prefix = "[?] " if has_condition() else ""
 	if is_target():
-		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return str(a)))])
-		var statements_string = expression.split('\n')[0]
+		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return Connection.print_script(a)))])
+		var statements_string = print_script(expression).split('\n')[0] if is_expression() else ""
 		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2})").format([
 			signal_name,
 			prefix,
 			Utils.ellipsize(invocation_string if not is_expression() else statements_string, 16 if shorten else -1)
 		]).replace("\n" if single_line else "", "")
 	else:
-		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")
+		assert(is_expression())
+		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(print_script(expression).split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")
