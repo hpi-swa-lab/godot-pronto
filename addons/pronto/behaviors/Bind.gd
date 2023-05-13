@@ -3,38 +3,33 @@
 extends Behavior
 class_name Bind
 
-@export var from: Array[SourceProp]
+### Script to evaluate to find the current property value to set.
+@export var evaluate: GDScript
+### Property of the parent node to write the result of evaluate to.
 @export var to_prop: String
-@export var convert: String = "return Expression..."
 ### Update only when the update() function is called.
 @export var one_shot: bool = false
 
-var last = null
+var _last = null
+var _dummy_object
+
+func _ready():
+	super._ready()
+	if evaluate == null:
+		evaluate = Connection.create_script_for(self, "return null", "")
+	if _dummy_object == null:
+		_dummy_object = U.new(self)
+		_dummy_object.set_script(evaluate)
 
 func update():
-	var inputs = []
-	for f in from:
-		var object = get_node(f.from)
-		assert(object != null, "Object is no longer at path {0}".format([f.from]))
-		var current
-		if f.prop in object:
-			current = object.get(f.prop)
-		else:
-			current = object.get_meta(f.prop)
-		inputs.append(current)
+	_dummy_object.ref = self
+	var value = _dummy_object.run()
 	
-	var value = null if inputs.is_empty() else inputs[0]
-	if convert:
-		value = ConnectionsList.eval(convert,
-			range(from.size()).map(func (index): return "value" + str(index) if from[index].name == "" else from[index].name),
-			inputs,
-			self)
-	
-	if last == value:
+	if _last == value:
 		return
 	
 	get_parent().set(to_prop, value)
-	last = value
+	_last = value
 
 func _process(delta):
 	super._process(delta)
@@ -43,4 +38,4 @@ func _process(delta):
 		update()
 
 func lines():
-	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (flip): return Utils.ellipsize(convert, 20), "value")]
+	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (flip): return Utils.ellipsize(Connection.print_script(evaluate), 20), "value")]

@@ -43,10 +43,11 @@ func script_source(from: Node, body: String) -> String:
 	return script_source_for(from, body, signal_name)
 
 static func script_source_for(from: Node, body: String, signal_name: String) -> String:
+	var args = _signal_args(from, signal_name) + ["from", "to"] if signal_name != "" else []
 	return "extends U
 func run({1}):
 	{0}
-".format([_indent(body), ', '.join(_signal_args(from, signal_name) + ["from", "to"])])
+".format([_indent(body), ', '.join(args)])
 
 static func create_script_for(from: Node, body: String, signal_name: String) -> GDScript:
 	var s = GDScript.new()
@@ -134,6 +135,8 @@ static func _ensure_connections(from: Node):
 	return connections
 
 static func _signal_args(from: Node, name: String) -> Array:
+	if name == "":
+		return []
 	return Utils.find(from.get_signal_list(), func (s): return s["name"] == name)["args"].map(func (a): return a["name"])
 
 func _install_in_game(from: Node):
@@ -180,7 +183,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				names.append("to")
 				values.append(target)
 			if c.should_trigger(names, values, from):
-				_run_script(from, c.expression, values)
+				c._run_script(from, c.expression, values)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
 func has_condition():
@@ -215,6 +218,7 @@ func _run_script(from: Node, s: GDScript, arguments: Array):
 	if not s in _dummy_objects:
 		_dummy_objects[s] = U.new(from)
 		_dummy_objects[s].set_script(s)
+	_dummy_objects[s].ref = from
 	return _dummy_objects[s].callv("run", arguments)
 
 func print(flip = false, shorten = true, single_line = false):
