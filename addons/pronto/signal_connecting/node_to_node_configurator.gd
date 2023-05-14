@@ -63,8 +63,8 @@ var receiver: Object:
 		%FunctionName.node = receiver
 
 func init_empty_scripts():
-	%Expression.edit_script = empty_script("")
-	%Condition.edit_script = empty_script("true")
+	%Expression.edit_script = empty_script("", false)
+	%Condition.edit_script = empty_script("true", true)
 
 func set_mode(expr: bool, recv: bool):
 	%Expression.visible = expr
@@ -109,7 +109,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	%Expression.visible = connection.is_expression()
 	
 	for i in range(%Args.get_child_count()):
-		%Args.get_child(i).edit_script = connection.arguments[i] if i <= connection.arguments.size() - 1 else empty_script("null")
+		%Args.get_child(i).edit_script = connection.arguments[i] if i <= connection.arguments.size() - 1 else empty_script("null", true)
 	
 	# FIXME just increment total directly didn't work from the closure?!
 	var total = {"total": 0}
@@ -136,12 +136,12 @@ func _on_function_selected(name: String):
 		var arg_ui = ExpressionEdit.instantiate()
 		Utils.fix_minimum_size(arg_ui)
 		arg_ui.placeholder_text = "return " + arg["name"]
-		arg_ui.edit_script = empty_script("null")
+		arg_ui.edit_script = empty_script("null", true)
 		%Args.add_child(arg_ui)
 	update_argument_names()
 
-func empty_script(expr: String):
-	return Connection.create_script_for(from, "return " + expr, selected_signal["name"])
+func empty_script(expr: String, return_value: bool):
+	return Connection.create_script_for(from, expr, selected_signal["name"], return_value)
 
 func _on_done_pressed():
 	if not %Expression.visible:

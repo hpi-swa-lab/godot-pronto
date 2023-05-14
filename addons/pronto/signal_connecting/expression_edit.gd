@@ -4,6 +4,7 @@ extends HBoxContainer
 signal text_changed()
 signal blur()
 
+@export var return_value = true
 @export var argument_names: Array = []
 @export var placeholder_text: String:
 	get: return $Expression.placeholder_text
@@ -41,7 +42,7 @@ func apply_changes(from: Node = null, signal_name: String = ""):
 	edit_script.emit_changed()
 
 func get_script_source(from: Node, signal_name: String):
-	return Connection.script_source_for(from, $Expression.text, signal_name)
+	return Connection.script_source_for(from, $Expression.text, signal_name, return_value)
 
 func _input(event):
 	if not $Expression.has_focus():
@@ -143,6 +144,7 @@ func extra_width():
 func _on_expression_text_changed():
 	resize()
 	text_changed.emit()
+	$MissingReturnWarning.visible = return_value and $Expression.text.count('\n') > 0 and $Expression.text.count('return ') == 0
 
 func _on_expression_focus_exited():
 	blur.emit()

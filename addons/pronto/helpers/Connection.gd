@@ -39,27 +39,31 @@ static func connect_expr(from: Node, signal_name: String, to: NodePath, expressi
 static func get_connections(node: Node) -> Array:
 	return node.get_meta("pronto_connections", [])
 
-func script_source(from: Node, body: String) -> String:
-	return script_source_for(from, body, signal_name)
+func script_source(from: Node, body: String, return_value: bool) -> String:
+	return script_source_for(from, body, signal_name, return_value)
 
-static func script_source_for(from: Node, body: String, signal_name: String) -> String:
+static func script_source_for(from: Node, body: String, signal_name: String, return_value: bool) -> String:
 	var args = _signal_args(from, signal_name) + ["from", "to"] if signal_name != "" else []
+	var needs_return = return_value and body.count("\n") == 0
 	return "extends U
 func run({1}):
-	{0}
-".format([_indent(body), ', '.join(args)])
+	{2}{0}
+".format([_indent(body), ', '.join(args), "return " if needs_return else ""])
 
-static func create_script_for(from: Node, body: String, signal_name: String) -> GDScript:
+static func create_script_for(from: Node, body: String, signal_name: String, return_value: bool) -> GDScript:
 	var s = GDScript.new()
-	s.source_code = script_source_for(from, body, signal_name)
+	s.source_code = script_source_for(from, body, signal_name, return_value)
 	s.reload()
 	return s
 
-func create_script(from: Node, body: String) -> GDScript:
-	return create_script_for(from, body, signal_name)
+func create_script(from: Node, body: String, return_value: bool) -> GDScript:
+	return create_script_for(from, body, signal_name, return_value)
 
 static func _indent(s: String):
 	return '\n\t'.join(s.split('\n'))
+
+static func _dedent(s: String):
+	return '\n'.join(Array(s.split('\n')).map(func(l): return l.right(-1)))
 
 ## The signal name of the node that this connection is added on to connect to.
 @export var signal_name: String = ""
@@ -211,7 +215,11 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 
 ## Heuristic to find the body of the script
 static func print_script(s: GDScript):
-	return s.source_code.substr(s.source_code.find(":\n\t") + 3).left(-1)
+	var body = _dedent(s.source_code.substr(s.source_code.find(":\n") + 2).left(-1))
+	if body.count('\n') == 0 and body.begins_with("return "):
+		return body.substr("return ".length())
+	else:
+		return body
 
 var _dummy_objects = {}
 func _run_script(from: Node, s: GDScript, arguments: Array):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1jujxfamsekk"]
+[gd_scene load_steps=7 format=3 uid="uid://d1jujxfamsekk"]
 
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/expression_edit.gd" id="1_lndi8"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_au0w8"]
@@ -6,7 +6,7 @@
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_y7f82"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_3rw38"]
 number_color = Color(0.63, 1, 0.88, 1)
 symbol_color = Color(0.67, 0.79, 1, 1)
 function_color = Color(0.34, 0.7, 1, 1)
@@ -62,6 +62,12 @@ resource_name = ""
 script = ExtResource("2_au0w8")
 name = "DebugSkipBreakpointsOff"
 
+[sub_resource type="Texture2D" id="Texture2D_767xo"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_au0w8")
+name = "NodeWarning"
+
 [node name="expression_edit" type="HBoxContainer"]
 custom_minimum_size = Vector2(180, 32)
 anchors_preset = 15
@@ -82,7 +88,7 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_y7f82")
+syntax_highlighter = SubResource("CodeHighlighter_3rw38")
 scroll_fit_content_height = true
 indent_automatic = true
 auto_brace_completion_enabled = true
@@ -92,6 +98,13 @@ layout_mode = 2
 size_flags_vertical = 0
 icon = SubResource("Texture2D_4hlth")
 flat = true
+
+[node name="MissingReturnWarning" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+tooltip_text = "Multi-line scripts require an explicit \"return\" statement."
+texture = SubResource("Texture2D_767xo")
+stretch_mode = 2
 
 [connection signal="focus_exited" from="Expression" to="." method="_on_expression_focus_exited"]
 [connection signal="text_changed" from="Expression" to="." method="_on_expression_text_changed"]

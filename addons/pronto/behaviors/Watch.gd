@@ -12,7 +12,7 @@ var _dummy_object
 func _ready():
 	super._ready()
 	if evaluate == null:
-		evaluate = Connection.create_script_for(self, "return null", "")
+		evaluate = Connection.create_script_for(self, "null", "", true)
 	if _dummy_object == null:
 		_dummy_object = U.new(self)
 		_dummy_object.set_script(evaluate)
