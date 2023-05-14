@@ -191,7 +191,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
 func has_condition():
-	return print_script(only_if) != "return true"
+	return print_script(only_if) != "true"
 
 func should_trigger(names, values, from):
 	return not has_condition() or _run_script(from, only_if, values)
