@@ -78,6 +78,7 @@ offset_bottom = -614.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
+size_flags_vertical = 0
 theme_override_constants/separation = 0
 script = ExtResource("1_lndi8")
 placeholder_text = "Expression..."

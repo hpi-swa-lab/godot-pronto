@@ -71,6 +71,8 @@ func set_mode(expr: bool, recv: bool):
 	%Receiver.visible = recv
 	update_argument_names()
 	%SignalArgs.text +=  " from" if not recv else " from, to"
+	if expr and %Expression.edit_script == null:
+		%Expression.edit_script = empty_script("", false)
 
 func default_focus():
 	await get_tree().process_frame
@@ -159,7 +161,7 @@ func _on_done_pressed():
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
-				{"invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
+				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
 		else:
 			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
 				args.map(func (a): return a.updated_script(from, selected_signal["name"])),
@@ -168,8 +170,13 @@ func _on_done_pressed():
 		if existing_connection:
 			Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
 				{"source_code": %Condition.get_script_source(from, selected_signal["name"])}, "reload")
-			Utils.commit_undoable(undo_redo, "Update expression of connection", existing_connection.expression,
-				{"source_code": %Expression.get_script_source(from, selected_signal["name"])}, "reload")
+			if existing_connection.expression != null:
+				Utils.commit_undoable(undo_redo, "Update expression of connection", existing_connection.expression,
+					{"source_code": %Expression.get_script_source(from, selected_signal["name"])}, "reload")
+			else:
+				Utils.commit_undoable(undo_redo,
+					"Set connection expression",
+					existing_connection, {"expression": %Expression.updated_script(from, selected_signal["name"])})
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection, {"signal_name": %Signal.text})
