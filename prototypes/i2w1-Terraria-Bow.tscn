@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://w21q0yrnaxkg"]
+[gd_scene load_steps=11 format=3 uid="uid://w21q0yrnaxkg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_wlgev"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_nrhwd"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_4k4rh"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="5_h05ko"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_gwch8"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="7_cog4u"]
 
 [sub_resource type="Resource" id="Resource_pvkep"]
 script = ExtResource("4_4k4rh")
@@ -24,6 +25,15 @@ invoke = ""
 arguments = []
 only_if = "return true"
 expression = "instance.get_node(\"Move\").move_direction(Vector2.RIGHT * 20)"
+
+[sub_resource type="Resource" id="Resource_3behq"]
+script = ExtResource("4_4k4rh")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "print(get_parent().get_last_slide_collision().get_normal().angle_to(Vector2.UP.rotated(get_parent().global_rotation)))"
 
 [node name="Node2D" type="Node2D"]
 
@@ -51,7 +61,7 @@ metadata/pronto_connections = [SubResource("Resource_pvkep")]
 script = ExtResource("3_uh4a8")
 metadata/pronto_connections = [SubResource("Resource_w8181")]
 
-[node name="Arrow" type="RigidBody2D" parent="CharacterBody2D/Spawner"]
+[node name="Arrow" type="CharacterBody2D" parent="CharacterBody2D/Spawner"]
 position = Vector2(39, -1)
 collision_layer = 3
 collision_mask = 3
@@ -67,14 +77,20 @@ gravity = 100.0
 friction_air = 2.0
 rotated = true
 
-[node name="Ground" type="StaticBody2D" parent="."]
+[node name="Collision" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
+position = Vector2(19, 0)
+script = ExtResource("7_cog4u")
+limit_to_group = "ground"
+metadata/pronto_connections = [SubResource("Resource_3behq")]
+
+[node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
 
 [node name="Placeholder" type="Node2D" parent="Ground"]
 position = Vector2(565, 583)
 script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(1000, 10)
 
-[node name="Wall Right" type="StaticBody2D" parent="."]
+[node name="Wall Right" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(-7, -128)
 
 [node name="Placeholder" type="Node2D" parent="Wall Right"]
@@ -82,7 +98,7 @@ position = Vector2(1067, 463)
 script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(10, 500)
 
-[node name="Floating" type="StaticBody2D" parent="."]
+[node name="Floating" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(-199, -193)
 
 [node name="Placeholder" type="Node2D" parent="Floating"]
@@ -90,7 +106,7 @@ position = Vector2(767, 585)
 script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(500, 10)
 
-[node name="Wall Left" type="StaticBody2D" parent="."]
+[node name="Wall Left" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(-994, -129)
 
 [node name="Placeholder" type="Node2D" parent="Wall Left"]
