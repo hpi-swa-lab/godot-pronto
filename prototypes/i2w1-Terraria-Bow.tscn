@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://w21q0yrnaxkg"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_wlgev"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_nrhwd"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(358, 544)
+
+[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("1_wlgev")
+jump_velocity = 630.0
+horizontal_velocity = 300.0
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("2_nrhwd")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+
+[node name="Placeholder" type="Node2D" parent="Ground"]
+position = Vector2(565, 583)
+script = ExtResource("2_nrhwd")
+placeholder_size = Vector2(1000, 10)
+
+[node name="Wall Right" type="StaticBody2D" parent="."]
+position = Vector2(-7, -128)
+
+[node name="Placeholder" type="Node2D" parent="Wall Right"]
+position = Vector2(1067, 463)
+script = ExtResource("2_nrhwd")
+placeholder_size = Vector2(10, 500)
+
+[node name="Floating" type="StaticBody2D" parent="."]
+position = Vector2(-199, -193)
+
+[node name="Placeholder" type="Node2D" parent="Floating"]
+position = Vector2(767, 585)
+script = ExtResource("2_nrhwd")
+placeholder_size = Vector2(500, 10)
+
+[node name="Wall Left" type="StaticBody2D" parent="."]
+position = Vector2(-994, -129)
+
+[node name="Placeholder" type="Node2D" parent="Wall Left"]
+position = Vector2(1060, 467)
+script = ExtResource("2_nrhwd")
+placeholder_size = Vector2(10, 500)
