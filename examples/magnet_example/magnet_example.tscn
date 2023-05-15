@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cah2fne75vtl2"]
+[gd_scene load_steps=25 format=3 uid="uid://cah2fne75vtl2"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="1_7jvq5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_phj7d"]
@@ -40,15 +40,6 @@ signal_name = "click"
 to = NodePath("../Spawner")
 invoke = "spawn_toward"
 arguments = ["pos"]
-only_if = "true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_38k5r"]
-script = ExtResource("3_5tqxr")
-signal_name = "always"
-to = NodePath("../Move")
-invoke = "move_right"
-arguments = []
 only_if = "true"
 expression = ""
 
@@ -154,12 +145,13 @@ rotated = true
 [node name="Always" type="Node2D" parent="player/Spawner/magnet"]
 position = Vector2(-32, -9)
 script = ExtResource("6_p8gb0")
-metadata/pronto_connections = [SubResource("Resource_38k5r")]
+metadata/pronto_connections = []
 
 [node name="Clock" type="Node2D" parent="player/Spawner/magnet"]
 position = Vector2(30, 63)
 script = ExtResource("8_rvmy5")
 duration_seconds = 0.2
+trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_32of2"), SubResource("Resource_bowqy")]
 
 [node name="Collision" type="Node2D" parent="player/Spawner/magnet"]

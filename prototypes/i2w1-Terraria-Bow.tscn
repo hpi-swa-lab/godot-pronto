@@ -1,20 +1,71 @@
-[gd_scene load_steps=3 format=3 uid="uid://w21q0yrnaxkg"]
+[gd_scene load_steps=9 format=3 uid="uid://w21q0yrnaxkg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_wlgev"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_nrhwd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="3_uh4a8"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_4k4rh"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="5_h05ko"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_gwch8"]
+
+[sub_resource type="Resource" id="Resource_pvkep"]
+script = ExtResource("4_4k4rh")
+signal_name = "click"
+to = NodePath("../Spawner")
+invoke = "spawn_toward"
+arguments = ["return pos"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_w8181"]
+script = ExtResource("4_4k4rh")
+signal_name = "spawned"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "instance.get_node(\"Move\").move_direction(Vector2.RIGHT * 20)"
 
 [node name="Node2D" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(358, 544)
+collision_layer = 4
+collision_mask = 5
 
 [node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, -33)
 script = ExtResource("1_wlgev")
 jump_velocity = 630.0
 horizontal_velocity = 300.0
 
 [node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("2_nrhwd")
+placeholder_size = Vector2(20, 40)
+
+[node name="Controls" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(89, -35)
+script = ExtResource("6_gwch8")
+metadata/pronto_connections = [SubResource("Resource_pvkep")]
+
+[node name="Spawner" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("3_uh4a8")
+metadata/pronto_connections = [SubResource("Resource_w8181")]
+
+[node name="Arrow" type="RigidBody2D" parent="CharacterBody2D/Spawner"]
+position = Vector2(39, -1)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
+script = ExtResource("2_nrhwd")
+placeholder_size = Vector2(10, 2)
+
+[node name="Move" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
+position = Vector2(1, 14)
+script = ExtResource("5_h05ko")
+gravity = 100.0
+friction_air = 2.0
+rotated = true
 
 [node name="Ground" type="StaticBody2D" parent="."]
 

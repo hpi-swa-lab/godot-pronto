@@ -78,7 +78,7 @@ func move_direction(direction: Vector2):
 	var _accel = acceleration if is_on_floor() else acceleration_air
 	_did_accelerate = true
 	if rotated:
-		direction = direction.rotated(get_parent().rotation)
+		direction = direction.rotated(get_parent().global_rotation)
 	velocity = velocity.lerp(direction * max_velocity, min(1.0, _accel * get_process_delta_time()))
 
 func move_left():
