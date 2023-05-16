@@ -5,19 +5,24 @@ signal text_changed()
 signal blur()
 
 @export var return_value = true
-@export var argument_names: Array = []
+@export var argument_names: Array = []:
+	set(v):
+		if edit_script != null and "argument_names" in edit_script:
+			edit_script.argument_names = v
+		argument_names = v
 @export var placeholder_text: String:
 	get: return $Expression.placeholder_text
 	set(v):
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
 		$Expression.placeholder_text = v
-@export var edit_script: GDScript:
+@export var edit_script: Resource:
 	get: return edit_script
 	set(v):
 		assert(v != null, "Must provide a script to expression_edit")
 		if v == edit_script: return
 		edit_script = v
+		edit_script.argument_names = argument_names
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
 		
@@ -26,9 +31,11 @@ signal blur()
 		$OpenFile.flat = not is_open
 		$OpenFile.text = "Click to edit" if is_open else ""
 		$OpenFile.tooltip_text = "Script is opened and may only be edited in the script editor until closed, otherwise your changes are overriden on save." if is_open else "Open script in the full editor."
-		$Expression.text = Connection.print_script(v)
+		$Expression.text = v.source_code
 		$Expression.edited_script = v
 		resize()
+var text: String:
+	get: return $Expression.text
 
 @export var min_width = 80
 @export var max_width = 260
@@ -38,12 +45,9 @@ func updated_script(from: Node, signal_name: String):
 	return edit_script
 
 func apply_changes(from: Node = null, signal_name: String = ""):
-	edit_script.source_code = get_script_source(from, signal_name)
+	edit_script.source_code = $Expression.text
 	edit_script.reload()
 	edit_script.emit_changed()
-
-func get_script_source(from: Node, signal_name: String):
-	return Connection.script_source_for(from, $Expression.text, signal_name, return_value)
 
 func _input(event):
 	if not $Expression.has_focus():

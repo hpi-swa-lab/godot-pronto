@@ -3,7 +3,7 @@
 extends Behavior
 class_name Watch
 
-@export var evaluate: GDScript
+@export var evaluate: ConnectionScript
 
 var _value = ""
 var _last
@@ -12,7 +12,7 @@ var _dummy_object
 func _ready():
 	super._ready()
 	if evaluate == null:
-		evaluate = Connection.create_script_for(self, "null", "", true)
+		evaluate = ConnectionScript.new()
 	if _dummy_object == null:
 		_dummy_object = U.new(self)
 		_dummy_object.set_script(evaluate)
@@ -30,5 +30,4 @@ func _report_game_value(val):
 	_value = val
 
 func lines():
-	return super.lines() + [Lines.BottomText.new(self,
-		Utils.ellipsize(Connection.print_script(evaluate), 12) + "=" + _value)]
+	return super.lines() + [Lines.BottomText.new(self, Utils.ellipsize(evaluate.source_code, 12) + "=" + _value)]

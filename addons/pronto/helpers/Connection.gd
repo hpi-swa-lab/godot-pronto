@@ -27,7 +27,7 @@ static func connect_target(from: Node, signal_name: String, to: NodePath, invoke
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: GDScript, only_if: GDScript, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: ConnectionScript, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -39,45 +39,19 @@ static func connect_expr(from: Node, signal_name: String, to: NodePath, expressi
 static func get_connections(node: Node) -> Array:
 	return node.get_meta("pronto_connections", [])
 
-func script_source(from: Node, body: String, return_value: bool) -> String:
-	return script_source_for(from, body, signal_name, return_value)
-
-static func script_source_for(from: Node, body: String, signal_name: String, return_value: bool) -> String:
-	var args = _signal_args(from, signal_name) + ["from", "to"] if signal_name != "" else []
-	var needs_return = return_value and body.count("\n") == 0
-	return "extends U
-func run({1}):
-	{2}{0}
-".format([_indent(body), ', '.join(args), "return " if needs_return else ""])
-
-static func create_script_for(from: Node, body: String, signal_name: String, return_value: bool) -> GDScript:
-	var s = GDScript.new()
-	s.source_code = script_source_for(from, body, signal_name, return_value)
-	s.reload()
-	return s
-
-func create_script(from: Node, body: String, return_value: bool) -> GDScript:
-	return create_script_for(from, body, signal_name, return_value)
-
-static func _indent(s: String):
-	return '\n\t'.join(s.split('\n'))
-
-static func _dedent(s: String):
-	return '\n'.join(Array(s.split('\n')).map(func(l): return l.right(-1)))
-
 ## The signal name of the node that this connection is added on to connect to.
 @export var signal_name: String = ""
 ## (Optional) The path to the node that this connection emits to.
 @export var to: NodePath = ^""
 ## (Optional) The method to invoke on [member to].
 @export var invoke: String
-## (Optional) The arguments to pass to method [member invoke] as [GDScript]s.
+## (Optional) The arguments to pass to method [member invoke] as [ConnectionScript]s.
 @export var arguments: Array = []
 ## Only trigger this connection if this expression given as [String] evaluates to true.
-@export var only_if: GDScript
+@export var only_if: ConnectionScript
 ## (Optional) Only used when neither [member to], [member invoke], or [member arguments] is not set.
 ## A string describing the [Expression] that is to be run when [member signal_name] triggers.
-@export var expression: GDScript
+@export var expression: ConnectionScript
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
@@ -191,7 +165,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
 func has_condition():
-	return print_script(only_if) != "true"
+	return only_if.source_code != "true"
 
 func should_trigger(names, values, from):
 	return not has_condition() or _run_script(from, only_if, values)
@@ -213,27 +187,19 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	
 	return new_connection
 
-## Heuristic to find the body of the script
-static func print_script(s: GDScript):
-	var body = _dedent(s.source_code.substr(s.source_code.find(":\n") + 2).left(-1))
-	if body.count('\n') == 0 and body.begins_with("return "):
-		return body.substr("return ".length())
-	else:
-		return body
-
 var _dummy_objects = {}
-func _run_script(from: Node, s: GDScript, arguments: Array):
+func _run_script(from: Node, s: ConnectionScript, arguments: Array):
 	if not s in _dummy_objects:
 		_dummy_objects[s] = U.new(from)
-		_dummy_objects[s].set_script(s)
+		_dummy_objects[s].set_script(s.nested_script)
 	_dummy_objects[s].ref = from
 	return _dummy_objects[s].callv("run", arguments)
 
 func print(flip = false, shorten = true, single_line = false):
 	var prefix = "[?] " if has_condition() else ""
 	if is_target():
-		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return Connection.print_script(a)))])
-		var statements_string = print_script(expression).split('\n')[0] if is_expression() else ""
+		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return a.source_code))])
+		var statements_string = expression.source_code.split('\n')[0] if is_expression() else ""
 		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2})").format([
 			signal_name,
 			prefix,
@@ -241,4 +207,4 @@ func print(flip = false, shorten = true, single_line = false):
 		]).replace("\n" if single_line else "", "")
 	else:
 		assert(is_expression())
-		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(print_script(expression).split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")
+		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.source_code.split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")

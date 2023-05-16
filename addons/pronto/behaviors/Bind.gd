@@ -4,7 +4,7 @@ extends Behavior
 class_name Bind
 
 ### Script to evaluate to find the current property value to set.
-@export var evaluate: GDScript
+@export var evaluate: ConnectionScript
 ### Property of the parent node to write the result of evaluate to.
 @export var to_prop: String
 ### Update only when the update() function is called.
@@ -16,7 +16,7 @@ var _dummy_object
 func _ready():
 	super._ready()
 	if evaluate == null:
-		evaluate = Connection.create_script_for(self, "null", "", true)
+		evaluate = ConnectionScript.new([], true)
 	if _dummy_object == null:
 		_dummy_object = U.new(self)
 		_dummy_object.set_script(evaluate)
@@ -38,4 +38,4 @@ func _process(delta):
 		update()
 
 func lines():
-	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (flip): return Utils.ellipsize(Connection.print_script(evaluate), 20), "value")]
+	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (flip): return Utils.ellipsize(evaluate.source_code, 20), "value")]

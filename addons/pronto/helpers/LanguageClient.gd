@@ -1,10 +1,14 @@
 @tool
 extends Node
 
+const ENABLE = false
+
 signal on_notification(data: Dictionary)
 signal on_response(data: Dictionary)
 
 func _ready():
+	if not ENABLE: return
+	
 	socket = StreamPeerTCP.new()
 	socket.connect_to_host('127.0.0.1', 6005)
 	socket.poll()
@@ -20,13 +24,14 @@ func _ready():
 		},
 	}, func (r): pass)
 
-static func script_path(script: Script):
+static func script_path(script: Resource):
 	return "file://" + ProjectSettings.globalize_path(script.resource_path)
 
 func _exit_tree():
-	socket.disconnect_from_host()
+	if ENABLE: socket.disconnect_from_host()
 
 func _process(delta):
+	if not ENABLE: return
 	socket.poll()
 	var m = receive_message()
 	if m != null:
@@ -37,7 +42,7 @@ func _process(delta):
 		else:
 			on_notification.emit(m)
 
-func completion(script: Script, line: int, character: int, cb: Callable):
+func completion(script: Resource, line: int, character: int, cb: Callable):
 	send_request('textDocument/completion', {
 		'textDocument': {'uri': script_path(script)}, 'position': {'line': line, 'character': character}
 	}, cb)
@@ -45,7 +50,7 @@ func completion(script: Script, line: int, character: int, cb: Callable):
 var _waiting_handlers = {}
 var _document_versions = {}
 
-func did_change(script: Script, text: String):
+func did_change(script: Resource, text: String):
 	if not script.resource_path in _document_versions:
 		_document_versions[script.resource_path] = 1
 	else:
@@ -55,13 +60,13 @@ func did_change(script: Script, text: String):
 		"contentChanges": {"text": text}
 	})
 
-func did_open(script: Script):
+func did_open(script: Resource):
 	send_notification("textDocument/didOpen", {'textDocument': {
 		'uri': script_path(script),
 		'text': script.source_code
 	}})
 
-func did_close(script: Script):
+func did_close(script: Resource):
 	send_notification("textDocument/didClose", {'textDocument': {
 		'uri': script_path(script)
 	}})
@@ -76,6 +81,7 @@ func send_request(request: String, params: Dictionary, cb: Callable):
 	send({'jsonrpc': '2.0', 'id': my_id, 'method': request, 'params': params})
 
 func send(obj: Dictionary):
+	if not ENABLE: return
 	assert(socket.get_status() == StreamPeerTCP.STATUS_CONNECTED, "lsp socket is not connected")
 	print("> " + str(obj))
 	var data = JSON.stringify(obj).to_utf8_buffer()

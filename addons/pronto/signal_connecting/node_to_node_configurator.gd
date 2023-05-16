@@ -46,7 +46,6 @@ var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value
 		%Signal.text = value["name"]
-		%SignalArgs.text = "({0})".format([Utils.print_args(value)])
 		update_argument_names()
 
 func _input(event):
@@ -70,7 +69,6 @@ func set_mode(expr: bool, recv: bool):
 	%Expression.visible = expr
 	%Receiver.visible = recv
 	update_argument_names()
-	%SignalArgs.text +=  " from" if not recv else " from, to"
 	if expr and %Expression.edit_script == null:
 		%Expression.edit_script = empty_script("", false)
 
@@ -82,9 +80,10 @@ func default_focus():
 		%FunctionName.grab_focus()
 
 func update_argument_names():
-	var names = selected_signal["args"].map(func (a): return a["name"]) + ["from"] + (["to"] if %Receiver.visible else [])
+	var names = argument_names()
 	%Expression.argument_names = names
 	for c in %Args.get_children(): c.argument_names = names
+	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
 
 func _process(delta):
 	if anchor and anchor.is_inside_tree():
@@ -143,7 +142,10 @@ func _on_function_selected(name: String):
 	update_argument_names()
 
 func empty_script(expr: String, return_value: bool):
-	return Connection.create_script_for(from, expr, selected_signal["name"], return_value)
+	return ConnectionScript.new(argument_names(), return_value, expr)
+
+func argument_names():
+	return selected_signal["args"].map(func (a): return a["name"]) + ["from"] + (["to"] if %Receiver.visible else [])
 
 func _on_done_pressed():
 	if not %Expression.visible:
@@ -153,11 +155,11 @@ func _on_done_pressed():
 		if invoke.length() == 0: return
 		if existing_connection:
 			Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
-				{"source_code": %Condition.get_script_source(from, selected_signal["name"])}, "reload")
+				{"source_code": %Condition.text}, "reload")
 			for i in range(args.size()):
 				Utils.commit_undoable(undo_redo, "Update argument {0} of connection".format([i]),
 					args[i].edit_script,
-					{"source_code": args[i].get_script_source(from, selected_signal["name"])}, "reload")
+					{"source_code": args[i].text}, "reload")
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
@@ -169,10 +171,10 @@ func _on_done_pressed():
 	else:
 		if existing_connection:
 			Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
-				{"source_code": %Condition.get_script_source(from, selected_signal["name"])}, "reload")
+				{"source_code": %Condition.text}, "reload")
 			if existing_connection.expression != null:
 				Utils.commit_undoable(undo_redo, "Update expression of connection", existing_connection.expression,
-					{"source_code": %Expression.get_script_source(from, selected_signal["name"])}, "reload")
+					{"source_code": %Expression.text}, "reload")
 			else:
 				Utils.commit_undoable(undo_redo,
 					"Set connection expression",
