@@ -181,6 +181,8 @@ static func global_rect_of(node: Node):
 	return Rect2(node.global_position, Vector2.ZERO)
 
 static func fix_minimum_size(n: Control):
+	if G.at("_pronto_editor_plugin") == null:
+		return
 	n.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
 
 static func log(s):

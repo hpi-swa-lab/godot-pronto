@@ -60,6 +60,8 @@ func _edit(object):
 	if edited_object and edited_object is Behavior:
 		edited_object.deselected()
 	
+	# get_editor_interface().edit_script(load("res://examples/platformer.tscn::GDScript_tb7ap"))
+	
 	edited_object = object
 	if edited_object and edited_object is Node:
 		show_signals(edited_object)
