@@ -15,7 +15,7 @@ func _ready():
 		evaluate = ConnectionScript.new()
 	if _dummy_object == null:
 		_dummy_object = U.new(self)
-		_dummy_object.set_script(evaluate)
+		_dummy_object.set_script(evaluate.nested_script)
 
 func _process(delta):
 	super._process(delta)

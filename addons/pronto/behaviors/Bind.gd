@@ -19,7 +19,7 @@ func _ready():
 		evaluate = ConnectionScript.new([], true)
 	if _dummy_object == null:
 		_dummy_object = U.new(self)
-		_dummy_object.set_script(evaluate)
+		_dummy_object.set_script(evaluate.nested_script)
 
 func update():
 	_dummy_object.ref = self

@@ -33,6 +33,7 @@ func _exit_tree():
 
 func _process(delta):
 	if not ENABLE: return
+	if socket == null: _ready()
 	socket.poll()
 	var m = receive_message()
 	if m != null:
