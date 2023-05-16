@@ -1,10 +1,11 @@
+@tool
 extends Resource
 class_name ConnectionScript
 
 @export var nested_script: GDScript
 @export var argument_names: PackedStringArray
 @export var return_value = true
-@export var source_code: String:
+var source_code: String:
 	get:
 		var body = _dedent(nested_script.source_code.substr(nested_script.source_code.find(":\n") + 2).left(-1))
 		if body.count('\n') == 0 and body.begins_with("return "):
