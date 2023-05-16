@@ -1,5 +1,5 @@
 @tool
-extends HBoxContainer
+extends VBoxContainer
 
 signal text_changed()
 signal blur()
@@ -11,11 +11,11 @@ signal blur()
 			edit_script.argument_names = v
 		argument_names = v
 @export var placeholder_text: String:
-	get: return $Expression.placeholder_text
+	get: return %Expression.placeholder_text
 	set(v):
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
-		$Expression.placeholder_text = v
+		%Expression.placeholder_text = v
 @export var edit_script: Resource:
 	get: return edit_script
 	set(v):
@@ -26,38 +26,46 @@ signal blur()
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
 		
-		var is_open = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor().get_open_scripts().any(func (s): return s.resource_path == edit_script.resource_path)
-		$Expression.visible = not is_open
-		$OpenFile.flat = not is_open
-		$OpenFile.text = "Click to edit" if is_open else ""
-		$OpenFile.tooltip_text = "Script is opened and may only be edited in the script editor until closed, otherwise your changes are overriden on save." if is_open else "Open script in the full editor."
-		$Expression.text = v.source_code
-		$Expression.edited_script = v
+		var is_open = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor().get_open_scripts().any(func (s): return s.resource_path == edit_script.nested_script.resource_path)
+		%Expression.visible = not is_open
+		%OpenFile.flat = not is_open
+		%OpenFile.text = "Click to edit" if is_open else ""
+		%OpenFile.tooltip_text = "Script is opened and may only be edited in the script editor until closed, otherwise your changes are overriden on save." if is_open else "Open script in the full editor."
+		%Expression.text = v.source_code
+		%Expression.edited_script = v
 		resize()
 var text: String:
-	get: return $Expression.text
+	get: return %Expression.text
 
 @export var min_width = 80
 @export var max_width = 260
+@export var errors = "":
+	set(e):
+		if e == null or e.is_empty():
+			%Errors.visible = false
+		else:
+			%Errors.text = e
+			%Errors.visible = true
+		resize()
 
 func updated_script(from: Node, signal_name: String):
 	apply_changes(from, signal_name)
 	return edit_script
 
 func apply_changes(from: Node = null, signal_name: String = ""):
-	edit_script.source_code = $Expression.text
+	edit_script.source_code = %Expression.text
 	edit_script.reload()
 	edit_script.emit_changed()
 
 func _input(event):
-	if not $Expression.has_focus():
+	if not %Expression.has_focus():
 		return
-	if event is InputEventKey and event.pressed and not event.is_echo() and event.keycode == KEY_TAB and $Expression.text.count("\n") < 1:
+	if event is InputEventKey and event.pressed and not event.is_echo() and event.keycode == KEY_TAB and %Expression.text.count("\n") < 1:
 		var focus
 		if event.shift_pressed:
-			focus = $Expression.find_prev_valid_focus()
+			focus = %Expression.find_prev_valid_focus()
 		else:
-			focus = $Expression.find_next_valid_focus()
+			focus = %Expression.find_next_valid_focus()
 		get_viewport().set_input_as_handled()
 		if focus: focus.grab_focus()
 
@@ -126,7 +134,7 @@ func fake_a_godot_highlighter():
 		"static": keyword_color,
 		"var": keyword_color,
 	}
-	$Expression.syntax_highlighter = h
+	%Expression.syntax_highlighter = h
 
 func get_a_godot_highlighter():
 	# NOTE: causes crashes when saving scenes in the current form. Potentially because
@@ -135,15 +143,15 @@ func get_a_godot_highlighter():
 	var se = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor()
 	if not se.get_open_script_editors().is_empty():
 		var s = se.get_open_script_editors()[0].get_base_editor().syntax_highlighter
-		$Expression.syntax_highlighter = s
+		%Expression.syntax_highlighter = s
 
 func open_file():
 	var interface = G.at("_pronto_editor_plugin").get_editor_interface()
-	interface.edit_script(edit_script)
+	interface.edit_script(edit_script.nested_script)
 	interface.set_main_screen_editor("Script")
 
 func grab_focus():
-	$Expression.grab_focus()
+	%Expression.grab_focus()
 
 func extra_width():
 	return 100
@@ -151,8 +159,8 @@ func extra_width():
 func _on_expression_text_changed():
 	resize()
 	text_changed.emit()
-	$MissingReturnWarning.visible = return_value and $Expression.text.count('\n') > 0 and $Expression.text.count('return ') == 0
-	$Expression.on_text_changed()
+	%MissingReturnWarning.visible = return_value and %Expression.text.count('\n') > 0 and %Expression.text.count('return ') == 0
+	%Expression.on_text_changed()
 
 func _on_expression_focus_exited():
 	blur.emit()
@@ -164,7 +172,10 @@ func resize():
 		custom_minimum_size = Vector2(0, 43)
 		Utils.fix_minimum_size(self)
 	else:
-		var size = get_theme_default_font().get_multiline_string_size($Expression.text)
+		var size = get_theme_default_font().get_multiline_string_size(%Expression.text)
 		custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
 		Utils.fix_minimum_size(self)
 		reset_size()
+
+func _on_expression_on_errors(errors):
+	self.errors = errors

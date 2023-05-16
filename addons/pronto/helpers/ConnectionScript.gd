@@ -2,8 +2,14 @@
 extends Resource
 class_name ConnectionScript
 
+static func full_source_code(s: Resource, text: String):
+	if s is ConnectionScript:
+		return s.get_full_source_code(text)
+	else:
+		return text
+
 @export var nested_script: GDScript
-@export var argument_names: PackedStringArray
+@export var argument_names: Array
 @export var return_value = true
 var source_code: String:
 	get:
@@ -13,16 +19,19 @@ var source_code: String:
 		else:
 			return body
 	set(body):
-		var needs_return = return_value and body.count("\n") == 0
-		nested_script.source_code = TEMPLATE.format([
-			_indent(body),
-			', '.join(argument_names),
-			"return " if needs_return else ""])
+		nested_script.source_code = get_full_source_code(body)
 
 const TEMPLATE = "extends U
 func run({1}):
 	{2}{0}
 "
+
+func get_full_source_code(body: String):
+	var needs_return = return_value and body.count("\n") == 0
+	return TEMPLATE.format([
+		_indent(body),
+		', '.join(argument_names),
+		"return " if needs_return else ""])
 
 func reload():
 	nested_script.reload()

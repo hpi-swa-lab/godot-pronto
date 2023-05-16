@@ -52,18 +52,18 @@ var _document_versions = {}
 
 func did_change(script: Resource, text: String):
 	if not script.resource_path in _document_versions:
-		_document_versions[script.resource_path] = 1
-	else:
-		_document_versions[script.resource_path] += 1
+		did_open(script)
+	_document_versions[script.resource_path] += 1
 	send_notification("textDocument/didChange", {
 		"textDocument": {"uri": script_path(script), "version": _document_versions[script.resource_path]},
-		"contentChanges": {"text": text}
+		"contentChanges": [{"text": ConnectionScript.full_source_code(script, text)}]
 	})
 
 func did_open(script: Resource):
+	_document_versions[script.resource_path] = 1
 	send_notification("textDocument/didOpen", {'textDocument': {
 		'uri': script_path(script),
-		'text': script.source_code
+		'text': ConnectionScript.full_source_code(script, script.source_code)
 	}})
 
 func did_close(script: Resource):

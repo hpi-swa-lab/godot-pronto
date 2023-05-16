@@ -1,6 +1,8 @@
 @tool
 extends CodeEdit
 
+signal on_errors(errors: String)
+
 var edited_script: Resource:
 	set(s):
 		edited_script = s
@@ -39,4 +41,10 @@ func _did_open():
 func on_notification(notification):
 	if (notification["method"] == 'textDocument/publishDiagnostics' and
 		notification["params"]["uri"] == LanguageClient.script_path(edited_script)):
-		print(notification["params"]["diagnostics"])
+		on_errors.emit("\n".join(notification["params"]["diagnostics"]
+			.filter(show_diagnostic)
+			.map(func (d): return d["message"])))
+
+func show_diagnostic(d):
+	return not (d["message"].begins_with("(STATIC_CALLED_ON_INSTANCE)") or
+		d["message"].begins_with("(UNUSED_PARAMETER)"))
