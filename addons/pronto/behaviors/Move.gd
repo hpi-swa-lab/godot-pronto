@@ -23,10 +23,15 @@ var velocity = Vector2.ZERO
 var _did_accelerate = false
 var _was_on_floor = false
 
+var collision_behavior = null
+
 func is_on_floor():
 	if get_parent() is CharacterBody2D:
 		return true
 	return false if gravity > 0.0 else true
+	
+func add_rotation(degrees: float):
+	get_parent().rotation_degrees += degrees
 
 func add_velocity(velocity: Vector2):
 	_did_accelerate = true
@@ -43,6 +48,10 @@ func set_velocity_x(num: float):
 func set_velocity(velocity: Vector2):
 	_did_accelerate = true
 	self.velocity = velocity
+	
+func _ready():
+	super._ready()
+	collision_behavior = get_parent().get_node("Collision")
 
 func _physics_process(delta):
 	if Engine.is_editor_hint():
@@ -64,7 +73,9 @@ func _physics_process(delta):
 		char.move_and_slide()
 		velocity = char.velocity
 	elif get_parent() is PhysicsBody2D:
-		get_parent().move_and_collide(velocity * delta)
+		var collision_object = get_parent().move_and_collide(velocity * delta)
+		if collision_object and collision_behavior:
+			collision_behavior.on_physics_collision(collision_object)
 	else:
 		get_parent().position += velocity * delta
 	_did_accelerate = false

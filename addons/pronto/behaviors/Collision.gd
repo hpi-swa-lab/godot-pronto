@@ -4,7 +4,7 @@ extends Behavior
 
 @export var limit_to_group: String = ""
 
-signal collided(other: Node, direction: Vector2)
+signal collided(other: Node, direction: Vector2, normal: Vector2)
 
 func _ready():
 	super._ready()
@@ -26,7 +26,13 @@ func _physics_process(delta):
 
 func on_collision(other: Node):
 	if limit_to_group == "" or other.is_in_group(limit_to_group):
-		collided.emit(other, Vector2(other.position - get_parent().position).normalized())
+		collided.emit(other, Vector2(other.position - get_parent().position).normalized(), Vector2.UP)
+		
+func on_physics_collision(collision_obj: KinematicCollision2D):
+	var other = collision_obj.get_collider()
+	if limit_to_group == "" or other.is_in_group(limit_to_group):
+		collided.emit(other, Vector2(other.position - get_parent().position).normalized(), collision_obj.get_normal())
+	
 
 func is_valid_parent():
 	var p = get_parent()

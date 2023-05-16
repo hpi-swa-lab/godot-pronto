@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://w21q0yrnaxkg"]
+[gd_scene load_steps=12 format=3 uid="uid://w21q0yrnaxkg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_wlgev"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_nrhwd"]
@@ -26,14 +26,23 @@ arguments = []
 only_if = "return true"
 expression = "instance.get_node(\"Move\").move_direction(Vector2.RIGHT * 20)"
 
-[sub_resource type="Resource" id="Resource_3behq"]
+[sub_resource type="Resource" id="Resource_aui80"]
 script = ExtResource("4_4k4rh")
 signal_name = "collided"
-to = NodePath("")
-invoke = ""
-arguments = []
+to = NodePath("../Move")
+invoke = "set_velocity"
+arguments = ["return get_parent().get_node(\"Move\").velocity.bounce(normal)"]
 only_if = "return true"
-expression = "print(get_parent().get_last_slide_collision().get_normal().angle_to(Vector2.UP.rotated(get_parent().global_rotation)))"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_c4rc8"]
+script = ExtResource("4_4k4rh")
+signal_name = "collided"
+to = NodePath("../Move")
+invoke = "add_rotation"
+arguments = ["return 90 + rad_to_deg(Vector2.UP.rotated(get_parent().global_rotation).angle_to(get_parent().get_node(\"Move\").velocity))"]
+only_if = "return true"
+expression = ""
 
 [node name="Node2D" type="Node2D"]
 
@@ -61,7 +70,7 @@ metadata/pronto_connections = [SubResource("Resource_pvkep")]
 script = ExtResource("3_uh4a8")
 metadata/pronto_connections = [SubResource("Resource_w8181")]
 
-[node name="Arrow" type="CharacterBody2D" parent="CharacterBody2D/Spawner"]
+[node name="Arrow" type="RigidBody2D" parent="CharacterBody2D/Spawner"]
 position = Vector2(39, -1)
 collision_layer = 3
 collision_mask = 3
@@ -71,17 +80,15 @@ script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(10, 2)
 
 [node name="Move" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
-position = Vector2(1, 14)
+position = Vector2(111, -3)
 script = ExtResource("5_h05ko")
-gravity = 100.0
-friction_air = 2.0
 rotated = true
 
 [node name="Collision" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
-position = Vector2(19, 0)
+position = Vector2(36, -2)
 script = ExtResource("7_cog4u")
 limit_to_group = "ground"
-metadata/pronto_connections = [SubResource("Resource_3behq")]
+metadata/pronto_connections = [SubResource("Resource_aui80"), SubResource("Resource_c4rc8")]
 
 [node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
 
