@@ -1,6 +1,5 @@
 @tool
 extends Node
-class_name LanguageClient
 
 signal on_notification(data: Dictionary)
 signal on_response(data: Dictionary)
@@ -21,18 +20,17 @@ func _ready():
 		},
 	}, func (r): pass)
 
-func script_path(script: Script):
+static func script_path(script: Script):
 	return "file://" + ProjectSettings.globalize_path(script.resource_path)
 
 func _exit_tree():
 	socket.disconnect_from_host()
 
 func _process(delta):
-	if Engine.is_editor_hint():
-		return
 	socket.poll()
 	var m = receive_message()
 	if m != null:
+		print("< " + str(m))
 		if "id" in m:
 			_waiting_handlers[int(m["id"])].call(m["result"])
 			_waiting_handlers.erase(int(m["id"]))
@@ -47,20 +45,25 @@ func completion(script: Script, line: int, character: int, cb: Callable):
 var _waiting_handlers = {}
 var _document_versions = {}
 
-func did_change(script: Script):
+func did_change(script: Script, text: String):
 	if not script.resource_path in _document_versions:
 		_document_versions[script.resource_path] = 1
 	else:
 		_document_versions[script.resource_path] += 1
 	send_notification("textDocument/didChange", {
 		"textDocument": {"uri": script_path(script), "version": _document_versions[script.resource_path]},
-		"contentChanges": {"text": script.source_code}
+		"contentChanges": {"text": text}
 	})
 
 func did_open(script: Script):
 	send_notification("textDocument/didOpen", {'textDocument': {
 		'uri': script_path(script),
 		'text': script.source_code
+	}})
+
+func did_close(script: Script):
+	send_notification("textDocument/didClose", {'textDocument': {
+		'uri': script_path(script)
 	}})
 
 func send_notification(notification: String, params: Dictionary):
@@ -73,6 +76,7 @@ func send_request(request: String, params: Dictionary, cb: Callable):
 	send({'jsonrpc': '2.0', 'id': my_id, 'method': request, 'params': params})
 
 func send(obj: Dictionary):
+	assert(socket.get_status() == StreamPeerTCP.STATUS_CONNECTED, "lsp socket is not connected")
 	print("> " + str(obj))
 	var data = JSON.stringify(obj).to_utf8_buffer()
 	socket.put_data('Content-Length: {0}\r\n\r\n'.format([data.size()]).to_utf8_buffer())

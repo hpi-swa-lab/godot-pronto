@@ -27,6 +27,7 @@ signal blur()
 		$OpenFile.text = "Click to edit" if is_open else ""
 		$OpenFile.tooltip_text = "Script is opened and may only be edited in the script editor until closed, otherwise your changes are overriden on save." if is_open else "Open script in the full editor."
 		$Expression.text = Connection.print_script(v)
+		$Expression.edited_script = v
 		resize()
 
 @export var min_width = 80
@@ -44,8 +45,6 @@ func apply_changes(from: Node = null, signal_name: String = ""):
 func get_script_source(from: Node, signal_name: String):
 	return Connection.script_source_for(from, $Expression.text, signal_name, return_value)
 
-var _LanguageClient: LanguageClient
-
 func _input(event):
 	if not $Expression.has_focus():
 		return
@@ -62,17 +61,6 @@ func _ready():
 	if owner != self:
 		fake_a_godot_highlighter()
 		resize()
-		add_child(LanguageClient.new())
-
-		# TODO
-		if not Engine.is_editor_hint():
-			# TODO move to autoload
-			_LanguageClient = LanguageClient.new()
-			add_child(_LanguageClient)
-			$Expression.code_completion_enabled = true
-			$Expression.code_completion_prefixes = ['.', '/'] # TODO
-			$Expression.language_client = _LanguageClient
-			$Expression.edited_script = edit_script
 
 func fake_a_godot_highlighter():
 	if G.at("_pronto_editor_plugin") == null:
@@ -160,6 +148,7 @@ func _on_expression_text_changed():
 	resize()
 	text_changed.emit()
 	$MissingReturnWarning.visible = return_value and $Expression.text.count('\n') > 0 and $Expression.text.count('return ') == 0
+	$Expression.on_text_changed()
 
 func _on_expression_focus_exited():
 	blur.emit()

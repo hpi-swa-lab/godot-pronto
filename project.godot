@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
 G="*res://addons/pronto/helpers/G.gd"
+LanguageClient="*res://addons/pronto/helpers/LanguageClient.gd"
 
 [display]
 

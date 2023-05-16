@@ -1,12 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1jujxfamsekk"]
+[gd_scene load_steps=8 format=3 uid="uid://d1jujxfamsekk"]
 
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/expression_edit.gd" id="1_lndi8"]
+[ext_resource type="Script" path="res://addons/pronto/signal_connecting/lsp_edit.gd" id="2_7vlfx"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_au0w8"]
 
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_3rw38"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_6swbt"]
 number_color = Color(0.63, 1, 0.88, 1)
 symbol_color = Color(0.67, 0.79, 1, 1)
 function_color = Color(0.34, 0.7, 1, 1)
@@ -89,10 +90,11 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_3rw38")
+syntax_highlighter = SubResource("CodeHighlighter_6swbt")
 scroll_fit_content_height = true
 indent_automatic = true
 auto_brace_completion_enabled = true
+script = ExtResource("2_7vlfx")
 
 [node name="OpenFile" type="Button" parent="."]
 layout_mode = 2
