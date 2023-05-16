@@ -2,11 +2,16 @@
 extends Resource
 class_name ConnectionScript
 
+# We can't extend the polymorphic interface of GDScript, so this is our workaround
 static func full_source_code(s: Resource, text: String):
+	if s is ConnectionScript: return s.get_full_source_code(text)
+	else: return text
+static func map_row_col(s: Resource, row: int, col: int, do: Callable):
 	if s is ConnectionScript:
-		return s.get_full_source_code(text)
-	else:
-		return text
+		do.call(row + 2, col + 1 +
+			("return ".length() if s.needs_return(s.source_code) else 0))
+	else: do.call(row, col)
+
 
 @export var nested_script: GDScript
 @export var argument_names: Array
@@ -26,12 +31,14 @@ func run({1}):
 	{2}{0}
 "
 
+func needs_return(body: String):
+	return return_value and body.count("\n") == 0
+
 func get_full_source_code(body: String):
-	var needs_return = return_value and body.count("\n") == 0
 	return TEMPLATE.format([
 		_indent(body),
 		', '.join(argument_names),
-		"return " if needs_return else ""])
+		"return " if needs_return(body) else ""])
 
 func reload():
 	nested_script.reload()

@@ -13,15 +13,16 @@ var _opened = false
 
 func on_text_changed():
 	LanguageClient.did_change(edited_script, text)
+	request_code_completion()
 
 func _request_code_completion(force):
-	print([get_caret_line(), get_caret_column()])
-	LanguageClient.completion(edited_script, get_caret_line(), get_caret_column(), func (entries):
-		for entry in entries:
-			# print(entry)
-			pass
-			# add_code_completion_option(CodeEdit.KIND_MEMBER)
-	)
+	ConnectionScript.map_row_col(edited_script, get_caret_line(), get_caret_column(), func (row, col):
+		LanguageClient.completion(edited_script, row, col, func (entries):
+			for entry in entries:
+				add_code_completion_option(CodeEdit.KIND_MEMBER, entry["insertText"], entry["insertText"])
+			update_code_completion_options(true)
+			custom_minimum_size = Vector2(200, 400)
+		))
 
 func _enter_tree():
 	if not _opened and edited_script != null:

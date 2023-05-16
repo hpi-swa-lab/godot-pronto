@@ -7,7 +7,7 @@
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_ejvs6"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_od8ts"]
 number_color = Color(0, 0.55, 0.28, 1)
 symbol_color = Color(0, 0, 0.61, 1)
 function_color = Color(0, 0.225, 0.9, 1)
@@ -74,10 +74,12 @@ font_size = 12
 font_color = Color(1, 0, 0, 1)
 
 [node name="expression_edit" type="VBoxContainer"]
+custom_minimum_size = Vector2(0, 43)
 offset_right = 180.0
 offset_bottom = 32.0
 size_flags_horizontal = 3
 script = ExtResource("1_lndi8")
+placeholder_text = "Expression..."
 
 [node name="row" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(180, 32)
@@ -92,8 +94,10 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_ejvs6")
+syntax_highlighter = SubResource("CodeHighlighter_od8ts")
 scroll_fit_content_height = true
+code_completion_enabled = true
+code_completion_prefixes = Array[String]([".", ",", "(", "=", "$", "@", "\"", "'"])
 indent_automatic = true
 auto_brace_completion_enabled = true
 script = ExtResource("2_7vlfx")

@@ -73,12 +73,17 @@ func _ready():
 	if owner != self:
 		fake_a_godot_highlighter()
 		resize()
+		%Expression.code_completion_prefixes = [".", ",", "(", "=", "$", "@", "\"", "\'"]
 
 func fake_a_godot_highlighter():
 	if G.at("_pronto_editor_plugin") == null:
 		return
 	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
 	var h = CodeHighlighter.new()
+	h.color_regions = {
+		"\"": s.get("text_editor/theme/highlighting/string_color"),
+		"'": s.get("text_editor/theme/highlighting/string_color")
+	}
 	h.number_color = s.get("text_editor/theme/highlighting/number_color")
 	h.symbol_color = s.get("text_editor/theme/highlighting/symbol_color")
 	h.function_color = s.get("text_editor/theme/highlighting/function_color")

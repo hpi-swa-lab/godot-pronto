@@ -2,6 +2,7 @@
 extends Node
 
 const ENABLE = false
+const DEBUG = false
 
 signal on_notification(data: Dictionary)
 signal on_response(data: Dictionary)
@@ -35,7 +36,7 @@ func _process(delta):
 	socket.poll()
 	var m = receive_message()
 	if m != null:
-		print("< " + str(m))
+		if DEBUG: print("< " + str(m))
 		if "id" in m:
 			_waiting_handlers[int(m["id"])].call(m["result"])
 			_waiting_handlers.erase(int(m["id"]))
@@ -83,7 +84,7 @@ func send_request(request: String, params: Dictionary, cb: Callable):
 func send(obj: Dictionary):
 	if not ENABLE: return
 	assert(socket.get_status() == StreamPeerTCP.STATUS_CONNECTED, "lsp socket is not connected")
-	print("> " + str(obj))
+	if DEBUG: print("> " + str(obj))
 	var data = JSON.stringify(obj).to_utf8_buffer()
 	socket.put_data('Content-Length: {0}\r\n\r\n'.format([data.size()]).to_utf8_buffer())
 	socket.put_data(data)
