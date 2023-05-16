@@ -1,14 +1,19 @@
 extends Node
 class_name Utils
 
+static func with(o, do: Callable):
+	return do.call(o)
+
 static func parent_that(node: Node, cond: Callable):
+	if node == null:
+		return null
 	if cond.call(node):
 		return node
 	return parent_that(node.get_parent(), cond)
 
-static func all_nodes_do(node: Node, do: Callable):
-	for c in node.get_children():
-		all_nodes_do(c, do)
+static func all_nodes_do(node: Node, do: Callable, include_internal = false):
+	for c in node.get_children(include_internal):
+		all_nodes_do(c, do, include_internal)
 	do.call(node)
 
 static func first_node_that(node: Node, cond: Callable):
@@ -25,9 +30,9 @@ static func all_nodes_that(node: Node, cond: Callable):
 	all_nodes_do(node, func (c): if cond.call(c): list.append(c))
 	return list
 
-static func all_nodes(node: Node):
+static func all_nodes(node: Node, include_internal = false):
 	var list = []
-	all_nodes_do(node, func (c): list.append(c))
+	all_nodes_do(node, func (c): list.append(c), include_internal)
 	return list
 
 static func print_signal(data: Dictionary):

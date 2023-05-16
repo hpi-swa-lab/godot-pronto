@@ -26,6 +26,10 @@ func _ready():
 	}, func (r): pass)
 
 static func script_path(script: Resource):
+	# FIXME scripts that have not been saved yet -- not sure if this is a good idea,
+	# since we won't be closing these we may leak memory in godot's lsp.
+	if script.resource_path.is_empty():
+		return "file://" + str(script) + ".gd"
 	return "file://" + ProjectSettings.globalize_path(script.resource_path)
 
 func _exit_tree():

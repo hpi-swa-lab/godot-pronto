@@ -60,7 +60,12 @@ func apply_changes(from: Node = null, signal_name: String = ""):
 func _input(event):
 	if not %Expression.has_focus():
 		return
-	if event is InputEventKey and event.pressed and not event.is_echo() and event.keycode == KEY_TAB and %Expression.text.count("\n") < 1:
+	if (event is InputEventKey and
+		event.pressed and
+		not event.is_echo() and
+		event.keycode == KEY_TAB and
+		%Expression.text.count("\n") < 1 and
+		%Expression.get_code_completion_selected_index() < 0):
 		var focus
 		if event.shift_pressed:
 			focus = %Expression.find_prev_valid_focus()

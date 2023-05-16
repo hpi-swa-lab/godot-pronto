@@ -11,6 +11,16 @@ var edited_script: Resource:
 
 var _opened = false
 
+func _ready():
+	if self != owner:
+		# make space for autocompletion popup
+		focus_entered.connect(func (): custom_minimum_size.y = 200)
+		focus_exited.connect(func ():
+			custom_minimum_size.y = 0
+			Utils.with(Utils.parent_that(self, func(p): return p is NodeToNodeConfigurator), func(p):
+				if p != null: p.reset_size())
+			cancel_code_completion())
+
 func on_text_changed():
 	LanguageClient.did_change(edited_script, text)
 	request_code_completion()
@@ -19,9 +29,10 @@ func _request_code_completion(force):
 	ConnectionScript.map_row_col(edited_script, get_caret_line(), get_caret_column(), func (row, col):
 		LanguageClient.completion(edited_script, row, col, func (entries):
 			for entry in entries:
-				add_code_completion_option(CodeEdit.KIND_MEMBER, entry["insertText"], entry["insertText"])
+				var insert = entry["insertText"]
+				if insert.is_empty(): insert = entry["label"]
+				add_code_completion_option(CodeEdit.KIND_MEMBER, Utils.ellipsize(entry["label"]), insert)
 			update_code_completion_options(true)
-			custom_minimum_size = Vector2(200, 400)
 		))
 
 func _enter_tree():
