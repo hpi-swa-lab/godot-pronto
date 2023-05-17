@@ -9,11 +9,14 @@ signal collided(other: Node, direction: Vector2, normal: Vector2)
 func _ready():
 	super._ready()
 	if not Engine.is_editor_hint():
-		if get_parent() is Area2D:
-			(get_parent() as Area2D).area_entered.connect(on_collision)
-			(get_parent() as Area2D).body_entered.connect(on_collision)
-		if get_parent() is RigidBody2D:
-			(get_parent() as RigidBody2D).body_entered.connect(on_collision)
+		var p = get_parent()
+		if p is Area2D:
+			(p as Area2D).area_entered.connect(on_collision)
+			(p as Area2D).body_entered.connect(on_collision)
+		if p is RigidBody2D:
+			(p as RigidBody2D).body_entered.connect(on_collision)
+			(p as RigidBody2D).contact_monitor = true
+			(p as RigidBody2D).max_contacts_reported = max((p as RigidBody2D).max_contacts_reported, 1)
 		if get_parent() is StaticBody2D:
 			push_error("StaticBody2D cannot report collisions in Godot. Move the Collision to the other collision partner.")
 
