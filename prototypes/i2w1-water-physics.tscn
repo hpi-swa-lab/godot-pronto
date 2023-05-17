@@ -1,0 +1,474 @@
+[gd_scene load_steps=54 format=3 uid="uid://ctkk17hieogw0"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_hkf3p"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_owvfh"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="3_uucm5"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_y1acd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_nllru"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="6_j13hb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_qg64g"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_i5qr6"]
+
+[sub_resource type="GDScript" id="GDScript_pk21q"]
+script/source = "extends U
+func run(body, from, to):
+	return \"playerUnderWater\"
+"
+
+[sub_resource type="Resource" id="Resource_gibfo"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_pk21q")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_b686k"]
+script/source = "extends U
+func run(body, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_y2o5w"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_b686k")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_5fxst"]
+script/source = "extends U
+func run(body, from, to):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_mqe7d"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_5fxst")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_x3frv"]
+script = ExtResource("4_y1acd")
+signal_name = "body_entered"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_gibfo"), SubResource("Resource_y2o5w")]
+only_if = SubResource("Resource_mqe7d")
+
+[sub_resource type="GDScript" id="GDScript_mpfw1"]
+script/source = "extends U
+func run(body, from, to):
+	return \"playerUnderWater\"
+"
+
+[sub_resource type="Resource" id="Resource_iu0hv"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_mpfw1")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_glmfk"]
+script/source = "extends U
+func run(body, from, to):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_ak4wo"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_glmfk")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_20bix"]
+script/source = "extends U
+func run(body, from, to):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_0f565"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_20bix")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_fu0xm"]
+script = ExtResource("4_y1acd")
+signal_name = "body_exited"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_iu0hv"), SubResource("Resource_ak4wo")]
+only_if = SubResource("Resource_0f565")
+
+[sub_resource type="GDScript" id="GDScript_e4j8m"]
+script/source = "extends U
+func run(body, from, to):
+	return \"underWaterLastFrame\"
+"
+
+[sub_resource type="Resource" id="Resource_74y44"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_e4j8m")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3by7f"]
+script/source = "extends U
+func run(body, from, to):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_7elgu"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_3by7f")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_qba0n"]
+script/source = "extends U
+func run(body, from, to):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_npocy"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_qba0n")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_iry5j"]
+script = ExtResource("4_y1acd")
+signal_name = "body_exited"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_74y44"), SubResource("Resource_7elgu")]
+only_if = SubResource("Resource_npocy")
+
+[sub_resource type="GDScript" id="GDScript_rw3tb"]
+script/source = "extends U
+func run(body, from, to):
+	return \"playerUnderWaterLastFrame\"
+"
+
+[sub_resource type="Resource" id="Resource_20qyw"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_rw3tb")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_sb7hp"]
+script/source = "extends U
+func run(body, from, to):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_selvw"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_sb7hp")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_j3m18"]
+script/source = "extends U
+func run(body, from, to):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_beqyy"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_j3m18")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ptwac"]
+script = ExtResource("4_y1acd")
+signal_name = "body_exited"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_20qyw"), SubResource("Resource_selvw")]
+only_if = SubResource("Resource_beqyy")
+
+[sub_resource type="GDScript" id="GDScript_gnwsv"]
+script/source = "extends U
+func run(delta, from, to):
+	to.horizontal_velocity = at(\"WaterHorizontalVelocity\")
+	to.gravity = at(\"WaterGravity\")
+	to.jump_velocity = at(\"WaterVerticalVelocity\")
+"
+
+[sub_resource type="Resource" id="Resource_0gb82"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_gnwsv")
+argument_names = ["delta", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_vcnhx"]
+script/source = "extends U
+func run(delta, from, to):
+	return G.at(\"playerUnderWater\") == true and G.at(\"playerUnderWaterLastFrame\") == true
+"
+
+[sub_resource type="Resource" id="Resource_cos8x"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_vcnhx")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_026t7"]
+script = ExtResource("4_y1acd")
+signal_name = "always"
+to = NodePath("../PlatformerController")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_cos8x")
+expression = SubResource("Resource_0gb82")
+
+[sub_resource type="GDScript" id="GDScript_xhuq6"]
+script/source = "extends U
+func run(delta, from, to):
+	#print(\"Attempting to set to \" + str(at(\"defaultGravity\")))
+	to.gravity = at(\"DefaultGravity\")
+	to.horizontal_velocity = at(\"DefaultHorizontalVelocity\")
+	to.jump_velocity = at(\"DefaultVerticalVelocity\")
+"
+
+[sub_resource type="Resource" id="Resource_utrcr"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_xhuq6")
+argument_names = ["delta", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_10ws7"]
+script/source = "extends U
+func run(delta, from, to):
+	return G.at(\"playerUnderWater\") == false
+"
+
+[sub_resource type="Resource" id="Resource_wbcqj"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_10ws7")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_cptbr"]
+script = ExtResource("4_y1acd")
+signal_name = "always"
+to = NodePath("../PlatformerController")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_wbcqj")
+expression = SubResource("Resource_utrcr")
+
+[sub_resource type="GDScript" id="GDScript_1tby3"]
+script/source = "extends U
+func run(delta, from, to):
+	G.put(\"playerUnderWaterLastFrame\", true)
+	G.get_node(\"/root/i2w1-water-physics/Player\").velocity.y = G.get_node(\"/root/i2w1-water-physics/Player\").velocity.y * 0.2
+"
+
+[sub_resource type="Resource" id="Resource_5xvwr"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_1tby3")
+argument_names = ["delta", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_q1kka"]
+script/source = "extends U
+func run(delta, from, to):
+	return G.at(\"playerUnderWater\") == true and G.at(\"playerUnderWaterLastFrame\") == false
+"
+
+[sub_resource type="Resource" id="Resource_xvqbc"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_q1kka")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tm8ws"]
+script = ExtResource("4_y1acd")
+signal_name = "always"
+to = NodePath("../PlatformerController")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_xvqbc")
+expression = SubResource("Resource_5xvwr")
+
+[sub_resource type="GDScript" id="GDScript_pt6ww"]
+script/source = "extends U
+func run():
+	return \"Y velocity: \" + str(G.get_node(\"/root/i2w1-water-physics/Player\").velocity.y)
+"
+
+[sub_resource type="Resource" id="Resource_ysq4d"]
+script = ExtResource("3_uucm5")
+nested_script = SubResource("GDScript_pt6ww")
+argument_names = []
+return_value = true
+
+[node name="i2w1-water-physics" type="Node2D"]
+
+[node name="State" type="Node2D" parent="."]
+position = Vector2(401, 315)
+script = ExtResource("5_nllru")
+global = true
+metadata/playerUnderWater = false
+metadata/playerUnderWaterLastFrame = false
+
+[node name="Level" type="Node2D" parent="."]
+position = Vector2(555, 323)
+
+[node name="Floor" type="StaticBody2D" parent="Level"]
+position = Vector2(-542, 288)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor"]
+position = Vector2(568, 21)
+script = ExtResource("1_hkf3p")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(1184, 33)
+
+[node name="Water" type="Area2D" parent="Level"]
+position = Vector2(-462, 282)
+metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_iry5j")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Water"]
+position = Vector2(134, -62)
+script = ExtResource("1_hkf3p")
+color = Color(0.0901961, 0.513726, 1, 0.211765)
+placeholder_size = Vector2(232, 146)
+
+[node name="Water2" type="Area2D" parent="Level"]
+position = Vector2(252, 282)
+metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_ptwac")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Water2"]
+position = Vector2(132, -217)
+script = ExtResource("1_hkf3p")
+color = Color(0.0901961, 0.513726, 1, 0.211765)
+placeholder_size = Vector2(423, 457)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Level"]
+position = Vector2(-4, 18)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D"]
+position = Vector2(131, 1)
+script = ExtResource("1_hkf3p")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Level"]
+position = Vector2(-150, -51)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D5"]
+position = Vector2(131, 1)
+script = ExtResource("1_hkf3p")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="Level"]
+position = Vector2(87, -182)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D7"]
+position = Vector2(131, 1)
+script = ExtResource("1_hkf3p")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="Level"]
+position = Vector2(-5, -106)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D6"]
+position = Vector2(131, 1)
+script = ExtResource("1_hkf3p")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Level"]
+position = Vector2(-148, 88)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D2"]
+position = Vector2(131, 1)
+script = ExtResource("1_hkf3p")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Level"]
+position = Vector2(-4, 125)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D3"]
+position = Vector2(131, 37)
+script = ExtResource("1_hkf3p")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Level"]
+position = Vector2(-153, 195)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D4"]
+position = Vector2(138, 33)
+script = ExtResource("1_hkf3p")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(775, 94)
+
+[node name="Placeholder" type="Node2D" parent="Player"]
+script = ExtResource("1_hkf3p")
+label = "Player"
+placeholder_size = Vector2(18, 40)
+
+[node name="PlatformerController" type="Node2D" parent="Player"]
+position = Vector2(41, -2)
+script = ExtResource("2_owvfh")
+
+[node name="Always" type="Node2D" parent="Player"]
+position = Vector2(40, -59)
+script = ExtResource("6_qg64g")
+metadata/pronto_connections = [SubResource("Resource_026t7"), SubResource("Resource_cptbr"), SubResource("Resource_tm8ws")]
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="Under Water" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 22.3333
+
+[node name="Bind" type="Node2D" parent="UI/Under Water"]
+script = ExtResource("6_j13hb")
+evaluate = SubResource("Resource_ysq4d")
+to_prop = "text"
+
+[node name="Values" type="Node2D" parent="."]
+position = Vector2(304, 308)
+
+[node name="WaterHorizontalVelocity" type="Node2D" parent="Values"]
+position = Vector2(-51, 22)
+script = ExtResource("8_i5qr6")
+to = 400.0
+value = 200.0
+
+[node name="DefaultHorizontalVelocity" type="Node2D" parent="Values"]
+position = Vector2(15, 22)
+script = ExtResource("8_i5qr6")
+to = 800.0
+value = 400.0
+
+[node name="WaterGravity" type="Node2D" parent="Values"]
+position = Vector2(-55, 51)
+script = ExtResource("8_i5qr6")
+to = 1000.0
+value = 245.0
+
+[node name="DefaultGravity" type="Node2D" parent="Values"]
+position = Vector2(13, 50)
+script = ExtResource("8_i5qr6")
+to = 2000.0
+value = 980.0
+
+[node name="WaterVerticalVelocity" type="Node2D" parent="Values"]
+position = Vector2(-56, 79)
+script = ExtResource("8_i5qr6")
+to = 400.0
+value = 200.0
+
+[node name="DefaultVerticalVelocity" type="Node2D" parent="Values"]
+position = Vector2(15, 80)
+script = ExtResource("8_i5qr6")
+to = 800.0
+value = 400.0

@@ -52,6 +52,10 @@ func _can_jump():
 func _reset_jump():
 	_last_jump_input = -10000
 	_last_on_floor = -10000
+	
+func reset_jump():
+	#_last_jump_input = 	Time.get_ticks_msec()
+	_last_on_floor = Time.get_ticks_msec()
 
 func _draw():
 	if !show_trail:
@@ -73,7 +77,13 @@ func _physics_process(delta):
 			_parent.position.y = _last_floor_height
 		_parent.velocity.y = -jump_velocity
 	else:
-		_parent.velocity.y += gravity * delta
+		if G.at("playerUnderWater"):
+			#print(gravity * delta)
+			_parent.velocity.y += min(gravity * delta, 1)
+			print(_parent.velocity.y)
+		else:
+			_parent.velocity.y += gravity * delta
+			print(_parent.velocity.y)
 	
 	# horizontal
 	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
