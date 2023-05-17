@@ -3,6 +3,11 @@
 extends Behavior
 
 var scene = null
+var instance
+var _path_corrector:
+	get:
+		if not _path_corrector: _path_corrector = Node2D.new() if instance is Node2D else Node3D.new()
+		return _path_corrector
 
 signal spawned(instance: Node)
 
@@ -17,13 +22,12 @@ func _spawn():
 	return scene.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
 
 func spawn():
-	var instance = _spawn()
+	instance = _spawn()
 	
-	var path_corrector = Node2D.new() if instance is Node2D else Node3D.new()
-	path_corrector.add_child(instance)
-	path_corrector.position = position
+	_path_corrector.add_child(instance)
+	_path_corrector.position = position
 	
-	get_parent().add_child(path_corrector)
+	get_parent().add_child(_path_corrector)
 	spawned.emit(instance)
 	
 	return instance

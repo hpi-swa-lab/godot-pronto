@@ -20,6 +20,8 @@ extends Behavior
 
 @onready var _parent: CharacterBody2D = get_parent()
 
+var is_on_static_grapple = false
+var is_on_grapple = false
 var _last_on_floor = -10000
 @onready var _last_floor_height = _parent.position.y
 var _last_jump_input = -10000
@@ -36,7 +38,7 @@ func _enter_tree():
 func _update_jump():
 	var now = Time.get_ticks_msec()
 	
-	if _parent.is_on_floor():
+	if _parent.is_on_floor() or is_on_grapple:
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
 		
@@ -64,6 +66,16 @@ func _draw():
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
+	
+	if is_on_static_grapple:
+		return
+	
+	if gravity == 0:
+		is_on_grapple = true
+	
+	#moved
+	if Input.get_axis("ui_left", "ui_right") != 0 or Input.is_action_just_pressed("ui_accept"):
+			gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 	
 	# vertical
 	_update_jump()
