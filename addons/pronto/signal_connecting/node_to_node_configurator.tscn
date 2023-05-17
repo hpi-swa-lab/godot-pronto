@@ -108,6 +108,7 @@ text = ")"
 
 [node name="Expression" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 64)
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "Statement(s)..."

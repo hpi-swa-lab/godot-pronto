@@ -6,54 +6,54 @@
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_yn0mp"]
-number_color = Color(0, 0.55, 0.28, 1)
-symbol_color = Color(0, 0, 0.61, 1)
-function_color = Color(0, 0.225, 0.9, 1)
-member_variable_color = Color(0, 0.4, 0.68, 1)
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_uuaak"]
+number_color = Color(0.63, 1, 0.88, 1)
+symbol_color = Color(0.67, 0.79, 1, 1)
+function_color = Color(0.34, 0.7, 1, 1)
+member_variable_color = Color(0.736, 0.88, 1, 1)
 keyword_colors = {
-"INF": Color(0.9, 0.135, 0.51, 1),
-"NAN": Color(0.9, 0.135, 0.51, 1),
-"PI": Color(0.9, 0.135, 0.51, 1),
-"TAU": Color(0.9, 0.135, 0.51, 1),
-"and": Color(0.9, 0.135, 0.51, 1),
-"as": Color(0.9, 0.135, 0.51, 1),
-"assert": Color(0.9, 0.135, 0.51, 1),
-"await": Color(0.9, 0.135, 0.51, 1),
-"bool": Color(0.9, 0.135, 0.51, 1),
-"break": Color(0.9, 0.135, 0.51, 1),
-"breakpoint": Color(0.9, 0.135, 0.51, 1),
-"class": Color(0.9, 0.135, 0.51, 1),
-"class_name": Color(0.9, 0.135, 0.51, 1),
-"const": Color(0.9, 0.135, 0.51, 1),
-"continue": Color(0.9, 0.135, 0.51, 1),
-"elif": Color(0.9, 0.135, 0.51, 1),
-"else": Color(0.9, 0.135, 0.51, 1),
-"enum": Color(0.9, 0.135, 0.51, 1),
-"extends": Color(0.9, 0.135, 0.51, 1),
-"false": Color(0.9, 0.135, 0.51, 1),
-"float": Color(0.9, 0.135, 0.51, 1),
-"for": Color(0.9, 0.135, 0.51, 1),
-"func": Color(0.9, 0.135, 0.51, 1),
-"if": Color(0.9, 0.135, 0.51, 1),
-"in": Color(0.9, 0.135, 0.51, 1),
-"int": Color(0.9, 0.135, 0.51, 1),
-"is": Color(0.9, 0.135, 0.51, 1),
-"match": Color(0.9, 0.135, 0.51, 1),
-"not": Color(0.9, 0.135, 0.51, 1),
-"null": Color(0.9, 0.135, 0.51, 1),
-"or": Color(0.9, 0.135, 0.51, 1),
-"pass": Color(0.9, 0.135, 0.51, 1),
-"preload": Color(0.9, 0.135, 0.51, 1),
-"return": Color(0.9, 0.135, 0.51, 1),
-"self": Color(0.9, 0.135, 0.51, 1),
-"signal": Color(0.9, 0.135, 0.51, 1),
-"static": Color(0.9, 0.135, 0.51, 1),
-"super": Color(0.9, 0.135, 0.51, 1),
-"true": Color(0.9, 0.135, 0.51, 1),
-"var": Color(0.9, 0.135, 0.51, 1),
-"void": Color(0.9, 0.135, 0.51, 1),
-"while": Color(0.9, 0.135, 0.51, 1)
+"INF": Color(1, 0.44, 0.52, 1),
+"NAN": Color(1, 0.44, 0.52, 1),
+"PI": Color(1, 0.44, 0.52, 1),
+"TAU": Color(1, 0.44, 0.52, 1),
+"and": Color(1, 0.44, 0.52, 1),
+"as": Color(1, 0.44, 0.52, 1),
+"assert": Color(1, 0.44, 0.52, 1),
+"await": Color(1, 0.44, 0.52, 1),
+"bool": Color(1, 0.44, 0.52, 1),
+"break": Color(1, 0.44, 0.52, 1),
+"breakpoint": Color(1, 0.44, 0.52, 1),
+"class": Color(1, 0.44, 0.52, 1),
+"class_name": Color(1, 0.44, 0.52, 1),
+"const": Color(1, 0.44, 0.52, 1),
+"continue": Color(1, 0.44, 0.52, 1),
+"elif": Color(1, 0.44, 0.52, 1),
+"else": Color(1, 0.44, 0.52, 1),
+"enum": Color(1, 0.44, 0.52, 1),
+"extends": Color(1, 0.44, 0.52, 1),
+"false": Color(1, 0.44, 0.52, 1),
+"float": Color(1, 0.44, 0.52, 1),
+"for": Color(1, 0.44, 0.52, 1),
+"func": Color(1, 0.44, 0.52, 1),
+"if": Color(1, 0.44, 0.52, 1),
+"in": Color(1, 0.44, 0.52, 1),
+"int": Color(1, 0.44, 0.52, 1),
+"is": Color(1, 0.44, 0.52, 1),
+"match": Color(1, 0.44, 0.52, 1),
+"not": Color(1, 0.44, 0.52, 1),
+"null": Color(1, 0.44, 0.52, 1),
+"or": Color(1, 0.44, 0.52, 1),
+"pass": Color(1, 0.44, 0.52, 1),
+"preload": Color(1, 0.44, 0.52, 1),
+"return": Color(1, 0.44, 0.52, 1),
+"self": Color(1, 0.44, 0.52, 1),
+"signal": Color(1, 0.44, 0.52, 1),
+"static": Color(1, 0.44, 0.52, 1),
+"super": Color(1, 0.44, 0.52, 1),
+"true": Color(1, 0.44, 0.52, 1),
+"var": Color(1, 0.44, 0.52, 1),
+"void": Color(1, 0.44, 0.52, 1),
+"while": Color(1, 0.44, 0.52, 1)
 }
 
 [sub_resource type="Texture2D" id="Texture2D_4hlth"]
@@ -63,10 +63,12 @@ script = ExtResource("2_au0w8")
 name = "DebugSkipBreakpointsOff"
 
 [node name="expression_edit" type="HBoxContainer"]
-custom_minimum_size = Vector2(0, 43)
+custom_minimum_size = Vector2(360, 64)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -792.0
+offset_bottom = -584.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
@@ -80,7 +82,7 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_yn0mp")
+syntax_highlighter = SubResource("CodeHighlighter_uuaak")
 scroll_fit_content_height = true
 indent_automatic = true
 auto_brace_completion_enabled = true
