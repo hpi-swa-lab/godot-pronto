@@ -40,7 +40,7 @@ func _update_jump():
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
 		
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_physical_key_pressed(KEY_W):
 		_last_jump_input = now
 
 func _can_jump():
@@ -76,7 +76,7 @@ func _physics_process(delta):
 		_parent.velocity.y += gravity * delta
 	
 	# horizontal
-	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
+	_parent.velocity.x = (-1 if Input.is_physical_key_pressed(KEY_A) else (1 if Input.is_physical_key_pressed(KEY_D) else 0)) * horizontal_velocity
 	
 	# move
 	var did_collide = _parent.move_and_slide()

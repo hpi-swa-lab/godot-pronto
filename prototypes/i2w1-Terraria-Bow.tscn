@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://w21q0yrnaxkg"]
+[gd_scene load_steps=14 format=3 uid="uid://w21q0yrnaxkg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_wlgev"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_nrhwd"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="5_h05ko"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_gwch8"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="7_cog4u"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_6c4x5"]
 
 [sub_resource type="Resource" id="Resource_pvkep"]
 script = ExtResource("4_4k4rh")
@@ -41,6 +42,15 @@ signal_name = "collided"
 to = NodePath("../Move")
 invoke = "add_rotation"
 arguments = ["return 90 + rad_to_deg(Vector2.UP.rotated(get_parent().global_rotation).angle_to(get_parent().get_node(\"Move\").velocity))"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_nye2f"]
+script = ExtResource("4_4k4rh")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
 only_if = "return true"
 expression = ""
 
@@ -82,6 +92,8 @@ placeholder_size = Vector2(10, 2)
 [node name="Move" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
 position = Vector2(111, -3)
 script = ExtResource("5_h05ko")
+acceleration = 20.0
+friction = 1.0
 rotated = true
 
 [node name="Collision" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
@@ -89,6 +101,14 @@ position = Vector2(36, -2)
 script = ExtResource("7_cog4u")
 limit_to_group = "ground"
 metadata/pronto_connections = [SubResource("Resource_aui80"), SubResource("Resource_c4rc8")]
+
+[node name="Clock" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
+position = Vector2(20, 18)
+script = ExtResource("8_6c4x5")
+one_shot = true
+duration_seconds = 2.0
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_nye2f")]
 
 [node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
 
