@@ -43,7 +43,9 @@ func _process(delta):
 	if m != null:
 		if DEBUG: print("< " + str(m))
 		if "id" in m:
-			_waiting_handlers[int(m["id"])].call(m["result"])
+			var invoke = _waiting_handlers[int(m["id"])]
+			# The callback may have disappeared meanwhile
+			if not invoke.is_null(): invoke.call(m["result"])
 			_waiting_handlers.erase(int(m["id"]))
 		else:
 			on_notification.emit(m)

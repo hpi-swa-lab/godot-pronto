@@ -82,6 +82,7 @@ func default_focus():
 func update_argument_names():
 	var names = argument_names()
 	%Expression.argument_names = names
+	%Condition.argument_names = names
 	for c in %Args.get_children(): c.argument_names = names
 	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
 
