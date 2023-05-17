@@ -44,6 +44,10 @@ func set_veleocity(velocity: Vector2):
 	_did_accelerate = true
 	self.velocity = velocity
 
+func set_velocity(velocity: Vector2):
+	_did_accelerate = true
+	self.velocity = velocity
+
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
