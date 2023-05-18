@@ -21,9 +21,22 @@ func _ready():
 				if p != null: p.reset_size())
 			cancel_code_completion())
 
+func _last_character():
+	return 
+
+var completion_regex = null
 func on_text_changed():
 	LanguageClient.did_change(edited_script, text)
-	request_code_completion()
+	
+	var line = get_line(get_caret_line())
+	if line.is_empty():
+		return
+	var char = line[max(get_caret_column() - 1, 0)]
+	if completion_regex == null:
+		completion_regex = RegEx.new()
+		completion_regex.compile("[^A-Za-z0-9_]")
+	if completion_regex.search(char) != null:
+		request_code_completion()
 
 func _request_code_completion(force):
 	ConnectionScript.map_row_col(edited_script, get_caret_line(), get_caret_column(), func (row, col):
