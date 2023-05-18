@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://w21q0yrnaxkg"]
+[gd_scene load_steps=18 format=3 uid="uid://w21q0yrnaxkg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_wlgev"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_nrhwd"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_gwch8"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="7_cog4u"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_6c4x5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="9_7nmyc"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="9_kml0a"]
 
 [sub_resource type="Resource" id="Resource_pvkep"]
 script = ExtResource("4_4k4rh")
@@ -54,6 +56,28 @@ arguments = []
 only_if = "return true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_1pei3"]
+script = ExtResource("4_4k4rh")
+signal_name = "collided"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_73q1e"]
+script = ExtResource("4_4k4rh")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "HP = other.get_node(\"Health\").at(\"HP\")
+if (HP > 50):
+	HP -= 50
+else:
+	other.queue_free()"
+
 [node name="Node2D" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
@@ -87,7 +111,7 @@ collision_mask = 3
 
 [node name="Placeholder" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
 script = ExtResource("2_nrhwd")
-placeholder_size = Vector2(10, 2)
+placeholder_size = Vector2(20, 5)
 
 [node name="Move" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
 position = Vector2(111, -3)
@@ -110,33 +134,71 @@ duration_seconds = 2.0
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_nye2f")]
 
+[node name="EnemyCollisions" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
+position = Vector2(53, 20)
+script = ExtResource("7_cog4u")
+limit_to_group = "enemy"
+metadata/pronto_connections = [SubResource("Resource_1pei3"), SubResource("Resource_73q1e")]
+
+[node name="ArrowDamage" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
+position = Vector2(-193, -510)
+script = ExtResource("9_kml0a")
+to = 50.0
+value = 20.0
+
 [node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
+position = Vector2(577, 629)
 
 [node name="Placeholder" type="Node2D" parent="Ground"]
-position = Vector2(576, 613)
 script = ExtResource("2_nrhwd")
-placeholder_size = Vector2(1200, 70)
+placeholder_size = Vector2(1200, 120)
 
 [node name="Wall Right" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(-7, -128)
 
 [node name="Placeholder" type="Node2D" parent="Wall Right"]
-position = Vector2(1127, 445)
+position = Vector2(1134, 385)
 script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(100, 700)
 
 [node name="Floating" type="StaticBody2D" parent="." groups=["ground"]]
-position = Vector2(-199, -193)
+position = Vector2(586, 391)
 
 [node name="Placeholder" type="Node2D" parent="Floating"]
-position = Vector2(767, 585)
 script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(500, 30)
 
 [node name="Wall Left" type="StaticBody2D" parent="." groups=["ground"]]
-position = Vector2(-994, -129)
+position = Vector2(27, 241)
 
 [node name="Placeholder" type="Node2D" parent="Wall Left"]
-position = Vector2(1020, 456)
 script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(100, 700)
+
+[node name="Enemy" type="RigidBody2D" parent="." groups=["enemy"]]
+position = Vector2(761, 345)
+
+[node name="Placeholder" type="Node2D" parent="Enemy"]
+script = ExtResource("2_nrhwd")
+label = "Enemy"
+color = Color(1, 0.396078, 0, 1)
+placeholder_size = Vector2(30, 60)
+
+[node name="Health" type="Node2D" parent="Enemy"]
+position = Vector2(1, 18)
+script = ExtResource("9_7nmyc")
+metadata/HP = 100
+
+[node name="Enemy2" type="RigidBody2D" parent="." groups=["enemy"]]
+position = Vector2(363, 340)
+
+[node name="Placeholder" type="Node2D" parent="Enemy2"]
+script = ExtResource("2_nrhwd")
+label = "Enemy"
+color = Color(1, 0.396078, 0, 1)
+placeholder_size = Vector2(30, 60)
+
+[node name="Health" type="Node2D" parent="Enemy2"]
+position = Vector2(1, 18)
+script = ExtResource("9_7nmyc")
+metadata/HP = 100
