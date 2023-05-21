@@ -72,9 +72,13 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "return true"
-expression = "HP = other.get_node(\"Health\").at(\"HP\")
-if (HP > 50):
-	HP -= 50
+expression = "var node = other.get_node(\"Health\");
+var HP = node.at(\"HP\")
+var dmg = get_parent().get_node(\"ArrowDamage\").value
+if (HP > dmg):
+	HP -= dmg
+	node.put(\"HP\", HP)
+	other.get_node(\"Placeholder\").label = str(HP)
 else:
 	other.queue_free()"
 
