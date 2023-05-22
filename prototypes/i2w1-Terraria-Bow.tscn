@@ -93,12 +93,13 @@ arguments = []
 only_if = "return true"
 expression = "var children = get_parent().get_node(\"Player\").get_children()
 var spawner = from.get_node(\"Spawner\")
-var step = deg_to_rad(15)
-var angle = -step
-for x in children:
-	var arrow = x.get_node(\"Arrow\")
+var arrow_count = from.get_node(\"NumberOfArrows\").value
+var step = deg_to_rad(from.get_node(\"SplitAngle\").value)
+var angle = -step * (arrow_count-1) / 2
+for child in children:
+	var arrow = child.get_node(\"Arrow\")
 	if arrow:
-		for i in range(3):
+		for i in range(arrow_count):
 			var direction = arrow.get_node(\"Move\").velocity.rotated(angle)
 			var position = arrow.global_position
 			angle += step
@@ -219,49 +220,63 @@ script = ExtResource("9_kml0a")
 to = 100.0
 value = 20.0
 
-[node name="Key" type="Node2D" parent="."]
+[node name="SplitButton" type="Node2D" parent="."]
 position = Vector2(452, 552)
 script = ExtResource("9_x4p0j")
 key = "Space"
 metadata/pronto_connections = [SubResource("Resource_ymhtu")]
 
-[node name="Spawner" type="Node2D" parent="Key"]
+[node name="Spawner" type="Node2D" parent="SplitButton"]
 position = Vector2(26, -15)
 script = ExtResource("3_uh4a8")
 metadata/pronto_connections = [SubResource("Resource_ap4bs")]
 
-[node name="SplitArrow" type="RigidBody2D" parent="Key/Spawner"]
+[node name="SplitArrow" type="RigidBody2D" parent="SplitButton/Spawner"]
 position = Vector2(36, 0)
 
-[node name="Placeholder" type="Node2D" parent="Key/Spawner/SplitArrow"]
+[node name="Placeholder" type="Node2D" parent="SplitButton/Spawner/SplitArrow"]
 script = ExtResource("2_nrhwd")
 color = Color(0.258824, 0.541176, 0.870588, 1)
 placeholder_size = Vector2(20, 5)
 
-[node name="Move" type="Node2D" parent="Key/Spawner/SplitArrow"]
+[node name="Move" type="Node2D" parent="SplitButton/Spawner/SplitArrow"]
 position = Vector2(24, -1)
 script = ExtResource("5_h05ko")
 acceleration = 20.0
 friction = 1.0
 rotated = true
 
-[node name="SplitArrowDamage" type="Node2D" parent="Key/Spawner/SplitArrow"]
+[node name="SplitArrowDamage" type="Node2D" parent="SplitButton/Spawner/SplitArrow"]
 position = Vector2(-137, -507)
 script = ExtResource("9_kml0a")
 to = 100.0
 value = 10.0
 
-[node name="EnemyCollision" type="Node2D" parent="Key/Spawner/SplitArrow"]
+[node name="EnemyCollision" type="Node2D" parent="SplitButton/Spawner/SplitArrow"]
 position = Vector2(21, -35)
 script = ExtResource("7_cog4u")
 limit_to_group = "enemy"
 metadata/pronto_connections = [SubResource("Resource_a7dwx"), SubResource("Resource_5h7l5")]
 
-[node name="WallCollision" type="Node2D" parent="Key/Spawner/SplitArrow"]
+[node name="WallCollision" type="Node2D" parent="SplitButton/Spawner/SplitArrow"]
 position = Vector2(40, 18)
 script = ExtResource("7_cog4u")
 limit_to_group = "ground"
 metadata/pronto_connections = [SubResource("Resource_spt21")]
+
+[node name="NumberOfArrows" type="Node2D" parent="SplitButton"]
+position = Vector2(-256, -521)
+script = ExtResource("9_kml0a")
+from = 3.0
+to = 9.0
+value = 5.0
+
+[node name="SplitAngle" type="Node2D" parent="SplitButton"]
+position = Vector2(-302, -521)
+script = ExtResource("9_kml0a")
+from = 1.0
+to = 30.0
+value = 15.0
 
 [node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(577, 629)
