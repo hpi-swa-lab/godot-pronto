@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://w21q0yrnaxkg"]
+[gd_scene load_steps=25 format=3 uid="uid://w21q0yrnaxkg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_wlgev"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_nrhwd"]
@@ -114,6 +114,41 @@ arguments = []
 only_if = "return true"
 expression = "instance.get_node(\"Move\").move_direction(Vector2.RIGHT * 20)"
 
+[sub_resource type="Resource" id="Resource_a7dwx"]
+script = ExtResource("4_4k4rh")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "var node = other.get_node(\"Health\");
+var HP = node.at(\"HP\")
+var dmg = get_parent().get_node(\"SplitArrowDamage\").value
+if (HP > dmg):
+	HP -= dmg
+	node.put(\"HP\", HP)
+	other.get_node(\"Placeholder\").label = str(HP)
+else:
+	other.queue_free()"
+
+[sub_resource type="Resource" id="Resource_5h7l5"]
+script = ExtResource("4_4k4rh")
+signal_name = "collided"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_spt21"]
+script = ExtResource("4_4k4rh")
+signal_name = "collided"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "return true"
+expression = ""
+
 [node name="Node2D" type="Node2D"]
 position = Vector2(-4, -3)
 
@@ -130,6 +165,7 @@ horizontal_velocity = 300.0
 
 [node name="Placeholder" type="Node2D" parent="Player"]
 script = ExtResource("2_nrhwd")
+color = Color(0, 0, 0, 1)
 placeholder_size = Vector2(20, 40)
 
 [node name="Controls" type="Node2D" parent="Player"]
@@ -203,10 +239,29 @@ color = Color(0.258824, 0.541176, 0.870588, 1)
 placeholder_size = Vector2(20, 5)
 
 [node name="Move" type="Node2D" parent="Key/Spawner/SplitArrow"]
+position = Vector2(24, -1)
 script = ExtResource("5_h05ko")
 acceleration = 20.0
 friction = 1.0
 rotated = true
+
+[node name="SplitArrowDamage" type="Node2D" parent="Key/Spawner/SplitArrow"]
+position = Vector2(-137, -507)
+script = ExtResource("9_kml0a")
+to = 100.0
+value = 10.0
+
+[node name="EnemyCollision" type="Node2D" parent="Key/Spawner/SplitArrow"]
+position = Vector2(21, -35)
+script = ExtResource("7_cog4u")
+limit_to_group = "enemy"
+metadata/pronto_connections = [SubResource("Resource_a7dwx"), SubResource("Resource_5h7l5")]
+
+[node name="WallCollision" type="Node2D" parent="Key/Spawner/SplitArrow"]
+position = Vector2(40, 18)
+script = ExtResource("7_cog4u")
+limit_to_group = "ground"
+metadata/pronto_connections = [SubResource("Resource_spt21")]
 
 [node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(577, 629)
