@@ -90,7 +90,8 @@ func move_direction(direction: Vector2):
 	_did_accelerate = true
 	if rotated:
 		direction = direction.rotated(get_parent().global_rotation)
-	velocity = velocity.lerp(direction * max_velocity, min(1.0, _accel * get_process_delta_time()))
+	var delta_time = get_process_delta_time()
+	velocity = velocity.lerp(direction * max_velocity, min(1.0, _accel * 0.006))
 
 func move_left():
 	move_direction(Vector2.LEFT)

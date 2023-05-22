@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://w21q0yrnaxkg"]
+[gd_scene load_steps=22 format=3 uid="uid://w21q0yrnaxkg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_wlgev"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_nrhwd"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_6c4x5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="9_7nmyc"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="9_kml0a"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="9_x4p0j"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="11_cvovy"]
 
 [sub_resource type="Resource" id="Resource_pvkep"]
 script = ExtResource("4_4k4rh")
@@ -82,73 +84,129 @@ if (HP > dmg):
 else:
 	other.queue_free()"
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="Resource" id="Resource_ymhtu"]
+script = ExtResource("4_4k4rh")
+signal_name = "just_down"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "var children = get_parent().get_node(\"Player\").get_children()
+var spawner = from.get_node(\"Spawner\")
+var step = deg_to_rad(15)
+var angle = -step
+for x in children:
+	var arrow = x.get_node(\"Arrow\")
+	if arrow:
+		for i in range(3):
+			var direction = arrow.get_node(\"Move\").velocity.rotated(angle)
+			var position = arrow.global_position
+			angle += step
+			arrow.queue_free()
+			spawner.spawn_towards_at(direction, position)"
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
+[sub_resource type="Resource" id="Resource_ap4bs"]
+script = ExtResource("4_4k4rh")
+signal_name = "spawned"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "instance.get_node(\"Move\").move_direction(Vector2.RIGHT * 20)"
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(-4, -3)
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(358, 544)
 collision_layer = 4
 collision_mask = 5
 
-[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+[node name="PlatformerController" type="Node2D" parent="Player"]
 position = Vector2(0, -33)
 script = ExtResource("1_wlgev")
 jump_velocity = 630.0
 horizontal_velocity = 300.0
 
-[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+[node name="Placeholder" type="Node2D" parent="Player"]
 script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(20, 40)
 
-[node name="Controls" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(89, -35)
+[node name="Controls" type="Node2D" parent="Player"]
+position = Vector2(-81, -2)
 script = ExtResource("6_gwch8")
 metadata/pronto_connections = [SubResource("Resource_pvkep")]
 
-[node name="Spawner" type="Node2D" parent="CharacterBody2D"]
+[node name="Spawner" type="Node2D" parent="Player"]
 script = ExtResource("3_uh4a8")
 metadata/pronto_connections = [SubResource("Resource_w8181")]
 
-[node name="Arrow" type="RigidBody2D" parent="CharacterBody2D/Spawner"]
+[node name="Arrow" type="RigidBody2D" parent="Player/Spawner" groups=["arrow"]]
 position = Vector2(39, -1)
 collision_layer = 3
 collision_mask = 3
 
-[node name="Placeholder" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
+[node name="Placeholder" type="Node2D" parent="Player/Spawner/Arrow"]
 script = ExtResource("2_nrhwd")
 placeholder_size = Vector2(20, 5)
 
-[node name="Move" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
-position = Vector2(111, -3)
+[node name="Move" type="Node2D" parent="Player/Spawner/Arrow"]
+position = Vector2(47, -33)
 script = ExtResource("5_h05ko")
 acceleration = 20.0
 friction = 1.0
 rotated = true
 
-[node name="Collision" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
+[node name="Collision" type="Node2D" parent="Player/Spawner/Arrow"]
 position = Vector2(36, -2)
 script = ExtResource("7_cog4u")
 limit_to_group = "ground"
 metadata/pronto_connections = [SubResource("Resource_aui80"), SubResource("Resource_c4rc8")]
 
-[node name="Clock" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
-position = Vector2(20, 18)
+[node name="Clock" type="Node2D" parent="Player/Spawner/Arrow"]
+position = Vector2(-28, -51)
 script = ExtResource("8_6c4x5")
 one_shot = true
 duration_seconds = 2.0
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_nye2f")]
 
-[node name="EnemyCollisions" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
-position = Vector2(53, 20)
+[node name="EnemyCollisions" type="Node2D" parent="Player/Spawner/Arrow"]
+position = Vector2(25, -75)
 script = ExtResource("7_cog4u")
 limit_to_group = "enemy"
 metadata/pronto_connections = [SubResource("Resource_1pei3"), SubResource("Resource_73q1e")]
 
-[node name="ArrowDamage" type="Node2D" parent="CharacterBody2D/Spawner/Arrow"]
-position = Vector2(-193, -510)
+[node name="ArrowDamage" type="Node2D" parent="Player/Spawner/Arrow"]
+position = Vector2(-137, -507)
 script = ExtResource("9_kml0a")
-to = 50.0
+to = 100.0
 value = 20.0
+
+[node name="Key" type="Node2D" parent="."]
+position = Vector2(452, 552)
+script = ExtResource("9_x4p0j")
+key = "Space"
+metadata/pronto_connections = [SubResource("Resource_ymhtu")]
+
+[node name="Spawner" type="Node2D" parent="Key"]
+position = Vector2(26, -15)
+script = ExtResource("3_uh4a8")
+metadata/pronto_connections = [SubResource("Resource_ap4bs")]
+
+[node name="SplitArrow" type="RigidBody2D" parent="Key/Spawner"]
+position = Vector2(36, 0)
+
+[node name="Placeholder" type="Node2D" parent="Key/Spawner/SplitArrow"]
+script = ExtResource("2_nrhwd")
+color = Color(0.258824, 0.541176, 0.870588, 1)
+placeholder_size = Vector2(20, 5)
+
+[node name="Move" type="Node2D" parent="Key/Spawner/SplitArrow"]
+script = ExtResource("5_h05ko")
+acceleration = 20.0
+friction = 1.0
+rotated = true
 
 [node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
 position = Vector2(577, 629)
@@ -206,3 +264,15 @@ placeholder_size = Vector2(30, 60)
 position = Vector2(1, 18)
 script = ExtResource("9_7nmyc")
 metadata/HP = 100
+
+[node name="FPS" type="Label" parent="."]
+offset_left = 87.0
+offset_top = 11.0
+offset_right = 127.0
+offset_bottom = 33.3333
+
+[node name="Bind" type="Node2D" parent="FPS"]
+position = Vector2(35, 26)
+script = ExtResource("11_cvovy")
+to_prop = "text"
+convert = "return \"FPS: \" + str(Engine.get_frames_per_second())"
