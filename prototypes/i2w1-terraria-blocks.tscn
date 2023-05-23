@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dk5f5rbwp2rh4"]
+[gd_scene load_steps=20 format=3 uid="uid://dk5f5rbwp2rh4"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_ssknk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_8rrcq"]
@@ -60,7 +60,8 @@ invoke = "set_cell"
 arguments = ["return 0", "var mouse_pos = from.get_viewport().get_mouse_position()
 var cell_index = Vector2i(mouse_pos / to.cell_quadrant_size)
 return cell_index", "return 1", "return Vector2i.ZERO", "return 1"]
-only_if = "if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+only_if = "return false
+if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 	return false
 	
 var mouse_pos = from.get_viewport().get_mouse_position()
@@ -69,6 +70,56 @@ var neighbor_positions = to.get_surrounding_cells(cell_index)
 var source_ids = neighbor_positions.map(func(pos): return to.get_cell_source_id(0,pos))
 return source_ids.any(func(i): return i != -1) "
 expression = ""
+
+[sub_resource type="Resource" id="Resource_g67qy"]
+script = ExtResource("4_xf1qv")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "G.put(\"build_queue\", [])"
+
+[sub_resource type="Resource" id="Resource_wtykm"]
+script = ExtResource("4_xf1qv")
+signal_name = "elapsed"
+to = NodePath("../BuildClock")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	return
+	
+var tile_map = to.get_node(\"%TileMap\")
+var mouse_pos = from.get_viewport().get_mouse_position()
+var cell_index = Vector2i(mouse_pos / tile_map.cell_quadrant_size)
+
+var queue = G.at(\"build_queue\")
+var neighbor_positions = tile_map.get_surrounding_cells(cell_index)
+var has_tilemap_neighbor = neighbor_positions.any(func(pos): return to.get_cell_source_id(0,pos) != -1 or pos in queue)
+if not has_tilemap_neighbor:
+	return
+
+if cell_index not in queue:
+	queue.push_back(cell_index)
+	if to.paused:
+		to.reset_and_start()
+"
+
+[sub_resource type="Resource" id="Resource_v23jl"]
+script = ExtResource("4_xf1qv")
+signal_name = "elapsed"
+to = NodePath("../TileMap")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "var pos = G.at(\"build_queue\").pop_front()
+if pos == null:
+	from.paused = true
+	return
+
+to.set_cell(0, pos, 1, Vector2i.ZERO, 1)
+"
 
 [node name="Node2D" type="Node2D"]
 
@@ -119,6 +170,7 @@ shape = SubResource("RectangleShape2D_c3dvs")
 script = ExtResource("1_ssknk")
 
 [node name="TileMap" type="TileMap" parent="."]
+unique_name_in_owner = true
 tile_set = SubResource("TileSet_16a3j")
 cell_quadrant_size = 20
 format = 2
@@ -130,11 +182,28 @@ metadata/_edit_lock_ = true
 position = Vector2(40, 118)
 
 [node name="Always" type="Node2D" parent="."]
-position = Vector2(59, 73)
+position = Vector2(16, 85)
 script = ExtResource("7_ouhvv")
 metadata/pronto_connections = [SubResource("Resource_ns78d")]
+
+[node name="InitializeQueue" type="Node2D" parent="."]
+position = Vector2(143, 13)
+script = ExtResource("8_x75nb")
+one_shot = true
+duration_seconds = 0.0001
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_g67qy")]
 
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(199, 132)
 script = ExtResource("8_x75nb")
+duration_seconds = 0.04
 trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_wtykm")]
+
+[node name="BuildClock" type="Node2D" parent="."]
+position = Vector2(128, 155)
+script = ExtResource("8_x75nb")
+duration_seconds = 0.3
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_v23jl")]
