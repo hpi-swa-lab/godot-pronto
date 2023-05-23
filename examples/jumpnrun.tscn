@@ -124,7 +124,7 @@ expression = ""
 [sub_resource type="Resource" id="Resource_1clvj"]
 script = ExtResource("5_jpml8")
 signal_name = "always"
-to = NodePath("../Static_Grapple_Spawner2")
+to = NodePath("../Static_Grapple_Spawner")
 invoke = "set_position"
 arguments = ["return G.at(\"playerPos\")"]
 only_if = "return true"
@@ -142,7 +142,7 @@ expression = ""
 [sub_resource type="Resource" id="Resource_4ko6u"]
 script = ExtResource("5_jpml8")
 signal_name = "down"
-to = NodePath("../Static_Grapple_Spawner2")
+to = NodePath("../Static_Grapple_Spawner")
 invoke = "spawn"
 arguments = []
 only_if = "return true"
@@ -240,20 +240,20 @@ position = Vector2(-28, 47)
 script = ExtResource("6_nu8ty")
 metadata/pronto_connections = [SubResource("Resource_o5k42"), SubResource("Resource_g8mp8"), SubResource("Resource_xstjp")]
 
-[node name="Static_Grapple_Spawner2" type="Node2D" parent="."]
+[node name="Static_Grapple_Spawner" type="Node2D" parent="."]
 position = Vector2(830, 413)
 script = ExtResource("3_7wwi6")
 metadata/pronto_connections = [SubResource("Resource_6rtae")]
 
-[node name="RigidBody2D" type="RigidBody2D" parent="Static_Grapple_Spawner2"]
+[node name="RigidBody2D" type="RigidBody2D" parent="Static_Grapple_Spawner"]
 collision_layer = 2
 
-[node name="Placeholder" type="Node2D" parent="Static_Grapple_Spawner2/RigidBody2D"]
+[node name="Placeholder" type="Node2D" parent="Static_Grapple_Spawner/RigidBody2D"]
 script = ExtResource("1_tc671")
 label = "Grapple"
 color = Color(1, 0.513726, 1, 1)
 
-[node name="Collision" type="Node2D" parent="Static_Grapple_Spawner2/RigidBody2D"]
+[node name="Collision" type="Node2D" parent="Static_Grapple_Spawner/RigidBody2D"]
 position = Vector2(-28, 47)
 script = ExtResource("6_nu8ty")
 metadata/pronto_connections = [SubResource("Resource_fcmup"), SubResource("Resource_qfd54"), SubResource("Resource_dvdr7"), SubResource("Resource_ipp8h"), SubResource("Resource_fwsaa")]
