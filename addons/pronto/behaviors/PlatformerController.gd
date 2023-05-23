@@ -47,7 +47,10 @@ func _can_jump():
 	var now = Time.get_ticks_msec()
 	var input = _last_jump_input > now - 1000 * jump_buffer
 	var floored = _last_on_floor > now - 1000 * coyote_time
-	return input and floored
+	return input and floored and _underwater_jump_condition()
+
+func _underwater_jump_condition():
+	return G.at("CanPlayerSwimUp") == 1
 
 func _reset_jump():
 	_last_jump_input = -10000
@@ -69,6 +72,18 @@ func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
 	
+	# vertical - climbing
+	if G.at("playerFreeY"):
+		# we set gravity as not to worry about later calculations while in Area2D
+		gravity = 0
+		if Input.is_action_pressed("ui_up"):
+			_parent.velocity.y = -(float(G.at("ClimbingSpeed")))
+		elif Input.is_action_pressed("ui_down"):
+			_parent.velocity.y = (float(G.at("ClimbingSpeed")))
+		else:
+			_parent.velocity.y = 0
+				
+	
 	# vertical
 	_update_jump()
 	if _can_jump():
@@ -78,12 +93,10 @@ func _physics_process(delta):
 		_parent.velocity.y = -jump_velocity
 	else:
 		if G.at("playerUnderWater"):
-			#print(gravity * delta)
-			_parent.velocity.y += min(gravity * delta, 1)
-			print(_parent.velocity.y)
+			_parent.velocity.y += min(gravity * delta, float(G.at("WaterMaxVelocity")))
 		else:
 			_parent.velocity.y += gravity * delta
-			print(_parent.velocity.y)
+
 	
 	# horizontal
 	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity

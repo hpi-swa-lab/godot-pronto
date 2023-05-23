@@ -1,13 +1,14 @@
-[gd_scene load_steps=54 format=3 uid="uid://ctkk17hieogw0"]
+[gd_scene load_steps=99 format=3 uid="uid://w4ovj8avvexq"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_hkf3p"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_owvfh"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="3_uucm5"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_y1acd"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_nllru"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="6_j13hb"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_qg64g"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_i5qr6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="1_pluq3"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_w5ojc"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="3_lruw1"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_cmdyj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="5_d1cg4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_jhpoq"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="7_nayn2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_33mee"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="9_8rf0m"]
 
 [sub_resource type="GDScript" id="GDScript_pk21q"]
 script/source = "extends U
@@ -16,7 +17,7 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_gibfo"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_pk21q")
 argument_names = ["body", "from", "to"]
 return_value = true
@@ -28,7 +29,7 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_y2o5w"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_b686k")
 argument_names = ["body", "from", "to"]
 return_value = true
@@ -40,13 +41,13 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_mqe7d"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_5fxst")
 argument_names = ["body", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_x3frv"]
-script = ExtResource("4_y1acd")
+script = ExtResource("4_cmdyj")
 signal_name = "body_entered"
 to = NodePath("../../State")
 invoke = "put"
@@ -60,7 +61,7 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_iu0hv"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_mpfw1")
 argument_names = ["body", "from", "to"]
 return_value = true
@@ -72,7 +73,7 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_ak4wo"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_glmfk")
 argument_names = ["body", "from", "to"]
 return_value = true
@@ -84,13 +85,13 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_0f565"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_20bix")
 argument_names = ["body", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_fu0xm"]
-script = ExtResource("4_y1acd")
+script = ExtResource("4_cmdyj")
 signal_name = "body_exited"
 to = NodePath("../../State")
 invoke = "put"
@@ -104,7 +105,7 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_74y44"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_e4j8m")
 argument_names = ["body", "from", "to"]
 return_value = true
@@ -116,7 +117,7 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_7elgu"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_3by7f")
 argument_names = ["body", "from", "to"]
 return_value = true
@@ -128,13 +129,13 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_npocy"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_qba0n")
 argument_names = ["body", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_iry5j"]
-script = ExtResource("4_y1acd")
+script = ExtResource("4_cmdyj")
 signal_name = "body_exited"
 to = NodePath("../../State")
 invoke = "put"
@@ -148,7 +149,7 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_20qyw"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_rw3tb")
 argument_names = ["body", "from", "to"]
 return_value = true
@@ -160,7 +161,7 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_selvw"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_sb7hp")
 argument_names = ["body", "from", "to"]
 return_value = true
@@ -172,18 +173,180 @@ func run(body, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_beqyy"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_j3m18")
 argument_names = ["body", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_ptwac"]
-script = ExtResource("4_y1acd")
+script = ExtResource("4_cmdyj")
 signal_name = "body_exited"
 to = NodePath("../../State")
 invoke = "put"
 arguments = [SubResource("Resource_20qyw"), SubResource("Resource_selvw")]
 only_if = SubResource("Resource_beqyy")
+
+[sub_resource type="GDScript" id="GDScript_3krm7"]
+script/source = "extends U
+func run(body, from, to):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_l2vt8"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_3krm7")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_s4osi"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_entered"
+to = NodePath("../../Values/Clock")
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_l2vt8")
+
+[sub_resource type="GDScript" id="GDScript_e8ys6"]
+script/source = "extends U
+func run(body, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bod08"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_e8ys6")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_j1niq"]
+script/source = "extends U
+func run(body, from, to):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_73vdc"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_j1niq")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_21fa0"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("../../Values/Clock")
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_bod08")]
+only_if = SubResource("Resource_73vdc")
+
+[sub_resource type="GDScript" id="GDScript_war5l"]
+script/source = "extends U
+func run(body, from, to):
+	return \"playerBreath\"
+"
+
+[sub_resource type="Resource" id="Resource_vt4gi"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_war5l")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_6rerh"]
+script/source = "extends U
+func run(body, from, to):
+	return 10
+"
+
+[sub_resource type="Resource" id="Resource_uh33s"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_6rerh")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_vsleh"]
+script/source = "extends U
+func run(body, from, to):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_8ua3m"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_vsleh")
+argument_names = ["body", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7k1wc"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_vt4gi"), SubResource("Resource_uh33s")]
+only_if = SubResource("Resource_8ua3m")
+
+[sub_resource type="GDScript" id="GDScript_2uvhg"]
+script/source = "extends U
+func run(body, from):
+	G.put(\"playerFreeY\", true)
+"
+
+[sub_resource type="Resource" id="Resource_lyyu6"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_2uvhg")
+argument_names = ["body", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_2scbc"]
+script/source = "extends U
+func run(body, from):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_mn13o"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_2scbc")
+argument_names = ["body", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_50l58"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_entered"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_mn13o")
+expression = SubResource("Resource_lyyu6")
+
+[sub_resource type="GDScript" id="GDScript_f6vah"]
+script/source = "extends U
+func run(body, from):
+	G.put(\"playerFreeY\", false)
+"
+
+[sub_resource type="Resource" id="Resource_05g3k"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_f6vah")
+argument_names = ["body", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_7ohm1"]
+script/source = "extends U
+func run(body, from):
+	return body is CharacterBody2D
+"
+
+[sub_resource type="Resource" id="Resource_y646x"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_7ohm1")
+argument_names = ["body", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_oljvh"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_y646x")
+expression = SubResource("Resource_05g3k")
 
 [sub_resource type="GDScript" id="GDScript_gnwsv"]
 script/source = "extends U
@@ -194,7 +357,7 @@ func run(delta, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_0gb82"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_gnwsv")
 argument_names = ["delta", "from", "to"]
 return_value = false
@@ -206,13 +369,13 @@ func run(delta, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_cos8x"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_vcnhx")
 argument_names = ["delta", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_026t7"]
-script = ExtResource("4_y1acd")
+script = ExtResource("4_cmdyj")
 signal_name = "always"
 to = NodePath("../PlatformerController")
 invoke = ""
@@ -229,7 +392,7 @@ func run(delta, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_utrcr"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_xhuq6")
 argument_names = ["delta", "from", "to"]
 return_value = false
@@ -241,13 +404,13 @@ func run(delta, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_wbcqj"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_10ws7")
 argument_names = ["delta", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_cptbr"]
-script = ExtResource("4_y1acd")
+script = ExtResource("4_cmdyj")
 signal_name = "always"
 to = NodePath("../PlatformerController")
 invoke = ""
@@ -263,7 +426,7 @@ func run(delta, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_5xvwr"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_1tby3")
 argument_names = ["delta", "from", "to"]
 return_value = false
@@ -275,19 +438,34 @@ func run(delta, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_xvqbc"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_q1kka")
 argument_names = ["delta", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_tm8ws"]
-script = ExtResource("4_y1acd")
+script = ExtResource("4_cmdyj")
 signal_name = "always"
 to = NodePath("../PlatformerController")
 invoke = ""
 arguments = []
 only_if = SubResource("Resource_xvqbc")
 expression = SubResource("Resource_5xvwr")
+
+[sub_resource type="GDScript" id="GDScript_durxt"]
+script/source = "extends U
+func run():
+	var breathText = \"\"
+	for n in G.at(\"playerBreath\"):
+		breathText += \"*\"
+	return breathText	
+"
+
+[sub_resource type="Resource" id="Resource_6j02f"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_durxt")
+argument_names = []
+return_value = true
 
 [sub_resource type="GDScript" id="GDScript_pt6ww"]
 script/source = "extends U
@@ -296,19 +474,130 @@ func run():
 "
 
 [sub_resource type="Resource" id="Resource_ysq4d"]
-script = ExtResource("3_uucm5")
+script = ExtResource("3_lruw1")
 nested_script = SubResource("GDScript_pt6ww")
 argument_names = []
 return_value = true
+
+[sub_resource type="GDScript" id="GDScript_abgy2"]
+script/source = "extends U
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4j8lv"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_abgy2")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dkkkf"]
+script/source = "extends U
+func run(delta, from, to):
+	return G.at(\"playerBreath\") <= 0
+"
+
+[sub_resource type="Resource" id="Resource_cf6g8"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_dkkkf")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_8lvce"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../Label")
+invoke = "set_visible"
+arguments = [SubResource("Resource_4j8lv")]
+only_if = SubResource("Resource_cf6g8")
+
+[sub_resource type="GDScript" id="GDScript_ov33q"]
+script/source = "extends U
+func run(from):
+	print(\"Dead\")
+"
+
+[sub_resource type="Resource" id="Resource_3b041"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_ov33q")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_snp7h"]
+script/source = "extends U
+func run(from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fyc3w"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_snp7h")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4fs63"]
+script = ExtResource("4_cmdyj")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_fyc3w")
+expression = SubResource("Resource_3b041")
+
+[sub_resource type="GDScript" id="GDScript_l2rbm"]
+script/source = "extends U
+func run(from, to):
+	return \"playerBreath\"
+"
+
+[sub_resource type="Resource" id="Resource_x5od3"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_l2rbm")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_tqrl8"]
+script/source = "extends U
+func run(from, to):
+	return -1
+"
+
+[sub_resource type="Resource" id="Resource_0ji4i"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_tqrl8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_aya1v"]
+script/source = "extends U
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ud7mt"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_aya1v")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nh0or"]
+script = ExtResource("4_cmdyj")
+signal_name = "until_elapsed"
+to = NodePath("../../State")
+invoke = "inc"
+arguments = [SubResource("Resource_x5od3"), SubResource("Resource_0ji4i")]
+only_if = SubResource("Resource_ud7mt")
 
 [node name="i2w1-water-physics" type="Node2D"]
 
 [node name="State" type="Node2D" parent="."]
 position = Vector2(401, 315)
-script = ExtResource("5_nllru")
+script = ExtResource("1_pluq3")
 global = true
 metadata/playerUnderWater = false
 metadata/playerUnderWaterLastFrame = false
+metadata/playerFreeY = false
+metadata/playerBreath = 10
 
 [node name="Level" type="Node2D" parent="."]
 position = Vector2(555, 323)
@@ -318,7 +607,7 @@ position = Vector2(-542, 288)
 
 [node name="Placeholder" type="Node2D" parent="Level/Floor"]
 position = Vector2(568, 21)
-script = ExtResource("1_hkf3p")
+script = ExtResource("2_w5ojc")
 color = Color(0.184314, 0.54902, 0.0509804, 1)
 placeholder_size = Vector2(1184, 33)
 
@@ -328,26 +617,26 @@ metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resou
 
 [node name="Placeholder" type="Node2D" parent="Level/Water"]
 position = Vector2(134, -62)
-script = ExtResource("1_hkf3p")
+script = ExtResource("2_w5ojc")
 color = Color(0.0901961, 0.513726, 1, 0.211765)
 placeholder_size = Vector2(232, 146)
 
 [node name="Water2" type="Area2D" parent="Level"]
 position = Vector2(252, 282)
-metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_ptwac")]
+metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_ptwac"), SubResource("Resource_s4osi"), SubResource("Resource_21fa0"), SubResource("Resource_7k1wc")]
 
 [node name="Placeholder" type="Node2D" parent="Level/Water2"]
 position = Vector2(132, -217)
-script = ExtResource("1_hkf3p")
+script = ExtResource("2_w5ojc")
 color = Color(0.0901961, 0.513726, 1, 0.211765)
 placeholder_size = Vector2(423, 457)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Level"]
-position = Vector2(-4, 18)
+position = Vector2(-50, 16)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D"]
 position = Vector2(131, 1)
-script = ExtResource("1_hkf3p")
+script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
@@ -355,8 +644,8 @@ placeholder_size = Vector2(92, 32)
 position = Vector2(-150, -51)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D5"]
-position = Vector2(131, 1)
-script = ExtResource("1_hkf3p")
+position = Vector2(91, 1)
+script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
@@ -365,16 +654,16 @@ position = Vector2(87, -182)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D7"]
 position = Vector2(131, 1)
-script = ExtResource("1_hkf3p")
+script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
 [node name="StaticBody2D6" type="StaticBody2D" parent="Level"]
-position = Vector2(-5, -106)
+position = Vector2(-51, -104)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D6"]
 position = Vector2(131, 1)
-script = ExtResource("1_hkf3p")
+script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
@@ -382,17 +671,17 @@ placeholder_size = Vector2(92, 32)
 position = Vector2(-148, 88)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D2"]
-position = Vector2(131, 1)
-script = ExtResource("1_hkf3p")
+position = Vector2(91, 1)
+script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="Level"]
-position = Vector2(-4, 125)
+position = Vector2(-41, 127)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D3"]
-position = Vector2(131, 37)
-script = ExtResource("1_hkf3p")
+position = Vector2(121, 42)
+script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
@@ -400,28 +689,52 @@ placeholder_size = Vector2(92, 32)
 position = Vector2(-153, 195)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D4"]
-position = Vector2(138, 33)
-script = ExtResource("1_hkf3p")
+position = Vector2(98, 33)
+script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
+
+[node name="Ladder" type="Area2D" parent="Level"]
+position = Vector2(151, 34)
+metadata/pronto_connections = [SubResource("Resource_50l58"), SubResource("Resource_oljvh")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Ladder"]
+script = ExtResource("2_w5ojc")
+color = Color(0.654902, 0.435294, 0.180392, 1)
+placeholder_size = Vector2(43, 516)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(775, 94)
 
 [node name="Placeholder" type="Node2D" parent="Player"]
-script = ExtResource("1_hkf3p")
+script = ExtResource("2_w5ojc")
 label = "Player"
 placeholder_size = Vector2(18, 40)
 
 [node name="PlatformerController" type="Node2D" parent="Player"]
 position = Vector2(41, -2)
-script = ExtResource("2_owvfh")
+script = ExtResource("5_d1cg4")
 show_trail = true
 
 [node name="Always" type="Node2D" parent="Player"]
 position = Vector2(40, -59)
-script = ExtResource("6_qg64g")
+script = ExtResource("6_jhpoq")
 metadata/pronto_connections = [SubResource("Resource_026t7"), SubResource("Resource_cptbr"), SubResource("Resource_tm8ws")]
+
+[node name="Breath" type="Label" parent="Player"]
+offset_left = -50.0
+offset_top = -41.0
+offset_right = 51.0
+offset_bottom = -15.0
+text = "**********"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bind" type="Node2D" parent="Player/Breath"]
+position = Vector2(-46, 14)
+script = ExtResource("7_nayn2")
+evaluate = SubResource("Resource_6j02f")
+to_prop = "text"
 
 [node name="UI" type="Node2D" parent="."]
 
@@ -430,56 +743,88 @@ offset_right = 40.0
 offset_bottom = 22.3333
 
 [node name="Bind" type="Node2D" parent="UI/Under Water"]
-script = ExtResource("6_j13hb")
+script = ExtResource("7_nayn2")
 evaluate = SubResource("Resource_ysq4d")
 to_prop = "text"
 
+[node name="Label" type="Label" parent="UI"]
+visible = false
+offset_left = 159.0
+offset_top = 185.0
+offset_right = 251.0
+offset_bottom = 211.0
+scale = Vector2(9.43342, 9.43342)
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Always" type="Node2D" parent="UI"]
+position = Vector2(211, 121)
+script = ExtResource("6_jhpoq")
+metadata/pronto_connections = [SubResource("Resource_8lvce")]
+
 [node name="Values" type="Node2D" parent="."]
-position = Vector2(304, 308)
+position = Vector2(302, 232)
 
 [node name="WaterHorizontalVelocity" type="Node2D" parent="Values"]
 position = Vector2(-51, 22)
-script = ExtResource("8_i5qr6")
+script = ExtResource("8_33mee")
 to = 400.0
 value = 200.0
 
 [node name="DefaultHorizontalVelocity" type="Node2D" parent="Values"]
 position = Vector2(15, 22)
-script = ExtResource("8_i5qr6")
+script = ExtResource("8_33mee")
 to = 800.0
 value = 400.0
 
 [node name="WaterGravity" type="Node2D" parent="Values"]
 position = Vector2(-55, 51)
-script = ExtResource("8_i5qr6")
+script = ExtResource("8_33mee")
 to = 1000.0
 value = 245.0
 
 [node name="DefaultGravity" type="Node2D" parent="Values"]
 position = Vector2(13, 50)
-script = ExtResource("8_i5qr6")
+script = ExtResource("8_33mee")
 to = 2000.0
 value = 980.0
 
 [node name="WaterVerticalVelocity" type="Node2D" parent="Values"]
 position = Vector2(-56, 79)
-script = ExtResource("8_i5qr6")
+script = ExtResource("8_33mee")
 to = 400.0
 value = 200.0
 
 [node name="DefaultVerticalVelocity" type="Node2D" parent="Values"]
 position = Vector2(15, 80)
-script = ExtResource("8_i5qr6")
+script = ExtResource("8_33mee")
 to = 800.0
 value = 400.0
 
 [node name="CanPlayerSwimUp" type="Node2D" parent="Values"]
 position = Vector2(-22, 110)
-script = ExtResource("8_i5qr6")
-value = 1.0
+script = ExtResource("8_33mee")
 
 [node name="WaterMaxVelocity" type="Node2D" parent="Values"]
 position = Vector2(-24, 136)
-script = ExtResource("8_i5qr6")
+script = ExtResource("8_33mee")
 to = 2.0
 value = 1.0
+
+[node name="ClimbingSpeed" type="Node2D" parent="Values"]
+position = Vector2(-25, 165)
+script = ExtResource("8_33mee")
+to = 2000.0
+value = 300.0
+
+[node name="Clock" type="Node2D" parent="Values"]
+position = Vector2(883, 230)
+script = ExtResource("9_8rf0m")
+one_shot = true
+duration_seconds = 10.0
+paused = true
+trigger_every_x_seconds = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_4fs63"), SubResource("Resource_nh0or")]
