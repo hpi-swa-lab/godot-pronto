@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=40 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
@@ -24,7 +24,7 @@ signal_name = "always"
 to = NodePath("..")
 invoke = "move_and_slide"
 arguments = []
-only_if = "return G.at(\"is_on_static_grapple\")"
+only_if = "return G.at(\"is_on_static_grapple\") or G.at(\"is_on_normal_grapple\")"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_6rtae"]
@@ -112,6 +112,91 @@ arguments = ["return \"grapple_pos\"", "return from.get_parent().global_position
 only_if = "return true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_uuw3x"]
+script = ExtResource("5_jpml8")
+signal_name = "spawned"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "var parent = instance.get_parent()
+if parent.get_child_count() > 1:
+	parent.remove_child(parent.get_child(0))
+
+instance.linear_velocity = (from.get_viewport().get_mouse_position() - G.at(\"playerPos\")).normalized() * G.at(\"init_grapple_speed\")"
+
+[sub_resource type="Resource" id="Resource_pwhsi"]
+script = ExtResource("5_jpml8")
+signal_name = "collided"
+to = NodePath("../../../CharacterBody2D/PlatformerController")
+invoke = "set"
+arguments = ["G.put(\"playerVelocity\",to.get_parent().get_velocity())
+return \"is_on_static_grapple\"", "return true"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_r851i"]
+script = ExtResource("5_jpml8")
+signal_name = "collided"
+to = NodePath("../../../CharacterBody2D")
+invoke = "set_position"
+arguments = ["return G.at(\"playerPos\")+((from.get_parent().global_position-G.at(\"playerPos\")) * 0.1)"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_fxtwo"]
+script = ExtResource("5_jpml8")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "from.get_parent().set_sleeping(true)"
+
+[sub_resource type="Resource" id="Resource_l8q6s"]
+script = ExtResource("5_jpml8")
+signal_name = "collided"
+to = NodePath("../../../State")
+invoke = "put"
+arguments = ["return \"is_on_normal_grapple\"", "return true"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_pr8wo"]
+script = ExtResource("5_jpml8")
+signal_name = "always"
+to = NodePath("../../../CharacterBody2D")
+invoke = "set_velocity"
+arguments = ["var currentVelocity = G.at(\"playerVelocity\")
+var grappleLine = (from.get_parent().global_position-G.at(\"playerPos\")).normalized()
+var swingDir = grappleLine.rotated(deg_to_rad(90))
+
+
+var newDir
+
+if currentVelocity != Vector2(0,0):
+	newDir = swingDir * currentVelocity.length()
+	#newDir = swingDir * swingDir.dot(currentVelocity.normalized()) * 50
+else:
+	newDir = swingDir
+
+var gravityInfluence = newDir * newDir.dot(Vector2(0,1))
+currentVelocity = newDir + gravityInfluence
+G.put(\"playerVelocity\", currentVelocity)
+return currentVelocity
+"]
+only_if = "return G.at(\"is_on_normal_grapple\")"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_gmt0n"]
+script = ExtResource("5_jpml8")
+signal_name = "always"
+to = NodePath("../../../CharacterBody2D")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "print(to.get_velocity())"
+
 [sub_resource type="Resource" id="Resource_xp1tx"]
 script = ExtResource("5_jpml8")
 signal_name = "always"
@@ -125,6 +210,15 @@ expression = ""
 script = ExtResource("5_jpml8")
 signal_name = "always"
 to = NodePath("../Static_Grapple_Spawner2")
+invoke = "set_position"
+arguments = ["return G.at(\"playerPos\")"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_t43s0"]
+script = ExtResource("5_jpml8")
+signal_name = "always"
+to = NodePath("../Normal_Grapple_Spawner")
 invoke = "set_position"
 arguments = ["return G.at(\"playerPos\")"]
 only_if = "return true"
@@ -202,10 +296,28 @@ arguments = ["return \"is_on_static_grapple\"", "return false"]
 only_if = "return true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_qp5aa"]
+script = ExtResource("5_jpml8")
+signal_name = "down"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["return \"is_on_normal_grapple\"", "return false"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_518e6"]
+script = ExtResource("5_jpml8")
+signal_name = "down"
+to = NodePath("../Normal_Grapple_Spawner")
+invoke = "spawn"
+arguments = []
+only_if = "return true"
+expression = ""
+
 [node name="jumpnrun" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(575, 558)
+position = Vector2(527, 317)
 collision_layer = 2
 
 [node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
@@ -218,7 +330,7 @@ position = Vector2(51, 30)
 script = ExtResource("2_qr0oj")
 
 [node name="Always" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(30, -59)
+position = Vector2(42, -97)
 script = ExtResource("5_kljok")
 metadata/pronto_connections = [SubResource("Resource_6pxs7"), SubResource("Resource_mmpws")]
 
@@ -258,6 +370,27 @@ position = Vector2(-28, 47)
 script = ExtResource("6_nu8ty")
 metadata/pronto_connections = [SubResource("Resource_fcmup"), SubResource("Resource_qfd54"), SubResource("Resource_dvdr7"), SubResource("Resource_ipp8h"), SubResource("Resource_fwsaa")]
 
+[node name="Normal_Grapple_Spawner" type="Node2D" parent="."]
+position = Vector2(1089, 479)
+script = ExtResource("3_7wwi6")
+metadata/pronto_connections = [SubResource("Resource_uuw3x")]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Normal_Grapple_Spawner"]
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="Normal_Grapple_Spawner/RigidBody2D"]
+script = ExtResource("1_tc671")
+
+[node name="Collision" type="Node2D" parent="Normal_Grapple_Spawner/RigidBody2D"]
+position = Vector2(-24, 63)
+script = ExtResource("6_nu8ty")
+metadata/pronto_connections = [SubResource("Resource_pwhsi"), SubResource("Resource_r851i"), SubResource("Resource_fxtwo"), SubResource("Resource_l8q6s")]
+
+[node name="Always2" type="Node2D" parent="Normal_Grapple_Spawner/RigidBody2D"]
+position = Vector2(112, 54)
+script = ExtResource("5_kljok")
+metadata/pronto_connections = [SubResource("Resource_pr8wo"), SubResource("Resource_gmt0n")]
+
 [node name="State" type="Node2D" parent="."]
 position = Vector2(754, 324)
 script = ExtResource("9_an3v8")
@@ -268,11 +401,13 @@ metadata/is_on_static_grapple = false
 metadata/static_grapple_player_pos = Vector2(0, 0)
 metadata/grapple_pos = Vector2(0, 0)
 metadata/grapple_speed = 200
+metadata/is_on_normal_grapple = false
+metadata/playerVelocity = Vector2(0, 0)
 
 [node name="Always" type="Node2D" parent="."]
 position = Vector2(638, 383)
 script = ExtResource("5_kljok")
-metadata/pronto_connections = [SubResource("Resource_xp1tx"), SubResource("Resource_1clvj")]
+metadata/pronto_connections = [SubResource("Resource_xp1tx"), SubResource("Resource_1clvj"), SubResource("Resource_t43s0")]
 
 [node name="Key" type="Node2D" parent="."]
 position = Vector2(403, 544)
@@ -357,4 +492,10 @@ metadata/pronto_connections = [SubResource("Resource_b7q43"), SubResource("Resou
 position = Vector2(834, 604)
 script = ExtResource("4_1kqu0")
 key = "Space"
-metadata/pronto_connections = [SubResource("Resource_268c8"), SubResource("Resource_ivovv")]
+metadata/pronto_connections = [SubResource("Resource_268c8"), SubResource("Resource_ivovv"), SubResource("Resource_qp5aa")]
+
+[node name="Key6" type="Node2D" parent="."]
+position = Vector2(1153, 445)
+script = ExtResource("4_1kqu0")
+key = "R"
+metadata/pronto_connections = [SubResource("Resource_518e6")]
