@@ -1,0 +1,140 @@
+[gd_scene load_steps=17 format=3 uid="uid://dk5f5rbwp2rh4"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_ssknk"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_8rrcq"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_i6iyn"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_xf1qv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_mq10o"]
+[ext_resource type="PackedScene" uid="uid://ch4odbgjwk6dy" path="res://prototypes/block.tscn" id="6_8aijl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="7_ouhvv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_x75nb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqy1d"]
+size = Vector2(1548, 46)
+
+[sub_resource type="Resource" id="Resource_arumt"]
+script = ExtResource("4_xf1qv")
+signal_name = "direction"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["return dir"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_h7iuy"]
+script = ExtResource("4_xf1qv")
+signal_name = "click"
+to = NodePath("../../TileMap")
+invoke = "set_cell"
+arguments = ["return 0", "var idx =  Vector2i(pos / to.cell_quadrant_size)
+return idx
+", "return 1", "return Vector2i.ZERO", "return 1"]
+only_if = "return false"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_nhche"]
+script = ExtResource("4_xf1qv")
+signal_name = "click"
+to = NodePath("../../Clock")
+invoke = "reset_and_start"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3dvs"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_vexoq"]
+resource_name = "Block"
+scenes/1/scene = ExtResource("6_8aijl")
+scenes/1/display_placeholder = ExtResource("6_8aijl")
+
+[sub_resource type="TileSet" id="TileSet_16a3j"]
+tile_size = Vector2i(20, 20)
+sources/1 = SubResource("TileSetScenesCollectionSource_vexoq")
+
+[sub_resource type="Resource" id="Resource_ns78d"]
+script = ExtResource("4_xf1qv")
+signal_name = "always"
+to = NodePath("../TileMap")
+invoke = "set_cell"
+arguments = ["return 0", "var mouse_pos = from.get_viewport().get_mouse_position()
+var cell_index = Vector2i(mouse_pos / to.cell_quadrant_size)
+return cell_index", "return 1", "return Vector2i.ZERO", "return 1"]
+only_if = "if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	return false
+	
+var mouse_pos = from.get_viewport().get_mouse_position()
+var cell_index = Vector2i(mouse_pos / to.cell_quadrant_size)
+var neighbor_positions = to.get_surrounding_cells(cell_index)
+var source_ids = neighbor_positions.map(func(pos): return to.get_cell_source_id(0,pos))
+return source_ids.any(func(i): return i != -1) "
+expression = ""
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-226, 581)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(764, 13)
+shape = SubResource("RectangleShape2D_eqy1d")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(206, 26)
+
+[node name="Placeholder" type="Node2D" parent="Player"]
+position = Vector2(0, -22)
+script = ExtResource("1_ssknk")
+placeholder_size = Vector2(18, 44)
+
+[node name="Move" type="Node2D" parent="Player"]
+position = Vector2(63, 58)
+script = ExtResource("2_8rrcq")
+acceleration_air = 100.0
+
+[node name="Controls" type="Node2D" parent="Player"]
+position = Vector2(71, 103)
+script = ExtResource("3_i6iyn")
+player = 1
+metadata/pronto_connections = [SubResource("Resource_arumt"), SubResource("Resource_h7iuy"), SubResource("Resource_nhche")]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Spawner" type="Node2D" parent="."]
+visible = false
+position = Vector2(189, 76)
+script = ExtResource("5_mq10o")
+
+[node name="Block" type="StaticBody2D" parent="Spawner"]
+
+[node name="Placeholder" type="Node2D" parent="Spawner/Block"]
+script = ExtResource("1_ssknk")
+label = "Block"
+color = Color(0.478431, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/Block"]
+shape = SubResource("RectangleShape2D_c3dvs")
+
+[node name="Placeholder" type="Node2D" parent="Spawner"]
+script = ExtResource("1_ssknk")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_16a3j")
+cell_quadrant_size = 20
+format = 2
+layer_0/name = "LayerZero"
+layer_0/tile_data = PackedInt32Array(2, 1, 65536, 0, 1, 65536)
+metadata/_edit_lock_ = true
+
+[node name="Node2D" parent="." instance=ExtResource("6_8aijl")]
+position = Vector2(40, 118)
+
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(59, 73)
+script = ExtResource("7_ouhvv")
+metadata/pronto_connections = [SubResource("Resource_ns78d")]
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(199, 132)
+script = ExtResource("8_x75nb")
+trigger_interval_in_seconds = 1.0
