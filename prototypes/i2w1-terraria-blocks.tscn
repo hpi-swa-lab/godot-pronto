@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dk5f5rbwp2rh4"]
+[gd_scene load_steps=20 format=3 uid="uid://dk5f5rbwp2rh4"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_ssknk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_8rrcq"]
@@ -40,13 +40,17 @@ expression = ""
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c3dvs"]
 
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_vexoq"]
-resource_name = "Block"
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_x3w1o"]
+resource_name = "block"
 scenes/1/scene = ExtResource("6_8aijl")
 
-[sub_resource type="TileSet" id="TileSet_16a3j"]
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pjk34"]
+resource_name = "empty"
+
+[sub_resource type="TileSet" id="TileSet_f11gb"]
 tile_size = Vector2i(20, 20)
-sources/1 = SubResource("TileSetScenesCollectionSource_vexoq")
+sources/0 = SubResource("TileSetScenesCollectionSource_x3w1o")
+sources/1 = SubResource("TileSetScenesCollectionSource_pjk34")
 
 [sub_resource type="Resource" id="Resource_ns78d"]
 script = ExtResource("4_xf1qv")
@@ -83,7 +87,9 @@ to = NodePath("../BuildClock")
 invoke = ""
 arguments = []
 only_if = "return true"
-expression = "if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+expression = "var add = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+var remove = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
+if not add and not remove:
 	return
 	
 var player = to.get_node(\"%Player\")
@@ -93,18 +99,27 @@ if player.global_position.distance_to(mouse_pos) > tile_map.cell_quadrant_size *
 	return
 
 var cell_index = Vector2i(mouse_pos / tile_map.cell_quadrant_size)
+var queue_item = [\"add\" if add else \"remove\", cell_index]
 
 var queue = G.at(\"build_queue\")
-var neighbor_positions = tile_map.get_surrounding_cells(cell_index)
-var has_tilemap_neighbor = neighbor_positions.any(func(pos): return tile_map.get_cell_source_id(0,pos) != -1 or pos in queue)
-if not has_tilemap_neighbor:
-	return
+if add:
+	var neighbor_positions = tile_map.get_surrounding_cells(cell_index)
+	var has_tilemap_neighbor = neighbor_positions.any(
+		func(pos): 
+			return tile_map.get_cell_source_id(0,pos) != -1 or queue.any(\\
+				func(item):
+					return item[0] == \"add\" and item[1] == pos
+			)
+	)
+				
 
-if cell_index not in queue:
-	queue.push_back(cell_index)
+	if not has_tilemap_neighbor: 
+		return
+
+if queue_item not in queue:
+	queue.push_back(queue_item)
 	if to.paused:
-		to.reset_and_start()
-"
+		to.reset_and_start()"
 
 [sub_resource type="Resource" id="Resource_v23jl"]
 script = ExtResource("4_xf1qv")
@@ -113,12 +128,26 @@ to = NodePath("../TileMap")
 invoke = ""
 arguments = []
 only_if = "return true"
-expression = "var pos = G.at(\"build_queue\").pop_front()
-if pos == null:
+expression = "var item = G.at(\"build_queue\").pop_front()
+if item == null:
 	from.paused = true
 	return
 
-to.set_cell(0, pos, 1, Vector2i.ZERO, 1)
+var grid_size = to.cell_quadrant_size
+
+var pos = item[1]
+if item[0] == \"add\":
+	to.set_cell(0, pos, 0, Vector2i.ZERO, 1)
+else:
+	to.set_cell(0, pos, -1)
+	var children = to.get_children()
+	for child in children:
+		var child_index = Vector2i(child.position / grid_size)
+		if child_index == item[1]:
+			child.queue_free()
+
+
+
 "
 
 [node name="Node2D" type="Node2D"]
@@ -165,15 +194,12 @@ script = ExtResource("1_ssknk")
 
 [node name="TileMap" type="TileMap" parent="."]
 unique_name_in_owner = true
-tile_set = SubResource("TileSet_16a3j")
+tile_set = SubResource("TileSet_f11gb")
 cell_quadrant_size = 20
 format = 2
 layer_0/name = "LayerZero"
-layer_0/tile_data = PackedInt32Array(2, 1, 65536, 0, 1, 65536, 2031616, 1, 65536, 2031656, 1, 65536, 2031673, 1, 65536, 2031672, 1, 65536, 2031671, 1, 65536, 2031670, 1, 65536, 2031669, 1, 65536, 2031668, 1, 65536, 2031667, 1, 65536, 2031666, 1, 65536, 2031665, 1, 65536, 2031664, 1, 65536, 2031663, 1, 65536, 2031662, 1, 65536, 2031661, 1, 65536, 2031660, 1, 65536, 2031659, 1, 65536, 2031658, 1, 65536, 2031657, 1, 65536, 2031655, 1, 65536, 2031654, 1, 65536, 2031653, 1, 65536, 2031652, 1, 65536, 2031651, 1, 65536, 2031650, 1, 65536, 2031649, 1, 65536, 2031648, 1, 65536, 2031647, 1, 65536, 2031646, 1, 65536, 2031645, 1, 65536, 2031644, 1, 65536, 2031643, 1, 65536, 2031642, 1, 65536, 2031641, 1, 65536, 2031640, 1, 65536, 2031639, 1, 65536, 2031638, 1, 65536, 2031637, 1, 65536, 2031636, 1, 65536, 2097171, 1, 65536, 2097170, 1, 65536, 2097169, 1, 65536, 2097168, 1, 65536, 2097167, 1, 65536, 2097166, 1, 65536, 2097165, 1, 65536, 2097164, 1, 65536, 2097163, 1, 65536, 2097162, 1, 65536, 2097161, 1, 65536, 2097160, 1, 65536, 2097159, 1, 65536, 2031625, 1, 65536, 2031626, 1, 65536, 2031627, 1, 65536, 2031628, 1, 65536, 2031629, 1, 65536, 2031630, 1, 65536, 2031631, 1, 65536, 2031632, 1, 65536, 2031633, 1, 65536, 2031634, 1, 65536, 2031635, 1, 65536, 2031624, 1, 65536, 2031623, 1, 65536, 2031622, 1, 65536, 2031621, 1, 65536, 2031620, 1, 65536, 2031619, 1, 65536, 2031618, 1, 65536, 2031617, 1, 65536, 2097152, 1, 65536, 2097153, 1, 65536, 2097154, 1, 65536, 2097155, 1, 65536, 2097156, 1, 65536, 2097157, 1, 65536, 2097158, 1, 65536, 2097172, 1, 65536, 2097173, 1, 65536, 2097174, 1, 65536, 2097175, 1, 65536, 2097176, 1, 65536, 2097177, 1, 65536, 2097178, 1, 65536, 2097179, 1, 65536, 2097180, 1, 65536, 2097181, 1, 65536, 2097182, 1, 65536, 2097183, 1, 65536, 2097184, 1, 65536, 2097209, 1, 65536, 2097208, 1, 65536, 2097207, 1, 65536, 2097206, 1, 65536, 2097205, 1, 65536, 2097204, 1, 65536, 2097203, 1, 65536, 2097202, 1, 65536, 2097201, 1, 65536, 2097200, 1, 65536, 2097199, 1, 65536, 2097198, 1, 65536, 2097197, 1, 65536, 2097196, 1, 65536, 2097195, 1, 65536, 2097194, 1, 65536, 2097193, 1, 65536, 2097192, 1, 65536, 2097191, 1, 65536, 2097190, 1, 65536, 2097189, 1, 65536, 2097188, 1, 65536, 2097187, 1, 65536, 2097186, 1, 65536, 2097185, 1, 65536)
+layer_0/tile_data = PackedInt32Array(2, 0, 65536, 0, 0, 65536, 2031616, 0, 65536, 2031656, 0, 65536, 2031673, 0, 65536, 2031672, 0, 65536, 2031671, 0, 65536, 2031670, 0, 65536, 2031669, 0, 65536, 2031668, 0, 65536, 2031667, 0, 65536, 2031666, 0, 65536, 2031665, 0, 65536, 2031664, 0, 65536, 2031663, 0, 65536, 2031662, 0, 65536, 2031661, 0, 65536, 2031660, 0, 65536, 2031659, 0, 65536, 2031658, 0, 65536, 2031657, 0, 65536, 2031655, 0, 65536, 2031654, 0, 65536, 2031653, 0, 65536, 2031652, 0, 65536, 2031651, 0, 65536, 2031650, 0, 65536, 2031649, 0, 65536, 2031648, 0, 65536, 2031647, 0, 65536, 2031646, 0, 65536, 2031645, 0, 65536, 2031644, 0, 65536, 2031643, 0, 65536, 2031642, 0, 65536, 2031641, 0, 65536, 2031640, 0, 65536, 2031639, 0, 65536, 2031638, 0, 65536, 2031637, 0, 65536, 2031636, 0, 65536, 2097171, 0, 65536, 2097170, 0, 65536, 2097169, 0, 65536, 2097168, 0, 65536, 2097167, 0, 65536, 2097166, 0, 65536, 2097165, 0, 65536, 2097164, 0, 65536, 2097163, 0, 65536, 2097162, 0, 65536, 2097161, 0, 65536, 2097160, 0, 65536, 2097159, 0, 65536, 2031625, 0, 65536, 2031626, 0, 65536, 2031627, 0, 65536, 2031628, 0, 65536, 2031629, 0, 65536, 2031630, 0, 65536, 2031631, 0, 65536, 2031632, 0, 65536, 2031633, 0, 65536, 2031634, 0, 65536, 2031635, 0, 65536, 2031624, 0, 65536, 2031623, 0, 65536, 2031622, 0, 65536, 2031621, 0, 65536, 2031620, 0, 65536, 2031619, 0, 65536, 2031618, 0, 65536, 2031617, 0, 65536, 2097152, 0, 65536, 2097153, 0, 65536, 2097154, 0, 65536, 2097155, 0, 65536, 2097156, 0, 65536, 2097157, 0, 65536, 2097158, 0, 65536, 2097172, 0, 65536, 2097173, 0, 65536, 2097174, 0, 65536, 2097175, 0, 65536, 2097176, 0, 65536, 2097177, 0, 65536, 2097178, 0, 65536, 2097179, 0, 65536, 2097180, 0, 65536, 2097181, 0, 65536, 2097182, 0, 65536, 2097183, 0, 65536, 2097184, 0, 65536, 2097209, 0, 65536, 2097208, 0, 65536, 2097207, 0, 65536, 2097206, 0, 65536, 2097205, 0, 65536, 2097204, 0, 65536, 2097203, 0, 65536, 2097202, 0, 65536, 2097201, 0, 65536, 2097200, 0, 65536, 2097199, 0, 65536, 2097198, 0, 65536, 2097197, 0, 65536, 2097196, 0, 65536, 2097195, 0, 65536, 2097194, 0, 65536, 2097193, 0, 65536, 2097192, 0, 65536, 2097191, 0, 65536, 2097190, 0, 65536, 2097189, 0, 65536, 2097188, 0, 65536, 2097187, 0, 65536, 2097186, 0, 65536, 2097185, 0, 65536, 65536, 0, 65536, 2162736, 0, 65536, 2162735, 0, 65536, 2162734, 0, 65536, 2162733, 0, 65536, 2162732, 0, 65536, 2162737, 0, 65536, 2162727, 0, 65536, 2162726, 0, 65536, 2162725, 0, 65536, 2162724, 0, 65536, 2162723, 0, 65536, 2162728, 0, 65536, 2162729, 0, 65536)
 metadata/_edit_lock_ = true
-
-[node name="Node2D" parent="." instance=ExtResource("6_8aijl")]
-position = Vector2(40, 118)
 
 [node name="Always" type="Node2D" parent="."]
 position = Vector2(16, 85)
