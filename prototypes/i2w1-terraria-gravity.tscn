@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cr0j2l321db0h"]
+[gd_scene load_steps=26 format=3 uid="uid://cr0j2l321db0h"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_pkw7y"]
 [ext_resource type="PackedScene" uid="uid://cmhx1qsp5lk13" path="res://prototypes/rock.tscn" id="2_ji8mk"]
@@ -15,14 +15,38 @@
 [sub_resource type="Resource" id="Resource_qbjei"]
 script = ExtResource("7_8dce0")
 name = "player_up_direction"
-from = NodePath("../../player_state")
+from = NodePath("../../player_state/player_state")
 prop = "up_direction"
 
 [sub_resource type="Resource" id="Resource_gmrq7"]
 script = ExtResource("7_8dce0")
 name = "global_up_direction"
-from = NodePath("../../global_state")
+from = NodePath("../../global_state/global_state")
 prop = "up_direction"
+
+[sub_resource type="Resource" id="Resource_77jp0"]
+script = ExtResource("7_8dce0")
+name = "time_left"
+from = NodePath("../../../player_state/reset_clock_player_gravity")
+prop = "time_left"
+
+[sub_resource type="Resource" id="Resource_kt4uj"]
+script = ExtResource("7_8dce0")
+name = "paused"
+from = NodePath("../../../player_state/reset_clock_player_gravity")
+prop = "paused"
+
+[sub_resource type="Resource" id="Resource_awwvy"]
+script = ExtResource("7_8dce0")
+name = "time_left"
+from = NodePath("../../../global_state/reset_clock_global_gravity")
+prop = "time_left"
+
+[sub_resource type="Resource" id="Resource_de7co"]
+script = ExtResource("7_8dce0")
+name = "paused"
+from = NodePath("../../../global_state/reset_clock_global_gravity")
+prop = "paused"
 
 [sub_resource type="Resource" id="Resource_rpu1v"]
 script = ExtResource("6_oc828")
@@ -686,20 +710,47 @@ to_prop = "up_direction"
 convert = "
 return -1 * player_up_direction * global_up_direction"
 
-[node name="A" type="Node2D" parent="."]
+[node name="HUD" type="Node2D" parent="."]
+position = Vector2(36, 50)
+
+[node name="Placeholder" type="Node2D" parent="HUD"]
+position = Vector2(60, 10)
+script = ExtResource("3_kcxei")
+placeholder_size = Vector2(120, 20)
+
+[node name="Bind" type="Node2D" parent="HUD/Placeholder"]
+script = ExtResource("6_y3k7c")
+from = Array[ExtResource("7_8dce0")]([SubResource("Resource_77jp0"), SubResource("Resource_kt4uj")])
+to_prop = "label"
+convert = "return \"Player gravity time: \" + (\"-\" if paused else \"%s\" % snapped(time_left, 0.01))"
+
+[node name="Placeholder2" type="Node2D" parent="HUD"]
+position = Vector2(60, 31)
+script = ExtResource("3_kcxei")
+placeholder_size = Vector2(120, 20)
+
+[node name="Bind" type="Node2D" parent="HUD/Placeholder2"]
+script = ExtResource("6_y3k7c")
+from = Array[ExtResource("7_8dce0")]([SubResource("Resource_awwvy"), SubResource("Resource_de7co")])
+to_prop = "label"
+convert = "return \"Global gravity time: \" + (\"-\" if paused else \"%s\" % snapped(time_left, 0.01))"
+
+[node name="player_state" type="Node2D" parent="."]
+
+[node name="A" type="Node2D" parent="player_state"]
 position = Vector2(-110, 572)
 script = ExtResource("7_fm8wo")
 key = "A"
 metadata/pronto_connections = [SubResource("Resource_rpu1v"), SubResource("Resource_fl2gw")]
 
-[node name="player_state" type="Node2D" parent="."]
+[node name="player_state" type="Node2D" parent="player_state"]
 position = Vector2(-111, 637)
 script = ExtResource("5_gcpat")
 metadata/pronto_connections = []
 metadata/up_direction = Vector2(0, -1)
 metadata/original_up_direction = Vector2(0, -1)
 
-[node name="reset_clock_player_gravity" type="Node2D" parent="."]
+[node name="reset_clock_player_gravity" type="Node2D" parent="player_state"]
 position = Vector2(-60, 605)
 script = ExtResource("11_fdw8a")
 duration_seconds = 5.0
@@ -707,13 +758,15 @@ paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_8fwrn"), SubResource("Resource_6dqy0")]
 
-[node name="Q" type="Node2D" parent="."]
+[node name="global_state" type="Node2D" parent="."]
+
+[node name="Q" type="Node2D" parent="global_state"]
 position = Vector2(-111, 436)
 script = ExtResource("7_fm8wo")
 key = "Q"
 metadata/pronto_connections = [SubResource("Resource_shrnu"), SubResource("Resource_547ya")]
 
-[node name="global_state" type="Node2D" parent="."]
+[node name="global_state" type="Node2D" parent="global_state"]
 position = Vector2(-111, 512)
 script = ExtResource("5_gcpat")
 global = true
@@ -721,7 +774,7 @@ metadata/pronto_connections = []
 metadata/up_direction = Vector2(0, -1)
 metadata/original_up_direction = Vector2(0, -1)
 
-[node name="reset_clock_global_gravity" type="Node2D" parent="."]
+[node name="reset_clock_global_gravity" type="Node2D" parent="global_state"]
 position = Vector2(-60, 476)
 script = ExtResource("11_fdw8a")
 duration_seconds = 5.0
