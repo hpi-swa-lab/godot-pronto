@@ -42,6 +42,9 @@ var _timer: Timer:
 		if not _timer: _timer = Timer.new()
 		return _timer
 
+var time_left: float:
+	get: return _timer.time_left
+
 func reset_and_start():
 	self.paused = false
 	_timer.start(duration_seconds)
