@@ -1,29 +1,33 @@
-[gd_scene load_steps=11 format=3 uid="uid://cr0j2l321db0h"]
+[gd_scene load_steps=13 format=3 uid="uid://cr0j2l321db0h"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_pkw7y"]
 [ext_resource type="PackedScene" uid="uid://cmhx1qsp5lk13" path="res://prototypes/rock.tscn" id="2_ji8mk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_kcxei"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="4_7xx8l"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_gcpat"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="5_tvgu3"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="6_6ggmk"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_oc828"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_hblxy"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Watch.gd" id="8_nrtel"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="7_fm8wo"]
 
-[sub_resource type="Resource" id="Resource_culgm"]
-script = ExtResource("6_oc828")
-signal_name = "changed"
-to = NodePath("../Player/PlatformerController")
-invoke = "@gravity_setter"
-arguments = ["return value"]
-only_if = "return prop == \"gravity_force\""
-expression = ""
+[sub_resource type="Resource" id="Resource_o3syl"]
+script = ExtResource("6_6ggmk")
+name = "gravity"
+from = NodePath("../../../State")
+prop = "gravity"
 
-[sub_resource type="Resource" id="Resource_1m7bs"]
+[sub_resource type="Resource" id="Resource_bq3nv"]
+script = ExtResource("6_6ggmk")
+name = "gravity"
+from = NodePath("../../State")
+prop = "gravity"
+
+[sub_resource type="Resource" id="Resource_813yl"]
 script = ExtResource("6_oc828")
-signal_name = "elapsed"
+signal_name = "pressed"
 to = NodePath("../State")
 invoke = "put"
-arguments = ["return \"gravity_force\"", "return to.at(\"gravity_force\") + 10"]
+arguments = ["return \"gravity\"", "return to.at(\"gravity\") * -1.0"]
 only_if = "return true"
 expression = ""
 
@@ -534,21 +538,30 @@ script = ExtResource("3_kcxei")
 color = Color(1, 0.317647, 0.819608, 1)
 
 [node name="PlatformerController" type="Node2D" parent="Player"]
-position = Vector2(-21, 0)
+position = Vector2(26, 1)
 script = ExtResource("4_7xx8l")
+
+[node name="Bind" type="Node2D" parent="Player/PlatformerController"]
+position = Vector2(62, 1)
+script = ExtResource("5_tvgu3")
+from = Array[ExtResource("6_6ggmk")]([SubResource("Resource_o3syl")])
+to_prop = "gravity"
+convert = "return gravity"
+
+[node name="Bind" type="Node2D" parent="Player"]
+script = ExtResource("5_tvgu3")
+from = Array[ExtResource("6_6ggmk")]([SubResource("Resource_bq3nv")])
+to_prop = "up_direction"
+convert = "return Vector2.UP if gravity > 0 else Vector2.DOWN"
 
 [node name="State" type="Node2D" parent="."]
 position = Vector2(-65, 619)
 script = ExtResource("5_gcpat")
-metadata/gravity_force = 980.0
-metadata/pronto_connections = [SubResource("Resource_culgm")]
+global = true
+metadata/gravity = 980.0
 
-[node name="Watch" type="Node2D" parent="State"]
-position = Vector2(211, -535)
-script = ExtResource("8_nrtel")
-
-[node name="Clock" type="Node2D" parent="."]
-position = Vector2(-63, 540)
-script = ExtResource("7_hblxy")
-trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_1m7bs")]
+[node name="Key" type="Node2D" parent="."]
+position = Vector2(-65, 542)
+script = ExtResource("7_fm8wo")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_813yl")]
