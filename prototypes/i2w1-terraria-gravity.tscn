@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cr0j2l321db0h"]
+[gd_scene load_steps=22 format=3 uid="uid://cr0j2l321db0h"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_pkw7y"]
 [ext_resource type="PackedScene" uid="uid://cmhx1qsp5lk13" path="res://prototypes/rock.tscn" id="2_ji8mk"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="6_y3k7c"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="7_8dce0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="7_fm8wo"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="11_fdw8a"]
 
 [sub_resource type="Resource" id="Resource_qbjei"]
 script = ExtResource("7_8dce0")
@@ -23,23 +24,77 @@ name = "global_up_direction"
 from = NodePath("../../global_state")
 prop = "up_direction"
 
+[sub_resource type="Resource" id="Resource_rpu1v"]
+script = ExtResource("6_oc828")
+signal_name = "up"
+to = NodePath("../player_state")
+invoke = "put"
+arguments = ["return \"up_direction\"", "return to.at(\"up_direction\") * -1"]
+only_if = "return to.at(\"up_direction\") == to.at(\"original_up_direction\")"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_fl2gw"]
+script = ExtResource("6_oc828")
+signal_name = "up"
+to = NodePath("../reset_clock_player_gravity")
+invoke = "@paused_setter"
+arguments = ["return false"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_8fwrn"]
+script = ExtResource("6_oc828")
+signal_name = "elapsed"
+to = NodePath("../player_state")
+invoke = "put"
+arguments = ["return \"up_direction\"", "return to.at(\"original_up_direction\")"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_6dqy0"]
+script = ExtResource("6_oc828")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "from.paused=true"
+
 [sub_resource type="Resource" id="Resource_shrnu"]
 script = ExtResource("6_oc828")
 signal_name = "up"
 to = NodePath("../global_state")
 invoke = "put"
 arguments = ["return \"up_direction\"", "return to.at(\"up_direction\") * -1"]
+only_if = "return to.at(\"up_direction\") == to.at(\"original_up_direction\")"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_547ya"]
+script = ExtResource("6_oc828")
+signal_name = "up"
+to = NodePath("../reset_clock_global_gravity")
+invoke = "@paused_setter"
+arguments = ["return false"]
 only_if = "return true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_wyrrh"]
+[sub_resource type="Resource" id="Resource_lxi4w"]
 script = ExtResource("6_oc828")
-signal_name = "up"
-to = NodePath("../player_state")
+signal_name = "elapsed"
+to = NodePath("../global_state")
 invoke = "put"
-arguments = ["return \"up_direction\"", "return to.at(\"up_direction\") * -1"]
+arguments = ["return \"up_direction\"", "return to.at(\"original_up_direction\")"]
 only_if = "return true"
 expression = ""
+
+[sub_resource type="Resource" id="Resource_ynvwv"]
+script = ExtResource("6_oc828")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "from.paused = true"
 
 [node name="Level" type="Node2D"]
 
@@ -631,27 +686,45 @@ to_prop = "up_direction"
 convert = "
 return -1 * player_up_direction * global_up_direction"
 
-[node name="Q" type="Node2D" parent="."]
-position = Vector2(-70, 586)
-script = ExtResource("7_fm8wo")
-key = "Q"
-metadata/pronto_connections = [SubResource("Resource_shrnu")]
-
 [node name="A" type="Node2D" parent="."]
-position = Vector2(-136, 586)
+position = Vector2(-110, 572)
 script = ExtResource("7_fm8wo")
 key = "A"
-metadata/pronto_connections = [SubResource("Resource_wyrrh")]
+metadata/pronto_connections = [SubResource("Resource_rpu1v"), SubResource("Resource_fl2gw")]
+
+[node name="player_state" type="Node2D" parent="."]
+position = Vector2(-111, 637)
+script = ExtResource("5_gcpat")
+metadata/pronto_connections = []
+metadata/up_direction = Vector2(0, -1)
+metadata/original_up_direction = Vector2(0, -1)
+
+[node name="reset_clock_player_gravity" type="Node2D" parent="."]
+position = Vector2(-60, 605)
+script = ExtResource("11_fdw8a")
+duration_seconds = 5.0
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_8fwrn"), SubResource("Resource_6dqy0")]
+
+[node name="Q" type="Node2D" parent="."]
+position = Vector2(-111, 436)
+script = ExtResource("7_fm8wo")
+key = "Q"
+metadata/pronto_connections = [SubResource("Resource_shrnu"), SubResource("Resource_547ya")]
 
 [node name="global_state" type="Node2D" parent="."]
-position = Vector2(-72, 650)
+position = Vector2(-111, 512)
 script = ExtResource("5_gcpat")
 global = true
 metadata/pronto_connections = []
 metadata/up_direction = Vector2(0, -1)
+metadata/original_up_direction = Vector2(0, -1)
 
-[node name="player_state" type="Node2D" parent="."]
-position = Vector2(-137, 651)
-script = ExtResource("5_gcpat")
-metadata/pronto_connections = []
-metadata/up_direction = Vector2(0, -1)
+[node name="reset_clock_global_gravity" type="Node2D" parent="."]
+position = Vector2(-60, 476)
+script = ExtResource("11_fdw8a")
+duration_seconds = 5.0
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_lxi4w"), SubResource("Resource_ynvwv")]
