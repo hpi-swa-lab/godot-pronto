@@ -38,8 +38,8 @@ func lines():
 	return super.lines() + [Lines.BottomText.new(self, _print_values())]
 
 func _print_values():
-	return "\n".join(Array(get_meta_list()).map(func (prop):
-		return "{0} = {1}{2}".format([prop, get_meta(prop), _last_reported_string(prop)])))
+	return "\n".join(Array(get_meta_list()).filter(func (p): return p != "pronto_connections").map(func (prop):
+		return "{0} = {1}{2}".format([prop, str(get_meta(prop)), _last_reported_string(prop)])))
 
 func _last_reported_string(prop: String):
 	var val = _last_reported_game_values.get(prop)
