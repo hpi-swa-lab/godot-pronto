@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dk5f5rbwp2rh4"]
+[gd_scene load_steps=15 format=3 uid="uid://dk5f5rbwp2rh4"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_ssknk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_8rrcq"]
@@ -14,17 +14,6 @@ to = NodePath("../Move")
 invoke = "move_direction"
 arguments = ["return dir"]
 only_if = "return true"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_h7iuy"]
-script = ExtResource("4_xf1qv")
-signal_name = "click"
-to = NodePath("../../TileMap")
-invoke = "set_cell"
-arguments = ["return 0", "var idx =  Vector2i(pos / to.cell_quadrant_size)
-return idx
-", "return 1", "return Vector2i.ZERO", "return 1"]
-only_if = "return false"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_nhche"]
@@ -150,13 +139,14 @@ placeholder_size = Vector2(18, 44)
 [node name="Move" type="Node2D" parent="Player"]
 position = Vector2(63, 58)
 script = ExtResource("2_8rrcq")
+gravity = 1000.0
 acceleration_air = 100.0
 
 [node name="Controls" type="Node2D" parent="Player"]
 position = Vector2(71, 103)
 script = ExtResource("3_i6iyn")
 player = 1
-metadata/pronto_connections = [SubResource("Resource_arumt"), SubResource("Resource_h7iuy"), SubResource("Resource_nhche")]
+metadata/pronto_connections = [SubResource("Resource_arumt"), SubResource("Resource_nhche")]
 
 [node name="World" type="Node2D" parent="."]
 
