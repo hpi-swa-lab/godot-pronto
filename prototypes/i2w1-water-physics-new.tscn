@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://w4ovj8avvexq"]
+[gd_scene load_steps=115 format=3 uid="uid://w4ovj8avvexq"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="1_pluq3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_w5ojc"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="5_d1cg4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_jhpoq"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="7_nayn2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="8_2vrt4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_33mee"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="9_8rf0m"]
 
@@ -97,50 +98,6 @@ to = NodePath("../../State")
 invoke = "put"
 arguments = [SubResource("Resource_iu0hv"), SubResource("Resource_ak4wo")]
 only_if = SubResource("Resource_0f565")
-
-[sub_resource type="GDScript" id="GDScript_e4j8m"]
-script/source = "extends U
-func run(body, from, to):
-	return \"underWaterLastFrame\"
-"
-
-[sub_resource type="Resource" id="Resource_74y44"]
-script = ExtResource("3_lruw1")
-nested_script = SubResource("GDScript_e4j8m")
-argument_names = ["body", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_3by7f"]
-script/source = "extends U
-func run(body, from, to):
-	return false
-"
-
-[sub_resource type="Resource" id="Resource_7elgu"]
-script = ExtResource("3_lruw1")
-nested_script = SubResource("GDScript_3by7f")
-argument_names = ["body", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_qba0n"]
-script/source = "extends U
-func run(body, from, to):
-	return body is CharacterBody2D
-"
-
-[sub_resource type="Resource" id="Resource_npocy"]
-script = ExtResource("3_lruw1")
-nested_script = SubResource("GDScript_qba0n")
-argument_names = ["body", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_iry5j"]
-script = ExtResource("4_cmdyj")
-signal_name = "body_exited"
-to = NodePath("../../State")
-invoke = "put"
-arguments = [SubResource("Resource_74y44"), SubResource("Resource_7elgu")]
-only_if = SubResource("Resource_npocy")
 
 [sub_resource type="GDScript" id="GDScript_rw3tb"]
 script/source = "extends U
@@ -348,6 +305,82 @@ arguments = []
 only_if = SubResource("Resource_y646x")
 expression = SubResource("Resource_05g3k")
 
+[sub_resource type="GDScript" id="GDScript_pt6ww"]
+script/source = "extends U
+func run():
+	return \"Y velocity: \" + str(G.get_node(\"/root/i2w1-water-physics/Player\").velocity.y)
+"
+
+[sub_resource type="Resource" id="Resource_ysq4d"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_pt6ww")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_abgy2"]
+script/source = "extends U
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4j8lv"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_abgy2")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dkkkf"]
+script/source = "extends U
+func run(delta, from, to):
+	return G.at(\"playerBreath\") <= 0
+"
+
+[sub_resource type="Resource" id="Resource_cf6g8"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_dkkkf")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_8lvce"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../Label")
+invoke = "set_visible"
+arguments = [SubResource("Resource_4j8lv")]
+only_if = SubResource("Resource_cf6g8")
+
+[sub_resource type="GDScript" id="GDScript_rp56m"]
+script/source = "extends U
+func run(delta, from, to):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_vmgnl"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_rp56m")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_wqhh0"]
+script/source = "extends U
+func run(delta, from, to):
+	return G.at(\"playerBreath\") > 0
+"
+
+[sub_resource type="Resource" id="Resource_mrsbm"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_wqhh0")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_js6m6"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../Label")
+invoke = "set_visible"
+arguments = [SubResource("Resource_vmgnl")]
+only_if = SubResource("Resource_mrsbm")
+
 [sub_resource type="GDScript" id="GDScript_gnwsv"]
 script/source = "extends U
 func run(delta, from, to):
@@ -467,81 +500,113 @@ nested_script = SubResource("GDScript_durxt")
 argument_names = []
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_tkbra"]
-script/source = "extends U
-func run(delta, from, to):
-	return from.get_parent().position
-"
-
-[sub_resource type="Resource" id="Resource_11hd7"]
-script = ExtResource("3_lruw1")
-nested_script = SubResource("GDScript_tkbra")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_bkufh"]
-script/source = "extends U
-func run(delta, from, to):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_npqxe"]
-script = ExtResource("3_lruw1")
-nested_script = SubResource("GDScript_bkufh")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_6rgmk"]
-script = ExtResource("4_cmdyj")
-signal_name = "always"
-to = NodePath("../../Camera2D")
-invoke = "set_position"
-arguments = [SubResource("Resource_11hd7")]
-only_if = SubResource("Resource_npqxe")
-
-[sub_resource type="GDScript" id="GDScript_pt6ww"]
+[sub_resource type="GDScript" id="GDScript_jusug"]
 script/source = "extends U
 func run():
-	return \"Y velocity: \" + str(G.get_node(\"/root/i2w1-water-physics/Player\").velocity.y)
+	return G.at(\"playerUnderWater\")
 "
 
-[sub_resource type="Resource" id="Resource_ysq4d"]
+[sub_resource type="Resource" id="Resource_vq4u6"]
 script = ExtResource("3_lruw1")
-nested_script = SubResource("GDScript_pt6ww")
+nested_script = SubResource("GDScript_jusug")
 argument_names = []
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_abgy2"]
+[sub_resource type="GDScript" id="GDScript_to7sn"]
 script/source = "extends U
-func run(delta, from, to):
-	return true
+func run(from, to):
+	return \"playerBreath\"
 "
 
-[sub_resource type="Resource" id="Resource_4j8lv"]
+[sub_resource type="Resource" id="Resource_t7x6b"]
 script = ExtResource("3_lruw1")
-nested_script = SubResource("GDScript_abgy2")
-argument_names = ["delta", "from", "to"]
+nested_script = SubResource("GDScript_to7sn")
+argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_dkkkf"]
+[sub_resource type="GDScript" id="GDScript_pnyw4"]
 script/source = "extends U
-func run(delta, from, to):
+func run(from, to):
+	return 10
+"
+
+[sub_resource type="Resource" id="Resource_64xwa"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_pnyw4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_noiyh"]
+script/source = "extends U
+func run(from, to):
 	return G.at(\"playerBreath\") <= 0
 "
 
-[sub_resource type="Resource" id="Resource_cf6g8"]
+[sub_resource type="Resource" id="Resource_2c3om"]
 script = ExtResource("3_lruw1")
-nested_script = SubResource("GDScript_dkkkf")
-argument_names = ["delta", "from", "to"]
+nested_script = SubResource("GDScript_noiyh")
+argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_8lvce"]
+[sub_resource type="Resource" id="Resource_x5qw4"]
 script = ExtResource("4_cmdyj")
-signal_name = "always"
-to = NodePath("../Label")
-invoke = "set_visible"
-arguments = [SubResource("Resource_4j8lv")]
-only_if = SubResource("Resource_cf6g8")
+signal_name = "down"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_t7x6b"), SubResource("Resource_64xwa")]
+only_if = SubResource("Resource_2c3om")
+
+[sub_resource type="GDScript" id="GDScript_uwgin"]
+script/source = "extends U
+func run(from, to):
+	return Vector2(50,587)
+"
+
+[sub_resource type="Resource" id="Resource_8q1r1"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_uwgin")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jtj4s"]
+script/source = "extends U
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_48qtf"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_jtj4s")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_70h8o"]
+script = ExtResource("4_cmdyj")
+signal_name = "down"
+to = NodePath("..")
+invoke = "set_position"
+arguments = [SubResource("Resource_8q1r1")]
+only_if = SubResource("Resource_48qtf")
+
+[sub_resource type="GDScript" id="GDScript_g1tfe"]
+script/source = "extends U
+func run(from, to):
+	return G.at(\"playerUnderWater\")
+"
+
+[sub_resource type="Resource" id="Resource_vrquq"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_g1tfe")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_mwtar"]
+script = ExtResource("4_cmdyj")
+signal_name = "down"
+to = NodePath("../../Values/Clock")
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_vrquq")
 
 [sub_resource type="GDScript" id="GDScript_ov33q"]
 script/source = "extends U
@@ -623,7 +688,7 @@ only_if = SubResource("Resource_ud7mt")
 [node name="i2w1-water-physics" type="Node2D"]
 
 [node name="State" type="Node2D" parent="."]
-position = Vector2(401, 315)
+position = Vector2(-203, 378)
 script = ExtResource("1_pluq3")
 global = true
 metadata/playerUnderWater = false
@@ -643,46 +708,126 @@ script = ExtResource("2_w5ojc")
 color = Color(0.184314, 0.54902, 0.0509804, 1)
 placeholder_size = Vector2(1184, 33)
 
+[node name="Floor7" type="StaticBody2D" parent="Level"]
+position = Vector2(806, 220)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor7"]
+position = Vector2(289, -128)
+script = ExtResource("2_w5ojc")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(284, 592)
+
+[node name="Floor8" type="StaticBody2D" parent="Level"]
+position = Vector2(1379, 217)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor8"]
+position = Vector2(289, -128)
+script = ExtResource("2_w5ojc")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(284, 592)
+
+[node name="Floor5" type="StaticBody2D" parent="Level"]
+position = Vector2(2047, 284)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor5"]
+position = Vector2(67, 23)
+script = ExtResource("2_w5ojc")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(154, 36)
+
+[node name="Floor6" type="StaticBody2D" parent="Level"]
+position = Vector2(3355, -9)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor6"]
+position = Vector2(69, 25)
+script = ExtResource("2_w5ojc")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(570, 28)
+
+[node name="Label" type="Label" parent="Level/Floor6"]
+offset_left = 34.0
+offset_top = -139.0
+offset_right = 96.0
+offset_bottom = -113.0
+text = "You win"
+
+[node name="Floor2" type="StaticBody2D" parent="Level"]
+position = Vector2(-443, 488)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor2"]
+position = Vector2(1078, 464)
+script = ExtResource("2_w5ojc")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(46, 1318)
+
+[node name="Floor3" type="StaticBody2D" parent="Level"]
+position = Vector2(963, 486)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor3"]
+position = Vector2(1077, 462)
+script = ExtResource("2_w5ojc")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(46, 1318)
+
+[node name="Floor4" type="StaticBody2D" parent="Level"]
+position = Vector2(273, 490)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor4"]
+position = Vector2(1067, 710)
+script = ExtResource("2_w5ojc")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(1373, 63)
+
 [node name="Water" type="Area2D" parent="Level"]
-position = Vector2(-462, 282)
-metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_iry5j")]
+position = Vector2(1247, 737)
+metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_ptwac"), SubResource("Resource_s4osi"), SubResource("Resource_21fa0"), SubResource("Resource_7k1wc")]
 
 [node name="Placeholder" type="Node2D" parent="Level/Water"]
-position = Vector2(134, -62)
+position = Vector2(89, -6)
 script = ExtResource("2_w5ojc")
 color = Color(0.0901961, 0.513726, 1, 0.211765)
-placeholder_size = Vector2(232, 146)
+placeholder_size = Vector2(1362, 881)
+
+[node name="Water3" type="Area2D" parent="Level"]
+position = Vector2(2779, 793)
+metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_ptwac"), SubResource("Resource_s4osi"), SubResource("Resource_21fa0"), SubResource("Resource_7k1wc")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Water3"]
+position = Vector2(-163, 162)
+script = ExtResource("2_w5ojc")
+color = Color(0.0901961, 0.513726, 1, 0.211765)
+placeholder_size = Vector2(874, 517)
 
 [node name="Water2" type="Area2D" parent="Level"]
-position = Vector2(252, 282)
+position = Vector2(-160, 444)
 metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_ptwac"), SubResource("Resource_s4osi"), SubResource("Resource_21fa0"), SubResource("Resource_7k1wc")]
 
 [node name="Placeholder" type="Node2D" parent="Level/Water2"]
 position = Vector2(132, -217)
 script = ExtResource("2_w5ojc")
 color = Color(0.0901961, 0.513726, 1, 0.211765)
-placeholder_size = Vector2(423, 457)
+placeholder_size = Vector2(313, 132)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Level"]
-position = Vector2(-50, 16)
+position = Vector2(543, 226)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D"]
-position = Vector2(131, 1)
+position = Vector2(-210, 9)
 script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="Level"]
-position = Vector2(-150, -51)
+position = Vector2(3344, 6)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D5"]
-position = Vector2(91, 1)
+position = Vector2(-250, 9)
 script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
 [node name="StaticBody2D7" type="StaticBody2D" parent="Level"]
-position = Vector2(87, -182)
+position = Vector2(361, -555)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D7"]
 position = Vector2(131, 1)
@@ -690,20 +835,99 @@ script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
+[node name="StaticBody2D8" type="StaticBody2D" parent="Level"]
+position = Vector2(-331, 226)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D8"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.470588, 0.470588, 0.470588, 1)
+placeholder_size = Vector2(31, 132)
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="Level"]
+position = Vector2(13, 225)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D9"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.470588, 0.470588, 0.470588, 1)
+placeholder_size = Vector2(31, 132)
+
+[node name="StaticBody2D10" type="StaticBody2D" parent="Level"]
+position = Vector2(2042, 31)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D10"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.470588, 0.470588, 0.470588, 1)
+placeholder_size = Vector2(31, 515)
+
+[node name="StaticBody2D11" type="StaticBody2D" parent="Level"]
+position = Vector2(2042, 544)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D11"]
+position = Vector2(128, 241)
+script = ExtResource("2_w5ojc")
+color = Color(0.470588, 0.470588, 0.470588, 1)
+placeholder_size = Vector2(41, 921)
+
+[node name="StaticBody2D12" type="StaticBody2D" parent="Level"]
+position = Vector2(2939, 622)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D12"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.470588, 0.470588, 0.470588, 1)
+placeholder_size = Vector2(42, 1191)
+
+[node name="StaticBody2D14" type="StaticBody2D" parent="Level"]
+position = Vector2(2332, -682)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D14"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.470588, 0.470588, 0.470588, 1)
+placeholder_size = Vector2(42, 1191)
+
+[node name="StaticBody2D15" type="StaticBody2D" parent="Level"]
+position = Vector2(2675, -803)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D15"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.470588, 0.470588, 0.470588, 1)
+placeholder_size = Vector2(42, 1191)
+
+[node name="StaticBody2D13" type="StaticBody2D" parent="Level"]
+position = Vector2(2251, 1389)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D13"]
+position = Vector2(377, -160)
+script = ExtResource("2_w5ojc")
+color = Color(0.470588, 0.470588, 0.470588, 1)
+placeholder_size = Vector2(917, 35)
+
+[node name="Label" type="Label" parent="Level/StaticBody2D13/Placeholder"]
+offset_left = -120.0
+offset_top = -59.0
+offset_right = 110.0
+offset_bottom = -33.0
+text = "You loose, press R to restart"
+
 [node name="StaticBody2D6" type="StaticBody2D" parent="Level"]
-position = Vector2(-51, -104)
+position = Vector2(2445, -219)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D6"]
-position = Vector2(131, 1)
+position = Vector2(-210, 9)
 script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Level"]
-position = Vector2(-148, 88)
+position = Vector2(456, 166)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D2"]
-position = Vector2(91, 1)
+position = Vector2(-250, 9)
 script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
@@ -712,7 +936,7 @@ placeholder_size = Vector2(92, 32)
 position = Vector2(-41, 127)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D3"]
-position = Vector2(121, 42)
+position = Vector2(-220, 50)
 script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
@@ -721,22 +945,112 @@ placeholder_size = Vector2(92, 32)
 position = Vector2(-153, 195)
 
 [node name="Placeholder" type="Node2D" parent="Level/StaticBody2D4"]
-position = Vector2(98, 33)
+position = Vector2(-243, 41)
 script = ExtResource("2_w5ojc")
 color = Color(0.380392, 0.243137, 0.0823529, 1)
 placeholder_size = Vector2(92, 32)
 
 [node name="Ladder" type="Area2D" parent="Level"]
-position = Vector2(151, 34)
+position = Vector2(-5, -646)
 metadata/pronto_connections = [SubResource("Resource_50l58"), SubResource("Resource_oljvh")]
 
 [node name="Placeholder" type="Node2D" parent="Level/Ladder"]
+position = Vector2(2141, 678)
 script = ExtResource("2_w5ojc")
+label = "Ladder"
 color = Color(0.654902, 0.435294, 0.180392, 1)
 placeholder_size = Vector2(43, 516)
 
+[node name="Ladder6" type="Area2D" parent="Level"]
+position = Vector2(-146, -139)
+metadata/pronto_connections = [SubResource("Resource_50l58"), SubResource("Resource_oljvh")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Ladder6"]
+position = Vector2(2143, 686)
+script = ExtResource("2_w5ojc")
+label = "Ladder"
+color = Color(0.654902, 0.435294, 0.180392, 1)
+placeholder_size = Vector2(43, 516)
+
+[node name="Ladder2" type="Area2D" parent="Level"]
+position = Vector2(266, -724)
+metadata/pronto_connections = [SubResource("Resource_50l58"), SubResource("Resource_oljvh")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Ladder2"]
+position = Vector2(2114, 701)
+script = ExtResource("2_w5ojc")
+label = "Ladder"
+color = Color(0.654902, 0.435294, 0.180392, 1)
+placeholder_size = Vector2(48, 299)
+
+[node name="Ladder3" type="Area2D" parent="Level"]
+position = Vector2(431, -643)
+metadata/pronto_connections = [SubResource("Resource_50l58"), SubResource("Resource_oljvh")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Ladder3"]
+position = Vector2(2114, 701)
+script = ExtResource("2_w5ojc")
+label = "Ladder"
+color = Color(0.654902, 0.435294, 0.180392, 1)
+placeholder_size = Vector2(48, 299)
+
+[node name="Ladder4" type="Area2D" parent="Level"]
+position = Vector2(600, -770)
+metadata/pronto_connections = [SubResource("Resource_50l58"), SubResource("Resource_oljvh")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Ladder4"]
+position = Vector2(2114, 701)
+script = ExtResource("2_w5ojc")
+label = "Ladder"
+color = Color(0.654902, 0.435294, 0.180392, 1)
+placeholder_size = Vector2(48, 299)
+
+[node name="Ladder5" type="Area2D" parent="Level"]
+position = Vector2(768, -682)
+metadata/pronto_connections = [SubResource("Resource_50l58"), SubResource("Resource_oljvh")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Ladder5"]
+position = Vector2(2114, 701)
+script = ExtResource("2_w5ojc")
+label = "Ladder"
+color = Color(0.654902, 0.435294, 0.180392, 1)
+placeholder_size = Vector2(48, 299)
+
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(775, 94)
+position = Vector2(51, 588)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -1)
+position_smoothing_speed = 2.0
+
+[node name="UI" type="Node2D" parent="Player/Camera2D"]
+position = Vector2(-455, -229)
+
+[node name="Under Water" type="Label" parent="Player/Camera2D/UI"]
+offset_right = 40.0
+offset_bottom = 22.3333
+
+[node name="Bind" type="Node2D" parent="Player/Camera2D/UI/Under Water"]
+script = ExtResource("7_nayn2")
+evaluate = SubResource("Resource_ysq4d")
+to_prop = "text"
+
+[node name="Label" type="Label" parent="Player/Camera2D/UI"]
+visible = false
+offset_left = 24.0
+offset_top = 117.0
+offset_right = 116.0
+offset_bottom = 143.0
+scale = Vector2(9.43342, 9.43342)
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Always" type="Node2D" parent="Player/Camera2D/UI"]
+position = Vector2(211, 121)
+script = ExtResource("6_jhpoq")
+metadata/pronto_connections = [SubResource("Resource_8lvce"), SubResource("Resource_js6m6")]
 
 [node name="Placeholder" type="Node2D" parent="Player"]
 script = ExtResource("2_w5ojc")
@@ -768,41 +1082,20 @@ script = ExtResource("7_nayn2")
 evaluate = SubResource("Resource_6j02f")
 to_prop = "text"
 
-[node name="Cam" type="Node2D" parent="Player"]
-position = Vector2(-463, -42)
-script = ExtResource("6_jhpoq")
-metadata/pronto_connections = [SubResource("Resource_6rgmk")]
-
-[node name="UI" type="Node2D" parent="."]
-
-[node name="Under Water" type="Label" parent="UI"]
-offset_right = 40.0
-offset_bottom = 22.3333
-
-[node name="Bind" type="Node2D" parent="UI/Under Water"]
+[node name="Bind2" type="Node2D" parent="Player/Breath"]
+position = Vector2(32, -31)
 script = ExtResource("7_nayn2")
-evaluate = SubResource("Resource_ysq4d")
-to_prop = "text"
+evaluate = SubResource("Resource_vq4u6")
+to_prop = "visible"
 
-[node name="Label" type="Label" parent="UI"]
-visible = false
-offset_left = 159.0
-offset_top = 185.0
-offset_right = 251.0
-offset_bottom = 211.0
-scale = Vector2(9.43342, 9.43342)
-text = "GAME OVER"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="Always" type="Node2D" parent="UI"]
-position = Vector2(211, 121)
-script = ExtResource("6_jhpoq")
-metadata/pronto_connections = [SubResource("Resource_8lvce")]
+[node name="Key" type="Node2D" parent="Player"]
+position = Vector2(-370, 279)
+script = ExtResource("8_2vrt4")
+key = "R"
+metadata/pronto_connections = [SubResource("Resource_x5qw4"), SubResource("Resource_70h8o"), SubResource("Resource_mwtar")]
 
 [node name="Values" type="Node2D" parent="."]
-position = Vector2(302, 232)
+position = Vector2(-67, 328)
 
 [node name="WaterHorizontalVelocity" type="Node2D" parent="Values"]
 position = Vector2(-51, 22)
@@ -841,32 +1134,44 @@ to = 800.0
 value = 400.0
 
 [node name="CanPlayerSwimUp" type="Node2D" parent="Values"]
-position = Vector2(-22, 110)
+position = Vector2(13, 111)
 script = ExtResource("8_33mee")
 
 [node name="WaterMaxVelocity" type="Node2D" parent="Values"]
-position = Vector2(-24, 136)
+position = Vector2(11, 137)
 script = ExtResource("8_33mee")
 to = 2.0
 value = 1.0
 
 [node name="ClimbingSpeed" type="Node2D" parent="Values"]
-position = Vector2(-25, 165)
+position = Vector2(10, 166)
 script = ExtResource("8_33mee")
 to = 2000.0
 value = 300.0
 
 [node name="Clock" type="Node2D" parent="Values"]
-position = Vector2(883, 230)
+position = Vector2(-133, 123)
 script = ExtResource("9_8rf0m")
 one_shot = true
-duration_seconds = 10.0
+duration_seconds = 999999.0
 paused = true
 trigger_every_x_seconds = true
-trigger_interval_in_seconds = 1.0
+trigger_interval_in_seconds = 2.0
 metadata/pronto_connections = [SubResource("Resource_4fs63"), SubResource("Resource_nh0or")]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(141, -2)
-position_smoothing_enabled = true
-position_smoothing_speed = 2.0
+[node name="HorizontalSlowdown" type="Node2D" parent="Values"]
+position = Vector2(-58, 114)
+script = ExtResource("8_33mee")
+value = 0.33
+
+[node name="VerticalSpeedupUpwards" type="Node2D" parent="Values"]
+position = Vector2(-61, 146)
+script = ExtResource("8_33mee")
+to = 10.0
+value = 1.5
+
+[node name="JumpTimeOutUnderWater" type="Node2D" parent="Values"]
+position = Vector2(-58, 174)
+script = ExtResource("8_33mee")
+to = 10000.0
+value = 666.0

@@ -23,6 +23,7 @@ extends Behavior
 var _last_on_floor = -10000
 @onready var _last_floor_height = _parent.position.y
 var _last_jump_input = -10000
+var _last_time_jump_allow = -10000
 
 var _last_positions_max = 30
 var _last_positions = []
@@ -44,13 +45,16 @@ func _update_jump():
 		_last_jump_input = now
 
 func _can_jump():
-	var now = Time.get_ticks_msec()
-	var input = _last_jump_input > now - 1000 * jump_buffer
-	var floored = _last_on_floor > now - 1000 * coyote_time
-	return input and floored and _underwater_jump_condition()
+		var now = Time.get_ticks_msec()
+		var input = _last_jump_input > now - 1000 * jump_buffer
+		if(G.at("playerUnderWater")):
+			return input and _last_jump_input > 1000 and (now - _last_time_jump_allow) > G.at("JumpTimeOutUnderWater")
+		else :
+			var floored = _last_on_floor > now - 1000 * coyote_time
+			return input and floored
 
 func _underwater_jump_condition():
-	if G.at("playerUnderwater"):
+	if G.at("playerUnderWater"):
 		return G.at("CanPlayerSwimUp") == 1
 	else:
 		return true	
@@ -91,18 +95,33 @@ func _physics_process(delta):
 	_update_jump()
 	if _can_jump():
 		_reset_jump()
-		if _parent.position.y > _last_floor_height:
-			_parent.position.y = _last_floor_height
+		_last_time_jump_allow = Time.get_ticks_msec()
+		#print("jump")
+		# Why is this necessary?
+		#if _parent.position.y > _last_floor_height:
+		#	_parent.position.y = _last_floor_height
 		_parent.velocity.y = -jump_velocity
 	else:
+		#print("no jump")
 		if G.at("playerUnderWater"):
-			_parent.velocity.y += min(gravity * delta, float(G.at("WaterMaxVelocity")))
+			#_parent.velocity.y += min(gravity * delta , float(G.at("WaterMaxVelocity")))
+			#_parent.velocity.y += gravity * delta * G.at("VerticalSlowdown")
+			if(_parent.velocity.y < 0):
+				_parent.velocity.y += gravity * delta * G.at("VerticalSpeedupUpwards")
+			else:
+				_parent.velocity.y += min(gravity * delta, float(G.at("WaterMaxVelocity")))
 		else:
 			_parent.velocity.y += gravity * delta
 
 	
 	# horizontal
-	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
+	
+	if(G.at("playerUnderWater")):
+		_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity * G.at("HorizontalSlowdown")
+	else:
+		_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
+	
+	
 	
 	# move
 	var did_collide = _parent.move_and_slide()
