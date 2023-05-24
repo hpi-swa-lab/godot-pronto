@@ -29,7 +29,7 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "return true"
-expression = "instance.get_node(\"Move\").move_direction(Vector2.RIGHT * 20)"
+expression = "instance.get_node(\"Move\").move_direction(Vector2.RIGHT * instance.get_node(\"ArrowSpeed\").value)"
 
 [sub_resource type="Resource" id="Resource_aui80"]
 script = ExtResource("4_4k4rh")
@@ -166,7 +166,7 @@ horizontal_velocity = 300.0
 
 [node name="Placeholder" type="Node2D" parent="Player"]
 script = ExtResource("2_nrhwd")
-color = Color(0, 0, 0, 1)
+color = Color(0, 0.690196, 0, 1)
 placeholder_size = Vector2(20, 40)
 
 [node name="Controls" type="Node2D" parent="Player"]
@@ -220,6 +220,13 @@ script = ExtResource("9_kml0a")
 to = 100.0
 value = 20.0
 
+[node name="ArrowSpeed" type="Node2D" parent="Player/Spawner/Arrow"]
+position = Vector2(-91, -310)
+script = ExtResource("9_kml0a")
+from = 10.0
+to = 30.0
+value = 25.0
+
 [node name="SplitButton" type="Node2D" parent="."]
 position = Vector2(452, 552)
 script = ExtResource("9_x4p0j")
@@ -233,8 +240,6 @@ metadata/pronto_connections = [SubResource("Resource_ap4bs")]
 
 [node name="SplitArrow" type="RigidBody2D" parent="SplitButton/Spawner"]
 position = Vector2(36, 0)
-mass = 20.0
-inertia = 20.0
 center_of_mass_mode = 1
 
 [node name="Placeholder" type="Node2D" parent="SplitButton/Spawner/SplitArrow"]
@@ -250,7 +255,7 @@ friction = 1.0
 rotated = true
 
 [node name="SplitArrowDamage" type="Node2D" parent="SplitButton/Spawner/SplitArrow"]
-position = Vector2(-137, -507)
+position = Vector2(-200, -501)
 script = ExtResource("9_kml0a")
 to = 100.0
 value = 10.0
@@ -268,14 +273,14 @@ limit_to_group = "ground"
 metadata/pronto_connections = [SubResource("Resource_spt21")]
 
 [node name="NumberOfArrows" type="Node2D" parent="SplitButton"]
-position = Vector2(-256, -521)
+position = Vector2(-34, -320)
 script = ExtResource("9_kml0a")
 from = 3.0
 to = 9.0
 value = 5.0
 
 [node name="SplitAngle" type="Node2D" parent="SplitButton"]
-position = Vector2(-302, -521)
+position = Vector2(-92, -318)
 script = ExtResource("9_kml0a")
 from = 1.0
 to = 30.0
