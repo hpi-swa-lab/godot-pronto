@@ -1,12 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://dk5f5rbwp2rh4"]
+[gd_scene load_steps=16 format=3 uid="uid://dk5f5rbwp2rh4"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_ssknk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_8rrcq"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_i6iyn"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_xf1qv"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_mq10o"]
 [ext_resource type="PackedScene" uid="uid://ch4odbgjwk6dy" path="res://prototypes/block.tscn" id="6_8aijl"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="7_ouhvv"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_x75nb"]
 
 [sub_resource type="Resource" id="Resource_arumt"]
@@ -38,8 +36,6 @@ arguments = []
 only_if = "return true"
 expression = ""
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3dvs"]
-
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_x3w1o"]
 resource_name = "block"
 scenes/1/scene = ExtResource("6_8aijl")
@@ -49,27 +45,10 @@ resource_name = "empty"
 
 [sub_resource type="TileSet" id="TileSet_f11gb"]
 tile_size = Vector2i(20, 20)
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetScenesCollectionSource_x3w1o")
 sources/1 = SubResource("TileSetScenesCollectionSource_pjk34")
-
-[sub_resource type="Resource" id="Resource_ns78d"]
-script = ExtResource("4_xf1qv")
-signal_name = "always"
-to = NodePath("../TileMap")
-invoke = "set_cell"
-arguments = ["return 0", "var mouse_pos = from.get_viewport().get_mouse_position()
-var cell_index = Vector2i(mouse_pos / to.cell_quadrant_size)
-return cell_index", "return 1", "return Vector2i.ZERO", "return 1"]
-only_if = "return false
-if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-	return false
-	
-var mouse_pos = from.get_viewport().get_mouse_position()
-var cell_index = Vector2i(mouse_pos / to.cell_quadrant_size)
-var neighbor_positions = to.get_surrounding_cells(cell_index)
-var source_ids = neighbor_positions.map(func(pos): return to.get_cell_source_id(0,pos))
-return source_ids.any(func(i): return i != -1) "
-expression = ""
 
 [sub_resource type="Resource" id="Resource_g67qy"]
 script = ExtResource("4_xf1qv")
@@ -138,14 +117,20 @@ var grid_size = to.cell_quadrant_size
 var pos = item[1]
 if item[0] == \"add\":
 	to.set_cell(0, pos, 0, Vector2i.ZERO, 1)
-else:
-	to.set_cell(0, pos, -1)
 	var children = to.get_children()
 	for child in children:
 		var child_index = Vector2i(child.position / grid_size)
 		if child_index == item[1]:
-			child.queue_free()
-
+			child.show()
+			child.get_child(0).disabled = false
+else:
+	to.erase_cell(0, pos)
+	var children = to.get_children()
+	for child in children:
+		var child_index = Vector2i(child.position / grid_size)
+		if child_index == item[1]:
+			child.get_child(0).disabled = true
+			child.hide()
 
 
 "
@@ -155,6 +140,7 @@ else:
 [node name="Player" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(206, 26)
+collision_layer = 0
 
 [node name="Placeholder" type="Node2D" parent="Player"]
 position = Vector2(0, -22)
@@ -174,37 +160,14 @@ metadata/pronto_connections = [SubResource("Resource_arumt"), SubResource("Resou
 
 [node name="World" type="Node2D" parent="."]
 
-[node name="Spawner" type="Node2D" parent="."]
-visible = false
-position = Vector2(189, 76)
-script = ExtResource("5_mq10o")
-
-[node name="Block" type="StaticBody2D" parent="Spawner"]
-
-[node name="Placeholder" type="Node2D" parent="Spawner/Block"]
-script = ExtResource("1_ssknk")
-label = "Block"
-color = Color(0.478431, 0, 0, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/Block"]
-shape = SubResource("RectangleShape2D_c3dvs")
-
-[node name="Placeholder" type="Node2D" parent="Spawner"]
-script = ExtResource("1_ssknk")
-
 [node name="TileMap" type="TileMap" parent="."]
 unique_name_in_owner = true
 tile_set = SubResource("TileSet_f11gb")
 cell_quadrant_size = 20
 format = 2
 layer_0/name = "LayerZero"
-layer_0/tile_data = PackedInt32Array(2, 0, 65536, 0, 0, 65536, 2031616, 0, 65536, 2031656, 0, 65536, 2031673, 0, 65536, 2031672, 0, 65536, 2031671, 0, 65536, 2031670, 0, 65536, 2031669, 0, 65536, 2031668, 0, 65536, 2031667, 0, 65536, 2031666, 0, 65536, 2031665, 0, 65536, 2031664, 0, 65536, 2031663, 0, 65536, 2031662, 0, 65536, 2031661, 0, 65536, 2031660, 0, 65536, 2031659, 0, 65536, 2031658, 0, 65536, 2031657, 0, 65536, 2031655, 0, 65536, 2031654, 0, 65536, 2031653, 0, 65536, 2031652, 0, 65536, 2031651, 0, 65536, 2031650, 0, 65536, 2031649, 0, 65536, 2031648, 0, 65536, 2031647, 0, 65536, 2031646, 0, 65536, 2031645, 0, 65536, 2031644, 0, 65536, 2031643, 0, 65536, 2031642, 0, 65536, 2031641, 0, 65536, 2031640, 0, 65536, 2031639, 0, 65536, 2031638, 0, 65536, 2031637, 0, 65536, 2031636, 0, 65536, 2097171, 0, 65536, 2097170, 0, 65536, 2097169, 0, 65536, 2097168, 0, 65536, 2097167, 0, 65536, 2097166, 0, 65536, 2097165, 0, 65536, 2097164, 0, 65536, 2097163, 0, 65536, 2097162, 0, 65536, 2097161, 0, 65536, 2097160, 0, 65536, 2097159, 0, 65536, 2031625, 0, 65536, 2031626, 0, 65536, 2031627, 0, 65536, 2031628, 0, 65536, 2031629, 0, 65536, 2031630, 0, 65536, 2031631, 0, 65536, 2031632, 0, 65536, 2031633, 0, 65536, 2031634, 0, 65536, 2031635, 0, 65536, 2031624, 0, 65536, 2031623, 0, 65536, 2031622, 0, 65536, 2031621, 0, 65536, 2031620, 0, 65536, 2031619, 0, 65536, 2031618, 0, 65536, 2031617, 0, 65536, 2097152, 0, 65536, 2097153, 0, 65536, 2097154, 0, 65536, 2097155, 0, 65536, 2097156, 0, 65536, 2097157, 0, 65536, 2097158, 0, 65536, 2097172, 0, 65536, 2097173, 0, 65536, 2097174, 0, 65536, 2097175, 0, 65536, 2097176, 0, 65536, 2097177, 0, 65536, 2097178, 0, 65536, 2097179, 0, 65536, 2097180, 0, 65536, 2097181, 0, 65536, 2097182, 0, 65536, 2097183, 0, 65536, 2097184, 0, 65536, 2097209, 0, 65536, 2097208, 0, 65536, 2097207, 0, 65536, 2097206, 0, 65536, 2097205, 0, 65536, 2097204, 0, 65536, 2097203, 0, 65536, 2097202, 0, 65536, 2097201, 0, 65536, 2097200, 0, 65536, 2097199, 0, 65536, 2097198, 0, 65536, 2097197, 0, 65536, 2097196, 0, 65536, 2097195, 0, 65536, 2097194, 0, 65536, 2097193, 0, 65536, 2097192, 0, 65536, 2097191, 0, 65536, 2097190, 0, 65536, 2097189, 0, 65536, 2097188, 0, 65536, 2097187, 0, 65536, 2097186, 0, 65536, 2097185, 0, 65536, 65536, 0, 65536, 2162736, 0, 65536, 2162735, 0, 65536, 2162734, 0, 65536, 2162733, 0, 65536, 2162732, 0, 65536, 2162737, 0, 65536, 2162727, 0, 65536, 2162726, 0, 65536, 2162725, 0, 65536, 2162724, 0, 65536, 2162723, 0, 65536, 2162728, 0, 65536, 2162729, 0, 65536)
+layer_0/tile_data = PackedInt32Array(2031616, 0, 65536, 2031617, 0, 65536, 2031618, 0, 65536, 2031619, 0, 65536, 2031620, 0, 65536, 2031621, 0, 65536, 2031622, 0, 65536, 2031623, 0, 65536, 2031624, 0, 65536, 2097161, 0, 65536, 2097162, 0, 65536, 2097163, 0, 65536, 2097164, 0, 65536, 2097165, 0, 65536, 2097166, 0, 65536, 2097167, 0, 65536, 2097168, 0, 65536, 2097169, 0, 65536, 2097170, 0, 65536, 2097171, 0, 65536, 2097172, 0, 65536, 2097173, 0, 65536, 2097174, 0, 65536, 2097175, 0, 65536, 2031637, 0, 65536, 2031636, 0, 65536, 2031635, 0, 65536, 2031634, 0, 65536, 2031633, 0, 65536, 2031632, 0, 65536, 2031631, 0, 65536, 2031630, 0, 65536, 2031629, 0, 65536, 2031628, 0, 65536, 2031627, 0, 65536, 2031626, 0, 65536, 2031625, 0, 65536, 2097156, 0, 65536, 2097157, 0, 65536, 2097158, 0, 65536, 2162695, 0, 65536, 2162696, 0, 65536, 2162697, 0, 65536, 2162698, 0, 65536, 2162699, 0, 65536, 2162700, 0, 65536, 2162701, 0, 65536, 2162702, 0, 65536, 2162703, 0, 65536, 2162704, 0, 65536, 2162705, 0, 65536, 2162706, 0, 65536, 2162707, 0, 65536, 2162708, 0, 65536, 2162709, 0, 65536, 2162710, 0, 65536, 2097176, 0, 65536, 2097177, 0, 65536, 2031642, 0, 65536, 2031643, 0, 65536, 2031641, 0, 65536, 2031640, 0, 65536, 1966103, 0, 65536, 1966102, 0, 65536, 1966101, 0, 65536, 1966100, 0, 65536, 1966099, 0, 65536, 1966098, 0, 65536, 2031638, 0, 65536, 2031639, 0, 65536, 2031644, 0, 65536, 2031645, 0, 65536, 2031646, 0, 65536, 2031647, 0, 65536, 2031648, 0, 65536, 2031649, 0, 65536, 2031650, 0, 65536, 2031651, 0, 65536, 2031652, 0, 65536, 2031653, 0, 65536, 2031654, 0, 65536, 2031655, 0, 65536, 2031656, 0, 65536, 2031657, 0, 65536, 2031658, 0, 65536, 2031659, 0, 65536, 2031660, 0, 65536, 2031661, 0, 65536, 2031662, 0, 65536, 2031663, 0, 65536, 2031664, 0, 65536, 2031665, 0, 65536, 2031666, 0, 65536, 2031667, 0, 65536, 2031668, 0, 65536, 2031669, 0, 65536, 2031670, 0, 65536, 2031671, 0, 65536, 2031672, 0, 65536, 2097208, 0, 65536, 2097209, 0, 65536, 2031673, 0, 65536, 393239, 0, 65536, 458775, 0, 65536, 524311, 0, 65536, 589847, 0, 65536, 655383, 0, 65536, 720919, 0, 65536, 786455, 0, 65536, 851991, 0, 65536, 393240, 0, 65536, 393241, 0, 65536, 393242, 0, 65536, 393243, 0, 65536, 589848, 0, 65536, 589849, 0, 65536, 589850, 0, 65536, 589851, 0, 65536, 458792, 0, 65536, 524328, 0, 65536, 589864, 0, 65536, 655400, 0, 65536, 720936, 0, 65536, 786472, 0, 65536, 852008, 0, 65536, 917544, 0, 65536, 458780, 0, 65536, 524316, 0, 65536, 393246, 0, 65536, 458782, 0, 65536, 524318, 0, 65536, 589854, 0, 65536, 655390, 0, 65536, 720926, 0, 65536, 786462, 0, 65536, 393247, 0, 65536, 393248, 0, 65536, 458785, 0, 65536, 524321, 0, 65536, 589856, 0, 65536, 589855, 0, 65536, 655393, 0, 65536, 720929, 0, 65536, 786465, 0, 65536, 458790, 0, 65536, 458789, 0, 65536, 458788, 0, 65536, 524323, 0, 65536, 589859, 0, 65536, 655395, 0, 65536, 720931, 0, 65536, 786468, 0, 65536, 786469, 0, 65536, 720933, 0, 65536, 655398, 0, 65536, 589862, 0, 65536, 524326, 0, 65536, 524330, 0, 65536, 589866, 0, 65536, 655402, 0, 65536, 720938, 0, 65536, 786475, 0, 65536, 852011, 0, 65536, 917548, 0, 65536, 852012, 0, 65536, 786476, 0, 65536, 720940, 0, 65536, 655404, 0, 65536, 589868, 0, 65536, 524336, 0, 65536, 589872, 0, 65536, 655408, 0, 65536, 720944, 0, 65536, 786480, 0, 65536, 852016, 0, 65536, 917552, 0, 65536, 983088, 0, 65536, 524335, 0, 65536, 524337, 0, 65536, 524338, 0, 65536, 524339, 0, 65536, 524340, 0, 65536, 524341, 0, 65536, 720950, 0, 65536, 720949, 0, 65536, 720948, 0, 65536, 786483, 0, 65536, 852019, 0, 65536, 917554, 0, 65536, 983091, 0, 65536, 1048628, 0, 65536, 1048629, 0, 65536, 983094, 0, 65536, 917559, 0, 65536, 852023, 0, 65536, 786487, 0, 65536, 786486, 0, 65536)
 metadata/_edit_lock_ = true
-
-[node name="Always" type="Node2D" parent="."]
-position = Vector2(16, 85)
-script = ExtResource("7_ouhvv")
-metadata/pronto_connections = [SubResource("Resource_ns78d")]
 
 [node name="InitializeQueue" type="Node2D" parent="."]
 position = Vector2(143, 13)
@@ -224,6 +187,7 @@ metadata/pronto_connections = [SubResource("Resource_wtykm")]
 
 [node name="BuildClock" type="Node2D" parent="."]
 position = Vector2(128, 155)
+scale = Vector2(1.00163, 0.992339)
 script = ExtResource("8_x75nb")
 duration_seconds = 0.1
 trigger_interval_in_seconds = 1.0
