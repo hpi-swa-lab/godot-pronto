@@ -58,8 +58,9 @@ only_if = "return true"
 expression = "var add = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 var remove = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
 if not add and not remove:
+	from.paused = true
 	return
-	
+
 var player = to.get_node(\"%Player\")
 var tile_map = to.get_node(\"%TileMap\")
 var mouse_pos = from.get_viewport().get_mouse_position()
@@ -153,7 +154,7 @@ layer_0/tile_data = PackedInt32Array(2031616, 0, 65536, 2031617, 0, 65536, 20316
 metadata/_edit_lock_ = true
 
 [node name="InitializeQueue" type="Node2D" parent="."]
-position = Vector2(108, 44)
+position = Vector2(89, 36)
 script = ExtResource("6_dag7y")
 one_shot = true
 duration_seconds = 0.0001
