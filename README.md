@@ -1,5 +1,7 @@
 # Pronto
 
+![Screenshot showing Godot with pronto elements](https://github.com/hpi-swa-lab/godot-pronto/blob/master/images/screenshot.png?raw=true)
+
 Pronto is a framework for [Godot](http://godotengine.org) to make prototyping game mechanics faster. It is *not* a framework aimed at helping to create entire games faster. The resulting prototypes are a means to quickly explore ideas, throw away the prototype, and only properly implement ideas that turned out well.
 
 ## Function
