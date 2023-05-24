@@ -14,8 +14,9 @@ func _ready():
 	super._ready()
 	if global and not Engine.is_editor_hint():
 		for prop in get_meta_list():
-			G._register_state(self, prop)
-			G.put(prop, get_meta(prop))
+			if prop != "pronto_connections":
+				G._register_state(self, prop)
+				G.put(prop, get_meta(prop))
 
 func inc(prop: String, amount = 1):
 	var value = get_meta(prop) + amount
