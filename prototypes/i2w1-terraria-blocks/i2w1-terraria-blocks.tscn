@@ -1,14 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://dk5f5rbwp2rh4"]
+[gd_scene load_steps=15 format=3 uid="uid://1ehljcf1qqo0"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_ssknk"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_8rrcq"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_i6iyn"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_xf1qv"]
-[ext_resource type="PackedScene" uid="uid://ch4odbgjwk6dy" path="res://prototypes/block.tscn" id="6_8aijl"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_x75nb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cq8hy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_g0uie"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_rbqn6"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_yhe1e"]
+[ext_resource type="PackedScene" uid="uid://ch4odbgjwk6dy" path="res://prototypes/i2w1-terraria-blocks/block.tscn" id="5_82l76"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="6_dag7y"]
 
 [sub_resource type="Resource" id="Resource_arumt"]
-script = ExtResource("4_xf1qv")
+script = ExtResource("4_yhe1e")
 signal_name = "direction"
 to = NodePath("../Move")
 invoke = "move_direction"
@@ -17,7 +17,7 @@ only_if = "return true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_nhche"]
-script = ExtResource("4_xf1qv")
+script = ExtResource("4_yhe1e")
 signal_name = "click"
 to = NodePath("../../MouseStrokeClock")
 invoke = "reset_and_start"
@@ -27,7 +27,7 @@ expression = ""
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_x3w1o"]
 resource_name = "block"
-scenes/1/scene = ExtResource("6_8aijl")
+scenes/1/scene = ExtResource("5_82l76")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_pjk34"]
 resource_name = "empty"
@@ -40,7 +40,7 @@ sources/0 = SubResource("TileSetScenesCollectionSource_x3w1o")
 sources/1 = SubResource("TileSetScenesCollectionSource_pjk34")
 
 [sub_resource type="Resource" id="Resource_g67qy"]
-script = ExtResource("4_xf1qv")
+script = ExtResource("4_yhe1e")
 signal_name = "elapsed"
 to = NodePath("")
 invoke = ""
@@ -49,7 +49,7 @@ only_if = "return true"
 expression = "G.put(\"build_queue\", [])"
 
 [sub_resource type="Resource" id="Resource_wtykm"]
-script = ExtResource("4_xf1qv")
+script = ExtResource("4_yhe1e")
 signal_name = "elapsed"
 to = NodePath("../BuildClock")
 invoke = ""
@@ -87,7 +87,7 @@ if queue_item not in queue:
 		to.reset_and_start()"
 
 [sub_resource type="Resource" id="Resource_v23jl"]
-script = ExtResource("4_xf1qv")
+script = ExtResource("4_yhe1e")
 signal_name = "elapsed"
 to = NodePath("../TileMap")
 invoke = ""
@@ -126,18 +126,18 @@ position = Vector2(510, 100)
 collision_layer = 0
 
 [node name="Placeholder" type="Node2D" parent="Player"]
-script = ExtResource("1_ssknk")
+script = ExtResource("1_cq8hy")
 placeholder_size = Vector2(18, 38)
 
 [node name="Move" type="Node2D" parent="Player"]
 position = Vector2(-168, 3)
-script = ExtResource("2_8rrcq")
+script = ExtResource("2_g0uie")
 gravity = 1000.0
 acceleration_air = 100.0
 
 [node name="Controls" type="Node2D" parent="Player"]
 position = Vector2(-255, -46)
-script = ExtResource("3_i6iyn")
+script = ExtResource("3_rbqn6")
 player = 1
 metadata/pronto_connections = [SubResource("Resource_arumt"), SubResource("Resource_nhche")]
 
@@ -154,7 +154,7 @@ metadata/_edit_lock_ = true
 
 [node name="InitializeQueue" type="Node2D" parent="."]
 position = Vector2(108, 44)
-script = ExtResource("8_x75nb")
+script = ExtResource("6_dag7y")
 one_shot = true
 duration_seconds = 0.0001
 trigger_interval_in_seconds = 1.0
@@ -162,7 +162,7 @@ metadata/pronto_connections = [SubResource("Resource_g67qy")]
 
 [node name="MouseStrokeClock" type="Node2D" parent="."]
 position = Vector2(199, 132)
-script = ExtResource("8_x75nb")
+script = ExtResource("6_dag7y")
 duration_seconds = 0.0001
 paused = true
 trigger_interval_in_seconds = 1.0
@@ -171,7 +171,7 @@ metadata/pronto_connections = [SubResource("Resource_wtykm")]
 [node name="BuildClock" type="Node2D" parent="."]
 position = Vector2(128, 155)
 scale = Vector2(1.00163, 0.992339)
-script = ExtResource("8_x75nb")
+script = ExtResource("6_dag7y")
 duration_seconds = 0.1
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_v23jl")]
