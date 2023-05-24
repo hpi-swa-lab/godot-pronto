@@ -233,6 +233,9 @@ metadata/pronto_connections = [SubResource("Resource_ap4bs")]
 
 [node name="SplitArrow" type="RigidBody2D" parent="SplitButton/Spawner"]
 position = Vector2(36, 0)
+mass = 20.0
+inertia = 20.0
+center_of_mass_mode = 1
 
 [node name="Placeholder" type="Node2D" parent="SplitButton/Spawner/SplitArrow"]
 script = ExtResource("2_nrhwd")
