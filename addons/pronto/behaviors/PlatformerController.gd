@@ -71,9 +71,12 @@ func _physics_process(delta):
 	_update_jump()
 	if _can_jump():
 		_reset_jump()
-		if _parent.position.y > _last_floor_height:
+		if (
+			(_parent.up_direction.y < 0 and _parent.position.y > _last_floor_height) or 
+			(_parent.up_direction.y > 0 and _parent.position.y < _last_floor_height)
+		):
 			_parent.position.y = _last_floor_height
-		_parent.velocity.y = -jump_velocity
+		_parent.velocity.y = jump_velocity * _parent.up_direction.y
 	else:
 		_parent.velocity.y += gravity * delta
 	
