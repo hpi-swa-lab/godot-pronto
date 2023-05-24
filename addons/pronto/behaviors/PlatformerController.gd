@@ -16,7 +16,9 @@ extends Behavior
 ## If enabled, the parent leaves a trail of recent positions.
 @export var show_trail: bool = false
 
-@onready var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+@onready var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity"):
+	set(v):
+		gravity = v
 
 @onready var _parent: CharacterBody2D = get_parent()
 
