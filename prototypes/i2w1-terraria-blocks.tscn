@@ -32,7 +32,7 @@ expression = ""
 [sub_resource type="Resource" id="Resource_nhche"]
 script = ExtResource("4_xf1qv")
 signal_name = "click"
-to = NodePath("../../Clock")
+to = NodePath("../../MouseStrokeClock")
 invoke = "reset_and_start"
 arguments = []
 only_if = "return true"
@@ -86,8 +86,12 @@ only_if = "return true"
 expression = "if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 	return
 	
+var player = to.get_node(\"%Player\")
 var tile_map = to.get_node(\"%TileMap\")
 var mouse_pos = from.get_viewport().get_mouse_position()
+if player.global_position.distance_to(mouse_pos) > tile_map.cell_quadrant_size * 10:
+	return
+
 var cell_index = Vector2i(mouse_pos / tile_map.cell_quadrant_size)
 
 var queue = G.at(\"build_queue\")
@@ -120,6 +124,7 @@ to.set_cell(0, pos, 1, Vector2i.ZERO, 1)
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(206, 26)
 
 [node name="Placeholder" type="Node2D" parent="Player"]
@@ -183,10 +188,11 @@ duration_seconds = 0.0001
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_g67qy")]
 
-[node name="Clock" type="Node2D" parent="."]
+[node name="MouseStrokeClock" type="Node2D" parent="."]
 position = Vector2(199, 132)
 script = ExtResource("8_x75nb")
-duration_seconds = 0.04
+duration_seconds = 0.0001
+paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_wtykm")]
 
