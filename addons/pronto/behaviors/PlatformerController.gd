@@ -16,9 +16,7 @@ extends Behavior
 ## If enabled, the parent leaves a trail of recent positions.
 @export var show_trail: bool = false
 
-@onready var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity"):
-	set(v):
-		gravity = v
+@onready var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var _parent: CharacterBody2D = get_parent()
 
@@ -71,14 +69,11 @@ func _physics_process(delta):
 	_update_jump()
 	if _can_jump():
 		_reset_jump()
-		if (
-			(_parent.up_direction.y < 0 and _parent.position.y > _last_floor_height) or 
-			(_parent.up_direction.y > 0 and _parent.position.y < _last_floor_height)
-		):
+		if (_parent.up_direction.y * _parent.position.y) + _last_floor_height < 0:
 			_parent.position.y = _last_floor_height
 		_parent.velocity.y = jump_velocity * _parent.up_direction.y
 	else:
-		_parent.velocity.y += gravity * delta
+		_parent.velocity.y += -_parent.up_direction.y * gravity * delta
 	
 	# horizontal
 	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
