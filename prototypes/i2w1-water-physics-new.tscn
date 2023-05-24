@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://w4ovj8avvexq"]
+[gd_scene load_steps=104 format=3 uid="uid://w4ovj8avvexq"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="1_pluq3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_w5ojc"]
@@ -467,6 +467,38 @@ nested_script = SubResource("GDScript_durxt")
 argument_names = []
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_tkbra"]
+script/source = "extends U
+func run(delta, from, to):
+	return from.get_parent().position
+"
+
+[sub_resource type="Resource" id="Resource_11hd7"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_tkbra")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bkufh"]
+script/source = "extends U
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_npqxe"]
+script = ExtResource("3_lruw1")
+nested_script = SubResource("GDScript_bkufh")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_6rgmk"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../../Camera2D")
+invoke = "set_position"
+arguments = [SubResource("Resource_11hd7")]
+only_if = SubResource("Resource_npqxe")
+
 [sub_resource type="GDScript" id="GDScript_pt6ww"]
 script/source = "extends U
 func run():
@@ -736,6 +768,11 @@ script = ExtResource("7_nayn2")
 evaluate = SubResource("Resource_6j02f")
 to_prop = "text"
 
+[node name="Cam" type="Node2D" parent="Player"]
+position = Vector2(-463, -42)
+script = ExtResource("6_jhpoq")
+metadata/pronto_connections = [SubResource("Resource_6rgmk")]
+
 [node name="UI" type="Node2D" parent="."]
 
 [node name="Under Water" type="Label" parent="UI"]
@@ -828,3 +865,8 @@ paused = true
 trigger_every_x_seconds = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_4fs63"), SubResource("Resource_nh0or")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(141, -2)
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0

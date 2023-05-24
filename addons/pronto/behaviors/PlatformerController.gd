@@ -50,7 +50,10 @@ func _can_jump():
 	return input and floored and _underwater_jump_condition()
 
 func _underwater_jump_condition():
-	return G.at("CanPlayerSwimUp") == 1
+	if G.at("playerUnderwater"):
+		return G.at("CanPlayerSwimUp") == 1
+	else:
+		return true	
 
 func _reset_jump():
 	_last_jump_input = -10000
