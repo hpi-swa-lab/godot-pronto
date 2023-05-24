@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmhx1qsp5lk13"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_2cpul"]
+
+[node name="rock" type="StaticBody2D"]
+
+[node name="Placeholder" type="Node2D" parent="."]
+script = ExtResource("1_2cpul")
+label = "Rock"
+color = Color(0, 0.631373, 0.282353, 1)

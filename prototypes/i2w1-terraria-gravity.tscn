@@ -1,0 +1,554 @@
+[gd_scene load_steps=11 format=3 uid="uid://cr0j2l321db0h"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_pkw7y"]
+[ext_resource type="PackedScene" uid="uid://cmhx1qsp5lk13" path="res://prototypes/rock.tscn" id="2_ji8mk"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_kcxei"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="4_7xx8l"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_gcpat"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_oc828"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_hblxy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Watch.gd" id="8_nrtel"]
+
+[sub_resource type="Resource" id="Resource_culgm"]
+script = ExtResource("6_oc828")
+signal_name = "changed"
+to = NodePath("../Player/PlatformerController")
+invoke = "@gravity_setter"
+arguments = ["return value"]
+only_if = "return prop == \"gravity_force\""
+expression = ""
+
+[sub_resource type="Resource" id="Resource_1m7bs"]
+script = ExtResource("6_oc828")
+signal_name = "elapsed"
+to = NodePath("../State")
+invoke = "put"
+arguments = ["return \"gravity_force\"", "return to.at(\"gravity_force\") + 10"]
+only_if = "return true"
+expression = ""
+
+[node name="Level" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_pkw7y")
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[node name="rock" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 637)
+
+[node name="rock2" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(32, 637)
+
+[node name="rock3" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(53, 637)
+
+[node name="rock4" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(74, 637)
+
+[node name="rock5" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(95, 637)
+
+[node name="rock6" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(116, 637)
+
+[node name="rock7" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(137, 637)
+
+[node name="rock8" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(158, 637)
+
+[node name="rock9" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(179, 637)
+
+[node name="rock10" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(200, 637)
+
+[node name="rock11" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(221, 637)
+
+[node name="rock12" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(242, 637)
+
+[node name="rock13" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(263, 637)
+
+[node name="rock14" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(284, 637)
+
+[node name="rock15" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(305, 637)
+
+[node name="rock16" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(326, 637)
+
+[node name="rock17" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(347, 637)
+
+[node name="rock18" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(368, 637)
+
+[node name="rock19" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(389, 637)
+
+[node name="rock20" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(410, 637)
+
+[node name="rock21" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(431, 637)
+
+[node name="rock22" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(452, 637)
+
+[node name="rock23" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(473, 637)
+
+[node name="rock24" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(494, 637)
+
+[node name="rock25" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(515, 637)
+
+[node name="rock26" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(536, 637)
+
+[node name="rock27" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(557, 637)
+
+[node name="rock28" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(578, 637)
+
+[node name="rock29" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(599, 637)
+
+[node name="rock30" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(620, 637)
+
+[node name="rock31" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(641, 637)
+
+[node name="rock32" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(662, 637)
+
+[node name="rock33" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(683, 637)
+
+[node name="rock34" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(704, 637)
+
+[node name="rock35" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(725, 637)
+
+[node name="rock36" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(746, 637)
+
+[node name="rock37" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(767, 637)
+
+[node name="rock38" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(788, 637)
+
+[node name="rock39" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(809, 637)
+
+[node name="rock40" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(830, 637)
+
+[node name="rock41" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(851, 637)
+
+[node name="rock42" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(872, 637)
+
+[node name="rock43" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(893, 637)
+
+[node name="rock44" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(914, 637)
+
+[node name="rock45" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(935, 637)
+
+[node name="rock46" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(956, 637)
+
+[node name="rock47" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(977, 637)
+
+[node name="rock48" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(998, 637)
+
+[node name="rock49" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1019, 637)
+
+[node name="rock50" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1040, 637)
+
+[node name="rock51" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1061, 637)
+
+[node name="rock52" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1082, 637)
+
+[node name="rock53" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1103, 637)
+
+[node name="rock54" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 637)
+
+[node name="rock55" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 28)
+
+[node name="rock56" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(32, 28)
+
+[node name="rock57" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(53, 28)
+
+[node name="rock58" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(74, 28)
+
+[node name="rock59" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(95, 28)
+
+[node name="rock60" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(116, 28)
+
+[node name="rock61" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(137, 28)
+
+[node name="rock62" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(158, 28)
+
+[node name="rock63" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(179, 28)
+
+[node name="rock64" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(200, 28)
+
+[node name="rock65" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(221, 28)
+
+[node name="rock66" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(242, 28)
+
+[node name="rock67" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(263, 28)
+
+[node name="rock68" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(284, 28)
+
+[node name="rock69" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(305, 28)
+
+[node name="rock70" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(326, 28)
+
+[node name="rock71" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(347, 28)
+
+[node name="rock72" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(368, 28)
+
+[node name="rock73" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(389, 28)
+
+[node name="rock74" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(410, 28)
+
+[node name="rock75" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(431, 28)
+
+[node name="rock76" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(452, 28)
+
+[node name="rock77" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(473, 28)
+
+[node name="rock78" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(494, 28)
+
+[node name="rock79" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(515, 28)
+
+[node name="rock80" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(536, 28)
+
+[node name="rock81" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(557, 28)
+
+[node name="rock82" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(578, 28)
+
+[node name="rock83" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(599, 28)
+
+[node name="rock84" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(620, 28)
+
+[node name="rock85" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(641, 28)
+
+[node name="rock86" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(662, 28)
+
+[node name="rock87" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(683, 28)
+
+[node name="rock88" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(704, 28)
+
+[node name="rock89" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(725, 28)
+
+[node name="rock90" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(746, 28)
+
+[node name="rock91" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(767, 28)
+
+[node name="rock92" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(788, 28)
+
+[node name="rock93" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(809, 28)
+
+[node name="rock94" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(830, 28)
+
+[node name="rock95" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(851, 28)
+
+[node name="rock96" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(872, 28)
+
+[node name="rock97" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(893, 28)
+
+[node name="rock98" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(914, 28)
+
+[node name="rock99" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(935, 28)
+
+[node name="rock100" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(956, 28)
+
+[node name="rock101" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(977, 28)
+
+[node name="rock102" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(998, 28)
+
+[node name="rock103" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1019, 28)
+
+[node name="rock104" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1040, 28)
+
+[node name="rock105" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1061, 28)
+
+[node name="rock106" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1082, 28)
+
+[node name="rock107" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1103, 28)
+
+[node name="rock108" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 28)
+
+[node name="rock109" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 49)
+
+[node name="rock110" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 70)
+
+[node name="rock111" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 91)
+
+[node name="rock112" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 112)
+
+[node name="rock113" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 133)
+
+[node name="rock114" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 154)
+
+[node name="rock115" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 175)
+
+[node name="rock116" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 196)
+
+[node name="rock117" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 217)
+
+[node name="rock118" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 238)
+
+[node name="rock119" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 259)
+
+[node name="rock120" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 280)
+
+[node name="rock121" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 301)
+
+[node name="rock122" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 322)
+
+[node name="rock123" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 343)
+
+[node name="rock124" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 364)
+
+[node name="rock125" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 385)
+
+[node name="rock126" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 406)
+
+[node name="rock127" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 427)
+
+[node name="rock128" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 448)
+
+[node name="rock129" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 469)
+
+[node name="rock130" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 490)
+
+[node name="rock131" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 511)
+
+[node name="rock132" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 532)
+
+[node name="rock133" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 553)
+
+[node name="rock134" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 574)
+
+[node name="rock135" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 595)
+
+[node name="rock136" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(11, 616)
+
+[node name="rock137" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 49)
+
+[node name="rock138" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 70)
+
+[node name="rock139" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 91)
+
+[node name="rock140" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 112)
+
+[node name="rock141" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 133)
+
+[node name="rock142" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 154)
+
+[node name="rock143" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 175)
+
+[node name="rock144" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 196)
+
+[node name="rock145" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 217)
+
+[node name="rock146" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 238)
+
+[node name="rock147" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 259)
+
+[node name="rock148" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 280)
+
+[node name="rock149" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 301)
+
+[node name="rock150" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 322)
+
+[node name="rock151" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 343)
+
+[node name="rock152" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 364)
+
+[node name="rock153" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 385)
+
+[node name="rock154" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 406)
+
+[node name="rock155" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 427)
+
+[node name="rock156" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 448)
+
+[node name="rock157" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 469)
+
+[node name="rock158" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 490)
+
+[node name="rock159" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 511)
+
+[node name="rock160" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 532)
+
+[node name="rock161" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 553)
+
+[node name="rock162" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 574)
+
+[node name="rock163" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 595)
+
+[node name="rock164" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(1124, 616)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(96, 589)
+
+[node name="Placeholder" type="Node2D" parent="Player"]
+script = ExtResource("3_kcxei")
+color = Color(1, 0.317647, 0.819608, 1)
+
+[node name="PlatformerController" type="Node2D" parent="Player"]
+position = Vector2(-21, 0)
+script = ExtResource("4_7xx8l")
+
+[node name="State" type="Node2D" parent="."]
+position = Vector2(-65, 619)
+script = ExtResource("5_gcpat")
+metadata/gravity_force = 980.0
+metadata/pronto_connections = [SubResource("Resource_culgm")]
+
+[node name="Watch" type="Node2D" parent="State"]
+position = Vector2(211, -535)
+script = ExtResource("8_nrtel")
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(-63, 540)
+script = ExtResource("7_hblxy")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_1m7bs")]
