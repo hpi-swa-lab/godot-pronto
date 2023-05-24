@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=41 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
@@ -175,16 +175,15 @@ var swingDir = grappleLine.rotated(deg_to_rad(90))
 var newDir
 
 if currentVelocity != Vector2(0,0):
-	newDir = swingDir * currentVelocity.length()
-	#newDir = swingDir * swingDir.dot(currentVelocity.normalized()) * 50
+	#newDir = swingDir * currentVelocity.length()
+	newDir = swingDir * swingDir.dot(currentVelocity.normalized()) * 50
 else:
 	newDir = swingDir
 
 var gravityInfluence = newDir * newDir.dot(Vector2(0,1))
 currentVelocity = newDir + gravityInfluence
 G.put(\"playerVelocity\", currentVelocity)
-return currentVelocity
-"]
+return currentVelocity"]
 only_if = "return G.at(\"is_on_normal_grapple\")"
 expression = ""
 
@@ -196,6 +195,16 @@ invoke = ""
 arguments = []
 only_if = "return true"
 expression = "print(to.get_velocity())"
+
+[sub_resource type="Resource" id="Resource_kunrp"]
+script = ExtResource("5_jpml8")
+signal_name = "pressed"
+to = NodePath("../../../CharacterBody2D")
+invoke = "set_velocity"
+arguments = ["var left = from.get_parent().global_position - G.at(\"playerPos\")
+return G.at(\"playerVelocity\") + left.rotated(-90).normalized() * 2000"]
+only_if = "return G.at(\"is_on_normal_grapple\")"
+expression = ""
 
 [sub_resource type="Resource" id="Resource_xp1tx"]
 script = ExtResource("5_jpml8")
@@ -391,6 +400,12 @@ position = Vector2(112, 54)
 script = ExtResource("5_kljok")
 metadata/pronto_connections = [SubResource("Resource_pr8wo"), SubResource("Resource_gmt0n")]
 
+[node name="Key" type="Node2D" parent="Normal_Grapple_Spawner/RigidBody2D"]
+position = Vector2(22, 69)
+script = ExtResource("4_1kqu0")
+key = "P"
+metadata/pronto_connections = [SubResource("Resource_kunrp")]
+
 [node name="State" type="Node2D" parent="."]
 position = Vector2(754, 324)
 script = ExtResource("9_an3v8")
@@ -483,7 +498,7 @@ key = "P"
 metadata/pronto_connections = [SubResource("Resource_aesu6"), SubResource("Resource_pxct8")]
 
 [node name="Key4" type="Node2D" parent="."]
-position = Vector2(765, 511)
+position = Vector2(764, 511)
 script = ExtResource("4_1kqu0")
 key = "L"
 metadata/pronto_connections = [SubResource("Resource_b7q43"), SubResource("Resource_hkqq7")]
