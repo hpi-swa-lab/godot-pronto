@@ -92,7 +92,7 @@ var cell_index = Vector2i(mouse_pos / tile_map.cell_quadrant_size)
 
 var queue = G.at(\"build_queue\")
 var neighbor_positions = tile_map.get_surrounding_cells(cell_index)
-var has_tilemap_neighbor = neighbor_positions.any(func(pos): return to.get_cell_source_id(0,pos) != -1 or pos in queue)
+var has_tilemap_neighbor = neighbor_positions.any(func(pos): return tile_map.get_cell_source_id(0,pos) != -1 or pos in queue)
 if not has_tilemap_neighbor:
 	return
 
