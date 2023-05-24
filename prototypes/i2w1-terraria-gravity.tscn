@@ -1,33 +1,28 @@
-[gd_scene load_steps=13 format=3 uid="uid://cr0j2l321db0h"]
+[gd_scene load_steps=10 format=3 uid="uid://cr0j2l321db0h"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_pkw7y"]
 [ext_resource type="PackedScene" uid="uid://cmhx1qsp5lk13" path="res://prototypes/rock.tscn" id="2_ji8mk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_kcxei"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="4_7xx8l"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="5_gcpat"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="5_tvgu3"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/SourceProp.gd" id="6_6ggmk"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_oc828"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="7_fm8wo"]
 
-[sub_resource type="Resource" id="Resource_o3syl"]
-script = ExtResource("6_6ggmk")
-name = "gravity"
-from = NodePath("../../../State")
-prop = "gravity"
-
-[sub_resource type="Resource" id="Resource_bq3nv"]
-script = ExtResource("6_6ggmk")
-name = "gravity"
-from = NodePath("../../State")
-prop = "gravity"
-
-[sub_resource type="Resource" id="Resource_813yl"]
+[sub_resource type="Resource" id="Resource_tcef5"]
 script = ExtResource("6_oc828")
-signal_name = "pressed"
+signal_name = "up"
 to = NodePath("../State")
 invoke = "put"
-arguments = ["return \"gravity\"", "return to.at(\"gravity\") * -1.0"]
+arguments = ["return \"up_direction\"", "return to.at(\"up_direction\") * -1.0"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_upka5"]
+script = ExtResource("6_oc828")
+signal_name = "changed"
+to = NodePath("..")
+invoke = "set_up_direction"
+arguments = ["return value"]
 only_if = "return true"
 expression = ""
 
@@ -118,6 +113,42 @@ position = Vector2(536, 637)
 
 [node name="rock27" parent="Foreground" instance=ExtResource("2_ji8mk")]
 position = Vector2(557, 637)
+
+[node name="rock165" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(515, 616)
+
+[node name="rock166" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(536, 616)
+
+[node name="rock167" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(557, 616)
+
+[node name="rock168" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(536, 595)
+
+[node name="rock169" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(557, 595)
+
+[node name="rock170" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(578, 595)
+
+[node name="rock176" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(578, 616)
+
+[node name="rock171" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(557, 574)
+
+[node name="rock172" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(578, 574)
+
+[node name="rock174" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(599, 616)
+
+[node name="rock175" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(599, 595)
+
+[node name="rock173" parent="Foreground" instance=ExtResource("2_ji8mk")]
+position = Vector2(599, 574)
 
 [node name="rock28" parent="Foreground" instance=ExtResource("2_ji8mk")]
 position = Vector2(578, 637)
@@ -540,28 +571,23 @@ color = Color(1, 0.317647, 0.819608, 1)
 [node name="PlatformerController" type="Node2D" parent="Player"]
 position = Vector2(26, 1)
 script = ExtResource("4_7xx8l")
+show_trail = true
 
-[node name="Bind" type="Node2D" parent="Player/PlatformerController"]
-position = Vector2(62, 1)
-script = ExtResource("5_tvgu3")
-from = Array[ExtResource("6_6ggmk")]([SubResource("Resource_o3syl")])
-to_prop = "gravity"
-convert = "return gravity"
-
-[node name="Bind" type="Node2D" parent="Player"]
-script = ExtResource("5_tvgu3")
-from = Array[ExtResource("6_6ggmk")]([SubResource("Resource_bq3nv")])
-to_prop = "up_direction"
-convert = "return Vector2.UP if gravity > 0 else Vector2.DOWN"
-
-[node name="State" type="Node2D" parent="."]
-position = Vector2(-65, 619)
-script = ExtResource("5_gcpat")
-global = true
-metadata/gravity = 980.0
-
-[node name="Key" type="Node2D" parent="."]
-position = Vector2(-65, 542)
+[node name="Key" type="Node2D" parent="Player"]
+position = Vector2(108, -28)
 script = ExtResource("7_fm8wo")
 key = "A"
-metadata/pronto_connections = [SubResource("Resource_813yl")]
+metadata/pronto_connections = [SubResource("Resource_tcef5")]
+
+[node name="State" type="Node2D" parent="Player"]
+position = Vector2(26, -27)
+script = ExtResource("5_gcpat")
+metadata/up_direction = Vector2(0, -1)
+metadata/pronto_connections = [SubResource("Resource_upka5")]
+
+[node name="State" type="Node2D" parent="."]
+position = Vector2(-49, 649)
+script = ExtResource("5_gcpat")
+global = true
+metadata/global_up_direction = Vector2(0, -1)
+metadata/pronto_connections = []
