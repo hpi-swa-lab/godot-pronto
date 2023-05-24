@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dk5f5rbwp2rh4"]
+[gd_scene load_steps=19 format=3 uid="uid://dk5f5rbwp2rh4"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_ssknk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_8rrcq"]
@@ -8,9 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://ch4odbgjwk6dy" path="res://prototypes/block.tscn" id="6_8aijl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="7_ouhvv"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_x75nb"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqy1d"]
-size = Vector2(1548, 46)
 
 [sub_resource type="Resource" id="Resource_arumt"]
 script = ExtResource("4_xf1qv")
@@ -46,7 +43,6 @@ expression = ""
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_vexoq"]
 resource_name = "Block"
 scenes/1/scene = ExtResource("6_8aijl")
-scenes/1/display_placeholder = ExtResource("6_8aijl")
 
 [sub_resource type="TileSet" id="TileSet_16a3j"]
 tile_size = Vector2i(20, 20)
@@ -123,13 +119,6 @@ to.set_cell(0, pos, 1, Vector2i.ZERO, 1)
 
 [node name="Node2D" type="Node2D"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(-226, 581)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(764, 13)
-shape = SubResource("RectangleShape2D_eqy1d")
-
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(206, 26)
 
@@ -175,7 +164,7 @@ tile_set = SubResource("TileSet_16a3j")
 cell_quadrant_size = 20
 format = 2
 layer_0/name = "LayerZero"
-layer_0/tile_data = PackedInt32Array(2, 1, 65536, 0, 1, 65536)
+layer_0/tile_data = PackedInt32Array(2, 1, 65536, 0, 1, 65536, 2031616, 1, 65536, 2031656, 1, 65536, 2031673, 1, 65536, 2031672, 1, 65536, 2031671, 1, 65536, 2031670, 1, 65536, 2031669, 1, 65536, 2031668, 1, 65536, 2031667, 1, 65536, 2031666, 1, 65536, 2031665, 1, 65536, 2031664, 1, 65536, 2031663, 1, 65536, 2031662, 1, 65536, 2031661, 1, 65536, 2031660, 1, 65536, 2031659, 1, 65536, 2031658, 1, 65536, 2031657, 1, 65536, 2031655, 1, 65536, 2031654, 1, 65536, 2031653, 1, 65536, 2031652, 1, 65536, 2031651, 1, 65536, 2031650, 1, 65536, 2031649, 1, 65536, 2031648, 1, 65536, 2031647, 1, 65536, 2031646, 1, 65536, 2031645, 1, 65536, 2031644, 1, 65536, 2031643, 1, 65536, 2031642, 1, 65536, 2031641, 1, 65536, 2031640, 1, 65536, 2031639, 1, 65536, 2031638, 1, 65536, 2031637, 1, 65536, 2031636, 1, 65536, 2097171, 1, 65536, 2097170, 1, 65536, 2097169, 1, 65536, 2097168, 1, 65536, 2097167, 1, 65536, 2097166, 1, 65536, 2097165, 1, 65536, 2097164, 1, 65536, 2097163, 1, 65536, 2097162, 1, 65536, 2097161, 1, 65536, 2097160, 1, 65536, 2097159, 1, 65536, 2031625, 1, 65536, 2031626, 1, 65536, 2031627, 1, 65536, 2031628, 1, 65536, 2031629, 1, 65536, 2031630, 1, 65536, 2031631, 1, 65536, 2031632, 1, 65536, 2031633, 1, 65536, 2031634, 1, 65536, 2031635, 1, 65536, 2031624, 1, 65536, 2031623, 1, 65536, 2031622, 1, 65536, 2031621, 1, 65536, 2031620, 1, 65536, 2031619, 1, 65536, 2031618, 1, 65536, 2031617, 1, 65536, 2097152, 1, 65536, 2097153, 1, 65536, 2097154, 1, 65536, 2097155, 1, 65536, 2097156, 1, 65536, 2097157, 1, 65536, 2097158, 1, 65536, 2097172, 1, 65536, 2097173, 1, 65536, 2097174, 1, 65536, 2097175, 1, 65536, 2097176, 1, 65536, 2097177, 1, 65536, 2097178, 1, 65536, 2097179, 1, 65536, 2097180, 1, 65536, 2097181, 1, 65536, 2097182, 1, 65536, 2097183, 1, 65536, 2097184, 1, 65536, 2097209, 1, 65536, 2097208, 1, 65536, 2097207, 1, 65536, 2097206, 1, 65536, 2097205, 1, 65536, 2097204, 1, 65536, 2097203, 1, 65536, 2097202, 1, 65536, 2097201, 1, 65536, 2097200, 1, 65536, 2097199, 1, 65536, 2097198, 1, 65536, 2097197, 1, 65536, 2097196, 1, 65536, 2097195, 1, 65536, 2097194, 1, 65536, 2097193, 1, 65536, 2097192, 1, 65536, 2097191, 1, 65536, 2097190, 1, 65536, 2097189, 1, 65536, 2097188, 1, 65536, 2097187, 1, 65536, 2097186, 1, 65536, 2097185, 1, 65536)
 metadata/_edit_lock_ = true
 
 [node name="Node2D" parent="." instance=ExtResource("6_8aijl")]
@@ -204,6 +193,6 @@ metadata/pronto_connections = [SubResource("Resource_wtykm")]
 [node name="BuildClock" type="Node2D" parent="."]
 position = Vector2(128, 155)
 script = ExtResource("8_x75nb")
-duration_seconds = 0.3
+duration_seconds = 0.1
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_v23jl")]
