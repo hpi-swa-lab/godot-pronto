@@ -44,15 +44,15 @@ func _get_property_list():
 	var properties = []
 	
 	var property_usage_general = PROPERTY_USAGE_NO_EDITOR
-	if space_override != Area2D.SpaceOverride.SPACE_OVERRIDE_DISABLED:
+	if space_override != Area2D.SPACE_OVERRIDE_DISABLED:
 		property_usage_general = PROPERTY_USAGE_DEFAULT
 	
 	var property_usage_point_gravity = PROPERTY_USAGE_NO_EDITOR
-	if space_override != Area2D.SpaceOverride.SPACE_OVERRIDE_DISABLED and is_point:
+	if space_override != Area2D.SPACE_OVERRIDE_DISABLED and is_point:
 		property_usage_point_gravity = PROPERTY_USAGE_DEFAULT
 	
 	var property_usage_homogeneous_gravity
-	if space_override != Area2D.SpaceOverride.SPACE_OVERRIDE_DISABLED and not is_point:
+	if space_override != Area2D.SPACE_OVERRIDE_DISABLED and not is_point:
 		property_usage_homogeneous_gravity = PROPERTY_USAGE_DEFAULT
 	
 	properties.append({
