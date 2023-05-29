@@ -30,7 +30,7 @@ var paused: bool:
 
 func _enter_tree():
 	if not get_parent() is Area2D:
-		push_error("LinearDamp must be a child of an Area2D")
+		push_error("AngularDamp must be a child of an Area2D")
 
 func _get_property_list():
 	return [{
