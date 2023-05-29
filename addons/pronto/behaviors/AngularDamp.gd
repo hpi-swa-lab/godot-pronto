@@ -1,19 +1,19 @@
 @tool
-#thumb("Line")
+#thumb("InterpLinearAngle")
 extends Behavior
 
 @onready var _parent: Area2D = get_parent()
 
 @export var space_override: Area2D.SpaceOverride:
-	get: return _parent.linear_damp_space_override
+	get: return _parent.angular_damp_space_override
 	set(value): 
-		_parent.linear_damp_space_override = value
+		_parent.angular_damp_space_override = value
 		notify_property_list_changed()
 
 var strength: float:
-	get: return _parent.linear_damp
+	get: return _parent.angular_damp
 	set(value):
-		_parent.linear_damp = value
+		_parent.angular_damp = value
 
 func _enter_tree():
 	if not get_parent() is Area2D:
@@ -24,7 +24,7 @@ func _get_property_list():
 		"name": "strength",
 		"type": TYPE_FLOAT,
 		"usage": PROPERTY_USAGE_NO_EDITOR if space_override == Area2D.SPACE_OVERRIDE_DISABLED else PROPERTY_USAGE_DEFAULT,
-		"hint_string": "Strength of the linear dampening."
+		"hint_string": "Strength of the angular dampening."
 	}]
 
 func _ready():
