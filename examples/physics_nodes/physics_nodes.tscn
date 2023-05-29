@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5v80k1y5ptoh"]
+[gd_scene load_steps=5 format=3 uid="uid://b5v80k1y5ptoh"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_5ktuc"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_fclmp"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Gravity.gd" id="3_pe0s7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/LinearDamp.gd" id="4_qxqsv"]
 
 [node name="physics_nodes" type="Node2D"]
 
@@ -11,19 +12,23 @@ script = ExtResource("1_5ktuc")
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(542, 327)
-gravity_space_override = 1
+gravity_space_override = 3
 
 [node name="Placeholder" type="Node2D" parent="Area2D"]
 script = ExtResource("2_fclmp")
 
 [node name="Gravity" type="Node2D" parent="Area2D"]
 script = ExtResource("3_pe0s7")
-space_override = 1
+space_override = 3
 is_point = false
 strength = 980.0
 direction = Vector2(0, 1)
 point_center = Vector2(0, 1)
 point_unit_distance = 0.0
+
+[node name="LinearDamp" type="Node2D" parent="Area2D"]
+script = ExtResource("4_qxqsv")
+strength = 0.1
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(536, 583)
