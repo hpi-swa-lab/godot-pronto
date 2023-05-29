@@ -4,9 +4,14 @@ extends Behavior
 
 @onready var _parent: Area2D = get_parent()
 
+var _prior_space_override: Area2D.SpaceOverride
+
 @export var space_override: Area2D.SpaceOverride:
 	get: return _parent.gravity_space_override
 	set(value): 
+		if (value != space_override):
+			_prior_space_override = space_override
+		
 		_parent.gravity_space_override = value
 		notify_property_list_changed()
 
@@ -35,6 +40,14 @@ var point_unit_distance: float:
 	get: return _parent.gravity_point_unit_distance
 	set(value):
 		_parent.gravity_point_unit_distance = value
+
+var paused: bool:
+	get: return _parent.gravity_space_override == Area2D.SPACE_OVERRIDE_DISABLED
+	set(value):
+		if value:
+			space_override = Area2D.SPACE_OVERRIDE_DISABLED
+		else:
+			space_override = _prior_space_override
 
 func _enter_tree():
 	if not get_parent() is Area2D:
