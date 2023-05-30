@@ -1,0 +1,92 @@
+[gd_scene load_steps=13 format=3 uid="uid://bmrl0roi6aena"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_168vi"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_jbyva"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_k5gu7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="4_6qb18"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Inspect.gd" id="5_16ijm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_3vsff"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_mgmy4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_tt84u"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="8_5m4w3"]
+
+[sub_resource type="Resource" id="Resource_yro7p"]
+script = ExtResource("3_k5gu7")
+signal_name = "direction"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["return dir"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_mhasi"]
+script = ExtResource("3_k5gu7")
+signal_name = "pressed"
+to = NodePath("../Move")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "to.get_parent().rotation = to.get_parent().rotation + 0.1"
+
+[sub_resource type="Resource" id="Resource_cv7s8"]
+script = ExtResource("3_k5gu7")
+signal_name = "elapsed"
+to = NodePath("../Player/Move")
+invoke = "move_left"
+arguments = []
+only_if = "return not false"
+expression = ""
+
+[node name="inspect1" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(583, 342)
+
+[node name="Placeholder" type="Node2D" parent="Player"]
+script = ExtResource("1_168vi")
+color = Color(1, 1, 0, 1)
+placeholder_size = Vector2(18, 38)
+
+[node name="Inspect" type="Node2D" parent="Player/Placeholder"]
+position = Vector2(0, 69)
+script = ExtResource("5_16ijm")
+property = "position"
+background_color = Color(0, 0, 0, 0.2)
+color = Color(1, 1, 1, 1)
+shape_size = Vector2(100, 100)
+
+[node name="Controls" type="Node2D" parent="Player"]
+position = Vector2(-38, -21)
+script = ExtResource("2_jbyva")
+metadata/pronto_connections = [SubResource("Resource_yro7p")]
+
+[node name="Move" type="Node2D" parent="Player"]
+position = Vector2(-210, -233)
+script = ExtResource("4_6qb18")
+
+[node name="Key" type="Node2D" parent="Player"]
+position = Vector2(57, -156)
+script = ExtResource("6_3vsff")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_mhasi")]
+
+[node name="Inspect" type="Node2D" parent="Player"]
+position = Vector2(-106, 112)
+script = ExtResource("5_16ijm")
+property = "global_position"
+background_color = Color(0, 0, 0, 0.2)
+color = Color(1, 1, 1, 1)
+shape_size = Vector2(100, 100)
+
+[node name="Value" type="Node2D" parent="."]
+position = Vector2(177, 317)
+script = ExtResource("6_mgmy4")
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(296, 493)
+script = ExtResource("7_tt84u")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_cv7s8")]
+
+[node name="State" type="Node2D" parent="."]
+script = ExtResource("8_5m4w3")

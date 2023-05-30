@@ -19,6 +19,10 @@ class_name Placeholder
 		queue_redraw()
 		_update_shape()
 
+var size: Vector2:
+	get:
+		return placeholder_size
+
 func _ready():
 	super._ready()
 
