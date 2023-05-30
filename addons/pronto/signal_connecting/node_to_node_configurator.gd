@@ -117,7 +117,10 @@ func set_existing_connection(from: Node, connection: Connection):
 func _on_function_selected(name: String):
 	set_mode(name == "<statement(s)>", true)
 	
-	var method = Utils.find(receiver.get_method_list(), func (m): return m["name"] == name)
+	var cond = func (m): return m["name"] == name
+	var method = Utils.find(receiver.get_script().get_script_method_list(), cond)
+	if method == null:
+		method = Utils.find(receiver.get_method_list(), cond)
 	
 	for child in %Args.get_children():
 		%Args.remove_child(child)
@@ -127,7 +130,14 @@ func _on_function_selected(name: String):
 		return
 	
 	var ExpressionEdit = preload("res://addons/pronto/signal_connecting/expression_edit.tscn")
-	for arg in method["args"]:
+	
+	var arguments = []
+	if (receiver is Code and name == "execute"):
+		arguments = receiver.arguments.map(func (argument_name): return {"name": argument_name})
+	else:
+		arguments = method["args"]
+	
+	for arg in arguments:
 		var arg_ui = ExpressionEdit.instantiate()
 		Utils.fix_minimum_size(arg_ui)
 		arg_ui.placeholder_text = "return " + arg["name"]

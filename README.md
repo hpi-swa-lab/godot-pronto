@@ -1,5 +1,7 @@
 # Pronto
 
+![Screenshot showing Godot with pronto elements](https://github.com/hpi-swa-lab/godot-pronto/blob/master/images/screenshot.png?raw=true)
+
 Pronto is a framework for [Godot](http://godotengine.org) to make prototyping game mechanics faster. It is *not* a framework aimed at helping to create entire games faster. The resulting prototypes are a means to quickly explore ideas, throw away the prototype, and only properly implement ideas that turned out well.
 
 ## Function
@@ -42,6 +44,7 @@ The following list of behaviors primarily cause effects when triggered.
 | Move | When triggered, moves its parent. Can be set to move along global or local axes. Supports handling of gravity. |
 | Spawner | When triggered, spawns whatever its child node is at its current location in the scene. |
 | Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. For example, create a Label node, add a Bind node as a child, use `text` as property and put any expression in its `convert` field. |
+| PlatformerController | Makes the parent behave like a platformer character, meaning that it can jump, move horizontally, and is affected by gravity. Must be a child of a [CharacterBody2D](https://docs.godotengine.org/en/stable/classes/class_characterbody2d.html). |
 
 The following list of behaviors manage state or communicate visual properties.
 
