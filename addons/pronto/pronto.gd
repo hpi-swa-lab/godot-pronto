@@ -76,16 +76,17 @@ func _make_visible(visible):
 	edited_object = null
 
 func _forward_canvas_gui_input(event):
-	if edited_object is Behavior:
-		var ret = edited_object._forward_canvas_gui_input(event, get_undo_redo())
-		if ret:
-			update_overlays()
-		return ret
-	return false
+	if not (is_instance_valid(edited_object) and edited_object is Behavior):
+		return false
+	var ret = edited_object._forward_canvas_gui_input(event, get_undo_redo())
+	if ret:
+		update_overlays()
+	return ret
 
 func _forward_canvas_draw_over_viewport(viewport_control):
-	if edited_object is Behavior:
-		edited_object._forward_canvas_draw_over_viewport(viewport_control)
+	if not (is_instance_valid(edited_object) and edited_object is Behavior):
+		return
+	edited_object._forward_canvas_draw_over_viewport(viewport_control)
 
 func show_signals(node: Node):
 	if popup:
