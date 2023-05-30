@@ -17,14 +17,16 @@ func run({0}):
 	{1}
 '.format([', '.join(argument_names), _indent(source)])
 	var source_filename = "res://script-instances/" + str(source_code.hash()) + ".gd"
-	if FileAccess.file_exists(source_filename):
-		return load(source_filename)
-	else:
+	if not FileAccess.file_exists(source_filename):
 		DirAccess.make_dir_absolute("res://script-instances")
 		var script = GDScript.new()
 		script.source_code = source_code
-		ResourceSaver.save(script, source_filename)
-		return load(source_filename)
+		var error = ResourceSaver.save(script, source_filename)
+		assert(not error, "Error saving script: %s" % error)
+	var script = load(source_filename)
+	assert(script, "Could not load script!")
+	# TODO: improve error handling
+	return script
 
 func eval(source: String, argument_names: Array, argument_values: Array, node_ref = null):
 	assert(argument_names.size() == argument_values.size(), "Argument names and values for eval need to have the same size.")
@@ -32,6 +34,7 @@ func eval(source: String, argument_names: Array, argument_values: Array, node_re
 	if not key in _cache:
 		var object = U.new(node_ref if node_ref != null else Engine.get_main_loop().root)
 		object.set_script(script_for_eval(source, argument_names))
+		assert('ref' in object, "Could not create script, possibly a syntax error?")
 		_cache[key] = object
 	var i = _cache[key]
 	i.ref = node_ref
