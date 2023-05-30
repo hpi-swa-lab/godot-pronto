@@ -29,5 +29,5 @@ func _draw():
 	super._draw()
 	if (not from or not to):
 		return
-	draw_line(from.get_global_position(), to.get_global_position(), line_color, line_width, true)
+	draw_line(from.get_global_position() - get_global_position(), to.get_global_position() - get_global_position(), line_color, line_width, true)
 	
