@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=48 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_jpml8"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="5_kljok"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="6_nu8ty"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="8_qfgut"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="9_an3v8"]
 
 [sub_resource type="Resource" id="Resource_6pxs7"]
@@ -141,7 +142,7 @@ expression = "var parent = instance.get_parent()
 if parent.get_child_count() > 1:
 	parent.remove_child(parent.get_child(0))
 
-instance.linear_velocity = (from.get_viewport().get_mouse_position() - G.at(\"playerPos\")).normalized() * G.at(\"init_grapple_speed\")"
+#instance.linear_velocity = (from.get_viewport().get_mouse_position() - G.at(\"playerPos\")).normalized() * G.at(\"init_grapple_speed\")"
 
 [sub_resource type="Resource" id="Resource_mcu8b"]
 script = ExtResource("5_jpml8")
@@ -223,6 +224,26 @@ to = NodePath("../../../State")
 invoke = "inc"
 arguments = ["return \"grapple_line\"", "return (G.at(\"grapple_line\")*G.at(\"grapple_move\"))"]
 only_if = "return G.at(\"is_on_normal_grapple\")"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_tiqya"]
+script = ExtResource("5_jpml8")
+signal_name = "mouse_down"
+to = NodePath("../..")
+invoke = "spawn"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_hpjrt"]
+script = ExtResource("5_jpml8")
+signal_name = "mouse_down"
+to = NodePath("../../../State")
+invoke = "put"
+arguments = ["
+from.get_parent().linear_velocity = (pos - G.at(\"playerPos\")).normalized() * G.at(\"init_grapple_speed\")
+return \"is_on_normal_grapple\"", "return true"]
+only_if = "return true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_xp1tx"]
@@ -440,6 +461,11 @@ script = ExtResource("4_1kqu0")
 key = "L"
 metadata/pronto_connections = [SubResource("Resource_4bkw8")]
 
+[node name="Controls" type="Node2D" parent="Normal_Grapple_Spawner/RigidBody2D"]
+position = Vector2(126, -8)
+script = ExtResource("8_qfgut")
+metadata/pronto_connections = [SubResource("Resource_tiqya"), SubResource("Resource_hpjrt")]
+
 [node name="State" type="Node2D" parent="."]
 position = Vector2(754, 324)
 script = ExtResource("9_an3v8")
@@ -453,7 +479,7 @@ metadata/grapple_speed = 200
 metadata/is_on_normal_grapple = false
 metadata/playerVelocity = Vector2(0, 0)
 metadata/grapple_line = Vector2(0, 0)
-metadata/grapple_move = 0.01
+metadata/grapple_move = 0.04
 
 [node name="Always" type="Node2D" parent="."]
 position = Vector2(638, 383)
@@ -546,7 +572,7 @@ key = "Space"
 metadata/pronto_connections = [SubResource("Resource_268c8"), SubResource("Resource_ivovv"), SubResource("Resource_qp5aa")]
 
 [node name="Key6" type="Node2D" parent="."]
-position = Vector2(1153, 445)
+position = Vector2(1162, 427)
 script = ExtResource("4_1kqu0")
 key = "R"
 metadata/pronto_connections = [SubResource("Resource_hgpjk"), SubResource("Resource_518e6")]
