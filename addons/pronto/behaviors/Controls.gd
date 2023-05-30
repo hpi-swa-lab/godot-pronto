@@ -14,7 +14,7 @@ signal vertical_direction(dir: Vector2)
 
 signal mouse_down(pos: Vector2, button: MouseButton)
 signal mouse_up(pos: Vector2, button: MouseButton)
-signal mouse_moved(pos: Vector2)
+signal mouse_move(pos: Vector2)
 signal mouse_drag(pos: Vector2)
 
 var enable_drag = false
@@ -73,6 +73,6 @@ func _input(event):
 		else:
 			mouse_up.emit(event.position, event.button_index)
 	if event is InputEventMouseMotion:
-		mouse_moved.emit(event.position)
+		mouse_move.emit(event.position)
 		if enable_drag:
 			mouse_drag.emit(event.position)
