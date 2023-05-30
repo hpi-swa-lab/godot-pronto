@@ -4,34 +4,57 @@ extends Behavior
 class_name Inspect
 
 var default_property = 'position'
+var default_expression = 'return self.%s' % default_property
 
-var _expression
-var expression:
-	get:
-		return _expression
-	set(v):
+var _expressions = []
+func get_expression(i):
+	if i >= len(_expressions):
+		return '<click to add>'
+	return _expressions[i]
+func set_expression(i, v):
+	if v == '<click to add>':
+		# must not add placeholder
+		return
+	if i >= len(_expressions):
+		_expressions.push_back(null)
+		_properties.push_back(null)
+	if v == '<remove>':
+		_properties.remove_at(i)
+		_expressions.remove_at(i)
+	else:
 		if v != null:
-			_property = '<statement(s)>'
-		_expression = v
-		notify_property_list_changed()
-		update()
+			_properties[i] = '<statement(s)>'
+		_expressions[i] = v
+	notify_property_list_changed()
+	update()
 
-var _property
-var property = default_property:
-	get:
-		return _property
-	set(v):
-		if v != null and v.begins_with('--'):
-			# must not select group headers
-			return
+var _properties = []
+func get_property(i):
+	if i >= len(_properties):
+		return '<click to add>'
+	return _properties[i]
+func set_property(i, v):
+	if v != null and v.begins_with('--'):
+		# must not select group headers
+		return
+	if v == '<click to add>':
+		# must not add placeholder
+		return
+	if i >= len(_properties):
+		_expressions.push_back(null)
+		_properties.push_back(null)
+	if v == '<remove>':
+		_properties.remove_at(i)
+		_expressions.remove_at(i)
+	else:
 		if v == '<statement(s)>':
-			expression = 'return target.%s' % (property if property else default_property)
-			return
+			var property = _properties[i]
+			return set_expression(i, 'return target.%s' % (property if property else default_property))
 		if v != null:
-			_expression = null
-		_property = v
-		notify_property_list_changed()
-		update()
+			_expressions[i] = null
+		_properties[i] = v
+	notify_property_list_changed()
+	update()
 
 var target: Node2D:
 	get:
@@ -47,10 +70,37 @@ var color = Color.WHITE:
 		color = v
 		queue_redraw()
 
-var shape_size = Vector2(100, 100):
+var shape_rect
+var shape_size:
 	set(v):
 		shape_size = v
+		shape_rect = Rect2(shape_size / -2, shape_size)
+		if label != null:
+			var string_rect = self.shape_rect.grow(-(padding + shadow_thickness))
+			label.position = string_rect.position
+			label.size = string_rect.size
 		queue_redraw()
+
+var label: Label
+
+var padding = 1
+var shadow_thickness = 1
+
+func _get(property):
+	if property.match('property_?*'):
+		var index = property.trim_prefix('property_').to_int()
+		return get_property(index)
+	if property.match('expression_?*'):
+		var index = property.trim_prefix('expression_').to_int()
+		return get_expression(index)
+
+func _set(property, v):
+	if property.match('property_?*'):
+		var index = property.trim_prefix('property_').to_int()
+		return set_property(index, v)
+	if property.match('expression_?*'):
+		var index = property.trim_prefix('expression_').to_int()
+		return set_expression(index, v)
 
 func _get_property_list():
 	var property_list = []
@@ -59,7 +109,8 @@ func _get_property_list():
 		var property_names = []
 		property_names.push_front('<statement(s)>')
 		for _class in Utils.all_classes_of(target):
-			var new_property_names = ClassDB.class_get_property_list(_class, true).map(func(_property): return _property.name)
+			var new_property_names = ClassDB.class_get_property_list(_class, true)\
+				.map(func(_property): return _property.name)
 			if not len(new_property_names): continue
 			
 			property_names.push_back("-- %s --" % _class)
@@ -70,24 +121,31 @@ func _get_property_list():
 					continue
 				property_names.push_back(name)
 		
-		property_list.append({
-			'name': 'property',
-			'type': TYPE_STRING,
-			'usage': PROPERTY_USAGE_DEFAULT,
-			'hint': PROPERTY_HINT_ENUM,
-			'hint_string': ','.join(property_names)
-		})
-		
-		if property == '<statement(s)>':
+		for i in len(_properties) + len(['<template>']):
+			var _property_names = property_names.duplicate()
+			if len(_properties) > 1 and i < len(_properties):
+				_property_names.push_front('<remove>')
+			
+			var property = get_property(i)
 			property_list.append({
-				'name': 'expression',
+				'name': 'property_%s' % i,
 				'type': TYPE_STRING,
 				'usage': PROPERTY_USAGE_DEFAULT,
-				'hint': PROPERTY_HINT_EXPRESSION
+				'hint': PROPERTY_HINT_ENUM,
+				'hint_string': ','.join(_property_names)
 			})
+			if property == '<statement(s)>':
+				# FIXME: Cannot edit expression at runtime because temporary syntax errors break everything - how to defer parsing?
+				property_list.append({
+					'name': 'expression_%s' % i,
+					'type': TYPE_STRING,
+					'usage': PROPERTY_USAGE_DEFAULT,
+					'hint': PROPERTY_HINT_EXPRESSION
+				})
 	
 	# export static properties
-	# NOTE: we could also use export keyword for that, but this would add these properties prior to the other group
+	# NOTE: we could also use export keyword for that, but this would add these
+	# properties prior to the other group
 	property_list.append({
 		'name': "Appearance",
 		'type': TYPE_NIL,
@@ -111,15 +169,36 @@ func _get_property_list():
 	
 	return property_list
 
-var value_string: String
+var strings
+
+func _init():
+	super._init()
+	
+	self.shape_size = Vector2(100, 100)
+	_properties.push_back(null)
+	_expressions.push_back(null)
+	self.set_property(0, default_property)
+	
+	label = Label.new()
+	label.label_settings = LabelSettings.new()
+	label.label_settings.font_size = 10
+	label.label_settings.line_spacing = -4
+	label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+	self.shape_size = shape_size
+	add_child(label)
 
 func _ready():
 	if Engine.is_editor_hint():
 		# construction convenience: position ourselves below the parent's known bounds
 		var parent = get_parent()
 		var parent_rect = Utils.global_rect_of(parent)
-		var parent_child_rect = parent.get_children().filter(func(child): return child != self).map(func(child): return Utils.global_rect_of(child)).reduce(func(a, b): return a.merge(b), parent_rect)
-		self.position = Vector2(0, (parent_child_rect.end.y - parent_rect.end.y + parent_rect.size.y + shape_size.y) / 2)
+		var parent_child_rect = parent.get_children() \
+			.filter(func(child): return child != self) \
+			.map(func(child): return Utils.global_rect_of(child)) \
+			.reduce(func(a, b): return a.merge(b), parent_rect)
+		self.position = Vector2(0,
+			(parent_child_rect.end.y - parent_rect.end.y
+				+ parent_rect.size.y + shape_size.y) / 2)
 	
 	super._ready()
 
@@ -129,23 +208,36 @@ func _process(delta):
 	self.update()
 
 func update():
-	var new_value_string
-	if target:
-		var new_value
-		if expression:
-			if Engine.is_editor_hint():
-				# FIXME: eval() does not work in editor mode
-				new_value = null
-			else:
-				new_value = ConnectionsList.eval(expression, ['target'], [self.target], self)
-		elif property:
-			new_value = self.target.get(property)
-		new_value_string = str(new_value)
+	var new_strings
+	if self.target:
+		new_strings = []
+		for i in len(_expressions):
+			var label
+			var value
+			if _expressions[i]:
+				var expression = _expressions[i]
+				label = "<expr%s>" % i
+				if Engine.is_editor_hint():
+					# FIXME: eval() does not work in editor mode
+					value = null
+				else:
+					value = ConnectionsList.eval(expression, ['target'], [self.target], self)
+			elif _properties[i]:
+				var property = _properties[i]
+				label = property
+				value = self.target.get(property)
+			var value_string = str(value)
+			if i + 1 < len(_expressions): # no need to truncate last item
+				value_string = Utils.ellipsize(value_string, 32)
+			new_strings.push_back([label, value_string])
 	else:
-		new_value_string = '<no target>'
-	if new_value_string == value_string: return
-	value_string = new_value_string
-	queue_redraw()
+		new_strings = '<no target>'
+	if typeof(new_strings) == typeof(strings) and new_strings == strings: return
+	strings = new_strings
+	
+	if label != null:
+		var labels = [strings] if not (strings is Array) else strings.map(func(string): return "%s: %s" % string)
+		label.set_text("\n".join(labels))
 
 func handles():
 	return [
@@ -159,37 +251,5 @@ func handles():
 func _draw():
 	super._draw()
 	
-	var labels = [value_string] #["x: 0", "label: text"]
-	
-	var shape_rect = Rect2(shape_size / -2, shape_size)
-	draw_rect(shape_rect, background_color, true)
-	
-	var padding = 1
-	var shadow_thickness = 1
-	var string_rect = shape_rect.grow(-(padding + shadow_thickness)).grow_side(SIDE_TOP, -5)
-	var font = ThemeDB.fallback_font
-	var string_sizes = labels.map(func(label): return font.get_string_size(label))
-	string_sizes = string_sizes.map(func(size): return size * Vector2(1, .5))
-	var y = 0
-	for i in labels.size():
-		var label = labels[i]
-		var height = string_sizes[i].y
-		y += height
-		
-		# draw text with shadow
-		var ds = []
-		for dx in range(-shadow_thickness, shadow_thickness * 2):
-			for dy in range(-shadow_thickness, shadow_thickness * 2):
-				ds.push_back(Vector2(dx, dy))
-		ds.push_back(Vector2.ZERO)
-		for d in ds:
-			draw_string(
-				font,
-				string_rect.size / -2 + Vector2(0, y - height / 2) + d,
-				label,
-				HORIZONTAL_ALIGNMENT_LEFT,
-				string_rect.size.x,
-				10,
-				color if d.x == 0 and d.y == 0 else
-					(Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
-			)
+	if shape_rect != null:
+		draw_rect(shape_rect, background_color, true)

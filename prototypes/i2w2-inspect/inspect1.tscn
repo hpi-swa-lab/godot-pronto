@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmrl0roi6aena"]
+[gd_scene load_steps=14 format=3 uid="uid://bmrl0roi6aena"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_168vi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_jbyva"]
@@ -37,6 +37,10 @@ arguments = []
 only_if = "return not false"
 expression = ""
 
+[sub_resource type="LabelSettings" id="LabelSettings_dpdsv"]
+line_spacing = -5.0
+font_size = 12
+
 [node name="inspect1" type="Node2D"]
 
 [node name="Player" type="Node2D" parent="."]
@@ -50,7 +54,10 @@ placeholder_size = Vector2(18, 38)
 [node name="Inspect" type="Node2D" parent="Player/Placeholder"]
 position = Vector2(0, 69)
 script = ExtResource("5_16ijm")
-property = "position"
+property_0 = "position"
+property_1 = "<statement(s)>"
+expression_1 = "return target.get_parent()"
+property_2 = "<click to add>"
 background_color = Color(0, 0, 0, 0.2)
 color = Color(1, 1, 1, 1)
 shape_size = Vector2(100, 100)
@@ -71,9 +78,10 @@ key = "A"
 metadata/pronto_connections = [SubResource("Resource_mhasi")]
 
 [node name="Inspect" type="Node2D" parent="Player"]
-position = Vector2(-106, 112)
+position = Vector2(106, -21)
 script = ExtResource("5_16ijm")
-property = "global_position"
+property_0 = "global_transform"
+property_1 = "<click to add>"
 background_color = Color(0, 0, 0, 0.2)
 color = Color(1, 1, 1, 1)
 shape_size = Vector2(100, 100)
@@ -90,3 +98,14 @@ metadata/pronto_connections = [SubResource("Resource_cv7s8")]
 
 [node name="State" type="Node2D" parent="."]
 script = ExtResource("8_5m4w3")
+
+[node name="RichTextLabel" type="Label" parent="."]
+offset_left = 944.0
+offset_top = 277.0
+offset_right = 1013.0
+offset_bottom = 357.0
+text = "x: hello world
+y: yes
+and also ..."
+label_settings = SubResource("LabelSettings_dpdsv")
+autowrap_mode = 1
