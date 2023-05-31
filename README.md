@@ -58,6 +58,7 @@ The following list of behaviors manage state or communicate visual properties.
 | Instance | Allows you to define a template subtree of Nodes that you want to repeat multiple times without copy-pasting. Add your template as a child of the Instance node, then hover the connection dialog and click the "Instance" button. Note: internally, this creates a "hidden" scene that you need to commit as well. You can thus use **"Editable children"** in Godot by right-clicking the instance and tweaking properties while inherting the rest. |
 | Background | Add to your scene to change the background color of the scene. |
 | CameraShake | Add as a child of a camera and call its `add_trauma` function to add shake. |
+| Inspect | Add as a child of a node to inspect its properties inside the game. |
 
 ### Hints
 
