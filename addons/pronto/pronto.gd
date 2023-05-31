@@ -76,17 +76,29 @@ func _make_visible(visible):
 	edited_object = null
 
 func _forward_canvas_gui_input(event):
-	if not (is_instance_valid(edited_object) and edited_object is Behavior):
+	if not _is_editing_behavior():
 		return false
 	var ret = edited_object._forward_canvas_gui_input(event, get_undo_redo())
 	if ret:
 		update_overlays()
 	return ret
 
-func _forward_canvas_draw_over_viewport(viewport_control):
-	if not (is_instance_valid(edited_object) and edited_object is Behavior):
-		return
-	edited_object._forward_canvas_draw_over_viewport(viewport_control)
+func _forward_canvas_draw_over_viewport(viewport_control):#
+	if _is_editing_behavior():
+		return edited_object._forward_canvas_draw_over_viewport(viewport_control)
+
+func _is_editing_behavior():
+	if not is_instance_valid(edited_object):
+		# edited_object might be freed after inspecting an object from a prior debugging session
+		return false
+	if not edited_object.has_method('_process'):
+		# edited_object is EditorDebuggerRemoteObject, which we can only use to retrieve state
+		# but not to interact with
+		# https://github.com/hpi-swa-lab/godot-pronto/pull/22
+		return false
+	if not edited_object is Behavior:
+		return false
+	return true
 
 func show_signals(node: Node):
 	if popup:
