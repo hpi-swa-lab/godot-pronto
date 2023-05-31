@@ -54,6 +54,7 @@ The following list of behaviors manage state or communicate visual properties.
 | State | Use the Godot meta properties to store state. You can configure it to store values in the global dictionary `G` and access it via `G.at(prop)`. |
 | Value | Show a constant you can use in expression visually as a slider. Note that these are shared globally, so create new names if you need to use different values. |
 | Placeholder | Show a colored rectangle with a label. Useful as a quick means to communicate a game object's function. Functions as a collision shape, so you don't need to add another. |
+| VisualLine | Show a colored Line between two Nodes. Useful as a quick visual connection. |
 | Instance | Allows you to define a template subtree of Nodes that you want to repeat multiple times without copy-pasting. Add your template as a child of the Instance node, then hover the connection dialog and click the "Instance" button. Note: internally, this creates a "hidden" scene that you need to commit as well. You can thus use **"Editable children"** in Godot by right-clicking the instance and tweaking properties while inherting the rest. |
 | Background | Add to your scene to change the background color of the scene. |
 | CameraShake | Add as a child of a camera and call its `add_trauma` function to add shake. |
