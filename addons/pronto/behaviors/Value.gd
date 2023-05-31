@@ -9,9 +9,14 @@ const WIDTH = 120
 
 @export var from = 0.0
 @export var to = 1.0
+@export var step_size = 1.0:
+	set(val):
+		if val and val > 0:
+			step_size = val
+
 @export var value = 0.0:
 	set(val):
-		value = clamp(val, from, to)
+		value = clamp(float(round(val/step_size)*step_size), from, to)
 		value_changed.emit(value)
 		G.put(name, value)
 		queue_redraw()

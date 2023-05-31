@@ -167,6 +167,10 @@ static func ellipsize(s: String, max: int = 16):
 		return s
 	return s.substr(0, max - 3) + "..."
 
+static func global_size_of_yourself(node: Node):
+	if "size" in node: return Rect2(node.global_position, node.size)
+	return Rect2(node.global_position, Vector2.ZERO)
+
 static func global_rect_of(node: Node):
 	node = Utils.closest_parent_with_position(node)
 	if "size" in node: return Rect2(node.global_position, node.size)

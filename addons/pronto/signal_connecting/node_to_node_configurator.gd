@@ -118,7 +118,9 @@ func _on_function_selected(name: String):
 	set_mode(name == "<statement(s)>", true)
 	
 	var cond = func (m): return m["name"] == name
-	var method = Utils.find(receiver.get_script().get_script_method_list(), cond)
+	var method = null
+	if receiver.get_script() != null:
+		method = Utils.find(receiver.get_script().get_script_method_list(), cond)
 	if method == null:
 		method = Utils.find(receiver.get_method_list(), cond)
 	
