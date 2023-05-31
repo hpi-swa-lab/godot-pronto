@@ -139,6 +139,14 @@ var shape_size:
 			label.size = string_rect.size
 		queue_redraw()
 
+var sticky_transform # need to export for copying state into game
+var sticky : bool = false:
+	get:
+		return sticky_transform != null
+	set(v):
+		sticky_transform = self.global_transform if v else null
+		notify_property_list_changed()
+
 var label: RichTextLabel
 
 var padding = 1
@@ -230,6 +238,17 @@ func _get_property_list():
 		'type': TYPE_VECTOR2,
 		'usage': PROPERTY_USAGE_DEFAULT
 	})
+	property_list.append({
+		'name': 'sticky',
+		'type': TYPE_BOOL,
+		'usage': PROPERTY_USAGE_DEFAULT
+	})
+	if sticky:
+		property_list.append({
+			'name': 'sticky_transform',
+			'type': TYPE_TRANSFORM2D,
+			'usage': PROPERTY_USAGE_DEFAULT
+		})
 	
 	return property_list
 
@@ -266,6 +285,9 @@ func _ready():
 
 func _process(delta):
 	super._process(delta)
+	
+	if sticky:
+		self.global_transform = sticky_transform
 	
 	self.update()
 
