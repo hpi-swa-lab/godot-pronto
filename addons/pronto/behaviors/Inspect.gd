@@ -6,53 +6,101 @@ class_name Inspect
 var default_property = 'position'
 var default_expression = 'return self.%s' % default_property
 
-var _expressions = []
-func get_expression(i):
-	if i >= len(_expressions):
+const COOLDOWN_LENGTH_MS = 100
+
+class Item:
+	var label
+	var value
+	var cooldown_time := 0
+	var property : String
+	var expression
+	var value_string : String
+	
+	func update(target: Node, index: int, inspect: Inspect) -> bool:
+		var new_value
+		if expression:
+			label = "<expr%s>" % index
+			if Engine.is_editor_hint():
+				# FIXME: eval() does not work in editor mode
+				new_value = null
+			else:
+				var result := ConnectionsList.eval_or_error(expression, ['target'], [target], inspect)
+				new_value = "<error>" if result.error else result.value
+		elif property:
+			label = property
+			new_value = target.get(property)
+		
+		if new_value == value:
+			return false
+		
+		cooldown_time = Time.get_ticks_msec() + COOLDOWN_LENGTH_MS
+		value = new_value
+		value_string = str(new_value)
+		return true
+	
+	func add_to_label(label: RichTextLabel, highlight_color: Color, should_truncate: bool = false):
+		var full_string := get_display_string(should_truncate) + "\n"
+
+		if Time.get_ticks_msec() >= cooldown_time:
+			label.add_text(full_string)
+			return
+						
+		label.push_color(highlight_color)	
+		label.add_text(full_string)
+		label.pop()
+	
+	func get_display_string(should_truncate := false) -> String:
+		var string := value_string
+		if should_truncate:
+			string = Utils.ellipsize(string, 32)
+		var full_string := "%s: %s" % [label, string]
+		return full_string
+		
+
+func get_expression(i: int) -> String:
+	if i >= len(items):
 		return '<click to add>'
-	return _expressions[i]
-func set_expression(i, v):
+	return items[i].expression
+func set_expression(i: int, v: String):
 	if v == '<click to add>':
 		# must not add placeholder
 		return
-	if i >= len(_expressions):
-		_expressions.push_back(null)
-		_properties.push_back(null)
+	if i >= len(items):
+		var new_item := Item.new()
+		new_item.expression = v
+		items.push_back(new_item)
 	if v == '<remove>':
-		_properties.remove_at(i)
-		_expressions.remove_at(i)
+		items.remove_at(i)
 	else:
 		if v != null:
-			_properties[i] = '<statement(s)>'
-		_expressions[i] = v
+			items[i].property = "<statement(s)>"
+		items[i].expression = v
 	notify_property_list_changed()
 	update()
 
-var _properties = []
-func get_property(i):
-	if i >= len(_properties):
+func get_property(i: int) -> String:
+	if i >= len(items):
 		return '<click to add>'
-	return _properties[i]
-func set_property(i, v):
+	return items[i].property
+func set_property(i: int, v: String):
 	if v != null and v.begins_with('--'):
 		# must not select group headers
 		return
 	if v == '<click to add>':
 		# must not add placeholder
 		return
-	if i >= len(_properties):
-		_expressions.push_back(null)
-		_properties.push_back(null)
+	if i >= len(items):
+		var new_item := Item.new()
+		items.push_back(new_item)
 	if v == '<remove>':
-		_properties.remove_at(i)
-		_expressions.remove_at(i)
+		items.remove_at(i)
 	else:
 		if v == '<statement(s)>':
-			var property = _properties[i]
+			var property = items[i].property
 			return set_expression(i, 'return target.%s' % (property if property else default_property))
 		if v != null:
-			_expressions[i] = null
-		_properties[i] = v
+			items[i].expression = null
+		items[i].property = v
 	notify_property_list_changed()
 	update()
 
@@ -67,8 +115,11 @@ var background_color = Color(0, 0, 0, .2):
 
 var color = Color.WHITE:
 	set(v):
-		color = v
-		queue_redraw()
+		label.set("theme_override_colors/default_color", v)
+	get:
+		return label.get("theme_override_colors/default_color")
+
+var highlight_color := Color.RED
 
 var shape_rect
 var shape_size:
@@ -81,7 +132,7 @@ var shape_size:
 			label.size = string_rect.size
 		queue_redraw()
 
-var label: Label
+var label: RichTextLabel
 
 var padding = 1
 var shadow_thickness = 1
@@ -121,9 +172,10 @@ func _get_property_list():
 					continue
 				property_names.push_back(name)
 		
-		for i in len(_properties) + len(['<template>']):
+		for i in len(items) + len(['<template>']):
 			var _property_names = property_names.duplicate()
-			if len(_properties) > 1 and i < len(_properties):
+			# Do not remove the first item or the template item.
+			if len(items) > 1 and i < len(items):
 				_property_names.push_front('<remove>')
 			
 			var property = get_property(i)
@@ -162,6 +214,11 @@ func _get_property_list():
 		'usage': PROPERTY_USAGE_DEFAULT
 	})
 	property_list.append({
+		'name': 'highlight_color',
+		'type': TYPE_COLOR,
+		'usage': PROPERTY_USAGE_DEFAULT
+	})
+	property_list.append({
 		'name': 'shape_size',
 		'type': TYPE_VECTOR2,
 		'usage': PROPERTY_USAGE_DEFAULT
@@ -169,21 +226,19 @@ func _get_property_list():
 	
 	return property_list
 
-var strings
+var items : Array[Item]
 
 func _init():
 	super._init()
 	
 	self.shape_size = Vector2(100, 100)
-	_properties.push_back(null)
-	_expressions.push_back(null)
 	self.set_property(0, default_property)
 	
-	label = Label.new()
-	label.label_settings = LabelSettings.new()
-	label.label_settings.font_size = 10
-	label.label_settings.line_spacing = -4
-	label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+	label = RichTextLabel.new()
+	label.set("theme_override_font_sizes/normal_font_size", 10)
+	label.set("theme_override_constants/line_separation", -4)
+	label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	label.mouse_filter = Control.MOUSE_FILTER_PASS
 	self.shape_size = shape_size
 	add_child(label)
 
@@ -208,36 +263,32 @@ func _process(delta):
 	self.update()
 
 func update():
-	var new_strings
-	if self.target:
-		new_strings = []
-		for i in len(_expressions):
-			var label
-			var value
-			if _expressions[i]:
-				var expression = _expressions[i]
-				label = "<expr%s>" % i
-				if Engine.is_editor_hint():
-					# FIXME: eval() does not work in editor mode
-					value = null
-				else:
-					value = ConnectionsList.eval(expression, ['target'], [self.target], self)
-			elif _properties[i]:
-				var property = _properties[i]
-				label = property
-				value = self.target.get(property)
-			var value_string = str(value)
-			if i + 1 < len(_expressions): # no need to truncate last item
-				value_string = Utils.ellipsize(value_string, 32)
-			new_strings.push_back([label, value_string])
-	else:
-		new_strings = '<no target>'
-	if typeof(new_strings) == typeof(strings) and new_strings == strings: return
-	strings = new_strings
+	if label == null:
+		return
 	
-	if label != null:
-		var labels = [strings] if not (strings is Array) else strings.map(func(string): return "%s: %s" % string)
-		label.set_text("\n".join(labels))
+	if self.target == null:
+		return
+	
+	for i in len(items):
+		var item := items[i]
+		item.update(self.target, i, self)
+	
+	var labels = ['<no target>'] if items == null else items.map(func(item: Item): return item.get_display_string(false))
+	label.tooltip_text = "\n".join(labels)
+	
+	label.clear()
+	for i in len(items):
+		var item := items[i]
+		item.add_to_label(label, highlight_color, i < len(items) - 1)
+	label.text = label.text.rstrip("\n")
+
+
+func _truncate_items(items: Array) -> Array:
+	var truncated := []
+	for pair in items:
+		var short_value := Utils.ellipsize(pair[1], 32) as String
+		truncated.push_back([pair[0],short_value])
+	return truncated
 
 func handles():
 	return [

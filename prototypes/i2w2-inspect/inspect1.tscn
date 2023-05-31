@@ -51,17 +51,6 @@ script = ExtResource("1_168vi")
 color = Color(1, 1, 0, 1)
 placeholder_size = Vector2(18, 38)
 
-[node name="Inspect" type="Node2D" parent="Player/Placeholder"]
-position = Vector2(0, 69)
-script = ExtResource("5_16ijm")
-property_0 = "position"
-property_1 = "<statement(s)>"
-expression_1 = "return target.get_parent()"
-property_2 = "<click to add>"
-background_color = Color(0, 0, 0, 0.2)
-color = Color(1, 1, 1, 1)
-shape_size = Vector2(100, 100)
-
 [node name="Controls" type="Node2D" parent="Player"]
 position = Vector2(-38, -21)
 script = ExtResource("2_jbyva")
@@ -78,13 +67,19 @@ key = "A"
 metadata/pronto_connections = [SubResource("Resource_mhasi")]
 
 [node name="Inspect" type="Node2D" parent="Player"]
-position = Vector2(106, -21)
+position = Vector2(0, 69)
 script = ExtResource("5_16ijm")
-property_0 = "global_transform"
-property_1 = "<click to add>"
+property_0 = "position"
+property_1 = "transform"
+property_2 = "<statement(s)>"
+expression_2 = "return target.global_rotation"
+property_3 = "<statement(s)>"
+expression_3 = "return target.position"
+property_4 = "<click to add>"
 background_color = Color(0, 0, 0, 0.2)
-color = Color(1, 1, 1, 1)
-shape_size = Vector2(100, 100)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(260, 52)
 
 [node name="Value" type="Node2D" parent="."]
 position = Vector2(177, 317)
@@ -93,6 +88,7 @@ script = ExtResource("6_mgmy4")
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(296, 493)
 script = ExtResource("7_tt84u")
+paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_cv7s8")]
 
