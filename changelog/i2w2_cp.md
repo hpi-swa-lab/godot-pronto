@@ -10,7 +10,7 @@
   - **Multiple properties:** You can also select multiple properties to inspect at once. Choose <kbd>\<remove></kbd> from the top of the dropdown to remove a property from the list again.
   - **Custom expressions:** You can also select <kbd>\<statement(s)></kbd> at the top to enter a custom code expression that is evaluated with access to the `target` node.
   - **Highlighted changes:** When the inspected properties change, the behavior will highlight the changed properties for a short time.
-  - **Dynamic layout:** You can use the resize handles to change the size of the inspect behavior. The initial layout avoids overlapping with the parent node's and its children's visible shapes.
+  - **Dynamic layout:** You can use the resize handles to change the size of the inspect behavior. The initial layout avoids overlapping with the parent node's and its children's visible shapes. You can also make the behavior *sticky* to avoid it being moved or rotated with the parent node.
   - **Tooltips and truncation for long strings:** Value strings that are too long to fit into the selected layout are truncated. Hover over the truncated string to see the full value in a tooltip.
   - **Customizable appearance:** You can change the text and background colors of the behavior in the inspector.
   - **Known issues:**
