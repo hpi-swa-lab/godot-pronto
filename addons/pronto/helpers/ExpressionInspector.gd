@@ -23,6 +23,7 @@ class ExpressionProperty extends EditorProperty:
 	var my_update = false
 	func _init():
 		editor = preload("res://addons/pronto/signal_connecting/expression_edit.tscn").instantiate()
+		editor.size_flags_horizontal = SIZE_EXPAND_FILL # Make the expression window take the full width
 		add_child(editor)
 		editor.text_changed.connect(func ():
 			if not my_update:

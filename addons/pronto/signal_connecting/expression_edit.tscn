@@ -60,7 +60,7 @@ keyword_colors = {
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_au0w8")
-name = "DebugSkipBreakpointsOff"
+name = "DebugStep"
 
 [node name="expression_edit" type="HBoxContainer"]
 custom_minimum_size = Vector2(0, 43)
