@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmrl0roi6aena"]
+[gd_scene load_steps=10 format=3 uid="uid://bmrl0roi6aena"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_168vi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_jbyva"]
@@ -6,9 +6,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="4_6qb18"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Inspect.gd" id="5_16ijm"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_3vsff"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_mgmy4"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_tt84u"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="8_5m4w3"]
 
 [sub_resource type="Resource" id="Resource_yro7p"]
 script = ExtResource("3_k5gu7")
@@ -28,18 +25,14 @@ arguments = []
 only_if = "return true"
 expression = "to.get_parent().rotation = to.get_parent().rotation + 0.1"
 
-[sub_resource type="Resource" id="Resource_cv7s8"]
+[sub_resource type="Resource" id="Resource_wixve"]
 script = ExtResource("3_k5gu7")
-signal_name = "elapsed"
-to = NodePath("../Player/Move")
-invoke = "move_left"
+signal_name = "pressed"
+to = NodePath("../Move")
+invoke = ""
 arguments = []
-only_if = "return not false"
-expression = ""
-
-[sub_resource type="LabelSettings" id="LabelSettings_dpdsv"]
-line_spacing = -5.0
-font_size = 12
+only_if = "return true"
+expression = "to.get_parent().rotation = to.get_parent().rotation - 0.1"
 
 [node name="inspect1" type="Node2D"]
 
@@ -51,57 +44,63 @@ script = ExtResource("1_168vi")
 color = Color(1, 1, 0, 1)
 placeholder_size = Vector2(18, 38)
 
+[node name="Inspect" type="Node2D" parent="Player/Placeholder"]
+position = Vector2(0, 69)
+script = ExtResource("5_16ijm")
+property_0 = "global_rotation"
+property_1 = "global_transform"
+property_2 = "<statement(s)>"
+expression_2 = "return target.get_parent().position"
+property_3 = "<click to add>"
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(135, 99)
+sticky = false
+
 [node name="Controls" type="Node2D" parent="Player"]
-position = Vector2(-38, -21)
+position = Vector2(-74, -161)
 script = ExtResource("2_jbyva")
 metadata/pronto_connections = [SubResource("Resource_yro7p")]
 
 [node name="Move" type="Node2D" parent="Player"]
-position = Vector2(-210, -233)
+position = Vector2(3, -76)
 script = ExtResource("4_6qb18")
 
-[node name="Key" type="Node2D" parent="Player"]
+[node name="Inspect" type="Node2D" parent="Player/Move"]
+position = Vector2(-494, -145)
+script = ExtResource("5_16ijm")
+property_0 = "<statement(s)>"
+expression_0 = "return \"vel=%s\" % target.velocity"
+property_1 = "<click to add>"
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(169, 23)
+sticky = true
+sticky_transform = Transform2D(1, 0, 0, 1, 92, 121)
+
+[node name="KeyA" type="Node2D" parent="Player"]
 position = Vector2(57, -156)
 script = ExtResource("6_3vsff")
 key = "A"
 metadata/pronto_connections = [SubResource("Resource_mhasi")]
 
+[node name="KeyD" type="Node2D" parent="Player"]
+position = Vector2(113, -147)
+script = ExtResource("6_3vsff")
+key = "D"
+metadata/pronto_connections = [SubResource("Resource_wixve")]
+
 [node name="Inspect" type="Node2D" parent="Player"]
-position = Vector2(0, 69)
+position = Vector2(-491, -290)
 script = ExtResource("5_16ijm")
 property_0 = "position"
-property_1 = "transform"
-property_2 = "<statement(s)>"
-expression_2 = "return target.global_rotation"
-property_3 = "<statement(s)>"
-expression_3 = "return target.position"
-property_4 = "<click to add>"
+property_1 = "rotation"
+property_2 = "<click to add>"
 background_color = Color(0, 0, 0, 0.2)
 color = null
 highlight_color = Color(1, 0, 0, 1)
-shape_size = Vector2(260, 52)
-
-[node name="Value" type="Node2D" parent="."]
-position = Vector2(177, 317)
-script = ExtResource("6_mgmy4")
-
-[node name="Clock" type="Node2D" parent="."]
-position = Vector2(296, 493)
-script = ExtResource("7_tt84u")
-paused = true
-trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_cv7s8")]
-
-[node name="State" type="Node2D" parent="."]
-script = ExtResource("8_5m4w3")
-
-[node name="RichTextLabel" type="Label" parent="."]
-offset_left = 944.0
-offset_top = 277.0
-offset_right = 1013.0
-offset_bottom = 357.0
-text = "x: hello world
-y: yes
-and also ..."
-label_settings = SubResource("LabelSettings_dpdsv")
-autowrap_mode = 1
+shape_size = Vector2(168, 94)
+sticky = true
+sticky_transform = Transform2D(1, 0, 0, 1, 92, 52)
