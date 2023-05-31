@@ -17,7 +17,7 @@
     - Editing an expression while the game is open is tricky as the expression is evaluated as-you-type. This can lead to unhandlable runtime errors. To avoid this, prefix the expression with `#` until you are done editing it.
     - Custom expressions can only be displayed when the game is open.
 
-- **Improved error handling for `eval`:** When a code expression anywhere in the system (e.g., in a connection or in an inspect behavior) contains a syntax error or cannot be saved, this error is now communicated clearer to the user in the output console. (You will no longer see the cryptic error message "invalid set index 'ref'".)
+- **Improved error handling for `eval`** (6a754c2): When a code expression anywhere in the system (e.g., in a connection or in an inspect behavior) contains a syntax error or cannot be saved, this error is now communicated clearer to the user in the output console. (You will no longer see the cryptic error message "invalid set index 'ref'".)
 
 ### API Changes
 
