@@ -28,4 +28,3 @@
 | `Inspect` behavior in scene | Properties of `Inspect` behavior |
 | --- | --- |
 | ![](./i2w2_cp_inspect_scene.png) | ![](./i2w2_cp_inspect_properties.png) |
-![](2023-05-31-23-05-52.png)
