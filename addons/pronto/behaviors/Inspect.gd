@@ -237,7 +237,7 @@ func _init():
 	label = RichTextLabel.new()
 	label.set("theme_override_font_sizes/normal_font_size", 10)
 	label.set("theme_override_constants/line_separation", -4)
-	label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 	label.mouse_filter = Control.MOUSE_FILTER_PASS
 	self.shape_size = shape_size
 	add_child(label)
