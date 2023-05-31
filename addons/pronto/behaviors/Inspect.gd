@@ -30,7 +30,7 @@ class Item:
 			label = property
 			new_value = target.get(property)
 		
-		if new_value == value:
+		if typeof(new_value) == typeof(value) and new_value == value:
 			return false
 		
 		cooldown_time = Time.get_ticks_msec() + COOLDOWN_LENGTH_MS
