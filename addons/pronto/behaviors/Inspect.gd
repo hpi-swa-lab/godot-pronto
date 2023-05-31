@@ -16,6 +16,13 @@ class Item:
 	var expression
 	var value_string : String
 	
+	func _to_string():
+		return "<InspectItem %s label=%s value=%s>" % [
+			"expression='%s'" % expression if expression != null else "property=%s" % property,
+			label,
+			value
+		]
+	
 	func update(target: Node, index: int, inspect: Inspect) -> bool:
 		var new_value
 		if expression:
