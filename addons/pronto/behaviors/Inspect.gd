@@ -115,6 +115,13 @@ var target: Node2D:
 	get:
 		return self.get_parent()
 
+var font_size = 10:
+	get:
+		return label.get("theme_override_font_sizes/normal_font_size")
+	set(v):
+		label.set("theme_override_font_sizes/normal_font_size", v)
+		notify_property_list_changed()
+
 var background_color = Color(0, 0, 0, .2):
 	set(v):
 		background_color = v
@@ -219,6 +226,11 @@ func _get_property_list():
 		'usage': PROPERTY_USAGE_CATEGORY
 	})
 	property_list.append({
+		'name': 'font_size',
+		'type': TYPE_INT,
+		'usage': PROPERTY_USAGE_DEFAULT
+	})
+	property_list.append({
 		'name': 'background_color',
 		'type': TYPE_COLOR,
 		'usage': PROPERTY_USAGE_DEFAULT
@@ -261,7 +273,7 @@ func _init():
 	self.set_property(0, default_property)
 	
 	label = RichTextLabel.new()
-	label.set("theme_override_font_sizes/normal_font_size", 10)
+	self.font_size = 10
 	label.set("theme_override_constants/line_separation", -4)
 	label.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 	label.mouse_filter = Control.MOUSE_FILTER_PASS
