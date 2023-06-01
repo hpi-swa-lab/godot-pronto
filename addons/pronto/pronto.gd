@@ -57,11 +57,11 @@ func _handles(object):
 	return !pronto_should_ignore(object)
 
 func _edit(object):
-	if edited_object and edited_object is Behavior:
+	if _is_editing_behavior():
 		edited_object.deselected()
 	
 	edited_object = object
-	if edited_object and edited_object is Node:
+	if _is_editing_behavior() and edited_object is Node:
 		show_signals(edited_object)
 	else:
 		close()
@@ -91,14 +91,12 @@ func _is_editing_behavior():
 	if not is_instance_valid(edited_object):
 		# edited_object might be freed after inspecting an object from a prior debugging session
 		return false
-	if not edited_object.has_method('_process'):
+	if not edited_object.has_method('_forward_canvas_draw_over_viewport'):
 		# edited_object is EditorDebuggerRemoteObject, which we can only use to retrieve state
 		# but not to interact with
 		# https://github.com/hpi-swa-lab/godot-pronto/pull/22
 		return false
-	if not edited_object is Behavior:
-		return false
-	return true
+	return edited_object is Behavior
 
 func show_signals(node: Node):
 	if popup:
