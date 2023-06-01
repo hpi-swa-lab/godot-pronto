@@ -1,0 +1,348 @@
+[gd_scene load_steps=19 format=3 uid="uid://i7avro6u8cdd"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_db1ot"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="3_16mby"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="3_nsabk"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_nyn4q"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_qf28f"]
+
+[sub_resource type="Resource" id="Resource_xilxk"]
+script = ExtResource("4_nyn4q")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return other is RigidBody2D"
+expression = "from.get_parent().position = closest(\"Checkpoint\").position"
+
+[sub_resource type="Resource" id="Resource_5t3wi"]
+script = ExtResource("4_nyn4q")
+signal_name = "up"
+to = NodePath("..")
+invoke = "set_position"
+arguments = ["return closest(\"Checkpoint\").position"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ungay"]
+size = Vector2(100, 266)
+
+[sub_resource type="Resource" id="Resource_5nir8"]
+script = ExtResource("4_nyn4q")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return other is CharacterBody2D"
+expression = "from.get_parent().position = closest(\"IceBallStartingPosition\").position"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bfgw1"]
+size = Vector2(100, 2)
+
+[sub_resource type="Resource" id="Resource_djw4w"]
+script = ExtResource("4_nyn4q")
+signal_name = "collided"
+to = NodePath("../../AscendingForce")
+invoke = "set_gravity_direction"
+arguments = ["return to.gravity_direction * -1"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vypyu"]
+size = Vector2(100, 2)
+
+[sub_resource type="Resource" id="Resource_oj0i4"]
+script = ExtResource("4_nyn4q")
+signal_name = "collided"
+to = NodePath("../../AscendingForce")
+invoke = "set_gravity_direction"
+arguments = ["return to.gravity_direction * -1"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjfjv"]
+size = Vector2(310, 49)
+
+[sub_resource type="Resource" id="Resource_2rsoi"]
+script = ExtResource("4_nyn4q")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return other is CharacterBody2D"
+expression = "from.get_parent().position = closest(\"IceBallStartingPosition\")"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubtvo"]
+size = Vector2(3, 49)
+
+[sub_resource type="Resource" id="Resource_wwlpx"]
+script = ExtResource("4_nyn4q")
+signal_name = "collided"
+to = NodePath("../../AscendingForce")
+invoke = "set_gravity_direction"
+arguments = ["return to.gravity_direction * -1"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_pckmf"]
+script = ExtResource("4_nyn4q")
+signal_name = "collided"
+to = NodePath("../../AscendingForce")
+invoke = "set_gravity_direction"
+arguments = ["return to.gravity_direction * -1"]
+only_if = "return true"
+expression = ""
+
+[node name="i3w1-celeste-ice-ball" type="Node2D"]
+
+[node name="Stage" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Stage"]
+position = Vector2(576, 10)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(1152, 20)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Stage"]
+position = Vector2(576, 2294)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D2"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(1152, 20)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Stage"]
+position = Vector2(10, 1142)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D3"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 2284)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Stage"]
+position = Vector2(1142, 1142)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D4"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 2284)
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Stage"]
+position = Vector2(217, 277)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D5"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(400, 20)
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="Stage"]
+position = Vector2(468, 297)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D6"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(101, 20)
+
+[node name="StaticBody2D11" type="StaticBody2D" parent="Stage"]
+position = Vector2(613, 523)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D11"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(101, 150)
+
+[node name="StaticBody2D13" type="StaticBody2D" parent="Stage"]
+position = Vector2(714, 523)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D13"]
+position = Vector2(0, 18)
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(101, 75)
+
+[node name="StaticBody2D12" type="StaticBody2D" parent="Stage"]
+position = Vector2(614, 350)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D12"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(101, 50)
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="Stage"]
+position = Vector2(669, 317)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D7"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(300, 20)
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="Stage"]
+position = Vector2(576, 300)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D8"]
+position = Vector2(233, 19)
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 49)
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="Stage"]
+position = Vector2(895, 588)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D9"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(480, 20)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(705, 274)
+collision_layer = 5
+collision_mask = 5
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, -2)
+script = ExtResource("2_db1ot")
+color = Color(0.878431, 0.129412, 0.831373, 1)
+placeholder_size = Vector2(25, 60)
+
+[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("3_16mby")
+jump_velocity = 500.0
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+
+[node name="Collision" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(3, 0)
+script = ExtResource("3_nsabk")
+metadata/pronto_connections = [SubResource("Resource_xilxk")]
+
+[node name="Key" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("5_qf28f")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_5t3wi")]
+
+[node name="IceBalls" type="Node2D" parent="."]
+
+[node name="Iceball" type="Node2D" parent="IceBalls"]
+position = Vector2(468, 154)
+
+[node name="AscendingForce" type="Area2D" parent="IceBalls/Iceball"]
+collision_layer = 2
+collision_mask = 2
+gravity_space_override = 3
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
+gravity = 300.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceBalls/Iceball/AscendingForce"]
+shape = SubResource("RectangleShape2D_ungay")
+
+[node name="iceball" type="RigidBody2D" parent="IceBalls/Iceball"]
+position = Vector2(2, 0)
+collision_layer = 6
+collision_mask = 6
+
+[node name="Placeholder" type="Node2D" parent="IceBalls/Iceball/iceball"]
+script = ExtResource("2_db1ot")
+color = Color(0.160784, 0.788235, 0.917647, 1)
+
+[node name="Collision" type="Node2D" parent="IceBalls/Iceball/iceball"]
+script = ExtResource("3_nsabk")
+metadata/pronto_connections = [SubResource("Resource_5nir8")]
+
+[node name="TopBar" type="Area2D" parent="IceBalls/Iceball"]
+position = Vector2(0, -133)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceBalls/Iceball/TopBar"]
+shape = SubResource("RectangleShape2D_bfgw1")
+
+[node name="Collision" type="Node2D" parent="IceBalls/Iceball/TopBar"]
+script = ExtResource("3_nsabk")
+metadata/pronto_connections = [SubResource("Resource_djw4w")]
+
+[node name="BottomBar" type="Area2D" parent="IceBalls/Iceball"]
+position = Vector2(0, 133)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceBalls/Iceball/BottomBar"]
+shape = SubResource("RectangleShape2D_vypyu")
+
+[node name="Collision" type="Node2D" parent="IceBalls/Iceball/BottomBar"]
+script = ExtResource("3_nsabk")
+metadata/pronto_connections = [SubResource("Resource_oj0i4")]
+
+[node name="IceBallStartingPosition" type="Node2D" parent="IceBalls/Iceball"]
+
+[node name="Iceball2" type="Node2D" parent="IceBalls"]
+position = Vector2(975, 319)
+
+[node name="AscendingForce" type="Area2D" parent="IceBalls/Iceball2"]
+collision_layer = 2
+collision_mask = 2
+gravity_space_override = 3
+gravity_point_center = Vector2(1, 0)
+gravity_direction = Vector2(1, 0)
+gravity = 300.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceBalls/Iceball2/AscendingForce"]
+shape = SubResource("RectangleShape2D_fjfjv")
+
+[node name="iceball" type="RigidBody2D" parent="IceBalls/Iceball2"]
+collision_layer = 6
+collision_mask = 6
+
+[node name="Placeholder" type="Node2D" parent="IceBalls/Iceball2/iceball"]
+script = ExtResource("2_db1ot")
+color = Color(0.160784, 0.788235, 0.917647, 1)
+
+[node name="Collision" type="Node2D" parent="IceBalls/Iceball2/iceball"]
+script = ExtResource("3_nsabk")
+metadata/pronto_connections = [SubResource("Resource_2rsoi")]
+
+[node name="TopBar" type="Area2D" parent="IceBalls/Iceball2"]
+position = Vector2(-155, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceBalls/Iceball2/TopBar"]
+shape = SubResource("RectangleShape2D_ubtvo")
+
+[node name="Collision" type="Node2D" parent="IceBalls/Iceball2/TopBar"]
+script = ExtResource("3_nsabk")
+metadata/pronto_connections = [SubResource("Resource_wwlpx")]
+
+[node name="BottomBar" type="Area2D" parent="IceBalls/Iceball2"]
+position = Vector2(155, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IceBalls/Iceball2/BottomBar"]
+shape = SubResource("RectangleShape2D_ubtvo")
+
+[node name="Collision" type="Node2D" parent="IceBalls/Iceball2/BottomBar"]
+script = ExtResource("3_nsabk")
+metadata/pronto_connections = [SubResource("Resource_pckmf")]
+
+[node name="IceBallStartingPosition" type="Node2D" parent="IceBalls/Iceball2"]
+
+[node name="Checkpoint" type="Node2D" parent="."]
+position = Vector2(54, 239)
+
+[node name="Checkpoint2" type="Node2D" parent="."]
+position = Vector2(667, 277)
