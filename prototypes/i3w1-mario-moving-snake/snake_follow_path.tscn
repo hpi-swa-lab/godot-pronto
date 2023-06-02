@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwbtidm6blffi"]
+
+[ext_resource type="Script" path="res://prototypes/i3w1-mario-moving-snake/MovingPlatform.gd" id="1_ow1e2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_7k0kl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="3_wkto5"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_yejyi"]
+
+[sub_resource type="Resource" id="Resource_3gl6t"]
+script = ExtResource("4_yejyi")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[node name="SnakeFollowPath" type="PathFollow2D"]
+rotates = false
+loop = false
+
+[node name="SnakeBlock" type="CharacterBody2D" parent="."]
+script = ExtResource("1_ow1e2")
+
+[node name="Placeholder" type="Node2D" parent="SnakeBlock"]
+script = ExtResource("2_7k0kl")
+color = Color(0.282353, 0.87451, 0.34902, 1)
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(37, 0)
+script = ExtResource("3_wkto5")
+one_shot = true
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_3gl6t")]
