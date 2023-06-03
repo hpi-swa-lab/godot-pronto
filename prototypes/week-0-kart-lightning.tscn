@@ -1,0 +1,164 @@
+[gd_scene load_steps=18 format=3 uid="uid://dw4frlvr7ghss"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_8m86w"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_4g7h6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_ev3hj"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_gty2v"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_p6ay7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_wlhs4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_k2jw4"]
+
+[sub_resource type="Animation" id="Animation_4mps3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_xftfa"]
+resource_name = "spin"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ajm2n"]
+_data = {
+"RESET": SubResource("Animation_4mps3"),
+"spin": SubResource("Animation_xftfa")
+}
+
+[sub_resource type="Resource" id="Resource_5mx72"]
+script = ExtResource("4_gty2v")
+signal_name = "up"
+to = NodePath("../CharacterBody2D/Move")
+invoke = "move_up"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_s8b1w"]
+script = ExtResource("4_gty2v")
+signal_name = "right"
+to = NodePath("../CharacterBody2D/Move")
+invoke = "rotate_right"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_qkit3"]
+script = ExtResource("4_gty2v")
+signal_name = "left"
+to = NodePath("../CharacterBody2D/Move")
+invoke = "rotate_left"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_215i0"]
+script = ExtResource("4_gty2v")
+signal_name = "just_down"
+to = NodePath("FastClock")
+invoke = "reset_and_start"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_3j73q"]
+script = ExtResource("4_gty2v")
+signal_name = "just_down"
+to = NodePath("../CharacterBody2D/Move")
+invoke = "set"
+arguments = ["\"max_velocity\"", "from.get_node(\"../Slow\").value"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_3j06i"]
+script = ExtResource("4_gty2v")
+signal_name = "just_down"
+to = NodePath("../CharacterBody2D/Placeholder/AnimationPlayer")
+invoke = "play"
+arguments = ["\"spin\"", "-1", "1.0", "false"]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_b57bi"]
+script = ExtResource("4_gty2v")
+signal_name = "elapsed"
+to = NodePath("../../CharacterBody2D/Move")
+invoke = "set"
+arguments = ["\"max_velocity\"", "from.get_node(\"../../Fast\").value"]
+only_if = "true"
+expression = ""
+
+[node name="week-0-kart-lightning" type="Node"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(572, 295)
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("1_8m86w")
+label = "Kart"
+placeholder_size = Vector2(24, 52)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D/Placeholder"]
+libraries = {
+"": SubResource("AnimationLibrary_ajm2n")
+}
+
+[node name="Move" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(103, 79)
+script = ExtResource("2_4g7h6")
+friction = 50.0
+rotated = true
+rotation_speed = 300.0
+
+[node name="Controls" type="Node2D" parent="."]
+position = Vector2(691, 448)
+script = ExtResource("3_ev3hj")
+metadata/pronto_connections = [SubResource("Resource_5mx72"), SubResource("Resource_s8b1w"), SubResource("Resource_qkit3")]
+
+[node name="Trigger" type="Node2D" parent="."]
+position = Vector2(525, 446)
+script = ExtResource("5_p6ay7")
+key = "Space"
+metadata/pronto_connections = [SubResource("Resource_215i0"), SubResource("Resource_3j73q"), SubResource("Resource_3j06i")]
+
+[node name="FastClock" type="Node2D" parent="Trigger"]
+position = Vector2(80, 51)
+script = ExtResource("8_k2jw4")
+one_shot = true
+paused = true
+metadata/pronto_connections = [SubResource("Resource_b57bi")]
+
+[node name="Slow" type="Node2D" parent="."]
+position = Vector2(555, 511)
+script = ExtResource("6_wlhs4")
+from = 100.0
+to = 1000.0
+value = 200.0
+
+[node name="Fast" type="Node2D" parent="."]
+position = Vector2(555, 537)
+script = ExtResource("6_wlhs4")
+from = 100.0
+to = 1000.0
+value = 500.0

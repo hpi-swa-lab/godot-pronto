@@ -25,7 +25,7 @@ var _was_on_floor = false
 
 func is_on_floor():
 	if get_parent() is CharacterBody2D:
-		return get_parent().is_on_floor()
+		return true
 	return false if gravity > 0.0 else true
 
 func add_velocity(velocity: Vector2):
@@ -39,6 +39,10 @@ func set_velocity_y(num: float):
 func set_velocity_x(num: float):
 	_did_accelerate = true
 	self.velocity.x = num
+
+func set_velocity(velocity: Vector2):
+	_did_accelerate = true
+	self.velocity = velocity
 
 func _physics_process(delta):
 	if Engine.is_editor_hint():

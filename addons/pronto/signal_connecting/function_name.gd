@@ -15,7 +15,7 @@ func _gui_input(event):
 		match event.keycode:
 			KEY_DOWN: move_focus(1)
 			KEY_UP: move_focus(-1)
-			KEY_ENTER:
+			KEY_ENTER, KEY_KP_ENTER:
 				selected(get_focused_index())
 
 func get_focused_index():
@@ -53,6 +53,8 @@ func build_list(filter: String):
 	if not %list.visible:
 		%list.visible = true
 		%list.global_position = global_position + Vector2(0, get_rect().size.y)
+	
+	%list.add_item("<statement(s)>")
 	
 	if node.get_script():
 		add_class_item(node.get_script().resource_path.get_file().split('.')[0])

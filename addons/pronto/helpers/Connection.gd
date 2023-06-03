@@ -27,9 +27,10 @@ static func connect_target(from: Node, signal_name: String, to: NodePath, invoke
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, expression: String, only_if: String, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: String, only_if: String, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
+	c.to = to
 	c.expression = expression
 	c.only_if = only_if
 	c._store(from, undo_redo)
@@ -58,7 +59,7 @@ func is_expression() -> bool:
 
 ## Return whether this connection will invoke a method on a target.
 func is_target() -> bool:
-	return not is_expression()
+	return not to.is_empty()
 
 ## Remove this connection from [param node].
 func delete(from: Node, undo_redo: EditorUndoRedoManager = null):
@@ -141,24 +142,31 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 		var values = argument_values.duplicate()
 		names.append("from")
 		values.append(from)
-		if c.to:
+		if not c.is_expression():
 			var target = from.get_node(c.to)
 			names.append("to")
 			values.append(target)
 			if c.should_trigger(names, values, from):
-				var args = c.arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, true, from))
-				target.callv(c.invoke, args)
+				var args = c.arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, from))
+				if (target is Code):
+					target.call(c.invoke, args)
+				else:
+					target.callv(c.invoke, args)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
 		else:
+			if c.is_target():
+				var target = from.get_node(c.to)
+				names.append("to")
+				values.append(target)
 			if c.should_trigger(names, values, from):
-				ConnectionsList.eval(c.expression, names, values, false, from)
+				ConnectionsList.eval(c.expression, names, values, from)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
 func has_condition():
-	return only_if != "true" and only_if != ""
+	return only_if != "return true" and only_if != ""
 
 func should_trigger(names, values, from):
-	return not has_condition() or ConnectionsList.eval(only_if, names, values, true, from)
+	return not has_condition() or ConnectionsList.eval(only_if, names, values, from)
 
 func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	var old = _ensure_connections(from)
@@ -176,3 +184,16 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	assert(_ensure_connections(from) == new)
 	
 	return new_connection
+
+func print(flip = false, shorten = true, single_line = false):
+	var prefix = "[?] " if has_condition() else ""
+	if is_target():
+		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return str(a)))])
+		var statements_string = expression.split('\n')[0]
+		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2})").format([
+			signal_name,
+			prefix,
+			Utils.ellipsize(invocation_string if not is_expression() else statements_string, 16 if shorten else -1)
+		]).replace("\n" if single_line else "", "")
+	else:
+		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")
