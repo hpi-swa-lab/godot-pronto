@@ -65,7 +65,7 @@ color_regions = {
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_au0w8")
-name = "DebugSkipBreakpointsOff"
+name = "DebugStep"
 
 [sub_resource type="Texture2D" id="Texture2D_767xo"]
 resource_local_to_scene = false

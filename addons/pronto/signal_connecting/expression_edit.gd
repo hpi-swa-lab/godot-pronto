@@ -179,6 +179,7 @@ func resize():
 	if self == owner:
 		return
 	if size_flags_horizontal == SIZE_FILL or size_flags_horizontal == SIZE_EXPAND_FILL:
+		# This is used in ExpressionInspector.gd such that Expression windows in the inspector take the full width.
 		custom_minimum_size = Vector2(0, 43)
 		Utils.fix_minimum_size(self)
 	else:

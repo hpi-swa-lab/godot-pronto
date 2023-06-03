@@ -153,7 +153,10 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			values.append(target)
 			if c.should_trigger(names, values, from):
 				var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
-				target.callv(c.invoke, args)
+				if target is Code:
+					target.call(c.invoke, args)
+				else:
+					target.callv(c.invoke, args)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
 		else:
 			if c.is_target():

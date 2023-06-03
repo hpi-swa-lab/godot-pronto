@@ -29,14 +29,14 @@ func _capture(message, data, session_id):
 			add_to_list(session_id, from, connection, data[1])
 		return true
 	if message == "pronto:state_put":
-		var state = editor_interface.get_edited_scene_root().get_parent().get_node(str(data[0]).substr(6))
-		assert(state is State)
-		state._report_game_value(data[1], data[2])
+		var state = editor_interface.get_edited_scene_root().get_parent().get_node_or_null(str(data[0]).substr(6))
+		if state != null and state is State:
+			state._report_game_value(data[1], data[2])
 		return true
 	if message == "pronto:watch_put":
-		var state = editor_interface.get_edited_scene_root().get_parent().get_node(str(data[0]).substr(6))
-		assert(state is Watch)
-		state._report_game_value(data[1])
+		var state = editor_interface.get_edited_scene_root().get_parent().get_node_or_null(str(data[0]).substr(6))
+		if state != null and state is State:
+			state._report_game_value(data[1])
 		return true
 	return true
 

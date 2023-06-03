@@ -3,11 +3,13 @@ class_name ExpressionInspector
 
 func _can_handle(object):
 	return (object is Bind
+		or object is Code
 		or object is Watch
 		or object is Node and object.get_child_count() > 0 and object.get_child(0) is Bind)
 
 func _parse_property(object, type, name, hint_type, hint_string, usage_flags, wide):
 	if (object is Bind and name == "evaluate"
+	or object is Code and name == "code"
 	or object is Watch and name == "evaluate"):
 		add_property_editor(name, ExpressionProperty.new())
 		return true
@@ -20,6 +22,7 @@ class ExpressionProperty extends EditorProperty:
 	var editor
 	func _init():
 		editor = preload("res://addons/pronto/signal_connecting/expression_edit.tscn").instantiate()
+		editor.size_flags_horizontal = SIZE_EXPAND_FILL # Make the expression window take the full width
 		add_child(editor)
 		editor.blur.connect(func ():
 			editor.apply_changes()

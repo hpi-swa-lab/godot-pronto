@@ -1,5 +1,7 @@
 # Pronto
 
+![Screenshot showing Godot with pronto elements](https://github.com/hpi-swa-lab/godot-pronto/blob/master/images/screenshot.png?raw=true)
+
 Pronto is a framework for [Godot](http://godotengine.org) to make prototyping game mechanics faster. It is *not* a framework aimed at helping to create entire games faster. The resulting prototypes are a means to quickly explore ideas, throw away the prototype, and only properly implement ideas that turned out well.
 
 ## Function
@@ -42,6 +44,8 @@ The following list of behaviors primarily cause effects when triggered.
 | Move | When triggered, moves its parent. Can be set to move along global or local axes. Supports handling of gravity. |
 | Spawner | When triggered, spawns whatever its child node is at its current location in the scene. |
 | Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. For example, create a Label node, add a Bind node as a child, use `text` as property and put any expression in its `convert` field. |
+| PlatformerController | Makes the parent behave like a platformer character, meaning that it can jump, move horizontally, and is affected by gravity. Must be a child of a [CharacterBody2D](https://docs.godotengine.org/en/stable/classes/class_characterbody2d.html). |
+| Code | It holds an `execute()` function with both user-definable arguments and a function body, which allows for arbitrary code execution. After `execute()` is called an `after` signal is emitted that carries the execution result, which can be used for chaining.
 
 The following list of behaviors manage state or communicate visual properties.
 
@@ -50,9 +54,11 @@ The following list of behaviors manage state or communicate visual properties.
 | State | Use the Godot meta properties to store state. You can configure it to store values in the global dictionary `G` and access it via `G.at(prop)`. |
 | Value | Show a constant you can use in expression visually as a slider. Note that these are shared globally, so create new names if you need to use different values. |
 | Placeholder | Show a colored rectangle with a label. Useful as a quick means to communicate a game object's function. Functions as a collision shape, so you don't need to add another. |
+| VisualLine | Show a colored Line between two Nodes. Useful as a quick visual connection. |
 | Instance | Allows you to define a template subtree of Nodes that you want to repeat multiple times without copy-pasting. Add your template as a child of the Instance node, then hover the connection dialog and click the "Instance" button. Note: internally, this creates a "hidden" scene that you need to commit as well. You can thus use **"Editable children"** in Godot by right-clicking the instance and tweaking properties while inherting the rest. |
 | Background | Add to your scene to change the background color of the scene. |
 | CameraShake | Add as a child of a camera and call its `add_trauma` function to add shake. |
+| Inspect | Add as a child of a node to inspect its properties inside the game. |
 
 ### Hints
 

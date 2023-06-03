@@ -112,3 +112,11 @@ class CombinedLine extends Line:
 class BottomText extends Line:
 	func _init(node: Node, label: String):
 		super._init(node, node, func (f): return label, label)
+		
+	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, flashed: Dictionary):
+		var text = text_fn.call(flipped)
+		var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
+		c.draw_multiline_string(font,
+			Vector2(-size.x/2, 0),
+			text,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color(flashed))

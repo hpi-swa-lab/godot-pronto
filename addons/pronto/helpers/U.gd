@@ -63,19 +63,22 @@ static func random_point_on_screen() -> Vector2:
 static func mouse_position() -> Vector2:
 	return Engine.get_main_loop().root.get_mouse_position()
 
-## Find the closest [State] that has a field with [param name].
-## If none is found, checks global state in [G].
-## See [member closest_that].
-func at(name: String, default = null) -> Variant:
-	var state = closest_that(func (n): return n is State and n.has_meta(name))
-	return state.at(name, default) if state != null else G.at(name, default)
+func next_state(name: String):
+	var s = closest_that(func (n): return n is State and n.has_meta(name))
+	if s == null:
+		return G
+	else:
+		return s
 
 ## Find the closest [State] that has a field with [param name].
 ## If none is found, checks global state in [G].
 ## See [member closest_that].
-func put(name: String, value: Variant) -> void:
-	var state = closest_that(func (n): return n is State and n.has_meta(name))
-	if state != null:
-		state.put(name, value)
-	else:
-		G.put(name, value)
+func at(name: String, default = null) -> Variant: return next_state(name).at(name, default)
+
+## Find the closest [State] that has a field with [param name].
+## If none is found, checks global state in [G].
+## See [member closest_that].
+func put(name: String, value: Variant) -> void: next_state(name).put(name, value)
+
+func inc(name: String, amount = 1): next_state(name).inc(name, amount)
+func dec(name: String, amount = 1): next_state(name).dec(name, amount)
