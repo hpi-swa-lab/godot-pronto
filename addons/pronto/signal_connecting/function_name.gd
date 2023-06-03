@@ -58,15 +58,20 @@ func build_list(filter: String):
 		%list.add_item("<statement(s)>")
 	
 	if node.get_script():
-		add_class_item(node.get_script().resource_path.get_file().split('.')[0])
+		var show = []
 		for s in node.get_script().get_script_method_list():
 			do_apply = do_apply or s["name"] == filter
-			if fuzzy_match(s["name"], filter) and s["name"][0] != "_": %list.add_item(s["name"])
+			if fuzzy_match(s["name"], filter) and s["name"][0] != "_": show.append(s["name"])
+		if not show.is_empty():
+			add_class_item(node.get_script().resource_path.get_file().split('.')[0])
+			for s in show: %list.add_item(s)
 	for c in Utils.all_classes_of(node):
-		add_class_item(c)
+		var show = []
 		for s in ClassDB.class_get_method_list(c, true):
 			do_apply = do_apply or s["name"] == filter
-			if fuzzy_match(s["name"], filter) and s["name"][0] != "_": %list.add_item(s["name"])
+			if fuzzy_match(s["name"], filter) and s["name"][0] != "_": show.append(s["name"])
+		if not show.is_empty(): add_class_item(c)
+		for s in show: %list.add_item(s)
 	
 	if get_focused_index() == -1:
 		move_focus(1)

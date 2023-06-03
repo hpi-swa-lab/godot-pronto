@@ -203,7 +203,7 @@ func print(flip = false, shorten = true, single_line = false):
 	if is_target():
 		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return a.source_code))])
 		var statements_string = expression.source_code.split('\n')[0] if is_expression() else ""
-		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2})").format([
+		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2}").format([
 			signal_name,
 			prefix,
 			Utils.ellipsize(invocation_string if not is_expression() else statements_string, 16 if shorten else -1)

@@ -27,7 +27,6 @@ func _spawn():
 
 func spawn():
 	var instance = _spawn()
-	instance.position = position
 	
 	if container == null:
 		var path_corrector = Node.new()
@@ -36,6 +35,7 @@ func spawn():
 	else:
 		container.add_child(instance)
 	
+	instance.global_position = global_position
 	spawned.emit(instance)
 	
 	return instance
@@ -43,8 +43,6 @@ func spawn():
 func spawn_toward(pos: Vector2):
 	var instance = _spawn()
 	instance.top_level = true
-	instance.global_position = global_position
-	instance.rotation = global_position.angle_to_point(pos)
 	
 	if container == null:
 		var path_corrector = Node.new()
@@ -53,6 +51,8 @@ func spawn_toward(pos: Vector2):
 	else:
 		container.add_child(instance)
 	
+	instance.global_position = global_position
+	instance.rotation = global_position.angle_to_point(pos)
 	spawned.emit(instance)
 	
 	return instance

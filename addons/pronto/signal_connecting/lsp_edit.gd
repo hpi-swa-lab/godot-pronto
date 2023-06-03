@@ -14,7 +14,7 @@ var _opened = false
 func _ready():
 	if self != owner:
 		# make space for autocompletion popup
-		focus_entered.connect(func (): custom_minimum_size.y = 200)
+		focus_entered.connect(func (): if LanguageClient.ENABLE: custom_minimum_size.y = 200)
 		focus_exited.connect(func ():
 			custom_minimum_size.y = 0
 			Utils.with(Utils.parent_that(self, func(p): return p is NodeToNodeConfigurator), func(p):
