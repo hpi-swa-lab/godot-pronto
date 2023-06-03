@@ -14,7 +14,9 @@ func _ready():
 		remove_child(scene)
 
 func _spawn():
-	return scene.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
+	var i = scene.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
+	i.position = Vector2.ZERO
+	return i
 
 func spawn():
 	var instance = _spawn()
