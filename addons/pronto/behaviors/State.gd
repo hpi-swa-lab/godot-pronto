@@ -3,7 +3,7 @@
 extends Behavior
 class_name State
 
-### When enabled, add the value of all properties to the global G dictionary as well.
+## When enabled, add the value of all properties to the global G dictionary as well.
 @export var global = false
 
 var _last_reported_game_values = {}
@@ -16,11 +16,15 @@ func _ready():
 		for prop in get_meta_list():
 			if prop != "pronto_connections":
 				G._register_state(self, prop)
-				G.put(prop, get_meta(prop))
+				if global:
+					G.put(prop, get_meta(prop))
 
 func inc(prop: String, amount = 1):
 	var value = get_meta(prop) + amount
 	put(prop, value)
+
+func dec(prop: String, amount = 1):
+	inc(prop, -amount)
 
 func put(prop: String, value: Variant):
 	set_meta(prop, value)
