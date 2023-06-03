@@ -14,16 +14,14 @@ func _ready():
 		remove_child(scene)
 
 func _spawn():
-	var i = scene.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
-	i.position = Vector2.ZERO
-	return i
+	return scene.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
 
 func spawn():
 	var instance = _spawn()
 	
-	var path_corrector = Node2D.new() if instance is Node2D else Node3D.new()
+	var path_corrector = Node.new()#
 	path_corrector.add_child(instance)
-	path_corrector.position = position
+	instance.position = position
 	
 	get_parent().add_child(path_corrector)
 	spawned.emit(instance)
@@ -33,12 +31,12 @@ func spawn():
 func spawn_toward(pos: Vector2):
 	var instance = _spawn()
 	
-	var path_corrector = Node2D.new() if instance is Node2D else Node3D.new()
-	
+	var path_corrector = Node.new()
 	path_corrector.add_child(instance)
-	path_corrector.top_level = true
-	path_corrector.global_position = global_position
-	path_corrector.rotation = global_position.angle_to_point(pos)
+	
+	instance.top_level = true
+	instance.global_position = global_position
+	instance.rotation = global_position.angle_to_point(pos)
 	
 	get_parent().add_child(path_corrector)
 	spawned.emit(instance)
