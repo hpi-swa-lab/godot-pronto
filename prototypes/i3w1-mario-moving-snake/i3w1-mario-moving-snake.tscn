@@ -19,7 +19,7 @@ point_count = 4
 
 [node name="i3w1-mario-moving-snake" type="Node2D"]
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(242, 508)
 
 [node name="PlatformerController" type="Node2D" parent="Player"]
@@ -39,7 +39,7 @@ position = Vector2(274, 537)
 [node name="Placeholder" type="Node2D" parent="Ground2"]
 scale = Vector2(1.04, 1)
 script = ExtResource("2_4csiw")
-placeholder_size = Vector2(125, 22)
+placeholder_size = Vector2(229, 15)
 
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2(572, 631)
@@ -66,6 +66,7 @@ color = Color(0.729412, 0.462745, 0, 1)
 placeholder_size = Vector2(100, 20)
 
 [node name="SnakePath" type="Path2D" parent="."]
+position = Vector2(-198, 154)
 curve = SubResource("Curve2D_bjdnm")
 
 [node name="SnakeBlock1" parent="SnakePath" instance=ExtResource("4_acklm")]
