@@ -18,7 +18,7 @@ expression = ""
 rotates = false
 loop = false
 
-[node name="SnakeBlock" type="CharacterBody2D" parent="."]
+[node name="SnakeBlock" type="CharacterBody2D" parent="." groups=["snake_block"]]
 script = ExtResource("1_ow1e2")
 
 [node name="Placeholder" type="Node2D" parent="SnakeBlock"]

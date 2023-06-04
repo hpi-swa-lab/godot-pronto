@@ -1,9 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://conjbnlbys8si"]
+[gd_scene load_steps=10 format=3 uid="uid://conjbnlbys8si"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_k6ccx"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_4csiw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="3_d87vf"]
 [ext_resource type="Script" path="res://prototypes/i3w1-mario-moving-snake/MovingPlatform.gd" id="3_w3igs"]
 [ext_resource type="PackedScene" uid="uid://dwbtidm6blffi" path="res://prototypes/i3w1-mario-moving-snake/snake_follow_path.tscn" id="4_acklm"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_dsv2v"]
+
+[sub_resource type="Resource" id="Resource_0vnuq"]
+script = ExtResource("4_dsv2v")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return other.paused and abs(direction.angle_to(Vector2.DOWN)) < PI/4"
+expression = "other.activate_snake()"
 
 [sub_resource type="Curve2D" id="Curve2D_c2osk"]
 _data = {
@@ -33,6 +44,12 @@ script = ExtResource("2_4csiw")
 color = Color(1, 0, 0, 1)
 placeholder_size = Vector2(20, 40)
 
+[node name="SnakeBlockTrigger" type="Node2D" parent="Player"]
+position = Vector2(28, 0)
+script = ExtResource("3_d87vf")
+limit_to_group = "snake_block"
+metadata/pronto_connections = [SubResource("Resource_0vnuq")]
+
 [node name="Ground2" type="StaticBody2D" parent="."]
 position = Vector2(274, 537)
 
@@ -59,6 +76,7 @@ rotates = false
 
 [node name="MovingPlatform" type="CharacterBody2D" parent="SimplePatformPath/PathFollow2D"]
 script = ExtResource("3_w3igs")
+paused = false
 
 [node name="Placeholder" type="Node2D" parent="SimplePatformPath/PathFollow2D/MovingPlatform"]
 script = ExtResource("2_4csiw")
