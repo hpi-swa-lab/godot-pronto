@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dthrl53okqjb"]
+
+[ext_resource type="PackedScene" uid="uid://d1jujxfamsekk" path="res://addons/pronto/signal_connecting/expression_edit.tscn" id="2_5guic"]
+
+[node name="Node" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="expression_edit" parent="." instance=ExtResource("2_5guic")]
+layout_mode = 1
+offset_left = 37.0
+offset_top = 40.0
+offset_right = 217.0
+offset_bottom = 74.0
