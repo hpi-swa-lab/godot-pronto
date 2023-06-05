@@ -4,12 +4,21 @@ extends VBoxContainer
 signal text_changed()
 signal blur()
 
+## Set to direct that this editor should override the argument_names of the
+## given script. If false, the argument_names will be taken from the script.
+var control_argument_names = true
+
 @export var return_value = true
 @export var argument_names: Array = []:
 	set(v):
-		if edit_script != null and "argument_names" in edit_script:
+		if edit_script != null and "argument_names" in edit_script and control_argument_names:
 			edit_script.argument_names = v
 		argument_names = v
+	get:
+		if control_argument_names:
+			return argument_names
+		else:
+			return edit_script.argument_names
 @export var placeholder_text: String:
 	get: return %Expression.placeholder_text
 	set(v):
@@ -22,7 +31,8 @@ signal blur()
 		assert(v != null, "Must provide a script to expression_edit")
 		if v == edit_script: return
 		edit_script = v
-		edit_script.argument_names = argument_names
+		if control_argument_names:
+			edit_script.argument_names = argument_names
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
 		

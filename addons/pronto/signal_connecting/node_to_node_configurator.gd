@@ -141,8 +141,8 @@ func _on_function_selected(name: String):
 	var ExpressionEdit = preload("res://addons/pronto/signal_connecting/expression_edit.tscn")
 	
 	var arguments = []
-	if (receiver is Code and name == "execute"):
-		arguments = receiver.arguments.map(func (argument_name): return {"name": argument_name})
+	if receiver is Code and name == "execute":
+		arguments = Array(receiver.arguments).map(func (argument_name): return {"name": argument_name})
 	else:
 		arguments = method["args"]
 	
