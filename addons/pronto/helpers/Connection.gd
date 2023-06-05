@@ -52,6 +52,8 @@ static func get_connections(node: Node) -> Array:
 ## (Optional) Only used when neither [member to], [member invoke], or [member arguments] is not set.
 ## A string describing the [Expression] that is to be run when [member signal_name] triggers.
 @export var expression: ConnectionScript
+## Run action of this connection in the next frame after it was triggered
+@export var deferred = false
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
@@ -152,6 +154,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			names.append("to")
 			values.append(target)
 			if c.should_trigger(names, values, from):
+				if deferred: await ConnectionsList.get_tree().process_frame
 				var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
 				if target is Code:
 					target.call(c.invoke, args)
@@ -164,6 +167,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				names.append("to")
 				values.append(target)
 			if c.should_trigger(names, values, from):
+				if deferred: await ConnectionsList.get_tree().process_frame
 				c._run_script(from, c.expression, values)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
