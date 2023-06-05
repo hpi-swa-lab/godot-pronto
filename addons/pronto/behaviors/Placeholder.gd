@@ -19,12 +19,13 @@ class_name Placeholder
 		queue_redraw()
 		_update_shape()
 
+## If true, this placeholder's parent will be moved instead of the placeholder in the editor.
+## Convenient for not having to switch selected items all the time.
+@export var keep_in_origin = true
+
 var size: Vector2:
 	get:
 		return placeholder_size
-
-func _ready():
-	super._ready()
 
 func _update_shape():
 	if _parent:

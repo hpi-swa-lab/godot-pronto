@@ -13,6 +13,9 @@ func _ready():
 		_icon.texture = Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
 		_icon.position = _icon.texture.get_size() / -2
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
+		
+		# spawn slightly offset from parent
+		position = Vector2(0, 30).rotated(get_parent().get_child_count() * PI / 4)
 
 func is_active_scene() -> bool:
 	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
