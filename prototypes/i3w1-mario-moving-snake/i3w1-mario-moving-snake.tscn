@@ -147,8 +147,8 @@ position = Vector2(459, 421)
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_left = 21.0
 offset_top = 11.0
-offset_right = 444.0
-offset_bottom = 159.0
+offset_right = 452.0
+offset_bottom = 204.0
 scale = Vector2(1.28473, 1.17159)
 
 [node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
@@ -189,6 +189,6 @@ value = 1.0
 
 [node name="BluePlatformRespawnTime" type="Node2D" parent="PanelContainer/PrototypingUI"]
 script = ExtResource("8_egddh")
-to = 5.0
-step_size = 0.025
-value = 1.0
+from = 1.0
+to = 20.0
+value = 10.0
