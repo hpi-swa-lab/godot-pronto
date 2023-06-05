@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwbtidm6blffi"]
+[gd_scene load_steps=6 format=3 uid="uid://bxfi5wgcdsuep"]
 
-[ext_resource type="Script" path="res://prototypes/i3w1-mario-moving-snake/MovingPlatform.gd" id="1_ow1e2"]
+[ext_resource type="Script" path="res://prototypes/i3w1-mario-moving-snake/SnakeBlock.gd" id="1_pmbf1"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_7k0kl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="3_wkto5"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_yejyi"]
@@ -18,8 +18,8 @@ expression = ""
 rotates = false
 loop = false
 
-[node name="SnakeBlock" type="CharacterBody2D" parent="." groups=["snake_block"]]
-script = ExtResource("1_ow1e2")
+[node name="SnakeBlock" type="StaticBody2D" parent="." groups=["snake_block"]]
+script = ExtResource("1_pmbf1")
 
 [node name="Placeholder" type="Node2D" parent="SnakeBlock"]
 script = ExtResource("2_7k0kl")
