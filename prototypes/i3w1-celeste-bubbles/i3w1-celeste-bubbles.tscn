@@ -592,7 +592,7 @@ deferred = false
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
-position = Vector2(566, 292)
+position = Vector2(63, 586)
 
 [node name="Placeholder" type="Node2D" parent="Player"]
 script = ExtResource("1_f0b6i")
@@ -673,6 +673,43 @@ rotation = 3.14159
 script = ExtResource("1_f0b6i")
 placeholder_size = Vector2(1156, 29)
 
+[node name="Placeholder5" type="Node2D" parent="Level"]
+position = Vector2(-23, -128)
+rotation = 3.14159
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(54, 240)
+
+[node name="Placeholder6" type="Node2D" parent="Level"]
+position = Vector2(-299, -64)
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(136, 46)
+
+[node name="Placeholder7" type="Node2D" parent="Level"]
+position = Vector2(-134, -152)
+rotation = -0.601012
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(253, 43)
+
+[node name="Placeholder8" type="Node2D" parent="Level"]
+position = Vector2(369, -313)
+rotation = 3.14159
+script = ExtResource("1_f0b6i")
+label = ">>> 🥅 <<<"
+color = Color(0.168627, 1, 0, 1)
+placeholder_size = Vector2(1, 24)
+
+[node name="Placeholder9" type="Node2D" parent="Level"]
+position = Vector2(86, -138)
+rotation = 0.577456
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(309, 51)
+
+[node name="Placeholder10" type="Node2D" parent="Level"]
+position = Vector2(193, -47.0001)
+rotation = 3.14158
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(136, 46)
+
 [node name="Label" type="Label" parent="."]
 offset_left = 265.0
 offset_top = 32.0
@@ -697,7 +734,7 @@ to = 500.0
 value = 300.0
 
 [node name="BubbleSpawner" type="Node2D" parent="."]
-position = Vector2(131, 515)
+position = Vector2(641, 284)
 script = ExtResource("11_ja0u7")
 
 [node name="Bubble" type="Area2D" parent="BubbleSpawner" groups=["bubbles"]]
