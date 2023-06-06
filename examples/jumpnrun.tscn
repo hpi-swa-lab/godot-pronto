@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=19 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_1iyk2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_2arfu"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="7_sb4fg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="8_27i4k"]
 
 [sub_resource type="Resource" id="Resource_ilw2k"]
 script = ExtResource("4_1iyk2")
@@ -52,6 +53,54 @@ signal_name = "down"
 to = NodePath("../../State")
 invoke = "put"
 arguments = ["return \"is_dashing\"", "return true"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_u7fbw"]
+script = ExtResource("4_1iyk2")
+signal_name = "collided"
+to = NodePath("../Clock")
+invoke = "reset_and_start"
+arguments = []
+only_if = "return other.global_position.y > from.get_parent().global_position.y"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_txdm5"]
+script = ExtResource("4_1iyk2")
+signal_name = "collided"
+to = NodePath("../../CharacterBody2D")
+invoke = "set_velocity"
+arguments = ["return (to.global_position-from.get_parent().global_position).normalized() * 500"]
+only_if = "return to.global_position.y <= from.get_parent().global_position.y"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_f2dcv"]
+script = ExtResource("4_1iyk2")
+signal_name = "collided"
+to = NodePath("../../CharacterBody2D")
+invoke = "set_velocity"
+arguments = ["
+from.get_parent().set_visible(false)
+from.get_parent().set_monitoring(false)
+return (to.global_position-from.get_parent().global_position).normalized() * 5000"]
+only_if = "return to.global_position.y > from.get_parent().global_position.y"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_fsxv8"]
+script = ExtResource("4_1iyk2")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "set_monitoring"
+arguments = ["return true"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_nu66r"]
+script = ExtResource("4_1iyk2")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "set_visible"
+arguments = ["return true"]
 only_if = "return true"
 expression = ""
 
@@ -107,8 +156,8 @@ script = ExtResource("2_x2wwj")
 [node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_tc671")
 label = "Madeleine"
-color = Color(0.984314, 0.929412, 0.929412, 1)
-color2 = Color(0.67451, 0.396078, 0.392157, 1)
+color = Color(0.984314, 0.309804, 0.929412, 1)
+color2 = Color(0.266667, 0.470588, 0.847059, 1)
 placeholder_size = Vector2(20, 60)
 
 [node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
@@ -157,3 +206,25 @@ placeholder_size = Vector2(88, 71)
 position = Vector2(263, 84)
 script = ExtResource("7_sb4fg")
 metadata/is_dashing = false
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(715, 327)
+
+[node name="Placeholder" type="Node2D" parent="Area2D"]
+script = ExtResource("1_tc671")
+color = Color(0.964706, 0.72549, 0.4, 1)
+color2 = Color(0.988235, 0.333333, 0.560784, 1)
+placeholder_size = Vector2(42, 44)
+
+[node name="Collision" type="Node2D" parent="Area2D"]
+position = Vector2(-161, -52)
+script = ExtResource("8_27i4k")
+metadata/pronto_connections = [SubResource("Resource_u7fbw"), SubResource("Resource_txdm5"), SubResource("Resource_f2dcv")]
+
+[node name="Clock" type="Node2D" parent="Area2D"]
+position = Vector2(-41, -88)
+script = ExtResource("3_8fytt")
+one_shot = true
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_fsxv8"), SubResource("Resource_nu66r")]
