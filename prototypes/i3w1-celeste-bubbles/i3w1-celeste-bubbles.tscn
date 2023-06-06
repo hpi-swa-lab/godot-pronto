@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://0iffumy7j0je"]
+[gd_scene load_steps=96 format=3 uid="uid://0iffumy7j0je"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_f0b6i"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_njc5r"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_k8f63"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_kc1wi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="9_deycf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="9_nrfdy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="10_ftgpq"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="11_ja0u7"]
 
@@ -240,128 +241,204 @@ only_if = SubResource("Resource_w2ubm")
 expression = SubResource("Resource_mwclj")
 deferred = false
 
-[sub_resource type="GDScript" id="GDScript_7b7y4"]
+[sub_resource type="GDScript" id="GDScript_lt2oh"]
 script/source = "extends U
 func run(other, direction, from, to):
-	return G.at(\"current_bubble\", false)
+	return G.at(\"current_bubble\")
 "
 
-[sub_resource type="Resource" id="Resource_dog67"]
+[sub_resource type="Resource" id="Resource_506k3"]
 script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_7b7y4")
+nested_script = SubResource("GDScript_lt2oh")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_twswg"]
+[sub_resource type="Resource" id="Resource_tdb68"]
 script = ExtResource("5_k8f63")
 signal_name = "collided"
-to = NodePath("../../BubbleClock")
+to = NodePath("../Kettenglied")
 invoke = "reset_and_start"
 arguments = []
-only_if = SubResource("Resource_dog67")
+only_if = SubResource("Resource_506k3")
 deferred = false
 
-[sub_resource type="GDScript" id="GDScript_vwcuc"]
+[sub_resource type="GDScript" id="GDScript_uf52l"]
 script/source = "extends U
-func run(other, direction, from, to):
-	return Node.PROCESS_MODE_INHERIT
-"
-
-[sub_resource type="Resource" id="Resource_fi4kx"]
-script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_vwcuc")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_akna4"]
-script/source = "extends U
-func run(other, direction, from, to):
+func run(from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_17ln3"]
+[sub_resource type="Resource" id="Resource_a4lsc"]
 script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_akna4")
-argument_names = ["other", "direction", "from", "to"]
+nested_script = SubResource("GDScript_uf52l")
+argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_wge7p"]
+[sub_resource type="Resource" id="Resource_f1phj"]
 script = ExtResource("5_k8f63")
-signal_name = "collided"
-to = NodePath("../PlatformerController")
-invoke = "set_process_mode"
-arguments = [SubResource("Resource_fi4kx")]
-only_if = SubResource("Resource_17ln3")
+signal_name = "elapsed"
+to = NodePath("../../BubbleClock")
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_a4lsc")
 deferred = false
 
-[sub_resource type="GDScript" id="GDScript_csxoy"]
+[sub_resource type="GDScript" id="GDScript_da73f"]
 script/source = "extends U
-func run(other, direction, from):
+func run(from):
 	G.at(\"current_bubble\").queue_free()
 	G.put(\"player_in_bubble\", false)
 	G.put(\"current_bubble\", null)
 "
 
-[sub_resource type="Resource" id="Resource_am4bx"]
+[sub_resource type="Resource" id="Resource_tffg8"]
 script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_csxoy")
-argument_names = ["other", "direction", "from"]
+nested_script = SubResource("GDScript_da73f")
+argument_names = ["from"]
 return_value = false
 
-[sub_resource type="GDScript" id="GDScript_j2r4q"]
+[sub_resource type="GDScript" id="GDScript_qpest"]
 script/source = "extends U
-func run(other, direction, from):
-	return G.at(\"current_bubble\", false)
-"
-
-[sub_resource type="Resource" id="Resource_rii8l"]
-script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_j2r4q")
-argument_names = ["other", "direction", "from"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_euhjh"]
-script = ExtResource("5_k8f63")
-signal_name = "collided"
-to = NodePath("")
-invoke = ""
-arguments = []
-only_if = SubResource("Resource_rii8l")
-expression = SubResource("Resource_am4bx")
-deferred = false
-
-[sub_resource type="GDScript" id="GDScript_0bpy3"]
-script/source = "extends U
-func run(other, direction, from, to):
-	to.paused = true
-"
-
-[sub_resource type="Resource" id="Resource_jfexd"]
-script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_0bpy3")
-argument_names = ["other", "direction", "from", "to"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_r8qr5"]
-script/source = "extends U
-func run(other, direction, from, to):
+func run(from):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_n63c3"]
+[sub_resource type="Resource" id="Resource_axtag"]
 script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_r8qr5")
-argument_names = ["other", "direction", "from", "to"]
+nested_script = SubResource("GDScript_qpest")
+argument_names = ["from"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_sadht"]
+[sub_resource type="Resource" id="Resource_33kx7"]
 script = ExtResource("5_k8f63")
-signal_name = "collided"
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_axtag")
+expression = SubResource("Resource_tffg8")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_f4oph"]
+script/source = "extends U
+func run(from, to):
+	return Node.PROCESS_MODE_INHERIT
+"
+
+[sub_resource type="Resource" id="Resource_rev4t"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_f4oph")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_koyos"]
+script/source = "extends U
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_f73ws"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_koyos")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_wtlvj"]
+script = ExtResource("5_k8f63")
+signal_name = "elapsed"
+to = NodePath("../PlatformerController")
+invoke = "set_process_mode"
+arguments = [SubResource("Resource_rev4t")]
+only_if = SubResource("Resource_f73ws")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_o1djv"]
+script/source = "extends U
+func run(from, to):
+	to.paused = true
+"
+
+[sub_resource type="Resource" id="Resource_h1s46"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_o1djv")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_1556v"]
+script/source = "extends U
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_pufg3"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_1556v")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_mw1uq"]
+script = ExtResource("5_k8f63")
+signal_name = "elapsed"
 to = NodePath("../DragAlways")
 invoke = ""
 arguments = []
-only_if = SubResource("Resource_n63c3")
-expression = SubResource("Resource_jfexd")
+only_if = SubResource("Resource_pufg3")
+expression = SubResource("Resource_h1s46")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_om7kx"]
+script/source = "extends U
+func run(from, to):
+	to.paused = true
+"
+
+[sub_resource type="Resource" id="Resource_nbmud"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_om7kx")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_m08ru"]
+script/source = "extends U
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_hkyjm"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_m08ru")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_mwx0y"]
+script = ExtResource("5_k8f63")
+signal_name = "elapsed"
+to = NodePath("../InitialDirectionClock")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_hkyjm")
+expression = SubResource("Resource_nbmud")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_iboc4"]
+script/source = "extends U
+func run(from, to):
+	return G.at(\"current_bubble\")
+"
+
+[sub_resource type="Resource" id="Resource_3u6q4"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_iboc4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xt64j"]
+script = ExtResource("5_k8f63")
+signal_name = "pressed"
+to = NodePath("../Kettenglied")
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_3u6q4")
 deferred = false
 
 [sub_resource type="GDScript" id="GDScript_gu0ai"]
@@ -554,12 +631,22 @@ metadata/pronto_connections = [SubResource("Resource_f5xoj")]
 position = Vector2(-63, -33)
 script = ExtResource("3_dgnjv")
 limit_to_group = "level"
-metadata/pronto_connections = [SubResource("Resource_twswg"), SubResource("Resource_wge7p"), SubResource("Resource_euhjh"), SubResource("Resource_sadht")]
+metadata/pronto_connections = [SubResource("Resource_tdb68")]
 
-[node name="Clock" type="Node2D" parent="Player"]
-position = Vector2(-120, -58)
+[node name="Kettenglied" type="Node2D" parent="Player"]
+position = Vector2(-247, -68)
 script = ExtResource("4_13lt6")
+one_shot = true
+duration_seconds = 0.0001
+paused = true
 trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_f1phj"), SubResource("Resource_33kx7"), SubResource("Resource_wtlvj"), SubResource("Resource_mw1uq"), SubResource("Resource_mwx0y")]
+
+[node name="DashKey" type="Node2D" parent="Player"]
+position = Vector2(-10, -61)
+script = ExtResource("9_nrfdy")
+key = "Shift"
+metadata/pronto_connections = [SubResource("Resource_xt64j")]
 
 [node name="Level" type="StaticBody2D" parent="." groups=["level"]]
 position = Vector2(568, 648)
