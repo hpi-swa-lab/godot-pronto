@@ -10,7 +10,8 @@ func _ready():
 	get_tree().node_added.connect(check_install)
 
 func script_for_eval(source: String, argument_names: Array) -> Script:
-	var source_code = 'extends U
+	var source_code = '@tool
+extends U
 
 func run({0}):
 	# GENERATED, DO NOT EDIT
