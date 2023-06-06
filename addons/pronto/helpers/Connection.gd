@@ -194,13 +194,8 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	
 	return new_connection
 
-var _dummy_objects = {}
 func _run_script(from: Node, s: ConnectionScript, arguments: Array):
-	if not s in _dummy_objects:
-		_dummy_objects[s] = U.new(from)
-		_dummy_objects[s].set_script(s.nested_script)
-	_dummy_objects[s].ref = from
-	return _dummy_objects[s].callv("run", arguments)
+	return s.run(arguments, from)
 
 func print(flip = false, shorten = true, single_line = false):
 	var prefix = "[?] " if has_condition() else ""

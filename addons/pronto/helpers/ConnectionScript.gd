@@ -26,7 +26,8 @@ var source_code: String:
 	set(body):
 		nested_script.source_code = get_full_source_code(body)
 
-const TEMPLATE = "extends U
+const TEMPLATE = "@tool
+extends U
 func run({1}):
 	{2}{0}
 "
@@ -39,6 +40,14 @@ func get_full_source_code(body: String):
 		_indent(body),
 		', '.join(argument_names),
 		"return " if needs_return(body) else ""])
+
+var _dummy_object = null
+func run(arguments: Array, ref = null):
+	if _dummy_object == null:
+		_dummy_object = U.new(ref)
+		_dummy_object.set_script(nested_script)
+	_dummy_object.ref = ref
+	return _dummy_object.callv("run", arguments)
 
 func reload():
 	nested_script.reload()

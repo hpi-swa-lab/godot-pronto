@@ -11,19 +11,14 @@ class_name Bind
 @export var one_shot: bool = false
 
 var _last = null
-var _dummy_object
 
 func _ready():
 	super._ready()
 	if evaluate == null:
 		evaluate = ConnectionScript.new([], true)
-	if _dummy_object == null:
-		_dummy_object = U.new(self)
-		_dummy_object.set_script(evaluate.nested_script)
 
 func update():
-	_dummy_object.ref = self
-	var value = _dummy_object.run()
+	var value = evaluate.run([], self)
 	
 	if _last == value:
 		return
