@@ -108,6 +108,7 @@ placeholder_size = Vector2(20, 60)
 [node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(45, -12)
 script = ExtResource("2_qr0oj")
+horizontal_velocity = 50.0
 
 [node name="Clock" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(-108, -74)
