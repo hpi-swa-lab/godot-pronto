@@ -12,6 +12,11 @@ class_name Placeholder
 	set(v):
 		color = v
 		queue_redraw()
+		
+@export var color2 = Color.WHITE:
+	set(v):
+		color2 = v
+		queue_redraw()
 
 @export var placeholder_size = Vector2(20, 20):
 	set(v):
@@ -60,7 +65,8 @@ func _draw():
 	var default_font = ThemeDB.fallback_font
 	var height = placeholder_size.y
 	var text_size = min(height, placeholder_size.x / label.length() * 1.8)
-	draw_rect(Rect2(placeholder_size / -2, placeholder_size), color, true)
+	draw_rect(Rect2(Vector2(placeholder_size.x * -0.5,placeholder_size.y * -0.5), Vector2(placeholder_size.x, placeholder_size.y * 0.5)), color, true)
+	draw_rect(Rect2(Vector2(placeholder_size.x * -0.5,0), Vector2(placeholder_size.x, placeholder_size.y * 0.5)), color2, true)
 	draw_string(default_font,
 		placeholder_size / -2 + Vector2(0, height / 2 + text_size / 4),
 		label,
