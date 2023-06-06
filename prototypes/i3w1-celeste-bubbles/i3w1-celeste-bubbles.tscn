@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://0iffumy7j0je"]
+[gd_scene load_steps=84 format=3 uid="uid://0iffumy7j0je"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_f0b6i"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_njc5r"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_kc1wi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="9_deycf"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="10_ftgpq"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="11_ja0u7"]
 
 [sub_resource type="GDScript" id="GDScript_tifby"]
 script/source = "extends U
@@ -239,38 +240,25 @@ only_if = SubResource("Resource_w2ubm")
 expression = SubResource("Resource_mwclj")
 deferred = false
 
-[sub_resource type="GDScript" id="GDScript_0bpy3"]
+[sub_resource type="GDScript" id="GDScript_7b7y4"]
 script/source = "extends U
 func run(other, direction, from, to):
-	to.paused = true
+	return G.at(\"current_bubble\", false)
 "
 
-[sub_resource type="Resource" id="Resource_jfexd"]
+[sub_resource type="Resource" id="Resource_dog67"]
 script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_0bpy3")
-argument_names = ["other", "direction", "from", "to"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_r8qr5"]
-script/source = "extends U
-func run(other, direction, from, to):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_n63c3"]
-script = ExtResource("4_kcamo")
-nested_script = SubResource("GDScript_r8qr5")
+nested_script = SubResource("GDScript_7b7y4")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_sadht"]
+[sub_resource type="Resource" id="Resource_twswg"]
 script = ExtResource("5_k8f63")
 signal_name = "collided"
-to = NodePath("../DragAlways")
-invoke = ""
+to = NodePath("../../BubbleClock")
+invoke = "reset_and_start"
 arguments = []
-only_if = SubResource("Resource_n63c3")
-expression = SubResource("Resource_jfexd")
+only_if = SubResource("Resource_dog67")
 deferred = false
 
 [sub_resource type="GDScript" id="GDScript_vwcuc"]
@@ -342,6 +330,40 @@ only_if = SubResource("Resource_rii8l")
 expression = SubResource("Resource_am4bx")
 deferred = false
 
+[sub_resource type="GDScript" id="GDScript_0bpy3"]
+script/source = "extends U
+func run(other, direction, from, to):
+	to.paused = true
+"
+
+[sub_resource type="Resource" id="Resource_jfexd"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_0bpy3")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_r8qr5"]
+script/source = "extends U
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_n63c3"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_r8qr5")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_sadht"]
+script = ExtResource("5_k8f63")
+signal_name = "collided"
+to = NodePath("../DragAlways")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_n63c3")
+expression = SubResource("Resource_jfexd")
+deferred = false
+
 [sub_resource type="GDScript" id="GDScript_gu0ai"]
 script/source = "extends U
 func run(other, direction, from, to):
@@ -396,7 +418,7 @@ return_value = true
 [sub_resource type="Resource" id="Resource_a7jjy"]
 script = ExtResource("5_k8f63")
 signal_name = "collided"
-to = NodePath("../../Player/InitialDirectionClock")
+to = NodePath("../../../Player/InitialDirectionClock")
 invoke = "reset_and_start"
 arguments = []
 only_if = SubResource("Resource_17aht")
@@ -469,6 +491,27 @@ arguments = [SubResource("Resource_wdcfs")]
 only_if = SubResource("Resource_rnp12")
 deferred = false
 
+[sub_resource type="GDScript" id="GDScript_v7m8l"]
+script/source = "extends U
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7ldx6"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_v7m8l")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a3che"]
+script = ExtResource("5_k8f63")
+signal_name = "elapsed"
+to = NodePath("../BubbleSpawner")
+invoke = "spawn"
+arguments = []
+only_if = SubResource("Resource_7ldx6")
+deferred = false
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
@@ -484,13 +527,13 @@ script = ExtResource("2_njc5r")
 
 [node name="DragAlways" type="Node2D" parent="Player"]
 unique_name_in_owner = true
-position = Vector2(-101, 24)
+position = Vector2(-147, 26)
 script = ExtResource("4_dfbwd")
 paused = true
 metadata/pronto_connections = [SubResource("Resource_4go41"), SubResource("Resource_prb4h")]
 
 [node name="InitialDirectionClock" type="Node2D" parent="Player"]
-position = Vector2(-145, 125)
+position = Vector2(-107, 137)
 script = ExtResource("4_13lt6")
 one_shot = true
 paused = true
@@ -511,7 +554,12 @@ metadata/pronto_connections = [SubResource("Resource_f5xoj")]
 position = Vector2(-63, -33)
 script = ExtResource("3_dgnjv")
 limit_to_group = "level"
-metadata/pronto_connections = [SubResource("Resource_sadht"), SubResource("Resource_wge7p"), SubResource("Resource_euhjh")]
+metadata/pronto_connections = [SubResource("Resource_twswg"), SubResource("Resource_wge7p"), SubResource("Resource_euhjh"), SubResource("Resource_sadht")]
+
+[node name="Clock" type="Node2D" parent="Player"]
+position = Vector2(-120, -58)
+script = ExtResource("4_13lt6")
+trigger_interval_in_seconds = 1.0
 
 [node name="Level" type="StaticBody2D" parent="." groups=["level"]]
 position = Vector2(568, 648)
@@ -538,25 +586,6 @@ rotation = 3.14159
 script = ExtResource("1_f0b6i")
 placeholder_size = Vector2(1156, 29)
 
-[node name="Bubble" type="Area2D" parent="." groups=["bubbles"]]
-position = Vector2(156, 517)
-
-[node name="Placeholder" type="Node2D" parent="Bubble"]
-script = ExtResource("1_f0b6i")
-color = Color(1, 0, 0, 0.352941)
-placeholder_size = Vector2(59, 57)
-
-[node name="PlayerCollision" type="Node2D" parent="Bubble"]
-position = Vector2(117, -26)
-script = ExtResource("3_dgnjv")
-limit_to_group = "player"
-metadata/pronto_connections = [SubResource("Resource_qig6k"), SubResource("Resource_a7jjy"), SubResource("Resource_di55p")]
-
-[node name="BubbleDragger" type="Node2D" parent="Bubble"]
-position = Vector2(70, 61)
-script = ExtResource("4_dfbwd")
-metadata/pronto_connections = [SubResource("Resource_ji1gq")]
-
 [node name="Label" type="Label" parent="."]
 offset_left = 265.0
 offset_top = 32.0
@@ -579,3 +608,32 @@ script = ExtResource("10_ftgpq")
 from = 1.0
 to = 500.0
 value = 300.0
+
+[node name="BubbleSpawner" type="Node2D" parent="."]
+position = Vector2(131, 515)
+script = ExtResource("11_ja0u7")
+
+[node name="Bubble" type="Area2D" parent="BubbleSpawner" groups=["bubbles"]]
+
+[node name="Placeholder" type="Node2D" parent="BubbleSpawner/Bubble"]
+script = ExtResource("1_f0b6i")
+color = Color(1, 0, 0, 0.352941)
+placeholder_size = Vector2(59, 57)
+
+[node name="PlayerCollision" type="Node2D" parent="BubbleSpawner/Bubble"]
+position = Vector2(117, -26)
+script = ExtResource("3_dgnjv")
+limit_to_group = "player"
+metadata/pronto_connections = [SubResource("Resource_qig6k"), SubResource("Resource_a7jjy"), SubResource("Resource_di55p")]
+
+[node name="BubbleDragger" type="Node2D" parent="BubbleSpawner/Bubble"]
+position = Vector2(70, 61)
+script = ExtResource("4_dfbwd")
+metadata/pronto_connections = [SubResource("Resource_ji1gq")]
+
+[node name="BubbleClock" type="Node2D" parent="."]
+position = Vector2(124, 372)
+script = ExtResource("4_13lt6")
+one_shot = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_a3che")]
