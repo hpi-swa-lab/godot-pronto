@@ -1,0 +1,581 @@
+[gd_scene load_steps=77 format=3 uid="uid://0iffumy7j0je"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_f0b6i"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_njc5r"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="3_dgnjv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="4_13lt6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="4_dfbwd"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_kcamo"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_k8f63"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_kc1wi"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="9_deycf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="10_ftgpq"]
+
+[sub_resource type="GDScript" id="GDScript_tifby"]
+script/source = "extends U
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ym3go"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_tifby")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4go41"]
+script = ExtResource("5_k8f63")
+signal_name = "always"
+to = NodePath("..")
+invoke = "move_and_slide"
+arguments = []
+only_if = SubResource("Resource_ym3go")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_qq80r"]
+script/source = "extends U
+func run(delta, from):
+	print(G.at(\"player_direction\") * G.at(\"BubbleSpeed\"))
+"
+
+[sub_resource type="Resource" id="Resource_gt8j1"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_qq80r")
+argument_names = ["delta", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_i00uh"]
+script/source = "extends U
+func run(delta, from):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_qq16s"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_i00uh")
+argument_names = ["delta", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_prb4h"]
+script = ExtResource("5_k8f63")
+signal_name = "always"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_qq16s")
+expression = SubResource("Resource_gt8j1")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_fcqjk"]
+script/source = "extends U
+func run(from, to):
+	to.paused = false
+	print(\"unpaused always\")
+
+"
+
+[sub_resource type="Resource" id="Resource_hul3t"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_fcqjk")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_74ali"]
+script/source = "extends U
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2gm5u"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_74ali")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tswrs"]
+script = ExtResource("5_k8f63")
+signal_name = "elapsed"
+to = NodePath("../DragAlways")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_2gm5u")
+expression = SubResource("Resource_hul3t")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_dpr7m"]
+script/source = "extends U
+func run(from, to):
+	return G.at(\"player_direction\") * G.at(\"BubbleSpeed\")
+"
+
+[sub_resource type="Resource" id="Resource_7s8or"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_dpr7m")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_nkv8p"]
+script/source = "extends U
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_tv6y8"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_nkv8p")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ywi8l"]
+script = ExtResource("5_k8f63")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "set_velocity"
+arguments = [SubResource("Resource_7s8or")]
+only_if = SubResource("Resource_tv6y8")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_yugo0"]
+script/source = "extends U
+func run(dir, from):
+	G.put(\"player_direction\", dir)
+"
+
+[sub_resource type="Resource" id="Resource_0oj5v"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_yugo0")
+argument_names = ["dir", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_l4n0r"]
+script/source = "extends U
+func run(dir, from):
+	return G.at(\"player_in_bubble\", false)
+"
+
+[sub_resource type="Resource" id="Resource_oneuq"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_l4n0r")
+argument_names = ["dir", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_apqoe"]
+script = ExtResource("5_k8f63")
+signal_name = "direction"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_oneuq")
+expression = SubResource("Resource_0oj5v")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_lowbn"]
+script/source = "extends U
+func run(dir, from):
+	if is_equal_approx(dir.x, 0.0):
+		return
+	G.put(\"player_direction\", dir)
+"
+
+[sub_resource type="Resource" id="Resource_olmlu"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_lowbn")
+argument_names = ["dir", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_3ccoe"]
+script/source = "extends U
+func run(dir, from):
+	return G.at(\"player_in_bubble\", true)
+"
+
+[sub_resource type="Resource" id="Resource_hs0r2"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_3ccoe")
+argument_names = ["dir", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_q1fwm"]
+script = ExtResource("5_k8f63")
+signal_name = "direction"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_hs0r2")
+expression = SubResource("Resource_olmlu")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_wh4d8"]
+script/source = "extends U
+func run(delta, from):
+	G.put(\"player\", from.get_parent())
+"
+
+[sub_resource type="Resource" id="Resource_mwclj"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_wh4d8")
+argument_names = ["delta", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_jwval"]
+script/source = "extends U
+func run(delta, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_w2ubm"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_jwval")
+argument_names = ["delta", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_f5xoj"]
+script = ExtResource("5_k8f63")
+signal_name = "always"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_w2ubm")
+expression = SubResource("Resource_mwclj")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_0bpy3"]
+script/source = "extends U
+func run(other, direction, from, to):
+	to.paused = true
+"
+
+[sub_resource type="Resource" id="Resource_jfexd"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_0bpy3")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_r8qr5"]
+script/source = "extends U
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_n63c3"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_r8qr5")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_sadht"]
+script = ExtResource("5_k8f63")
+signal_name = "collided"
+to = NodePath("../DragAlways")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_n63c3")
+expression = SubResource("Resource_jfexd")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_vwcuc"]
+script/source = "extends U
+func run(other, direction, from, to):
+	return Node.PROCESS_MODE_INHERIT
+"
+
+[sub_resource type="Resource" id="Resource_fi4kx"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_vwcuc")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_akna4"]
+script/source = "extends U
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_17ln3"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_akna4")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_wge7p"]
+script = ExtResource("5_k8f63")
+signal_name = "collided"
+to = NodePath("../PlatformerController")
+invoke = "set_process_mode"
+arguments = [SubResource("Resource_fi4kx")]
+only_if = SubResource("Resource_17ln3")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_csxoy"]
+script/source = "extends U
+func run(other, direction, from):
+	G.at(\"current_bubble\").queue_free()
+	G.put(\"player_in_bubble\", false)
+	G.put(\"current_bubble\", null)
+"
+
+[sub_resource type="Resource" id="Resource_am4bx"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_csxoy")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_j2r4q"]
+script/source = "extends U
+func run(other, direction, from):
+	return G.at(\"current_bubble\", false)
+"
+
+[sub_resource type="Resource" id="Resource_rii8l"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_j2r4q")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_euhjh"]
+script = ExtResource("5_k8f63")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_rii8l")
+expression = SubResource("Resource_am4bx")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_gu0ai"]
+script/source = "extends U
+func run(other, direction, from, to):
+	other.global_position = to.global_position
+	# make this bubble the current one
+	G.put(\"current_bubble\", to)
+	to.set_deferred(\"monitoring\", false)
+	var platformer_controller := other.get_node(\"PlatformerController\") as Node
+	platformer_controller.process_mode = Node.PROCESS_MODE_DISABLED
+"
+
+[sub_resource type="Resource" id="Resource_0ddbc"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_gu0ai")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_m4ej1"]
+script/source = "extends U
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_xr7li"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_m4ej1")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qig6k"]
+script = ExtResource("5_k8f63")
+signal_name = "collided"
+to = NodePath("..")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_xr7li")
+expression = SubResource("Resource_0ddbc")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_wtitp"]
+script/source = "extends U
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_17aht"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_wtitp")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a7jjy"]
+script = ExtResource("5_k8f63")
+signal_name = "collided"
+to = NodePath("../../Player/InitialDirectionClock")
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_17aht")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_dou0j"]
+script/source = "extends U
+func run(other, direction, from):
+	G.put(\"player_in_bubble\", true)
+"
+
+[sub_resource type="Resource" id="Resource_i40na"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_dou0j")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_bhp0f"]
+script/source = "extends U
+func run(other, direction, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_g4lxj"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_bhp0f")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_di55p"]
+script = ExtResource("5_k8f63")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_g4lxj")
+expression = SubResource("Resource_i40na")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_03ssf"]
+script/source = "extends U
+func run(delta, from, to):
+	return G.at(\"player\").global_position
+"
+
+[sub_resource type="Resource" id="Resource_wdcfs"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_03ssf")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_n3jru"]
+script/source = "extends U
+func run(delta, from, to):
+	return G.at(\"current_bubble\") == to
+"
+
+[sub_resource type="Resource" id="Resource_rnp12"]
+script = ExtResource("4_kcamo")
+nested_script = SubResource("GDScript_n3jru")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ji1gq"]
+script = ExtResource("5_k8f63")
+signal_name = "always"
+to = NodePath("..")
+invoke = "set_global_position"
+arguments = [SubResource("Resource_wdcfs")]
+only_if = SubResource("Resource_rnp12")
+deferred = false
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(566, 292)
+
+[node name="Placeholder" type="Node2D" parent="Player"]
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(24, 54)
+
+[node name="PlatformerController" type="Node2D" parent="Player"]
+position = Vector2(-1, -106)
+script = ExtResource("2_njc5r")
+
+[node name="DragAlways" type="Node2D" parent="Player"]
+unique_name_in_owner = true
+position = Vector2(-101, 24)
+script = ExtResource("4_dfbwd")
+paused = true
+metadata/pronto_connections = [SubResource("Resource_4go41"), SubResource("Resource_prb4h")]
+
+[node name="InitialDirectionClock" type="Node2D" parent="Player"]
+position = Vector2(-145, 125)
+script = ExtResource("4_13lt6")
+one_shot = true
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_tswrs"), SubResource("Resource_ywi8l")]
+
+[node name="Controls" type="Node2D" parent="Player"]
+position = Vector2(-452, -44)
+script = ExtResource("6_kc1wi")
+metadata/pronto_connections = [SubResource("Resource_apqoe"), SubResource("Resource_q1fwm")]
+
+[node name="ReallyMakeSurePlayerIsPlayer" type="Node2D" parent="Player"]
+position = Vector2(112, 6)
+script = ExtResource("4_dfbwd")
+metadata/pronto_connections = [SubResource("Resource_f5xoj")]
+
+[node name="LevelCollision" type="Node2D" parent="Player"]
+position = Vector2(-63, -33)
+script = ExtResource("3_dgnjv")
+limit_to_group = "level"
+metadata/pronto_connections = [SubResource("Resource_sadht"), SubResource("Resource_wge7p"), SubResource("Resource_euhjh")]
+
+[node name="Level" type="StaticBody2D" parent="." groups=["level"]]
+position = Vector2(568, 648)
+
+[node name="Placeholder" type="Node2D" parent="Level"]
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(1156, 29)
+
+[node name="Placeholder2" type="Node2D" parent="Level"]
+position = Vector2(-575, -306)
+rotation = 1.5708
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(1156, 29)
+
+[node name="Placeholder3" type="Node2D" parent="Level"]
+position = Vector2(582, -339)
+rotation = 1.5708
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(1156, 29)
+
+[node name="Placeholder4" type="Node2D" parent="Level"]
+position = Vector2(5, -641)
+rotation = 3.14159
+script = ExtResource("1_f0b6i")
+placeholder_size = Vector2(1156, 29)
+
+[node name="Bubble" type="Area2D" parent="." groups=["bubbles"]]
+position = Vector2(156, 517)
+
+[node name="Placeholder" type="Node2D" parent="Bubble"]
+script = ExtResource("1_f0b6i")
+color = Color(1, 0, 0, 0.352941)
+placeholder_size = Vector2(59, 57)
+
+[node name="PlayerCollision" type="Node2D" parent="Bubble"]
+position = Vector2(117, -26)
+script = ExtResource("3_dgnjv")
+limit_to_group = "player"
+metadata/pronto_connections = [SubResource("Resource_qig6k"), SubResource("Resource_a7jjy"), SubResource("Resource_di55p")]
+
+[node name="BubbleDragger" type="Node2D" parent="Bubble"]
+position = Vector2(70, 61)
+script = ExtResource("4_dfbwd")
+metadata/pronto_connections = [SubResource("Resource_ji1gq")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 265.0
+offset_top = 32.0
+offset_right = 484.0
+offset_bottom = 58.0
+text = "TODO: - diagonal movement"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 39.0
+offset_top = 49.0
+offset_right = 240.0
+offset_bottom = 185.0
+
+[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
+script = ExtResource("9_deycf")
+
+[node name="BubbleSpeed" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(93, 63)
+script = ExtResource("10_ftgpq")
+from = 1.0
+to = 500.0
+value = 300.0
