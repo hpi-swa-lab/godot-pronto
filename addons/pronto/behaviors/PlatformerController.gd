@@ -16,6 +16,8 @@ extends Behavior
 ## If enabled, the parent leaves a trail of recent positions.
 @export var show_trail: bool = false
 
+@export var friction: float = 0.1
+
 @onready var _parent: CharacterBody2D = get_parent()
 
 var _last_on_floor = -10000
@@ -79,8 +81,11 @@ func _physics_process(delta):
 		_parent.velocity.y += gravity.y * delta
 	
 	# horizontal
-	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
-	_parent.velocity.x += gravity.x * delta
+	if (Input.get_axis("ui_left", "ui_right") != 0):
+		_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
+		_parent.velocity.x += gravity.x * delta
+	
+	_parent.velocity.x = lerp(_parent.velocity.x, 0., friction)
 	
 	# move
 	var did_collide = _parent.move_and_slide()

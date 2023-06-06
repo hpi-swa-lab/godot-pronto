@@ -114,6 +114,7 @@ position = Vector2(-108, -74)
 script = ExtResource("3_8fytt")
 one_shot = true
 duration_seconds = 0.1
+paused = true
 trigger_every_frame = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_ilw2k"), SubResource("Resource_e2wyc"), SubResource("Resource_ic2wy")]
