@@ -62,6 +62,9 @@ func _draw():
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
+		
+	if G.at("is_dashing"):
+		return
 	
 	var gravity = PhysicsServer2D.body_get_direct_state(_parent).total_gravity
 	

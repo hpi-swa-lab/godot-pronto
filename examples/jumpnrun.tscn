@@ -1,7 +1,59 @@
-[gd_scene load_steps=3 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=13 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="2_x2wwj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="3_8fytt"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_1iyk2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_2arfu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="7_sb4fg"]
+
+[sub_resource type="Resource" id="Resource_ilw2k"]
+script = ExtResource("4_1iyk2")
+signal_name = "until_elapsed"
+to = NodePath("..")
+invoke = "set_velocity"
+arguments = ["print((from.get_viewport().get_mouse_position() - to.global_position).normalized() * 1000)
+print(to.get_velocity())
+return (from.get_viewport().get_mouse_position() - to.global_position).normalized() * 1000"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_e2wyc"]
+script = ExtResource("4_1iyk2")
+signal_name = "elapsed"
+to = NodePath("../../State")
+invoke = "put"
+arguments = ["return \"is_dashing\"", "return false"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ic2wy"]
+script = ExtResource("4_1iyk2")
+signal_name = "until_elapsed"
+to = NodePath("..")
+invoke = "move_and_slide"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_ii0t7"]
+script = ExtResource("4_1iyk2")
+signal_name = "down"
+to = NodePath("../Clock")
+invoke = "reset_and_start"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_lkat7"]
+script = ExtResource("4_1iyk2")
+signal_name = "down"
+to = NodePath("../../State")
+invoke = "put"
+arguments = ["return \"is_dashing\"", "return true"]
+only_if = "return true"
+expression = ""
 
 [node name="jumpnrun" type="Node2D"]
 
@@ -44,6 +96,10 @@ placeholder_size = Vector2(88, 71)
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(575, 558)
 
+[node name="Code" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(-168, -132)
+script = ExtResource("2_x2wwj")
+
 [node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_tc671")
 label = "guy"
@@ -52,7 +108,21 @@ placeholder_size = Vector2(20, 60)
 [node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(45, -12)
 script = ExtResource("2_qr0oj")
-show_trail = true
+
+[node name="Clock" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(-108, -74)
+script = ExtResource("3_8fytt")
+one_shot = true
+duration_seconds = 0.1
+trigger_every_frame = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_ilw2k"), SubResource("Resource_e2wyc"), SubResource("Resource_ic2wy")]
+
+[node name="Key" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(-254, -7)
+script = ExtResource("5_2arfu")
+key = "E"
+metadata/pronto_connections = [SubResource("Resource_ii0t7"), SubResource("Resource_lkat7")]
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="."]
 position = Vector2(389, 306)
@@ -72,3 +142,8 @@ position = Vector2(1, 16)
 script = ExtResource("1_tc671")
 color = Color(0.0313726, 0.658824, 0, 1)
 placeholder_size = Vector2(88, 71)
+
+[node name="State" type="Node2D" parent="."]
+position = Vector2(263, 84)
+script = ExtResource("7_sb4fg")
+metadata/is_dashing = false
