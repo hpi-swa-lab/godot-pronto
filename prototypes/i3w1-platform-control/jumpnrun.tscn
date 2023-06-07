@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cw138tsgjt3kk"]
+[gd_scene load_steps=28 format=3 uid="uid://b75rb7gcnfaf1"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_j2od4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_dewe6"]
@@ -129,7 +129,7 @@ signal_name = "horizontal_direction"
 to = NodePath("../BlueBlocks/Path2D3/PathFollow2D")
 invoke = "set_progress"
 arguments = ["var speed = 2#G.at(\"PlatformMovementSpeed\")
-return to.progress + (-dir.x * speed)"]
+return to.progress + (dir.x * speed)"]
 only_if = "return G.at(\"Collision Layer\") == 3"
 expression = ""
 
@@ -186,7 +186,7 @@ show_trail = true
 [node name="Key" type="Node2D" parent="CharacterBody2D/PlatformerController"]
 position = Vector2(-107, -521)
 script = ExtResource("4_mo53x")
-key = "E"
+key = "Shift"
 metadata/pronto_connections = [SubResource("Resource_4udh5"), SubResource("Resource_3ul1c"), SubResource("Resource_y54c7")]
 
 [node name="StaticBody2D6" type="StaticBody2D" parent="."]
@@ -211,9 +211,19 @@ text = "Collision Layer:
 editable = false
 
 [node name="Always" type="Node2D" parent="."]
-position = Vector2(396, 435)
+position = Vector2(384, 481)
 script = ExtResource("5_gi2o6")
 metadata/pronto_connections = [SubResource("Resource_rvx38"), SubResource("Resource_nghco"), SubResource("Resource_sf1xn")]
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(1038, 174)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D4"]
+position = Vector2(19, 14)
+script = ExtResource("1_j2od4")
+label = "Bonus points"
+color = Color(0.686275, 0.580392, 0.14902, 1)
+placeholder_size = Vector2(151, 44)
 
 [node name="Red Blocks" type="CanvasGroup" parent="."]
 position = Vector2(-1, 1)
@@ -228,17 +238,6 @@ position = Vector2(1, 16)
 script = ExtResource("1_j2od4")
 color = Color(0.87451, 0.341176, 0.352941, 1)
 placeholder_size = Vector2(88, 71)
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="Red Blocks"]
-position = Vector2(1049, 563)
-collision_layer = 4
-collision_mask = 4
-
-[node name="Placeholder" type="Node2D" parent="Red Blocks/StaticBody2D2"]
-position = Vector2(19, 14)
-script = ExtResource("1_j2od4")
-color = Color(0.886275, 0.329412, 0.337255, 1)
-placeholder_size = Vector2(151, 44)
 
 [node name="Code" type="Node2D" parent="Red Blocks"]
 position = Vector2(1, -1)
@@ -284,7 +283,6 @@ loop = false
 [node name="StaticBody2D9" type="StaticBody2D" parent="Red Blocks/Path2D2/PathFollow2D"]
 position = Vector2(0.0921021, 19.9998)
 rotation = 0.476859
-scale = Vector2(1, 1)
 collision_layer = 4
 collision_mask = 4
 
@@ -315,7 +313,6 @@ rotates = false
 [node name="StaticBody2D5" type="StaticBody2D" parent="BlueBlocks/Path2D3/PathFollow2D"]
 position = Vector2(-9.99994, -27)
 rotation = 0.476859
-scale = Vector2(1, 1)
 collision_layer = 2
 collision_mask = 2
 
@@ -331,6 +328,7 @@ position = Vector2(279, 18)
 script = ExtResource("10_u7tha")
 one_shot = true
 duration_seconds = 0.0001
+paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_alrso"), SubResource("Resource_lqb5v")]
 
@@ -371,3 +369,18 @@ rotation = 3.13704
 script = ExtResource("1_j2od4")
 color = Color(0.0313726, 0.658824, 0, 1)
 placeholder_size = Vector2(249, 26)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 175.0
+offset_top = 501.0
+offset_right = 389.0
+offset_bottom = 527.0
+text = "Press 'Shift' to switch layers"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 41.0
+offset_top = 306.0
+offset_right = 255.0
+offset_bottom = 384.0
+text = "Use 'A/D' & 'W/S' to move platforms that are not on your layer"
+autowrap_mode = 2

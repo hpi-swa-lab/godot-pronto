@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://clnqkilb40min"]
+
+[ext_resource type="Script" path="res://prototypes/i3w1-platform-control/Path2D.gd" id="1_346ly"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_mbuqe"]
+
+[sub_resource type="Curve2D" id="Curve2D_v1f00"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -619, -132, 0, 0, 0, 0, -619, -132, 0, 0, 0, 0, -439, -133)
+}
+point_count = 3
+
+[node name="Path2D" type="Path2D"]
+position = Vector2(979, 331)
+curve = SubResource("Curve2D_v1f00")
+script = ExtResource("1_346ly")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(-619.126, -131.999)
+loop = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="PathFollow2D"]
+
+[node name="Placeholder" type="Node2D" parent="PathFollow2D/StaticBody2D"]
+script = ExtResource("2_mbuqe")
+label = "platform"
+placeholder_size = Vector2(54, 21)
+
+[node name="191408" type="Timer" parent="PathFollow2D"]
+wait_time = 0.2
+one_shot = true

@@ -1,0 +1,169 @@
+[gd_scene load_steps=9 format=3 uid="uid://c43jq8f4byxjd"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_h8e17"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_se1ax"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="3_vmeyp"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="4_l28kd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="5_jedjs"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_rwkf7"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_prsrf"]
+
+[sub_resource type="Resource" id="Resource_f6lhh"]
+script = ExtResource("7_prsrf")
+signal_name = "mouse_drag"
+to = NodePath("../StaticBody2D")
+invoke = "set_global_position"
+arguments = ["return pos"]
+only_if = "return true"
+expression = ""
+
+[node name="jumpnrun" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(563, 624)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D"]
+position = Vector2(1, 16)
+script = ExtResource("1_h8e17")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(2000, 40)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(683, 443)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D2"]
+position = Vector2(1, 16)
+script = ExtResource("1_h8e17")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(899, 528)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D3"]
+position = Vector2(1, 16)
+script = ExtResource("1_h8e17")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(763, 590)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D4"]
+position = Vector2(1, 16)
+script = ExtResource("1_h8e17")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(685, 379)
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("1_h8e17")
+label = "guy"
+placeholder_size = Vector2(20, 60)
+
+[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(45, -12)
+script = ExtResource("2_se1ax")
+coyote_time = 1.0
+show_trail = true
+
+[node name="Bind" type="Node2D" parent="CharacterBody2D/PlatformerController"]
+position = Vector2(-12, -53)
+script = ExtResource("3_vmeyp")
+to_prop = "jump_velocity"
+convert = "return G.at(\"JumpVel\")"
+
+[node name="Bind2" type="Node2D" parent="CharacterBody2D/PlatformerController"]
+position = Vector2(-35, -48)
+script = ExtResource("3_vmeyp")
+to_prop = "horizontal_velocity"
+convert = "return G.at(\"HorizontalVel\")"
+
+[node name="Bind3" type="Node2D" parent="CharacterBody2D/PlatformerController"]
+position = Vector2(39, -34)
+script = ExtResource("3_vmeyp")
+to_prop = "coyote_time"
+convert = "return G.at(\"CoyoteTime\")"
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(389, 306)
+rotation = 0.476859
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D5"]
+position = Vector2(1, 16)
+script = ExtResource("1_h8e17")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(457, 36)
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2(978, 594)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D6"]
+position = Vector2(1, 16)
+script = ExtResource("1_h8e17")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+visible = false
+offset_right = 339.0
+offset_bottom = 138.0
+
+[node name="PrototypingUI" type="Node2D" parent="UI/PanelContainer"]
+position = Vector2(397, 197)
+scale = Vector2(1.01074, 1.01653)
+script = ExtResource("4_l28kd")
+
+[node name="JumpVel" type="Node2D" parent="UI/PanelContainer/PrototypingUI"]
+position = Vector2(72.2242, -8.85367)
+scale = Vector2(0.989374, 0.983739)
+script = ExtResource("5_jedjs")
+from = 200.0
+to = 800.0
+step_size = 10.0
+value = 400.0
+
+[node name="HorizontalVel" type="Node2D" parent="UI/PanelContainer/PrototypingUI"]
+position = Vector2(70.2455, 22.626)
+script = ExtResource("5_jedjs")
+from = 200.0
+to = 800.0
+step_size = 10.0
+value = 400.0
+
+[node name="CoyoteTime" type="Node2D" parent="UI/PanelContainer/PrototypingUI"]
+position = Vector2(69.2561, 53.1219)
+script = ExtResource("5_jedjs")
+step_size = 0.1
+value = 0.2
+
+[node name="Label" type="Label" parent="."]
+offset_left = 558.0
+offset_top = 47.0
+offset_right = 598.0
+offset_bottom = 69.3333
+
+[node name="Bind" type="Node2D" parent="Label"]
+position = Vector2(-1, -2)
+script = ExtResource("3_vmeyp")
+to_prop = "text"
+convert = "return G.at(\"CoolValue\")"
+
+[node name="Platform-Prototyping" type="Node2D" parent="."]
+position = Vector2(642, 183)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Platform-Prototyping"]
+position = Vector2(249, 186)
+
+[node name="Placeholder" type="Node2D" parent="Platform-Prototyping/StaticBody2D"]
+script = ExtResource("1_h8e17")
+placeholder_size = Vector2(145, 21)
+
+[node name="Controls" type="Node2D" parent="Platform-Prototyping"]
+position = Vector2(250, 235)
+script = ExtResource("6_rwkf7")
+metadata/pronto_connections = [SubResource("Resource_f6lhh")]
