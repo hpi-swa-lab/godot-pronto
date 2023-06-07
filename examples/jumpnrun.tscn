@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=23 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="7_sb4fg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="8_27i4k"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="9_tjmxt"]
+[ext_resource type="AudioStream" uid="uid://blllofbj5trfy" path="res://examples/untitled.ogg" id="10_vyh86"]
 
 [sub_resource type="Resource" id="Resource_ilw2k"]
 script = ExtResource("4_1iyk2")
@@ -62,7 +63,9 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "return other.get_meta(\"is_kevin\", false) and G.at(\"is_dashing\")"
-expression = "other.get_parent().set_meta(\"move_direction\", Vector2.from_angle(round(direction.angle() / deg_to_rad(90.)) * deg_to_rad(90.)) * -1)"
+expression = "other.get_parent().set_meta(\"move_direction\", Vector2.from_angle(round(direction.angle() / deg_to_rad(90.)) * deg_to_rad(90.)) * -1)
+other.get_parent().get_node(\"AudioStreamPlayer2D\").stop()
+other.get_parent().get_node(\"AudioStreamPlayer2D\").play()"
 
 [sub_resource type="Resource" id="Resource_u7fbw"]
 script = ExtResource("4_1iyk2")
@@ -289,3 +292,6 @@ script = ExtResource("1_tc671")
 color = Color(0.592157, 0.0117647, 0.0235294, 1)
 color2 = Color(0.592157, 0.0117647, 0.0235294, 1)
 placeholder_size = Vector2(40, 46)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="StaticBody2D7"]
+stream = ExtResource("10_vyh86")
