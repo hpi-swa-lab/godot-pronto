@@ -1,22 +1,21 @@
-[gd_scene load_steps=23 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=22 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="2_x2wwj"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="3_8fytt"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_1iyk2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_2arfu"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_hhv8t"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="7_sb4fg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="8_27i4k"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="8_b1ktx"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="9_now4d"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="9_tjmxt"]
 
 [sub_resource type="Resource" id="Resource_ilw2k"]
 script = ExtResource("4_1iyk2")
 signal_name = "until_elapsed"
 to = NodePath("..")
 invoke = "set_velocity"
-arguments = ["return G.at(\"dash_vector\")"]
+arguments = ["return (from.get_viewport().get_mouse_position() - to.global_position).normalized() * 1000"]
 only_if = "return true"
 expression = ""
 
@@ -44,8 +43,7 @@ signal_name = "down"
 to = NodePath("../Clock")
 invoke = "reset_and_start"
 arguments = []
-only_if = "G.put(\"dash_vector\",(from.get_viewport().get_mouse_position() - to.global_position).normalized() * G.at(\"dash_velocity\"))
-return G.at(\"can_dash\")"
+only_if = "return true"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_lkat7"]
@@ -54,32 +52,17 @@ signal_name = "down"
 to = NodePath("../../State")
 invoke = "put"
 arguments = ["return \"is_dashing\"", "return true"]
-only_if = "return G.at(\"can_dash\")"
-expression = ""
-
-[sub_resource type="Resource" id="Resource_rx2c7"]
-script = ExtResource("4_1iyk2")
-signal_name = "down"
-to = NodePath("../../State")
-invoke = "put"
-arguments = ["return \"can_dash\"", "return false"]
 only_if = "return true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_kworb"]
+[sub_resource type="Resource" id="Resource_f6dqd"]
 script = ExtResource("4_1iyk2")
-signal_name = "always"
-to = NodePath("../Placeholder")
-invoke = "@color_setter"
-arguments = ["var c
-if(G.at(\"can_dash\")):
-	c = Color(\"fb4fed\")
-else:
-	c = Color(\"4ab3d5\")
-
-return c"]
-only_if = "return true"
-expression = ""
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return other.get_meta(\"is_kevin\", false) and G.at(\"is_dashing\")"
+expression = "other.get_parent().set_meta(\"move_direction\", Vector2.from_angle(round(direction.angle() / deg_to_rad(90.)) * deg_to_rad(90.)) * -1)"
 
 [sub_resource type="Resource" id="Resource_u7fbw"]
 script = ExtResource("4_1iyk2")
@@ -87,7 +70,7 @@ signal_name = "collided"
 to = NodePath("../Clock")
 invoke = "reset_and_start"
 arguments = []
-only_if = "return other.global_position.y + G.at(\"blow_up_height\")> from.get_parent().global_position.y and not G.at(\"is_respawning\")"
+only_if = "return other.global_position.y > from.get_parent().global_position.y"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_txdm5"]
@@ -95,9 +78,8 @@ script = ExtResource("4_1iyk2")
 signal_name = "collided"
 to = NodePath("../../CharacterBody2D")
 invoke = "set_velocity"
-arguments = ["G.put(\"can_dash\",true)
-return (to.global_position-from.get_parent().global_position).normalized() * G.at(\"bounce_speed\")"]
-only_if = "return to.global_position.y + G.at(\"blow_up_height\") <= from.get_parent().global_position.y and not G.at(\"is_respawning\")"
+arguments = ["return (to.global_position-from.get_parent().global_position).normalized() * 500"]
+only_if = "return to.global_position.y <= from.get_parent().global_position.y"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_f2dcv"]
@@ -108,10 +90,8 @@ invoke = "set_velocity"
 arguments = ["
 from.get_parent().set_visible(false)
 from.get_parent().set_monitoring(false)
-G.put(\"is_respawning\",true)
-G.put(\"can_dash\",true)
-return (to.global_position-from.get_parent().global_position).normalized() * G.at(\"blow_up_speed\")"]
-only_if = "return to.global_position.y + G.at(\"blow_up_height\") > from.get_parent().global_position.y and not G.at(\"is_respawning\")"
+return (to.global_position-from.get_parent().global_position).normalized() * 5000"]
+only_if = "return to.global_position.y > from.get_parent().global_position.y"
 expression = ""
 
 [sub_resource type="Resource" id="Resource_fsxv8"]
@@ -119,8 +99,7 @@ script = ExtResource("4_1iyk2")
 signal_name = "elapsed"
 to = NodePath("..")
 invoke = "set_monitoring"
-arguments = ["G.put(\"is_respawning\",false)
-return true"]
+arguments = ["return true"]
 only_if = "return true"
 expression = ""
 
@@ -133,30 +112,31 @@ arguments = ["return true"]
 only_if = "return true"
 expression = ""
 
+[sub_resource type="Resource" id="Resource_7uwau"]
+script = ExtResource("4_1iyk2")
+signal_name = "always"
+to = NodePath("../StaticBody2D7")
+invoke = "set_constant_linear_velocity"
+arguments = ["var movement = to.get_meta(\"move_direction\", Vector2(0,0)) * 500
+to.position += movement * delta
+return movement"]
+only_if = "return true"
+expression = ""
+
 [node name="jumpnrun" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(65, 670)
+position = Vector2(563, 624)
 
 [node name="Placeholder" type="Node2D" parent="StaticBody2D"]
 position = Vector2(1, 16)
 script = ExtResource("1_tc671")
 color = Color(0.0313726, 0.658824, 0, 1)
 color2 = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(518, 149)
-
-[node name="StaticBody2D5" type="StaticBody2D" parent="."]
-position = Vector2(1237, 621)
-
-[node name="Placeholder" type="Node2D" parent="StaticBody2D5"]
-position = Vector2(1, 16)
-script = ExtResource("1_tc671")
-color = Color(0.0313726, 0.658824, 0, 1)
-color2 = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(518, 149)
+placeholder_size = Vector2(2000, 40)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(1126, 263)
+position = Vector2(683, 443)
 
 [node name="Placeholder" type="Node2D" parent="StaticBody2D2"]
 position = Vector2(1, 16)
@@ -166,17 +146,17 @@ color2 = Color(0.0313726, 0.658824, 0, 1)
 placeholder_size = Vector2(88, 71)
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2(604, 3)
+position = Vector2(899, 528)
 
 [node name="Placeholder" type="Node2D" parent="StaticBody2D3"]
 position = Vector2(1, 16)
 script = ExtResource("1_tc671")
 color = Color(0.0313726, 0.658824, 0, 1)
 color2 = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(65, 603)
+placeholder_size = Vector2(88, 71)
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="."]
-position = Vector2(52, 237)
+position = Vector2(763, 590)
 
 [node name="Placeholder" type="Node2D" parent="StaticBody2D4"]
 position = Vector2(1, 16)
@@ -186,7 +166,11 @@ color2 = Color(0.0313726, 0.658824, 0, 1)
 placeholder_size = Vector2(88, 71)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(17, 552)
+position = Vector2(575, 558)
+
+[node name="Code" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(-168, -132)
+script = ExtResource("2_x2wwj")
 
 [node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_tc671")
@@ -204,88 +188,104 @@ horizontal_velocity = 50.0
 position = Vector2(-108, -74)
 script = ExtResource("3_8fytt")
 one_shot = true
-duration_seconds = 0.01
+duration_seconds = 0.1
 paused = true
 trigger_every_frame = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_ilw2k"), SubResource("Resource_e2wyc"), SubResource("Resource_ic2wy")]
 
 [node name="Key" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(-253, -7)
+position = Vector2(-254, -7)
 script = ExtResource("5_2arfu")
 key = "E"
-metadata/pronto_connections = [SubResource("Resource_ii0t7"), SubResource("Resource_lkat7"), SubResource("Resource_rx2c7")]
+metadata/pronto_connections = [SubResource("Resource_ii0t7"), SubResource("Resource_lkat7")]
 
-[node name="Always" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(-53, 33)
-script = ExtResource("6_hhv8t")
-metadata/pronto_connections = [SubResource("Resource_kworb")]
+[node name="Collision" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(60, 24)
+script = ExtResource("8_27i4k")
+metadata/pronto_connections = [SubResource("Resource_f6dqd")]
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(389, 306)
+rotation = 0.476859
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D5"]
+position = Vector2(1, 16)
+script = ExtResource("1_tc671")
+color = Color(0.0313726, 0.658824, 0, 1)
+color2 = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(457, 36)
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2(978, 594)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D6"]
+position = Vector2(1, 16)
+script = ExtResource("1_tc671")
+color = Color(0.0313726, 0.658824, 0, 1)
+color2 = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
 
 [node name="State" type="Node2D" parent="."]
-position = Vector2(293, 369)
+position = Vector2(263, 84)
 script = ExtResource("7_sb4fg")
 global = true
 metadata/is_dashing = false
-metadata/can_dash = true
-metadata/dash_vector = Vector2(0, 0)
 
-[node name="Blowfish" type="Area2D" parent="."]
-position = Vector2(91, 508)
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(715, 327)
 
-[node name="Placeholder" type="Node2D" parent="Blowfish"]
+[node name="Placeholder" type="Node2D" parent="Area2D"]
 script = ExtResource("1_tc671")
 color = Color(0.964706, 0.72549, 0.4, 1)
 color2 = Color(0.988235, 0.333333, 0.560784, 1)
 placeholder_size = Vector2(42, 44)
 
-[node name="Collision" type="Node2D" parent="Blowfish"]
+[node name="Collision" type="Node2D" parent="Area2D"]
 position = Vector2(-161, -52)
 script = ExtResource("8_27i4k")
 metadata/pronto_connections = [SubResource("Resource_u7fbw"), SubResource("Resource_txdm5"), SubResource("Resource_f2dcv")]
 
-[node name="Clock" type="Node2D" parent="Blowfish"]
+[node name="Clock" type="Node2D" parent="Area2D"]
 position = Vector2(-41, -88)
 script = ExtResource("3_8fytt")
 one_shot = true
-duration_seconds = 2.0
 paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_fsxv8"), SubResource("Resource_nu66r")]
 
-[node name="State" type="Node2D" parent="Blowfish"]
-position = Vector2(54, 9)
-script = ExtResource("7_sb4fg")
-metadata/is_respawning = false
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(1030, 432)
+script = ExtResource("9_tjmxt")
+metadata/pronto_connections = [SubResource("Resource_7uwau")]
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-offset_left = 8.0
-offset_top = 9.0
-offset_right = 429.0
-offset_bottom = 195.0
+[node name="StaticBody2D7" type="StaticBody2D" parent="."]
+position = Vector2(909, 408)
+metadata/is_kevin = false
+metadata/move_direction = Vector2(0, 0)
 
-[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
-script = ExtResource("8_b1ktx")
+[node name="Placeholder" type="Node2D" parent="StaticBody2D7"]
+scale = Vector2(4.1371, 2.17307)
+script = ExtResource("1_tc671")
+color = Color(0.592157, 0.0117647, 0.0235294, 1)
+color2 = Color(0.592157, 0.0117647, 0.0235294, 1)
+placeholder_size = Vector2(0, 0)
 
-[node name="bounce_speed" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(102, 63)
-script = ExtResource("9_now4d")
-to = 1000.0
-value = 500.0
+[node name="RigidBody2D" type="RigidBody2D" parent="StaticBody2D7"]
+mass = 1000.0
+gravity_scale = 0.0
+continuous_cd = 2
+contact_monitor = true
+can_sleep = false
+lock_rotation = true
+linear_damp_mode = 1
+angular_damp_mode = 1
+metadata/is_kevin = true
+metadata/move_direction = Vector2(0, 0)
 
-[node name="blow_up_speed" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(101, 30)
-script = ExtResource("9_now4d")
-from = 100.0
-to = 10000.0
-value = 5000.0
-
-[node name="dash_velocity" type="Node2D" parent="PanelContainer/PrototypingUI"]
-script = ExtResource("9_now4d")
-to = 1000.0
-value = 500.0
-
-[node name="blow_up_height" type="Node2D" parent="PanelContainer/PrototypingUI"]
-script = ExtResource("9_now4d")
-to = 10.0
-step_size = 0.5
-value = 1.0
+[node name="Placeholder" type="Node2D" parent="StaticBody2D7/RigidBody2D"]
+scale = Vector2(4.1371, 2.17307)
+script = ExtResource("1_tc671")
+color = Color(0.592157, 0.0117647, 0.0235294, 1)
+color2 = Color(0.592157, 0.0117647, 0.0235294, 1)
+placeholder_size = Vector2(40, 46)
