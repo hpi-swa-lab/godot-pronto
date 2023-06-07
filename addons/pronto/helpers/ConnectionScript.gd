@@ -32,6 +32,8 @@ func run({1}):
 	{2}{0}
 "
 
+var has_error = false
+
 func needs_return(body: String):
 	return return_value and body.count("\n") == 0
 
@@ -50,7 +52,9 @@ func run(arguments: Array, ref = null):
 	return _dummy_object.callv("run", arguments)
 
 func reload():
-	nested_script.reload()
+	var err = nested_script.reload()
+	has_error = err != OK
+	return err
 
 func _init(argument_names: PackedStringArray = [], return_value = true, source_code = "null"):
 	if nested_script == null:
