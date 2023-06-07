@@ -27,7 +27,7 @@ class Item:
 		var new_value
 		if expression:
 			label = "<expr%s>" % index
-			var result := ConnectionsList.eval_or_error(expression, ['target'], [target], inspect)
+			var result = ConnectionsList.eval_or_error(expression, ['target'], [target], inspect)
 			new_value = "<error>" if result.error else result.value
 		elif property:
 			label = property
