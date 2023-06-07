@@ -1,11 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://i7avro6u8cdd"]
+[gd_scene load_steps=19 format=3 uid="uid://i7avro6u8cdd"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_db1ot"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="3_16mby"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="3_nsabk"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_nyn4q"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_qf28f"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_dyr78"]
 
 [sub_resource type="Resource" id="Resource_xilxk"]
 script = ExtResource("4_nyn4q")
@@ -94,15 +93,6 @@ arguments = ["return to.gravity_direction * -1"]
 only_if = "return true"
 expression = ""
 
-[sub_resource type="Resource" id="Resource_lqnv4"]
-script = ExtResource("4_nyn4q")
-signal_name = "value_changed"
-to = NodePath("../IceBalls/Iceball/AscendingForce")
-invoke = "set_gravity"
-arguments = ["return value"]
-only_if = "return true"
-expression = ""
-
 [node name="i3w1-celeste-ice-ball" type="Node2D"]
 
 [node name="Stage" type="Node2D" parent="."]
@@ -133,6 +123,15 @@ collision_mask = 3
 [node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D3"]
 script = ExtResource("2_db1ot")
 placeholder_size = Vector2(20, 2284)
+
+[node name="StaticBody2D14" type="StaticBody2D" parent="Stage"]
+position = Vector2(273, 1347)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D14"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 1500)
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="Stage"]
 position = Vector2(1142, 1142)
@@ -217,29 +216,217 @@ collision_mask = 3
 script = ExtResource("2_db1ot")
 placeholder_size = Vector2(480, 20)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(705, 274)
+[node name="StaticBody2D10" type="StaticBody2D" parent="Stage"]
+position = Vector2(413, 588)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D10"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(300, 20)
+
+[node name="StaticBody2D15" type="StaticBody2D" parent="Stage"]
+position = Vector2(498, 2199)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D15"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(300, 20)
+
+[node name="StaticBody2D16" type="StaticBody2D" parent="Stage"]
+position = Vector2(694, 2100)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D16"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(300, 20)
+
+[node name="StaticBody2D19" type="StaticBody2D" parent="Stage"]
+position = Vector2(583, 843)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D19"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(600, 20)
+
+[node name="StaticBody2D18" type="StaticBody2D" parent="Stage"]
+position = Vector2(696, 1887)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D18"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(300, 20)
+
+[node name="StaticBody2D25" type="StaticBody2D" parent="Stage"]
+position = Vector2(510, 1438)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D25"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(300, 20)
+
+[node name="StaticBody2D28" type="StaticBody2D" parent="Stage"]
+position = Vector2(524, 1257)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D28"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(300, 20)
+
+[node name="StaticBody2D29" type="StaticBody2D" parent="Stage"]
+position = Vector2(332, 1346)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D29"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(100, 20)
+
+[node name="StaticBody2D30" type="StaticBody2D" parent="Stage"]
+position = Vector2(625, 1139)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D30"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(100, 20)
+
+[node name="StaticBody2D31" type="StaticBody2D" parent="Stage"]
+position = Vector2(333, 1020)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D31"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(100, 20)
+
+[node name="StaticBody2D32" type="StaticBody2D" parent="Stage"]
+position = Vector2(643, 958)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D32"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(100, 20)
+
+[node name="StaticBody2D17" type="StaticBody2D" parent="Stage"]
+position = Vector2(958, 2135)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D17"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 300)
+
+[node name="StaticBody2D27" type="StaticBody2D" parent="Stage"]
+position = Vector2(683, 1117)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D27"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 300)
+
+[node name="StaticBody2D23" type="StaticBody2D" parent="Stage"]
+position = Vector2(549, 1697)
+rotation = -1.01927
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D23"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 300)
+
+[node name="StaticBody2D24" type="StaticBody2D" parent="Stage"]
+position = Vector2(827, 1515)
+rotation = 1.01927
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D24"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 300)
+
+[node name="StaticBody2D26" type="StaticBody2D" parent="Stage"]
+position = Vector2(773, 1206)
+rotation = 1.01927
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D26"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 200)
+
+[node name="StaticBody2D33" type="StaticBody2D" parent="Stage"]
+position = Vector2(1054, 1030)
+rotation = 1.01927
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D33"]
+script = ExtResource("2_db1ot")
+placeholder_size = Vector2(20, 200)
+
+[node name="StaticBody2D20" type="StaticBody2D" parent="Stage"]
+position = Vector2(1047, 914)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D20"]
+script = ExtResource("2_db1ot")
+
+[node name="StaticBody2D21" type="StaticBody2D" parent="Stage"]
+position = Vector2(997, 914)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D21"]
+script = ExtResource("2_db1ot")
+
+[node name="StaticBody2D22" type="StaticBody2D" parent="Stage"]
+position = Vector2(944, 914)
+collision_layer = 3
+collision_mask = 3
+
+[node name="Placeholder" type="Node2D" parent="Stage/StaticBody2D22"]
+script = ExtResource("2_db1ot")
+
+[node name="Placeholder" type="Node2D" parent="Stage"]
+position = Vector2(555, 672)
+script = ExtResource("2_db1ot")
+label = "WOOO-HOO, YOU MADE IT ^^"
+color = Color(0.14902, 0.92549, 0, 1)
+placeholder_size = Vector2(516, 35)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(391, 1210)
 collision_layer = 5
 collision_mask = 5
 
-[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+[node name="Placeholder" type="Node2D" parent="Player"]
 position = Vector2(0, -2)
 script = ExtResource("2_db1ot")
 color = Color(0.878431, 0.129412, 0.831373, 1)
 placeholder_size = Vector2(25, 60)
 
-[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+[node name="PlatformerController" type="Node2D" parent="Player"]
 script = ExtResource("3_16mby")
 jump_velocity = 500.0
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+[node name="Camera2D" type="Camera2D" parent="Player"]
 
-[node name="Collision" type="Node2D" parent="CharacterBody2D"]
+[node name="Collision" type="Node2D" parent="Player"]
 position = Vector2(3, 0)
 script = ExtResource("3_nsabk")
 metadata/pronto_connections = [SubResource("Resource_xilxk")]
 
-[node name="Key" type="Node2D" parent="CharacterBody2D"]
+[node name="Key" type="Node2D" parent="Player"]
 script = ExtResource("5_qf28f")
 key = "A"
 metadata/pronto_connections = [SubResource("Resource_5t3wi")]
@@ -353,14 +540,3 @@ metadata/pronto_connections = [SubResource("Resource_pckmf")]
 
 [node name="Checkpoint" type="Node2D" parent="."]
 position = Vector2(54, 239)
-
-[node name="Checkpoint2" type="Node2D" parent="."]
-position = Vector2(667, 277)
-
-[node name="Value" type="Node2D" parent="."]
-position = Vector2(562, 30)
-script = ExtResource("6_dyr78")
-to = 1960.0
-step_size = 10.0
-value = 300.0
-metadata/pronto_connections = [SubResource("Resource_lqnv4")]
