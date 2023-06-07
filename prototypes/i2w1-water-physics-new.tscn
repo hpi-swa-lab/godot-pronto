@@ -1,0 +1,467 @@
+[gd_scene load_steps=41 format=3 uid="uid://b28fy73waeic1"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="1_pluq3"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_w5ojc"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="3_lruw1"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_cmdyj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="5_d1cg4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_jhpoq"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="7_nayn2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_33mee"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="9_8rf0m"]
+
+[sub_resource type="Resource" id="Resource_gibfo"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_y2o5w"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_x3frv"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_entered"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_gibfo"), SubResource("Resource_y2o5w")]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_iu0hv"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_ak4wo"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_fu0xm"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_iu0hv"), SubResource("Resource_ak4wo")]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_74y44"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_7elgu"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_iry5j"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_74y44"), SubResource("Resource_7elgu")]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_20qyw"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_selvw"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_ptwac"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_20qyw"), SubResource("Resource_selvw")]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_s4osi"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_entered"
+to = NodePath("../../Values/Clock")
+invoke = "reset_and_start"
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_bod08"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_21fa0"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("../../Values/Clock")
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_bod08")]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_vt4gi"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_uh33s"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_7k1wc"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("../../State")
+invoke = "put"
+arguments = [SubResource("Resource_vt4gi"), SubResource("Resource_uh33s")]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_50l58"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_entered"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_oljvh"]
+script = ExtResource("4_cmdyj")
+signal_name = "body_exited"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_026t7"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../PlatformerController")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_cptbr"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../PlatformerController")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_tm8ws"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../PlatformerController")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_11hd7"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_6rgmk"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../../Camera2D")
+invoke = "set_position"
+arguments = [SubResource("Resource_11hd7")]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_4fs63"]
+script = ExtResource("4_cmdyj")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_x5od3"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_0ji4i"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_nh0or"]
+script = ExtResource("4_cmdyj")
+signal_name = "until_elapsed"
+to = NodePath("../../State")
+invoke = "inc"
+arguments = [SubResource("Resource_x5od3"), SubResource("Resource_0ji4i")]
+only_if = "true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_4j8lv"]
+script = ExtResource("3_lruw1")
+
+[sub_resource type="Resource" id="Resource_8lvce"]
+script = ExtResource("4_cmdyj")
+signal_name = "always"
+to = NodePath("../Label")
+invoke = "set_visible"
+arguments = [SubResource("Resource_4j8lv")]
+only_if = "true"
+expression = ""
+
+[node name="i2w1-water-physics" type="Node2D"]
+
+[node name="State" type="Node2D" parent="."]
+position = Vector2(401, 315)
+script = ExtResource("1_pluq3")
+global = true
+metadata/playerUnderWater = false
+metadata/playerUnderWaterLastFrame = false
+metadata/playerFreeY = false
+metadata/playerBreath = 10
+
+[node name="Level" type="Node2D" parent="."]
+position = Vector2(555, 323)
+
+[node name="Floor" type="StaticBody2D" parent="Level"]
+position = Vector2(-542, 288)
+
+[node name="Placeholder" type="Node2D" parent="Level/Floor"]
+position = Vector2(568, 21)
+script = ExtResource("2_w5ojc")
+color = Color(0.184314, 0.54902, 0.0509804, 1)
+placeholder_size = Vector2(1184, 33)
+
+[node name="Water" type="Area2D" parent="Level"]
+position = Vector2(-462, 282)
+metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_iry5j")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Water"]
+position = Vector2(134, -62)
+script = ExtResource("2_w5ojc")
+color = Color(0.0901961, 0.513726, 1, 0.211765)
+placeholder_size = Vector2(232, 146)
+
+[node name="Water2" type="Area2D" parent="Level"]
+position = Vector2(252, 282)
+metadata/pronto_connections = [SubResource("Resource_x3frv"), SubResource("Resource_fu0xm"), SubResource("Resource_ptwac"), SubResource("Resource_s4osi"), SubResource("Resource_21fa0"), SubResource("Resource_7k1wc")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Water2"]
+position = Vector2(132, -217)
+script = ExtResource("2_w5ojc")
+color = Color(0.0901961, 0.513726, 1, 0.211765)
+placeholder_size = Vector2(423, 457)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Level"]
+position = Vector2(-50, 16)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Level"]
+position = Vector2(-150, -51)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D5"]
+position = Vector2(91, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="Level"]
+position = Vector2(87, -182)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D7"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="Level"]
+position = Vector2(-51, -104)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D6"]
+position = Vector2(131, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Level"]
+position = Vector2(-148, 88)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D2"]
+position = Vector2(91, 1)
+script = ExtResource("2_w5ojc")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Level"]
+position = Vector2(-41, 127)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D3"]
+position = Vector2(121, 42)
+script = ExtResource("2_w5ojc")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Level"]
+position = Vector2(-153, 195)
+
+[node name="Placeholder" type="Node2D" parent="Level/StaticBody2D4"]
+position = Vector2(98, 33)
+script = ExtResource("2_w5ojc")
+color = Color(0.380392, 0.243137, 0.0823529, 1)
+placeholder_size = Vector2(92, 32)
+
+[node name="Ladder" type="Area2D" parent="Level"]
+position = Vector2(151, 34)
+metadata/pronto_connections = [SubResource("Resource_50l58"), SubResource("Resource_oljvh")]
+
+[node name="Placeholder" type="Node2D" parent="Level/Ladder"]
+script = ExtResource("2_w5ojc")
+color = Color(0.654902, 0.435294, 0.180392, 1)
+placeholder_size = Vector2(43, 516)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(775, 94)
+
+[node name="Placeholder" type="Node2D" parent="Player"]
+script = ExtResource("2_w5ojc")
+label = "Player"
+placeholder_size = Vector2(18, 40)
+
+[node name="PlatformerController" type="Node2D" parent="Player"]
+position = Vector2(41, -2)
+script = ExtResource("5_d1cg4")
+show_trail = true
+
+[node name="Always" type="Node2D" parent="Player"]
+position = Vector2(40, -59)
+script = ExtResource("6_jhpoq")
+metadata/pronto_connections = [SubResource("Resource_026t7"), SubResource("Resource_cptbr"), SubResource("Resource_tm8ws")]
+
+[node name="Breath" type="Label" parent="Player"]
+offset_left = -50.0
+offset_top = -41.0
+offset_right = 51.0
+offset_bottom = -15.0
+text = "**********"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bind" type="Node2D" parent="Player/Breath"]
+position = Vector2(-46, 14)
+script = ExtResource("7_nayn2")
+to_prop = "text"
+
+[node name="Cam" type="Node2D" parent="Player"]
+position = Vector2(-463, -42)
+script = ExtResource("6_jhpoq")
+metadata/pronto_connections = [SubResource("Resource_6rgmk")]
+
+[node name="Values" type="Node2D" parent="."]
+position = Vector2(302, 232)
+
+[node name="WaterHorizontalVelocity" type="Node2D" parent="Values"]
+position = Vector2(-51, 22)
+script = ExtResource("8_33mee")
+to = 400.0
+value = 200.0
+
+[node name="DefaultHorizontalVelocity" type="Node2D" parent="Values"]
+position = Vector2(15, 22)
+script = ExtResource("8_33mee")
+to = 800.0
+value = 400.0
+
+[node name="WaterGravity" type="Node2D" parent="Values"]
+position = Vector2(-55, 51)
+script = ExtResource("8_33mee")
+to = 1000.0
+value = 250.0
+
+[node name="DefaultGravity" type="Node2D" parent="Values"]
+position = Vector2(13, 50)
+script = ExtResource("8_33mee")
+to = 2000.0
+value = 980.0
+
+[node name="WaterVerticalVelocity" type="Node2D" parent="Values"]
+position = Vector2(-56, 79)
+script = ExtResource("8_33mee")
+to = 400.0
+value = 200.0
+
+[node name="DefaultVerticalVelocity" type="Node2D" parent="Values"]
+position = Vector2(15, 80)
+script = ExtResource("8_33mee")
+to = 800.0
+value = 400.0
+
+[node name="CanPlayerSwimUp" type="Node2D" parent="Values"]
+position = Vector2(-26, 107)
+script = ExtResource("8_33mee")
+value = 1.0
+
+[node name="WaterMaxVelocity" type="Node2D" parent="Values"]
+position = Vector2(-24, 136)
+script = ExtResource("8_33mee")
+to = 2.0
+value = 1.0
+
+[node name="ClimbingSpeed" type="Node2D" parent="Values"]
+position = Vector2(-25, 165)
+script = ExtResource("8_33mee")
+to = 2000.0
+value = 300.0
+
+[node name="Clock" type="Node2D" parent="Values"]
+position = Vector2(883, 230)
+script = ExtResource("9_8rf0m")
+one_shot = true
+duration_seconds = 10.0
+paused = true
+trigger_every_x_seconds = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_4fs63"), SubResource("Resource_nh0or")]
+
+[node name="HorizontalSlowdown" type="Node2D" parent="Values"]
+position = Vector2(-51, -7)
+script = ExtResource("8_33mee")
+
+[node name="VerticalSpeedupUpwards" type="Node2D" parent="Values"]
+position = Vector2(19, -4)
+script = ExtResource("8_33mee")
+to = 10.0
+value = 2.0
+
+[node name="JumpTimeOutUnderWater" type="Node2D" parent="Values"]
+position = Vector2(-47, -34)
+script = ExtResource("8_33mee")
+to = 10000.0
+value = 666.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(141, -2)
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+
+[node name="UI" type="Node2D" parent="Camera2D"]
+position = Vector2(-552, -316)
+
+[node name="Under Water" type="Label" parent="Camera2D/UI"]
+offset_right = 40.0
+offset_bottom = 22.3333
+
+[node name="Bind" type="Node2D" parent="Camera2D/UI/Under Water"]
+script = ExtResource("7_nayn2")
+to_prop = "text"
+
+[node name="Label" type="Label" parent="Camera2D/UI"]
+visible = false
+offset_left = 159.0
+offset_top = 185.0
+offset_right = 251.0
+offset_bottom = 211.0
+scale = Vector2(9.43342, 9.43342)
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Always" type="Node2D" parent="Camera2D/UI"]
+position = Vector2(211, 121)
+script = ExtResource("6_jhpoq")
+metadata/pronto_connections = [SubResource("Resource_8lvce")]

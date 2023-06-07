@@ -99,7 +99,7 @@ position = Vector2(181, 7)
 script = ExtResource("7_flr1a")
 from = 500.0
 to = 2000.0
-value = 909.179
+value = 909.0
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 ignore_rotation = false

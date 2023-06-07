@@ -33,6 +33,12 @@ enabled=PackedStringArray("res://addons/pronto/plugin.cfg")
 
 theme/default_font_multichannel_signed_distance_field=true
 
+[layer_names]
+
+2d_physics/layer_1="All"
+2d_physics/layer_2="Blue"
+2d_physics/layer_3="Red"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

@@ -1,0 +1,373 @@
+[gd_scene load_steps=28 format=3 uid="uid://cw138tsgjt3kk"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_j2od4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_dewe6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Inspect.gd" id="2_qh004"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="4_mo53x"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="5_gi2o6"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_2jaih"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="8_l5y4t"]
+[ext_resource type="Script" path="res://prototypes/i3w1-platform-control/Path2D.gd" id="8_w6cov"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="9_83dn0"]
+[ext_resource type="Script" path="res://prototypes/i3w1-platform-control/Path2D2.gd" id="9_a51gf"]
+[ext_resource type="Script" path="res://prototypes/i3w1-platform-control/Path2D3.gd" id="10_1e3n3"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="10_u7tha"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="11_3uwb7"]
+
+[sub_resource type="Resource" id="Resource_4udh5"]
+script = ExtResource("6_2jaih")
+signal_name = "down"
+to = NodePath("../../../Red Blocks/Code")
+invoke = "execute"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_3ul1c"]
+script = ExtResource("6_2jaih")
+signal_name = "down"
+to = NodePath("../../../BlueBlocks/Code")
+invoke = "execute"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_y54c7"]
+script = ExtResource("6_2jaih")
+signal_name = "down"
+to = NodePath("../../../Collision Layer")
+invoke = "@value_setter"
+arguments = ["return val"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_rvx38"]
+script = ExtResource("6_2jaih")
+signal_name = "always"
+to = NodePath("../CharacterBody2D")
+invoke = "set_collision_mask_value"
+arguments = ["return 2", "return G.at(\"Collision Layer\") == 2"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_nghco"]
+script = ExtResource("6_2jaih")
+signal_name = "always"
+to = NodePath("../CharacterBody2D")
+invoke = "set_collision_mask_value"
+arguments = ["return 3", "return G.at(\"Collision Layer\") == 3"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_sf1xn"]
+script = ExtResource("6_2jaih")
+signal_name = "always"
+to = NodePath("../CharacterBody2D/Placeholder")
+invoke = "@color_setter"
+arguments = ["return Color.Blue"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Curve2D" id="Curve2D_jc16h"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 449, 443, 0, 0, 0, 0, 448, 266)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_5j5ru"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 449, 153, 0, 0, 0, 0, 232, 152)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_r0w1v"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 773, 382, 0, 0, 0, 0, 886, 315, 0, 0, 0, 0, 932, 247, 0, 0, 0, 0, 922, 188, 0, 0, 0, 0, 898, 133, 0, 0, 0, 0, 863, 87, 0, 0, 0, 0, 809, 55, 0, 0, 0, 0, 741, 47, 0, 0, 0, 0, 673, 59, 0, 0, 0, 0, 623, 74, 0, 0, 0, 0, 584, 105, 0, 0, 0, 0, 567, 140, 0, 0, 0, 0, 548, 186, 0, 0, 0, 0, 548, 231, 0, 0, 0, 0, 559, 272, 0, 0, 0, 0, 588, 303, 0, 0, 0, 0, 612, 330, 0, 0, 0, 0, 640, 351, 0, 0, 0, 0, 664, 367, 0, 0, 0, 0, 689, 382, 0, 0, 0, 0, 773, 382)
+}
+point_count = 21
+
+[sub_resource type="Resource" id="Resource_alrso"]
+script = ExtResource("6_2jaih")
+signal_name = "elapsed"
+to = NodePath("../Red Blocks/Code")
+invoke = "execute"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_lqb5v"]
+script = ExtResource("6_2jaih")
+signal_name = "elapsed"
+to = NodePath("../BlueBlocks/Code")
+invoke = "execute"
+arguments = []
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_2lpd6"]
+script = ExtResource("6_2jaih")
+signal_name = "vertical_direction"
+to = NodePath("../Red Blocks/Path2D/PathFollow2D")
+invoke = "set_progress"
+arguments = ["return progress"]
+only_if = "return G.at(\"Collision Layer\") == 2"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_werc4"]
+script = ExtResource("6_2jaih")
+signal_name = "horizontal_direction"
+to = NodePath("../Red Blocks/Path2D2/PathFollow2D")
+invoke = "set_progress"
+arguments = ["var speed = 2#G.at(\"PlatformMovementSpeed\")
+return to.progress + (-dir.x * speed)"]
+only_if = "return G.at(\"Collision Layer\") == 2"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_25j21"]
+script = ExtResource("6_2jaih")
+signal_name = "horizontal_direction"
+to = NodePath("../BlueBlocks/Path2D3/PathFollow2D")
+invoke = "set_progress"
+arguments = ["var speed = 2#G.at(\"PlatformMovementSpeed\")
+return to.progress + (-dir.x * speed)"]
+only_if = "return G.at(\"Collision Layer\") == 3"
+expression = ""
+
+[node name="jumpnrun" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(563, 624)
+collision_layer = 1023
+collision_mask = 1023
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D"]
+position = Vector2(1, 16)
+script = ExtResource("1_j2od4")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(2000, 40)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(122, 496)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D3"]
+position = Vector2(1, 16)
+script = ExtResource("1_j2od4")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(371, 570)
+disable_mode = 2
+
+[node name="Inspect" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, 50)
+script = ExtResource("2_qh004")
+property_0 = "collision_mask"
+property_1 = "collision_layer"
+property_2 = "<click to add>"
+font_size = 10
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(92, 34)
+sticky = false
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, 6)
+script = ExtResource("1_j2od4")
+label = "guy"
+placeholder_size = Vector2(20, 60)
+
+[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(21, 22)
+script = ExtResource("2_dewe6")
+show_trail = true
+
+[node name="Key" type="Node2D" parent="CharacterBody2D/PlatformerController"]
+position = Vector2(-107, -521)
+script = ExtResource("4_mo53x")
+key = "E"
+metadata/pronto_connections = [SubResource("Resource_4udh5"), SubResource("Resource_3ul1c"), SubResource("Resource_y54c7")]
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2(153, 425)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D6"]
+position = Vector2(1, 16)
+script = ExtResource("1_j2od4")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_left = 1155.0
+offset_top = 3.0
+offset_right = 1349.0
+offset_bottom = 113.0
+text = "Collision Layer:
+1 = green
+2 = blue 
+3 = red
+"
+editable = false
+
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(396, 435)
+script = ExtResource("5_gi2o6")
+metadata/pronto_connections = [SubResource("Resource_rvx38"), SubResource("Resource_nghco"), SubResource("Resource_sf1xn")]
+
+[node name="Red Blocks" type="CanvasGroup" parent="."]
+position = Vector2(-1, 1)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Red Blocks"]
+position = Vector2(94, 566)
+collision_layer = 4
+collision_mask = 4
+
+[node name="Placeholder" type="Node2D" parent="Red Blocks/StaticBody2D4"]
+position = Vector2(1, 16)
+script = ExtResource("1_j2od4")
+color = Color(0.87451, 0.341176, 0.352941, 1)
+placeholder_size = Vector2(88, 71)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Red Blocks"]
+position = Vector2(1049, 563)
+collision_layer = 4
+collision_mask = 4
+
+[node name="Placeholder" type="Node2D" parent="Red Blocks/StaticBody2D2"]
+position = Vector2(19, 14)
+script = ExtResource("1_j2od4")
+color = Color(0.886275, 0.329412, 0.337255, 1)
+placeholder_size = Vector2(151, 44)
+
+[node name="Code" type="Node2D" parent="Red Blocks"]
+position = Vector2(1, -1)
+script = ExtResource("8_l5y4t")
+code = "print(\"test\") return
+
+"
+
+[node name="Path2D" type="Path2D" parent="Red Blocks"]
+position = Vector2(1, -1)
+curve = SubResource("Curve2D_jc16h")
+script = ExtResource("8_w6cov")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Red Blocks/Path2D"]
+position = Vector2(449, 443)
+rotation = -1.57617
+rotates = false
+loop = false
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="Red Blocks/Path2D/PathFollow2D"]
+position = Vector2(19.9836, 3.10742)
+rotation = 2.05303
+collision_layer = 4
+collision_mask = 4
+
+[node name="Placeholder" type="Node2D" parent="Red Blocks/Path2D/PathFollow2D/StaticBody2D8"]
+position = Vector2(8.77991, 21.3521)
+rotation = -0.476126
+script = ExtResource("1_j2od4")
+color = Color(0.87451, 0.341176, 0.352941, 1)
+placeholder_size = Vector2(178, 44)
+
+[node name="Path2D2" type="Path2D" parent="Red Blocks"]
+curve = SubResource("Curve2D_5j5ru")
+script = ExtResource("9_a51gf")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Red Blocks/Path2D2"]
+position = Vector2(449, 153)
+rotation = -3.13698
+rotates = false
+loop = false
+
+[node name="StaticBody2D9" type="StaticBody2D" parent="Red Blocks/Path2D2/PathFollow2D"]
+position = Vector2(0.0921021, 19.9998)
+rotation = 0.476859
+scale = Vector2(1, 1)
+collision_layer = 4
+collision_mask = 4
+
+[node name="Placeholder" type="Node2D" parent="Red Blocks/Path2D2/PathFollow2D/StaticBody2D9"]
+position = Vector2(-10.0683, -17.3098)
+rotation = -0.476126
+script = ExtResource("1_j2od4")
+color = Color(0.87451, 0.341176, 0.352941, 1)
+placeholder_size = Vector2(178, 44)
+
+[node name="BlueBlocks" type="CanvasGroup" parent="."]
+position = Vector2(1, 22)
+
+[node name="Code" type="Node2D" parent="BlueBlocks"]
+position = Vector2(0, 1)
+script = ExtResource("8_l5y4t")
+code = "return test"
+
+[node name="Path2D3" type="Path2D" parent="BlueBlocks"]
+position = Vector2(-2, -21)
+curve = SubResource("Curve2D_r0w1v")
+script = ExtResource("10_1e3n3")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="BlueBlocks/Path2D3"]
+position = Vector2(773, 382)
+rotates = false
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="BlueBlocks/Path2D3/PathFollow2D"]
+position = Vector2(-9.99994, -27)
+rotation = 0.476859
+scale = Vector2(1, 1)
+collision_layer = 2
+collision_mask = 2
+
+[node name="Placeholder" type="Node2D" parent="BlueBlocks/Path2D3/PathFollow2D/StaticBody2D5"]
+position = Vector2(20.3592, 17.6211)
+rotation = -0.476126
+script = ExtResource("1_j2od4")
+color = Color(0.0588235, 0.537255, 1, 1)
+placeholder_size = Vector2(178, 44)
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(279, 18)
+script = ExtResource("10_u7tha")
+one_shot = true
+duration_seconds = 0.0001
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_alrso"), SubResource("Resource_lqb5v")]
+
+[node name="Collision Layer" type="Node2D" parent="."]
+position = Vector2(55, 100)
+rotation = -0.0438727
+script = ExtResource("9_83dn0")
+from = 2.0
+to = 3.0
+value = 2.0
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D2"]
+position = Vector2(96, 156)
+script = ExtResource("1_j2od4")
+label = "Finish"
+placeholder_size = Vector2(156, 62)
+
+[node name="Controls" type="Node2D" parent="."]
+position = Vector2(748, 238)
+script = ExtResource("11_3uwb7")
+player = 1
+metadata/pronto_connections = [SubResource("Resource_2lpd6"), SubResource("Resource_werc4"), SubResource("Resource_25j21")]
+
+[node name="ValuePlatformMovementSpeed" type="Node2D" parent="."]
+script = ExtResource("9_83dn0")
+to = 10.0
+step_size = 0.5
+value = 2.0
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="."]
+position = Vector2(572, 211)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D7"]
+position = Vector2(-135, -17)
+rotation = 3.13704
+script = ExtResource("1_j2od4")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(249, 26)
