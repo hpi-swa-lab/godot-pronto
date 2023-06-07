@@ -35,14 +35,9 @@ var control_argument_names = true
 			edit_script.argument_names = argument_names
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
-		
-		var is_open = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor().get_open_scripts().any(func (s): return s.resource_path == edit_script.nested_script.resource_path)
-		%Expression.visible = not is_open
-		%OpenFile.flat = not is_open
-		%OpenFile.text = "Click to edit" if is_open else ""
-		%OpenFile.tooltip_text = "Script is opened and may only be edited in the script editor until closed, otherwise your changes are overriden on save." if is_open else "Open script in the full editor."
-		%Expression.text = v.source_code
-		%Expression.edited_script = v
+		%Expression.text = edit_script.source_code
+		%Expression.edited_script = edit_script
+		update_editable()
 		resize()
 var text: String:
 	get: return %Expression.text
@@ -57,6 +52,17 @@ var text: String:
 			%Errors.text = e
 			%Errors.visible = true
 		resize()
+
+func update_editable():
+	if not edit_script: return
+	var path = edit_script.nested_script.resource_path
+	var is_open = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor().get_open_scripts().any(func (s): return s.resource_path == path)
+	if %Expression.visible != is_open: return
+	%Expression.visible = not is_open
+	%OpenFile.flat = not is_open
+	%OpenFile.text = "Click to edit" if is_open else ""
+	%OpenFile.tooltip_text = "Script is opened and may only be edited in the script editor until closed, otherwise your changes are overriden on save." if is_open else "Open script in the full editor."
+	resize()
 
 func updated_script(from: Node, signal_name: String):
 	apply_changes(from, signal_name)
@@ -83,6 +89,9 @@ func _input(event):
 			focus = %Expression.find_next_valid_focus()
 		get_viewport().set_input_as_handled()
 		if focus: focus.grab_focus()
+
+func _process(d):
+	update_editable()
 
 func _ready():
 	if owner != self:
