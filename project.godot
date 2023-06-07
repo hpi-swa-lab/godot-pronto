@@ -29,6 +29,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/pronto/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true
