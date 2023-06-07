@@ -83,6 +83,8 @@ script = ExtResource("3_d87vf")
 limit_to_group = "blue_platform"
 metadata/pronto_connections = [SubResource("Resource_xx2so")]
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
 [node name="Ground2" type="StaticBody2D" parent="."]
 position = Vector2(274, 537)
 
