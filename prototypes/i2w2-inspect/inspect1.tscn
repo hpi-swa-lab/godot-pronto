@@ -45,23 +45,38 @@ color = Color(1, 1, 0, 1)
 placeholder_size = Vector2(18, 38)
 
 [node name="Inspect" type="Node2D" parent="Player/Placeholder"]
-position = Vector2(0, 69)
+position = Vector2(0, 68.5)
 script = ExtResource("5_16ijm")
 property_0 = "global_rotation"
 property_1 = "global_transform"
 property_2 = "<statement(s)>"
 expression_2 = "return target.get_parent().position"
 property_3 = "<click to add>"
+font_size = 14
 background_color = Color(0, 0, 0, 0.2)
 color = null
 highlight_color = Color(1, 0, 0, 1)
 shape_size = Vector2(135, 99)
-sticky = false
+sticky = true
+sticky_transform = Transform2D(1, 0, 0, 1, 583, 410.5)
 
 [node name="Controls" type="Node2D" parent="Player"]
 position = Vector2(-74, -161)
 script = ExtResource("2_jbyva")
 metadata/pronto_connections = [SubResource("Resource_yro7p")]
+
+[node name="Inspect" type="Node2D" parent="Player/Controls"]
+position = Vector2(0, 50)
+script = ExtResource("5_16ijm")
+property_0 = "position"
+property_1 = "<click to add>"
+font_size = 10
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(100, 100)
+sticky = true
+sticky_transform = Transform2D(1, 0, 0, 1, 509, 231)
 
 [node name="Move" type="Node2D" parent="Player"]
 position = Vector2(3, -76)
@@ -73,6 +88,7 @@ script = ExtResource("5_16ijm")
 property_0 = "<statement(s)>"
 expression_0 = "return \"vel=%s\" % target.velocity"
 property_1 = "<click to add>"
+font_size = 10
 background_color = Color(0, 0, 0, 0.2)
 color = null
 highlight_color = Color(1, 0, 0, 1)
@@ -98,6 +114,7 @@ script = ExtResource("5_16ijm")
 property_0 = "position"
 property_1 = "rotation"
 property_2 = "<click to add>"
+font_size = 10
 background_color = Color(0, 0, 0, 0.2)
 color = null
 highlight_color = Color(1, 0, 0, 1)
