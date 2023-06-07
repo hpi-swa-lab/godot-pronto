@@ -37,7 +37,7 @@ func _enter_tree():
 	get_undo_redo().history_changed.connect(history_changed)
 
 func history_changed():
-	if _is_editing_behavior() and edited_object is Placeholder and edited_object.keep_in_origin:
+	if _is_editing_behavior() and edited_object is Placeholder and edited_object.should_keep_in_origin():
 		var u = get_undo_redo().get_history_undo_redo(get_undo_redo().get_object_history_id(edited_object))
 		if edited_object.position != Vector2.ZERO:
 			var p = edited_object.get_parent()

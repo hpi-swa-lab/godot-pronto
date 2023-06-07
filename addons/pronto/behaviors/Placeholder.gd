@@ -27,6 +27,9 @@ var size: Vector2:
 	get:
 		return placeholder_size
 
+func should_keep_in_origin():
+	return keep_in_origin and get_parent() is CollisionObject2D
+
 func _update_shape():
 	if _parent:
 		_parent.shape_owner_set_transform(_owner_id, transform)

@@ -52,6 +52,7 @@ func _reset_jump():
 	_last_on_floor = -10000
 
 func _draw():
+	super._draw()
 	if !show_trail:
 		return
 	
@@ -91,3 +92,6 @@ func _physics_process(delta):
 		_last_positions.pop_front()
 	
 	queue_redraw()
+
+func lines():
+	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (f): return "controls", "controls")]
