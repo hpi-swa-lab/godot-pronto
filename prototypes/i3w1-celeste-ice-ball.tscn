@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://i7avro6u8cdd"]
+[gd_scene load_steps=21 format=3 uid="uid://i7avro6u8cdd"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_db1ot"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="3_16mby"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="3_nsabk"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_nyn4q"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_qf28f"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="6_dyr78"]
 
 [sub_resource type="Resource" id="Resource_xilxk"]
 script = ExtResource("4_nyn4q")
@@ -70,7 +71,7 @@ to = NodePath("")
 invoke = ""
 arguments = []
 only_if = "return other is CharacterBody2D"
-expression = "from.get_parent().position = closest(\"IceBallStartingPosition\")"
+expression = "from.get_parent().position = closest(\"IceBallStartingPosition\").position"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ubtvo"]
 size = Vector2(3, 49)
@@ -90,6 +91,15 @@ signal_name = "collided"
 to = NodePath("../../AscendingForce")
 invoke = "set_gravity_direction"
 arguments = ["return to.gravity_direction * -1"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_lqnv4"]
+script = ExtResource("4_nyn4q")
+signal_name = "value_changed"
+to = NodePath("../IceBalls/Iceball/AscendingForce")
+invoke = "set_gravity"
+arguments = ["return value"]
 only_if = "return true"
 expression = ""
 
@@ -346,3 +356,11 @@ position = Vector2(54, 239)
 
 [node name="Checkpoint2" type="Node2D" parent="."]
 position = Vector2(667, 277)
+
+[node name="Value" type="Node2D" parent="."]
+position = Vector2(562, 30)
+script = ExtResource("6_dyr78")
+to = 1960.0
+step_size = 10.0
+value = 300.0
+metadata/pronto_connections = [SubResource("Resource_lqnv4")]
