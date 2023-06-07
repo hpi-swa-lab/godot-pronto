@@ -1,14 +1,51 @@
-[gd_scene load_steps=15 format=3 uid="uid://conjbnlbys8si"]
+[gd_scene load_steps=19 format=3 uid="uid://conjbnlbys8si"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="1_k6ccx"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_4csiw"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="3_d87vf"]
 [ext_resource type="PackedScene" uid="uid://bxfi5wgcdsuep" path="res://prototypes/i3w1-mario-moving-snake/snake_follow_path.tscn" id="4_acklm"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_dsv2v"]
+[ext_resource type="Script" path="res://prototypes/i3w1-mario-moving-snake/ResetButton.gd" id="7_7pghi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="7_35hwo"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="7_qg1f6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_egddh"]
 [ext_resource type="PackedScene" uid="uid://dlkhmn7b7r5dk" path="res://prototypes/i3w1-mario-moving-snake/blue_platform.tscn" id="9_2wha8"]
+[ext_resource type="PackedScene" uid="uid://7vo8djrj1tlr" path="res://prototypes/i3w1-mario-moving-snake/large_blue_platform.tscn" id="11_cklef"]
+
+[sub_resource type="Curve2D" id="Curve2D_c2osk"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 300, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_mshn6"]
+script = ExtResource("4_dsv2v")
+signal_name = "always"
+to = NodePath("../MovingPlatform")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "var speed = at(\"PlatformSpeed\")
+var _follow = get_parent()
+_follow.set_progress(_follow.get_progress() + speed * delta)"
+
+[sub_resource type="Curve2D" id="Curve2D_bjdnm"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 300, 300, 0, 0, 0, 0, 600, 300, 0, 0, 0, 0, 600, 200, 0, 0, 0, 0, 700, 200, 0, 0, 0, 0, 700, 180, 0, 0, 0, 0, 450, 180, 0, 0, 0, 0, 450, 0, 0, 0, 0, 0, 900, 0)
+}
+point_count = 8
+
+[sub_resource type="Curve2D" id="Curve2D_hd3yu"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -120, 0, 0, 0, 0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_kswdk"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -250, 0, 0, 0, 0, 0, 0)
+}
+point_count = 3
 
 [sub_resource type="Resource" id="Resource_0vnuq"]
 script = ExtResource("4_dsv2v")
@@ -25,45 +62,234 @@ signal_name = "collided"
 to = NodePath("")
 invoke = ""
 arguments = []
-only_if = "return other.get_node(\"TriggerClock\").paused"
+only_if = "return other.get_node(\"TriggerClock\").paused and abs(direction.angle_to(Vector2.DOWN)) < PI/4"
 expression = "var clock = other.get_node(\"TriggerClock\")
 var time = at(\"BluePlatformTriggerTime\")
 clock.duration_seconds = time
 clock.reset_and_start()"
 
-[sub_resource type="Curve2D" id="Curve2D_c2osk"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 54, 74, 0, 0, 0, 0, 300, 0, 0, 0, 0, 0, 500, 74, 0, 0, 0, 0, 54, 74)
-}
-point_count = 4
-
-[sub_resource type="Resource" id="Resource_mshn6"]
-script = ExtResource("4_dsv2v")
-signal_name = "always"
-to = NodePath("../MovingPlatform")
-invoke = ""
-arguments = []
-only_if = "return true"
-expression = "var speed = at(\"PlatformSpeed\")
-var _follow = get_parent()
-_follow.set_progress(_follow.get_progress() + speed * delta)"
-
-[sub_resource type="Curve2D" id="Curve2D_bjdnm"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 300, 300, 0, 0, 0, 0, 600, 300, 0, 0, 0, 0, 600, 100, 0, 0, 0, 0, 800, 100)
-}
-point_count = 4
-
 [node name="i3w1-mario-moving-snake" type="Node2D"]
 
+[node name="Floating1" type="StaticBody2D" parent="."]
+position = Vector2(274, 537)
+
+[node name="Placeholder" type="Node2D" parent="Floating1"]
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+label = "Super Mario Obstacle Parcours"
+placeholder_size = Vector2(232, 22)
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(0, -857)
+
+[node name="Placeholder" type="Node2D" parent="LeftWall"]
+position = Vector2(-320, 381)
+script = ExtResource("2_4csiw")
+color = Color(0.458824, 0.576471, 1, 1)
+placeholder_size = Vector2(600, 3000)
+
+[node name="SimplePatformPath" type="Path2D" parent="."]
+position = Vector2(504, 421)
+curve = SubResource("Curve2D_c2osk")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="SimplePatformPath"]
+rotates = false
+
+[node name="Always" type="Node2D" parent="SimplePatformPath/PathFollow2D"]
+position = Vector2(-3, 51)
+script = ExtResource("7_qg1f6")
+metadata/pronto_connections = [SubResource("Resource_mshn6")]
+
+[node name="MovingPlatform" type="CharacterBody2D" parent="SimplePatformPath/PathFollow2D"]
+
+[node name="Placeholder" type="Node2D" parent="SimplePatformPath/PathFollow2D/MovingPlatform"]
+script = ExtResource("2_4csiw")
+color = Color(0.729412, 0.462745, 0, 1)
+placeholder_size = Vector2(100, 20)
+
+[node name="SnakePath" type="Path2D" parent="."]
+position = Vector2(-256, -328)
+curve = SubResource("Curve2D_bjdnm")
+
+[node name="SnakeBlock1" parent="SnakePath" instance=ExtResource("4_acklm")]
+position = Vector2(300, 300)
+
+[node name="SnakeBlock2" parent="SnakePath" instance=ExtResource("4_acklm")]
+position = Vector2(319.989, 300)
+progress = 20.0
+
+[node name="SnakeBlock3" parent="SnakePath" instance=ExtResource("4_acklm")]
+position = Vector2(340.166, 300)
+progress = 40.0
+
+[node name="SnakeBlock4" parent="SnakePath" instance=ExtResource("4_acklm")]
+position = Vector2(359.996, 300)
+progress = 60.0
+
+[node name="SnakeBlock5" parent="SnakePath" instance=ExtResource("4_acklm")]
+position = Vector2(379.996, 300)
+progress = 80.0
+
+[node name="SnakeBlock6" parent="SnakePath" instance=ExtResource("4_acklm")]
+position = Vector2(399.997, 300)
+progress = 100.0
+
+[node name="BluePlatform" parent="." instance=ExtResource("9_2wha8")]
+position = Vector2(561, 134)
+
+[node name="BluePlatform2" parent="." instance=ExtResource("9_2wha8")]
+position = Vector2(723, 191)
+
+[node name="BluePlatform3" parent="." instance=ExtResource("9_2wha8")]
+position = Vector2(388, 102)
+
+[node name="BluePlatform4" parent="." instance=ExtResource("9_2wha8")]
+position = Vector2(743, -328)
+
+[node name="BluePlatform5" parent="." instance=ExtResource("9_2wha8")]
+position = Vector2(528, -203)
+
+[node name="Floating2" type="StaticBody2D" parent="."]
+position = Vector2(989, 309)
+
+[node name="Placeholder" type="Node2D" parent="Floating2"]
+position = Vector2(-1, 196)
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+color = Color(0.435294, 0.27451, 0.243137, 1)
+placeholder_size = Vector2(229, 400)
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(1725, -1085)
+
+[node name="Placeholder" type="Node2D" parent="RightWall"]
+position = Vector2(-320, 381)
+script = ExtResource("2_4csiw")
+color = Color(0.458824, 0.576471, 1, 1)
+placeholder_size = Vector2(600, 3000)
+
+[node name="FloatingWall" type="StaticBody2D" parent="."]
+position = Vector2(230, -485)
+
+[node name="Placeholder" type="Node2D" parent="FloatingWall"]
+position = Vector2(0, -50)
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+color = Color(0.180392, 0.180392, 0.180392, 1)
+placeholder_size = Vector2(40, 400)
+
+[node name="FloatingWall2" type="StaticBody2D" parent="."]
+position = Vector2(230, -240)
+
+[node name="Placeholder" type="Node2D" parent="FloatingWall2"]
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+color = Color(0.180392, 0.180392, 0.180392, 1)
+placeholder_size = Vector2(40, 160)
+
+[node name="Floating3" type="StaticBody2D" parent="."]
+position = Vector2(109, 104)
+
+[node name="Placeholder" type="Node2D" parent="Floating3"]
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+color = Color(0.435294, 0.27451, 0.243137, 1)
+placeholder_size = Vector2(250, 86)
+
+[node name="SimplePatformPath2" type="Path2D" parent="."]
+position = Vector2(275, -177)
+curve = SubResource("Curve2D_hd3yu")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="SimplePatformPath2"]
+rotates = false
+
+[node name="Always" type="Node2D" parent="SimplePatformPath2/PathFollow2D"]
+position = Vector2(-3, 51)
+script = ExtResource("7_qg1f6")
+metadata/pronto_connections = [SubResource("Resource_mshn6")]
+
+[node name="MovingPlatform" type="CharacterBody2D" parent="SimplePatformPath2/PathFollow2D"]
+
+[node name="Placeholder" type="Node2D" parent="SimplePatformPath2/PathFollow2D/MovingPlatform"]
+script = ExtResource("2_4csiw")
+color = Color(0.729412, 0.462745, 0, 1)
+placeholder_size = Vector2(50, 10)
+
+[node name="Goal Platform" type="StaticBody2D" parent="."]
+position = Vector2(120, -731)
+
+[node name="Placeholder" type="Node2D" parent="Goal Platform"]
+position = Vector2(6, -1)
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+label = "Goal"
+color = Color(1, 0.431373, 0.239216, 1)
+placeholder_size = Vector2(280, 86)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(696, 823)
+
+[node name="Placeholder" type="Node2D" parent="Ground"]
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+color = Color(0.270588, 0.490196, 0.211765, 1)
+placeholder_size = Vector2(3000, 400)
+
+[node name="LastPlatform" type="StaticBody2D" parent="."]
+position = Vector2(975, -298)
+
+[node name="Placeholder" type="Node2D" parent="LastPlatform"]
+position = Vector2(1, 0)
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+label = "almost there..."
+color = Color(0.803922, 0.294118, 0.462745, 1)
+placeholder_size = Vector2(250, 86)
+
+[node name="SimplePatformPath3" type="Path2D" parent="."]
+position = Vector2(1075, -371)
+curve = SubResource("Curve2D_kswdk")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="SimplePatformPath3"]
+rotates = false
+
+[node name="Always" type="Node2D" parent="SimplePatformPath3/PathFollow2D"]
+position = Vector2(-3, 51)
+script = ExtResource("7_qg1f6")
+metadata/pronto_connections = [SubResource("Resource_mshn6")]
+
+[node name="MovingPlatform" type="CharacterBody2D" parent="SimplePatformPath3/PathFollow2D"]
+
+[node name="Placeholder" type="Node2D" parent="SimplePatformPath3/PathFollow2D/MovingPlatform"]
+script = ExtResource("2_4csiw")
+color = Color(0.729412, 0.462745, 0, 1)
+placeholder_size = Vector2(60, 10)
+
+[node name="LargeBluePlatform" parent="." instance=ExtResource("11_cklef")]
+position = Vector2(828, -624)
+
+[node name="LargeBluePlatform2" parent="." instance=ExtResource("11_cklef")]
+position = Vector2(464, -713)
+
+[node name="BackupPlatform" type="StaticBody2D" parent="."]
+position = Vector2(629, -500)
+
+[node name="Placeholder" type="Node2D" parent="BackupPlatform"]
+scale = Vector2(1.04, 1)
+script = ExtResource("2_4csiw")
+label = "you don't want to fall down here..."
+color = Color(0.180392, 0.180392, 0.180392, 1)
+placeholder_size = Vector2(800, 20)
+
 [node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
-position = Vector2(242, 508)
+position = Vector2(25, 589)
 collision_layer = 3
 
 [node name="PlatformerController" type="Node2D" parent="Player"]
 script = ExtResource("1_k6ccx")
 jump_velocity = 500.0
 horizontal_velocity = 200.0
+coyote_time = 0.5
 show_trail = true
 
 [node name="Placeholder" type="Node2D" parent="Player"]
@@ -84,113 +310,69 @@ limit_to_group = "blue_platform"
 metadata/pronto_connections = [SubResource("Resource_xx2so")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(0, -50)
 
-[node name="Ground2" type="StaticBody2D" parent="."]
-position = Vector2(274, 537)
-
-[node name="Placeholder" type="Node2D" parent="Ground2"]
-scale = Vector2(1.04, 1)
-script = ExtResource("2_4csiw")
-placeholder_size = Vector2(229, 15)
-
-[node name="Ground" type="StaticBody2D" parent="."]
-position = Vector2(572, 631)
-
-[node name="Placeholder" type="Node2D" parent="Ground"]
-scale = Vector2(1.04, 1)
-script = ExtResource("2_4csiw")
-placeholder_size = Vector2(1141, 25)
-
-[node name="SimplePatformPath" type="Path2D" parent="."]
-position = Vector2(404, 387)
-curve = SubResource("Curve2D_c2osk")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="SimplePatformPath"]
-position = Vector2(54, 74)
-rotates = false
-
-[node name="Always" type="Node2D" parent="SimplePatformPath/PathFollow2D"]
-position = Vector2(-3, 51)
-script = ExtResource("7_qg1f6")
-metadata/pronto_connections = [SubResource("Resource_mshn6")]
-
-[node name="MovingPlatform" type="CharacterBody2D" parent="SimplePatformPath/PathFollow2D"]
-
-[node name="Placeholder" type="Node2D" parent="SimplePatformPath/PathFollow2D/MovingPlatform"]
-script = ExtResource("2_4csiw")
-color = Color(0.729412, 0.462745, 0, 1)
-placeholder_size = Vector2(100, 20)
-
-[node name="SnakePath" type="Path2D" parent="."]
-position = Vector2(-198, 154)
-curve = SubResource("Curve2D_bjdnm")
-
-[node name="SnakeBlock1" parent="SnakePath" instance=ExtResource("4_acklm")]
-position = Vector2(300, 300)
-
-[node name="SnakeBlock2" parent="SnakePath" instance=ExtResource("4_acklm")]
-position = Vector2(319.989, 300)
-progress = 20.0
-
-[node name="SnakeBlock3" parent="SnakePath" instance=ExtResource("4_acklm")]
-position = Vector2(340.166, 300)
-progress = 40.0
-
-[node name="SnakeBlock4" parent="SnakePath" instance=ExtResource("4_acklm")]
-position = Vector2(359.996, 300)
-progress = 60.0
-
-[node name="BluePlatform" parent="." instance=ExtResource("9_2wha8")]
-position = Vector2(490, 323)
-
-[node name="BluePlatform2" parent="." instance=ExtResource("9_2wha8")]
-position = Vector2(459, 421)
-
-[node name="PanelContainer" type="PanelContainer" parent="."]
-offset_left = 21.0
-offset_top = 11.0
-offset_right = 452.0
-offset_bottom = 204.0
+[node name="PanelContainer" type="PanelContainer" parent="Player/Camera2D"]
+offset_left = -576.0
+offset_top = -373.0
+offset_right = -275.0
+offset_bottom = -180.0
 scale = Vector2(1.28473, 1.17159)
 
-[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
+[node name="PrototypingUI" type="Node2D" parent="Player/Camera2D/PanelContainer"]
 script = ExtResource("7_35hwo")
 
-[node name="PlatformSpeed" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(33.47, 163.88)
+[node name="PlatformSpeed" type="Node2D" parent="Player/Camera2D/PanelContainer/PrototypingUI"]
+position = Vector2(33.4701, 208.264)
 script = ExtResource("8_egddh")
+from = 10.0
 to = 200.0
+step_size = 10.0
 value = 60.0
 
-[node name="SnakeSpeed" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(91.848, 166.44)
+[node name="SnakeSpeed" type="Node2D" parent="Player/Camera2D/PanelContainer/PrototypingUI"]
+position = Vector2(100.41, 213.385)
 script = ExtResource("8_egddh")
+from = 10.0
 to = 200.0
+step_size = 10.0
 value = 60.0
 
-[node name="SnakeDespawnTime" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(140.107, 165.587)
+[node name="SnakeDespawnTime" type="Node2D" parent="Player/Camera2D/PanelContainer/PrototypingUI"]
+position = Vector2(158.01, 213.385)
 script = ExtResource("8_egddh")
-to = 10.0
-step_size = 0.01
-value = 1.0
+from = 1.0
+to = 4.0
+step_size = 0.5
+value = 1.5
 
-[node name="BluePlatformTriggerTime" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(196.928, 166.44)
+[node name="BluePlatformTriggerTime" type="Node2D" parent="Player/Camera2D/PanelContainer/PrototypingUI"]
+position = Vector2(227.285, 212.532)
 script = ExtResource("8_egddh")
 to = 2.0
 step_size = 0.1
-value = 0.5
+value = 0.3
 
-[node name="BluePlatformGravity" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(196.928, 166.44)
-script = ExtResource("8_egddh")
-to = 20.0
-step_size = 0.25
-value = 1.0
-
-[node name="BluePlatformRespawnTime" type="Node2D" parent="PanelContainer/PrototypingUI"]
+[node name="BluePlatformGravity" type="Node2D" parent="Player/Camera2D/PanelContainer/PrototypingUI"]
+position = Vector2(289.555, 211.678)
 script = ExtResource("8_egddh")
 from = 1.0
-to = 20.0
-value = 10.0
+to = 10.0
+value = 1.0
+
+[node name="BluePlatformRespawnTime" type="Node2D" parent="Player/Camera2D/PanelContainer/PrototypingUI"]
+position = Vector2(350.268, 212.532)
+script = ExtResource("8_egddh")
+from = 1.0
+to = 10.0
+value = 5.0
+
+[node name="Button" type="Button" parent="Player/Camera2D"]
+offset_left = -576.0
+offset_top = 243.0
+offset_right = -480.0
+offset_bottom = 274.0
+text = "Reset Level"
+script = ExtResource("7_7pghi")
+
+[connection signal="pressed" from="Player/Camera2D/Button" to="Player/Camera2D/Button" method="_on_pressed"]
