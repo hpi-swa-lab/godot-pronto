@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=22 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
@@ -8,15 +8,14 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_2arfu"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="7_sb4fg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="8_27i4k"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="9_tjmxt"]
 
 [sub_resource type="Resource" id="Resource_ilw2k"]
 script = ExtResource("4_1iyk2")
 signal_name = "until_elapsed"
 to = NodePath("..")
 invoke = "set_velocity"
-arguments = ["print((from.get_viewport().get_mouse_position() - to.global_position).normalized() * 1000)
-print(to.get_velocity())
-return (from.get_viewport().get_mouse_position() - to.global_position).normalized() * 1000"]
+arguments = ["return (from.get_viewport().get_mouse_position() - to.global_position).normalized() * 1000"]
 only_if = "return true"
 expression = ""
 
@@ -55,6 +54,15 @@ invoke = "put"
 arguments = ["return \"is_dashing\"", "return true"]
 only_if = "return true"
 expression = ""
+
+[sub_resource type="Resource" id="Resource_f6dqd"]
+script = ExtResource("4_1iyk2")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = "return other.get_meta(\"is_kevin\", false) and G.at(\"is_dashing\")"
+expression = "other.get_parent().set_meta(\"move_direction\", Vector2.from_angle(round(direction.angle() / deg_to_rad(90.)) * deg_to_rad(90.)) * -1)"
 
 [sub_resource type="Resource" id="Resource_u7fbw"]
 script = ExtResource("4_1iyk2")
@@ -101,6 +109,17 @@ signal_name = "elapsed"
 to = NodePath("..")
 invoke = "set_visible"
 arguments = ["return true"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_7uwau"]
+script = ExtResource("4_1iyk2")
+signal_name = "always"
+to = NodePath("../StaticBody2D7")
+invoke = "set_constant_linear_velocity"
+arguments = ["var movement = to.get_meta(\"move_direction\", Vector2(0,0)) * 500
+to.position += movement * delta
+return movement"]
 only_if = "return true"
 expression = ""
 
@@ -181,6 +200,11 @@ script = ExtResource("5_2arfu")
 key = "E"
 metadata/pronto_connections = [SubResource("Resource_ii0t7"), SubResource("Resource_lkat7")]
 
+[node name="Collision" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(60, 24)
+script = ExtResource("8_27i4k")
+metadata/pronto_connections = [SubResource("Resource_f6dqd")]
+
 [node name="StaticBody2D5" type="StaticBody2D" parent="."]
 position = Vector2(389, 306)
 rotation = 0.476859
@@ -205,6 +229,7 @@ placeholder_size = Vector2(88, 71)
 [node name="State" type="Node2D" parent="."]
 position = Vector2(263, 84)
 script = ExtResource("7_sb4fg")
+global = true
 metadata/is_dashing = false
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -228,3 +253,39 @@ one_shot = true
 paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_fsxv8"), SubResource("Resource_nu66r")]
+
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(1030, 432)
+script = ExtResource("9_tjmxt")
+metadata/pronto_connections = [SubResource("Resource_7uwau")]
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="."]
+position = Vector2(909, 408)
+metadata/is_kevin = false
+metadata/move_direction = Vector2(0, 0)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D7"]
+scale = Vector2(4.1371, 2.17307)
+script = ExtResource("1_tc671")
+color = Color(0.592157, 0.0117647, 0.0235294, 1)
+color2 = Color(0.592157, 0.0117647, 0.0235294, 1)
+placeholder_size = Vector2(0, 0)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="StaticBody2D7"]
+mass = 1000.0
+gravity_scale = 0.0
+continuous_cd = 2
+contact_monitor = true
+can_sleep = false
+lock_rotation = true
+linear_damp_mode = 1
+angular_damp_mode = 1
+metadata/is_kevin = true
+metadata/move_direction = Vector2(0, 0)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D7/RigidBody2D"]
+scale = Vector2(4.1371, 2.17307)
+script = ExtResource("1_tc671")
+color = Color(0.592157, 0.0117647, 0.0235294, 1)
+color2 = Color(0.592157, 0.0117647, 0.0235294, 1)
+placeholder_size = Vector2(40, 46)
