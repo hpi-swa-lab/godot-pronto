@@ -28,6 +28,7 @@ var source_code: String:
 
 const TEMPLATE = "@tool
 extends U
+@warning_ignore(\"unused_parameter\")
 func run({1}):
 	{2}{0}
 "
