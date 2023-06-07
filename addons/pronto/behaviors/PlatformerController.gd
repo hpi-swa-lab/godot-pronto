@@ -47,6 +47,8 @@ func _can_jump():
 	var now = Time.get_ticks_msec()
 	var input = _last_jump_input > now - 1000 * jump_buffer
 	var floored = _last_on_floor > now - 1000 * coyote_time
+	if floored:
+		G.put("can_dash",true)
 	return input and floored
 
 func _reset_jump():
