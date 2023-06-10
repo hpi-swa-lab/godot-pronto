@@ -1,14 +1,19 @@
 extends Node
 class_name Utils
 
+static func with(o, do: Callable):
+	return do.call(o)
+
 static func parent_that(node: Node, cond: Callable):
+	if node == null:
+		return null
 	if cond.call(node):
 		return node
 	return parent_that(node.get_parent(), cond)
 
-static func all_nodes_do(node: Node, do: Callable):
-	for c in node.get_children():
-		all_nodes_do(c, do)
+static func all_nodes_do(node: Node, do: Callable, include_internal = false):
+	for c in node.get_children(include_internal):
+		all_nodes_do(c, do, include_internal)
 	do.call(node)
 
 static func first_node_that(node: Node, cond: Callable):
@@ -25,9 +30,9 @@ static func all_nodes_that(node: Node, cond: Callable):
 	all_nodes_do(node, func (c): if cond.call(c): list.append(c))
 	return list
 
-static func all_nodes(node: Node):
+static func all_nodes(node: Node, include_internal = false):
 	var list = []
-	all_nodes_do(node, func (c): list.append(c))
+	all_nodes_do(node, func (c): list.append(c), include_internal)
 	return list
 
 static func print_signal(data: Dictionary):
@@ -146,11 +151,16 @@ static func build_class_row(c: StringName, ref: Node):
 	row.add_child(label)
 	return row
 
-static func commit_undoable(undo_redo: EditorUndoRedoManager, title: String, object: Object, props: Dictionary):
+static func commit_undoable(undo_redo: EditorUndoRedoManager, title: String, object: Object, props: Dictionary, action = null):
+	if not props.keys().any(func (prop): return props[prop] != object.get(prop)):
+		return
 	undo_redo.create_action(title)
 	for prop in props:
 		undo_redo.add_undo_property(object, prop, object.get(prop))
 		undo_redo.add_do_property(object, prop, props[prop])
+	if action != null:
+		undo_redo.add_do_method(object, action)
+		undo_redo.add_undo_method(object, action)
 	undo_redo.commit_action()
 
 static func get_game_size():
@@ -167,6 +177,10 @@ static func ellipsize(s: String, max: int = 16):
 		return s
 	return s.substr(0, max - 3) + "..."
 
+static func global_size_of_yourself(node: Node):
+	if "size" in node: return Rect2(node.global_position, node.size)
+	return Rect2(node.global_position, Vector2.ZERO)
+
 static func global_rect_of(node: Node):
 	node = Utils.closest_parent_with_position(node)
 	if "size" in node: return Rect2(node.global_position, node.size)
@@ -176,6 +190,8 @@ static func global_rect_of(node: Node):
 	return Rect2(node.global_position, Vector2.ZERO)
 
 static func fix_minimum_size(n: Control):
+	if G.at("_pronto_editor_plugin") == null:
+		return
 	n.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
 
 static func log(s):

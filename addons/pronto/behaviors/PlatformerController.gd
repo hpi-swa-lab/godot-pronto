@@ -16,8 +16,6 @@ extends Behavior
 ## If enabled, the parent leaves a trail of recent positions.
 @export var show_trail: bool = false
 
-@onready var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
-
 @onready var _parent: CharacterBody2D = get_parent()
 
 var _last_on_floor = -10000
@@ -54,6 +52,7 @@ func _reset_jump():
 	_last_on_floor = -10000
 
 func _draw():
+	super._draw()
 	if !show_trail:
 		return
 	
@@ -65,6 +64,8 @@ func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
 	
+	var gravity = PhysicsServer2D.body_get_direct_state(_parent).total_gravity
+	
 	# vertical
 	_update_jump()
 	if _can_jump():
@@ -73,10 +74,11 @@ func _physics_process(delta):
 			_parent.position.y = _last_floor_height
 		_parent.velocity.y = -jump_velocity
 	else:
-		_parent.velocity.y += gravity * delta
+		_parent.velocity.y += gravity.y * delta
 	
 	# horizontal
 	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
+	_parent.velocity.x += gravity.x * delta
 	
 	# move
 	var did_collide = _parent.move_and_slide()
@@ -90,3 +92,6 @@ func _physics_process(delta):
 		_last_positions.pop_front()
 	
 	queue_redraw()
+
+func lines():
+	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (f): return "controls", "controls")]

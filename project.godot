@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
 G="*res://addons/pronto/helpers/G.gd"
+LanguageClient="*res://addons/pronto/helpers/LanguageClient.gd"
 
 [display]
 
@@ -28,6 +29,14 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/pronto/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"

@@ -12,7 +12,6 @@ static func open_existing(undo_redo: EditorUndoRedoManager, from: Node, connecti
 	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
 	i.set_existing_connection(from, connection)
 	Utils.spawn_popup_from_canvas(from, i)
-	i.default_focus()
 
 static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary, receiver: Node):
 	var i = _open(Utils.parent_that(receiver, func (n): return Utils.has_position(n)), undo_redo)
@@ -20,6 +19,7 @@ static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source
 	i.from = from
 	i.receiver = receiver
 	i.set_mode(false, true)
+	i.init_empty_scripts()
 	Utils.spawn_popup_from_canvas(receiver, i)
 	i.default_focus()
 
@@ -28,6 +28,7 @@ static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, so
 	i.selected_signal = source_signal
 	i.from = from
 	i.set_mode(true, false)
+	i.init_empty_scripts()
 	Utils.spawn_popup_from_canvas(from, i)
 	i.default_focus()
 
@@ -45,7 +46,6 @@ var selected_signal: Dictionary:
 	set(value):
 		selected_signal = value
 		%Signal.text = value["name"]
-		%SignalArgs.text = "({0})".format([Utils.print_args(value)])
 		update_argument_names()
 
 func _input(event):
@@ -61,12 +61,16 @@ var receiver: Object:
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 
+func init_empty_scripts():
+	%Expression.edit_script = empty_script("", false)
+	%Condition.edit_script = empty_script("true", true)
+
 func set_mode(expr: bool, recv: bool):
 	%Expression.visible = expr
-	%Expression.text = ''
 	%Receiver.visible = recv
 	update_argument_names()
-	%SignalArgs.text +=  " from" if not recv else " from, to"
+	if expr and %Expression.edit_script == null:
+		%Expression.edit_script = empty_script("", false)
 
 func default_focus():
 	await get_tree().process_frame
@@ -76,9 +80,11 @@ func default_focus():
 		%FunctionName.grab_focus()
 
 func update_argument_names():
-	var names = selected_signal["args"].map(func (a): return a["name"]) + ["from"] + (["to"] if %Receiver.visible else [])
+	var names = argument_names()
 	%Expression.argument_names = names
+	%Condition.argument_names = names
 	for c in %Args.get_children(): c.argument_names = names
+	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
 
 func _process(delta):
 	if anchor and anchor.is_inside_tree():
@@ -92,19 +98,20 @@ func set_existing_connection(from: Node, connection: Connection):
 	existing_connection = connection
 	self.selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
 	set_mode(connection.is_expression(), connection.is_target())
-	%Condition.text = connection.only_if
+	%Condition.edit_script = connection.only_if
 	if connection.is_target():
 		receiver = from.get_node(connection.to)
 		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke if not connection.is_expression() else "<statement(s)>"
 		_on_function_selected(%FunctionName.text)
-	%Expression.text = connection.expression
+	if connection.expression != null:
+		%Expression.edit_script = connection.expression
 	
 	%Receiver.visible = connection.is_target()
 	%Expression.visible = connection.is_expression()
 	
 	for i in range(%Args.get_child_count()):
-		%Args.get_child(i).text = connection.arguments[i] if i <= connection.arguments.size() - 1 else ""
+		%Args.get_child(i).edit_script = connection.arguments[i] if i <= connection.arguments.size() - 1 else empty_script("null", true)
 	
 	# FIXME just increment total directly didn't work from the closure?!
 	var total = {"total": 0}
@@ -117,7 +124,12 @@ func set_existing_connection(from: Node, connection: Connection):
 func _on_function_selected(name: String):
 	set_mode(name == "<statement(s)>", true)
 	
-	var method = Utils.find(receiver.get_method_list(), func (m): return m["name"] == name)
+	var cond = func (m): return m["name"] == name
+	var method = null
+	if receiver.get_script() != null:
+		method = Utils.find(receiver.get_script().get_script_method_list(), cond)
+	if method == null:
+		method = Utils.find(receiver.get_method_list(), cond)
 	
 	for child in %Args.get_children():
 		%Args.remove_child(child)
@@ -127,35 +139,67 @@ func _on_function_selected(name: String):
 		return
 	
 	var ExpressionEdit = preload("res://addons/pronto/signal_connecting/expression_edit.tscn")
-	for arg in method["args"]:
+	
+	var arguments = []
+	if receiver is Code and name == "execute":
+		arguments = Array(receiver.arguments).map(func (argument_name): return {"name": argument_name})
+	else:
+		arguments = method["args"]
+	
+	for arg in arguments:
 		var arg_ui = ExpressionEdit.instantiate()
 		Utils.fix_minimum_size(arg_ui)
 		arg_ui.placeholder_text = "return " + arg["name"]
-		arg_ui.text = "return " + arg["name"]
+		arg_ui.edit_script = empty_script("null", true)
 		%Args.add_child(arg_ui)
 	update_argument_names()
 
+func empty_script(expr: String, return_value: bool):
+	return ConnectionScript.new(argument_names(), return_value, expr)
+
+func argument_names():
+	return selected_signal["args"].map(func (a): return a["name"]) + ["from"] + (["to"] if %Receiver.visible else [])
+
 func _on_done_pressed():
 	if not %Expression.visible:
-		var args = %Args.get_children().map(func (c): return c.text)
+		var args = %Args.get_children()
 		var invoke = %FunctionName.text
-		if invoke.length() == 0 or args.any(func (a): return a.length() == 0): return
+		# TODO check if only_if and args can be parsed
+		if invoke.length() == 0: return
 		if existing_connection:
+			Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
+				{"source_code": %Condition.text}, "reload")
+			for i in range(args.size()):
+				Utils.commit_undoable(undo_redo, "Update argument {0} of connection".format([i]),
+					args[i].edit_script,
+					{"source_code": args[i].text}, "reload")
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
-				{"arguments": args, "expression": "", "invoke": invoke, "only_if": %Condition.text, "signal_name": %Signal.text})
+				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
 		else:
-			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke, args, %Condition.text, undo_redo)
+			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
+				args.map(func (a): return a.updated_script(from, selected_signal["name"])),
+				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 	else:
 		if existing_connection:
+			Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
+				{"source_code": %Condition.text}, "reload")
+			if existing_connection.expression != null:
+				Utils.commit_undoable(undo_redo, "Update expression of connection", existing_connection.expression,
+					{"source_code": %Expression.text}, "reload")
+			else:
+				Utils.commit_undoable(undo_redo,
+					"Set connection expression",
+					existing_connection, {"expression": %Expression.updated_script(from, selected_signal["name"])})
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
-				existing_connection,
-				{"arguments": [], "expression": %Expression.text, "invoke": "", "only_if": %Condition.text, "signal_name": %Signal.text})
+				existing_connection, {"signal_name": %Signal.text})
 		else:
 			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
-			Connection.connect_expr(from, selected_signal["name"], to_path, %Expression.text, %Condition.text, undo_redo)
+			Connection.connect_expr(from, selected_signal["name"], to_path,
+				%Expression.updated_script(from, selected_signal["name"]),
+				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 	queue_free()
 
 func _on_remove_pressed():

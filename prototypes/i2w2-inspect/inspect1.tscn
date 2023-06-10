@@ -1,0 +1,123 @@
+[gd_scene load_steps=10 format=3 uid="uid://bmrl0roi6aena"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_168vi"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="2_jbyva"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_k5gu7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="4_6qb18"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Inspect.gd" id="5_16ijm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_3vsff"]
+
+[sub_resource type="Resource" id="Resource_yro7p"]
+script = ExtResource("3_k5gu7")
+signal_name = "direction"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = ["return dir"]
+only_if = "return true"
+expression = ""
+
+[sub_resource type="Resource" id="Resource_mhasi"]
+script = ExtResource("3_k5gu7")
+signal_name = "pressed"
+to = NodePath("../Move")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "to.get_parent().rotation = to.get_parent().rotation + 0.1"
+
+[sub_resource type="Resource" id="Resource_wixve"]
+script = ExtResource("3_k5gu7")
+signal_name = "pressed"
+to = NodePath("../Move")
+invoke = ""
+arguments = []
+only_if = "return true"
+expression = "to.get_parent().rotation = to.get_parent().rotation - 0.1"
+
+[node name="inspect1" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(583, 342)
+
+[node name="Placeholder" type="Node2D" parent="Player"]
+script = ExtResource("1_168vi")
+color = Color(1, 1, 0, 1)
+placeholder_size = Vector2(18, 38)
+
+[node name="Inspect" type="Node2D" parent="Player/Placeholder"]
+position = Vector2(0, 68.5)
+script = ExtResource("5_16ijm")
+property_0 = "global_rotation"
+property_1 = "global_transform"
+property_2 = "<statement(s)>"
+expression_2 = "return target.get_parent().position"
+property_3 = "<click to add>"
+font_size = 14
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(135, 99)
+sticky = true
+sticky_transform = Transform2D(1, 0, 0, 1, 583, 410.5)
+
+[node name="Controls" type="Node2D" parent="Player"]
+position = Vector2(-74, -161)
+script = ExtResource("2_jbyva")
+metadata/pronto_connections = [SubResource("Resource_yro7p")]
+
+[node name="Inspect" type="Node2D" parent="Player/Controls"]
+position = Vector2(0, 50)
+script = ExtResource("5_16ijm")
+property_0 = "position"
+property_1 = "<click to add>"
+font_size = 10
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(100, 100)
+sticky = true
+sticky_transform = Transform2D(1, 0, 0, 1, 509, 231)
+
+[node name="Move" type="Node2D" parent="Player"]
+position = Vector2(3, -76)
+script = ExtResource("4_6qb18")
+
+[node name="Inspect" type="Node2D" parent="Player/Move"]
+position = Vector2(-494, -145)
+script = ExtResource("5_16ijm")
+property_0 = "<statement(s)>"
+expression_0 = "return \"vel=%s\" % target.velocity"
+property_1 = "<click to add>"
+font_size = 10
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(169, 23)
+sticky = true
+sticky_transform = Transform2D(1, 0, 0, 1, 92, 121)
+
+[node name="KeyA" type="Node2D" parent="Player"]
+position = Vector2(57, -156)
+script = ExtResource("6_3vsff")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_mhasi")]
+
+[node name="KeyD" type="Node2D" parent="Player"]
+position = Vector2(113, -147)
+script = ExtResource("6_3vsff")
+key = "D"
+metadata/pronto_connections = [SubResource("Resource_wixve")]
+
+[node name="Inspect" type="Node2D" parent="Player"]
+position = Vector2(-491, -290)
+script = ExtResource("5_16ijm")
+property_0 = "position"
+property_1 = "rotation"
+property_2 = "<click to add>"
+font_size = 10
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(168, 94)
+sticky = true
+sticky_transform = Transform2D(1, 0, 0, 1, 92, 52)

@@ -11,8 +11,14 @@ signal down
 signal direction(dir: Vector2)
 signal horizontal_direction(dir: Vector2)
 signal vertical_direction(dir: Vector2)
-signal click(pos: Vector2)
-signal moved(pos: Vector2)
+
+signal mouse_down(pos: Vector2, button: MouseButton)
+signal mouse_up(pos: Vector2, button: MouseButton, duration: int)
+signal mouse_move(pos: Vector2)
+signal mouse_drag(pos: Vector2)
+
+var enable_drag = false
+var held_mouse_buttons = {}
 
 var key_map = [{
 	"function": Input.is_action_pressed,
@@ -60,7 +66,19 @@ func _process(delta):
 		vertical_direction.emit(Vector2.DOWN)
 
 func _input(event):
-	if event is InputEventMouseButton and event.pressed:
-		click.emit(event.position)
+	if event is InputEventMouseButton:
+		if (event.button_index == MOUSE_BUTTON_LEFT):
+			enable_drag = event.pressed
+		if (event.pressed):
+			held_mouse_buttons[event.button_index] = Time.get_ticks_msec();
+			mouse_down.emit(event.position, event.button_index)
+		else:
+			mouse_up.emit(event.position, event.button_index, Time.get_ticks_msec() - held_mouse_buttons.get(event.button_index, 0))
+			held_mouse_buttons.erase(event.button_index)
 	if event is InputEventMouseMotion:
-		moved.emit(event.position)
+		mouse_move.emit(event.position)
+		if enable_drag:
+			mouse_drag.emit(event.position)
+
+func get_held_mouse_buttons():
+	return held_mouse_buttons.keys()

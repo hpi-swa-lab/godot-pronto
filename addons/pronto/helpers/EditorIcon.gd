@@ -5,8 +5,9 @@ class_name EditorIcon
 @export var name: String:
 	set(n):
 		name = n
-		_tex = Engine.get_main_loop().get_root().get_theme_icon(name, &"EditorIcons")
-		emit_changed()
+		if Engine.get_main_loop() != null:
+			_tex = Engine.get_main_loop().get_root().get_theme_icon(name, &"EditorIcons")
+			emit_changed()
 
 var _tex: ImageTexture
 

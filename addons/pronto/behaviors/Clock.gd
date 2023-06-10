@@ -47,6 +47,7 @@ func reset_and_start():
 	_timer.start(duration_seconds)
 
 func _process(delta):
+	super._process(delta)
 	if((_until_elapsed_active or _use_trigger_interval) and not _timer.paused and not _timer.is_stopped()):
 		if(_use_trigger_interval):
 			_time_since_last_trigger += delta

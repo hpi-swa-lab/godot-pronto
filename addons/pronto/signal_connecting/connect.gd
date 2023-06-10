@@ -65,9 +65,12 @@ func _on_connections_item_clicked(index, at_position, mouse_button_index):
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
 		var m = PopupMenu.new()
 		m.add_item("Move to top", 0)
+		m.add_item("Delete", 1)
 		m.id_pressed.connect(func (id):
 			if id == 0:
-				Connection.reorder_to_top(node, index, undo_redo, build_list))
+				Connection.reorder_to_top(node, index, undo_redo, build_list)
+			if id == 1:
+				Connection.get_connections(node)[index].delete(node, undo_redo))
 		add_child(m)
 		m.position = Vector2i(global_position + at_position)
 		m.popup()
