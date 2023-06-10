@@ -1,0 +1,103 @@
+[gd_scene load_steps=8 format=3 uid="uid://pcvirp44au2y"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_wkkvy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_g2k13"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="3_h1uyp"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="4_bdlcu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Inspect.gd" id="4_y2g46"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_bcaxq"]
+
+[sub_resource type="Resource" id="Resource_1moy4"]
+script = ExtResource("5_bcaxq")
+signal_name = "up"
+to = NodePath("../PlatformerController")
+invoke = "@gravity_paused_setter"
+arguments = ["return not to.gravity_paused"]
+only_if = "return true"
+expression = ""
+
+[node name="platformer_gravity_paused" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_wkkvy")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(10, 324)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D"]
+script = ExtResource("2_g2k13")
+placeholder_size = Vector2(20, 648)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(1142, 324)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D2"]
+script = ExtResource("2_g2k13")
+placeholder_size = Vector2(20, 648)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(576, 10)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D3"]
+script = ExtResource("2_g2k13")
+placeholder_size = Vector2(1112, 20)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(576, 638)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D4"]
+script = ExtResource("2_g2k13")
+placeholder_size = Vector2(1112, 20)
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(294, 531)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D5"]
+script = ExtResource("2_g2k13")
+placeholder_size = Vector2(158, 19)
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2(542, 468)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D6"]
+script = ExtResource("2_g2k13")
+placeholder_size = Vector2(158, 19)
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="."]
+position = Vector2(792, 406)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D7"]
+script = ExtResource("2_g2k13")
+placeholder_size = Vector2(158, 19)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(297, 491)
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("2_g2k13")
+label = "Player"
+color = Color(0.886275, 0.105882, 0.741176, 1)
+placeholder_size = Vector2(20, 60)
+
+[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("3_h1uyp")
+jump_velocity = 450.0
+
+[node name="Key" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(-19, 0)
+script = ExtResource("4_bdlcu")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_1moy4")]
+
+[node name="Inspect" type="Node2D" parent="."]
+position = Vector2(150, 67)
+script = ExtResource("4_y2g46")
+property_0 = "<statement(s)>"
+expression_0 = "return closest(\"PlatformerController\").gravity_paused"
+property_1 = "<click to add>"
+font_size = 10
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(260, 94)
+sticky = false
