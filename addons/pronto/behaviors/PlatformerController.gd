@@ -13,7 +13,9 @@ extends Behavior
 @export_range(0.0, 1.0) var jump_buffer = 0.1
 
 @export_category("Physics")
-@export var gravity_paused: bool = false
+@export var gravity_paused: bool = false:
+	get: return gravity_paused
+	set(value): gravity_paused = value
 
 @export_category("Debug")
 ## If enabled, the parent leaves a trail of recent positions.
@@ -68,7 +70,7 @@ func _physics_process(delta):
 	
 	var gravity = PhysicsServer2D.body_get_direct_state(_parent).total_gravity
 	if gravity_paused:
-		gravity = Vector2.ONE
+		gravity = Vector2.ZERO
 	
 	# vertical
 	_update_jump()
