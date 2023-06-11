@@ -130,7 +130,6 @@ func _draw():
 			text_size)
 			
 func _init():
-	print("Test")
 	for info in get_property_list():
 		if info.name == "enum_choices_2":
 			print(info)			
@@ -139,7 +138,6 @@ class DropPropertyPrompt extends ColorRect:
 	var editor_interface: EditorInterface
 	
 	func _init(editor_interface):
-		print("Test")
 		for info in get_property_list():
 			if info.name == "enum_choices_2":
 				print(info)

@@ -61,6 +61,20 @@ func connection_activated(c: Connection):
 	if current == null:
 		t.tween_method(flash_line.bind(c), 0.0, 1.0, 0.2)
 	t.tween_method(flash_line.bind(c), 1.0, 0.0, 0.2)
+	
+# duplicating as Godot does not support overloading
+# see: https://github.com/godotengine/godot-proposals/issues/1571
+var _running_highlight_tweens = {}
+func highlight_activated(c: Connection):
+	var duration = 0.3
+	# FIXME not scheduling well yet on fast repeats
+	var current = _running_highlight_tweens.get(c)
+	if current != null and not current.is_running(): current = null
+	if current != null:
+		current.kill()
+	var t = create_tween()
+	_running_highlight_tweens[c] = t
+	t.tween_method(flash_line.bind(c), 1.0, 0.0, duration)
 
 func flash_line(value: float, key: Variant):
 	_lines.flash_line(value, key)
