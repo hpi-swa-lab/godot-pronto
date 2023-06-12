@@ -150,7 +150,10 @@ func _on_function_selected(name: String):
 		var arg_ui = ExpressionEdit.instantiate()
 		Utils.fix_minimum_size(arg_ui)
 		arg_ui.placeholder_text = "return " + arg["name"]
-		arg_ui.edit_script = empty_script("null", true)
+		if name == "apply" && arg["type"] == 25:
+			arg_ui.edit_script = empty_script("func(node): null", true)
+		else:
+			arg_ui.edit_script = empty_script("null", true)
 		%Args.add_child(arg_ui)
 	update_argument_names()
 
