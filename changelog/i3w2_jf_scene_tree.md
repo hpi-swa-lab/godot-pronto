@@ -12,7 +12,9 @@ We had a long discussion about what functionality the SceneRoot should provide. 
 
 We decided to use a lambda function as a parameter instead that is also given the node it is executed on. This allows for manipulation of these nodes different from just calling their own functions with certain parameters.
 
-The new function now is called `apply(group: StringName, lamda_func: Callable)` and takes the group name as well as a lamda function of format `func(node): ...`. To make it easy for users to understand how the lamda function must be defined, `func(node): null` is automatically set in the connection window by default, explaining the usage of the lamda funtion.
+The new function now is called `apply(group: StringName, lamda_func: Callable)` and takes the group name as well as a lamda function of format `func(from, node): ...`. To make it easy for users to understand how the lamda function must be defined, `func(from, node): null` is automatically set in the connection window by default, explaining the usage of the lamda funtion. Inside the lamda function the user has access to the node object of the group `node` as well as `from` (the caller of the Connection).
+
+We also added the functions `apply_with_filterapply(group: StringName, lamda_func: Callable, filter_func: Callable)` and `apply_within_dist(postion: Vector2, max_dist: float, group: StringName, lamda_func: Callable)`, which allow for more flexibility and use-cases.
 
 Our SceneRoot Behavior also exposes some of the signals of the SceneTree:
   - `node_added(node: Node)`
