@@ -1,6 +1,7 @@
 @tool
 #thumb("ClassList")
 extends Behavior
+class_name SceneRoot
 
 var scene_tree: SceneTree
 
@@ -16,9 +17,19 @@ func _ready():
 	scene_tree.node_removed.connect(func(node): node_removed.emit(node))
 	scene_tree.tree_changed.connect(func(): tree_changed.emit())
 	
-func apply(group: StringName, lamda_func: Callable):
+func apply(group: StringName, lamda_func: Callable, from: Node2D):
 	for node in scene_tree.get_nodes_in_group(group):
-		lamda_func.call(node)
+		lamda_func.call(from, node)
+		
+func apply_with_filter(group: StringName, lamda_func: Callable, filter_func: Callable, from: Node2D):
+	for node in scene_tree.get_nodes_in_group(group):
+		if filter_func.call(from, node):
+			lamda_func.call(from, node)
+			
+func apply_within_dist(position: Vector2, max_dist: float, group: StringName, lamda_func: Callable, from: Node2D):
+	for node in scene_tree.get_nodes_in_group(group):
+		if node.global_position.distance_to(position) <= max_dist:
+			lamda_func.call(from, node)
 	
 func notify_group(group: StringName, notification: int):
 	scene_tree.notify_group(group, notification)
