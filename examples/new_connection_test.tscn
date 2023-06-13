@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbvcjfqlnaacx"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="1_s2maq"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_4h337"]
+
+[node name="new_connection_test" type="Node2D"]
+
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(-21.2132, 21.2132)
+script = ExtResource("1_s2maq")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("2_4h337")
+metadata/pronto_id = 0

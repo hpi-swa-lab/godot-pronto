@@ -57,7 +57,7 @@ func _input(event):
 var receiver: Object:
 	set(value):
 		receiver = value
-		%ReceiverPath.text = "${0} ({1})".format([from.get_path_to(receiver), receiver.name])
+		%ReceiverPath.text = "${0} ({1})".format([Pronto.get_pronto_id(receiver), receiver.name])
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 
@@ -100,7 +100,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	set_mode(connection.is_expression(), connection.is_target())
 	%Condition.edit_script = connection.only_if
 	if connection.is_target():
-		receiver = load("res://addons/pronto/pronto.gd").get_node_from_pronto_id(connection.to)
+		receiver = Pronto.find_pronto_id_in_children(get_tree().get_root(), connection.to)
 		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke if not connection.is_expression() else "<statement(s)>"
 		_on_function_selected(%FunctionName.text)

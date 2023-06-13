@@ -150,7 +150,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 		names.append("from")
 		values.append(from)
 		if not c.is_expression():
-			var target = load("res://addons/pronto/pronto.gd").get_node_from_pronto_id(c.to)
+			var target = Pronto.find_pronto_id_in_children(from.get_tree().get_root(), c.to)
 			names.append("to")
 			values.append(target)
 			if c.should_trigger(names, values, from):
@@ -163,7 +163,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
 		else:
 			if c.is_target():
-				var target = load("res://addons/pronto/pronto.gd").get_node_from_pronto_id(c.to)
+				var target = Pronto.find_pronto_id_in_children(from.get_tree().get_root(), c.to)
 				names.append("to")
 				values.append(target)
 			if c.should_trigger(names, values, from):
