@@ -100,7 +100,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	set_mode(connection.is_expression(), connection.is_target())
 	%Condition.edit_script = connection.only_if
 	if connection.is_target():
-		receiver = from.get_node(connection.to)
+		receiver = load("res://addons/pronto/pronto.gd").get_node_from_pronto_id(connection.to)
 		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke if not connection.is_expression() else "<statement(s)>"
 		_on_function_selected(%FunctionName.text)
@@ -181,7 +181,7 @@ func _on_done_pressed():
 				existing_connection,
 				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
 		else:
-			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
+			Connection.connect_target(from, selected_signal["name"], load("res://addons/pronto/pronto.gd").get_pronto_id(receiver), invoke,
 				args.map(func (a): return a.updated_script(from, selected_signal["name"])),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 	else:
@@ -199,8 +199,8 @@ func _on_done_pressed():
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection, {"signal_name": %Signal.text})
 		else:
-			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
-			Connection.connect_expr(from, selected_signal["name"], to_path,
+			var to_id = load("res://addons/pronto/pronto.gd").get_pronto_id(receiver) if %Receiver.visible else -1
+			Connection.connect_expr(from, selected_signal["name"], to_id,
 				%Expression.updated_script(from, selected_signal["name"]),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 	queue_free()

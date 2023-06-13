@@ -15,7 +15,7 @@ class_name Connection
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, only_if: ConnectionScript, undo_redo: EditorUndoRedoManager = null):
+static func connect_target(from: Node, signal_name: String, to: int, invoke: String, arguments: Array, only_if: ConnectionScript, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -27,7 +27,7 @@ static func connect_target(from: Node, signal_name: String, to: NodePath, invoke
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: ConnectionScript, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, to: int, expression: ConnectionScript, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -41,8 +41,8 @@ static func get_connections(node: Node) -> Array:
 
 ## The signal name of the node that this connection is added on to connect to.
 @export var signal_name: String = ""
-## (Optional) The path to the node that this connection emits to.
-@export var to: NodePath = ^""
+## (Optional) The pronto id to the node that this connection emits to.
+@export var to: int = -1
 ## (Optional) The method to invoke on [member to].
 @export var invoke: String
 ## (Optional) The arguments to pass to method [member invoke] as [ConnectionScript]s.
@@ -61,7 +61,7 @@ func is_expression() -> bool:
 
 ## Return whether this connection will invoke a method on a target.
 func is_target() -> bool:
-	return not to.is_empty()
+	return to >= 0
 
 ## Remove this connection from [param node].
 func delete(from: Node, undo_redo: EditorUndoRedoManager = null):
@@ -150,7 +150,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 		names.append("from")
 		values.append(from)
 		if not c.is_expression():
-			var target = from.get_node(c.to)
+			var target = load("res://addons/pronto/pronto.gd").get_node_from_pronto_id(c.to)
 			names.append("to")
 			values.append(target)
 			if c.should_trigger(names, values, from):
@@ -163,7 +163,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
 		else:
 			if c.is_target():
-				var target = from.get_node(c.to)
+				var target = load("res://addons/pronto/pronto.gd").get_node_from_pronto_id(c.to)
 				names.append("to")
 				values.append(target)
 			if c.should_trigger(names, values, from):

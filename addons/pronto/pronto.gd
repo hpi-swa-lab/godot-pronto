@@ -8,6 +8,40 @@ var behaviors = {}
 var debugger: ConnectionDebug
 var inspectors = [ExpressionInspector.new()]
 
+var pronto_global_id = 0
+# @TODO could save absolute paths in persistent state to serialize node object
+var global_pronto_objects = {}
+
+func _set_state(data):
+	pronto_global_id = data.get("pronto_global_id", 0)
+	# global_pronto_objects = data.get("global_pronto_objects", {})
+
+func _get_state():
+	return {"pronto_global_id": pronto_global_id
+		# , "global_pronto_objects": global_pronto_objects
+		}
+
+func get_pronto_id(node):
+	if node.has_meta("pronto_id"):
+		return node.get_meta("pronto_id")
+	node.set_meta("pronto_id", pronto_global_id)
+	pronto_global_id += 1
+	return node.get_meta("pronto_id")
+
+func find_pronto_id_in_children(node, id):
+	if node.has_meta("pronto_id"):
+		if node.get_meta("pronto_id") == id:
+			return node
+	var found_node = null
+	for child in node.get_children():
+		if (!found_node):
+			found_node = find_pronto_id_in_children(child, id)
+	return found_node
+
+func get_node_from_pronto_id(id):
+	return find_pronto_id_in_children(get_tree().get_root(), id)
+
+
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		return
