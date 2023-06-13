@@ -16,7 +16,7 @@ const WIDTH = 120
 		selectType = val
 		# todo: figure out if we want to clear certain variables here for a clean slate
 		notify_property_list_changed()
-
+		
 # float variables
 var float_from:float = 0.0
 var float_to:float = 1.0
