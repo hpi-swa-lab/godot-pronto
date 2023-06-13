@@ -11,8 +11,9 @@ script = ExtResource("1_1ki2o")
 unique_name_in_owner = true
 visible = false
 top_level = true
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(400, 200)
 layout_mode = 0
 allow_reselect = true
+same_column_width = true
 
 [connection signal="item_selected" from="list" to="." method="_on_list_pressed"]
