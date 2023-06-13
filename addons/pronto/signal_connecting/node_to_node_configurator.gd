@@ -71,6 +71,7 @@ func set_mode(expr: bool, recv: bool):
 	update_argument_names()
 	if expr and %Expression.edit_script == null:
 		%Expression.edit_script = empty_script("", false)
+	mark_changed()
 
 func default_focus():
 	await get_tree().process_frame
@@ -92,6 +93,9 @@ func _process(delta):
 		var offscreen_delta = (position + size - get_parent().size).clamp(Vector2(0, 0), Vector2(1000000, 1000000))
 		position -= offscreen_delta
 		%FunctionName.anchor = anchor
+
+func mark_changed(value: bool = true):
+	%ChangesNotifier.visible = value
 
 func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
@@ -121,6 +125,7 @@ func set_existing_connection(from: Node, connection: Connection):
 			total["total"] += Connection.get_connections(n).count(connection))
 	%SharedLinksNote.visible = total["total"] > 1
 	%SharedLinksCount.text = "This connection is linked to {0} other node{1}.".format([total["total"] - 1, "s" if total["total"] != 2 else ""])
+	mark_changed(false)
 
 func _on_function_selected(name: String):
 	set_mode(name == "<statement(s)>", true)
@@ -156,6 +161,7 @@ func _on_function_selected(name: String):
 		else:
 			arg_ui.edit_script = empty_script("null", true)
 		%Args.add_child(arg_ui)
+		arg_ui.text_changed.connect(func(): mark_changed())
 	update_argument_names()
 
 func empty_script(expr: String, return_value: bool):
@@ -204,7 +210,7 @@ func _on_done_pressed():
 			existing_connection = Connection.connect_expr(from, selected_signal["name"], to_path,
 				%Expression.updated_script(from, selected_signal["name"]),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
-				
+
 	existing_connection.enabled = %Enabled.button_pressed
 	queue_free()
 
