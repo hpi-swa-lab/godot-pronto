@@ -109,6 +109,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	
 	%Receiver.visible = connection.is_target()
 	%Expression.visible = connection.is_expression()
+	%Enabled.button_pressed = connection.enabled
 	
 	for i in range(%Args.get_child_count()):
 		%Args.get_child(i).edit_script = connection.arguments[i] if i <= connection.arguments.size() - 1 else empty_script("null", true)
@@ -181,7 +182,7 @@ func _on_done_pressed():
 				existing_connection,
 				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
 		else:
-			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
+			existing_connection = Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
 				args.map(func (a): return a.updated_script(from, selected_signal["name"])),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 	else:
@@ -200,9 +201,11 @@ func _on_done_pressed():
 				existing_connection, {"signal_name": %Signal.text})
 		else:
 			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
-			Connection.connect_expr(from, selected_signal["name"], to_path,
+			existing_connection = Connection.connect_expr(from, selected_signal["name"], to_path,
 				%Expression.updated_script(from, selected_signal["name"]),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
+				
+	existing_connection.enabled = %Enabled.button_pressed
 	queue_free()
 
 func _on_remove_pressed():

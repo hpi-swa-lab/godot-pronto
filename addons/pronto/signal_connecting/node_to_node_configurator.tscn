@@ -72,6 +72,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "(area)"
 
+[node name="Enabled" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
 [node name="remove" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -108,7 +113,6 @@ text = ")"
 
 [node name="Expression" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43)
 layout_mode = 2
 size_flags_horizontal = 1
 return_value = false
@@ -124,9 +128,7 @@ text = "only if: "
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43)
 layout_mode = 2
-size_flags_horizontal = 3
 max_width = 500
 
 [node name="ButtonList" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]

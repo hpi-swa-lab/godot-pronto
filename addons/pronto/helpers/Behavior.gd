@@ -80,14 +80,17 @@ func flash_line(value: float, key: Variant):
 	_lines.flash_line(value, key)
 	queue_redraw()
 
-func lines():
+func lines() -> Array:
 	return Connection.get_connections(self).map(func (connection):
-		if not connection.is_target():
-			return Lines.Line.new(self, self, func (flipped): return connection.print(flipped), connection)
-		else:
-			var other = get_node_or_null(connection.to)
-			if not other: return null
-			return Lines.Line.new(self, other, func (flipped): return connection.print(flipped), connection))
+		var other = self if not connection.is_target() else get_node_or_null(connection.to)
+		if other == null:
+			return null
+		connection.changed_enabled.connect(func(new_state): 
+			_lines.set_enabled(new_state, connection)
+			queue_redraw()
+		)
+		return Lines.Line.new(self, other, func (flipped): return connection.print(flipped), connection)
+	)
 
 func _draw():
 	if not Engine.is_editor_hint() or not _icon or not is_inside_tree():

@@ -23,6 +23,12 @@ func build_list():
 	_displayed_connections = Connection.get_connections(node).duplicate()
 	for c in _displayed_connections:
 		var added_index = %connections.add_item(c.print(false, false, true), Utils.icon_from_theme("Signals", node))
+		%connections.set_item_disabled(added_index, !c.enabled)
+		c.changed_enabled.connect(func(new_state: bool):
+			# FIXME: There is a bug when removing a connection, then undoing that and disabling it.
+			# The connection is added to the bottom of the list but the index remains the same.
+			%connections.set_item_disabled(added_index, !new_state)
+		)
 	
 	# connecting to signals for slight performance improvement
 	# by avoiding querying mouse position every process call
@@ -88,14 +94,21 @@ func _on_connections_item_selected(index):
 
 func _on_connections_item_clicked(index, at_position, mouse_button_index):
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
-		var m = PopupMenu.new()
+		var connection := Connection.get_connections(node)[index] as Connection
+		var m := PopupMenu.new()
+		m.add_check_item("Enabled", 2, KEY_E)
+		m.set_item_checked(0, connection.enabled)
+		m.add_separator()
 		m.add_item("Move to top", 0)
 		m.add_item("Delete", 1)
 		m.id_pressed.connect(func (id):
 			if id == 0:
 				Connection.reorder_to_top(node, index, undo_redo, build_list)
 			if id == 1:
-				Connection.get_connections(node)[index].delete(node, undo_redo))
+				connection.delete(node, undo_redo)
+			if id == 2:
+				connection.toggle_enabled(undo_redo)
+		)
 		add_child(m)
 		m.position = Vector2i(global_position + at_position)
 		m.popup()
