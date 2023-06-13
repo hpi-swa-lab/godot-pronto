@@ -20,11 +20,12 @@ name = "Remove"
 [node name="Node To Node Configurator" type="PanelContainer"]
 custom_minimum_size = Vector2(100, 100)
 offset_right = 431.0
-offset_bottom = 175.0
+offset_bottom = 218.0
 scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
+mouse_filter = 1
 theme_type_variation = &"Panel"
 script = ExtResource("2_fmteu")
 metadata/pronto_ignore = true
@@ -159,6 +160,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Cancel"
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/SharedLinksNote/Button" to="." method="_on_make_unique_pressed"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Enabled" to="." method="mark_changed" unbinds=1]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]

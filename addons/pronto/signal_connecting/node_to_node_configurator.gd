@@ -33,6 +33,7 @@ static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, so
 	i.default_focus()
 
 var undo_redo: EditorUndoRedoManager
+var _drag_offset
 
 var anchor: Node:
 	set(n):
@@ -226,3 +227,23 @@ func _on_make_unique_pressed():
 	var duplicate = existing_connection.make_unique(from, undo_redo)
 	queue_free()
 	open_existing(undo_redo, from, duplicate)
+
+
+func _on_gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.is_pressed():
+			_start_drag(event.global_position)
+		else:
+			_stop_drag()
+	elif event is InputEventMouseMotion and _drag_offset != null:
+		print(offset_left, " ", event.global_position.x + _drag_offset.x)
+		#offset_left = 200
+		get_parent().position = event.global_position + _drag_offset
+
+
+func _start_drag(at: Vector2):
+	_drag_offset = global_position - at
+
+
+func _stop_drag():
+	_drag_offset = null

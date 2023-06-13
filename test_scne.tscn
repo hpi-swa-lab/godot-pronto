@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=3 uid="uid://bolwhcpcsykie"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="1_kyy2k"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_wmh8i"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_nw0t0"]
+
+[sub_resource type="GDScript" id="GDScript_evk3r"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from):
+	pass
+"
+
+[sub_resource type="Resource" id="Resource_sp8fq"]
+script = ExtResource("2_wmh8i")
+nested_script = SubResource("GDScript_evk3r")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_yfd3w"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_g1n48"]
+script = ExtResource("2_wmh8i")
+nested_script = SubResource("GDScript_yfd3w")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ypvks"]
+script = ExtResource("3_nw0t0")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_g1n48")
+expression = SubResource("Resource_sp8fq")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_p05dk"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from):
+	pass
+"
+
+[sub_resource type="Resource" id="Resource_oadaw"]
+script = ExtResource("2_wmh8i")
+nested_script = SubResource("GDScript_p05dk")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_1rpmv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3umj5"]
+script = ExtResource("2_wmh8i")
+nested_script = SubResource("GDScript_1rpmv")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_kwwff"]
+script = ExtResource("3_nw0t0")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_3umj5")
+expression = SubResource("Resource_oadaw")
+deferred = false
+enabled = true
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(210, 258)
+script = ExtResource("1_kyy2k")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_ypvks")]
+
+[node name="Clock2" type="Node2D" parent="."]
+position = Vector2(270, -1)
+script = ExtResource("1_kyy2k")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_kwwff")]
