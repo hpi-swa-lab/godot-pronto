@@ -247,3 +247,8 @@ func _start_drag(at: Vector2):
 
 func _stop_drag():
 	_drag_offset = null
+
+#- Z index
+#- dragging
+#- pinning (stay open)
+#- 
