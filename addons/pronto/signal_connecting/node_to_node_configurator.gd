@@ -287,8 +287,6 @@ func _stop_drag():
 func _drag(position: Vector2):
 	position_offset = position - _drag_start_offset
 
-#- highlight related nodes/connections when hovering?
-
 func _on_pinned_toggled(button_pressed):
 	pinned = button_pressed
 
