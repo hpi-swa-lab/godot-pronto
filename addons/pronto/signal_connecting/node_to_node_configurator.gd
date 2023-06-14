@@ -11,7 +11,7 @@ static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
 static func open_existing(undo_redo: EditorUndoRedoManager, from: Node, connection: Connection):
 	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
 	i.set_existing_connection(from, connection)
-	return i.open(from)
+	Utils.spawn_popup_from_canvas(from, i)
 
 static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary, receiver: Node):
 	var i = _open(Utils.parent_that(receiver, func (n): return Utils.has_position(n)), undo_redo)
@@ -20,7 +20,8 @@ static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source
 	i.receiver = receiver
 	i.set_mode(false, true)
 	i.init_empty_scripts()
-	return i.open(receiver)
+	Utils.spawn_popup_from_canvas(receiver, i)
+	i.default_focus()
 
 static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary):
 	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
@@ -28,22 +29,8 @@ static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, so
 	i.from = from
 	i.set_mode(true, false)
 	i.init_empty_scripts()
-	return i.open(from)
-
-func open(receiver: Node):
-	# find existing configurator siblings
-	for configurator in Utils.popup_parent(receiver).get_children(true):
-		if configurator is NodeToNodeConfigurator and configurator.has_same_connection(self):
-			configurator.default_focus()
-			return configurator
-	
-	Utils.spawn_popup_from_canvas(receiver, self)
-	default_focus()
-	return self
-
-func has_same_connection(other: NodeToNodeConfigurator):
-	print("has_same_connection", self, " ", other)
-	return other.from == from and other.selected_signal == selected_signal
+	Utils.spawn_popup_from_canvas(from, i)
+	i.default_focus()
 
 var undo_redo: EditorUndoRedoManager
 
@@ -60,14 +47,6 @@ var selected_signal: Dictionary:
 		selected_signal = value
 		%Signal.text = value["name"]
 		update_argument_names()
-
-var position_offset = Vector2(0, 0)
-
-var pinned = false:
-	set(value):
-		print("pinned", value)
-		pinned = value
-		%Pinned.button_pressed = value
 
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
@@ -110,21 +89,10 @@ func update_argument_names():
 
 func _process(delta):
 	if anchor and anchor.is_inside_tree():
-		position = Utils.popup_position(anchor) + position_offset
+		position = Utils.popup_position(anchor)
 		var offscreen_delta = (position + size - get_parent().size).clamp(Vector2(0, 0), Vector2(1000000, 1000000))
 		position -= offscreen_delta
 		%FunctionName.anchor = anchor
-
-	if not anchor: return
-	var _parent = Utils.popup_parent(anchor)
-	if not _parent: return
-	var hovered_nodes = _parent.get_children(true).filter(func (n):
-		if not (n is NodeToNodeConfigurator): return false
-		return n.get_global_rect().has_point(get_viewport().get_mouse_position()))
-	var is_hovered = hovered_nodes.size() > 0 and hovered_nodes[-1] == self
-	if is_hovered:
-		if self.existing_connection:
-			from.highlight_activated(self.existing_connection)
 
 func mark_changed(value: bool = true):
 	%ChangesNotifier.visible = value
@@ -244,9 +212,7 @@ func _on_done_pressed():
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 
 	existing_connection.enabled = %Enabled.button_pressed
-	mark_changed(false)
-	if not pinned:
-		queue_free()
+	queue_free()
 
 func _on_remove_pressed():
 	if existing_connection:
@@ -260,38 +226,3 @@ func _on_make_unique_pressed():
 	var duplicate = existing_connection.make_unique(from, undo_redo)
 	queue_free()
 	open_existing(undo_redo, from, duplicate)
-
-var _drag_start_offset = null
-
-func _on_gui_input(event: InputEvent):
-	if event is InputEventMouseButton and event.double_click and event.button_index == MOUSE_BUTTON_LEFT:
-		_double_click()
-	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.is_pressed():
-			_start_drag(event.global_position)
-		else:
-			_stop_drag()
-	elif event is InputEventMouseMotion and _drag_start_offset != null:
-		_drag(event.global_position)
-
-func _double_click():
-	pinned = not pinned
-
-func _start_drag(position: Vector2):
-	_drag_start_offset = position - position_offset
-	self.get_parent().move_child(self, -1)
-
-func _stop_drag():
-	_drag_start_offset = null
-
-func _drag(position: Vector2):
-	position_offset = position - _drag_start_offset
-
-func _on_pinned_toggled(button_pressed):
-	pinned = button_pressed
-
-func _on_enabled_toggled(button_pressed):
-	if existing_connection:
-		existing_connection.enabled = button_pressed
-	else:
-		mark_changed()

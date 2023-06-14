@@ -42,11 +42,6 @@ var control_argument_names = true
 var text: String:
 	get: return %Expression.text
 
-@export var default_text : String = '<none>':
-	set(v):
-		default_text = v
-		update_editable()
-
 @export var min_width = 80
 @export var max_width = 260
 @export var errors = "":
@@ -59,7 +54,6 @@ var text: String:
 		resize()
 
 func update_editable():
-	%Reset.visible = default_text != '<none>' and %Expression.text != default_text
 	if not edit_script: return
 	var path = edit_script.nested_script.resource_path
 	var is_open = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor().get_open_scripts().any(func (s): return s.resource_path == path)
@@ -196,7 +190,6 @@ func _on_expression_text_changed():
 	text_changed.emit()
 	%MissingReturnWarning.visible = return_value and %Expression.text.count('\n') > 0 and %Expression.text.count('return ') == 0
 	%Expression.on_text_changed()
-	%Reset.visible = default_text != '<none>' and %Expression.text != default_text
 
 func _on_expression_focus_exited():
 	blur.emit()
@@ -216,8 +209,3 @@ func resize():
 
 func _on_expression_on_errors(errors):
 	self.errors = errors
-
-func _on_reset_pressed():
-	if default_text != '<none>':
-		%Expression.text = default_text
-		_on_expression_text_changed()

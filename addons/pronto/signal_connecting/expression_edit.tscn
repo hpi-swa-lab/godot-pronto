@@ -1,19 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://d1jujxfamsekk"]
+[gd_scene load_steps=8 format=3 uid="uid://d1jujxfamsekk"]
 
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/expression_edit.gd" id="1_lndi8"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/lsp_edit.gd" id="2_7vlfx"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_au0w8"]
 
-[sub_resource type="Texture2D" id="Texture2D_i52lc"]
-resource_local_to_scene = false
-resource_name = ""
-script = ExtResource("2_au0w8")
-name = "RotateLeft"
-
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_f0s43"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_88ft5"]
 number_color = Color(0.63, 1, 0.88, 1)
 symbol_color = Color(0.67, 0.79, 1, 1)
 function_color = Color(0.34, 0.7, 1, 1)
@@ -67,7 +61,7 @@ color_regions = {
 "'": Color(1, 0.93, 0.63, 1)
 }
 
-[sub_resource type="Texture2D" id="Texture2D_8ynin"]
+[sub_resource type="Texture2D" id="Texture2D_4hlth"]
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("2_au0w8")
@@ -81,27 +75,17 @@ name = "NodeWarning"
 
 [node name="expression_edit" type="VBoxContainer"]
 custom_minimum_size = Vector2(0, 43)
-offset_right = 195.0
-offset_bottom = 43.0
+offset_right = 180.0
+offset_bottom = 32.0
 size_flags_horizontal = 3
 script = ExtResource("1_lndi8")
 placeholder_text = "Expression..."
-default_text = null
 
 [node name="row" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(180, 32)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 0
-
-[node name="Reset" type="Button" parent="row"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_vertical = 0
-tooltip_text = "Open script"
-icon = SubResource("Texture2D_i52lc")
-flat = true
 
 [node name="Expression" type="CodeEdit" parent="row"]
 unique_name_in_owner = true
@@ -110,7 +94,7 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_f0s43")
+syntax_highlighter = SubResource("CodeHighlighter_88ft5")
 scroll_fit_content_height = true
 code_completion_enabled = true
 code_completion_prefixes = Array[String]([".", ",", "(", "=", "$", "@", "\"", "'"])
@@ -122,8 +106,7 @@ script = ExtResource("2_7vlfx")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
-tooltip_text = "Open script"
-icon = SubResource("Texture2D_8ynin")
+icon = SubResource("Texture2D_4hlth")
 flat = true
 
 [node name="MissingReturnWarning" type="TextureRect" parent="row"]
@@ -142,7 +125,6 @@ theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Error text comes ereaaad das here."
 autowrap_mode = 2
 
-[connection signal="pressed" from="row/Reset" to="." method="_on_reset_pressed"]
 [connection signal="focus_exited" from="row/Expression" to="." method="_on_expression_focus_exited"]
 [connection signal="on_errors" from="row/Expression" to="." method="_on_expression_on_errors"]
 [connection signal="text_changed" from="row/Expression" to="." method="_on_expression_text_changed"]
