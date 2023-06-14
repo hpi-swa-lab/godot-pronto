@@ -160,6 +160,8 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 					target.call(c.invoke, args)
 				elif target is SceneRoot:
 					if c.invoke.begins_with("apply"):
+						# add "from" to all "apply.*" functions, so that they can be
+						# added to the context of the lambda functions.
 						args.append(from)
 						target.callv(c.invoke, args)
 					else:
