@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://y65132ek88r5"]
 
-[ext_resource type="Texture2D" uid="uid://des3t5ibrf8m4" path="res://addons/pronto/icons/Add.svg" id="1_j4o26"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/connect.gd" id="1_qcj0a"]
+[ext_resource type="Texture2D" uid="uid://ciqp75uka3bs5" path="res://addons/pronto/icons/Connect.svg" id="2_cyp0g"]
 
 [node name="connect" type="VBoxContainer"]
 offset_right = 16.0
@@ -23,7 +23,7 @@ auto_height = true
 [node name="add" type="TextureRect" parent="edit"]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("1_j4o26")
+texture = ExtResource("2_cyp0g")
 stretch_mode = 2
 
 [node name="signals" type="Panel" parent="edit"]
@@ -50,7 +50,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="edit/signals/ScrollContainer/signal_list/title_text"]
 layout_mode = 2
-texture = ExtResource("1_j4o26")
+texture = ExtResource("2_cyp0g")
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="edit/signals/ScrollContainer/signal_list/title_text"]

@@ -75,11 +75,11 @@ The following list of behaviors manage state or communicate visual properties.
 Connections are an extension of Godot signals to be more flexible. Connections can be dragged from any behavior to any arbitrary node in a scene. They are the primary means to assemble your game by wiring Behaviors together.
 
 * Creating
-    * Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
-    * The type `target`, is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `two`.
-    * The type `expression` allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
+	* Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
+	* The type `target`, is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `two`.
+	* The type `expression` allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
 * Deleting
-    * Open the connection, then click on the trash icon in the top-right.
+	* Open the connection, then click on the trash icon in the top-right.
 
 ### Expressions
 
@@ -95,16 +95,16 @@ Pronto scatters code throughout the scene to be as close to the place where it i
 
 ### Common Pitfalls
 * PhysicsBody2D
-    * Collisions only work when contact monitor is on and the max contacts is at least 1.
-    * PhysicsBody2D does not report collisions with Area2D. Instead, listen for collisions with the PhysicsBody on the Area.
+	* Collisions only work when contact monitor is on and the max contacts is at least 1.
+	* PhysicsBody2D does not report collisions with Area2D. Instead, listen for collisions with the PhysicsBody on the Area.
 * StaticBody
-    * Does not support reporting collisions at all in Godot. You can instead listen for collisions on the other collision partner.
+	* Does not support reporting collisions at all in Godot. You can instead listen for collisions on the other collision partner.
 * Connections
-    * The `$` shorthand of GDScript does not work. Use get_node() instead.
-    * `self` is sadly not defined in connections. Use `from` and `to` instead, or make use of any of `U`'s helpers (which are relative to `from`).
-    * Moving nodes around will break connections.
+	* The `$` shorthand of GDScript does not work. Use get_node() instead.
+	* `self` is sadly not defined in connections. Use `from` and `to` instead, or make use of any of `U`'s helpers (which are relative to `from`).
+	* Moving nodes around will break connections.
 * Instance
-    * Be careful if you used the "Editable Children" option to modify nodes in an instanced subtree and then move the corresponding nodes in the template. Your modifications will be lost.
+	* Be careful if you used the "Editable Children" option to modify nodes in an instanced subtree and then move the corresponding nodes in the template. Your modifications will be lost.
 
 ### Video Changelog
 
@@ -131,15 +131,15 @@ extends Behavior
 ### When do I have to reload what?
 
 * Re-enable the plugin (go to Project>Settings>Plugins and toggle Pronto off and on)
-    * When creating a completely new `Behavior` file.
+	* When creating a completely new `Behavior` file.
 * Re-open the scene to update existing Behaviors
-    * When changing a `_ready` function.
-    * When creating a new `_process` function.
+	* When changing a `_ready` function.
+	* When creating a new `_process` function.
 * Switch scenes back and forth
-    * When updating a `_draw` function if no one calls `queue_redraw`.
+	* When updating a `_draw` function if no one calls `queue_redraw`.
 * If everything goes wrong :-)
-    * Reload the project from the main menu > Project > Reload Current Project
-    * TODO: reproduce in which cases this is necessary
+	* Reload the project from the main menu > Project > Reload Current Project
+	* TODO: reproduce in which cases this is necessary
 
 #### Helpers
 
