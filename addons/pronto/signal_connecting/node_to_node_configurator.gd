@@ -100,7 +100,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	set_mode(connection.is_expression(), connection.is_target())
 	%Condition.edit_script = connection.only_if
 	if connection.is_target():
-		receiver = Utils.find_pronto_id_in_children(get_tree().get_root(), connection.to)
+		receiver = Utils.find_pronto_id_in_children(from.get_tree().get_root(), connection.to)
 		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke if not connection.is_expression() else "<statement(s)>"
 		_on_function_selected(%FunctionName.text)
