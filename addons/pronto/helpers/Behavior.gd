@@ -16,7 +16,15 @@ func _ready():
 		
 		# spawn slightly offset from parent
 		if position == Vector2.ZERO:
-			position = Vector2(0, 30).rotated(get_parent().get_child_count() * PI / 4)
+			var parent = get_parent()
+			var parent_rect = Utils.global_rect_of(parent)
+			var parent_full_rect = parent.get_children() \
+				.filter(func(child): return child != self) \
+				.map(func(child): return Utils.global_rect_of(child)) \
+				.reduce(func(a, b): return a.merge(b), parent_rect)
+			
+			var radius = (parent_full_rect.size.length() + Utils.global_rect_of(self).size.length()) / 2
+			position = Vector2(0, radius).rotated(get_parent().get_child_count() * PI / 4)
 
 func is_active_scene() -> bool:
 	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner

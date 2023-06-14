@@ -142,6 +142,10 @@ var shape_size:
 			label.size = string_rect.size
 		queue_redraw()
 
+var size:
+	get:
+		return shape_size
+
 var sticky_transform # need to export for copying state into game
 var sticky : bool = false:
 	get:
@@ -276,21 +280,6 @@ func _init():
 	self.shape_size = shape_size
 	add_child(label)
 
-func _ready():
-	if Engine.is_editor_hint():
-		# construction convenience: position ourselves below the parent's known bounds
-		var parent = get_parent()
-		var parent_rect = Utils.global_rect_of(parent)
-		var parent_child_rect = parent.get_children() \
-			.filter(func(child): return child != self) \
-			.map(func(child): return Utils.global_rect_of(child)) \
-			.reduce(func(a, b): return a.merge(b), parent_rect)
-		self.position = Vector2(0,
-			(parent_child_rect.end.y - parent_rect.end.y
-				+ parent_rect.size.y + shape_size.y) / 2)
-	
-	super._ready()
-
 func _process(delta):
 	super._process(delta)
 	
@@ -298,9 +287,6 @@ func _process(delta):
 		self.global_transform = sticky_transform
 	
 	self.update()
-	
-	#Pronto.new().get_editor_interface().get_selection().clear()
-	#Pronto.new().get_editor_interface().get_selection().add_node(self.get_parent())
 
 func update():
 	if label == null:
