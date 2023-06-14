@@ -29,6 +29,13 @@ static func get_pronto_id(node):
 	G.put("pronto_global_id", pronto_global_id+1)
 	return node.get_meta("pronto_id")
 
+static func get_pronto_node(node, id):
+	var receiver_cache = G.at("pronto_receiver_cache", {})
+	if not receiver_cache.has(id):
+		receiver_cache[id] = find_pronto_id_in_children(node, id)
+		G.put("pronto_receiver_cache", receiver_cache)
+	return receiver_cache[id]
+
 static func find_pronto_id_in_children(node, id):
 	if node.has_meta("pronto_id"):
 		if node.get_meta("pronto_id") == id:
