@@ -4,29 +4,42 @@ extends Behavior
 class_name AdvancedValue
 # PLEASE READ: 
 # AdvancedValue is the new extended Value logic
-# AdvancedValue will be merged into the current Value logic at the end of the sprint
+# AdvancedValue will be merged into the current Value logic at the end of the s#print
 # It is only a new behavior for now as the merge will most likely be some sort of breaking change 
 
 signal value_changed(value: float)
 
 const WIDTH = 120
 
+var value_init = false
+
+
 @export_enum("Float", "Enum", "Bool") var selectType: String = "Float":
 	set(val):
 		selectType = val
 		# todo: figure out if we want to clear certain variables here for a clean slate
 		notify_property_list_changed()
-
+		
 # float variables
 var float_from:float = 0.0
 var float_to:float = 1.0
+var float_default: float = 0
 var float_step_size:float = 1.0:
 	set(val):
 		if val and val > 0:
 			float_step_size = val
+			
+
 var float_value = 0.0:
 	set(val):
-		float_value = clamp(float(round(val/float_step_size)*float_step_size), float_from, float_to)
+		#print("Updateting Value")
+		if(!value_init):
+			#print("Set float default to: " + str(val))
+			#float_default = clamp(float(round(val/float_step_size)*float_step_size), float_from, float_to)
+			float_default = clamp(snapped(val, float_step_size) , float_from, float_to)
+			value_init = true
+		float_value = clamp(snapped(val, float_step_size) , float_from, float_to)
+		notify_property_list_changed()
 		_handle_update_value(float_value)
 
 # enum variables
@@ -35,22 +48,44 @@ var enum_choices: Array[String] = [""]:
 		enum_choices = val
 		notify_property_list_changed()
 
+var enum_default_index: int
+
 var enum_value: String:
 	set(val):
+		#print("State name: " + name)
+		if(!value_init):
+			enum_default_index = enum_choices.find(val)
+			#print("Setting default for Enum index to: " + val + " with index: "  + str(enum_default_index))
+			value_init = true
+		#print("Updateting Enum value to: " + val)
 		enum_value = val
 		notify_property_list_changed()
 		_handle_update_value(enum_value)
 
+
+
 # bool variable
-var bool_value: bool = false:
+var bool_value: String = "TRUE":
 	set(val):
+		if(!value_init):
+			#print("Setting default for Bool value to: " + str(val))
+			bool_default = val == "TRUE"
+			value_init = true
 		bool_value = val
-		_handle_update_value(bool_value)
+		_bool_value = val == "TRUE"
+		_handle_update_value(_bool_value)
+
+
+var _bool_value: bool
+
+var bool_default: bool
 
 func _handle_update_value(value):
-	value_changed.emit(value)
+	if not is_inside_tree(): await ready
 	G.put(name, value)
+	value_changed.emit(value)
 	queue_redraw()
+	#print("Updated Value: " + name + " to: " + str(value))
 		
 		
 # conditional exporting is not yet supported through annotations in Godot 4
@@ -90,7 +125,9 @@ func _get_property_list():
 	elif selectType == "Bool":
 		properties.append({
 			"name": "bool_value",
-			"type": TYPE_BOOL,
+			"type": TYPE_STRING,
+			'hint': PROPERTY_HINT_ENUM,
+			'hint_string': "TRUE, FALSE"
 		})
 	else:
 		push_error("Invalid Type (" + selectType + ") selected for AdvancedValue " + str(self.name))			

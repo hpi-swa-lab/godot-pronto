@@ -22,11 +22,13 @@ func _ready():
 			scene = get_child(0)
 			remove_child(scene)
 
-func _spawn():
+func _duplicate_blueprint():
 	return scene.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
 
-func spawn():
-	var instance = _spawn()
+func _spawn(top_level: bool = false):
+	var instance = _duplicate_blueprint()
+	
+	instance.top_level = top_level
 	
 	if container == null:
 		var path_corrector = Node.new()
@@ -34,6 +36,11 @@ func spawn():
 		get_parent().add_child(path_corrector)
 	else:
 		container.add_child(instance)
+	
+	return instance
+
+func spawn():
+	var instance = _spawn()
 	
 	instance.global_position = global_position
 	spawned.emit(instance)
@@ -41,18 +48,20 @@ func spawn():
 	return instance
 
 func spawn_toward(pos: Vector2):
-	var instance = _spawn()
-	instance.top_level = true
-	
-	if container == null:
-		var path_corrector = Node.new()
-		path_corrector.add_child(instance)
-		get_parent().add_child(path_corrector)
-	else:
-		container.add_child(instance)
+	var instance = _spawn(true)
 	
 	instance.global_position = global_position
 	instance.rotation = global_position.angle_to_point(pos)
+	
+	spawned.emit(instance)
+	
+	return instance
+
+func spawn_at(pos: Vector2):
+	var instance = _spawn(true)
+	
+	instance.global_position = pos
+	
 	spawned.emit(instance)
 	
 	return instance

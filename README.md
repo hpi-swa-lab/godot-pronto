@@ -43,9 +43,10 @@ The following list of behaviors primarily cause effects when triggered.
 | Stopwatch | Starts counting up time when triggered. Can be reset. |
 | Move | When triggered, moves its parent. Can be set to move along global or local axes. Supports handling of gravity. |
 | Spawner | When triggered, spawns whatever its child node is at its current location in the scene. |
-| Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. For example, create a Label node, add a Bind node as a child, use `text` as property and put any expression in its `convert` field. |
+| Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. For example, create a Label node, add a Bind node as a child, use `text` as property and put any expression in its `convert` field. Another example would use a Clock with a Bind node as a child that uses `duration_seconds` as a property to change the trigger-time depending on a Value-Behavior. |
 | PlatformerController | Makes the parent behave like a platformer character, meaning that it can jump, move horizontally, and is affected by gravity. Must be a child of a [CharacterBody2D](https://docs.godotengine.org/en/stable/classes/class_characterbody2d.html). |
-| Code | It holds an `execute()` function with both user-definable arguments and a function body, which allows for arbitrary code execution. After `execute()` is called an `after` signal is emitted that carries the execution result, which can be used for chaining.
+| Code | It holds an `execute()` function with both user-definable arguments and a function body, which allows for arbitrary code execution. After `execute()` is called an `after` signal is emitted that carries the execution result, which can be used for chaining. |
+| SceneRoot | Provides access to the `SceneTree` from Godot. It offers the signals `node_added(node: Node)`, `node_remove(node: Node)` and `tree_changed()` from the `SceneTree`. Additionally, it implements three methods for executing lambda functions on all or a specific subset of nodes in a given `group`. |
 
 The following list of behaviors manage state or communicate visual properties.
 
@@ -74,11 +75,11 @@ The following list of behaviors manage state or communicate visual properties.
 Connections are an extension of Godot signals to be more flexible. Connections can be dragged from any behavior to any arbitrary node in a scene. They are the primary means to assemble your game by wiring Behaviors together.
 
 * Creating
-    * Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
-    * The type `target`, is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `two`.
-    * The type `expression` allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
+	* Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
+	* The type `target`, is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `two`.
+	* The type `expression` allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
 * Deleting
-    * Open the connection, then click on the trash icon in the top-right.
+	* Open the connection, then click on the trash icon in the top-right.
 
 ### Expressions
 
@@ -94,16 +95,16 @@ Pronto scatters code throughout the scene to be as close to the place where it i
 
 ### Common Pitfalls
 * PhysicsBody2D
-    * Collisions only work when contact monitor is on and the max contacts is at least 1.
-    * PhysicsBody2D does not report collisions with Area2D. Instead, listen for collisions with the PhysicsBody on the Area.
+	* Collisions only work when contact monitor is on and the max contacts is at least 1.
+	* PhysicsBody2D does not report collisions with Area2D. Instead, listen for collisions with the PhysicsBody on the Area.
 * StaticBody
-    * Does not support reporting collisions at all in Godot. You can instead listen for collisions on the other collision partner.
+	* Does not support reporting collisions at all in Godot. You can instead listen for collisions on the other collision partner.
 * Connections
-    * The `$` shorthand of GDScript does not work. Use get_node() instead.
-    * `self` is sadly not defined in connections. Use `from` and `to` instead, or make use of any of `U`'s helpers (which are relative to `from`).
-    * Moving nodes around will break connections.
+	* The `$` shorthand of GDScript does not work. Use get_node() instead.
+	* `self` is sadly not defined in connections. Use `from` and `to` instead, or make use of any of `U`'s helpers (which are relative to `from`).
+	* Moving nodes around will break connections.
 * Instance
-    * Be careful if you used the "Editable Children" option to modify nodes in an instanced subtree and then move the corresponding nodes in the template. Your modifications will be lost.
+	* Be careful if you used the "Editable Children" option to modify nodes in an instanced subtree and then move the corresponding nodes in the template. Your modifications will be lost.
 
 ### Video Changelog
 
@@ -130,15 +131,15 @@ extends Behavior
 ### When do I have to reload what?
 
 * Re-enable the plugin (go to Project>Settings>Plugins and toggle Pronto off and on)
-    * When creating a completely new `Behavior` file.
+	* When creating a completely new `Behavior` file.
 * Re-open the scene to update existing Behaviors
-    * When changing a `_ready` function.
-    * When creating a new `_process` function.
+	* When changing a `_ready` function.
+	* When creating a new `_process` function.
 * Switch scenes back and forth
-    * When updating a `_draw` function if no one calls `queue_redraw`.
+	* When updating a `_draw` function if no one calls `queue_redraw`.
 * If everything goes wrong :-)
-    * Reload the project from the main menu > Project > Reload Current Project
-    * TODO: reproduce in which cases this is necessary
+	* Reload the project from the main menu > Project > Reload Current Project
+	* TODO: reproduce in which cases this is necessary
 
 #### Helpers
 

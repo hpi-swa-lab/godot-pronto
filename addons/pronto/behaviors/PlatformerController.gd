@@ -12,6 +12,11 @@ extends Behavior
 ## The amount of time a jump input will trigger a jump if the character is not touching the floor, in seconds.
 @export_range(0.0, 1.0) var jump_buffer = 0.1
 
+@export_category("Physics")
+@export var gravity_paused: bool = false:
+	get: return gravity_paused
+	set(value): gravity_paused = value
+
 @export_category("Debug")
 ## If enabled, the parent leaves a trail of recent positions.
 @export var show_trail: bool = false
@@ -65,6 +70,8 @@ func _physics_process(delta):
 		return
 	
 	var gravity = PhysicsServer2D.body_get_direct_state(_parent).total_gravity
+	if gravity_paused:
+		gravity = Vector2.ZERO
 	
 	# vertical
 	_update_jump()

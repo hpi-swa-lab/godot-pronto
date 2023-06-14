@@ -1,0 +1,3 @@
+extends Behavior
+
+signal test()

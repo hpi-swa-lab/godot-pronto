@@ -183,6 +183,14 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
 				if target is Code:
 					target.call(c.invoke, args)
+				elif target is SceneRoot:
+					if c.invoke.begins_with("apply"):
+						# add "from" to all "apply.*" functions, so that they can be
+						# added to the context of the lambda functions.
+						args.append(from)
+						target.callv(c.invoke, args)
+					else:
+						target.callv(c.invoke, args)
 				else:
 					target.callv(c.invoke, args)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])

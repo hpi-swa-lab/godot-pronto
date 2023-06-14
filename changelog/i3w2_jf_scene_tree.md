@@ -12,9 +12,17 @@ We had a long discussion about what functionality the SceneRoot should provide. 
 
 We decided to use a lambda function as a parameter instead that is also given the node it is executed on. This allows for manipulation of these nodes different from just calling their own functions with certain parameters.
 
-The new function now is called `apply(group: StringName, lamda_func: Callable)` and takes the group name as well as a lamda function of format `func(node): ...`. To make it easy for users to understand how the lamda function must be defined, `func(node): null` is automatically set in the connection window by default, explaining the usage of the lamda funtion.
+The new function now is called `apply(group: StringName, lamda_func: Callable)` and takes the group name as well as a lamda function of format `func(from, node): ...`. To make it easy for users to understand how the lamda function must be defined, `func(from, node): null` is automatically set in the connection window by default, explaining the usage of the lamda funtion. Inside the lamda function the user has access to the node object of the group `node` as well as `from` (the caller of the Connection).
 
-Our SceneRoot Behavior also exposes some of the signals of the SceneTree:
+We also added the functions `apply_with_filter(group: StringName, lamda_func: Callable, filter_func: Callable)` and `apply_within_dist(group: StringName, lamda_func: Callable, postion: Vector2, max_dist: float)`, which allow for more flexibility and use-cases.
+
+Our `SceneRoot`-Behavior also exposes some of the signals of the `SceneTree`:
   - `node_added(node: Node)`
   - `node_remove(node: Node)`
   - `tree_changed()`
+
+The provided functionality should be sufficient to access the `SceneTree` via our `SceneRoot`-Behavior.
+
+## Clocks in combination with Values (in Prototyping UI)
+
+We also found out that the `Bind`-Behavior can be used to set the Clock's `duration_seconds`. Just append the `Bind` as a child of the clock and set `To Prop` to `duration_seconds`. You can access the value via the global scope inside the `Evaluate` property with `at("ValueName")`.

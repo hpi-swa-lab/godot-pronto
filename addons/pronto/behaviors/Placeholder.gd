@@ -81,14 +81,19 @@ func _draw():
 		debug_color.a = 1
 		draw_rect(r, debug_color, false)
 
+# position: Vector2, 
+# icon: Texture,
+# object: Object, 
+# property: String, 
+# map: Callable, 
+# local_space = true
+
 func handles():
 	return [
 		Handles.SetPropHandle.new(
-			global_transform.basis_xform(placeholder_size / 2),
+			(global_transform * placeholder_size - global_position) / 2,
 			Utils.icon_from_theme("EditorHandle", self),
 			self,
 			"placeholder_size",
-			func (coord: Vector2):
-				coord = global_transform.basis_xform_inv(coord)
-				return floor(coord * 2).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+			func (coord): return floor((coord * 2 + global_position) * global_transform).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
