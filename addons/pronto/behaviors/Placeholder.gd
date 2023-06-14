@@ -83,9 +83,12 @@ func _draw():
 
 func handles():
 	return [
-		Handles.SetPropHandle.new(placeholder_size / 2,
+		Handles.SetPropHandle.new(
+			global_transform.basis_xform(placeholder_size / 2),
 			Utils.icon_from_theme("EditorHandle", self),
 			self,
 			"placeholder_size",
-			func (coord): return floor(coord * 2).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+			func (coord: Vector2):
+				coord = global_transform.basis_xform_inv(coord)
+				return floor(coord * 2).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
