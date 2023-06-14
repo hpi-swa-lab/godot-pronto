@@ -291,3 +291,9 @@ func _drag(position: Vector2):
 
 func _on_pinned_toggled(button_pressed):
 	pinned = button_pressed
+
+func _on_enabled_toggled(button_pressed):
+	if existing_connection:
+		existing_connection.enabled = button_pressed
+	else:
+		mark_changed()
