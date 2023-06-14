@@ -1,46 +1,113 @@
 @tool
-extends HBoxContainer
+extends VBoxContainer
 
 signal text_changed()
+signal blur()
 
-@export var argument_names: Array = []
+## Set to direct that this editor should override the argument_names of the
+## given script. If false, the argument_names will be taken from the script.
+var control_argument_names = true
+
+@export var return_value = true
+@export var argument_names: Array = []:
+	set(v):
+		if edit_script != null and "argument_names" in edit_script and control_argument_names:
+			edit_script.argument_names = v
+		argument_names = v
+	get:
+		if control_argument_names:
+			return argument_names
+		else:
+			return edit_script.argument_names
 @export var placeholder_text: String:
-	get: return $Expression.placeholder_text
+	get: return %Expression.placeholder_text
 	set(v):
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
-		$Expression.placeholder_text = v
-@export var text: String:
-	get: return $Expression.text
+		%Expression.placeholder_text = v
+@export var edit_script: Resource:
+	get: return edit_script
 	set(v):
+		assert(v != null, "Must provide a script to expression_edit")
+		if v == edit_script: return
+		edit_script = v
+		if control_argument_names:
+			edit_script.argument_names = argument_names
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
-		$Expression.text = v
+		%Expression.text = edit_script.source_code
+		%Expression.edited_script = edit_script
+		update_editable()
 		resize()
+var text: String:
+	get: return %Expression.text
 
 @export var min_width = 80
 @export var max_width = 260
+@export var errors = "":
+	set(e):
+		if e == null or e.is_empty():
+			%Errors.visible = false
+		else:
+			%Errors.text = e
+			%Errors.visible = true
+		resize()
+
+func update_editable():
+	if not edit_script: return
+	var path = edit_script.nested_script.resource_path
+	var is_open = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor().get_open_scripts().any(func (s): return s.resource_path == path)
+	if %Expression.visible != is_open: return
+	%Expression.visible = not is_open
+	%OpenFile.flat = not is_open
+	%OpenFile.text = "Click to edit" if is_open else ""
+	%OpenFile.tooltip_text = "Script is opened and may only be edited in the script editor until closed, otherwise your changes are overriden on save." if is_open else "Open script in the full editor."
+	resize()
+
+func updated_script(from: Node, signal_name: String):
+	apply_changes(from, signal_name)
+	return edit_script
+
+func apply_changes(from: Node = null, signal_name: String = ""):
+	edit_script.source_code = %Expression.text
+	edit_script.reload()
+	edit_script.emit_changed()
 
 func _input(event):
-	if not $Expression.has_focus():
+	if not %Expression.has_focus():
 		return
-	if event is InputEventKey and event.pressed and not event.is_echo() and event.keycode == KEY_TAB and text.count("\n") < 1:
+	if (event is InputEventKey and
+		event.pressed and
+		not event.is_echo() and
+		event.keycode == KEY_TAB and
+		%Expression.text.count("\n") < 1 and
+		%Expression.get_code_completion_selected_index() < 0):
 		var focus
 		if event.shift_pressed:
-			focus = $Expression.find_prev_valid_focus()
+			focus = %Expression.find_prev_valid_focus()
 		else:
-			focus = $Expression.find_next_valid_focus()
+			focus = %Expression.find_next_valid_focus()
 		get_viewport().set_input_as_handled()
 		if focus: focus.grab_focus()
+
+func _process(d):
+	update_editable()
 
 func _ready():
 	if owner != self:
 		fake_a_godot_highlighter()
 		resize()
+		%Expression.code_completion_prefixes = [".", ",", "(", "=", "$", "@", "\"", "\'"]
 
 func fake_a_godot_highlighter():
+	if G.at("_pronto_editor_plugin") == null:
+		return
 	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
 	var h = CodeHighlighter.new()
+	h.color_regions = {
+		"\"": s.get("text_editor/theme/highlighting/string_color"),
+		"'": s.get("text_editor/theme/highlighting/string_color")
+	}
 	h.number_color = s.get("text_editor/theme/highlighting/number_color")
 	h.symbol_color = s.get("text_editor/theme/highlighting/symbol_color")
 	h.function_color = s.get("text_editor/theme/highlighting/function_color")
@@ -96,7 +163,7 @@ func fake_a_godot_highlighter():
 		"static": keyword_color,
 		"var": keyword_color,
 	}
-	$Expression.syntax_highlighter = h
+	%Expression.syntax_highlighter = h
 
 func get_a_godot_highlighter():
 	# NOTE: causes crashes when saving scenes in the current form. Potentially because
@@ -105,16 +172,15 @@ func get_a_godot_highlighter():
 	var se = G.at("_pronto_editor_plugin").get_editor_interface().get_script_editor()
 	if not se.get_open_script_editors().is_empty():
 		var s = se.get_open_script_editors()[0].get_base_editor().syntax_highlighter
-		$Expression.syntax_highlighter = s
+		%Expression.syntax_highlighter = s
 
 func open_file():
-	var script = ConnectionsList.script_for_eval($Expression.text, argument_names)
 	var interface = G.at("_pronto_editor_plugin").get_editor_interface()
-	interface.edit_script(script)
+	interface.edit_script(edit_script.nested_script)
 	interface.set_main_screen_editor("Script")
 
 func grab_focus():
-	$Expression.grab_focus()
+	%Expression.grab_focus()
 
 func extra_width():
 	return 100
@@ -122,6 +188,11 @@ func extra_width():
 func _on_expression_text_changed():
 	resize()
 	text_changed.emit()
+	%MissingReturnWarning.visible = return_value and %Expression.text.count('\n') > 0 and %Expression.text.count('return ') == 0
+	%Expression.on_text_changed()
+
+func _on_expression_focus_exited():
+	blur.emit()
 
 func resize():
 	if self == owner:
@@ -131,7 +202,10 @@ func resize():
 		custom_minimum_size = Vector2(0, 43)
 		Utils.fix_minimum_size(self)
 	else:
-		var size = get_theme_default_font().get_multiline_string_size(text)
+		var size = get_theme_default_font().get_multiline_string_size(%Expression.text)
 		custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
 		Utils.fix_minimum_size(self)
 		reset_size()
+
+func _on_expression_on_errors(errors):
+	self.errors = errors

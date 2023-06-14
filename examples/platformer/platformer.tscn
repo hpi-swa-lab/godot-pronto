@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://88vl7ypda1n1"]
+[gd_scene load_steps=15 format=3 uid="uid://88vl7ypda1n1"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_rpa0n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_pahj6"]
@@ -53,6 +53,13 @@ invoke = "move_direction"
 arguments = ["dir"]
 only_if = ""
 expression = ""
+
+[sub_resource type="GDScript" id="GDScript_tb7ap"]
+script/source = "extends Object
+
+func 
+2 + 3
+"
 
 [node name="platformer" type="Node2D"]
 
@@ -141,3 +148,4 @@ position = Vector2(231, 530)
 position = Vector2(1, 0)
 script = ExtResource("1_rpa0n")
 placeholder_size = Vector2(227, 25)
+metadata/s = SubResource("GDScript_tb7ap")

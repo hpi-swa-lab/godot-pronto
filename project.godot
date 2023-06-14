@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="pronto"
-run/main_scene="res://prototypes/i2w2-inspect/inspect1.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 run/low_processor_mode=true
 config/icon="res://icon.svg"
@@ -20,6 +19,7 @@ config/icon="res://icon.svg"
 
 ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
 G="*res://addons/pronto/helpers/G.gd"
+LanguageClient="*res://addons/pronto/helpers/LanguageClient.gd"
 
 [display]
 
@@ -28,6 +28,10 @@ window/stretch/mode="canvas_items"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/pronto/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
 
 [gui]
 

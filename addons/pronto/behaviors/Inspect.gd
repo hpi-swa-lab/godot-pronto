@@ -27,12 +27,8 @@ class Item:
 		var new_value
 		if expression:
 			label = "<expr%s>" % index
-			if Engine.is_editor_hint():
-				# FIXME: eval() does not work in editor mode
-				new_value = null
-			else:
-				var result := ConnectionsList.eval_or_error(expression, ['target'], [target], inspect)
-				new_value = "<error>" if result.error else result.value
+			var result = ConnectionsList.eval_or_error(expression, ['target'], [target], inspect)
+			new_value = "<error>" if result.error else result.value
 		elif property:
 			label = property
 			new_value = target.get(property)
@@ -302,6 +298,9 @@ func _process(delta):
 		self.global_transform = sticky_transform
 	
 	self.update()
+	
+	#Pronto.new().get_editor_interface().get_selection().clear()
+	#Pronto.new().get_editor_interface().get_selection().add_node(self.get_parent())
 
 func update():
 	if label == null:

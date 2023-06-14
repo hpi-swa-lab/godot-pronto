@@ -3,6 +3,7 @@ extends VBoxContainer
 
 var undo_redo: EditorUndoRedoManager
 var _displayed_connections = []
+var _check_for_connection_highlight = false
 
 var anchor: Node:
 	set(a):
@@ -21,8 +22,21 @@ func build_list():
 	%connections.clear()
 	_displayed_connections = Connection.get_connections(node).duplicate()
 	for c in _displayed_connections:
-		%connections.add_item(c.print(false, false, true), Utils.icon_from_theme("Signals", node))
+		var added_index = %connections.add_item(c.print(false, false, true), Utils.icon_from_theme("Signals", node))
+	
+	# connecting to signals for slight performance improvement
+	# by avoiding querying mouse position every process call
+	if not %connections.is_connected("mouse_entered", _handle_mouse_entered):	
+		%connections.mouse_entered.connect(_handle_mouse_entered)
+	if not %connections.is_connected("mouse_exited", _handle_mouse_exited):
+		%connections.mouse_exited.connect(_handle_mouse_exited)		
 	%connections.visible = %connections.item_count > 0
+
+func _handle_mouse_entered():
+	_check_for_connection_highlight = true
+	
+func _handle_mouse_exited():
+	_check_for_connection_highlight = false
 
 func _process(delta):
 	if anchor:
@@ -37,6 +51,17 @@ func _process(delta):
 	
 	if node and Connection.get_connections(node) != _displayed_connections:
 		build_list()
+
+	# there is most likely a way better solution for this
+	# feel free to improve it
+	if _check_for_connection_highlight and %connections.visible:
+		var idx = %connections.get_item_at_position(get_local_mouse_position())
+		var name = %connections.get_item_text(idx)
+		var conn = Utils.find(Connection.get_connections(node),
+			func (c: Connection): return c.print(false, false, true) == name)
+		if conn:
+			node.highlight_activated(conn)
+
 
 func _on_add_mouse_entered():
 	for c in %signal_list.get_children().slice(2):
@@ -65,9 +90,12 @@ func _on_connections_item_clicked(index, at_position, mouse_button_index):
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
 		var m = PopupMenu.new()
 		m.add_item("Move to top", 0)
+		m.add_item("Delete", 1)
 		m.id_pressed.connect(func (id):
 			if id == 0:
-				Connection.reorder_to_top(node, index, undo_redo, build_list))
+				Connection.reorder_to_top(node, index, undo_redo, build_list)
+			if id == 1:
+				Connection.get_connections(node)[index].delete(node, undo_redo))
 		add_child(m)
 		m.position = Vector2i(global_position + at_position)
 		m.popup()

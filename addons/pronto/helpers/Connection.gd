@@ -15,7 +15,7 @@ class_name Connection
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, only_if: String, undo_redo: EditorUndoRedoManager = null):
+static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, only_if: ConnectionScript, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -27,7 +27,7 @@ static func connect_target(from: Node, signal_name: String, to: NodePath, invoke
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: String, only_if: String, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: ConnectionScript, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -44,18 +44,20 @@ static func get_connections(node: Node) -> Array:
 ## (Optional) The path to the node that this connection emits to.
 @export var to: NodePath = ^""
 ## (Optional) The method to invoke on [member to].
-@export var invoke: String = ""
-## (Optional) The arguments to pass to method [member invoke] as [String]s.
+@export var invoke: String
+## (Optional) The arguments to pass to method [member invoke] as [ConnectionScript]s.
 @export var arguments: Array = []
 ## Only trigger this connection if this expression given as [String] evaluates to true.
-@export var only_if: String = "true"
+@export var only_if: ConnectionScript
 ## (Optional) Only used when neither [member to], [member invoke], or [member arguments] is not set.
 ## A string describing the [Expression] that is to be run when [member signal_name] triggers.
-@export_multiline var expression: String = ""
+@export var expression: ConnectionScript
+## Run action of this connection in the next frame after it was triggered
+@export var deferred = false
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
-	return expression != ""
+	return expression != null
 
 ## Return whether this connection will invoke a method on a target.
 func is_target() -> bool:
@@ -112,11 +114,16 @@ static func _ensure_connections(from: Node):
 		from.set_meta("pronto_connections", connections)
 	return connections
 
+static func _signal_args(from: Node, name: String) -> Array:
+	if name == "":
+		return []
+	return Utils.find(from.get_signal_list(), func (s): return s["name"] == name)["args"].map(func (a): return a["name"])
+
 func _install_in_game(from: Node):
 	if Engine.is_editor_hint():
 		return
 	
-	var signal_arguments: Array = Utils.find(from.get_signal_list(), func (s): return s["name"] == signal_name)["args"].map(func (a): return a["name"])
+	var signal_arguments: Array = _signal_args(from, signal_name)
 	if not from.get_signal_connection_list(signal_name).any(func (dict): return dict["callable"].get_method().begins_with("_pronto_dispatch_connections")):
 		var name = "_pronto_dispatch_connections" + str(signal_arguments.size())
 		from.connect(signal_name, Callable(self, name).bind(from, signal_name, signal_arguments))
@@ -147,9 +154,16 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			names.append("to")
 			values.append(target)
 			if c.should_trigger(names, values, from):
-				var args = c.arguments.map(func (arg): return ConnectionsList.eval(arg, names, values, from))
-				if (target is Code):
+				if deferred: await ConnectionsList.get_tree().process_frame
+				var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
+				if target is Code:
 					target.call(c.invoke, args)
+				elif target is SceneRoot:
+					if c.invoke.begins_with("apply"):
+						args.append(from)
+						target.callv(c.invoke, args)
+					else:
+						target.callv(c.invoke, args)
 				else:
 					target.callv(c.invoke, args)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
@@ -159,14 +173,15 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 				names.append("to")
 				values.append(target)
 			if c.should_trigger(names, values, from):
-				ConnectionsList.eval(c.expression, names, values, from)
+				if deferred: await ConnectionsList.get_tree().process_frame
+				c._run_script(from, c.expression, values)
 				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
 
 func has_condition():
-	return only_if != "return true" and only_if != ""
+	return only_if.source_code != "true"
 
 func should_trigger(names, values, from):
-	return not has_condition() or ConnectionsList.eval(only_if, names, values, from)
+	return not has_condition() or _run_script(from, only_if, values)
 
 func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	var old = _ensure_connections(from)
@@ -185,15 +200,19 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 	
 	return new_connection
 
+func _run_script(from: Node, s: ConnectionScript, arguments: Array):
+	return s.run(arguments, from)
+
 func print(flip = false, shorten = true, single_line = false):
 	var prefix = "[?] " if has_condition() else ""
 	if is_target():
-		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return str(a)))])
-		var statements_string = expression.split('\n')[0]
-		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2})").format([
+		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return a.source_code))])
+		var statements_string = expression.source_code.split('\n')[0] if is_expression() else ""
+		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2}").format([
 			signal_name,
 			prefix,
 			Utils.ellipsize(invocation_string if not is_expression() else statements_string, 16 if shorten else -1)
 		]).replace("\n" if single_line else "", "")
 	else:
-		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")
+		assert(is_expression())
+		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.source_code.split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")

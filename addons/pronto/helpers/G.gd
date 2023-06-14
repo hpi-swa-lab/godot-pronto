@@ -19,6 +19,11 @@ func at(name: String, default = null):
 	else:
 		return default
 
+func default(name: String, call: Callable):
+	if not name in values:
+		values[name] = call.call()
+	return values[name]
+
 func inc(prop: String, amount = 1):
 	var value = values[prop] + amount
 	put(prop, value)
