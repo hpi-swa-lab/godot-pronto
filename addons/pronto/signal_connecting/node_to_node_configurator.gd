@@ -11,7 +11,7 @@ static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
 static func open_existing(undo_redo: EditorUndoRedoManager, from: Node, connection: Connection):
 	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
 	i.set_existing_connection(from, connection)
-	Utils.spawn_popup_from_canvas(from, i)
+	return i.open(from)
 
 static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary, receiver: Node):
 	var i = _open(Utils.parent_that(receiver, func (n): return Utils.has_position(n)), undo_redo)
@@ -20,8 +20,7 @@ static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source
 	i.receiver = receiver
 	i.set_mode(false, true)
 	i.init_empty_scripts()
-	Utils.spawn_popup_from_canvas(receiver, i)
-	i.default_focus()
+	return i.open(receiver)
 
 static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary):
 	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
@@ -29,8 +28,22 @@ static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, so
 	i.from = from
 	i.set_mode(true, false)
 	i.init_empty_scripts()
-	Utils.spawn_popup_from_canvas(from, i)
-	i.default_focus()
+	return i.open(from)
+
+func open(receiver: Node):
+	# find existing configurator siblings
+	for configurator in Utils.popup_parent(receiver).get_children(true):
+		if configurator is NodeToNodeConfigurator and configurator.has_same_connection(self):
+			configurator.default_focus()
+			return configurator
+	
+	Utils.spawn_popup_from_canvas(receiver, self)
+	default_focus()
+	return self
+
+func has_same_connection(other: NodeToNodeConfigurator):
+	print("has_same_connection", self, " ", other)
+	return other.from == from and other.selected_signal == selected_signal
 
 var undo_redo: EditorUndoRedoManager
 
