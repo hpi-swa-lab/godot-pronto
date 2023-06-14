@@ -167,8 +167,9 @@ func _pronto_dispatch_connections5(arg1, arg2, arg3, arg4, arg5, from: Node, sig
 
 func _trigger(from: Object, signal_name: String, argument_names: Array, argument_values: Array):
 	for c in Connection.get_connections(from):
-		if c.signal_name != signal_name:
+		if !c.enabled or c.signal_name != signal_name:
 			continue
+		
 		var names = argument_names.duplicate()
 		var values = argument_values.duplicate()
 		names.append("from")
