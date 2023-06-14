@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxjta8b8p36rr"]
+
+[ext_resource type="Script" path="res://window.gd" id="1_ng23y"]
+
+[node name="Window" type="GraphNode"]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 30.0
+offset_bottom = 30.0
+title = "Window"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_ng23y")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "I am text!"
