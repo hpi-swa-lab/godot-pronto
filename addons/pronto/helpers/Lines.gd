@@ -88,11 +88,21 @@ class Line:
 		
 		var begin = Vector2.ZERO
 		var end = Utils.global_rect_of(to).get_center() - from.global_position
+		end -= end.normalized() * 12 # keep some distance to the node
 		draw_line(c, begin, end, color(lines), lerp(0.02, 1.0, 1.0 / from.get_viewport_transform().get_scale().x))
 		
+		# arrow head
 		var angle = begin.angle_to_point(end)
-		var flip = Utils.between(angle, PI / 2, PI) or Utils.between(angle, -PI, -PI / 2)
+		var arrow_size = 8
+		var arrow = [
+			Vector2(0, 0),
+			Vector2(-1, -.5),
+			Vector2(-1, .5),
+		]
+		arrow = arrow.map(func (p): return (p * arrow_size).rotated(angle) + end)
+		c.draw_polygon(arrow, [color(lines), color(lines), color(lines)])
 		
+		var flip = Utils.between(angle, PI / 2, PI) or Utils.between(angle, -PI, -PI / 2)
 		c.draw_set_transform_matrix(Transform2D(angle + PI if flip else angle, Vector2.ZERO) * Transform2D(0.0, Vector2(12, -2)))
 		draw_text(c, font, text_size, flip, lines)
 
