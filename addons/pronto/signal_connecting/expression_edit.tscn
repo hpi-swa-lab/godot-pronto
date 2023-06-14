@@ -7,7 +7,7 @@
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_1yox0"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_rximc"]
 number_color = Color(0.63, 1, 0.88, 1)
 symbol_color = Color(0.67, 0.79, 1, 1)
 function_color = Color(0.34, 0.7, 1, 1)
@@ -94,7 +94,7 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_1yox0")
+syntax_highlighter = SubResource("CodeHighlighter_rximc")
 scroll_fit_content_height = true
 code_completion_enabled = true
 code_completion_prefixes = Array[String]([".", ",", "(", "=", "$", "@", "\"", "'"])
@@ -106,6 +106,7 @@ script = ExtResource("2_7vlfx")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
+tooltip_text = "Open script"
 icon = SubResource("Texture2D_4hlth")
 flat = true
 
