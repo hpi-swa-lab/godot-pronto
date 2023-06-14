@@ -33,7 +33,6 @@ static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, so
 	i.default_focus()
 
 var undo_redo: EditorUndoRedoManager
-var _drag_offset
 
 var anchor: Node:
 	set(n):
@@ -48,6 +47,8 @@ var selected_signal: Dictionary:
 		selected_signal = value
 		%Signal.text = value["name"]
 		update_argument_names()
+
+var position_offset = Vector2(0, 0)
 
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
@@ -90,7 +91,7 @@ func update_argument_names():
 
 func _process(delta):
 	if anchor and anchor.is_inside_tree():
-		position = Utils.popup_position(anchor)
+		position = Utils.popup_position(anchor) + position_offset
 		var offscreen_delta = (position + size - get_parent().size).clamp(Vector2(0, 0), Vector2(1000000, 1000000))
 		position -= offscreen_delta
 		%FunctionName.anchor = anchor
@@ -228,6 +229,7 @@ func _on_make_unique_pressed():
 	queue_free()
 	open_existing(undo_redo, from, duplicate)
 
+var _drag_start_offset = null
 
 func _on_gui_input(event: InputEvent):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -235,20 +237,18 @@ func _on_gui_input(event: InputEvent):
 			_start_drag(event.global_position)
 		else:
 			_stop_drag()
-	elif event is InputEventMouseMotion and _drag_offset != null:
-		print(offset_left, " ", event.global_position.x + _drag_offset.x)
-		#offset_left = 200
-		get_parent().position = event.global_position + _drag_offset
+	elif event is InputEventMouseMotion and _drag_start_offset != null:
+		_drag(event.global_position)
 
-
-func _start_drag(at: Vector2):
-	_drag_offset = global_position - at
-
+func _start_drag(position: Vector2):
+	_drag_start_offset = position - position_offset
+	self.get_parent().move_child(self, -1)
 
 func _stop_drag():
-	_drag_offset = null
+	_drag_start_offset = null
 
-#- Z index
-#- dragging
+func _drag(position: Vector2):
+	position_offset = position - _drag_start_offset
+
 #- pinning (stay open)
-#- 
+#- highlight related nodes/connections when hovering?
