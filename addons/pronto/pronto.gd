@@ -9,6 +9,8 @@ var debugger: ConnectionDebug
 var inspectors = [ExpressionInspector.new()]
 
 # @TODO could save absolute paths in persistent state to serialize node object
+# (and also to not have to traverse the tree every execution, but rather get a cached result.
+# 	if the cached path is invalid, only then we need to traverse again.)
 
 func _set_state(data):
 	G.put("pronto_global_id", data.get("pronto_global_id", 0))
