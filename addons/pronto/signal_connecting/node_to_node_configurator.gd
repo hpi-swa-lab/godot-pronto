@@ -50,6 +50,12 @@ var selected_signal: Dictionary:
 
 var position_offset = Vector2(0, 0)
 
+var pinned = false:
+	set(value):
+		print("pinned", value)
+		pinned = value
+		%Pinned.button_pressed = value
+
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
 		_on_cancel_pressed()
@@ -214,7 +220,9 @@ func _on_done_pressed():
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 
 	existing_connection.enabled = %Enabled.button_pressed
-	queue_free()
+	mark_changed(false)
+	if not pinned:
+		queue_free()
 
 func _on_remove_pressed():
 	if existing_connection:
@@ -232,13 +240,18 @@ func _on_make_unique_pressed():
 var _drag_start_offset = null
 
 func _on_gui_input(event: InputEvent):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and event.double_click and event.button_index == MOUSE_BUTTON_LEFT:
+		_double_click()
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
 			_start_drag(event.global_position)
 		else:
 			_stop_drag()
 	elif event is InputEventMouseMotion and _drag_start_offset != null:
 		_drag(event.global_position)
+
+func _double_click():
+	pinned = not pinned
 
 func _start_drag(position: Vector2):
 	_drag_start_offset = position - position_offset
@@ -250,5 +263,8 @@ func _stop_drag():
 func _drag(position: Vector2):
 	position_offset = position - _drag_start_offset
 
-#- pinning (stay open)
 #- highlight related nodes/connections when hovering?
+
+func _on_pinned_toggled(button_pressed):
+	print("pinned toggled")
+	pinned = button_pressed

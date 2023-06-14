@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=10 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_2ll7t"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
@@ -11,6 +11,18 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
+
+[sub_resource type="Texture2D" id="Texture2D_7vccf"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_2ll7t")
+name = "PinJoint2D"
+
+[sub_resource type="Texture2D" id="Texture2D_8wpht"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_2ll7t")
+name = "Pin"
 
 [sub_resource type="Texture2D" id="Texture2D_tlx1e"]
 resource_local_to_scene = false
@@ -69,6 +81,13 @@ text = "Make unique"
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
+
+[node name="Pinned" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Pin"
+theme_override_icons/checked = SubResource("Texture2D_7vccf")
+theme_override_icons/unchecked = SubResource("Texture2D_8wpht")
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -162,15 +181,17 @@ layout_mode = 2
 [node name="done" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Connect"
+text = "Save"
 
 [node name="cancel" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Cancel"
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/SharedLinksNote/Button" to="." method="_on_make_unique_pressed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Pinned" to="." method="_on_pinned_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Enabled" to="." method="mark_changed" unbinds=1]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="method_selected" from="MarginContainer/VBoxContainer/Receiver/FunctionName" to="." method="_on_function_selected"]
