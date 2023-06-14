@@ -39,14 +39,14 @@ func _enter_tree():
 func history_changed():
 	if _is_editing_behavior() and edited_object is Placeholder and edited_object.should_keep_in_origin():
 		var u = get_undo_redo().get_history_undo_redo(get_undo_redo().get_object_history_id(edited_object))
-		if edited_object.position != Vector2.ZERO:
-			var p = edited_object.get_parent()
-			var t = edited_object.global_transform
+		var p = edited_object.get_parent()
+		var offset = edited_object.global_position - p.global_position
+		if offset != Vector2.ZERO:
 			# undo the Placeholder's move and instead move the parent
 			u.undo()
 			u.create_action("Move parent of Placeholder")
-			u.add_undo_property(p, "global_transform", p.global_transform)
-			u.add_do_property(edited_object.get_parent(), "global_transform", t)
+			u.add_undo_property(p, "global_position", p.global_position)
+			u.add_do_property(p, "global_position", p.global_position + offset)
 			u.commit_action()
 			edited_object.position = Vector2.ZERO
 
