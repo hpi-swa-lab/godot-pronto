@@ -13,7 +13,7 @@ name = "RotateLeft"
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_f0s43"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_kgj05"]
 number_color = Color(0.63, 1, 0.88, 1)
 symbol_color = Color(0.67, 0.79, 1, 1)
 function_color = Color(0.34, 0.7, 1, 1)
@@ -86,7 +86,6 @@ offset_bottom = 43.0
 size_flags_horizontal = 3
 script = ExtResource("1_lndi8")
 placeholder_text = "Expression..."
-default_text = null
 
 [node name="row" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(180, 32)
@@ -99,7 +98,7 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 size_flags_vertical = 0
-tooltip_text = "Open script"
+tooltip_text = "Reset"
 icon = SubResource("Texture2D_i52lc")
 flat = true
 
@@ -110,7 +109,7 @@ size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_f0s43")
+syntax_highlighter = SubResource("CodeHighlighter_kgj05")
 scroll_fit_content_height = true
 code_completion_enabled = true
 code_completion_prefixes = Array[String]([".", ",", "(", "=", "$", "@", "\"", "'"])
