@@ -144,8 +144,10 @@ func _on_function_selected(name: String):
 	if receiver is Code and name == "execute":
 		arguments = Array(receiver.arguments).map(func (argument_name): return {"name": argument_name})
 	elif receiver is SceneRoot and name.begins_with("apply"):
+		# remove "from" argument so it does not appear in the connection window, 
+		# which is automatically set later in Connection.gd::_trigger.
 		arguments = method["args"]
-		arguments.pop_back() # remove from argument which is automatically set later
+		arguments.pop_back()
 	else:
 		arguments = method["args"]
 	
