@@ -66,6 +66,7 @@ func connection_activated(c: Connection):
 # see: https://github.com/godotengine/godot-proposals/issues/1571
 var _running_highlight_tweens = {}
 func highlight_activated(c: Connection):
+	# FOR LATER: use different color for highlight and activation
 	var duration = 0.3
 	# FIXME not scheduling well yet on fast repeats
 	var current = _running_highlight_tweens.get(c)
