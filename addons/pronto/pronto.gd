@@ -8,44 +8,6 @@ var behaviors = {}
 var debugger: ConnectionDebug
 var inspectors = [ExpressionInspector.new()]
 
-# @TODO could save absolute paths in persistent state to serialize node object
-# (and also to not have to traverse the tree every execution, but rather get a cached result.
-# 	if the cached path is invalid, only then we need to traverse again.)
-
-func _set_state(data):
-	G.put("pronto_global_id", data.get("pronto_global_id", 0))
-	# global_pronto_objects = data.get("global_pronto_objects", {})
-
-func _get_state():
-	return {"pronto_global_id": G.at("pronto_global_id", 0)
-		# , "global_pronto_objects": global_pronto_objects
-		}
-
-static func get_pronto_id(node):
-	if node.has_meta("pronto_id"):
-		return node.get_meta("pronto_id")
-	var pronto_global_id = G.at("pronto_global_id", 0)
-	node.set_meta("pronto_id", pronto_global_id)
-	G.put("pronto_global_id", pronto_global_id+1)
-	return node.get_meta("pronto_id")
-
-static func get_pronto_node(node, id):
-	var receiver_cache = G.at("pronto_receiver_cache", {})
-	if not receiver_cache.has(id):
-		receiver_cache[id] = find_pronto_id_in_children(node, id)
-		G.put("pronto_receiver_cache", receiver_cache)
-	return receiver_cache[id]
-
-static func find_pronto_id_in_children(node, id):
-	if node.has_meta("pronto_id"):
-		if node.get_meta("pronto_id") == id:
-			return node
-	var found_node = null
-	for child in node.get_children():
-		if (!found_node):
-			found_node = find_pronto_id_in_children(child, id)
-	return found_node
-
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		return

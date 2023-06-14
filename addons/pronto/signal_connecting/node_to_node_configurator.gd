@@ -57,7 +57,7 @@ func _input(event):
 var receiver: Object:
 	set(value):
 		receiver = value
-		%ReceiverPath.text = "${0} ({1})".format([Pronto.get_pronto_id(receiver), receiver.name])
+		%ReceiverPath.text = "${0} ({1})".format([Utils.get_pronto_id(receiver), receiver.name])
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 
@@ -100,7 +100,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	set_mode(connection.is_expression(), connection.is_target())
 	%Condition.edit_script = connection.only_if
 	if connection.is_target():
-		receiver = Pronto.find_pronto_id_in_children(get_tree().get_root(), connection.to)
+		receiver = Utils.find_pronto_id_in_children(get_tree().get_root(), connection.to)
 		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke if not connection.is_expression() else "<statement(s)>"
 		_on_function_selected(%FunctionName.text)
@@ -189,7 +189,7 @@ func _on_done_pressed():
 				existing_connection,
 				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
 		else:
-			Connection.connect_target(from, selected_signal["name"], load("res://addons/pronto/pronto.gd").get_pronto_id(receiver), invoke,
+			Connection.connect_target(from, selected_signal["name"], Utils.get_pronto_id(receiver), invoke,
 				args.map(func (a): return a.updated_script(from, selected_signal["name"])),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 	else:
@@ -207,7 +207,7 @@ func _on_done_pressed():
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection, {"signal_name": %Signal.text})
 		else:
-			var to_id = load("res://addons/pronto/pronto.gd").get_pronto_id(receiver) if %Receiver.visible else -1
+			var to_id = Utils.get_pronto_id(receiver) if %Receiver.visible else -1
 			Connection.connect_expr(from, selected_signal["name"], to_id,
 				%Expression.updated_script(from, selected_signal["name"]),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
