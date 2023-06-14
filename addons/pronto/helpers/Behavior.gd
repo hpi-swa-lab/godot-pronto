@@ -85,7 +85,7 @@ func lines():
 		if not connection.is_target():
 			return Lines.Line.new(self, self, func (flipped): return connection.print(flipped), connection)
 		else:
-			var other = get_node_or_null(connection.to)
+			var other = Pronto.find_pronto_id_in_children(get_tree().get_root(), connection.to)
 			if not other: return null
 			return Lines.Line.new(self, other, func (flipped): return connection.print(flipped), connection))
 
