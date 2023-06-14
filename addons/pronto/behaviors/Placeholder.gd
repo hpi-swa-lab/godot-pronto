@@ -91,9 +91,9 @@ func _draw():
 func handles():
 	return [
 		Handles.SetPropHandle.new(
-			(transform * placeholder_size - position) / 2,
+			(global_transform * placeholder_size - global_position) / 2,
 			Utils.icon_from_theme("EditorHandle", self),
 			self,
 			"placeholder_size",
-			func (coord): return (floor(coord * 2) * transform).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+			func (coord): return floor((coord * 2 + global_position) * global_transform).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
