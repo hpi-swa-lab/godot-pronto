@@ -1,24 +1,90 @@
-[gd_scene load_steps=8 format=3 uid="uid://pcvirp44au2y"]
+[gd_scene load_steps=17 format=3 uid="uid://pcvirp44au2y"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_wkkvy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_g2k13"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="3_h1uyp"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="4_bdlcu"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Inspect.gd" id="4_y2g46"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_bcaxq"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_uttg8"]
 
-[sub_resource type="Resource" id="Resource_1moy4"]
+[sub_resource type="GDScript" id="GDScript_c8t77"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return not to.gravity_paused
+"
+
+[sub_resource type="Resource" id="Resource_j72po"]
+script = ExtResource("5_uttg8")
+nested_script = SubResource("GDScript_c8t77")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_udcpy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_w08ri"]
+script = ExtResource("5_uttg8")
+nested_script = SubResource("GDScript_udcpy")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_uv11l"]
 script = ExtResource("5_bcaxq")
 signal_name = "up"
 to = NodePath("../PlatformerController")
 invoke = "@gravity_paused_setter"
-arguments = ["return not to.gravity_paused"]
-only_if = "return true"
-expression = ""
+arguments = [SubResource("Resource_j72po")]
+only_if = SubResource("Resource_w08ri")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_y48qe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return \"Gravity paused: %s\" % closest(\"PlatformerController\").gravity_paused
+"
+
+[sub_resource type="Resource" id="Resource_40a7a"]
+script = ExtResource("5_uttg8")
+nested_script = SubResource("GDScript_y48qe")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_8qku2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_m8ueh"]
+script = ExtResource("5_uttg8")
+nested_script = SubResource("GDScript_8qku2")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ap7jo"]
+script = ExtResource("5_bcaxq")
+signal_name = "up"
+to = NodePath("../../Placeholder")
+invoke = "@label_setter"
+arguments = [SubResource("Resource_40a7a")]
+only_if = SubResource("Resource_m8ueh")
+deferred = false
 
 [node name="platformer_gravity_paused" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
+position = Vector2(-30, 4.17213e-06)
 script = ExtResource("1_wkkvy")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -80,24 +146,17 @@ color = Color(0.886275, 0.105882, 0.741176, 1)
 placeholder_size = Vector2(20, 60)
 
 [node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(-65, -1.31134e-06)
 script = ExtResource("3_h1uyp")
-jump_velocity = 450.0
 
 [node name="Key" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(-19, 0)
+position = Vector2(-65, -46)
 script = ExtResource("4_bdlcu")
 key = "A"
-metadata/pronto_connections = [SubResource("Resource_1moy4")]
+metadata/pronto_connections = [SubResource("Resource_uv11l"), SubResource("Resource_ap7jo")]
 
-[node name="Inspect" type="Node2D" parent="."]
-position = Vector2(150, 67)
-script = ExtResource("4_y2g46")
-property_0 = "<statement(s)>"
-expression_0 = "return closest(\"PlatformerController\").gravity_paused"
-property_1 = "<click to add>"
-font_size = 10
-background_color = Color(0, 0, 0, 0.2)
-color = null
-highlight_color = Color(1, 0, 0, 1)
-shape_size = Vector2(260, 94)
-sticky = false
+[node name="Placeholder" type="Node2D" parent="."]
+position = Vector2(72, 37)
+script = ExtResource("2_g2k13")
+label = "Gravity paused: false"
+placeholder_size = Vector2(100, 30)
