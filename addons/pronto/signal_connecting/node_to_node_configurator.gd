@@ -115,6 +115,14 @@ func _process(delta):
 		position -= offscreen_delta
 		%FunctionName.anchor = anchor
 
+	var hovered_nodes = Utils.popup_parent(anchor).get_children(true).filter(func (n):
+		if not (n is NodeToNodeConfigurator): return false
+		return n.get_global_rect().has_point(get_viewport().get_mouse_position()))
+	var is_hovered = hovered_nodes.size() > 0 and hovered_nodes[-1] == self
+	if is_hovered:
+		if self.existing_connection:
+			from.highlight_activated(self.existing_connection)
+
 func mark_changed(value: bool = true):
 	%ChangesNotifier.visible = value
 
@@ -279,5 +287,4 @@ func _drag(position: Vector2):
 #- highlight related nodes/connections when hovering?
 
 func _on_pinned_toggled(button_pressed):
-	print("pinned toggled")
 	pinned = button_pressed
