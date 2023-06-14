@@ -11,7 +11,7 @@ static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
 static func open_existing(undo_redo: EditorUndoRedoManager, from: Node, connection: Connection):
 	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
 	i.set_existing_connection(from, connection)
-	Utils.spawn_popup_from_canvas(from, i)
+	return i.open(from)
 
 static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary, receiver: Node):
 	var i = _open(Utils.parent_that(receiver, func (n): return Utils.has_position(n)), undo_redo)
@@ -20,8 +20,7 @@ static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source
 	i.receiver = receiver
 	i.set_mode(false, true)
 	i.init_empty_scripts()
-	Utils.spawn_popup_from_canvas(receiver, i)
-	i.default_focus()
+	return i.open(receiver)
 
 static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary):
 	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
@@ -29,8 +28,22 @@ static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, so
 	i.from = from
 	i.set_mode(true, false)
 	i.init_empty_scripts()
-	Utils.spawn_popup_from_canvas(from, i)
-	i.default_focus()
+	return i.open(from)
+
+func open(receiver: Node):
+	# find existing configurator siblings
+	for configurator in Utils.popup_parent(receiver).get_children(true):
+		if configurator is NodeToNodeConfigurator and configurator.has_same_connection(self):
+			configurator.default_focus()
+			return configurator
+	
+	Utils.spawn_popup_from_canvas(receiver, self)
+	default_focus()
+	return self
+
+func has_same_connection(other: NodeToNodeConfigurator):
+	print("has_same_connection", self, " ", other)
+	return other.from == from and other.selected_signal == selected_signal
 
 var undo_redo: EditorUndoRedoManager
 
@@ -47,6 +60,14 @@ var selected_signal: Dictionary:
 		selected_signal = value
 		%Signal.text = value["name"]
 		update_argument_names()
+
+var position_offset = Vector2(0, 0)
+
+var pinned = false:
+	set(value):
+		print("pinned", value)
+		pinned = value
+		%Pinned.button_pressed = value
 
 func _input(event):
 	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
@@ -71,6 +92,7 @@ func set_mode(expr: bool, recv: bool):
 	update_argument_names()
 	if expr and %Expression.edit_script == null:
 		%Expression.edit_script = empty_script("", false)
+	mark_changed()
 
 func default_focus():
 	await get_tree().process_frame
@@ -88,10 +110,24 @@ func update_argument_names():
 
 func _process(delta):
 	if anchor and anchor.is_inside_tree():
-		position = Utils.popup_position(anchor)
+		position = Utils.popup_position(anchor) + position_offset
 		var offscreen_delta = (position + size - get_parent().size).clamp(Vector2(0, 0), Vector2(1000000, 1000000))
 		position -= offscreen_delta
 		%FunctionName.anchor = anchor
+
+	if not anchor: return
+	var _parent = Utils.popup_parent(anchor)
+	if not _parent: return
+	var hovered_nodes = _parent.get_children(true).filter(func (n):
+		if not (n is NodeToNodeConfigurator): return false
+		return n.get_global_rect().has_point(get_viewport().get_mouse_position()))
+	var is_hovered = hovered_nodes.size() > 0 and hovered_nodes[-1] == self
+	if is_hovered:
+		if self.existing_connection:
+			from.highlight_activated(self.existing_connection)
+
+func mark_changed(value: bool = true):
+	%ChangesNotifier.visible = value
 
 func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
@@ -109,6 +145,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	
 	%Receiver.visible = connection.is_target()
 	%Expression.visible = connection.is_expression()
+	%Enabled.button_pressed = connection.enabled
 	
 	for i in range(%Args.get_child_count()):
 		%Args.get_child(i).edit_script = connection.arguments[i] if i <= connection.arguments.size() - 1 else empty_script("null", true)
@@ -120,6 +157,7 @@ func set_existing_connection(from: Node, connection: Connection):
 			total["total"] += Connection.get_connections(n).count(connection))
 	%SharedLinksNote.visible = total["total"] > 1
 	%SharedLinksCount.text = "This connection is linked to {0} other node{1}.".format([total["total"] - 1, "s" if total["total"] != 2 else ""])
+	mark_changed(false)
 
 func _on_function_selected(name: String):
 	set_mode(name == "<statement(s)>", true)
@@ -163,6 +201,7 @@ func _on_function_selected(name: String):
 		else:
 			arg_ui.edit_script = empty_script("null", true)
 		%Args.add_child(arg_ui)
+		arg_ui.text_changed.connect(func(): mark_changed())
 	update_argument_names()
 
 func empty_script(expr: String, return_value: bool):
@@ -189,7 +228,7 @@ func _on_done_pressed():
 				existing_connection,
 				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
 		else:
-			Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
+			existing_connection = Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
 				args.map(func (a): return a.updated_script(from, selected_signal["name"])),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 	else:
@@ -208,10 +247,14 @@ func _on_done_pressed():
 				existing_connection, {"signal_name": %Signal.text})
 		else:
 			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
-			Connection.connect_expr(from, selected_signal["name"], to_path,
+			existing_connection = Connection.connect_expr(from, selected_signal["name"], to_path,
 				%Expression.updated_script(from, selected_signal["name"]),
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
-	queue_free()
+
+	existing_connection.enabled = %Enabled.button_pressed
+	mark_changed(false)
+	if not pinned:
+		queue_free()
 
 func _on_remove_pressed():
 	if existing_connection:
@@ -225,3 +268,38 @@ func _on_make_unique_pressed():
 	var duplicate = existing_connection.make_unique(from, undo_redo)
 	queue_free()
 	open_existing(undo_redo, from, duplicate)
+
+var _drag_start_offset = null
+
+func _on_gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.double_click and event.button_index == MOUSE_BUTTON_LEFT:
+		_double_click()
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.is_pressed():
+			_start_drag(event.global_position)
+		else:
+			_stop_drag()
+	elif event is InputEventMouseMotion and _drag_start_offset != null:
+		_drag(event.global_position)
+
+func _double_click():
+	pinned = not pinned
+
+func _start_drag(position: Vector2):
+	_drag_start_offset = position - position_offset
+	self.get_parent().move_child(self, -1)
+
+func _stop_drag():
+	_drag_start_offset = null
+
+func _drag(position: Vector2):
+	position_offset = position - _drag_start_offset
+
+func _on_pinned_toggled(button_pressed):
+	pinned = button_pressed
+
+func _on_enabled_toggled(button_pressed):
+	if existing_connection:
+		existing_connection.enabled = button_pressed
+	else:
+		mark_changed()
