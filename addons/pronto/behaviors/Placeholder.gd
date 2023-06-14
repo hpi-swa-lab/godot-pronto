@@ -91,7 +91,7 @@ func _draw():
 func handles():
 	return [
 		Handles.SetPropHandle.new(
-			transform * placeholder_size / 2,
+			(transform * placeholder_size - position) / 2,
 			Utils.icon_from_theme("EditorHandle", self),
 			self,
 			"placeholder_size",

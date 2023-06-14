@@ -137,7 +137,7 @@ script = ExtResource("2_g2k13")
 placeholder_size = Vector2(158, 19)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(297, 491)
+position = Vector2(295, 490)
 
 [node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("2_g2k13")
@@ -156,7 +156,7 @@ key = "A"
 metadata/pronto_connections = [SubResource("Resource_uv11l"), SubResource("Resource_ap7jo")]
 
 [node name="Placeholder" type="Node2D" parent="."]
-position = Vector2(72, 37)
+position = Vector2(71, 36)
 script = ExtResource("2_g2k13")
 label = "Gravity paused: false"
 placeholder_size = Vector2(100, 30)
