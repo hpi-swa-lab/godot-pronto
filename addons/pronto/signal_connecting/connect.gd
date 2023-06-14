@@ -91,6 +91,7 @@ func _on_add_mouse_entered():
 
 func _on_connections_item_selected(index):
 	NodeToNodeConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
+	queue_free()
 
 func _on_connections_item_clicked(index, at_position, mouse_button_index):
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
