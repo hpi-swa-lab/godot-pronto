@@ -109,7 +109,10 @@ static func spawn_popup_from_canvas(reference: Node, popup: Node):
 	popup.position = popup_position(parent_that(reference, func (c): return Utils.has_position(c)))
 
 static func popup_parent(reference: Node):
-	return reference.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent()
+	var viewport = reference.get_viewport()
+	if not viewport:
+		return null
+	return viewport.get_parent().get_parent().get_parent().get_parent().get_parent()
 
 static func popup_position(anchor: Node):
 	return anchor.get_viewport_transform() * anchor.global_position

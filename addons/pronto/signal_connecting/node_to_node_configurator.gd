@@ -115,7 +115,10 @@ func _process(delta):
 		position -= offscreen_delta
 		%FunctionName.anchor = anchor
 
-	var hovered_nodes = Utils.popup_parent(anchor).get_children(true).filter(func (n):
+	if not anchor: return
+	var _parent = Utils.popup_parent(anchor)
+	if not _parent: return
+	var hovered_nodes = _parent.get_children(true).filter(func (n):
 		if not (n is NodeToNodeConfigurator): return false
 		return n.get_global_rect().has_point(get_viewport().get_mouse_position()))
 	var is_hovered = hovered_nodes.size() > 0 and hovered_nodes[-1] == self
