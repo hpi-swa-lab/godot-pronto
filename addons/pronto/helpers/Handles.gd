@@ -34,8 +34,13 @@ class SetPropHandle extends Handle:
 	var _initial: Variant
 	
 	func _init(position: Vector2, icon: Texture, object: Object, property: String, map: Callable, local_space = true):
-		super._init(position, icon, func (new_prop):
-			object.set(property, map.call(new_prop)), local_space)
+		super._init(
+			position, 
+			icon, 
+			func (new_prop):
+				object.set(property, map.call(new_prop)), 
+			local_space
+		)
 		self.object = object
 		self.property = property
 		self.map = map

@@ -143,6 +143,11 @@ func _on_function_selected(name: String):
 	var arguments = []
 	if receiver is Code and name == "execute":
 		arguments = Array(receiver.arguments).map(func (argument_name): return {"name": argument_name})
+	elif receiver is SceneRoot and name.begins_with("apply"):
+		# remove "from" argument so it does not appear in the connection window, 
+		# which is automatically set later in Connection.gd::_trigger.
+		arguments = method["args"]
+		arguments.pop_back()
 	else:
 		arguments = method["args"]
 	
@@ -150,8 +155,11 @@ func _on_function_selected(name: String):
 		var arg_ui = ExpressionEdit.instantiate()
 		Utils.fix_minimum_size(arg_ui)
 		arg_ui.placeholder_text = "return " + arg["name"]
-		if name == "apply" && arg["type"] == 25:
-			arg_ui.edit_script = empty_script("func(node): null", true)
+		if name.begins_with("apply") && arg["type"] == 25:
+			if arg["name"] == "filter_func":
+				arg_ui.edit_script = empty_script("func(from, node): return true", true)
+			else:
+				arg_ui.edit_script = empty_script("func(from, node): null", true)
 		else:
 			arg_ui.edit_script = empty_script("null", true)
 		%Args.add_child(arg_ui)

@@ -43,9 +43,10 @@ The following list of behaviors primarily cause effects when triggered.
 | Stopwatch | Starts counting up time when triggered. Can be reset. |
 | Move | When triggered, moves its parent. Can be set to move along global or local axes. Supports handling of gravity. |
 | Spawner | When triggered, spawns whatever its child node is at its current location in the scene. |
-| Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. For example, create a Label node, add a Bind node as a child, use `text` as property and put any expression in its `convert` field. |
+| Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. For example, create a Label node, add a Bind node as a child, use `text` as property and put any expression in its `convert` field. Another example would use a Clock with a Bind node as a child that uses `duration_seconds` as a property to change the trigger-time depending on a Value-Behavior. |
 | PlatformerController | Makes the parent behave like a platformer character, meaning that it can jump, move horizontally, and is affected by gravity. Must be a child of a [CharacterBody2D](https://docs.godotengine.org/en/stable/classes/class_characterbody2d.html). |
-| Code | It holds an `execute()` function with both user-definable arguments and a function body, which allows for arbitrary code execution. After `execute()` is called an `after` signal is emitted that carries the execution result, which can be used for chaining.
+| Code | It holds an `execute()` function with both user-definable arguments and a function body, which allows for arbitrary code execution. After `execute()` is called an `after` signal is emitted that carries the execution result, which can be used for chaining. |
+| SceneRoot | Provides access to the `SceneTree` from Godot. It offers the signals `node_added(node: Node)`, `node_remove(node: Node)` and `tree_changed()` from the `SceneTree`. Additionally, it implements three methods for executing lambda functions on all or a specific subset of nodes in a given `group`. |
 
 The following list of behaviors manage state or communicate visual properties.
 
