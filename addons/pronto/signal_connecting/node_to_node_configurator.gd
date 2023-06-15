@@ -42,7 +42,6 @@ func open(receiver: Node):
 	return self
 
 func has_same_connection(other: NodeToNodeConfigurator):
-	print("has_same_connection", self, " ", other)
 	return other.from == from and other.selected_signal == selected_signal
 
 var undo_redo: EditorUndoRedoManager
@@ -65,7 +64,6 @@ var position_offset = Vector2(0, 0)
 
 var pinned = false:
 	set(value):
-		print("pinned", value)
 		pinned = value
 		%Pinned.button_pressed = value
 
