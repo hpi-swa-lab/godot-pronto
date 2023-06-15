@@ -2,6 +2,9 @@
 extends Resource
 class_name Connection
 
+## Emitted when changing the state of enabled
+signal changed_enabled(new_state)
+
 ## Wrapper for richer Signals.
 ##
 ## A [Connection] wraps a Godot signal to allow for richer effects to take
@@ -23,6 +26,7 @@ static func connect_target(from: Node, signal_name: String, to: NodePath, invoke
 	c.arguments = arguments
 	c.only_if = only_if
 	c._store(from, undo_redo)
+	return c
 
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
@@ -34,6 +38,7 @@ static func connect_expr(from: Node, signal_name: String, to: NodePath, expressi
 	c.expression = expression
 	c.only_if = only_if
 	c._store(from, undo_redo)
+	return c
 
 ## Returns list of all connections from [param node]
 static func get_connections(node: Node) -> Array:
@@ -54,6 +59,15 @@ static func get_connections(node: Node) -> Array:
 @export var expression: ConnectionScript
 ## Run action of this connection in the next frame after it was triggered
 @export var deferred = false
+## Enable this connection for quick debugging
+@export var enabled = true :
+	get:
+		if enabled == null:
+			enabled = true
+		return enabled
+	set(new_value):
+		enabled = new_value
+		changed_enabled.emit(new_value)
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
@@ -72,6 +86,16 @@ func delete(from: Node, undo_redo: EditorUndoRedoManager = null):
 		undo_redo.add_do_method(self, "_remove_connection", from)
 		undo_redo.add_undo_method(self, "_append_connection", from)
 		undo_redo.commit_action()
+
+## Toggle this node on and off
+func toggle_enabled(undo_redo: EditorUndoRedoManager = null):
+	if undo_redo == null:
+		enabled = !enabled
+		return 
+	undo_redo.create_action("%s connection" % ("Disable" if enabled else "Enable"))
+	undo_redo.add_do_method(self, "set", "enabled", !enabled)
+	undo_redo.add_undo_method(self, "set", "enabled", enabled)
+	undo_redo.commit_action()
 
 ## Reorder the connection at the given index in its connection list to be the first.
 static func reorder_to_top(from: Node, index: int, undo_redo: EditorUndoRedoManager = null, update_display = null):
@@ -143,8 +167,9 @@ func _pronto_dispatch_connections5(arg1, arg2, arg3, arg4, arg5, from: Node, sig
 
 func _trigger(from: Object, signal_name: String, argument_names: Array, argument_values: Array):
 	for c in Connection.get_connections(from):
-		if c.signal_name != signal_name:
+		if !c.enabled or c.signal_name != signal_name:
 			continue
+		
 		var names = argument_names.duplicate()
 		var values = argument_values.duplicate()
 		names.append("from")

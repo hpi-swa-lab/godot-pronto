@@ -1,9 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=10 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_2ll7t"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
 [ext_resource type="PackedScene" uid="uid://1ubsx3vbyfwv" path="res://addons/pronto/signal_connecting/function_name.tscn" id="4_x4sfm"]
 [ext_resource type="PackedScene" uid="uid://d1jujxfamsekk" path="res://addons/pronto/signal_connecting/expression_edit.tscn" id="5_ujudk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inije"]
+bg_color = Color(0.180392, 0.180392, 0.180392, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="Texture2D" id="Texture2D_7vccf"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_2ll7t")
+name = "PinJoint2D"
+
+[sub_resource type="Texture2D" id="Texture2D_8wpht"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_2ll7t")
+name = "Pin"
+
+[sub_resource type="Texture2D" id="Texture2D_tlx1e"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_2ll7t")
+name = "Warning"
 
 [sub_resource type="Texture2D" id="Texture2D_q6wk4"]
 resource_local_to_scene = false
@@ -14,17 +39,20 @@ name = "Remove"
 [node name="Node To Node Configurator" type="PanelContainer"]
 custom_minimum_size = Vector2(100, 100)
 offset_right = 431.0
-offset_bottom = 175.0
+offset_bottom = 218.0
 scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
+mouse_filter = 1
 theme_type_variation = &"Panel"
+theme_override_styles/panel = SubResource("StyleBoxFlat_inije")
 script = ExtResource("2_fmteu")
 metadata/pronto_ignore = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+mouse_default_cursor_shape = 13
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -54,6 +82,13 @@ text = "Make unique"
 layout_mode = 2
 theme_override_constants/separation = 0
 
+[node name="Pinned" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Pin"
+theme_override_icons/checked = SubResource("Texture2D_7vccf")
+theme_override_icons/unchecked = SubResource("Texture2D_8wpht")
+
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Signal:"
@@ -72,9 +107,25 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "(area)"
 
+[node name="ChangesNotifier" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+tooltip_text = "There are unsaved changes"
+texture = SubResource("Texture2D_tlx1e")
+stretch_mode = 5
+
+[node name="Enabled" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Enable"
+button_pressed = true
+
 [node name="remove" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Remove"
 icon = SubResource("Texture2D_q6wk4")
 
 [node name="Receiver" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
@@ -108,11 +159,11 @@ text = ")"
 
 [node name="Expression" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43)
 layout_mode = 2
 size_flags_horizontal = 1
 return_value = false
 placeholder_text = "Statement(s)..."
+default_text = "<none>"
 max_width = 559
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
@@ -124,9 +175,8 @@ text = "only if: "
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43)
 layout_mode = 2
-size_flags_horizontal = 3
+default_text = "true"
 max_width = 500
 
 [node name="ButtonList" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
@@ -135,15 +185,21 @@ layout_mode = 2
 [node name="done" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Connect"
+text = "Save"
 
 [node name="cancel" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Cancel"
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/SharedLinksNote/Button" to="." method="_on_make_unique_pressed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Pinned" to="." method="_on_pinned_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Enabled" to="." method="_on_enabled_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="method_selected" from="MarginContainer/VBoxContainer/Receiver/FunctionName" to="." method="_on_function_selected"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/Expression" to="." method="mark_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/Condition" to="." method="mark_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/done" to="." method="_on_done_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/cancel" to="." method="_on_cancel_pressed"]

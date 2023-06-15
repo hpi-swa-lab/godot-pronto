@@ -105,8 +105,14 @@ static func closest_parent_that(node: Node, cond: Callable) -> Node:
 	return null
 
 static func spawn_popup_from_canvas(reference: Node, popup: Node):
-	reference.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(popup, false, Node.INTERNAL_MODE_BACK)
+	popup_parent(reference).add_child(popup, false, Node.INTERNAL_MODE_BACK)
 	popup.position = popup_position(parent_that(reference, func (c): return Utils.has_position(c)))
+
+static func popup_parent(reference: Node):
+	var viewport = reference.get_viewport()
+	if not viewport:
+		return null
+	return viewport.get_parent().get_parent().get_parent().get_parent().get_parent()
 
 static func popup_position(anchor: Node):
 	return anchor.get_viewport_transform() * anchor.global_position

@@ -16,3 +16,9 @@ func _process(delta):
 func _physics_process(delta):
 	if not Engine.is_editor_hint() and not paused:
 		physiscs_always.emit(delta)
+
+func pause():
+	paused = true
+
+func resume():
+	paused = false
