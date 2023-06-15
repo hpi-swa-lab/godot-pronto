@@ -8,8 +8,13 @@ var _flashed = {}
 var _enabled = {}
 
 
-func flash_line(value: float, key: Variant):
-	_flashed[key] = value
+func flash_line(key: Variant, type: String, value: float):
+	_flashed[[key, type]] = value
+
+const flash_colors = {
+	'activated': Color.RED,
+	'highlight': Color.GREEN,
+}
 
 
 func set_enabled(value: bool, key: Variant):
@@ -66,8 +71,13 @@ class Line:
 	
 	func color(lines: Lines):
 		if not lines._enabled.get(key,true):
-			return Color.WHITE.lerp(Color.BLACK, 0.5);
-		return Color.WHITE.lerp(Color.RED, lines._flashed.get(key, 0.0))
+			return Color.WHITE.lerp(Color.BLACK, 0.5)
+		var color = Color.BLACK
+		for type in flash_colors:
+			var flash = lines._flashed.get([key, type], 0.0)
+			if flash > 0.0:
+				color += Color.WHITE.lerp(flash_colors[type], flash)
+		return color if color != Color.BLACK else Color.WHITE
 	
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, lines: Lines):
 		var text = text_fn.call(flipped)
