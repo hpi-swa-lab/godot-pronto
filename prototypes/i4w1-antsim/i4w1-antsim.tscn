@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4sxlqk20ilar"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_shyf6"]
+[ext_resource type="Script" path="res://prototypes/i4w1-antsim/Ant.gd" id="1_u15hm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="2_tepas"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_2t4v7"]
+vertices = PackedVector2Array(190, 641, -6, 647, -1, 4, 195, 60, 350, 8, 291, 61, 361, 570, 296, 646, 1157, 651, 477, 561, 1156, 5, 474, -4)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(5, 4, 6, 7), PackedInt32Array(8, 7, 6, 9), PackedInt32Array(10, 8, 9, 11)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1, 4, 350, 8, 361, 570, 477, 561, 474, -4, 1156, 5, 1157, 651, 296, 646, 291, 61, 195, 60, 190, 641, -6, 647)])
+
+[node name="i4w1-antsim" type="Node2D"]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_2t4v7")
+
+[node name="Ant" type="CharacterBody2D" parent="." node_paths=PackedStringArray("target", "navigation_agent")]
+position = Vector2(47, 609)
+motion_mode = 1
+script = ExtResource("1_u15hm")
+target = NodePath("../Food")
+navigation_agent = NodePath("NavigationAgent2D")
+
+[node name="Placeholder" type="Node2D" parent="Ant"]
+script = ExtResource("1_shyf6")
+label = "Ant"
+color = Color(0.760784, 0.490196, 0.0313726, 1)
+placeholder_size = Vector2(32, 17)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Ant"]
+avoidance_enabled = true
+radius = 50.0
+debug_enabled = true
+
+[node name="Food" type="StaticBody2D" parent="."]
+position = Vector2(516, 251)
+
+[node name="Placeholder" type="Node2D" parent="Food"]
+script = ExtResource("1_shyf6")
+label = "Food"
+color = Color(0.192157, 0.847059, 0.407843, 1)
+
+[node name="Background" type="Node2D" parent="."]
+position = Vector2(-282.209, -282.209)
+script = ExtResource("2_tepas")
+color = Color(0.603922, 0.584314, 0.592157, 1)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
+position = Vector2(247, 362)
+
+[node name="Placeholder" type="Node2D" parent="Walls/StaticBody2D"]
+script = ExtResource("1_shyf6")
+placeholder_size = Vector2(62, 531)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
+position = Vector2(410, 285)
+
+[node name="Placeholder" type="Node2D" parent="Walls/StaticBody2D2"]
+script = ExtResource("1_shyf6")
+placeholder_size = Vector2(53, 520)
