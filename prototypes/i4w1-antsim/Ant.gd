@@ -4,29 +4,55 @@ extends CharacterBody2D
 
 @export var target: Node2D
 @export var navigation_agent: NavigationAgent2D
+@export var base: Node2D
 
 # WARNING: NavigationRegion2D has a huge issue atm
 #          it doesn't take the actor's size into account
-# https://github.com/godotengine/godot/issues/60546
-# https://github.com/godotengine/godot/pull/70724
+#          https://github.com/godotengine/godot/issues/60546
+#          https://github.com/godotengine/godot/pull/70724
+# For tilesets we can sort of fix this with: https://github.com/godotengine/godot/issues/60546
+# (see the workaround posted by the user "timothyqiu")
 
+# todo: re-evaluate path of tileset update of agent doesn't do this automatically (not tested yet)
+# todo: figure out what we want to actually test/prototype incl. user tests
 
 func _ready():
 	navigation_agent.path_desired_distance = 4.0
 	navigation_agent.target_desired_distance = 4.0
+	# we need to call_deferred as physics_server is syncing on first frame!
 	call_deferred("actor_setup")
 	
 func actor_setup():
 	await get_tree().physics_frame
-#	print("This: " + str(self.global_position) + " | Target: " + str(target.global_position))
-	set_movement_target(target.global_position)
+	# setting target based on initial state
+	evaluate_state()
+		
+		
+func evaluate_state():
+	if G.at("AntState") == "GATHERING_FOOD":
+		# find nearest food and collect
+		set_movement_target(target.global_position)
+	elif G.at("AntState") == "RETURNING_TO_BASE":
+		# return home
+		set_movement_target(base.global_position)	
+	elif G.at("AntState") == "IDLE":
+		# idle
+		navigation_agent.target_position = self.global_position
+		# todo: move to a random next tile and wait for a moment
+	else:
+		push_error("Ant " + str(self.name) + " has an invalid state: " + G.at("AntState"))	
 	
 func set_movement_target(target_position: Vector2):
 	navigation_agent.target_position = target_position
 	
 func _physics_process(delta):
+	
+	# we could induce a timeout here after reaching next_path_position
+	# this would simulate e.g. moving one tile every second
+	
 	if navigation_agent.is_navigation_finished():
-		print("Target reached")
+		# early return in case of reaching target or obstructed path
+		# return to idle here if allowed ?
 		return
 	
 	var current_agent_position: Vector2 = global_position

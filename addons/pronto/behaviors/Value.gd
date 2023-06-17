@@ -52,12 +52,12 @@ var enum_default_index: int
 
 var enum_value: String:
 	set(val):
-		#print("State name: " + name)
+		print("State name: " + name)
 		if(!value_init):
 			enum_default_index = enum_choices.find(val)
 			#print("Setting default for Enum index to: " + val + " with index: "  + str(enum_default_index))
 			value_init = true
-		#print("Updateting Enum value to: " + val)
+		print("Updateting Enum value to: " + val)
 		enum_value = val
 		notify_property_list_changed()
 		_handle_update_value(enum_value)
@@ -85,7 +85,7 @@ func _handle_update_value(value):
 	G.put(name, value)
 	value_changed.emit(value)
 	queue_redraw()
-	#print("Updated Value: " + name + " to: " + str(value))
+	print("Updated Value: " + name + " to: " + str(value))
 		
 		
 # conditional exporting is not yet supported through annotations in Godot 4
