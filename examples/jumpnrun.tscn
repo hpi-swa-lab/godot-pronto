@@ -1,7 +1,169 @@
-[gd_scene load_steps=3 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=29 format=3 uid="uid://b185xnr6xxyhc"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AdvancedValue.gd" id="3_h8k08"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Inspect.gd" id="3_w5hsv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="5_w23yi"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_r6yw1"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_q3iyx"]
+
+[sub_resource type="GDScript" id="GDScript_wp7yp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return 5
+"
+
+[sub_resource type="Resource" id="Resource_8wocf"]
+script = ExtResource("6_r6yw1")
+nested_script = SubResource("GDScript_wp7yp")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_sj30x"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2am1e"]
+script = ExtResource("6_r6yw1")
+nested_script = SubResource("GDScript_sj30x")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1t81e"]
+script = ExtResource("7_q3iyx")
+signal_name = "always"
+to = NodePath("../AdvancedValue")
+invoke = "@float_value_setter"
+arguments = [SubResource("Resource_8wocf")]
+only_if = SubResource("Resource_2am1e")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_o2ofl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ufx1e"]
+script = ExtResource("6_r6yw1")
+nested_script = SubResource("GDScript_o2ofl")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_is5s5"]
+script = ExtResource("7_q3iyx")
+signal_name = "always"
+to = NodePath("../AdvancedValue")
+invoke = "get_position"
+arguments = []
+only_if = SubResource("Resource_ufx1e")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_ftbgq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_b4abr"]
+script = ExtResource("6_r6yw1")
+nested_script = SubResource("GDScript_ftbgq")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_qo1hk"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_k13vm"]
+script = ExtResource("6_r6yw1")
+nested_script = SubResource("GDScript_qo1hk")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3ul07"]
+script = ExtResource("7_q3iyx")
+signal_name = "always"
+to = NodePath("../Node2D")
+invoke = "set_rotation"
+arguments = [SubResource("Resource_b4abr")]
+only_if = SubResource("Resource_k13vm")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_x2do8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return Color(0,0,0)
+"
+
+[sub_resource type="Resource" id="Resource_k3b6o"]
+script = ExtResource("6_r6yw1")
+nested_script = SubResource("GDScript_x2do8")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_y2q46"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_c6kkq"]
+script = ExtResource("6_r6yw1")
+nested_script = SubResource("GDScript_y2q46")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ebyjt"]
+script = ExtResource("7_q3iyx")
+signal_name = "always"
+to = NodePath("../../CharacterBody2D/Placeholder")
+invoke = "@color_setter"
+arguments = [SubResource("Resource_k3b6o")]
+only_if = SubResource("Resource_c6kkq")
+deferred = false
+
+[sub_resource type="GDScript" id="GDScript_pxfm4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_h4vvd"]
+script = ExtResource("6_r6yw1")
+nested_script = SubResource("GDScript_pxfm4")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_l6h8c"]
+script = ExtResource("7_q3iyx")
+signal_name = "always"
+to = NodePath("../../CharacterBody2D/PlatformerController")
+invoke = "show_icon"
+arguments = []
+only_if = SubResource("Resource_h4vvd")
+deferred = false
 
 [node name="jumpnrun" type="Node2D"]
 
@@ -54,6 +216,18 @@ position = Vector2(45, -12)
 script = ExtResource("2_qr0oj")
 show_trail = true
 
+[node name="Inspect" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, 80)
+script = ExtResource("3_w5hsv")
+property_0 = "position"
+property_1 = "<click to add>"
+font_size = 10
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(100, 100)
+sticky = false
+
 [node name="StaticBody2D5" type="StaticBody2D" parent="."]
 position = Vector2(389, 306)
 rotation = 0.476859
@@ -72,3 +246,21 @@ position = Vector2(1, 16)
 script = ExtResource("1_tc671")
 color = Color(0.0313726, 0.658824, 0, 1)
 placeholder_size = Vector2(88, 71)
+
+[node name="Experimental" type="Node2D" parent="."]
+
+[node name="AdvancedValue" type="Node2D" parent="Experimental"]
+position = Vector2(394, 422)
+script = ExtResource("3_h8k08")
+float_from = 0.0
+float_to = 10.0
+float_value = 0.0
+float_step_size = 1.0
+
+[node name="Always" type="Node2D" parent="Experimental"]
+position = Vector2(241, 480)
+script = ExtResource("5_w23yi")
+metadata/pronto_connections = [SubResource("Resource_1t81e"), SubResource("Resource_is5s5"), SubResource("Resource_3ul07"), SubResource("Resource_ebyjt"), SubResource("Resource_l6h8c")]
+
+[node name="Node2D" type="Node2D" parent="Experimental"]
+position = Vector2(395, 481)

@@ -37,6 +37,11 @@ import/blender/enabled=false
 
 theme/default_font_multichannel_signed_distance_field=true
 
+[navigation]
+
+2d/default_edge_connection_margin=8
+
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
