@@ -1,0 +1,124 @@
+[gd_scene load_steps=17 format=3 uid="uid://da42rhb2vls1m"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_5i2nd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="2_2kynd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="3_1dipl"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_0nawf"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_gmxrw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="6_rt3b5"]
+
+[sub_resource type="GDScript" id="GDScript_e5la8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from):
+	print(instance.get_node(\"NavigationAgent2D\"))
+"
+
+[sub_resource type="Resource" id="Resource_8e6xu"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_e5la8")
+argument_names = ["instance", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_xic4x"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4i6xw"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_xic4x")
+argument_names = ["instance", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_u03uj"]
+script = ExtResource("4_0nawf")
+signal_name = "spawned"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_4i6xw")
+expression = SubResource("Resource_8e6xu")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_in53g"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_5yemp"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_in53g")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bv0jf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_i8j3n"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_bv0jf")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tnr71"]
+script = ExtResource("4_0nawf")
+signal_name = "after"
+to = NodePath("../../../Spawner")
+invoke = "spawn"
+arguments = []
+only_if = SubResource("Resource_i8j3n")
+deferred = false
+enabled = true
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Castle" type="StaticBody2D" parent="."]
+position = Vector2(538, 328)
+
+[node name="Placeholder" type="Node2D" parent="Castle"]
+script = ExtResource("1_5i2nd")
+label = "Castle"
+color = Color(0.407843, 0.372549, 0.239216, 1)
+placeholder_size = Vector2(100, 100)
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(90, 121)
+script = ExtResource("2_2kynd")
+metadata/pronto_connections = [SubResource("Resource_u03uj")]
+
+[node name="Enemy" type="StaticBody2D" parent="Spawner"]
+position = Vector2(33, 40)
+
+[node name="Placeholder" type="Node2D" parent="Spawner/Enemy"]
+script = ExtResource("1_5i2nd")
+color = Color(1, 0, 0, 1)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Spawner/Enemy"]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 217.0
+offset_bottom = 83.0
+
+[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
+position = Vector2(15, 14)
+script = ExtResource("6_rt3b5")
+
+[node name="Spawn Enemy" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(-3, 43)
+script = ExtResource("3_1dipl")
+evaluate = SubResource("Resource_5yemp")
+metadata/pronto_connections = [SubResource("Resource_tnr71")]
