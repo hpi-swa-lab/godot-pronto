@@ -1,11 +1,10 @@
-[gd_scene load_steps=41 format=3 uid="uid://kvmebtvv8qs0"]
+[gd_scene load_steps=46 format=3 uid="uid://kvmebtvv8qs0"]
 
 [ext_resource type="Script" path="res://prototypes/i4w1-antsim/Ant.gd" id="1_bsxlv"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_isqvl"]
 [ext_resource type="Texture2D" uid="uid://crsdlid37kyko" path="res://prototypes/i4w1-antsim/1sttileset.png" id="3_f5lwy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="3_g0ho6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="4_1r5fj"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="4_32w7e"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="4_dq7x4"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_28kmq"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="5_lktaa"]
@@ -129,41 +128,46 @@ texture = ExtResource("3_f5lwy")
 navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_nk3lt")
 
-[sub_resource type="GDScript" id="GDScript_6c3q6"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_d0ran"]
+radius = 128.016
+
+[sub_resource type="GDScript" id="GDScript_jthv3"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from, to):
-	return Color.GREEN if G.at(\"hasFood\") else Color.SANDY_BROWN
+func run(other, direction, from):
+	print(\"I smell food\")
+	G.put(\"detectedFood\", other)
 "
 
-[sub_resource type="Resource" id="Resource_4fcfu"]
+[sub_resource type="Resource" id="Resource_y1hxw"]
 script = ExtResource("5_28kmq")
-nested_script = SubResource("GDScript_6c3q6")
-argument_names = ["delta", "from", "to"]
-return_value = true
+nested_script = SubResource("GDScript_jthv3")
+argument_names = ["other", "direction", "from"]
+return_value = false
 
-[sub_resource type="GDScript" id="GDScript_m2guo"]
+[sub_resource type="GDScript" id="GDScript_rci7k"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from, to):
-	return true
+func run(other, direction, from):
+	return other.name.begins_with(\"Food\")
 "
 
-[sub_resource type="Resource" id="Resource_6vkyv"]
+[sub_resource type="Resource" id="Resource_yjwf8"]
 script = ExtResource("5_28kmq")
-nested_script = SubResource("GDScript_m2guo")
-argument_names = ["delta", "from", "to"]
+nested_script = SubResource("GDScript_rci7k")
+argument_names = ["other", "direction", "from"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_t2n4r"]
+[sub_resource type="Resource" id="Resource_l2o4d"]
 script = ExtResource("6_nmkqa")
-signal_name = "always"
-to = NodePath("../Placeholder")
-invoke = "@color_setter"
-arguments = [SubResource("Resource_4fcfu")]
-only_if = SubResource("Resource_6vkyv")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_yjwf8")
+expression = SubResource("Resource_y1hxw")
 deferred = false
 enabled = true
 
@@ -188,7 +192,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(other, direction, from):
-	return other is CharacterBody2D
+	return other.name.begins_with(\"Ant\")
 "
 
 [sub_resource type="Resource" id="Resource_ee2xm"]
@@ -241,7 +245,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(other, direction, from, to):
-	return true
+	return other.name.begins_with(\"Ant\")
 "
 
 [sub_resource type="Resource" id="Resource_tfglk"]
@@ -260,7 +264,49 @@ only_if = SubResource("Resource_tfglk")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_chmnp"]
+[sub_resource type="GDScript" id="GDScript_xh4bp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	G.put(\"AntState\", \"IDLE\")
+	G.put(\"hasFood\", false)
+	G.put(\"food\", G.at(\"food\")+1)
+	print(\"Deposited food in base\")
+"
+
+[sub_resource type="Resource" id="Resource_gwlw4"]
+script = ExtResource("5_28kmq")
+nested_script = SubResource("GDScript_xh4bp")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_yauoy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	return other is CharacterBody2D and G.at(\"hasFood\")
+"
+
+[sub_resource type="Resource" id="Resource_wlnum"]
+script = ExtResource("5_28kmq")
+nested_script = SubResource("GDScript_yauoy")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_cbc5k"]
+script = ExtResource("6_nmkqa")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_wlnum")
+expression = SubResource("Resource_gwlw4")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_teeoo"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -268,19 +314,19 @@ func run(prop, value, from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_okv0i"]
+[sub_resource type="Resource" id="Resource_0v0vh"]
 script = ExtResource("5_28kmq")
-nested_script = SubResource("GDScript_chmnp")
+nested_script = SubResource("GDScript_teeoo")
 argument_names = ["prop", "value", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_g0jwn"]
+[sub_resource type="Resource" id="Resource_qtj77"]
 script = ExtResource("6_nmkqa")
 signal_name = "changed"
 to = NodePath("../Ant")
 invoke = "evaluate_state"
 arguments = []
-only_if = SubResource("Resource_okv0i")
+only_if = SubResource("Resource_0v0vh")
 deferred = false
 enabled = true
 
@@ -296,12 +342,11 @@ layer_0/tile_data = PackedInt32Array(0, 196608, 1, 65536, 196608, 1, 65537, 1966
 position = Vector2(275, 129)
 motion_mode = 1
 script = ExtResource("1_bsxlv")
-movement_speed = 100.0
 target = NodePath("../Food")
 navigation_agent = NodePath("NavigationAgent2D")
-base = NodePath("../Area2D/Placeholder")
+base = NodePath("../Base")
 
-[node name="Placeholder" type="Node2D" parent="Ant"]
+[node name="Body" type="Node2D" parent="Ant"]
 script = ExtResource("2_isqvl")
 label = "Ant"
 color = Color(0.760784, 0.490196, 0.0313726, 1)
@@ -314,15 +359,22 @@ debug_enabled = true
 [node name="Camera2D" type="Camera2D" parent="Ant"]
 zoom = Vector2(2, 2)
 
-[node name="Always" type="Node2D" parent="Ant"]
-position = Vector2(3, -28)
-script = ExtResource("4_32w7e")
-metadata/pronto_connections = [SubResource("Resource_t2n4r")]
+[node name="Smell" type="Area2D" parent="Ant"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ant/Smell"]
+shape = SubResource("CircleShape2D_d0ran")
+
+[node name="Collision" type="Node2D" parent="Ant/Smell"]
+position = Vector2(-43, 15)
+script = ExtResource("4_1r5fj")
+metadata/pronto_connections = [SubResource("Resource_l2o4d")]
 
 [node name="Food" type="Area2D" parent="."]
 position = Vector2(412, 224)
 
-[node name="Placeholder" type="Node2D" parent="Food"]
+[node name="FoodPlaceholder" type="Node2D" parent="Food"]
+light_mask = 3
+visibility_layer = 3
 script = ExtResource("2_isqvl")
 label = "Food"
 color = Color(0.192157, 0.847059, 0.407843, 1)
@@ -350,7 +402,7 @@ script = ExtResource("4_dq7x4")
 script = ExtResource("5_lktaa")
 selectType = "Enum"
 enum_choices = Array[String](["IDLE", "GATHERING_FOOD", "RETURNING_TO_BASE"])
-enum_value = "GATHERING_FOOD"
+enum_value = "IDLE"
 
 [node name="Background" type="Node2D" parent="."]
 position = Vector2(-282.209, -282.209)
@@ -359,16 +411,22 @@ color = Color(0.603922, 0.584314, 0.592157, 1)
 
 [node name="Walls" type="Node2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Base" type="Area2D" parent="."]
 position = Vector2(42, 41)
 
-[node name="Placeholder" type="Node2D" parent="Area2D"]
+[node name="Placeholder" type="Node2D" parent="Base"]
 script = ExtResource("2_isqvl")
 label = "Base"
 color = Color(0.819608, 0.854902, 0.133333, 1)
+
+[node name="Collision" type="Node2D" parent="Base"]
+position = Vector2(32, -25)
+script = ExtResource("4_1r5fj")
+metadata/pronto_connections = [SubResource("Resource_cbc5k")]
 
 [node name="State" type="Node2D" parent="."]
 position = Vector2(410, -22)
 script = ExtResource("12_rhd3a")
 global = true
-metadata/pronto_connections = [SubResource("Resource_g0jwn")]
+metadata/pronto_connections = [SubResource("Resource_qtj77")]
+metadata/food = 0

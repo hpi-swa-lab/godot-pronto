@@ -1,10 +1,17 @@
 extends CharacterBody2D
 
-@export var movement_speed: float = 200.0
+@export var movement_speed: float = 50.0
+@export var carrying_movement_speed: float = 25.0
 
 @export var target: Node2D
 @export var navigation_agent: NavigationAgent2D
 @export var base: Node2D
+
+var tile_size = 16
+var idle_distance = tile_size * 3
+var timeout_between_idle_actions = 2
+
+# could we have built a state machine with pronto?
 
 # WARNING: NavigationRegion2D has a huge issue atm
 #          it doesn't take the actor's size into account
@@ -38,7 +45,23 @@ func evaluate_state():
 	elif G.at("AntState") == "IDLE":
 		# idle
 		navigation_agent.target_position = self.global_position
-		# todo: move to a random next tile and wait for a moment
+		# check for food in range
+		if G.at("detectedFood"):
+			target = G.at("detectedFood")
+			G.put("AntState", "GATHERING_FOOD")
+			G.put("detectedFood", null) 
+		
+		if randi_range(0, 10) < 6:
+			# randomly select if we want to move half of the time
+			var rand_direction = Vector2(randf_range(-idle_distance, idle_distance),randf_range(-idle_distance, idle_distance))
+			set_movement_target(global_position + rand_direction)
+		
+		# warning: the following await will trigger independent of movement completion
+		# e.g. if next target takes longer than timeout_between_idle_actions to reach,
+		# a new idle command might be issued
+		await get_tree().create_timer(timeout_between_idle_actions).timeout
+		evaluate_state() 
+			
 	else:
 		push_error("Ant " + str(self.name) + " has an invalid state: " + G.at("AntState"))	
 	
@@ -60,8 +83,11 @@ func _physics_process(delta):
 	
 	var new_velocity: Vector2 = next_path_pos - current_agent_position
 	new_velocity = new_velocity.normalized()
-	new_velocity = new_velocity * movement_speed
-	
+	if G.at("hasFood"):
+		# reduce movement speed when carrying food
+		new_velocity = new_velocity * carrying_movement_speed
+	else:
+		new_velocity = new_velocity * movement_speed
 	velocity = new_velocity
 	move_and_slide()
 	look_at(next_path_pos)		
