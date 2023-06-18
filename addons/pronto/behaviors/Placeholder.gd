@@ -95,5 +95,5 @@ func handles():
 			Utils.icon_from_theme("EditorHandle", self),
 			self,
 			"placeholder_size",
-			func (coord): return (floor(coord * 2) * transform).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+			func (coord): return (floor(coord * 2) * transform.translated(-position)).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
