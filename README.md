@@ -29,7 +29,7 @@ The following list of behaviors act primarily as triggers of events.
 
 | Behavior | Function                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | -------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Always | Triggers every frame. Analog to Godot's `_process` function.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Always | Triggers every frame. Analog to Godot's `_process` function. Can be paused.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | Clock | Triggers after or for a set time. Can be set to paused and to only trigger once. When looking to trigger for a specific duration the `Trigger Every Frame` property of `Unil Elapsed` needs to be enabled. This will trigger every frame until the timer is elapsed. If you wish to trigger e.g. every second (instead of every frame) you can activate `Trigger Every X Seconds` and set the `Trigger Interval In Seconds` to `1`. Hint: Intervall should not be smaller than typical time between frames (delta). |
 | Key | Triggers when a single keyboard key is pressed or released.                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | Controls | Triggers for mouse interactions and offers a convenient set of triggers for keyboard movement. Exact keybindings are chosen via the `Player` property which allows for up to 3 different controls (Player 1: `Arrowkeys`, Player 2: `WASD`, Player 3: `IJKL`).                                                                                                                                                                                                                                                      |
@@ -75,11 +75,18 @@ The following list of behaviors manage state or communicate visual properties.
 Connections are an extension of Godot signals to be more flexible. Connections can be dragged from any behavior to any arbitrary node in a scene. They are the primary means to assemble your game by wiring Behaviors together.
 
 * Creating
-    * Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
-    * The type `target`, is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `two`.
-    * The type `expression` allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
+	* Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
+	* The type `target`, is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `two`.
+	* The type `expression` allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
+* Editing
+	* You can define a condition for the connection to trigger by entering a Godot expression in condition field. You may refer to `from` and `to` in the expression.
+	* You can disable a connection by unticking the checkbox in the top-right or in its context menu.
+	* You can also pin a connection editor so that it remains in the scene after saving them. You can click and drag editors in the scene as well.
+* Reordering
+    * From the context menu of a connection, choose "Move to top".
 * Deleting
-    * Open the connection, then click on the trash icon in the top-right.
+	* Open the connection, then click on the trash icon in the top-right.
+	* Alternatively, right-click the connection and choose "Delete".
 
 ### Expressions
 
@@ -95,16 +102,16 @@ Pronto scatters code throughout the scene to be as close to the place where it i
 
 ### Common Pitfalls
 * PhysicsBody2D
-    * Collisions only work when contact monitor is on and the max contacts is at least 1.
-    * PhysicsBody2D does not report collisions with Area2D. Instead, listen for collisions with the PhysicsBody on the Area.
+	* Collisions only work when contact monitor is on and the max contacts is at least 1.
+	* PhysicsBody2D does not report collisions with Area2D. Instead, listen for collisions with the PhysicsBody on the Area.
 * StaticBody
-    * Does not support reporting collisions at all in Godot. You can instead listen for collisions on the other collision partner.
+	* Does not support reporting collisions at all in Godot. You can instead listen for collisions on the other collision partner.
 * Connections
-    * The `$` shorthand of GDScript does not work. Use get_node() instead.
-    * `self` is sadly not defined in connections. Use `from` and `to` instead, or make use of any of `U`'s helpers (which are relative to `from`).
-    * Moving nodes around will break connections.
+	* The `$` shorthand of GDScript does not work. Use get_node() instead.
+	* `self` is sadly not defined in connections. Use `from` and `to` instead, or make use of any of `U`'s helpers (which are relative to `from`).
+	* Moving nodes around will break connections.
 * Instance
-    * Be careful if you used the "Editable Children" option to modify nodes in an instanced subtree and then move the corresponding nodes in the template. Your modifications will be lost.
+	* Be careful if you used the "Editable Children" option to modify nodes in an instanced subtree and then move the corresponding nodes in the template. Your modifications will be lost.
 
 ### Video Changelog
 
@@ -131,15 +138,15 @@ extends Behavior
 ### When do I have to reload what?
 
 * Re-enable the plugin (go to Project>Settings>Plugins and toggle Pronto off and on)
-    * When creating a completely new `Behavior` file.
+	* When creating a completely new `Behavior` file.
 * Re-open the scene to update existing Behaviors
-    * When changing a `_ready` function.
-    * When creating a new `_process` function.
+	* When changing a `_ready` function.
+	* When creating a new `_process` function.
 * Switch scenes back and forth
-    * When updating a `_draw` function if no one calls `queue_redraw`.
+	* When updating a `_draw` function if no one calls `queue_redraw`.
 * If everything goes wrong :-)
-    * Reload the project from the main menu > Project > Reload Current Project
-    * TODO: reproduce in which cases this is necessary
+	* Reload the project from the main menu > Project > Reload Current Project
+	* TODO: reproduce in which cases this is necessary
 
 #### Helpers
 

@@ -16,7 +16,15 @@ func _ready():
 		
 		# spawn slightly offset from parent
 		if position == Vector2.ZERO:
-			position = Vector2(0, 30).rotated(get_parent().get_child_count() * PI / 4)
+			var parent = get_parent()
+			var parent_rect = Utils.global_rect_of(parent)
+			var parent_full_rect = parent.get_children() \
+				.filter(func(child): return child != self) \
+				.map(func(child): return Utils.global_rect_of(child)) \
+				.reduce(func(a, b): return a.merge(b), parent_rect)
+			
+			var radius = (parent_full_rect.size.length() + Utils.global_rect_of(self).size.length()) / 2
+			position = Vector2(0, radius).rotated(get_parent().get_child_count() * PI / 4)
 
 func is_active_scene() -> bool:
 	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
@@ -31,6 +39,7 @@ func connect_ui():
 	return null
 
 func _process(delta):
+	Connection.garbage_collect(self)
 	if _lines._needs_update(lines()):
 		queue_redraw()
 
@@ -58,9 +67,12 @@ func connection_activated(c: Connection):
 			current.kill()
 	var t = create_tween()
 	_running_tweens[c] = t
-	if current == null:
-		t.tween_method(flash_line.bind(c), 0.0, 1.0, 0.2)
-	t.tween_method(flash_line.bind(c), 1.0, 0.0, 0.2)
+	t.tween_method(
+		flash_line.bind(c, 'activated'),
+		0.0 if current == null else 1.0,
+		1.0 if current == null else 0.0,
+		0.2
+	)
 	
 # duplicating as Godot does not support overloading
 # see: https://github.com/godotengine/godot-proposals/issues/1571
@@ -74,20 +86,23 @@ func highlight_activated(c: Connection):
 		current.kill()
 	var t = create_tween()
 	_running_highlight_tweens[c] = t
-	t.tween_method(flash_line.bind(c), 1.0, 0.0, duration)
+	t.tween_method(flash_line.bind(c, 'highlight'), 1.0, 0.0, duration)
 
-func flash_line(value: float, key: Variant):
-	_lines.flash_line(value, key)
+func flash_line(value: float, key: Variant, type: String):
+	_lines.flash_line(key, type, value)
 	queue_redraw()
 
-func lines():
+func lines() -> Array:
 	return Connection.get_connections(self).map(func (connection):
-		if not connection.is_target():
-			return Lines.Line.new(self, self, func (flipped): return connection.print(flipped), connection)
-		else:
-			var other = get_node_or_null(connection.to)
-			if not other: return null
-			return Lines.Line.new(self, other, func (flipped): return connection.print(flipped), connection))
+		var other = self if not connection.is_target() else get_node_or_null(connection.to)
+		if other == null:
+			return null
+		connection.changed_enabled.connect(func(new_state): 
+			_lines.set_enabled(new_state, connection)
+			queue_redraw()
+		)
+		return Lines.Line.new(self, other, func (flipped): return connection.print(flipped), connection)
+	).filter(func (connection): return connection != null)
 
 func _draw():
 	if not Engine.is_editor_hint() or not _icon or not is_inside_tree():

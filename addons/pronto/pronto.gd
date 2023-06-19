@@ -85,7 +85,7 @@ func _edit(object):
 		close()
 
 func close():
-	if popup: popup.queue_free()
+	if popup and is_instance_valid(popup): popup.queue_free()
 	popup = null
 
 func _make_visible(visible):

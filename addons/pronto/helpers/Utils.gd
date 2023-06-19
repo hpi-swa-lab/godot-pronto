@@ -105,8 +105,14 @@ static func closest_parent_that(node: Node, cond: Callable) -> Node:
 	return null
 
 static func spawn_popup_from_canvas(reference: Node, popup: Node):
-	reference.get_viewport().get_parent().get_parent().get_parent().get_parent().get_parent().add_child(popup, false, Node.INTERNAL_MODE_BACK)
+	popup_parent(reference).add_child(popup, false, Node.INTERNAL_MODE_BACK)
 	popup.position = popup_position(parent_that(reference, func (c): return Utils.has_position(c)))
+
+static func popup_parent(reference: Node):
+	var viewport = reference.get_viewport()
+	if not viewport:
+		return null
+	return viewport.get_parent().get_parent().get_parent().get_parent().get_parent()
 
 static func popup_position(anchor: Node):
 	return anchor.get_viewport_transform() * anchor.global_position
@@ -183,6 +189,7 @@ static func global_size_of_yourself(node: Node):
 
 static func global_rect_of(node: Node):
 	node = Utils.closest_parent_with_position(node)
+	if node is Placeholder: return Rect2(node.global_position - node.size / 2, node.size)
 	if "size" in node: return Rect2(node.global_position, node.size)
 	if "shape" in node and node.shape:
 		var s = node.shape.get_rect().size
