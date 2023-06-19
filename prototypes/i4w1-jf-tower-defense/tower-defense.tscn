@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://da42rhb2vls1m"]
+[gd_scene load_steps=70 format=3 uid="uid://da42rhb2vls1m"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_5i2nd"]
 [ext_resource type="Script" path="res://prototypes/i4w1-jf-tower-defense/tower-defense.gd" id="1_wa5o0"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_s3v3w"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRoot.gd" id="8_2r0ku"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="11_2imrd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="12_laxul"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="13_wys14"]
 
 [sub_resource type="GDScript" id="GDScript_e5la8"]
 script/source = "@tool
@@ -249,6 +251,24 @@ only_if = SubResource("Resource_i8j3n")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_bh8r6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	var rng = RandomNumberGenerator.new()
+	var rndX = rng.randi_range(575, 1150)
+	var rndY = rng.randi_range(0, 650)
+	return Vector2(rndX, rndY)
+	
+"
+
+[sub_resource type="Resource" id="Resource_vdxoq"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_bh8r6")
+argument_names = ["result", "from", "to"]
+return_value = true
+
 [sub_resource type="GDScript" id="GDScript_fwwrg"]
 script/source = "@tool
 extends U
@@ -267,8 +287,8 @@ return_value = true
 script = ExtResource("4_0nawf")
 signal_name = "after"
 to = NodePath("../../../EnemySpawner")
-invoke = "spawn"
-arguments = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_vdxoq")]
 only_if = SubResource("Resource_xtm80")
 deferred = false
 enabled = true
@@ -277,6 +297,138 @@ enabled = true
 vertices = PackedVector2Array(-106, 694, 121, 387, 1029, 379, 1130, 379, 1199, 747, 1229, -31, 1128, 277, 20, 287, -29, -36, 1029, 279, 121, 287, 20, 387)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 4, 3, 6), PackedInt32Array(7, 8, 5, 6, 9, 10), PackedInt32Array(11, 1, 0), PackedInt32Array(11, 0, 8, 7), PackedInt32Array(10, 9, 2, 1)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(20, 287, 121, 287, 121, 387, 20, 387), PackedVector2Array(1029, 279, 1128, 277, 1130, 379, 1029, 379), PackedVector2Array(-29, -36, 1229, -31, 1199, 747, -106, 694)])
+
+[sub_resource type="GDScript" id="GDScript_lhnjy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return \"player_money\"
+"
+
+[sub_resource type="Resource" id="Resource_mssep"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_lhnjy")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_15k8m"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return G.at(\"money_inc\")
+"
+
+[sub_resource type="Resource" id="Resource_2bsfd"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_15k8m")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4kn6d"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bgev6"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_4kn6d")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ysxx3"]
+script = ExtResource("4_0nawf")
+signal_name = "elapsed"
+to = NodePath("State")
+invoke = "inc"
+arguments = [SubResource("Resource_mssep"), SubResource("Resource_2bsfd")]
+only_if = SubResource("Resource_bgev6")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_pi21n"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return \"enemy_money\"
+"
+
+[sub_resource type="Resource" id="Resource_hjy35"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_pi21n")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_2aeug"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return G.at(\"money_inc\")
+"
+
+[sub_resource type="Resource" id="Resource_b33gw"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_2aeug")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_v404y"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fv1ib"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_v404y")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3dbip"]
+script = ExtResource("4_0nawf")
+signal_name = "elapsed"
+to = NodePath("State")
+invoke = "inc"
+arguments = [SubResource("Resource_hjy35"), SubResource("Resource_b33gw")]
+only_if = SubResource("Resource_fv1ib")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_6d4hq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return \"$ \" + str(G.at(\"player_money\"))
+"
+
+[sub_resource type="Resource" id="Resource_dyfov"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_6d4hq")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_fn84l"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return str(G.at(\"enemy_money\")) + \" $\"
+"
+
+[sub_resource type="Resource" id="Resource_dsti8"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_fn84l")
+argument_names = []
+return_value = true
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_wa5o0")
@@ -395,7 +547,7 @@ evaluate = SubResource("Resource_5yemp")
 metadata/pronto_connections = [SubResource("Resource_tnr71")]
 
 [node name="Spawn Enemy" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(97, 37)
+position = Vector2(292, 38)
 script = ExtResource("3_1dipl")
 evaluate = SubResource("Resource_5yemp")
 metadata/pronto_connections = [SubResource("Resource_a3h3y")]
@@ -408,6 +560,54 @@ float_to = 500.0
 float_value = 250.0
 float_step_size = 1.0
 
+[node name="money_inc" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(1.48786e-05, -170.191)
+script = ExtResource("11_2imrd")
+float_from = 1.0
+float_to = 100.0
+float_value = 10.0
+float_step_size = 1.0
+
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_l2jg2")
+
+[node name="MoneyClock" type="Node2D" parent="."]
+position = Vector2(-185, 83)
+script = ExtResource("7_s3v3w")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_ysxx3"), SubResource("Resource_3dbip")]
+
+[node name="State" type="Node2D" parent="MoneyClock"]
+position = Vector2(104, -2)
+script = ExtResource("12_laxul")
+global = true
+metadata/player_money = 0.0
+metadata/enemy_money = 0.0
+
+[node name="MoneyLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 611.0
+offset_right = 163.0
+offset_bottom = 637.0
+text = "$"
+
+[node name="Bind" type="Node2D" parent="MoneyLabel"]
+position = Vector2(-52.779, 52.779)
+script = ExtResource("13_wys14")
+evaluate = SubResource("Resource_dyfov")
+to_prop = "text"
+
+[node name="EnemyMoneyLabel" type="Label" parent="."]
+offset_left = 989.0
+offset_top = 607.0
+offset_right = 1136.0
+offset_bottom = 633.0
+text = "$"
+horizontal_alignment = 2
+
+[node name="Bind" type="Node2D" parent="EnemyMoneyLabel"]
+position = Vector2(-52.779, 52.779)
+script = ExtResource("13_wys14")
+evaluate = SubResource("Resource_dsti8")
+to_prop = "text"

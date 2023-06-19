@@ -67,11 +67,10 @@ func set_attacker(node: CharacterBody2D):
 func attacker_in_range(node: CharacterBody2D):
 	if node.target == null:
 		set_attacker(node)
-	if node.target == self:
+	if node.target == self and attacker != null:
 		apply_damage(attacker.damage)
 
 func apply_damage(amount: float):
-	print("take damage")
 	health = max(0, health - amount)
 	if health == 0:
 		die()
