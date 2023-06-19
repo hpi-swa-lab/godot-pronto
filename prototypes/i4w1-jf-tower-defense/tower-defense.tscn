@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://da42rhb2vls1m"]
+[gd_scene load_steps=48 format=3 uid="uid://da42rhb2vls1m"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_5i2nd"]
 [ext_resource type="Script" path="res://prototypes/i4w1-jf-tower-defense/tower-defense.gd" id="1_wa5o0"]
@@ -70,7 +70,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from, to):
-	return func(from, node): node.damage(from.get_parent().damage)
+	return func(from, node): node.attacker_in_range(from.get_parent())
 "
 
 [sub_resource type="Resource" id="Resource_kniyk"]
@@ -128,6 +128,86 @@ to = NodePath("../SceneRoot")
 invoke = "apply_within_dist"
 arguments = [SubResource("Resource_pnno7"), SubResource("Resource_kniyk"), SubResource("Resource_ueaot"), SubResource("Resource_ss1it")]
 only_if = SubResource("Resource_obfro")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_bcrhr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return \"troop\"
+"
+
+[sub_resource type="Resource" id="Resource_s8ch6"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_bcrhr")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_j5up4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return func(from, node): node.attacker_in_range(from.get_parent())
+"
+
+[sub_resource type="Resource" id="Resource_lesna"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_j5up4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_kv6wp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return get_parent().global_position
+"
+
+[sub_resource type="Resource" id="Resource_cls0h"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_kv6wp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_o6bbw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return G.at(\"range\")
+"
+
+[sub_resource type="Resource" id="Resource_2m3kv"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_o6bbw")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_08htg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_lpf8q"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_08htg")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_hbtlc"]
+script = ExtResource("4_0nawf")
+signal_name = "elapsed"
+to = NodePath("../SceneRoot")
+invoke = "apply_within_dist"
+arguments = [SubResource("Resource_s8ch6"), SubResource("Resource_lesna"), SubResource("Resource_cls0h"), SubResource("Resource_2m3kv")]
+only_if = SubResource("Resource_lpf8q")
 deferred = false
 enabled = true
 
@@ -201,12 +281,28 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(20, 287, 121, 287, 121,
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_wa5o0")
 
+[node name="BlueField" type="Area2D" parent="."]
+position = Vector2(288, 326)
+
+[node name="Placeholder" type="Node2D" parent="BlueField"]
+script = ExtResource("1_5i2nd")
+color = Color(0, 1, 1, 0.305882)
+placeholder_size = Vector2(575, 650)
+
+[node name="BlueField2" type="Area2D" parent="."]
+position = Vector2(865, 326)
+
+[node name="Placeholder" type="Node2D" parent="BlueField2"]
+script = ExtResource("1_5i2nd")
+color = Color(1, 0, 0, 0.305882)
+placeholder_size = Vector2(575, 650)
+
 [node name="MyCastle" type="StaticBody2D" parent="."]
 position = Vector2(71, 337)
 
 [node name="Placeholder" type="Node2D" parent="MyCastle"]
 script = ExtResource("1_5i2nd")
-label = "MyCastle"
+label = "    You"
 color = Color(0.196078, 0.454902, 0.882353, 1)
 placeholder_size = Vector2(100, 100)
 
@@ -215,7 +311,7 @@ position = Vector2(1080, 328)
 
 [node name="Placeholder" type="Node2D" parent="EnemyCastle"]
 script = ExtResource("1_5i2nd")
-label = "EnemyCastle"
+label = "   Enemy"
 color = Color(0.701961, 0, 0.164706, 1)
 placeholder_size = Vector2(100, 100)
 
@@ -224,15 +320,16 @@ position = Vector2(90, 121)
 script = ExtResource("2_2kynd")
 metadata/pronto_connections = [SubResource("Resource_u03uj")]
 
-[node name="Troop" type="CharacterBody2D" parent="Spawner" node_paths=PackedStringArray("target") groups=["selectable"]]
+[node name="Troop" type="CharacterBody2D" parent="Spawner" node_paths=PackedStringArray("target_location") groups=["selectable", "troop"]]
 position = Vector2(33, 40)
 script = ExtResource("5_lwmg1")
 speed = 80
-target = NodePath("../../EnemyCastle")
+target_location = NodePath("../../EnemyCastle")
+color = Color(0, 0, 1, 1)
 
 [node name="Placeholder" type="Node2D" parent="Spawner/Troop"]
 script = ExtResource("1_5i2nd")
-color = Color(0.360784, 0.494118, 0.952941, 1)
+color = Color(0, 0, 1, 1)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Spawner/Troop"]
 avoidance_enabled = true
@@ -255,11 +352,13 @@ position = Vector2(984, 39)
 script = ExtResource("2_2kynd")
 metadata/pronto_connections = [SubResource("Resource_u03uj")]
 
-[node name="Enemy" type="CharacterBody2D" parent="EnemySpawner" node_paths=PackedStringArray("target") groups=["enemy"]]
+[node name="Enemy" type="CharacterBody2D" parent="EnemySpawner" node_paths=PackedStringArray("target_location") groups=["enemy", "selectable"]]
 position = Vector2(33, 40)
 script = ExtResource("5_lwmg1")
 speed = 80
-target = NodePath("../../MyCastle")
+health = 50
+target_location = NodePath("../../MyCastle")
+color = Color(1, 0, 0, 1)
 
 [node name="Placeholder" type="Node2D" parent="EnemySpawner/Enemy"]
 script = ExtResource("1_5i2nd")
@@ -270,6 +369,16 @@ avoidance_enabled = true
 radius = 114.6
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="EnemySpawner/Enemy"]
+
+[node name="Clock" type="Node2D" parent="EnemySpawner/Enemy"]
+position = Vector2(38, -15)
+script = ExtResource("7_s3v3w")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_hbtlc")]
+
+[node name="SceneRoot" type="Node2D" parent="EnemySpawner/Enemy"]
+position = Vector2(28, 20)
+script = ExtResource("8_2r0ku")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_right = 319.0

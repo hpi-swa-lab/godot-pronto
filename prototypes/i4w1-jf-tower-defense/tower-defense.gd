@@ -15,7 +15,8 @@ func _unhandled_input(event):
 				drag_start = event.position
 			else:
 				for item in selected:
-					item.set_move_target(event.position)
+					if item != null:
+						item.set_move_target(event.position)
 				selected = []
 		elif dragging:
 			dragging = false
@@ -39,7 +40,7 @@ func _unhandled_input(event):
 func _draw():
 	if dragging:
 		draw_rect(Rect2(drag_start, get_global_mouse_position() - drag_start),
-				Color(.5, .5, .5), false)
+				Color("03b100"), false)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
