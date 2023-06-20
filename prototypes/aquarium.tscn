@@ -1,30 +1,35 @@
-[gd_scene load_steps=12 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=32 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="3_gnudj"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="4_2klxd"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_qdmir"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_6mxix"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="3_uwe38"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_by7o2"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_7l3rf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_spvgy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="6_y8438"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="7_bf3ce"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_jf3wf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="10_ftdv1"]
 
-[sub_resource type="GDScript" id="GDScript_54c8v"]
+[sub_resource type="GDScript" id="GDScript_d0ggo"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from, to):
+	var screenSize = to.get_viewport().get_visible_rect().size
 	var rng = RandomNumberGenerator.new()
-	from.duration_seconds = rng.randf_range(10,30)
-	from.reset_and_start()
-	return Vector2(rng.randf_range(0,600),550)
+	var rndX = rng.randi_range(0, screenSize.x)
+	var rndY = rng.randi_range(0, screenSize.y)
+	return Vector2(rndX,rndY) - to.get_parent().global_position
 "
 
-[sub_resource type="Resource" id="Resource_dak1b"]
-script = ExtResource("5_qdmir")
-nested_script = SubResource("GDScript_54c8v")
+[sub_resource type="Resource" id="Resource_qlbdw"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_d0ggo")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_wppg4"]
+[sub_resource type="GDScript" id="GDScript_8e837"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -32,19 +37,147 @@ func run(from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_w5kbb"]
-script = ExtResource("5_qdmir")
-nested_script = SubResource("GDScript_wppg4")
+[sub_resource type="Resource" id="Resource_p8gay"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_8e837")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_dumdv"]
-script = ExtResource("6_6mxix")
+[sub_resource type="Resource" id="Resource_gxck4"]
+script = ExtResource("5_7l3rf")
 signal_name = "elapsed"
-to = NodePath("../Spawner")
+to = NodePath("..")
+invoke = "set_velocity"
+arguments = [SubResource("Resource_qlbdw")]
+only_if = SubResource("Resource_p8gay")
+deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_s4lps"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_pbtqc"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_s4lps")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jkuw4"]
+script = ExtResource("5_7l3rf")
+signal_name = "elapsed"
+to = NodePath(".")
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_pbtqc")
+deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_16kjs"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	var screenSize = to.get_viewport().get_visible_rect().size
+	var rng = RandomNumberGenerator.new()
+	var rndX = rng.randi_range(0, screenSize.x)
+	var rndY = rng.randi_range(0, screenSize.y)
+	return (Vector2(rndX,rndY) - to.get_parent().global_position).normalized() * G.at(\"fishy_speed\")
+"
+
+[sub_resource type="Resource" id="Resource_xo8hi"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_16kjs")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_pwyiv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8yaxn"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_pwyiv")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_fp5qh"]
+script = ExtResource("5_7l3rf")
+signal_name = "elapsed"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = [SubResource("Resource_xo8hi")]
+only_if = SubResource("Resource_8yaxn")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_u0aip"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_b8ojh"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_u0aip")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_i8wha"]
+script = ExtResource("5_7l3rf")
+signal_name = "elapsed"
+to = NodePath("..")
+invoke = "move_and_slide"
+arguments = []
+only_if = SubResource("Resource_b8ojh")
+deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_mtmk2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from, to):
+	return pos
+"
+
+[sub_resource type="Resource" id="Resource_hvscs"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_mtmk2")
+argument_names = ["pos", "button", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_6ji51"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ub288"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_6ji51")
+argument_names = ["pos", "button", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_cb5sb"]
+script = ExtResource("5_7l3rf")
+signal_name = "mouse_down"
+to = NodePath("../FishySpawner")
 invoke = "spawn_at"
-arguments = [SubResource("Resource_dak1b")]
-only_if = SubResource("Resource_w5kbb")
+arguments = [SubResource("Resource_hvscs")]
+only_if = SubResource("Resource_ub288")
 deferred = false
 enabled = true
 
@@ -62,20 +195,45 @@ scale = Vector2(67, 1.96)
 script = ExtResource("2_twtba")
 color = Color(0.521569, 0.34902, 0.141176, 1)
 
-[node name="Spawner" type="Node2D" parent="."]
-script = ExtResource("3_gnudj")
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 245.0
+offset_bottom = 166.0
 
-[node name="Algae" type="Area2D" parent="Spawner"]
+[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
+position = Vector2(5.235e-05, -598.815)
+script = ExtResource("7_bf3ce")
 
-[node name="Placeholder" type="Node2D" parent="Spawner/Algae"]
-script = ExtResource("2_twtba")
-color = Color(0.184314, 0.4, 0.0823529, 1)
-placeholder_size = Vector2(20, 60)
+[node name="fishy_speed" type="Node2D" parent="PanelContainer/PrototypingUI"]
+script = ExtResource("8_jf3wf")
+float_from = 0.0
+float_to = 1.0
+float_value = 0.0
+float_step_size = 0.1
 
-[node name="Clock" type="Node2D" parent="."]
-position = Vector2(-103, -52)
-script = ExtResource("4_2klxd")
-one_shot = true
-trigger_every_x_seconds = true
+[node name="FishySpawner" type="Node2D" parent="."]
+position = Vector2(354, -224)
+script = ExtResource("5_spvgy")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="FishySpawner"]
+position = Vector2(170.574, 714.426)
+
+[node name="Clock" type="Node2D" parent="FishySpawner/CharacterBody2D"]
+position = Vector2(-83, -7)
+script = ExtResource("3_uwe38")
+duration_seconds = 3.0
 trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_dumdv")]
+metadata/pronto_connections = [SubResource("Resource_gxck4"), SubResource("Resource_jkuw4"), SubResource("Resource_fp5qh"), SubResource("Resource_i8wha")]
+
+[node name="Placeholder" type="Node2D" parent="FishySpawner/CharacterBody2D"]
+script = ExtResource("2_twtba")
+color = Color(1, 0.317647, 0, 1)
+
+[node name="Move" type="Node2D" parent="FishySpawner/CharacterBody2D"]
+position = Vector2(-33.6322, -33.6322)
+script = ExtResource("6_y8438")
+friction = 0.0
+
+[node name="Controls" type="Node2D" parent="."]
+position = Vector2(528, 68)
+script = ExtResource("10_ftdv1")
+metadata/pronto_connections = [SubResource("Resource_cb5sb")]
