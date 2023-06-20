@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=66 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
@@ -14,72 +14,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="11_5bwvg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="12_06af0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="14_mkqs2"]
-
-[sub_resource type="GDScript" id="GDScript_d0ggo"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
-	var screenSize = to.get_viewport().get_visible_rect().size
-	var rng = RandomNumberGenerator.new()
-	var rndX = rng.randi_range(0, screenSize.x)
-	var rndY = rng.randi_range(0, screenSize.y)
-	return Vector2(rndX,rndY) - to.get_parent().global_position
-"
-
-[sub_resource type="Resource" id="Resource_qlbdw"]
-script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_d0ggo")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_8e837"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_p8gay"]
-script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_8e837")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_gxck4"]
-script = ExtResource("5_7l3rf")
-signal_name = "elapsed"
-to = NodePath("..")
-invoke = "set_velocity"
-arguments = [SubResource("Resource_qlbdw")]
-only_if = SubResource("Resource_p8gay")
-deferred = false
-enabled = false
-
-[sub_resource type="GDScript" id="GDScript_s4lps"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_pbtqc"]
-script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_s4lps")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_jkuw4"]
-script = ExtResource("5_7l3rf")
-signal_name = "elapsed"
-to = NodePath(".")
-invoke = "reset_and_start"
-arguments = []
-only_if = SubResource("Resource_pbtqc")
-deferred = false
-enabled = false
 
 [sub_resource type="GDScript" id="GDScript_16kjs"]
 script/source = "@tool
@@ -122,30 +56,6 @@ arguments = [SubResource("Resource_xo8hi")]
 only_if = SubResource("Resource_8yaxn")
 deferred = false
 enabled = true
-
-[sub_resource type="GDScript" id="GDScript_u0aip"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_b8ojh"]
-script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_u0aip")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_i8wha"]
-script = ExtResource("5_7l3rf")
-signal_name = "elapsed"
-to = NodePath("..")
-invoke = "move_and_slide"
-arguments = []
-only_if = SubResource("Resource_b8ojh")
-deferred = false
-enabled = false
 
 [sub_resource type="GDScript" id="GDScript_07o1n"]
 script/source = "@tool
@@ -224,9 +134,87 @@ deferred = false
 enabled = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_55lvm"]
-radius = 74.4526
+radius = 172.483
 
-[sub_resource type="GDScript" id="GDScript_m1cha"]
+[sub_resource type="GDScript" id="GDScript_c25qf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_c8oqo"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_c25qf")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_8gprj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3n541"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_8gprj")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_6ojcb"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../Clock")
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_c8oqo")]
+only_if = SubResource("Resource_3n541")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_kmn31"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return (other.global_position - from.get_parent().global_position).normalized() * G.at(\"fishy_feed_speed\")
+"
+
+[sub_resource type="Resource" id="Resource_p1hp5"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_kmn31")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bc387"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_tyis2"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_bc387")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_81gt1"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../Move")
+invoke = "move_direction"
+arguments = [SubResource("Resource_p1hp5")]
+only_if = SubResource("Resource_tyis2")
+deferred = false
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_umpna"]
+
+[sub_resource type="GDScript" id="GDScript_dhkvw"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -235,13 +223,13 @@ func run(other, direction, from, to):
 	return \"food\"
 "
 
-[sub_resource type="Resource" id="Resource_wgvd6"]
+[sub_resource type="Resource" id="Resource_sbnwg"]
 script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_m1cha")
+nested_script = SubResource("GDScript_dhkvw")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_xv7gp"]
+[sub_resource type="GDScript" id="GDScript_3ict8"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -249,13 +237,13 @@ func run(other, direction, from, to):
 	return 200
 "
 
-[sub_resource type="Resource" id="Resource_ueapo"]
+[sub_resource type="Resource" id="Resource_mbrow"]
 script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_xv7gp")
+nested_script = SubResource("GDScript_3ict8")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_r3mm3"]
+[sub_resource type="GDScript" id="GDScript_n6jj7"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -263,19 +251,57 @@ func run(other, direction, from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_8unss"]
+[sub_resource type="Resource" id="Resource_xhl0c"]
 script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_r3mm3")
+nested_script = SubResource("GDScript_n6jj7")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_smpdg"]
+[sub_resource type="Resource" id="Resource_d6bg4"]
 script = ExtResource("5_7l3rf")
 signal_name = "collided"
 to = NodePath("../../State")
 invoke = "inc"
-arguments = [SubResource("Resource_wgvd6"), SubResource("Resource_ueapo")]
-only_if = SubResource("Resource_8unss")
+arguments = [SubResource("Resource_sbnwg"), SubResource("Resource_mbrow")]
+only_if = SubResource("Resource_xhl0c")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_6frua"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_ys2op"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_6frua")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_cfo6a"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ptu7p"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_cfo6a")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_f02t0"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../Clock")
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_ys2op")]
+only_if = SubResource("Resource_ptu7p")
 deferred = false
 enabled = true
 
@@ -339,7 +365,7 @@ func run(from, to):
 	var rng = RandomNumberGenerator.new()
 	from.duration_seconds = rng.randf_range(10,30)
 	from.reset_and_start()
-	return Vector2(rng.randf_range(0,600),600)
+	return Vector2(rng.randf_range(0,1150),600)
 "
 
 [sub_resource type="Resource" id="Resource_chv3q"]
@@ -381,6 +407,8 @@ script = ExtResource("1_bcm2o")
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(545, 638)
 scale = Vector2(67, 1.96)
+collision_layer = 32768
+collision_mask = 32768
 
 [node name="Placeholder" type="Node2D" parent="Area2D"]
 script = ExtResource("2_twtba")
@@ -401,19 +429,28 @@ float_to = 1.0
 float_value = 0.0
 float_step_size = 0.1
 
+[node name="fishy_feed_speed" type="Node2D" parent="PanelContainer/PrototypingUI"]
+script = ExtResource("8_jf3wf")
+float_from = 0.0
+float_to = 1.0
+float_value = 0.0
+float_step_size = 0.1
+
 [node name="FishySpawner" type="Node2D" parent="."]
 position = Vector2(354, -224)
 script = ExtResource("5_spvgy")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="FishySpawner" groups=["meat"]]
 position = Vector2(170.574, 714.426)
+collision_layer = 4
+collision_mask = 3
 
 [node name="Clock" type="Node2D" parent="FishySpawner/CharacterBody2D"]
 position = Vector2(-83, -7)
 script = ExtResource("3_uwe38")
 duration_seconds = 3.0
 trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_gxck4"), SubResource("Resource_jkuw4"), SubResource("Resource_fp5qh"), SubResource("Resource_i8wha")]
+metadata/pronto_connections = [SubResource("Resource_fp5qh")]
 
 [node name="Placeholder" type="Node2D" parent="FishySpawner/CharacterBody2D"]
 script = ExtResource("2_twtba")
@@ -436,7 +473,7 @@ metadata/food = 2000
 metadata/pronto_connections = [SubResource("Resource_3aqj4")]
 
 [node name="Area2D" type="Area2D" parent="FishySpawner/CharacterBody2D"]
-collision_layer = 2
+collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FishySpawner/CharacterBody2D/Area2D"]
@@ -445,7 +482,19 @@ shape = SubResource("CircleShape2D_55lvm")
 [node name="Collision" type="Node2D" parent="FishySpawner/CharacterBody2D/Area2D"]
 position = Vector2(-105.574, 47.574)
 script = ExtResource("12_06af0")
-metadata/pronto_connections = [SubResource("Resource_smpdg")]
+metadata/pronto_connections = [SubResource("Resource_6ojcb"), SubResource("Resource_81gt1")]
+
+[node name="Area2D2" type="Area2D" parent="FishySpawner/CharacterBody2D"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FishySpawner/CharacterBody2D/Area2D2"]
+shape = SubResource("RectangleShape2D_umpna")
+
+[node name="Collision" type="Node2D" parent="FishySpawner/CharacterBody2D/Area2D2"]
+position = Vector2(28.426, 28.574)
+script = ExtResource("12_06af0")
+metadata/pronto_connections = [SubResource("Resource_d6bg4"), SubResource("Resource_f02t0")]
 
 [node name="Controls" type="Node2D" parent="."]
 position = Vector2(528, 68)
@@ -458,8 +507,8 @@ script = ExtResource("5_spvgy")
 
 [node name="Area2D" type="Area2D" parent="AlgaeSpawner" groups=["veggy"]]
 position = Vector2(0.202026, -7.71299e-06)
-collision_layer = 2
-collision_mask = 2
+collision_layer = 3
+collision_mask = 3
 
 [node name="Placeholder" type="Node2D" parent="AlgaeSpawner/Area2D"]
 script = ExtResource("2_twtba")
