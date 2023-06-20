@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=82 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -474,7 +474,7 @@ nested_script = SubResource("GDScript_82m0q")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_lh4a1"]
+[sub_resource type="GDScript" id="GDScript_geng5"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -482,19 +482,19 @@ func run(from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_rq0hp"]
+[sub_resource type="Resource" id="Resource_0cwou"]
 script = ExtResource("5_drryg")
-nested_script = SubResource("GDScript_lh4a1")
+nested_script = SubResource("GDScript_geng5")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_6akkc"]
+[sub_resource type="Resource" id="Resource_otehx"]
 script = ExtResource("6_j0vsh")
 signal_name = "just_down"
 to = NodePath("..")
 invoke = "spawn_at"
 arguments = [SubResource("Resource_g8dfc")]
-only_if = SubResource("Resource_rq0hp")
+only_if = SubResource("Resource_0cwou")
 deferred = false
 enabled = true
 
@@ -596,6 +596,30 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_s2dky")
 expression = SubResource("Resource_vplfd")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_lh4a1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rq0hp"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_lh4a1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_6akkc"]
+script = ExtResource("6_j0vsh")
+signal_name = "just_down"
+to = NodePath("..")
+invoke = "spawn_at"
+arguments = [SubResource("Resource_g8dfc")]
+only_if = SubResource("Resource_rq0hp")
 deferred = false
 enabled = true
 
@@ -734,7 +758,7 @@ polygon = PackedVector2Array(-7, -7, -10, 0, -6, 8, 0, 10, 6, 8, 10, 0, 8, -6, 0
 position = Vector2(21, 89)
 script = ExtResource("9_adfup")
 key = "H"
-metadata/pronto_connections = [SubResource("Resource_6akkc")]
+metadata/pronto_connections = [SubResource("Resource_otehx")]
 
 [node name="ProgramCounter" type="Area2D" parent="."]
 position = Vector2(-4, 573)
