@@ -504,9 +504,8 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(delta, from, to):
 	var marker = to.get_node(\"%PositionMarker\")
-	to.global_position.y = marker.global_position.y
-
-
+	to.global_position.x = max(10 / 2, min(to.get_viewport().size.x - 10 / 2, to.global_position.x))
+	to.global_position.y = marker.global_position.y + 10
 "
 
 [sub_resource type="Resource" id="Resource_pbkvm"]
@@ -641,7 +640,15 @@ offset_bottom = 171.0
 
 [node name="Label" type="Label" parent="ArmSpawner/Robot/Program"]
 layout_mode = 2
-text = "List1"
+text = "   "
+
+[node name="Label2" type="Label" parent="ArmSpawner/Robot/Program"]
+layout_mode = 2
+text = "Arm"
+
+[node name="Label3" type="Label" parent="ArmSpawner/Robot/Program"]
+layout_mode = 2
+text = "   "
 
 [node name="Instruction" type="OptionButton" parent="ArmSpawner/Robot/Program"]
 layout_mode = 2
@@ -737,7 +744,7 @@ collision_mask = 8
 [node name="Placeholder" type="Node2D" parent="ProgramCounter"]
 position = Vector2(0, 500)
 script = ExtResource("1_cm6jg")
-placeholder_size = Vector2(31, 1000)
+placeholder_size = Vector2(10, 1000)
 keep_in_origin = false
 
 [node name="Always" type="Node2D" parent="ProgramCounter"]
