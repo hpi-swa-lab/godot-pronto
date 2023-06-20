@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1syr2o6gkf6u"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
+
+[node name="aquarium" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_bcm2o")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(545, 638)
+scale = Vector2(67, 1.96)
+
+[node name="Placeholder" type="Node2D" parent="Area2D"]
+script = ExtResource("2_twtba")
+color = Color(0.521569, 0.34902, 0.141176, 1)
