@@ -1,21 +1,29 @@
 extends CharacterBody2D
 
-@export var speed = 50
-
-@export var health = 100
 var max_health: float
 
-@export var damage = 10
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
 @export var target_location: Node2D
 @export var color: Color
 
+@export var range_prop: String = ""
+
 var dead_color: Color
-
 var last_target_position: Vector2
+var target: Node2D = null
+var attacker: Node2D = null
 
-var target: CharacterBody2D = null
-var attacker: CharacterBody2D = null
+@export var speed: float
+@export var health: float
+@export var damage: float
+
+func _ready():
+	dead_color = Color(color.r, color.g, color.b, 0.0)
+	max_health = health
+	if target_location:
+		set_move_target(target_location.global_position)
+	else:
+		set_move_target(self.global_position)
 
 func _physics_process(delta):
 	var dir = to_local(nav_agent.get_next_path_position()).normalized()
@@ -36,26 +44,16 @@ func _draw() -> void:
 		var head : Vector2 = -target_pos.normalized() * 15
 		draw_line(target_pos, target_pos + head.rotated(0.3), clr)
 		draw_line(target_pos, target_pos + head.rotated(-0.3), clr)
-	
-func _ready():
-	dead_color = Color(color.r, color.g, color.b, 0.0)
-	max_health = health
-	if target_location:
-		set_move_target(target_location.global_position)
-	else:
-		set_move_target(self.global_position)
 
 func reset_target():
 	target = null
 	resume_moving()
 	
 func check_if_target_out_of_dist():
-	if target != null and self.global_position.distance_to(target.global_position) > G.at("range"):
+	if target == null or self.global_position.distance_to(target.global_position) > G.at(range_prop):
 		reset_target()
 	
 func die():
-	if attacker != null:
-		attacker.reset_target()
 	queue_free()
 	
 func set_attacker(node: CharacterBody2D):
