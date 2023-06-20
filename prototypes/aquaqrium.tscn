@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d0a41w4o3d3wu"]
+[gd_scene load_steps=13 format=3 uid="uid://c5koanpis2m5y"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_8xs2b"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_hgwhx"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="4_a1u3m"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_ma6te"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_uau76"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="7_5e3ub"]
 
 [sub_resource type="GDScript" id="GDScript_8d1mp"]
 script/source = "@tool
@@ -84,3 +85,20 @@ position = Vector2(-34, -21)
 script = ExtResource("4_a1u3m")
 metadata/pronto_id = 2
 metadata/is_searching = true
+
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(450, 527)
+script = ExtResource("3_civwv")
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2(30, 3.57746e-07)
+script = ExtResource("7_5e3ub")
+
+[node name="Algae" type="Area2D" parent="Spawner"]
+position = Vector2(468, 560)
+metadata/pronto_id = 0
+
+[node name="Placeholder" type="Node2D" parent="Spawner/Algae"]
+script = ExtResource("2_hgwhx")
+color = Color(0.211765, 0.560784, 0.207843, 1)
+metadata/pronto_id = 1
