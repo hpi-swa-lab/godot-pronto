@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=59 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_drryg"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_j0vsh"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_7crgp"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="9_6ntri"]
 
 [sub_resource type="GDScript" id="GDScript_lw4yo"]
 script/source = "@tool
@@ -172,42 +173,166 @@ expression = SubResource("Resource_r3ddd")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_jck7l"]
+[sub_resource type="GDScript" id="GDScript_38tvg"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from, to):
-	to.global_position = to.get_global_mouse_position()
+func run(pos, from, to):
+	return pos
 "
 
-[sub_resource type="Resource" id="Resource_bw78e"]
+[sub_resource type="Resource" id="Resource_n0xh1"]
 script = ExtResource("5_drryg")
-nested_script = SubResource("GDScript_jck7l")
-argument_names = ["delta", "from", "to"]
-return_value = false
+nested_script = SubResource("GDScript_38tvg")
+argument_names = ["pos", "from", "to"]
+return_value = true
 
-[sub_resource type="GDScript" id="GDScript_scd2h"]
+[sub_resource type="GDScript" id="GDScript_c52v6"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from, to):
+func run(pos, from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_8ermf"]
+[sub_resource type="Resource" id="Resource_a3vq3"]
 script = ExtResource("5_drryg")
-nested_script = SubResource("GDScript_scd2h")
-argument_names = ["delta", "from", "to"]
+nested_script = SubResource("GDScript_c52v6")
+argument_names = ["pos", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_j8mgh"]
+[sub_resource type="Resource" id="Resource_nvdc5"]
 script = ExtResource("6_j0vsh")
-signal_name = "always"
+signal_name = "mouse_move"
+to = NodePath("..")
+invoke = "set_global_position"
+arguments = [SubResource("Resource_n0xh1")]
+only_if = SubResource("Resource_a3vq3")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_xkt1u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from, to):
+	var collisions = to.get_overlapping_areas()
+	if collisions.is_empty():
+		return
+	var object = collisions[0]
+	G.put(\"dragged_object\", object)
+	G.put(\"drag_offset\", object.global_position - to.global_position)
+	
+"
+
+[sub_resource type="Resource" id="Resource_miwlu"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_xkt1u")
+argument_names = ["pos", "button", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_mevrv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3leq4"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_mevrv")
+argument_names = ["pos", "button", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_y2rje"]
+script = ExtResource("6_j0vsh")
+signal_name = "mouse_down"
 to = NodePath("..")
 invoke = ""
 arguments = []
-only_if = SubResource("Resource_8ermf")
-expression = SubResource("Resource_bw78e")
+only_if = SubResource("Resource_3leq4")
+expression = SubResource("Resource_miwlu")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_045le"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, duration, from):
+	G.put(\"dragged_object\", null)
+"
+
+[sub_resource type="Resource" id="Resource_0th1a"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_045le")
+argument_names = ["pos", "button", "duration", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_1dpya"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, duration, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_vyggr"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_1dpya")
+argument_names = ["pos", "button", "duration", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_lat1y"]
+script = ExtResource("6_j0vsh")
+signal_name = "mouse_up"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_vyggr")
+expression = SubResource("Resource_0th1a")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_icjps"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, from):
+	var object = G.at(\"dragged_object\")
+	if object != null:
+		object.global_position = from.get_parent().global_position + G.at(\"drag_offset\")
+"
+
+[sub_resource type="Resource" id="Resource_mm61c"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_icjps")
+argument_names = ["pos", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_pg4bc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_unph2"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_pg4bc")
+argument_names = ["pos", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xg0fg"]
+script = ExtResource("6_j0vsh")
+signal_name = "mouse_move"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_unph2")
+expression = SubResource("Resource_mm61c")
 deferred = false
 enabled = true
 
@@ -232,6 +357,48 @@ to = NodePath("../Spawner")
 invoke = "spawn"
 arguments = []
 only_if = SubResource("Resource_865p7")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ttvov"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	var marker = to.get_node(\"%PositionMarker\")
+	to.global_position.y = marker.global_position.y
+
+
+"
+
+[sub_resource type="Resource" id="Resource_pbkvm"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_ttvov")
+argument_names = ["delta", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_unnqu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_06xy3"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_unnqu")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rn47k"]
+script = ExtResource("6_j0vsh")
+signal_name = "always"
+to = NodePath("..")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_06xy3")
+expression = SubResource("Resource_pbkvm")
 deferred = false
 enabled = true
 
@@ -261,6 +428,8 @@ script = ExtResource("1_cm6jg")
 label = "Base"
 
 [node name="VisualLine" type="Node2D" parent="Spawner/Robot/Arm/Base" node_paths=PackedStringArray("from", "to")]
+show_behind_parent = true
+z_index = -10
 script = ExtResource("2_o0onj")
 from = NodePath("..")
 to = NodePath("../../Hand")
@@ -290,6 +459,8 @@ popup/item_2/id = 2
 
 [node name="Trigger" type="Area2D" parent="Spawner/Robot/Program/Instruction"]
 position = Vector2(0, 28.0285)
+collision_layer = 8
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/Robot/Program/Instruction/Trigger"]
 position = Vector2(69.5, 16.0285)
@@ -301,7 +472,7 @@ script = ExtResource("3_8q8n7")
 metadata/pronto_connections = [SubResource("Resource_0bc8q"), SubResource("Resource_iy2le")]
 
 [node name="Clock" type="Node2D" parent="Spawner/Robot/Program"]
-position = Vector2(-8, -45)
+position = Vector2(-30, -68)
 script = ExtResource("8_7crgp")
 one_shot = true
 duration_seconds = 0.0001
@@ -313,11 +484,12 @@ position = Vector2(445, 72)
 
 [node name="Placeholder" type="Node2D" parent="Cursor"]
 script = ExtResource("1_cm6jg")
+placeholder_size = Vector2(10, 10)
 
-[node name="Always" type="Node2D" parent="Cursor"]
-position = Vector2(-14.1421, -6.18172e-07)
-script = ExtResource("4_fj5vs")
-metadata/pronto_connections = [SubResource("Resource_j8mgh")]
+[node name="Controls" type="Node2D" parent="Cursor"]
+position = Vector2(-23, 38)
+script = ExtResource("9_6ntri")
+metadata/pronto_connections = [SubResource("Resource_nvdc5"), SubResource("Resource_y2rje"), SubResource("Resource_lat1y"), SubResource("Resource_xg0fg")]
 
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(273, 68)
@@ -330,3 +502,23 @@ metadata/pronto_connections = [SubResource("Resource_rvfwo")]
 [node name="PositionMarker" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, 601)
+
+[node name="ElementSpawner" type="Node2D" parent="."]
+position = Vector2(264.392, -264.392)
+script = ExtResource("1_ggulk")
+
+[node name="ProgramCounter" type="Area2D" parent="."]
+position = Vector2(-4, 573)
+collision_layer = 9
+collision_mask = 8
+
+[node name="Placeholder" type="Node2D" parent="ProgramCounter"]
+position = Vector2(0, 500)
+script = ExtResource("1_cm6jg")
+placeholder_size = Vector2(31, 1000)
+keep_in_origin = false
+
+[node name="Always" type="Node2D" parent="ProgramCounter"]
+position = Vector2(165, 28)
+script = ExtResource("4_fj5vs")
+metadata/pronto_connections = [SubResource("Resource_rn47k")]
