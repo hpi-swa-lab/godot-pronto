@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://60o0tlk46yvg"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Turn Left"
+popup/item_0/id = 0
+popup/item_1/text = "Turn Right"
+popup/item_1/id = 1
