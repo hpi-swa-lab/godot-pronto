@@ -1,57 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=3 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="3_gnudj"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="4_2klxd"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_qdmir"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_6mxix"]
-
-[sub_resource type="GDScript" id="GDScript_54c8v"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
-	var rng = RandomNumberGenerator.new()
-	from.duration_seconds = rng.randf_range(10,30)
-	from.reset_and_start()
-	return Vector2(rng.randf_range(0,600),550)
-"
-
-[sub_resource type="Resource" id="Resource_dak1b"]
-script = ExtResource("5_qdmir")
-nested_script = SubResource("GDScript_54c8v")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_wppg4"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_w5kbb"]
-script = ExtResource("5_qdmir")
-nested_script = SubResource("GDScript_wppg4")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_dumdv"]
-script = ExtResource("6_6mxix")
-signal_name = "elapsed"
-to = NodePath("../Spawner")
-invoke = "spawn_at"
-arguments = [SubResource("Resource_dak1b")]
-only_if = SubResource("Resource_w5kbb")
-deferred = false
-enabled = true
 
 [node name="aquarium" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
-position = Vector2(-419.544, -1.83389e-05)
 script = ExtResource("1_bcm2o")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -61,21 +15,3 @@ scale = Vector2(67, 1.96)
 [node name="Placeholder" type="Node2D" parent="Area2D"]
 script = ExtResource("2_twtba")
 color = Color(0.521569, 0.34902, 0.141176, 1)
-
-[node name="Spawner" type="Node2D" parent="."]
-script = ExtResource("3_gnudj")
-
-[node name="Algae" type="Area2D" parent="Spawner"]
-
-[node name="Placeholder" type="Node2D" parent="Spawner/Algae"]
-script = ExtResource("2_twtba")
-color = Color(0.184314, 0.4, 0.0823529, 1)
-placeholder_size = Vector2(20, 60)
-
-[node name="Clock" type="Node2D" parent="."]
-position = Vector2(-103, -52)
-script = ExtResource("4_2klxd")
-one_shot = true
-trigger_every_x_seconds = true
-trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_dumdv")]
