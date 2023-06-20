@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=76 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -107,10 +107,15 @@ func run(other, direction, from, to):
 		return
 	
 	var target = molecules[0]
-	var transform = target.global_transform
-	target.get_parent().remove_child(target)
-	to.get_node(\"Hand\").add_child(target)
-	target.global_transform = transform
+	target.top_level = false
+	
+	var after = func():
+		var transform = target.global_transform
+		target.get_parent().remove_child(target)
+		to.get_node(\"Hand\").add_child(target)
+		target.global_transform = transform
+		print(\"Grab\")
+	after.call_deferred()
 "
 
 [sub_resource type="Resource" id="Resource_sjaap"]
@@ -163,7 +168,8 @@ func run(other, direction, from, to):
 	target.get_parent().remove_child(target)
 	desk.add_child(target)
 	target.global_transform = transform
-
+	
+	print(\"Release\")
 "
 
 [sub_resource type="Resource" id="Resource_5exp8"]
@@ -404,7 +410,7 @@ expression = SubResource("Resource_mm61c")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_0d18d"]
+[sub_resource type="GDScript" id="GDScript_dnach"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -412,21 +418,37 @@ func run(from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_865p7"]
+[sub_resource type="Resource" id="Resource_gvf71"]
 script = ExtResource("5_drryg")
-nested_script = SubResource("GDScript_0d18d")
+nested_script = SubResource("GDScript_dnach")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_rvfwo"]
+[sub_resource type="Resource" id="Resource_1w5qb"]
 script = ExtResource("6_j0vsh")
 signal_name = "elapsed"
-to = NodePath("../Spawner")
+to = NodePath("../ArmSpawner")
 invoke = "spawn"
 arguments = []
-only_if = SubResource("Resource_865p7")
+only_if = SubResource("Resource_gvf71")
 deferred = false
 enabled = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qw4sk"]
+
+[sub_resource type="GDScript" id="GDScript_82m0q"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return to.get_node(\"../Cursor\").global_position
+"
+
+[sub_resource type="Resource" id="Resource_g8dfc"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_82m0q")
+argument_names = ["from", "to"]
+return_value = true
 
 [sub_resource type="GDScript" id="GDScript_lh4a1"]
 script/source = "@tool
@@ -446,8 +468,8 @@ return_value = true
 script = ExtResource("6_j0vsh")
 signal_name = "just_down"
 to = NodePath("..")
-invoke = "spawn"
-arguments = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_g8dfc")]
 only_if = SubResource("Resource_rq0hp")
 deferred = false
 enabled = true
@@ -494,32 +516,92 @@ expression = SubResource("Resource_pbkvm")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_12ds5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	var molecules = to.get_overlapping_areas().filter(
+		func(n: Node):
+			return n.is_in_group(\"molecules\")
+	)
+
+	print(\"Hello\")
+	if molecules.size() != 2:
+		return
+
+	var A = molecules[0]
+	var B = molecules[1]
+	if B.get_parent().name != \"Desk\" or B == G.at(\"dragged_object\"):
+		A = B
+		B = molecules[0]
+	
+	for atom in B.get_children():
+		var transform = atom.global_transform
+		B.remove_child(atom)
+		A.add_child(atom)
+		atom.global_transform = transform
+	B.queue_free()
+
+"
+
+[sub_resource type="Resource" id="Resource_vplfd"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_12ds5")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_yutko"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_s2dky"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_yutko")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1v4n2"]
+script = ExtResource("6_j0vsh")
+signal_name = "collided"
+to = NodePath("..")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_s2dky")
+expression = SubResource("Resource_vplfd")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
 
-[node name="Spawner" type="Node2D" parent="."]
+[node name="ArmSpawner" type="Node2D" parent="."]
 position = Vector2(186, 199)
 script = ExtResource("1_ggulk")
 
-[node name="Robot" type="Node2D" parent="Spawner"]
+[node name="Robot" type="Node2D" parent="ArmSpawner"]
 
-[node name="Arm" type="Area2D" parent="Spawner/Robot"]
+[node name="Arm" type="Area2D" parent="ArmSpawner/Robot"]
 
-[node name="Hand" type="Node2D" parent="Spawner/Robot/Arm"]
+[node name="Hand" type="Node2D" parent="ArmSpawner/Robot/Arm"]
 position = Vector2(100, 0)
 script = ExtResource("1_cm6jg")
 label = "Hand"
 keep_in_origin = false
 
-[node name="Collision" type="Node2D" parent="Spawner/Robot/Arm"]
+[node name="Collision" type="Node2D" parent="ArmSpawner/Robot/Arm"]
 position = Vector2(29, 52)
 script = ExtResource("3_8q8n7")
 metadata/pronto_connections = []
 
-[node name="Base" type="Node2D" parent="Spawner/Robot/Arm"]
+[node name="Base" type="Node2D" parent="ArmSpawner/Robot/Arm"]
 script = ExtResource("1_cm6jg")
 label = "Base"
 
-[node name="VisualLine" type="Node2D" parent="Spawner/Robot/Arm/Base" node_paths=PackedStringArray("from", "to")]
+[node name="VisualLine" type="Node2D" parent="ArmSpawner/Robot/Arm/Base" node_paths=PackedStringArray("from", "to")]
 show_behind_parent = true
 z_index = -10
 script = ExtResource("2_o0onj")
@@ -527,17 +609,17 @@ from = NodePath("..")
 to = NodePath("../../Hand")
 line_width = 10
 
-[node name="Program" type="HBoxContainer" parent="Spawner/Robot"]
+[node name="Program" type="HBoxContainer" parent="ArmSpawner/Robot"]
 offset_left = -52.0
 offset_top = 140.0
 offset_right = 128.0
 offset_bottom = 171.0
 
-[node name="Label" type="Label" parent="Spawner/Robot/Program"]
+[node name="Label" type="Label" parent="ArmSpawner/Robot/Program"]
 layout_mode = 2
 text = "List1"
 
-[node name="Instruction" type="OptionButton" parent="Spawner/Robot/Program"]
+[node name="Instruction" type="OptionButton" parent="ArmSpawner/Robot/Program"]
 layout_mode = 2
 mouse_filter = 1
 item_count = 5
@@ -553,21 +635,21 @@ popup/item_3/id = 3
 popup/item_4/text = "Release"
 popup/item_4/id = 4
 
-[node name="Trigger" type="Area2D" parent="Spawner/Robot/Program/Instruction"]
+[node name="Trigger" type="Area2D" parent="ArmSpawner/Robot/Program/Instruction"]
 position = Vector2(0, 28.0285)
 collision_layer = 8
 collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawner/Robot/Program/Instruction/Trigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArmSpawner/Robot/Program/Instruction/Trigger"]
 position = Vector2(69.5, 16.0285)
 shape = SubResource("RectangleShape2D_adf4g")
 
-[node name="Collision" type="Node2D" parent="Spawner/Robot/Program/Instruction/Trigger"]
+[node name="Collision" type="Node2D" parent="ArmSpawner/Robot/Program/Instruction/Trigger"]
 position = Vector2(1.00001, -91.0285)
 script = ExtResource("3_8q8n7")
 metadata/pronto_connections = [SubResource("Resource_0bc8q"), SubResource("Resource_iy2le"), SubResource("Resource_615c5"), SubResource("Resource_wnkei")]
 
-[node name="Clock" type="Node2D" parent="Spawner/Robot/Program"]
+[node name="Clock" type="Node2D" parent="ArmSpawner/Robot/Program"]
 position = Vector2(-30, -68)
 script = ExtResource("8_7crgp")
 one_shot = true
@@ -579,6 +661,7 @@ metadata/pronto_connections = [SubResource("Resource_i2stt")]
 position = Vector2(445, 72)
 
 [node name="Placeholder" type="Node2D" parent="Cursor"]
+visible = false
 script = ExtResource("1_cm6jg")
 placeholder_size = Vector2(10, 10)
 
@@ -593,29 +676,27 @@ script = ExtResource("8_7crgp")
 one_shot = true
 duration_seconds = 0.0001
 trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_rvfwo")]
+metadata/pronto_connections = [SubResource("Resource_1w5qb")]
 
-[node name="PositionMarker" type="Marker2D" parent="Clock"]
-unique_name_in_owner = true
-position = Vector2(-273, 533)
-
-[node name="AtomSpawner" type="Node2D" parent="." node_paths=PackedStringArray("container")]
+[node name="Hydrogen" type="Node2D" parent="." node_paths=PackedStringArray("container")]
 position = Vector2(488, 215)
 script = ExtResource("1_ggulk")
 container = NodePath("../Desk")
 
-[node name="Molecule" type="Area2D" parent="AtomSpawner" groups=["molecules"]]
+[node name="Molecule" type="Area2D" parent="Hydrogen" groups=["molecules"]]
 
-[node name="Atom" type="Node2D" parent="AtomSpawner/Molecule"]
-script = ExtResource("1_cm6jg")
-label = "Atom"
-color = Color(0.376471, 1, 1, 1)
-placeholder_size = Vector2(13, 13)
+[node name="Atom" type="CollisionShape2D" parent="Hydrogen/Molecule"]
+shape = SubResource("CircleShape2D_qw4sk")
 
-[node name="Key" type="Node2D" parent="AtomSpawner"]
+[node name="Polygon2D" type="Polygon2D" parent="Hydrogen/Molecule/Atom"]
+show_behind_parent = true
+color = Color(0.423529, 1, 1, 1)
+polygon = PackedVector2Array(-7, -7, -10, 0, -6, 8, 0, 10, 6, 8, 10, 0, 8, -6, 0, -10)
+
+[node name="Key" type="Node2D" parent="Hydrogen"]
 position = Vector2(21, 89)
 script = ExtResource("9_adfup")
-key = "A"
+key = "H"
 metadata/pronto_connections = [SubResource("Resource_6akkc")]
 
 [node name="ProgramCounter" type="Area2D" parent="."]
@@ -636,3 +717,52 @@ metadata/pronto_connections = [SubResource("Resource_rn47k")]
 
 [node name="Desk" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="Molecule" type="Area2D" parent="Desk" groups=["molecules"]]
+
+[node name="Atom" type="CollisionShape2D" parent="Desk/Molecule"]
+shape = SubResource("CircleShape2D_qw4sk")
+
+[node name="Polygon2D" type="Polygon2D" parent="Desk/Molecule/Atom"]
+show_behind_parent = true
+color = Color(0.423529, 1, 1, 1)
+polygon = PackedVector2Array(-7, -7, -10, 0, -6, 8, 0, 10, 6, 8, 10, 0, 8, -6, 0, -10)
+
+[node name="Merger" type="Area2D" parent="."]
+position = Vector2(84, 74)
+
+[node name="Placeholder" type="Node2D" parent="Merger"]
+script = ExtResource("1_cm6jg")
+label = "Merger"
+placeholder_size = Vector2(39, 8)
+
+[node name="Collision" type="Node2D" parent="Merger"]
+position = Vector2(-15, 48)
+script = ExtResource("3_8q8n7")
+limit_to_group = "molecules"
+metadata/pronto_connections = [SubResource("Resource_1v4n2")]
+
+[node name="PositionMarker" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 601)
+
+[node name="Oxygen" type="Node2D" parent="." node_paths=PackedStringArray("container")]
+position = Vector2(725, 388)
+script = ExtResource("1_ggulk")
+container = NodePath("../Desk")
+
+[node name="Molecule" type="Area2D" parent="Oxygen" groups=["molecules"]]
+
+[node name="Atom" type="CollisionShape2D" parent="Oxygen/Molecule"]
+shape = SubResource("CircleShape2D_qw4sk")
+
+[node name="Polygon2D" type="Polygon2D" parent="Oxygen/Molecule/Atom"]
+show_behind_parent = true
+color = Color(0.929412, 0.870588, 0.976471, 1)
+polygon = PackedVector2Array(-7, -7, -10, 0, -6, 8, 0, 10, 6, 8, 10, 0, 8, -6, 0, -10)
+
+[node name="Key" type="Node2D" parent="Oxygen"]
+position = Vector2(21, 89)
+script = ExtResource("9_adfup")
+key = "O"
+metadata/pronto_connections = [SubResource("Resource_6akkc")]
