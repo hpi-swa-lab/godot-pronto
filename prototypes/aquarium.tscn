@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=37 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
@@ -181,6 +181,47 @@ only_if = SubResource("Resource_ub288")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_pkvyh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	var rng = RandomNumberGenerator.new()
+	from.duration_seconds = rng.randf_range(10,30)
+	from.reset_and_start()
+	return Vector2(rng.randf_range(0,600),600)
+"
+
+[sub_resource type="Resource" id="Resource_chv3q"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_pkvyh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_lvfqb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rbx3x"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_lvfqb")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_uk2gf"]
+script = ExtResource("5_7l3rf")
+signal_name = "elapsed"
+to = NodePath("../AlgaeSpawner")
+invoke = "spawn_at"
+arguments = [SubResource("Resource_chv3q")]
+only_if = SubResource("Resource_rbx3x")
+deferred = false
+enabled = true
+
 [node name="aquarium" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
@@ -237,3 +278,21 @@ friction = 0.0
 position = Vector2(528, 68)
 script = ExtResource("10_ftdv1")
 metadata/pronto_connections = [SubResource("Resource_cb5sb")]
+
+[node name="AlgaeSpawner" type="Node2D" parent="."]
+position = Vector2(646.798, 7.71299e-06)
+script = ExtResource("5_spvgy")
+
+[node name="Area2D" type="Area2D" parent="AlgaeSpawner"]
+position = Vector2(0.202026, -7.71299e-06)
+
+[node name="Placeholder" type="Node2D" parent="AlgaeSpawner/Area2D"]
+script = ExtResource("2_twtba")
+color = Color(0.172549, 0.490196, 0.156863, 1)
+placeholder_size = Vector2(20, 60)
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(587, -8)
+script = ExtResource("3_uwe38")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_uk2gf")]
