@@ -218,7 +218,10 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return null
+	if (at(\"player_money\") < 50):
+		return false
+	dec(\"player_money\", 50)
+	return true
 "
 
 [sub_resource type="Resource" id="Resource_5yemp"]
@@ -232,7 +235,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(result, from, to):
-	return true
+	return result
 "
 
 [sub_resource type="Resource" id="Resource_i8j3n"]
@@ -541,7 +544,7 @@ position = Vector2(15, 14)
 script = ExtResource("6_rt3b5")
 
 [node name="Spawn Troop" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(-3, 43)
+position = Vector2(10, 109)
 script = ExtResource("3_1dipl")
 evaluate = SubResource("Resource_5yemp")
 metadata/pronto_connections = [SubResource("Resource_tnr71")]
