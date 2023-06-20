@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=68 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -9,45 +9,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_j0vsh"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_7crgp"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="9_6ntri"]
-
-[sub_resource type="GDScript" id="GDScript_lw4yo"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from):
-	print(\"Collided\")
-"
-
-[sub_resource type="Resource" id="Resource_2qodk"]
-script = ExtResource("5_drryg")
-nested_script = SubResource("GDScript_lw4yo")
-argument_names = ["other", "direction", "from"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_j22ie"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_m2vbv"]
-script = ExtResource("5_drryg")
-nested_script = SubResource("GDScript_j22ie")
-argument_names = ["other", "direction", "from"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_nnsls"]
-script = ExtResource("6_j0vsh")
-signal_name = "collided"
-to = NodePath("")
-invoke = ""
-arguments = []
-only_if = SubResource("Resource_m2vbv")
-expression = SubResource("Resource_2qodk")
-deferred = false
-enabled = true
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="9_adfup"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_adf4g"]
 size = Vector2(139, 20)
@@ -71,7 +33,8 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(other, direction, from, to):
-	return from.get_node(\"../..\").selected == 1
+	var button = from.get_node(\"../..\")
+	return button.get_item_text(button.selected) == \"Rotate Left\"
 "
 
 [sub_resource type="Resource" id="Resource_wkn33"]
@@ -110,7 +73,8 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(other, direction, from, to):
-	return from.get_node(\"../..\").selected == 2
+	var button = from.get_node(\"../..\")
+	return button.get_item_text(button.selected) == \"Rotate Right\"
 "
 
 [sub_resource type="Resource" id="Resource_ep08m"]
@@ -127,6 +91,110 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_ep08m")
 expression = SubResource("Resource_s3eim")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_1kh7u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	var molecules = to.get_overlapping_areas().filter(
+		func(n): return n.is_in_group(\"molecules\")
+	)
+	
+	if molecules.is_empty():
+		return
+	
+	var target = molecules[0]
+	var transform = target.global_transform
+	target.get_parent().remove_child(target)
+	to.get_node(\"Hand\").add_child(target)
+	target.global_transform = transform
+"
+
+[sub_resource type="Resource" id="Resource_sjaap"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_1kh7u")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_wmw77"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	var button = from.get_node(\"../..\")
+	return button.get_item_text(button.selected) == \"Grab\"
+"
+
+[sub_resource type="Resource" id="Resource_ir8jk"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_wmw77")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_615c5"]
+script = ExtResource("6_j0vsh")
+signal_name = "collided"
+to = NodePath("../../../../Arm")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_ir8jk")
+expression = SubResource("Resource_sjaap")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_5kxnr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	var molecules = to.get_node(\"Hand\").get_children()
+	
+	if molecules.is_empty():
+		return
+	
+	var scene_root = Utils.parent_that(to, func(n): return n.get_parent() == to.get_tree().root)
+	var desk = scene_root.get_node(\"%Desk\")
+	var target = molecules[0]
+	
+	var transform = target.global_transform
+	target.get_parent().remove_child(target)
+	desk.add_child(target)
+	target.global_transform = transform
+
+"
+
+[sub_resource type="Resource" id="Resource_5exp8"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_5kxnr")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_5kvj3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	var button = from.get_node(\"../..\")
+	return button.get_item_text(button.selected) == \"Release\"
+"
+
+[sub_resource type="Resource" id="Resource_0k3b1"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_5kvj3")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_wnkei"]
+script = ExtResource("6_j0vsh")
+signal_name = "collided"
+to = NodePath("../../../../Arm")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_0k3b1")
+expression = SubResource("Resource_5exp8")
 deferred = false
 enabled = true
 
@@ -360,6 +428,30 @@ only_if = SubResource("Resource_865p7")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_lh4a1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rq0hp"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_lh4a1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_6akkc"]
+script = ExtResource("6_j0vsh")
+signal_name = "just_down"
+to = NodePath("..")
+invoke = "spawn"
+arguments = []
+only_if = SubResource("Resource_rq0hp")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_ttvov"]
 script/source = "@tool
 extends U
@@ -421,7 +513,7 @@ keep_in_origin = false
 [node name="Collision" type="Node2D" parent="Spawner/Robot/Arm"]
 position = Vector2(29, 52)
 script = ExtResource("3_8q8n7")
-metadata/pronto_connections = [SubResource("Resource_nnsls")]
+metadata/pronto_connections = []
 
 [node name="Base" type="Node2D" parent="Spawner/Robot/Arm"]
 script = ExtResource("1_cm6jg")
@@ -448,7 +540,7 @@ text = "List1"
 [node name="Instruction" type="OptionButton" parent="Spawner/Robot/Program"]
 layout_mode = 2
 mouse_filter = 1
-item_count = 3
+item_count = 5
 selected = 0
 popup/item_0/text = "Nop"
 popup/item_0/id = 0
@@ -456,6 +548,10 @@ popup/item_1/text = "Rotate Left"
 popup/item_1/id = 1
 popup/item_2/text = "Rotate Right"
 popup/item_2/id = 2
+popup/item_3/text = "Grab"
+popup/item_3/id = 3
+popup/item_4/text = "Release"
+popup/item_4/id = 4
 
 [node name="Trigger" type="Area2D" parent="Spawner/Robot/Program/Instruction"]
 position = Vector2(0, 28.0285)
@@ -469,7 +565,7 @@ shape = SubResource("RectangleShape2D_adf4g")
 [node name="Collision" type="Node2D" parent="Spawner/Robot/Program/Instruction/Trigger"]
 position = Vector2(1.00001, -91.0285)
 script = ExtResource("3_8q8n7")
-metadata/pronto_connections = [SubResource("Resource_0bc8q"), SubResource("Resource_iy2le")]
+metadata/pronto_connections = [SubResource("Resource_0bc8q"), SubResource("Resource_iy2le"), SubResource("Resource_615c5"), SubResource("Resource_wnkei")]
 
 [node name="Clock" type="Node2D" parent="Spawner/Robot/Program"]
 position = Vector2(-30, -68)
@@ -499,13 +595,28 @@ duration_seconds = 0.0001
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_rvfwo")]
 
-[node name="PositionMarker" type="Marker2D" parent="."]
+[node name="PositionMarker" type="Marker2D" parent="Clock"]
 unique_name_in_owner = true
-position = Vector2(0, 601)
+position = Vector2(-273, 533)
 
-[node name="ElementSpawner" type="Node2D" parent="."]
-position = Vector2(264.392, -264.392)
+[node name="AtomSpawner" type="Node2D" parent="." node_paths=PackedStringArray("container")]
+position = Vector2(488, 215)
 script = ExtResource("1_ggulk")
+container = NodePath("../Desk")
+
+[node name="Molecule" type="Area2D" parent="AtomSpawner" groups=["molecules"]]
+
+[node name="Atom" type="Node2D" parent="AtomSpawner/Molecule"]
+script = ExtResource("1_cm6jg")
+label = "Atom"
+color = Color(0.376471, 1, 1, 1)
+placeholder_size = Vector2(13, 13)
+
+[node name="Key" type="Node2D" parent="AtomSpawner"]
+position = Vector2(21, 89)
+script = ExtResource("9_adfup")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_6akkc")]
 
 [node name="ProgramCounter" type="Area2D" parent="."]
 position = Vector2(-4, 573)
@@ -522,3 +633,6 @@ keep_in_origin = false
 position = Vector2(165, 28)
 script = ExtResource("4_fj5vs")
 metadata/pronto_connections = [SubResource("Resource_rn47k")]
+
+[node name="Desk" type="Node2D" parent="."]
+unique_name_in_owner = true
