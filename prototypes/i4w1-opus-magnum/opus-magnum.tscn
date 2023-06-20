@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=79 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -244,6 +244,30 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_xdxx2")
 expression = SubResource("Resource_r3ddd")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_3byhk"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_wwf0n"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_3byhk")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_48wsb"]
+script = ExtResource("6_j0vsh")
+signal_name = "just_down"
+to = NodePath("..")
+invoke = "spawn"
+arguments = []
+only_if = SubResource("Resource_wwf0n")
 deferred = false
 enabled = true
 
@@ -657,6 +681,12 @@ duration_seconds = 0.0001
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_i2stt")]
 
+[node name="Key" type="Node2D" parent="ArmSpawner"]
+position = Vector2(-48, 7)
+script = ExtResource("9_adfup")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_48wsb")]
+
 [node name="Cursor" type="Area2D" parent="."]
 position = Vector2(445, 72)
 
@@ -718,18 +748,8 @@ metadata/pronto_connections = [SubResource("Resource_rn47k")]
 [node name="Desk" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="Molecule" type="Area2D" parent="Desk" groups=["molecules"]]
-
-[node name="Atom" type="CollisionShape2D" parent="Desk/Molecule"]
-shape = SubResource("CircleShape2D_qw4sk")
-
-[node name="Polygon2D" type="Polygon2D" parent="Desk/Molecule/Atom"]
-show_behind_parent = true
-color = Color(0.423529, 1, 1, 1)
-polygon = PackedVector2Array(-7, -7, -10, 0, -6, 8, 0, 10, 6, 8, 10, 0, 8, -6, 0, -10)
-
 [node name="Merger" type="Area2D" parent="."]
-position = Vector2(84, 74)
+position = Vector2(163, 104)
 
 [node name="Placeholder" type="Node2D" parent="Merger"]
 script = ExtResource("1_cm6jg")
