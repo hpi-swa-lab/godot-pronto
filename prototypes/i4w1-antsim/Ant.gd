@@ -11,6 +11,9 @@ var tile_size = 16
 var idle_distance = tile_size * 3
 var timeout_between_idle_actions = 2
 
+var state = "IDLE"
+var food_carried = 0
+
 # could we have built a state machine with pronto?
 
 # WARNING: NavigationRegion2D has a huge issue atm
@@ -36,20 +39,23 @@ func actor_setup():
 		
 		
 func evaluate_state():
-	if G.at("AntState") == "GATHERING_FOOD":
+	print("Evaluating Postion")
+	if state == "GATHERING_FOOD":
 		# find nearest food and collect
 		set_movement_target(target.global_position)
-	elif G.at("AntState") == "RETURNING_TO_BASE":
+	elif state == "RETURNING_TO_BASE":
+		print("Returning to base")
 		# return home
 		set_movement_target(base.global_position)	
-	elif G.at("AntState") == "IDLE":
+	elif state == "IDLE":
 		# idle
 		navigation_agent.target_position = self.global_position
 		# check for food in range
-		if G.at("detectedFood"):
-			target = G.at("detectedFood")
-			G.put("AntState", "GATHERING_FOOD")
-			G.put("detectedFood", null) 
+		#if G.at("detectedFood"):
+		#	target = G.at("detectedFood")
+		#	state = "GATHERING_FOOD"
+		#	#G.put("AntState", "GATHERING_FOOD")
+		#	G.put("detectedFood", null) 
 		
 		if randi_range(0, 10) < 6:
 			# randomly select if we want to move half of the time
@@ -83,11 +89,30 @@ func _physics_process(delta):
 	
 	var new_velocity: Vector2 = next_path_pos - current_agent_position
 	new_velocity = new_velocity.normalized()
-	if G.at("hasFood"):
+	if food_carried != 0:
 		# reduce movement speed when carrying food
-		new_velocity = new_velocity * carrying_movement_speed
+		new_velocity = new_velocity * carrying_movement_speed/food_carried
 	else:
 		new_velocity = new_velocity * movement_speed
 	velocity = new_velocity
 	move_and_slide()
-	look_at(next_path_pos)		
+	look_at(next_path_pos)
+	
+func on_food_collected():
+	print("on_food_collected")
+	food_carried = food_carried + 1
+	state = "RETURNING_TO_BASE"
+	evaluate_state()
+	
+func on_food_removed():
+	print("on_food_removed")
+	food_carried = 0
+	state = "IDLE"
+	evaluate_state()
+	
+func on_food_detected(food: Node2D):
+	if(food_carried <= 1):
+		target = food
+		state = "GATHERING_FOOD"
+		evaluate_state()
+	
