@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=61 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
@@ -10,6 +10,10 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="7_bf3ce"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_jf3wf"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="10_ftdv1"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="10_tqox3"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="11_5bwvg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="12_06af0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="14_mkqs2"]
 
 [sub_resource type="GDScript" id="GDScript_d0ggo"]
 script/source = "@tool
@@ -143,6 +147,138 @@ only_if = SubResource("Resource_b8ojh")
 deferred = false
 enabled = false
 
+[sub_resource type="GDScript" id="GDScript_07o1n"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return \"food\"
+"
+
+[sub_resource type="Resource" id="Resource_xpttf"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_07o1n")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_h2xr3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return 1
+"
+
+[sub_resource type="Resource" id="Resource_4m6kj"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_h2xr3")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_oa3o1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_q6m74"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_oa3o1")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ea67k"]
+script = ExtResource("5_7l3rf")
+signal_name = "always"
+to = NodePath("../State")
+invoke = "dec"
+arguments = [SubResource("Resource_xpttf"), SubResource("Resource_4m6kj")]
+only_if = SubResource("Resource_q6m74")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_h08jv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(prop, value, from, to):
+	return value < 0
+"
+
+[sub_resource type="Resource" id="Resource_1u4d6"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_h08jv")
+argument_names = ["prop", "value", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3aqj4"]
+script = ExtResource("5_7l3rf")
+signal_name = "changed"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_1u4d6")
+deferred = false
+enabled = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_55lvm"]
+radius = 74.4526
+
+[sub_resource type="GDScript" id="GDScript_m1cha"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	other.queue_free()
+	return \"food\"
+"
+
+[sub_resource type="Resource" id="Resource_wgvd6"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_m1cha")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xv7gp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return 200
+"
+
+[sub_resource type="Resource" id="Resource_ueapo"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_xv7gp")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_r3mm3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8unss"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_r3mm3")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_smpdg"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../State")
+invoke = "inc"
+arguments = [SubResource("Resource_wgvd6"), SubResource("Resource_ueapo")]
+only_if = SubResource("Resource_8unss")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_mtmk2"]
 script/source = "@tool
 extends U
@@ -180,6 +316,20 @@ arguments = [SubResource("Resource_hvscs")]
 only_if = SubResource("Resource_ub288")
 deferred = false
 enabled = true
+
+[sub_resource type="GDScript" id="GDScript_xx88b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_enplj"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_xx88b")
+argument_names = []
+return_value = true
 
 [sub_resource type="GDScript" id="GDScript_pkvyh"]
 script/source = "@tool
@@ -255,7 +405,7 @@ float_step_size = 0.1
 position = Vector2(354, -224)
 script = ExtResource("5_spvgy")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="FishySpawner"]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="FishySpawner" groups=["meat"]]
 position = Vector2(170.574, 714.426)
 
 [node name="Clock" type="Node2D" parent="FishySpawner/CharacterBody2D"]
@@ -274,6 +424,29 @@ position = Vector2(-33.6322, -33.6322)
 script = ExtResource("6_y8438")
 friction = 0.0
 
+[node name="Always" type="Node2D" parent="FishySpawner/CharacterBody2D"]
+position = Vector2(4.49033e-06, -51.3633)
+script = ExtResource("10_tqox3")
+metadata/pronto_connections = [SubResource("Resource_ea67k")]
+
+[node name="State" type="Node2D" parent="FishySpawner/CharacterBody2D"]
+position = Vector2(39.393, -39.393)
+script = ExtResource("11_5bwvg")
+metadata/food = 2000
+metadata/pronto_connections = [SubResource("Resource_3aqj4")]
+
+[node name="Area2D" type="Area2D" parent="FishySpawner/CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FishySpawner/CharacterBody2D/Area2D"]
+shape = SubResource("CircleShape2D_55lvm")
+
+[node name="Collision" type="Node2D" parent="FishySpawner/CharacterBody2D/Area2D"]
+position = Vector2(-105.574, 47.574)
+script = ExtResource("12_06af0")
+metadata/pronto_connections = [SubResource("Resource_smpdg")]
+
 [node name="Controls" type="Node2D" parent="."]
 position = Vector2(528, 68)
 script = ExtResource("10_ftdv1")
@@ -283,13 +456,25 @@ metadata/pronto_connections = [SubResource("Resource_cb5sb")]
 position = Vector2(646.798, 7.71299e-06)
 script = ExtResource("5_spvgy")
 
-[node name="Area2D" type="Area2D" parent="AlgaeSpawner"]
+[node name="Area2D" type="Area2D" parent="AlgaeSpawner" groups=["veggy"]]
 position = Vector2(0.202026, -7.71299e-06)
+collision_layer = 2
+collision_mask = 2
 
 [node name="Placeholder" type="Node2D" parent="AlgaeSpawner/Area2D"]
 script = ExtResource("2_twtba")
 color = Color(0.172549, 0.490196, 0.156863, 1)
 placeholder_size = Vector2(20, 60)
+
+[node name="Clock" type="Node2D" parent="AlgaeSpawner"]
+position = Vector2(42.202, 12)
+script = ExtResource("3_uwe38")
+trigger_interval_in_seconds = 1.0
+
+[node name="grow" type="Node2D" parent="AlgaeSpawner"]
+position = Vector2(45.202, 69)
+script = ExtResource("14_mkqs2")
+evaluate = SubResource("Resource_enplj")
 
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(587, -8)
