@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0a41w4o3d3wu"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_8xs2b"]
+
+[node name="Node2D" type="Node2D"]
+modulate = Color(0.376471, 1, 1, 1)
+self_modulate = Color(0.309804, 1, 1, 1)
+
+[node name="Background" type="Node2D" parent="."]
+position = Vector2(-21.2132, 21.2132)
+script = ExtResource("1_8xs2b")
+color = Color(0.278431, 0.458824, 0.74902, 1)
