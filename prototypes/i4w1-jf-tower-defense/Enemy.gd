@@ -13,11 +13,12 @@ var last_target_position: Vector2
 var target: Node2D = null
 var attacker: Node2D = null
 
-@export var speed: float
+@export var speed_prop: String
 @export var health: float
 @export var damage: float
 
 func _ready():
+	nav_agent.path_desired_distance = 4.0
 	dead_color = Color(color.r, color.g, color.b, 0.0)
 	max_health = health
 	if target_location:
@@ -27,7 +28,7 @@ func _ready():
 
 func _physics_process(delta):
 	var dir = to_local(nav_agent.get_next_path_position()).normalized()
-	velocity = dir * speed
+	velocity = dir * G.at(speed_prop)
 	move_and_slide()
 	check_if_target_out_of_dist()
 	queue_redraw()

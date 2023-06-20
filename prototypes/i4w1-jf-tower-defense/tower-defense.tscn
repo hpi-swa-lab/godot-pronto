@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=3 uid="uid://da42rhb2vls1m"]
+[gd_scene load_steps=112 format=3 uid="uid://da42rhb2vls1m"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_5i2nd"]
 [ext_resource type="Script" path="res://prototypes/i4w1-jf-tower-defense/tower-defense.gd" id="1_wa5o0"]
@@ -416,222 +416,64 @@ only_if = SubResource("Resource_lpf8q")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_in53g"]
+[sub_resource type="GDScript" id="GDScript_0r3jk"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run():
+func run(from, to):
+	var rng = RandomNumberGenerator.new()
+	var rndY = rng.randi_range(0, 650)
+	return Vector2(1200, rndY)
+"
+
+[sub_resource type="Resource" id="Resource_pyqtv"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_0r3jk")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_m5ytd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_5yemp"]
+[sub_resource type="Resource" id="Resource_scs58"]
 script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_in53g")
-argument_names = []
+nested_script = SubResource("GDScript_m5ytd")
+argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_b7fuk"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(result, from, to):
-	var rng = RandomNumberGenerator.new()
-	var rndX = rng.randi_range(150, 575)
-	var rndY = rng.randi_range(0, 650)
-	return Vector2(rndX, rndY)
-"
-
-[sub_resource type="Resource" id="Resource_cvrwv"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_b7fuk")
-argument_names = ["result", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_bv0jf"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(result, from, to):
-	return result
-"
-
-[sub_resource type="Resource" id="Resource_i8j3n"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_bv0jf")
-argument_names = ["result", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_tnr71"]
+[sub_resource type="Resource" id="Resource_8hvba"]
 script = ExtResource("4_0nawf")
-signal_name = "after"
-to = NodePath("../../../Spawner")
+signal_name = "elapsed"
+to = NodePath("../EnemySpawner")
 invoke = "spawn_at"
-arguments = [SubResource("Resource_cvrwv")]
-only_if = SubResource("Resource_i8j3n")
+arguments = [SubResource("Resource_pyqtv")]
+only_if = SubResource("Resource_scs58")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_denji"]
+[sub_resource type="GDScript" id="GDScript_dimjq"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	if G.at(\"player_money\") >= G.at(\"archer_cost\"):
-		G.put(\"player_money\", G.at(\"player_money\") - G.at(\"archer_cost\"))
-		return true
-	return false
+	return G.at(\"enemy_spawn_time\")
 "
 
-[sub_resource type="Resource" id="Resource_pyv8w"]
+[sub_resource type="Resource" id="Resource_eswth"]
 script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_denji")
+nested_script = SubResource("GDScript_dimjq")
 argument_names = []
 return_value = true
-
-[sub_resource type="GDScript" id="GDScript_pstx2"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(result, from, to):
-	var rng = RandomNumberGenerator.new()
-	var rndX = rng.randi_range(150, 575)
-	var rndY = rng.randi_range(0, 650)
-	return Vector2(rndX, rndY)
-"
-
-[sub_resource type="Resource" id="Resource_7507y"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_pstx2")
-argument_names = ["result", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_k6v8f"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(result, from, to):
-	return result
-"
-
-[sub_resource type="Resource" id="Resource_l2ofy"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_k6v8f")
-argument_names = ["result", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_s5xrh"]
-script = ExtResource("4_0nawf")
-signal_name = "after"
-to = NodePath("../../../Spawner2")
-invoke = "spawn_at"
-arguments = [SubResource("Resource_7507y")]
-only_if = SubResource("Resource_l2ofy")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_1k1jx"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run():
-	if G.at(\"player_money\") >= G.at(\"tank_cost\"):
-		G.put(\"player_money\", G.at(\"player_money\") - G.at(\"tank_cost\"))
-		return true
-	return false
-"
-
-[sub_resource type="Resource" id="Resource_idd87"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_1k1jx")
-argument_names = []
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_4jtth"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(result, from, to):
-	var rng = RandomNumberGenerator.new()
-	var rndX = rng.randi_range(150, 575)
-	var rndY = rng.randi_range(0, 650)
-	return Vector2(rndX, rndY)
-"
-
-[sub_resource type="Resource" id="Resource_tsyro"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_4jtth")
-argument_names = ["result", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_e1oww"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(result, from, to):
-	return result
-"
-
-[sub_resource type="Resource" id="Resource_tgato"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_e1oww")
-argument_names = ["result", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_77je2"]
-script = ExtResource("4_0nawf")
-signal_name = "after"
-to = NodePath("../../../Spawner3")
-invoke = "spawn_at"
-arguments = [SubResource("Resource_tsyro")]
-only_if = SubResource("Resource_tgato")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_bh8r6"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(result, from, to):
-	var rng = RandomNumberGenerator.new()
-	var rndX = rng.randi_range(575, 1000)
-	var rndY = rng.randi_range(0, 650)
-	return Vector2(rndX, rndY)
-"
-
-[sub_resource type="Resource" id="Resource_vdxoq"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_bh8r6")
-argument_names = ["result", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_fwwrg"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(result, from, to):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_xtm80"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_fwwrg")
-argument_names = ["result", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_a3h3y"]
-script = ExtResource("4_0nawf")
-signal_name = "after"
-to = NodePath("../../../EnemySpawner")
-invoke = "spawn_at"
-arguments = [SubResource("Resource_vdxoq")]
-only_if = SubResource("Resource_xtm80")
-deferred = false
-enabled = true
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_l2jg2"]
-vertices = PackedVector2Array(-106, 694, 121, 387, 1029, 379, 1130, 379, 1199, 747, 1229, -31, 1128, 277, 20, 287, -29, -36, 1029, 279, 121, 287, 20, 387)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 4, 3, 6), PackedInt32Array(7, 8, 5, 6, 9, 10), PackedInt32Array(11, 1, 0), PackedInt32Array(11, 0, 8, 7), PackedInt32Array(10, 9, 2, 1)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(20, 287, 121, 287, 121, 387, 20, 387), PackedVector2Array(1029, 279, 1128, 277, 1130, 379, 1029, 379), PackedVector2Array(-29, -36, 1229, -31, 1199, 747, -106, 694)])
+vertices = PackedVector2Array(1428, -118, 1388, 766, 1150, 393, 1150, 257, -101, -80, 1009, 257, -141, 774, 1010, 393, 121, 387, 20, 387, 20, 287, 121, 287)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(2, 1, 6, 7), PackedInt32Array(8, 7, 6, 9), PackedInt32Array(9, 6, 4, 10), PackedInt32Array(10, 4, 5, 11), PackedInt32Array(11, 5, 7, 8)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(20, 287, 121, 287, 121, 387, 20, 387), PackedVector2Array(1009, 257, 1150, 257, 1150, 393, 1010, 393), PackedVector2Array(-101, -80, 1428, -118, 1388, 766, -141, 774)])
 
 [sub_resource type="GDScript" id="GDScript_lhnjy"]
 script/source = "@tool
@@ -727,6 +569,180 @@ nested_script = SubResource("GDScript_u2q75")
 argument_names = []
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_in53g"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	if G.at(\"player_money\") >= 25:
+		G.inc(\"player_money\", -25)
+		return true
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_5yemp"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_in53g")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_b7fuk"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	var rng = RandomNumberGenerator.new()
+	var rndX = rng.randi_range(150, 575)
+	var rndY = rng.randi_range(0, 650)
+	return Vector2(rndX, rndY)
+"
+
+[sub_resource type="Resource" id="Resource_cvrwv"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_b7fuk")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bv0jf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_i8j3n"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_bv0jf")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tnr71"]
+script = ExtResource("4_0nawf")
+signal_name = "after"
+to = NodePath("../../../Spawner")
+invoke = "spawn_at"
+arguments = [SubResource("Resource_cvrwv")]
+only_if = SubResource("Resource_i8j3n")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_denji"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	if G.at(\"player_money\") >= 50:
+		G.inc(\"player_money\", -50)
+		return true
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_pyv8w"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_denji")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_pstx2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	var rng = RandomNumberGenerator.new()
+	var rndX = rng.randi_range(150, 575)
+	var rndY = rng.randi_range(0, 650)
+	return Vector2(rndX, rndY)
+"
+
+[sub_resource type="Resource" id="Resource_7507y"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_pstx2")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_k6v8f"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_l2ofy"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_k6v8f")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_s5xrh"]
+script = ExtResource("4_0nawf")
+signal_name = "after"
+to = NodePath("../../../Spawner2")
+invoke = "spawn_at"
+arguments = [SubResource("Resource_7507y")]
+only_if = SubResource("Resource_l2ofy")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_1k1jx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	if G.at(\"player_money\") >= 100:
+		G.inc(\"player_money\", -100)
+		return true
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_idd87"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_1k1jx")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4jtth"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	var rng = RandomNumberGenerator.new()
+	var rndX = rng.randi_range(150, 575)
+	var rndY = rng.randi_range(0, 650)
+	return Vector2(rndX, rndY)
+"
+
+[sub_resource type="Resource" id="Resource_tsyro"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_4jtth")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_e1oww"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_tgato"]
+script = ExtResource("4_gmxrw")
+nested_script = SubResource("GDScript_e1oww")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_77je2"]
+script = ExtResource("4_0nawf")
+signal_name = "after"
+to = NodePath("../../../Spawner3")
+invoke = "spawn_at"
+arguments = [SubResource("Resource_tsyro")]
+only_if = SubResource("Resource_tgato")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_wa5o0")
 
@@ -746,7 +762,7 @@ script = ExtResource("1_5i2nd")
 color = Color(1, 0, 0, 0.305882)
 placeholder_size = Vector2(575, 650)
 
-[node name="MyCastle" type="StaticBody2D" parent="." groups=["troop"]]
+[node name="MyCastle" type="Area2D" parent="." groups=["troop"]]
 position = Vector2(71, 337)
 script = ExtResource("3_wx5gk")
 life_property = "player_life"
@@ -763,7 +779,7 @@ script = ExtResource("12_laxul")
 global = true
 metadata/player_life = 500.0
 
-[node name="EnemyCastle" type="StaticBody2D" parent="." groups=["enemy"]]
+[node name="EnemyCastle" type="Area2D" parent="." groups=["enemy"]]
 position = Vector2(1080, 328)
 script = ExtResource("3_wx5gk")
 life_property = "enemy_life"
@@ -791,7 +807,7 @@ script = ExtResource("5_lwmg1")
 target_location = NodePath("../../EnemyCastle")
 color = Color(0, 0, 1, 1)
 range_prop = "knight_range"
-speed = 50.0
+speed_prop = "knight_speed"
 health = 100.0
 damage = 10.0
 
@@ -833,7 +849,7 @@ script = ExtResource("5_lwmg1")
 target_location = NodePath("../../EnemyCastle")
 color = Color(0, 0, 1, 1)
 range_prop = "archer_range"
-speed = 50.0
+speed_prop = "archer_speed"
 health = 100.0
 damage = 50.0
 
@@ -875,8 +891,8 @@ script = ExtResource("5_lwmg1")
 target_location = NodePath("../../EnemyCastle")
 color = Color(0, 0, 1, 1)
 range_prop = "tank_range"
-speed = 30.0
-health = 200.0
+speed_prop = "tank_speed"
+health = 500.0
 damage = 5.0
 
 [node name="Placeholder" type="Node2D" parent="Spawner3/Tank"]
@@ -907,7 +923,7 @@ evaluate = SubResource("Resource_qf6h2")
 to_prop = "duration_seconds"
 
 [node name="EnemySpawner" type="Node2D" parent="."]
-position = Vector2(984, 39)
+position = Vector2(1015, 65)
 script = ExtResource("2_2kynd")
 metadata/pronto_connections = [SubResource("Resource_u03uj")]
 
@@ -917,7 +933,7 @@ script = ExtResource("5_lwmg1")
 target_location = NodePath("../../MyCastle")
 color = Color(1, 0, 0, 1)
 range_prop = "knight_range"
-speed = 30.0
+speed_prop = "knight_speed"
 health = 100.0
 damage = 10.0
 
@@ -925,10 +941,6 @@ damage = 10.0
 script = ExtResource("1_5i2nd")
 label = "  Z"
 color = Color(1, 0, 0, 1)
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="EnemySpawner/Enemy"]
-avoidance_enabled = true
-radius = 114.6
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="EnemySpawner/Enemy"]
 
@@ -942,128 +954,24 @@ metadata/pronto_connections = [SubResource("Resource_hbtlc")]
 position = Vector2(34, 59)
 script = ExtResource("8_2r0ku")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-offset_right = 319.0
-offset_bottom = 103.0
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="EnemySpawner/Enemy"]
+avoidance_enabled = true
+radius = 114.6
 
-[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
-position = Vector2(15, 14)
-script = ExtResource("6_rt3b5")
+[node name="SpawnerClock" type="Node2D" parent="."]
+position = Vector2(982, 59)
+script = ExtResource("7_s3v3w")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_8hvba")]
 
-[node name="Knight $25" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(1, -2)
-script = ExtResource("3_1dipl")
-evaluate = SubResource("Resource_5yemp")
-metadata/pronto_connections = [SubResource("Resource_tnr71")]
-
-[node name="Archer $50" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(2, 34)
-script = ExtResource("3_1dipl")
-evaluate = SubResource("Resource_pyv8w")
-metadata/pronto_connections = [SubResource("Resource_s5xrh")]
-
-[node name="Tank $100" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(4, 72)
-script = ExtResource("3_1dipl")
-evaluate = SubResource("Resource_idd87")
-metadata/pronto_connections = [SubResource("Resource_77je2")]
-
-[node name="Spawn Enemy" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(242, -65)
-script = ExtResource("3_1dipl")
-evaluate = SubResource("Resource_5yemp")
-metadata/pronto_connections = [SubResource("Resource_a3h3y")]
-
-[node name="knight_cost" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 10.0
-float_to = 200.0
-float_value = 25.0
-float_step_size = 1.0
-
-[node name="money_inc" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(1.52588e-05, -170.191)
-script = ExtResource("11_2imrd")
-float_from = 1.0
-float_to = 100.0
-float_value = 10.0
-float_step_size = 1.0
-
-[node name="archer_cost" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 10.0
-float_to = 200.0
-float_value = 50.0
-float_step_size = 1.0
-
-[node name="tank_cost" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 10.0
-float_to = 200.0
-float_value = 100.0
-float_step_size = 1.0
-
-[node name="knight_range" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 50.0
-float_to = 300.0
-float_value = 150.0
-float_step_size = 1.0
-
-[node name="archer_range" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 50.0
-float_to = 300.0
-float_value = 250.0
-float_step_size = 1.0
-
-[node name="tank_range" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 50.0
-float_to = 300.0
-float_value = 50.0
-float_step_size = 1.0
-
-[node name="knight_attack_time" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 1.0
-float_to = 5.0
-float_value = 1.0
-float_step_size = 1.0
-
-[node name="archer_attack_time" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 1.0
-float_to = 5.0
-float_value = 3.0
-float_step_size = 1.0
-
-[node name="tank_attack_time" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(139.046, -139.046)
-script = ExtResource("11_2imrd")
-float_from = 1.0
-float_to = 5.0
-float_value = 1.0
-float_step_size = 1.0
-
-[node name="speed" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(-144, -178)
-script = ExtResource("11_2imrd")
-float_from = 25.0
-float_to = 100.0
-float_value = 50.0
-float_step_size = 1.0
+[node name="Bind" type="Node2D" parent="SpawnerClock"]
+script = ExtResource("13_wys14")
+evaluate = SubResource("Resource_eswth")
+to_prop = "duration_seconds"
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
+position = Vector2(3, 3)
 navigation_polygon = SubResource("NavigationPolygon_l2jg2")
 
 [node name="MoneyClock" type="Node2D" parent="."]
@@ -1117,3 +1025,126 @@ position = Vector2(-35.5053, 35.5053)
 script = ExtResource("13_wys14")
 evaluate = SubResource("Resource_o5pu6")
 to_prop = "text"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 319.0
+offset_bottom = 103.0
+
+[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
+position = Vector2(15, 14)
+script = ExtResource("6_rt3b5")
+
+[node name="Knight $25" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(1, -2)
+script = ExtResource("3_1dipl")
+evaluate = SubResource("Resource_5yemp")
+metadata/pronto_connections = [SubResource("Resource_tnr71")]
+
+[node name="Archer $50" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(2, 34)
+script = ExtResource("3_1dipl")
+evaluate = SubResource("Resource_pyv8w")
+metadata/pronto_connections = [SubResource("Resource_s5xrh")]
+
+[node name="Tank $100" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(4, 72)
+script = ExtResource("3_1dipl")
+evaluate = SubResource("Resource_idd87")
+metadata/pronto_connections = [SubResource("Resource_77je2")]
+
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+offset_left = 334.0
+offset_top = 1.0
+offset_right = 667.0
+offset_bottom = 102.0
+
+[node name="PrototypingUI" type="Node2D" parent="PanelContainer2"]
+position = Vector2(-123.029, 123.029)
+script = ExtResource("6_rt3b5")
+
+[node name="money_inc" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-195.971, -280.22)
+script = ExtResource("11_2imrd")
+float_from = 1.0
+float_to = 100.0
+float_value = 10.0
+float_step_size = 1.0
+
+[node name="enemy_spawn_time" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+script = ExtResource("11_2imrd")
+float_from = 1.0
+float_to = 5.0
+float_value = 3.0
+float_step_size = 1.0
+
+[node name="knight_attack_time" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-56.925, -249.075)
+script = ExtResource("11_2imrd")
+float_from = 1.0
+float_to = 5.0
+float_value = 1.0
+float_step_size = 1.0
+
+[node name="archer_attack_time" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-56.925, -249.075)
+script = ExtResource("11_2imrd")
+float_from = 1.0
+float_to = 5.0
+float_value = 3.0
+float_step_size = 1.0
+
+[node name="tank_attack_time" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-56.925, -249.075)
+script = ExtResource("11_2imrd")
+float_from = 1.0
+float_to = 5.0
+float_value = 1.0
+float_step_size = 1.0
+
+[node name="knight_range" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-56.925, -249.075)
+script = ExtResource("11_2imrd")
+float_from = 50.0
+float_to = 300.0
+float_value = 150.0
+float_step_size = 1.0
+
+[node name="archer_range" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-56.925, -249.075)
+script = ExtResource("11_2imrd")
+float_from = 50.0
+float_to = 300.0
+float_value = 250.0
+float_step_size = 1.0
+
+[node name="tank_range" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-56.925, -249.075)
+script = ExtResource("11_2imrd")
+float_from = 50.0
+float_to = 300.0
+float_value = 50.0
+float_step_size = 1.0
+
+[node name="knight_speed" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-120.897, 120.897)
+script = ExtResource("11_2imrd")
+float_from = 30.0
+float_to = 100.0
+float_value = 50.0
+float_step_size = 5.0
+
+[node name="archer_speed" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-120.897, 120.897)
+script = ExtResource("11_2imrd")
+float_from = 30.0
+float_to = 100.0
+float_value = 50.0
+float_step_size = 5.0
+
+[node name="tank_speed" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-752.197, 417.197)
+script = ExtResource("11_2imrd")
+float_from = 10.0
+float_to = 50.0
+float_value = 30.0
+float_step_size = 5.0

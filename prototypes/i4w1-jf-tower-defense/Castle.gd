@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends Area2D
 
 var attacker: CharacterBody2D = null
 @export var life_property: String = ""
