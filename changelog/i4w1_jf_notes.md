@@ -32,8 +32,8 @@ We asked a few different people with different background (some ITSE students, s
 
 | |Amount|
 |-|-|
-| Wins | 4 |
-| Losses | 1 |
+| Wins | 8 |
+| Losses | 3 |
 
 We also noticed different strategies: In some runs the user was very focussed on defending the own base and took some time before attacking themself. Other users used a more aggressive strategy and tried to send some units along a longer path to sneak up on the enemy and finish the game way faster (those were mainly the people that also play other computer games).
 
