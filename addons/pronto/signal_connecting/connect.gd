@@ -27,11 +27,6 @@ func build_connection_list():
 	for c in _displayed_connections:
 		var added_index = %connections.add_item(c.print(false, false, true), Utils.icon_from_theme("Signals", node))
 		%connections.set_item_disabled(added_index, !c.enabled)
-		c.changed_enabled.connect(func(new_state: bool):
-			# FIXME: There is a bug when removing a connection, then undoing that and disabling it.
-			# The connection is added to the bottom of the list but the index remains the same.
-			%connections.set_item_disabled(added_index, !new_state)
-		)
 	
 	# connecting to signals for slight performance improvement
 	# by avoiding querying mouse position every process call

@@ -2,9 +2,6 @@
 extends Resource
 class_name Connection
 
-## Emitted when changing the state of enabled
-signal changed_enabled(new_state)
-
 ## Wrapper for richer Signals.
 ##
 ## A [Connection] wraps a Godot signal to allow for richer effects to take
@@ -67,7 +64,6 @@ static func get_connections(node: Node) -> Array:
 		return enabled
 	set(new_value):
 		enabled = new_value
-		changed_enabled.emit(new_value)
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
@@ -94,7 +90,9 @@ func toggle_enabled(undo_redo: EditorUndoRedoManager = null):
 		return 
 	undo_redo.create_action("%s connection" % ("Disable" if enabled else "Enable"))
 	undo_redo.add_do_method(self, "set", "enabled", !enabled)
+	undo_redo.add_do_method(ConnectionsList, "emit_connections_changed")
 	undo_redo.add_undo_method(self, "set", "enabled", enabled)
+	undo_redo.add_undo_method(ConnectionsList, "emit_connections_changed")
 	undo_redo.commit_action()
 
 ## Reorder the connection at the given index in its connection list to be the first.

@@ -5,8 +5,6 @@ class_name Lines
 var _last_pos = []
 var _last_zoom = 1.0
 var _flashed = {}
-var _enabled = {}
-
 
 func flash_line(key: Variant, type: String, value: float):
 	_flashed[[key, type]] = value
@@ -15,11 +13,6 @@ const flash_colors = {
 	'activated': Color.RED,
 	'highlight': Color.GREEN,
 }
-
-
-func set_enabled(value: bool, key: Variant):
-	_enabled[key] = value
-
 
 func _needs_update(lines: Array):
 	var new_zoom = lines[0].from.get_viewport_transform().get_scale().x if not lines.is_empty() else 1.0
@@ -31,6 +24,7 @@ func _needs_update(lines: Array):
 		new_pos.append(l.from.global_position)
 		new_pos.append(Utils.find_position(l.to))
 		new_pos.append(l.text_fn.call(false))
+		new_pos.append(l.color)
 	
 	needs_update = needs_update or _last_pos != new_pos
 	_last_pos = new_pos
@@ -55,12 +49,14 @@ class Line:
 	var from: Node
 	var to: Node
 	var key: Variant
+	var color: Color
 	
-	func _init(from: Node, to: Node, text_fn: Callable, key: Variant):
+	func _init(from: Node, to: Node, text_fn: Callable, key: Variant, color = Color.WHITE):
 		self.text_fn = text_fn
 		self.from = from
 		self.to = to
 		self.key = key
+		self.color = color
 	
 	func as_combined(lines):
 		if lines.size() == 1:
@@ -69,15 +65,13 @@ class Line:
 		c.lines = lines
 		return c
 	
-	func color(lines: Lines):
-		if not lines._enabled.get(key,true):
-			return Color.WHITE.lerp(Color.BLACK, 0.5)
-		var color = Color.BLACK
+	func current_color(lines: Lines) -> Color:
+		var final = Color.BLACK
 		for type in flash_colors:
 			var flash = lines._flashed.get([key, type], 0.0)
 			if flash > 0.0:
-				color += Color.WHITE.lerp(flash_colors[type], flash)
-		return color if color != Color.BLACK else Color.WHITE
+				final += color.lerp(flash_colors[type], flash)
+		return final if final != Color.BLACK else color
 	
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, lines: Lines):
 		var text = text_fn.call(flipped)
@@ -85,7 +79,7 @@ class Line:
 		c.draw_multiline_string(font,
 			Vector2(-size.x - 24, 0) if flipped else Vector2(0, 0),
 			text,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color(lines))
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, current_color(lines))
 	
 	func draw_line(c: CanvasItem, begin: Vector2, end: Vector2, color: Color, width: float):
 		c.draw_line(begin, end, color, width, true)
@@ -94,12 +88,14 @@ class Line:
 		if from == to:
 			return
 		
+		var col := current_color(lines)
+		
 		c.draw_set_transform(Vector2.ZERO)
 		
 		var begin = Vector2.ZERO
 		var end = Utils.global_rect_of(to).get_center() - from.global_position
 		end -= end.normalized() * 12 # keep some distance to the node
-		draw_line(c, begin, end, color(lines), lerp(0.02, 1.0, 1.0 / from.get_viewport_transform().get_scale().x))
+		draw_line(c, begin, end, col, lerp(0.02, 1.0, 1.0 / from.get_viewport_transform().get_scale().x))
 		
 		# arrow head
 		var angle = begin.angle_to_point(end)
@@ -110,7 +106,7 @@ class Line:
 			Vector2(-1, .5),
 		]
 		arrow = arrow.map(func (p): return (p * arrow_size).rotated(angle) + end)
-		c.draw_polygon(arrow, [color(lines), color(lines), color(lines)])
+		c.draw_polygon(arrow, [col, col, col])
 		
 		var flip = Utils.between(angle, PI / 2, PI) or Utils.between(angle, -PI, -PI / 2)
 		c.draw_set_transform_matrix(Transform2D(angle + PI if flip else angle, Vector2.ZERO) * Transform2D(0.0, Vector2(12, -2)))
@@ -123,14 +119,14 @@ class DashedLine extends Line:
 class CombinedLine extends Line:
 	var lines
 	
-	func color(_lines: Lines):
-		return Color.WHITE.lerp(Color.RED, Utils.max(lines.map(func (l): return _lines._flashed.get(l.key, 0.0))))
+	func current_color(_lines: Lines):
+		return color.lerp(Color.RED, Utils.max(lines.map(func (l): return _lines._flashed.get(l.key, 0.0))))
 	
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, _lines: Lines):
 		var y = 0
 		for line in lines:
 			var text = line.text_fn.call(flipped)
-			var color = line.color(_lines)
+			var color = line.current_color(_lines)
 			var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
 			c.draw_multiline_string(font,
 				Vector2(-size.x - 24, y) if flipped else Vector2(0, y),
@@ -148,4 +144,4 @@ class BottomText extends Line:
 		c.draw_multiline_string(font,
 			Vector2(-size.x/2, 0),
 			text,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color(lines))
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, current_color(lines))
