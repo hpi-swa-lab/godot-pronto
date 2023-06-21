@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=129 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="10_tqox3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="11_5bwvg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="12_06af0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="15_v6xav"]
 
 [sub_resource type="GDScript" id="GDScript_16kjs"]
 script/source = "@tool
@@ -147,6 +148,21 @@ arguments = []
 only_if = SubResource("Resource_1u4d6")
 deferred = false
 enabled = true
+
+[sub_resource type="GDScript" id="GDScript_qyx1c"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return G.at(\"init_f
+	ood\")
+"
+
+[sub_resource type="Resource" id="Resource_ylnwr"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_qyx1c")
+argument_names = []
+return_value = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_55lvm"]
 radius = 274.007
@@ -358,6 +374,326 @@ only_if = SubResource("Resource_kmu3d")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_fhrt2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	var screenSize = to.get_viewport().get_visible_rect().size
+	var rng = RandomNumberGenerator.new()
+	var rndX = rng.randi_range(0, screenSize.x)
+	var rndY = rng.randi_range(0, screenSize.y)
+	return (Vector2(rndX,rndY) - to.get_parent().global_position).normalized() * G.at(\"fishy_speed\")
+"
+
+[sub_resource type="Resource" id="Resource_w115x"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_fhrt2")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ofmdp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8giat"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_ofmdp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qpxmq"]
+script = ExtResource("5_7l3rf")
+signal_name = "elapsed"
+to = NodePath("../Move")
+invoke = "move_direction"
+arguments = [SubResource("Resource_w115x")]
+only_if = SubResource("Resource_8giat")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_2esg8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	var rng = RandomNumberGenerator.new()
+	return rng.randi_range(G.at(\"min_time\"), G.at(\"max_time\"))
+"
+
+[sub_resource type="Resource" id="Resource_kn7nc"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_2esg8")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ds0il"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return \"food\"
+"
+
+[sub_resource type="Resource" id="Resource_cpk2v"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_ds0il")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_t0aem"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return 1
+"
+
+[sub_resource type="Resource" id="Resource_4h4p0"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_t0aem")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ch367"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_sed6g"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_ch367")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qu7uj"]
+script = ExtResource("5_7l3rf")
+signal_name = "always"
+to = NodePath("../State")
+invoke = "dec"
+arguments = [SubResource("Resource_cpk2v"), SubResource("Resource_4h4p0")]
+only_if = SubResource("Resource_sed6g")
+deferred = false
+enabled = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xnqgi"]
+radius = 250.154
+
+[sub_resource type="GDScript" id="GDScript_e48wm"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_pys1l"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_e48wm")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_1cccu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ori4s"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_1cccu")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nrb67"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../Clock")
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_pys1l")]
+only_if = SubResource("Resource_ori4s")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_7rmyt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return (other.global_position - from.get_parent().global_position).normalized() * G.at(\"fishy_feed_speed\")
+"
+
+[sub_resource type="Resource" id="Resource_18aor"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_7rmyt")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_8wyt6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_algeu"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_8wyt6")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_x2g1c"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../Move")
+invoke = "move_direction"
+arguments = [SubResource("Resource_18aor")]
+only_if = SubResource("Resource_algeu")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_duv0x"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	other.queue_free()
+	return \"food\"
+"
+
+[sub_resource type="Resource" id="Resource_rt6el"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_duv0x")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_f68yo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return 200
+"
+
+[sub_resource type="Resource" id="Resource_gi0uf"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_f68yo")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4tt6i"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_s3b10"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_4tt6i")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7ix4k"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../State")
+invoke = "inc"
+arguments = [SubResource("Resource_rt6el"), SubResource("Resource_gi0uf")]
+only_if = SubResource("Resource_s3b10")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_yg6e0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_dgn6t"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_yg6e0")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dpk4r"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2j1dc"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_dpk4r")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1gim5"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../Clock")
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_dgn6t")]
+only_if = SubResource("Resource_2j1dc")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_doj8q"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return Vector2(0,0)
+"
+
+[sub_resource type="Resource" id="Resource_0ylww"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_doj8q")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bqu1r"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_hupq2"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_bqu1r")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tw26e"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../Move")
+invoke = "set_velocity"
+arguments = [SubResource("Resource_0ylww")]
+only_if = SubResource("Resource_hupq2")
+deferred = false
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1cbab"]
+size = Vector2(52, 50)
+
 [sub_resource type="GDScript" id="GDScript_mtmk2"]
 script/source = "@tool
 extends U
@@ -474,6 +810,61 @@ nested_script = SubResource("GDScript_6y8sv")
 argument_names = []
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_y610f"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return \"fishy\"
+"
+
+[sub_resource type="Resource" id="Resource_yv0x5"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_y610f")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_t25dj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	var b = true
+	if G.at(\"fishy\"):
+		b = false
+	return b
+"
+
+[sub_resource type="Resource" id="Resource_ddyym"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_t25dj")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jfgy0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_hu5pm"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_jfgy0")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4o4bf"]
+script = ExtResource("5_7l3rf")
+signal_name = "down"
+to = NodePath("../State")
+invoke = "put"
+arguments = [SubResource("Resource_yv0x5"), SubResource("Resource_ddyym")]
+only_if = SubResource("Resource_hu5pm")
+deferred = false
+enabled = true
+
 [node name="aquarium" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
@@ -540,6 +931,13 @@ float_to = 20.0
 float_value = 10.0
 float_step_size = 1.0
 
+[node name="init_food" type="Node2D" parent="PanelContainer/PrototypingUI"]
+script = ExtResource("8_jf3wf")
+float_from = 0.0
+float_to = 10000.0
+float_value = 2000.0
+float_step_size = 1000.0
+
 [node name="FishySpawner" type="Node2D" parent="."]
 position = Vector2(517, 371)
 script = ExtResource("5_spvgy")
@@ -581,6 +979,11 @@ script = ExtResource("11_5bwvg")
 metadata/food = 2000
 metadata/pronto_connections = [SubResource("Resource_3aqj4")]
 
+[node name="Bind" type="Node2D" parent="FishySpawner/CharacterBody2D/State"]
+script = ExtResource("9_gp8es")
+evaluate = SubResource("Resource_ylnwr")
+to_prop = "food"
+
 [node name="Area2D" type="Area2D" parent="FishySpawner/CharacterBody2D"]
 collision_layer = 4
 collision_mask = 2
@@ -605,10 +1008,70 @@ position = Vector2(28, 29)
 script = ExtResource("12_06af0")
 metadata/pronto_connections = [SubResource("Resource_d6bg4"), SubResource("Resource_f02t0"), SubResource("Resource_pnqg5")]
 
-[node name="Controls" type="Node2D" parent="."]
-position = Vector2(528, 68)
-script = ExtResource("10_ftdv1")
-metadata/pronto_connections = [SubResource("Resource_cb5sb")]
+[node name="PiraSpawner" type="Node2D" parent="."]
+position = Vector2(102, 294)
+script = ExtResource("5_spvgy")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="PiraSpawner"]
+position = Vector2(3, 62)
+collision_layer = 8
+collision_mask = 4
+
+[node name="Clock" type="Node2D" parent="PiraSpawner/CharacterBody2D"]
+position = Vector2(-53, 42)
+script = ExtResource("3_uwe38")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_qpxmq")]
+
+[node name="Bind" type="Node2D" parent="PiraSpawner/CharacterBody2D/Clock"]
+position = Vector2(-33, -32)
+script = ExtResource("9_gp8es")
+evaluate = SubResource("Resource_kn7nc")
+to_prop = "duration_seconds"
+
+[node name="Placeholder" type="Node2D" parent="PiraSpawner/CharacterBody2D"]
+script = ExtResource("2_twtba")
+color = Color(0.733333, 0, 0, 1)
+placeholder_size = Vector2(52, 50)
+
+[node name="Move" type="Node2D" parent="PiraSpawner/CharacterBody2D"]
+position = Vector2(-8, 68)
+script = ExtResource("6_y8438")
+
+[node name="Always" type="Node2D" parent="PiraSpawner/CharacterBody2D"]
+position = Vector2(45, 63)
+script = ExtResource("10_tqox3")
+paused = true
+metadata/pronto_connections = [SubResource("Resource_qu7uj")]
+
+[node name="State" type="Node2D" parent="PiraSpawner/CharacterBody2D"]
+position = Vector2(65, 4)
+script = ExtResource("11_5bwvg")
+
+[node name="Area2D" type="Area2D" parent="PiraSpawner/CharacterBody2D"]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PiraSpawner/CharacterBody2D/Area2D"]
+shape = SubResource("CircleShape2D_xnqgi")
+metadata/food = 2000
+
+[node name="Collision" type="Node2D" parent="PiraSpawner/CharacterBody2D/Area2D"]
+position = Vector2(-55, -59)
+script = ExtResource("12_06af0")
+metadata/pronto_connections = [SubResource("Resource_nrb67"), SubResource("Resource_x2g1c")]
+
+[node name="Area2D2" type="Area2D" parent="PiraSpawner/CharacterBody2D"]
+collision_layer = 8
+collision_mask = 4
+
+[node name="Collision" type="Node2D" parent="PiraSpawner/CharacterBody2D/Area2D2"]
+position = Vector2(-2, 119)
+script = ExtResource("12_06af0")
+metadata/pronto_connections = [SubResource("Resource_7ix4k"), SubResource("Resource_1gim5"), SubResource("Resource_tw26e")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PiraSpawner/CharacterBody2D/Area2D2"]
+shape = SubResource("RectangleShape2D_1cbab")
 
 [node name="AlgaeSpawner" type="Node2D" parent="."]
 position = Vector2(646.798, 7.71299e-06)
@@ -622,7 +1085,12 @@ collision_mask = 3
 [node name="Placeholder" type="Node2D" parent="AlgaeSpawner/Area2D"]
 script = ExtResource("2_twtba")
 color = Color(0.172549, 0.490196, 0.156863, 1)
-placeholder_size = Vector2(20, 60)
+placeholder_size = Vector2(12, 490)
+
+[node name="Controls" type="Node2D" parent="."]
+position = Vector2(528, 68)
+script = ExtResource("10_ftdv1")
+metadata/pronto_connections = [SubResource("Resource_cb5sb")]
 
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(534, 6)
@@ -635,3 +1103,14 @@ position = Vector2(-51, 19)
 script = ExtResource("9_gp8es")
 evaluate = SubResource("Resource_v3ift")
 to_prop = "duration_seconds"
+
+[node name="State" type="Node2D" parent="."]
+position = Vector2(-439.336, 439.336)
+script = ExtResource("11_5bwvg")
+metadata/fishy = true
+
+[node name="Key" type="Node2D" parent="."]
+position = Vector2(-392, 426)
+script = ExtResource("15_v6xav")
+key = "E"
+metadata/pronto_connections = [SubResource("Resource_4o4bf")]
