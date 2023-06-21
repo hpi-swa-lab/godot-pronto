@@ -12,6 +12,7 @@ func put(name: String, value: Variant):
 	_put(name, value)
 	if name in _state_update:
 		_state_update[name].put(name, value)
+	return value
 
 func at(name: String, default = null):
 	if name in values:
