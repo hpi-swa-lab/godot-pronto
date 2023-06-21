@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=126 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="8_7crgp"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="9_6ntri"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="9_adfup"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="11_51tr7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="11_en4qj"]
 
 [sub_resource type="GDScript" id="GDScript_55yuf"]
 script/source = "@tool
@@ -725,7 +727,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from, to):
-	to.position.x += (100+3) * from.duration_seconds
+	to.position.x += (3+G.at(\"RunSpeed\")) * from.duration_seconds
 "
 
 [sub_resource type="Resource" id="Resource_wo3ce"]
@@ -1250,3 +1252,19 @@ T - Stop Simulation
 H - Spawn Hydrogen at mouse
 O - Spawn Oxygen at mouse
 D - Add Instruction to end"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 332.0
+offset_bottom = 56.0
+
+[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
+position = Vector2(-53.9676, 53.9676)
+script = ExtResource("11_51tr7")
+
+[node name="RunSpeed" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(62, 27)
+script = ExtResource("11_en4qj")
+float_from = 0.0
+float_to = 200.0
+float_value = 100.0
+float_step_size = 1.0
