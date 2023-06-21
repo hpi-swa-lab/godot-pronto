@@ -68,12 +68,9 @@ func connection_activated(c: Connection):
 			current.kill()
 	var t = create_tween()
 	_running_tweens[c] = t
-	t.tween_method(
-		flash_line.bind(c, 'activated'),
-		0.0 if current == null else 1.0,
-		1.0 if current == null else 0.0,
-		0.2
-	)
+	if current == null:
+		t.tween_method(flash_line.bind(c, 'activated'), 0.0, 1.0, 0.2)
+	t.tween_method(flash_line.bind(c, 'activated'), 1.0, 0.0, 0.2)
 	
 # duplicating as Godot does not support overloading
 # see: https://github.com/godotengine/godot-proposals/issues/1571
@@ -98,11 +95,11 @@ func lines() -> Array:
 		var other = self if not connection.is_target() else get_node_or_null(connection.to)
 		if other == null:
 			return null
-		connection.changed_enabled.connect(func(new_state): 
-			_lines.set_enabled(new_state, connection)
-			queue_redraw()
-		)
-		return Lines.Line.new(self, other, func (flipped): return connection.print(flipped), connection)
+		return Lines.Line.new(self,
+			other,
+			func (flipped): return connection.print(flipped),
+			connection,
+			Color.WHITE if connection.enabled else Color.WHITE.lerp(Color.BLACK, 0.5))
 	).filter(func (connection): return connection != null)
 
 func _draw():

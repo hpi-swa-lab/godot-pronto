@@ -16,19 +16,17 @@ var anchor: Node:
 var node: Node:
 	set(value):
 		node = value
-		build_list()
+		build_connection_list()
 
-func build_list():
+func _ready():
+	ConnectionsList.connections_changed.connect(build_connection_list)
+
+func build_connection_list():
 	%connections.clear()
 	_displayed_connections = Connection.get_connections(node).duplicate()
 	for c in _displayed_connections:
 		var added_index = %connections.add_item(c.print(false, false, true), Utils.icon_from_theme("Signals", node))
 		%connections.set_item_disabled(added_index, !c.enabled)
-		c.changed_enabled.connect(func(new_state: bool):
-			# FIXME: There is a bug when removing a connection, then undoing that and disabling it.
-			# The connection is added to the bottom of the list but the index remains the same.
-			%connections.set_item_disabled(added_index, !new_state)
-		)
 	
 	# connecting to signals for slight performance improvement
 	# by avoiding querying mouse position every process call
@@ -56,7 +54,7 @@ func _process(delta):
 			size = Vector2.ZERO
 	
 	if node and Connection.get_connections(node) != _displayed_connections:
-		build_list()
+		build_connection_list()
 
 	# there is most likely a way better solution for this
 	# feel free to improve it
@@ -68,8 +66,10 @@ func _process(delta):
 		if conn:
 			node.highlight_activated(conn)
 
-
 func _on_add_mouse_entered():
+	build_signal_list()
+
+func build_signal_list():
 	for c in %signal_list.get_children().slice(2):
 		c.queue_free()
 	
@@ -91,7 +91,6 @@ func _on_add_mouse_entered():
 
 func _on_connections_item_selected(index):
 	NodeToNodeConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
-	queue_free()
 
 func _on_connections_item_clicked(index, at_position, mouse_button_index):
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
@@ -104,7 +103,7 @@ func _on_connections_item_clicked(index, at_position, mouse_button_index):
 		m.add_item("Delete", 1)
 		m.id_pressed.connect(func (id):
 			if id == 0:
-				Connection.reorder_to_top(node, index, undo_redo, build_list)
+				Connection.reorder_to_top(node, index, undo_redo, build_connection_list)
 			if id == 1:
 				connection.delete(node, undo_redo)
 			if id == 2:
