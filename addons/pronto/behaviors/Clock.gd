@@ -44,8 +44,7 @@ var _timer: Timer:
 
 func reset_and_start():
 	self.paused = false
-	var rng = RandomNumberGenerator.new()
-	_timer.start(rng.randi_range(2, 5))
+	_timer.start(duration_seconds)
 
 func _process(delta):
 	super._process(delta)

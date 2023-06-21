@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=66 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="6_y8438"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="7_bf3ce"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="8_jf3wf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="9_gp8es"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="10_ftdv1"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="10_tqox3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="11_5bwvg"]
@@ -55,6 +56,21 @@ arguments = [SubResource("Resource_xo8hi")]
 only_if = SubResource("Resource_8yaxn")
 deferred = false
 enabled = true
+
+[sub_resource type="GDScript" id="GDScript_plrm2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	var rng = RandomNumberGenerator.new()
+	return rng.randi_range(2, 5)
+"
+
+[sub_resource type="Resource" id="Resource_xevbk"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_plrm2")
+argument_names = []
+return_value = true
 
 [sub_resource type="GDScript" id="GDScript_07o1n"]
 script/source = "@tool
@@ -436,6 +452,11 @@ script = ExtResource("3_uwe38")
 duration_seconds = 3.0
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_fp5qh")]
+
+[node name="Bind" type="Node2D" parent="FishySpawner/CharacterBody2D/Clock"]
+script = ExtResource("9_gp8es")
+evaluate = SubResource("Resource_xevbk")
+to_prop = "duration_seconds"
 
 [node name="Placeholder" type="Node2D" parent="FishySpawner/CharacterBody2D"]
 script = ExtResource("2_twtba")
