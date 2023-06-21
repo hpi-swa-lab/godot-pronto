@@ -112,7 +112,10 @@ func on_food_removed():
 	
 func on_food_detected(food: Node2D):
 	if(food_carried <= 1):
+		if(state == "GATHERING_FOOD" and position.distance_to(food.position) > position.distance_to(navigation_agent.target_position)):
+			return
 		target = food
 		state = "GATHERING_FOOD"
 		evaluate_state()
+
 	
