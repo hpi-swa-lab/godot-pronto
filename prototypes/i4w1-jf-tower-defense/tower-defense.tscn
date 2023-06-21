@@ -982,7 +982,7 @@ metadata/pronto_connections = [SubResource("Resource_ysxx3")]
 position = Vector2(104, -2)
 script = ExtResource("12_laxul")
 global = true
-metadata/player_money = 20.0
+metadata/player_money = 0.0
 
 [node name="MoneyLabel" type="Label" parent="."]
 offset_left = 16.0
