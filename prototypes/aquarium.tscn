@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=63 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
@@ -342,44 +342,6 @@ only_if = SubResource("Resource_ub288")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_j4vvs"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_7kfwe"]
-script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_j4vvs")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_66m75"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_2jc2m"]
-script = ExtResource("4_by7o2")
-nested_script = SubResource("GDScript_66m75")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_wmxsj"]
-script = ExtResource("5_7l3rf")
-signal_name = "elapsed"
-to = NodePath("../Area2D/Placeholder")
-invoke = "set_scale"
-arguments = [SubResource("Resource_7kfwe")]
-only_if = SubResource("Resource_2jc2m")
-deferred = false
-enabled = true
-
 [sub_resource type="GDScript" id="GDScript_pkvyh"]
 script/source = "@tool
 extends U
@@ -537,13 +499,6 @@ collision_mask = 3
 script = ExtResource("2_twtba")
 color = Color(0.172549, 0.490196, 0.156863, 1)
 placeholder_size = Vector2(20, 60)
-
-[node name="Clock" type="Node2D" parent="AlgaeSpawner"]
-position = Vector2(42.202, 12)
-script = ExtResource("3_uwe38")
-one_shot = true
-trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_wmxsj")]
 
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(587, -8)
