@@ -1,6 +1,7 @@
-[gd_scene load_steps=46 format=3 uid="uid://kvmebtvv8qs0"]
+[gd_scene load_steps=41 format=3 uid="uid://kvmebtvv8qs0"]
 
 [ext_resource type="Script" path="res://prototypes/i4w1-antsim/Ant.gd" id="1_bsxlv"]
+[ext_resource type="Script" path="res://prototypes/i4w1-antsim/i4w1-antsim-2.gd" id="1_qp5nf"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_isqvl"]
 [ext_resource type="Texture2D" uid="uid://crsdlid37kyko" path="res://prototypes/i4w1-antsim/1sttileset.png" id="3_f5lwy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="3_g0ho6"]
@@ -9,8 +10,8 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_28kmq"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="5_lktaa"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_nmkqa"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="7_go4ch"]
 [ext_resource type="Script" path="res://prototypes/i4w1-antsim/NewContainer.gd" id="8_yywl7"]
+[ext_resource type="Script" path="res://prototypes/i4w1-antsim/Button.gd" id="12_rc8py"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1e3lh"]
 
@@ -216,14 +217,6 @@ expression = SubResource("Resource_kd47f")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_r4c4n"]
-
-[sub_resource type="Resource" id="Resource_wmml5"]
-script = ExtResource("5_28kmq")
-nested_script = SubResource("GDScript_r4c4n")
-argument_names = []
-return_value = true
-
 [sub_resource type="GDScript" id="GDScript_xh4bp"]
 script/source = "@tool
 extends U
@@ -268,7 +261,7 @@ expression = SubResource("Resource_gwlw4")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_jguai"]
+[sub_resource type="Image" id="Image_cd6gj"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 182, 255, 255, 255, 0, 255, 255, 255, 1, 253, 128, 128, 186, 253, 127, 127, 181, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 180, 255, 255, 255, 0, 255, 255, 255, 1, 253, 127, 127, 185, 253, 128, 128, 180, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 182, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 129, 129, 65, 252, 128, 128, 192, 252, 128, 128, 192, 252, 129, 129, 65, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 182, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 180, 255, 255, 255, 0, 252, 129, 129, 67, 252, 128, 128, 194, 252, 127, 127, 255, 252, 127, 127, 245, 252, 127, 127, 245, 252, 127, 127, 255, 252, 127, 127, 193, 252, 128, 128, 66, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 180, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 129, 129, 67, 252, 127, 127, 195, 252, 127, 127, 255, 252, 128, 128, 244, 252, 128, 128, 138, 255, 128, 128, 22, 255, 128, 128, 22, 252, 127, 127, 139, 252, 127, 127, 245, 252, 127, 127, 255, 252, 127, 127, 193, 252, 129, 129, 65, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 252, 127, 127, 255, 252, 127, 127, 239, 255, 130, 130, 53, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 128, 128, 56, 252, 128, 128, 240, 252, 127, 127, 255, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 252, 127, 127, 247, 252, 127, 127, 255, 252, 128, 128, 250, 252, 127, 127, 155, 255, 128, 128, 32, 255, 131, 131, 33, 252, 127, 127, 157, 252, 127, 127, 251, 252, 128, 128, 254, 252, 127, 127, 247, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 253, 128, 128, 188, 255, 128, 128, 50, 253, 127, 127, 177, 252, 127, 127, 255, 252, 127, 127, 251, 252, 127, 127, 251, 252, 128, 128, 254, 253, 127, 127, 175, 255, 128, 128, 48, 252, 128, 128, 192, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 253, 128, 128, 188, 255, 255, 255, 0, 255, 255, 255, 0, 255, 128, 128, 50, 252, 127, 127, 237, 252, 128, 128, 234, 255, 128, 128, 48, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 192, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 253, 128, 128, 188, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 220, 252, 128, 128, 216, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 192, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 252, 127, 127, 239, 253, 129, 129, 115, 255, 142, 142, 9, 255, 255, 255, 0, 252, 128, 128, 220, 252, 128, 128, 216, 255, 255, 255, 0, 255, 128, 128, 10, 253, 129, 129, 117, 252, 127, 127, 241, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 90, 252, 128, 128, 216, 252, 127, 127, 255, 252, 128, 128, 232, 253, 129, 129, 115, 252, 127, 127, 225, 252, 128, 128, 222, 253, 129, 129, 117, 252, 127, 127, 233, 252, 127, 127, 255, 252, 127, 127, 215, 253, 128, 128, 88, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 170, 170, 3, 253, 129, 129, 91, 252, 128, 128, 216, 252, 127, 127, 255, 252, 127, 127, 255, 252, 127, 127, 255, 252, 127, 127, 255, 252, 127, 127, 215, 253, 128, 128, 90, 255, 128, 128, 2, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 170, 170, 3, 253, 129, 129, 91, 252, 128, 128, 216, 252, 128, 128, 216, 253, 129, 129, 91, 255, 128, 128, 2, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 170, 170, 3, 255, 170, 170, 3, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -278,21 +271,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_24bjm"]
-image = SubResource("Image_jguai")
+image = SubResource("Image_cd6gj")
 
-[sub_resource type="Image" id="Image_rqlv6"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 225, 225, 225, 75, 224, 224, 224, 228, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 227, 224, 224, 224, 73, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 228, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 226, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 163, 225, 225, 225, 92, 255, 255, 255, 0, 255, 255, 255, 0, 227, 227, 227, 9, 224, 224, 224, 161, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 224, 224, 224, 144, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 77, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 224, 224, 224, 164, 224, 224, 224, 144, 224, 224, 224, 144, 224, 224, 224, 184, 224, 224, 224, 205, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 201, 225, 225, 225, 223, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 72, 224, 224, 224, 147, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 1, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 227, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 197, 224, 224, 224, 136, 255, 255, 255, 4, 255, 255, 255, 4, 255, 255, 255, 5, 225, 225, 225, 101, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 226, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 73, 224, 224, 224, 226, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 226, 227, 227, 227, 71, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_f3wde"]
-image = SubResource("Image_rqlv6")
-
-[sub_resource type="Image" id="Image_lxggg"]
+[sub_resource type="Image" id="Image_psxe3"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 182, 255, 255, 255, 0, 255, 255, 255, 1, 253, 128, 128, 186, 253, 127, 127, 181, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 180, 255, 255, 255, 0, 255, 255, 255, 1, 253, 127, 127, 185, 253, 128, 128, 180, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 182, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 129, 129, 65, 252, 128, 128, 192, 252, 128, 128, 192, 252, 129, 129, 65, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 182, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 180, 255, 255, 255, 0, 252, 129, 129, 67, 252, 128, 128, 194, 252, 127, 127, 255, 252, 127, 127, 245, 252, 127, 127, 245, 252, 127, 127, 255, 252, 127, 127, 193, 252, 128, 128, 66, 255, 255, 255, 0, 253, 128, 128, 182, 253, 128, 128, 180, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 129, 129, 67, 252, 127, 127, 195, 252, 127, 127, 255, 252, 128, 128, 244, 252, 128, 128, 138, 255, 128, 128, 22, 255, 128, 128, 22, 252, 127, 127, 139, 252, 127, 127, 245, 252, 127, 127, 255, 252, 127, 127, 193, 252, 129, 129, 65, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 252, 127, 127, 255, 252, 127, 127, 239, 255, 130, 130, 53, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 128, 128, 56, 252, 128, 128, 240, 252, 127, 127, 255, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 252, 127, 127, 247, 252, 127, 127, 255, 252, 128, 128, 250, 252, 127, 127, 155, 255, 128, 128, 32, 255, 131, 131, 33, 252, 127, 127, 157, 252, 127, 127, 251, 252, 128, 128, 254, 252, 127, 127, 247, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 253, 128, 128, 188, 255, 128, 128, 50, 253, 127, 127, 177, 252, 127, 127, 255, 252, 127, 127, 251, 252, 127, 127, 251, 252, 128, 128, 254, 253, 127, 127, 175, 255, 128, 128, 48, 252, 128, 128, 192, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 253, 128, 128, 188, 255, 255, 255, 0, 255, 255, 255, 0, 255, 128, 128, 50, 252, 127, 127, 237, 252, 128, 128, 234, 255, 128, 128, 48, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 192, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 253, 128, 128, 188, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 220, 252, 128, 128, 216, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 192, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 252, 128, 128, 248, 252, 127, 127, 239, 253, 129, 129, 115, 255, 142, 142, 9, 255, 255, 255, 0, 252, 128, 128, 220, 252, 128, 128, 216, 255, 255, 255, 0, 255, 128, 128, 10, 253, 129, 129, 117, 252, 127, 127, 241, 252, 128, 128, 244, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 253, 128, 128, 90, 252, 128, 128, 216, 252, 127, 127, 255, 252, 128, 128, 232, 253, 129, 129, 115, 252, 127, 127, 225, 252, 128, 128, 222, 253, 129, 129, 117, 252, 127, 127, 233, 252, 127, 127, 255, 252, 127, 127, 215, 253, 128, 128, 88, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 170, 170, 3, 253, 129, 129, 91, 252, 128, 128, 216, 252, 127, 127, 255, 252, 127, 127, 255, 252, 127, 127, 255, 252, 127, 127, 255, 252, 127, 127, 215, 253, 128, 128, 90, 255, 128, 128, 2, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 170, 170, 3, 253, 129, 129, 91, 252, 128, 128, 216, 252, 128, 128, 216, 253, 129, 129, 91, 255, 128, 128, 2, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 170, 170, 3, 255, 170, 170, 3, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -302,21 +283,10 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_061cd"]
-image = SubResource("Image_lxggg")
-
-[sub_resource type="Image" id="Image_fn84q"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 225, 225, 225, 75, 224, 224, 224, 228, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 227, 224, 224, 224, 73, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 228, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 226, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 163, 225, 225, 225, 92, 255, 255, 255, 0, 255, 255, 255, 0, 227, 227, 227, 9, 224, 224, 224, 161, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 224, 224, 224, 144, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 226, 226, 226, 77, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 224, 224, 224, 164, 224, 224, 224, 144, 224, 224, 224, 144, 224, 224, 224, 184, 224, 224, 224, 205, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 201, 225, 225, 225, 223, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 72, 224, 224, 224, 147, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 1, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 227, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 197, 224, 224, 224, 136, 255, 255, 255, 4, 255, 255, 255, 4, 255, 255, 255, 5, 225, 225, 225, 101, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 226, 255, 255, 255, 0, 255, 255, 255, 0, 224, 224, 224, 73, 224, 224, 224, 226, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 226, 227, 227, 227, 71, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_00ofx"]
-image = SubResource("Image_fn84q")
+image = SubResource("Image_psxe3")
 
 [node name="i4w1-antsim" type="Node2D"]
+script = ExtResource("1_qp5nf")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_l4ime")
@@ -339,6 +309,9 @@ color = Color(0.760784, 0.490196, 0.0313726, 1)
 placeholder_size = Vector2(15, 8)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Ant"]
+avoidance_enabled = true
+radius = 50.0
+neighbor_distance = 800.0
 debug_enabled = true
 
 [node name="Smell" type="Area2D" parent="Ant"]
@@ -368,11 +341,6 @@ placeholder_size = Vector2(13, 12)
 position = Vector2(39, 16)
 script = ExtResource("4_1r5fj")
 metadata/pronto_connections = [SubResource("Resource_j4jle")]
-
-[node name="Code" type="Node2D" parent="Food/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
 
 [node name="PanelContainer" type="PanelContainer" parent="." node_paths=PackedStringArray("cam")]
 visible = false
@@ -440,18 +408,6 @@ offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
 
-[node name="Code" type="Node2D" parent="Food2/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="78218" type="TextureRect" parent="Food2/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
-
 [node name="Food3" type="Area2D" parent="."]
 position = Vector2(353, 84)
 collision_layer = 3
@@ -483,25 +439,6 @@ offset_top = -8.0
 offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
-
-[node name="Code" type="Node2D" parent="Food3/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="18158" type="TextureRect" parent="Food3/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="78218" type="TextureRect" parent="Food3/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
 
 [node name="Food4" type="Area2D" parent="."]
 position = Vector2(111, 263)
@@ -541,32 +478,6 @@ offset_top = -8.0
 offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
-
-[node name="Code" type="Node2D" parent="Food4/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="29128" type="TextureRect" parent="Food4/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="18158" type="TextureRect" parent="Food4/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="78218" type="TextureRect" parent="Food4/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
 
 [node name="Food5" type="Area2D" parent="."]
 position = Vector2(88, 198)
@@ -614,39 +525,6 @@ offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
 
-[node name="Code" type="Node2D" parent="Food5/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="31579" type="TextureRect" parent="Food5/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="29128" type="TextureRect" parent="Food5/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="18158" type="TextureRect" parent="Food5/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="78218" type="TextureRect" parent="Food5/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
-
 [node name="Food6" type="Area2D" parent="."]
 position = Vector2(480, 319)
 collision_layer = 3
@@ -692,39 +570,6 @@ offset_top = -8.0
 offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
-
-[node name="Code" type="Node2D" parent="Food6/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="31579" type="TextureRect" parent="Food6/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="29128" type="TextureRect" parent="Food6/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="18158" type="TextureRect" parent="Food6/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="78218" type="TextureRect" parent="Food6/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
 
 [node name="Food7" type="Area2D" parent="."]
 position = Vector2(26, 307)
@@ -772,39 +617,6 @@ offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
 
-[node name="Code" type="Node2D" parent="Food7/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="31579" type="TextureRect" parent="Food7/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="29128" type="TextureRect" parent="Food7/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="18158" type="TextureRect" parent="Food7/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="78218" type="TextureRect" parent="Food7/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
-
 [node name="Food8" type="Area2D" parent="."]
 position = Vector2(188, 72)
 collision_layer = 3
@@ -850,39 +662,6 @@ offset_top = -8.0
 offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
-
-[node name="Code" type="Node2D" parent="Food8/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="31579" type="TextureRect" parent="Food8/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="29128" type="TextureRect" parent="Food8/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="18158" type="TextureRect" parent="Food8/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="78218" type="TextureRect" parent="Food8/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
 
 [node name="Food9" type="Area2D" parent="."]
 position = Vector2(85, 100)
@@ -930,39 +709,6 @@ offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
 
-[node name="Code" type="Node2D" parent="Food9/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="31579" type="TextureRect" parent="Food9/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="29128" type="TextureRect" parent="Food9/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="18158" type="TextureRect" parent="Food9/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="78218" type="TextureRect" parent="Food9/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
-
 [node name="Food10" type="Area2D" parent="."]
 position = Vector2(220, 189)
 collision_layer = 3
@@ -1009,39 +755,6 @@ offset_right = -8.0
 offset_bottom = -8.0
 texture = SubResource("ImageTexture_24bjm")
 
-[node name="Code" type="Node2D" parent="Food10/Collision"]
-position = Vector2(-52, 16)
-script = ExtResource("7_go4ch")
-evaluate = SubResource("Resource_wmml5")
-
-[node name="31579" type="TextureRect" parent="Food10/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="29128" type="TextureRect" parent="Food10/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="18158" type="TextureRect" parent="Food10/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_00ofx")
-
-[node name="78218" type="TextureRect" parent="Food10/Collision/Code"]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = -8.0
-offset_bottom = -8.0
-texture = SubResource("ImageTexture_f3wde")
-
 [node name="Ant2" type="CharacterBody2D" parent="." node_paths=PackedStringArray("target", "navigation_agent", "base")]
 position = Vector2(71, 74)
 collision_layer = 2
@@ -1059,6 +772,9 @@ color = Color(0.760784, 0.490196, 0.0313726, 1)
 placeholder_size = Vector2(15, 8)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Ant2"]
+avoidance_enabled = true
+radius = 50.0
+neighbor_distance = 600.0
 debug_enabled = true
 
 [node name="Smell" type="Area2D" parent="Ant2"]
@@ -1081,3 +797,12 @@ texture = SubResource("ImageTexture_061cd")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(260, 171)
 zoom = Vector2(2, 2)
+
+[node name="Button" type="Button" parent="."]
+process_mode = 2
+offset_left = 241.0
+offset_top = 18.0
+offset_right = 287.0
+offset_bottom = 49.0
+text = "Start"
+script = ExtResource("12_rc8py")
