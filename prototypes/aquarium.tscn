@@ -422,11 +422,11 @@ float_value = 0.0
 float_step_size = 0.1
 
 [node name="FishySpawner" type="Node2D" parent="."]
-position = Vector2(354, -224)
+position = Vector2(517, 371)
 script = ExtResource("5_spvgy")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="FishySpawner" groups=["meat"]]
-position = Vector2(170.574, 714.426)
+position = Vector2(27, 141)
 collision_layer = 4
 collision_mask = 3
 
