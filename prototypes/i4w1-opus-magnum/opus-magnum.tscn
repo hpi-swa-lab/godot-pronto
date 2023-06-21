@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=124 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -361,6 +361,46 @@ to = NodePath("..")
 invoke = "spawn"
 arguments = []
 only_if = SubResource("Resource_5uhp0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_a684w"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	to.get_node(\"Arm\").global_rotation = to.get_node(\"Reset\").global_rotation
+	print(\"Reset\")
+"
+
+[sub_resource type="Resource" id="Resource_ahdvf"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_a684w")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_vy5os"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_o7oik"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_vy5os")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_k64yg"]
+script = ExtResource("6_j0vsh")
+signal_name = "just_down"
+to = NodePath("..")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_o7oik")
+expression = SubResource("Resource_ahdvf")
 deferred = false
 enabled = true
 
@@ -797,6 +837,47 @@ expression = SubResource("Resource_n20qf")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_qrm26"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	for child in to.get_children():
+		if child.is_in_group(\"molecules\"):
+			child.queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_x6rk6"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_qrm26")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_usqe4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_e1wxd"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_usqe4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ol7wp"]
+script = ExtResource("6_j0vsh")
+signal_name = "just_down"
+to = NodePath("..")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_e1wxd")
+expression = SubResource("Resource_x6rk6")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_12ds5"]
 script/source = "@tool
 extends U
@@ -894,6 +975,7 @@ script = ExtResource("1_ggulk")
 position = Vector2(100, 0)
 script = ExtResource("1_cm6jg")
 label = "Hand"
+color = Color(0, 0.74902, 0.266667, 1)
 keep_in_origin = false
 
 [node name="Collision" type="Node2D" parent="ArmSpawner/Robot/Arm"]
@@ -904,6 +986,7 @@ metadata/pronto_connections = []
 [node name="Base" type="Node2D" parent="ArmSpawner/Robot/Arm"]
 script = ExtResource("1_cm6jg")
 label = "Base"
+placeholder_size = Vector2(24, 24)
 
 [node name="VisualLine" type="Node2D" parent="ArmSpawner/Robot/Arm/Base" node_paths=PackedStringArray("from", "to")]
 show_behind_parent = true
@@ -972,7 +1055,7 @@ collision_layer = 8
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ArmSpawner/Robot/Program/InstructionSpawner/Instruction/Trigger"]
-position = Vector2(37.0955, 16.0285)
+position = Vector2(37.191, -12.0285)
 shape = SubResource("RectangleShape2D_adf4g")
 
 [node name="Collision" type="Node2D" parent="ArmSpawner/Robot/Program/InstructionSpawner/Instruction/Trigger"]
@@ -1008,6 +1091,14 @@ script = ExtResource("8_7crgp")
 duration_seconds = 0.1
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_e0uhn")]
+
+[node name="Reset" type="Marker2D" parent="ArmSpawner/Robot"]
+
+[node name="ToggleReset" type="Node2D" parent="ArmSpawner/Robot"]
+position = Vector2(-83, -25)
+script = ExtResource("9_adfup")
+key = "R"
+metadata/pronto_connections = [SubResource("Resource_k64yg")]
 
 [node name="Key" type="Node2D" parent="ArmSpawner"]
 position = Vector2(-48, 7)
@@ -1102,6 +1193,12 @@ metadata/pronto_connections = [SubResource("Resource_aeofd")]
 [node name="Desk" type="Node2D" parent="."]
 unique_name_in_owner = true
 
+[node name="Key" type="Node2D" parent="Desk"]
+position = Vector2(-6, 43)
+script = ExtResource("9_adfup")
+key = "R"
+metadata/pronto_connections = [SubResource("Resource_ol7wp")]
+
 [node name="Merger" type="Area2D" parent="."]
 position = Vector2(163, 104)
 
@@ -1140,3 +1237,16 @@ position = Vector2(21, 89)
 script = ExtResource("9_adfup")
 key = "O"
 metadata/pronto_connections = [SubResource("Resource_6akkc")]
+
+[node name="Guide" type="Label" parent="."]
+offset_left = 654.0
+offset_top = 67.0
+offset_right = 945.0
+offset_bottom = 198.0
+text = "A - Spawn Arm
+R - Reset Simulation
+S - Run Program
+T - Stop Simulation
+H - Spawn Hydrogen at mouse
+O - Spawn Oxygen at mouse
+D - Add Instruction to end"
