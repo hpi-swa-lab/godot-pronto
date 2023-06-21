@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://b1syr2o6gkf6u"]
+[gd_scene load_steps=76 format=3 uid="uid://b1syr2o6gkf6u"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_bcm2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_twtba"]
@@ -63,7 +63,7 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run():
 	var rng = RandomNumberGenerator.new()
-	return rng.randi_range(2, 5)
+	return rng.randi_range(G.at(\"min_time\"), G.at(\"max_time\"))
 "
 
 [sub_resource type="Resource" id="Resource_xevbk"]
@@ -149,7 +149,7 @@ deferred = false
 enabled = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_55lvm"]
-radius = 172.483
+radius = 274.007
 
 [sub_resource type="GDScript" id="GDScript_c25qf"]
 script/source = "@tool
@@ -320,6 +320,44 @@ only_if = SubResource("Resource_ptu7p")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_ukm7k"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return Vector2(0,0)
+"
+
+[sub_resource type="Resource" id="Resource_j60vr"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_ukm7k")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_da3t6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_kmu3d"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_da3t6")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_pnqg5"]
+script = ExtResource("5_7l3rf")
+signal_name = "collided"
+to = NodePath("../../Move")
+invoke = "set_velocity"
+arguments = [SubResource("Resource_j60vr")]
+only_if = SubResource("Resource_kmu3d")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_mtmk2"]
 script/source = "@tool
 extends U
@@ -364,8 +402,6 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(from, to):
 	var rng = RandomNumberGenerator.new()
-	from.duration_seconds = rng.randf_range(10,30)
-	from.reset_and_start()
 	return Vector2(rng.randf_range(0,1150),600)
 "
 
@@ -398,6 +434,45 @@ arguments = [SubResource("Resource_chv3q")]
 only_if = SubResource("Resource_rbx3x")
 deferred = false
 enabled = true
+
+[sub_resource type="GDScript" id="GDScript_yvggp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_cjj1p"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_yvggp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_imx3v"]
+script = ExtResource("5_7l3rf")
+signal_name = "elapsed"
+to = NodePath(".")
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_cjj1p")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_6y8sv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	var rng = RandomNumberGenerator.new()
+	return rng.randf_range(G.at(\"min_time_algea\"),G.at(\"max_time_algea\"))
+"
+
+[sub_resource type="Resource" id="Resource_v3ift"]
+script = ExtResource("4_by7o2")
+nested_script = SubResource("GDScript_6y8sv")
+argument_names = []
+return_value = true
 
 [node name="aquarium" type="Node2D"]
 
@@ -436,6 +511,34 @@ float_from = 0.0
 float_to = 1.0
 float_value = 0.0
 float_step_size = 0.1
+
+[node name="min_time" type="Node2D" parent="PanelContainer/PrototypingUI"]
+script = ExtResource("8_jf3wf")
+float_from = 0.0
+float_to = 3.0
+float_value = 2.0
+float_step_size = 1.0
+
+[node name="max_time" type="Node2D" parent="PanelContainer/PrototypingUI"]
+script = ExtResource("8_jf3wf")
+float_from = 2.0
+float_to = 6.0
+float_value = 4.0
+float_step_size = 1.0
+
+[node name="min_time_algea" type="Node2D" parent="PanelContainer/PrototypingUI"]
+script = ExtResource("8_jf3wf")
+float_from = 0.0
+float_to = 10.0
+float_value = 5.0
+float_step_size = 1.0
+
+[node name="max_time_algea" type="Node2D" parent="PanelContainer/PrototypingUI"]
+script = ExtResource("8_jf3wf")
+float_from = 5.0
+float_to = 20.0
+float_value = 10.0
+float_step_size = 1.0
 
 [node name="FishySpawner" type="Node2D" parent="."]
 position = Vector2(517, 371)
@@ -498,9 +601,9 @@ collision_mask = 3
 shape = SubResource("RectangleShape2D_umpna")
 
 [node name="Collision" type="Node2D" parent="FishySpawner/CharacterBody2D/Area2D2"]
-position = Vector2(28.426, 28.574)
+position = Vector2(28, 29)
 script = ExtResource("12_06af0")
-metadata/pronto_connections = [SubResource("Resource_d6bg4"), SubResource("Resource_f02t0")]
+metadata/pronto_connections = [SubResource("Resource_d6bg4"), SubResource("Resource_f02t0"), SubResource("Resource_pnqg5")]
 
 [node name="Controls" type="Node2D" parent="."]
 position = Vector2(528, 68)
@@ -522,7 +625,13 @@ color = Color(0.172549, 0.490196, 0.156863, 1)
 placeholder_size = Vector2(20, 60)
 
 [node name="Clock" type="Node2D" parent="."]
-position = Vector2(587, -8)
+position = Vector2(534, 6)
 script = ExtResource("3_uwe38")
 trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_uk2gf")]
+metadata/pronto_connections = [SubResource("Resource_uk2gf"), SubResource("Resource_imx3v")]
+
+[node name="Bind" type="Node2D" parent="Clock"]
+position = Vector2(-51, 19)
+script = ExtResource("9_gp8es")
+evaluate = SubResource("Resource_v3ift")
+to_prop = "duration_seconds"
