@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4il6gn0ovkq7"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_ypbqj"]
+
+[node name="i4w1-sort-the-court" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+script = ExtResource("1_ypbqj")

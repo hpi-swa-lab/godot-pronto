@@ -83,7 +83,7 @@ Connections are an extension of Godot signals to be more flexible. Connections c
 	* You can disable a connection by unticking the checkbox in the top-right or in its context menu.
 	* You can also pin a connection editor so that it remains in the scene after saving them. You can click and drag editors in the scene as well.
 * Reordering
-    * From the context menu of a connection, choose "Move to top".
+	* From the context menu of a connection, choose "Move to top".
 * Deleting
 	* Open the connection, then click on the trash icon in the top-right.
 	* Alternatively, right-click the connection and choose "Delete".
