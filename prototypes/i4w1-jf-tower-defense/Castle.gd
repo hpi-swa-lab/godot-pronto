@@ -13,6 +13,7 @@ func game_over():
 	if attacker != null:
 		attacker.reset_target()
 	get_tree().paused = true
+	get_parent().get_node("GameOver").show()
 	
 func set_attacker(node: CharacterBody2D):
 	attacker = node

@@ -27,12 +27,13 @@ func _ready():
 		set_move_target(self.global_position)
 
 func _physics_process(delta):
-	var dir = to_local(nav_agent.get_next_path_position()).normalized()
-	velocity = dir * G.at(speed_prop)
-	move_and_slide()
+	update_color()
 	check_if_target_out_of_dist()
 	queue_redraw()
-	update_color()
+	if(!nav_agent.is_target_reached()):
+		var dir = to_local(nav_agent.get_next_path_position()).normalized()
+		velocity = dir * G.at(speed_prop)
+		move_and_slide()
 	
 func update_color():
 	get_node("Placeholder").color = color.lerp(dead_color, 1 - (health / max_health))

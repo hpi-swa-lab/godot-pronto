@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=3 uid="uid://da42rhb2vls1m"]
+[gd_scene load_steps=107 format=3 uid="uid://da42rhb2vls1m"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_5i2nd"]
 [ext_resource type="Script" path="res://prototypes/i4w1-jf-tower-defense/tower-defense.gd" id="1_wa5o0"]
@@ -14,45 +14,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="11_2imrd"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="12_laxul"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="13_wys14"]
-
-[sub_resource type="GDScript" id="GDScript_e5la8"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(instance, from):
-	print(instance.get_node(\"NavigationAgent2D\"))
-"
-
-[sub_resource type="Resource" id="Resource_8e6xu"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_e5la8")
-argument_names = ["instance", "from"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_xic4x"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(instance, from):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_4i6xw"]
-script = ExtResource("4_gmxrw")
-nested_script = SubResource("GDScript_xic4x")
-argument_names = ["instance", "from"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_u03uj"]
-script = ExtResource("4_0nawf")
-signal_name = "spawned"
-to = NodePath("")
-invoke = ""
-arguments = []
-only_if = SubResource("Resource_4i6xw")
-expression = SubResource("Resource_8e6xu")
-deferred = false
-enabled = true
 
 [sub_resource type="GDScript" id="GDScript_s672m"]
 script/source = "@tool
@@ -471,9 +432,9 @@ argument_names = []
 return_value = true
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_l2jg2"]
-vertices = PackedVector2Array(1428, -118, 1388, 766, 1150, 393, 1150, 257, -101, -80, 1009, 257, -141, 774, 1010, 393, 121, 387, 20, 387, 20, 287, 121, 287)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(2, 1, 6, 7), PackedInt32Array(8, 7, 6, 9), PackedInt32Array(9, 6, 4, 10), PackedInt32Array(10, 4, 5, 11), PackedInt32Array(11, 5, 7, 8)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(20, 287, 121, 287, 121, 387, 20, 387), PackedVector2Array(1009, 257, 1150, 257, 1150, 393, 1010, 393), PackedVector2Array(-101, -80, 1428, -118, 1388, 766, -141, 774)])
+vertices = PackedVector2Array(1150, 257, 1009, 257, 659, 240, 659, 157, 853, 576, 1388, 766, -141, 774, 784, 575, 1428, -118, 1150, 393, 1010, 393, 853, 290, -101, -80, 783, 294, 499, 239, 493, 158)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 5, 9, 0), PackedInt32Array(9, 5, 4, 10), PackedInt32Array(10, 4, 11, 1), PackedInt32Array(12, 8, 0, 3), PackedInt32Array(2, 1, 11, 13), PackedInt32Array(7, 6, 12, 14), PackedInt32Array(12, 3, 15), PackedInt32Array(2, 13, 7, 14), PackedInt32Array(14, 12, 15)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1009, 257, 1150, 257, 1150, 393, 1010, 393), PackedVector2Array(-101, -80, 1428, -118, 1388, 766, -141, 774), PackedVector2Array(493, 158, 659, 157, 659, 240, 499, 239), PackedVector2Array(783, 294, 853, 290, 853, 576, 784, 575)])
 
 [sub_resource type="GDScript" id="GDScript_lhnjy"]
 script/source = "@tool
@@ -592,8 +553,8 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(result, from, to):
 	var rng = RandomNumberGenerator.new()
-	var rndX = rng.randi_range(150, 575)
-	var rndY = rng.randi_range(0, 650)
+	var rndX = rng.randi_range(150, 500)
+	var rndY = rng.randi_range(200, 450)
 	return Vector2(rndX, rndY)
 "
 
@@ -650,8 +611,8 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(result, from, to):
 	var rng = RandomNumberGenerator.new()
-	var rndX = rng.randi_range(150, 575)
-	var rndY = rng.randi_range(0, 650)
+	var rndX = rng.randi_range(150, 500)
+	var rndY = rng.randi_range(200, 450)
 	return Vector2(rndX, rndY)
 "
 
@@ -708,8 +669,8 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(result, from, to):
 	var rng = RandomNumberGenerator.new()
-	var rndX = rng.randi_range(150, 575)
-	var rndY = rng.randi_range(0, 650)
+	var rndX = rng.randi_range(150, 500)
+	var rndY = rng.randi_range(200, 450)
 	return Vector2(rndX, rndY)
 "
 
@@ -799,7 +760,7 @@ metadata/enemy_life = 500.0
 [node name="Spawner" type="Node2D" parent="."]
 position = Vector2(-175, 32)
 script = ExtResource("2_2kynd")
-metadata/pronto_connections = [SubResource("Resource_u03uj")]
+metadata/pronto_connections = []
 
 [node name="Knight" type="CharacterBody2D" parent="Spawner" node_paths=PackedStringArray("target_location") groups=["selectable", "troop"]]
 position = Vector2(33, 40)
@@ -819,6 +780,7 @@ color = Color(0, 0, 1, 1)
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Spawner/Knight"]
 avoidance_enabled = true
 radius = 114.6
+debug_enabled = true
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Spawner/Knight"]
 
@@ -841,7 +803,7 @@ script = ExtResource("8_2r0ku")
 [node name="Spawner2" type="Node2D" parent="."]
 position = Vector2(-169, 126)
 script = ExtResource("2_2kynd")
-metadata/pronto_connections = [SubResource("Resource_u03uj")]
+metadata/pronto_connections = []
 
 [node name="Archer" type="CharacterBody2D" parent="Spawner2" node_paths=PackedStringArray("target_location") groups=["selectable", "troop"]]
 position = Vector2(33, 40)
@@ -861,6 +823,7 @@ color = Color(0, 0, 1, 1)
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Spawner2/Archer"]
 avoidance_enabled = true
 radius = 114.6
+debug_enabled = true
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Spawner2/Archer"]
 
@@ -883,7 +846,7 @@ to_prop = "duration_seconds"
 [node name="Spawner3" type="Node2D" parent="."]
 position = Vector2(-174, 218)
 script = ExtResource("2_2kynd")
-metadata/pronto_connections = [SubResource("Resource_u03uj")]
+metadata/pronto_connections = []
 
 [node name="Tank" type="CharacterBody2D" parent="Spawner3" node_paths=PackedStringArray("target_location") groups=["selectable", "troop"]]
 position = Vector2(33, 40)
@@ -903,6 +866,7 @@ color = Color(0, 0, 1, 1)
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Spawner3/Tank"]
 avoidance_enabled = true
 radius = 114.6
+debug_enabled = true
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Spawner3/Tank"]
 
@@ -925,7 +889,7 @@ to_prop = "duration_seconds"
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(1015, 65)
 script = ExtResource("2_2kynd")
-metadata/pronto_connections = [SubResource("Resource_u03uj")]
+metadata/pronto_connections = []
 
 [node name="Enemy" type="CharacterBody2D" parent="EnemySpawner" node_paths=PackedStringArray("target_location") groups=["enemy"]]
 position = Vector2(33, 40)
@@ -956,7 +920,8 @@ script = ExtResource("8_2r0ku")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="EnemySpawner/Enemy"]
 avoidance_enabled = true
-radius = 114.6
+radius = 30.0
+debug_path_custom_color = Color(0.207843, 1, 0, 1)
 
 [node name="SpawnerClock" type="Node2D" parent="."]
 position = Vector2(982, 59)
@@ -984,7 +949,7 @@ metadata/pronto_connections = [SubResource("Resource_ysxx3")]
 position = Vector2(104, -2)
 script = ExtResource("12_laxul")
 global = true
-metadata/player_money = 0.0
+metadata/player_money = 20.0
 
 [node name="MoneyLabel" type="Label" parent="."]
 offset_left = 16.0
@@ -1071,9 +1036,10 @@ float_value = 10.0
 float_step_size = 1.0
 
 [node name="enemy_spawn_time" type="Node2D" parent="PanelContainer2/PrototypingUI"]
+position = Vector2(-362.662, -362.662)
 script = ExtResource("11_2imrd")
 float_from = 1.0
-float_to = 5.0
+float_to = 10.0
 float_value = 3.0
 float_step_size = 1.0
 
@@ -1106,7 +1072,7 @@ position = Vector2(-56.925, -249.075)
 script = ExtResource("11_2imrd")
 float_from = 50.0
 float_to = 300.0
-float_value = 150.0
+float_value = 100.0
 float_step_size = 1.0
 
 [node name="archer_range" type="Node2D" parent="PanelContainer2/PrototypingUI"]
@@ -1142,9 +1108,37 @@ float_value = 50.0
 float_step_size = 5.0
 
 [node name="tank_speed" type="Node2D" parent="PanelContainer2/PrototypingUI"]
-position = Vector2(-752.197, 417.197)
+position = Vector2(-340.971, -253.029)
 script = ExtResource("11_2imrd")
 float_from = 10.0
 float_to = 50.0
 float_value = 30.0
 float_step_size = 5.0
+
+[node name="Water" type="Area2D" parent="."]
+position = Vector2(580, 203)
+
+[node name="Placeholder" type="Node2D" parent="Water"]
+script = ExtResource("1_5i2nd")
+label = "Water"
+color = Color(0.286275, 0.752941, 0.811765, 1)
+placeholder_size = Vector2(149, 70)
+
+[node name="Water2" type="Area2D" parent="."]
+position = Vector2(823, 435)
+
+[node name="Placeholder" type="Node2D" parent="Water2"]
+script = ExtResource("1_5i2nd")
+label = "Water"
+color = Color(0.286275, 0.752941, 0.811765, 1)
+placeholder_size = Vector2(47, 267)
+
+[node name="GameOver" type="Area2D" parent="."]
+visible = false
+position = Vector2(577, 327)
+
+[node name="Placeholder" type="Node2D" parent="GameOver"]
+script = ExtResource("1_5i2nd")
+label = "GAME OVER  "
+color = Color(0, 0, 0, 0.701961)
+placeholder_size = Vector2(828, 340)

@@ -33,7 +33,6 @@ func _unhandled_input(event):
 					selected.append(item.collider)
 			for item in selected:
 				pass
-			print(selected)
 	if event is InputEventMouseMotion and dragging:
 		queue_redraw()
 
