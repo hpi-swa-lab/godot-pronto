@@ -35,6 +35,27 @@ func _enter_tree():
 	for i in inspectors: add_inspector_plugin(i)
 	
 	get_undo_redo().history_changed.connect(history_changed)
+	
+	get_tree().node_added.connect(make_pronto_connections_unique)
+
+var id_remappings = {}
+
+func make_pronto_connections_unique(node: Node):
+	var has_id = node.has_meta("pronto_id")
+	var has_connections = node.has_meta("pronto_connections")
+	if !has_id and !has_connections: return
+	
+	print("pronto node! %s id: %d connections: %d" % [str(node), node.get_meta("pronto_id", -1), node.get_meta("pronto_connections", []).size()])
+	
+	if has_id:
+		var new_id = Utils.create_new_pronto_id()
+		id_remappings[node.get_meta("pronto_id")] = new_id
+		node.set_meta("pronto_id", new_id)
+	
+	for connection in node.get_meta("pronto_connections", []):
+		if connection.to in id_remappings:
+			var new_connection = connection.make_unique(node, null)
+			new_connection.to = id_remappings[new_connection.to]
 
 func history_changed():
 	if _is_editing_behavior() and edited_object is Placeholder and edited_object.should_keep_in_origin():

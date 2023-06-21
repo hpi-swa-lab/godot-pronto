@@ -193,31 +193,28 @@ static func fix_minimum_size(n: Control):
 	if G.at("_pronto_editor_plugin") == null:
 		return
 	n.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
-	
+
 static func get_pronto_id(node):
 	if node.has_meta("pronto_id"):
 		return node.get_meta("pronto_id")
-	var pronto_global_id = G.at("pronto_global_id", 0)
-	node.set_meta("pronto_id", pronto_global_id)
-	G.put("pronto_global_id", pronto_global_id+1)
-	return node.get_meta("pronto_id")
+	
+	var id = create_new_pronto_id()
+	node.set_meta("pronto_id", id)
+	return id
 
-static func get_pronto_node(node, id):
-	var receiver_cache = G.at("pronto_receiver_cache", {})
-	if not receiver_cache.has(id):
-		receiver_cache[id] = find_pronto_id_in_children(node, id)
-		G.put("pronto_receiver_cache", receiver_cache)
-	return receiver_cache[id]
+static func create_new_pronto_id():
+	var id = G.at("_pronto_global_id", 0)
+	G.put("_pronto_global_id", id + 1)
+	return id
 
 static func find_pronto_id_in_children(node, id):
 	if node.has_meta("pronto_id"):
 		if node.get_meta("pronto_id") == id:
 			return node
-	var found_node = null
 	for child in node.get_children():
-		if (!found_node):
-			found_node = find_pronto_id_in_children(child, id)
-	return found_node
+		var found = find_pronto_id_in_children(child, id)
+		if found != null: return found
+	return null
 
 static func log(s):
 	var a = FileAccess.open("res://log", FileAccess.READ_WRITE if FileAccess.file_exists("res://log") else FileAccess.WRITE_READ)
