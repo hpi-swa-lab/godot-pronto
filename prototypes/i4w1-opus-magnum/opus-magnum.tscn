@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=133 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -406,6 +406,61 @@ expression = SubResource("Resource_ahdvf")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_8anoi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	var program = to.get_node(\"../Program\")
+	var h = program.get_global_rect().has_point(to.get_global_mouse_position())
+	to.modulate = Color.RED if h else Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_qctjy"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_8anoi")
+argument_names = ["delta", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_b2gcl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_57mt8"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_b2gcl")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_vnbt3"]
+script = ExtResource("6_j0vsh")
+signal_name = "always"
+to = NodePath("../Arm")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_57mt8")
+expression = SubResource("Resource_qctjy")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_nmn0x"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return to.get_global_mouse_position()
+"
+
+[sub_resource type="Resource" id="Resource_kbh5h"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_nmn0x")
+argument_names = ["from", "to"]
+return_value = true
+
 [sub_resource type="GDScript" id="GDScript_3byhk"]
 script/source = "@tool
 extends U
@@ -424,8 +479,8 @@ return_value = true
 script = ExtResource("6_j0vsh")
 signal_name = "just_down"
 to = NodePath("..")
-invoke = "spawn"
-arguments = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_kbh5h")]
 only_if = SubResource("Resource_wwf0n")
 deferred = false
 enabled = true
@@ -1102,6 +1157,11 @@ script = ExtResource("9_adfup")
 key = "R"
 metadata/pronto_connections = [SubResource("Resource_k64yg")]
 
+[node name="HighlightArm" type="Node2D" parent="ArmSpawner/Robot"]
+position = Vector2(162, 148)
+script = ExtResource("4_fj5vs")
+metadata/pronto_connections = [SubResource("Resource_vnbt3")]
+
 [node name="Key" type="Node2D" parent="ArmSpawner"]
 position = Vector2(-48, 7)
 script = ExtResource("9_adfup")
@@ -1117,7 +1177,7 @@ script = ExtResource("1_cm6jg")
 placeholder_size = Vector2(10, 10)
 
 [node name="Controls" type="Node2D" parent="Cursor"]
-position = Vector2(-23, 38)
+position = Vector2(-33, 39)
 script = ExtResource("9_6ntri")
 metadata/pronto_connections = [SubResource("Resource_nvdc5"), SubResource("Resource_y2rje"), SubResource("Resource_lat1y"), SubResource("Resource_xg0fg")]
 
