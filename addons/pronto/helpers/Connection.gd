@@ -109,6 +109,7 @@ static func reorder_to_top(from: Node, index: int, undo_redo: EditorUndoRedoMana
 		undo_redo.commit_action()
 	else:
 		_move_connection(from, index, 0)
+		ConnectionsList.emit_connections_changed()
 
 func _store(from: Node, undo_redo: EditorUndoRedoManager = null):
 	var connections = _ensure_connections(from)
@@ -121,13 +122,19 @@ func _store(from: Node, undo_redo: EditorUndoRedoManager = null):
 		undo_redo.commit_action()
 	else:
 		connections.append(self)
+		ConnectionsList.emit_connections_changed()
 
 static func _move_connection(from: Node, current: int, new: int):
 	var list = _ensure_connections(from)
 	var c = list.pop_at(current)
 	list.insert(new, c)
-func _append_connection(from: Node):_ensure_connections(from).append(self)
-func _remove_connection(from: Node): _ensure_connections(from).erase(self)
+	ConnectionsList.emit_connections_changed()
+func _append_connection(from: Node):
+	_ensure_connections(from).append(self)
+	ConnectionsList.emit_connections_changed()
+func _remove_connection(from: Node):
+	_ensure_connections(from).erase(self)
+	ConnectionsList.emit_connections_changed()
 
 static func _ensure_connections(from: Node):
 	var connections: Array
@@ -254,6 +261,10 @@ static func garbage_collect(from: Node):
 	# undoing will first restore the invalid connection and we have to hope the user
 	# proceeds to also restore the target, but since gc is called from _process, this won't
 	# happen quickly enough.
+	var did_change = false
 	for connection in get_connections(from).duplicate():
 		if not connection.is_valid(from):
 			connection.delete(from)
+			did_change = true
+	if did_change:
+		ConnectionsList.emit_connections_changed()

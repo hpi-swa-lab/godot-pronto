@@ -39,9 +39,10 @@ func connect_ui():
 	return null
 
 func _process(delta):
-	Connection.garbage_collect(self)
-	if _lines._needs_update(lines()):
-		queue_redraw()
+	if Engine.is_editor_hint():
+		Connection.garbage_collect(self)
+		if _lines._needs_update(lines()):
+			queue_redraw()
 
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	_handles._forward_canvas_draw_over_viewport(self, viewport_control)
@@ -67,12 +68,9 @@ func connection_activated(c: Connection):
 			current.kill()
 	var t = create_tween()
 	_running_tweens[c] = t
-	t.tween_method(
-		flash_line.bind(c, 'activated'),
-		0.0 if current == null else 1.0,
-		1.0 if current == null else 0.0,
-		0.2
-	)
+	if current == null:
+		t.tween_method(flash_line.bind(c, 'activated'), 0.0, 1.0, 0.2)
+	t.tween_method(flash_line.bind(c, 'activated'), 1.0, 0.0, 0.2)
 	
 # duplicating as Godot does not support overloading
 # see: https://github.com/godotengine/godot-proposals/issues/1571

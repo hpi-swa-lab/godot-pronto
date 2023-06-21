@@ -1,6 +1,11 @@
 @tool
 extends Node
 
+signal connections_changed()
+
+func emit_connections_changed():
+	connections_changed.emit()
+
 func check_install(node: Node):
 	for c in Connection.get_connections(node):
 		c._install_in_game(node)
