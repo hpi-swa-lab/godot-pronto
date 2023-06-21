@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://da42rhb2vls1m"]
+[gd_scene load_steps=112 format=3 uid="uid://da42rhb2vls1m"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_5i2nd"]
 [ext_resource type="Script" path="res://prototypes/i4w1-jf-tower-defense/tower-defense.gd" id="1_wa5o0"]
@@ -7,13 +7,18 @@
 [ext_resource type="Script" path="res://prototypes/i4w1-jf-tower-defense/Castle.gd" id="3_wx5gk"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_0nawf"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_gmxrw"]
+[ext_resource type="Texture2D" uid="uid://ctcjlxjqpcuxa" path="res://prototypes/i4w1-jf-tower-defense/castle.png" id="4_q8xi8"]
 [ext_resource type="Script" path="res://prototypes/i4w1-jf-tower-defense/Enemy.gd" id="5_lwmg1"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="6_rt3b5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_s3v3w"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRoot.gd" id="8_2r0ku"]
+[ext_resource type="Texture2D" uid="uid://cai68n757f7m3" path="res://prototypes/i4w1-jf-tower-defense/knight.png" id="8_x8m5t"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="11_2imrd"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="12_laxul"]
+[ext_resource type="Texture2D" uid="uid://c7ogncfhtilo" path="res://prototypes/i4w1-jf-tower-defense/zombie.png" id="13_vy05w"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="13_wys14"]
+[ext_resource type="Texture2D" uid="uid://cqs0hmv10merw" path="res://prototypes/i4w1-jf-tower-defense/archer.png" id="14_24ifs"]
+[ext_resource type="Texture2D" uid="uid://cgbfbqfbohwc8" path="res://prototypes/i4w1-jf-tower-defense/giant.png" id="15_nvkv5"]
 
 [sub_resource type="GDScript" id="GDScript_s672m"]
 script/source = "@tool
@@ -432,9 +437,9 @@ argument_names = []
 return_value = true
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_l2jg2"]
-vertices = PackedVector2Array(1150, 257, 1009, 257, 659, 240, 659, 157, 853, 576, 1388, 766, -141, 774, 784, 575, 1428, -118, 1150, 393, 1010, 393, 853, 290, -101, -80, 783, 294, 499, 239, 493, 158)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 5, 9, 0), PackedInt32Array(9, 5, 4, 10), PackedInt32Array(10, 4, 11, 1), PackedInt32Array(12, 8, 0, 3), PackedInt32Array(2, 1, 11, 13), PackedInt32Array(7, 6, 12, 14), PackedInt32Array(12, 3, 15), PackedInt32Array(2, 13, 7, 14), PackedInt32Array(14, 12, 15)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(1009, 257, 1150, 257, 1150, 393, 1010, 393), PackedVector2Array(-101, -80, 1428, -118, 1388, 766, -141, 774), PackedVector2Array(493, 158, 659, 157, 659, 240, 499, 239), PackedVector2Array(783, 294, 853, 290, 853, 576, 784, 575)])
+vertices = PackedVector2Array(853, 290, 783, 294, 659, 240, 659, 157, 1428, -118, 853, 576, 1388, 766, -141, 774, 784, 575, -101, -80, 499, 239, 493, 158)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(4, 6, 5, 0), PackedInt32Array(8, 7, 9, 10), PackedInt32Array(9, 4, 3, 11), PackedInt32Array(2, 1, 8, 10), PackedInt32Array(10, 9, 11)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-101, -80, 1428, -118, 1388, 766, -141, 774), PackedVector2Array(493, 158, 659, 157, 659, 240, 499, 239), PackedVector2Array(783, 294, 853, 290, 853, 576, 784, 575)])
 
 [sub_resource type="GDScript" id="GDScript_lhnjy"]
 script/source = "@tool
@@ -730,9 +735,13 @@ life_property = "player_life"
 
 [node name="Placeholder" type="Node2D" parent="MyCastle"]
 script = ExtResource("1_5i2nd")
-label = "    You"
 color = Color(0.196078, 0.454902, 0.882353, 1)
 placeholder_size = Vector2(100, 100)
+
+[node name="Sprite2D" type="Sprite2D" parent="MyCastle"]
+position = Vector2(2, -0.999982)
+scale = Vector2(0.195313, 0.195313)
+texture = ExtResource("4_q8xi8")
 
 [node name="State" type="Node2D" parent="MyCastle"]
 position = Vector2(-70.7107, -3.09086e-06)
@@ -747,9 +756,14 @@ life_property = "enemy_life"
 
 [node name="Placeholder" type="Node2D" parent="EnemyCastle"]
 script = ExtResource("1_5i2nd")
-label = "   Enemy"
+label = "   "
 color = Color(0.701961, 0, 0.164706, 1)
 placeholder_size = Vector2(100, 100)
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyCastle"]
+position = Vector2(2, -0.999969)
+scale = Vector2(0.195313, 0.195313)
+texture = ExtResource("4_q8xi8")
 
 [node name="State" type="Node2D" parent="EnemyCastle"]
 position = Vector2(-70.7107, -3.09086e-06)
@@ -774,8 +788,13 @@ damage = 10.0
 
 [node name="Placeholder" type="Node2D" parent="Spawner/Knight"]
 script = ExtResource("1_5i2nd")
-label = "  K"
+label = "  "
 color = Color(0, 0, 1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Spawner/Knight"]
+position = Vector2(0.25, 0.250008)
+scale = Vector2(0.038086, 0.038086)
+texture = ExtResource("8_x8m5t")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Spawner/Knight"]
 avoidance_enabled = true
@@ -817,8 +836,13 @@ damage = 50.0
 
 [node name="Placeholder" type="Node2D" parent="Spawner2/Archer"]
 script = ExtResource("1_5i2nd")
-label = "  A"
+label = "  "
 color = Color(0, 0, 1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Spawner2/Archer"]
+position = Vector2(-5.84126e-06, -5.84126e-06)
+scale = Vector2(0.0390625, 0.0390625)
+texture = ExtResource("14_24ifs")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Spawner2/Archer"]
 avoidance_enabled = true
@@ -860,8 +884,13 @@ damage = 5.0
 
 [node name="Placeholder" type="Node2D" parent="Spawner3/Tank"]
 script = ExtResource("1_5i2nd")
-label = "  T"
+label = "  "
 color = Color(0, 0, 1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Spawner3/Tank"]
+position = Vector2(-0.125001, -0.125001)
+scale = Vector2(0.0395508, 0.0395508)
+texture = ExtResource("15_nvkv5")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Spawner3/Tank"]
 avoidance_enabled = true
@@ -903,8 +932,12 @@ damage = 10.0
 
 [node name="Placeholder" type="Node2D" parent="EnemySpawner/Enemy"]
 script = ExtResource("1_5i2nd")
-label = "  Z"
+label = "  "
 color = Color(1, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemySpawner/Enemy"]
+scale = Vector2(0.038086, 0.038086)
+texture = ExtResource("13_vy05w")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="EnemySpawner/Enemy"]
 
@@ -1070,9 +1103,9 @@ float_step_size = 1.0
 [node name="knight_range" type="Node2D" parent="PanelContainer2/PrototypingUI"]
 position = Vector2(-56.925, -249.075)
 script = ExtResource("11_2imrd")
-float_from = 50.0
-float_to = 300.0
-float_value = 100.0
+float_from = 10.0
+float_to = 100.0
+float_value = 40.0
 float_step_size = 1.0
 
 [node name="archer_range" type="Node2D" parent="PanelContainer2/PrototypingUI"]
@@ -1086,9 +1119,9 @@ float_step_size = 1.0
 [node name="tank_range" type="Node2D" parent="PanelContainer2/PrototypingUI"]
 position = Vector2(-56.925, -249.075)
 script = ExtResource("11_2imrd")
-float_from = 50.0
-float_to = 300.0
-float_value = 50.0
+float_from = 10.0
+float_to = 100.0
+float_value = 35.0
 float_step_size = 1.0
 
 [node name="knight_speed" type="Node2D" parent="PanelContainer2/PrototypingUI"]
