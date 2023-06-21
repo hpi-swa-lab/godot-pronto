@@ -4,14 +4,20 @@ extends CharacterBody2D
 @export var carrying_movement_speed: float = 25.0
 
 @export var target: Node2D
-@export var navigation_agent: NavigationAgent2D
+	#set(val):
+	#	if val != null:
+	#		print(self.name + "Setting tagret to: " + str(val.position))
+	#	target = val
+		
+@export var navigation_agent = NavigationAgent2D.new()
 @export var base: Node2D
 
 var tile_size = 16
 var idle_distance = tile_size * 3
 var timeout_between_idle_actions = 2
 
-var state = "IDLE"
+
+@export var state: String = "IDLE"
 var food_carried = 0
 
 # could we have built a state machine with pronto?
@@ -29,6 +35,14 @@ var food_carried = 0
 func _ready():
 	navigation_agent.path_desired_distance = 4.0
 	navigation_agent.target_desired_distance = 4.0
+	var col_layer = int(G.at("Collision Layer"))
+	
+	for i in range(1,32):
+		set_collision_mask_value(i, i == col_layer)
+		set_collision_layer_value(i, i == col_layer)
+	
+	G.put("Collision Layer",G.at("Collision Layer") + 1)
+	
 	# we need to call_deferred as physics_server is syncing on first frame!
 	call_deferred("actor_setup")
 	
@@ -39,12 +53,13 @@ func actor_setup():
 		
 		
 func evaluate_state():
-	print("Evaluating Postion")
+	
+	print(self.name + ": Evaluating State | current state: " + state)
 	if state == "GATHERING_FOOD":
 		# find nearest food and collect
 		set_movement_target(target.global_position)
 	elif state == "RETURNING_TO_BASE":
-		print("Returning to base")
+		print(self.name + ": Returning to base")
 		# return home
 		set_movement_target(base.global_position)	
 	elif state == "IDLE":
@@ -99,19 +114,21 @@ func _physics_process(delta):
 	look_at(next_path_pos)
 	
 func on_food_collected():
-	print("on_food_collected")
+	print(self.name + ": on_food_collected")
 	food_carried = food_carried + 1
 	state = "RETURNING_TO_BASE"
 	evaluate_state()
 	
 func on_food_removed():
-	print("on_food_removed")
+	print(self.name + ": on_food_removed")
 	food_carried = 0
 	state = "IDLE"
 	evaluate_state()
 	
 func on_food_detected(food: Node2D):
 	if(food_carried <= 1):
+		if(state == "GATHERING_FOOD" and position.distance_to(food.position) > position.distance_to(navigation_agent.target_position)):
+			return
 		target = food
 		state = "GATHERING_FOOD"
 		evaluate_state()
