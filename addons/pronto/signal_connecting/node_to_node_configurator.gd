@@ -252,6 +252,8 @@ func _on_done_pressed():
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 
 	existing_connection.enabled = %Enabled.button_pressed
+	# FIXME doesn't respect undo
+	ConnectionsList.emit_connections_changed()
 	mark_changed(false)
 	if not pinned:
 		queue_free()
