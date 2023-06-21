@@ -1,4 +1,4 @@
-[gd_scene load_steps=133 format=3 uid="uid://clcnvsu160d7x"]
+[gd_scene load_steps=138 format=3 uid="uid://clcnvsu160d7x"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_cm6jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_ggulk"]
@@ -935,6 +935,30 @@ expression = SubResource("Resource_x6rk6")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_lh4a1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rq0hp"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_lh4a1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_6akkc"]
+script = ExtResource("6_j0vsh")
+signal_name = "just_down"
+to = NodePath("..")
+invoke = "spawn_at"
+arguments = [SubResource("Resource_g8dfc")]
+only_if = SubResource("Resource_rq0hp")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_12ds5"]
 script/source = "@tool
 extends U
@@ -994,7 +1018,21 @@ expression = SubResource("Resource_vplfd")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_lh4a1"]
+[sub_resource type="GDScript" id="GDScript_861ow"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return to.get_global_mouse_position()
+"
+
+[sub_resource type="Resource" id="Resource_mqwwa"]
+script = ExtResource("5_drryg")
+nested_script = SubResource("GDScript_861ow")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_m06xy"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -1002,19 +1040,19 @@ func run(from, to):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_rq0hp"]
+[sub_resource type="Resource" id="Resource_tu6ff"]
 script = ExtResource("5_drryg")
-nested_script = SubResource("GDScript_lh4a1")
+nested_script = SubResource("GDScript_m06xy")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_6akkc"]
+[sub_resource type="Resource" id="Resource_afruf"]
 script = ExtResource("6_j0vsh")
 signal_name = "just_down"
 to = NodePath("..")
 invoke = "spawn_at"
-arguments = [SubResource("Resource_g8dfc")]
-only_if = SubResource("Resource_rq0hp")
+arguments = [SubResource("Resource_mqwwa")]
+only_if = SubResource("Resource_tu6ff")
 deferred = false
 enabled = true
 
@@ -1261,20 +1299,6 @@ script = ExtResource("9_adfup")
 key = "R"
 metadata/pronto_connections = [SubResource("Resource_ol7wp")]
 
-[node name="Merger" type="Area2D" parent="."]
-position = Vector2(163, 104)
-
-[node name="Placeholder" type="Node2D" parent="Merger"]
-script = ExtResource("1_cm6jg")
-label = "Merger"
-placeholder_size = Vector2(39, 8)
-
-[node name="Collision" type="Node2D" parent="Merger"]
-position = Vector2(-15, 48)
-script = ExtResource("3_8q8n7")
-limit_to_group = "molecules"
-metadata/pronto_connections = [SubResource("Resource_1v4n2")]
-
 [node name="PositionMarker" type="Marker2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, 601)
@@ -1328,3 +1352,27 @@ float_from = 0.0
 float_to = 200.0
 float_value = 100.0
 float_step_size = 1.0
+
+[node name="MergerSpawner" type="Node2D" parent="."]
+position = Vector2(547, 475)
+script = ExtResource("1_ggulk")
+
+[node name="Merger" type="Area2D" parent="MergerSpawner"]
+position = Vector2(51, -75)
+
+[node name="Placeholder" type="Node2D" parent="MergerSpawner/Merger"]
+script = ExtResource("1_cm6jg")
+label = "Merger"
+placeholder_size = Vector2(39, 8)
+
+[node name="Collision" type="Node2D" parent="MergerSpawner/Merger"]
+position = Vector2(4, 47)
+script = ExtResource("3_8q8n7")
+limit_to_group = "molecules"
+metadata/pronto_connections = [SubResource("Resource_1v4n2")]
+
+[node name="Key" type="Node2D" parent="MergerSpawner"]
+position = Vector2(-59, -33)
+script = ExtResource("9_adfup")
+key = "M"
+metadata/pronto_connections = [SubResource("Resource_afruf")]
