@@ -39,8 +39,10 @@ func connect_ui():
 	return null
 
 func _process(delta):
-	if _lines._needs_update(lines()):
-		queue_redraw()
+	if Engine.is_editor_hint():
+		Connection.garbage_collect(self)
+		if _lines._needs_update(lines()):
+			queue_redraw()
 
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	_handles._forward_canvas_draw_over_viewport(self, viewport_control)
@@ -101,7 +103,7 @@ func lines() -> Array:
 			queue_redraw()
 		)
 		return Lines.Line.new(self, other, func (flipped): return connection.print(flipped), connection)
-	)
+	).filter(func (connection): return connection != null)
 
 func _draw():
 	if not Engine.is_editor_hint() or not _icon or not is_inside_tree():

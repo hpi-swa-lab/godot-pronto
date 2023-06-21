@@ -16,7 +16,12 @@ func _gui_input(event):
 			KEY_DOWN: move_focus(1)
 			KEY_UP: move_focus(-1)
 			KEY_ENTER, KEY_KP_ENTER:
-				selected(get_focused_index())
+				accept_selected()
+
+func accept_selected():
+	var index = get_focused_index()
+	if index >= 0 and %list.visible:
+		selected(index)
 
 func get_focused_index():
 	var l = %list.get_selected_items()

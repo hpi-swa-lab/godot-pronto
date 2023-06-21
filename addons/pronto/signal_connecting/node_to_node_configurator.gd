@@ -209,6 +209,8 @@ func argument_names():
 	return selected_signal["args"].map(func (a): return a["name"]) + ["from"] + (["to"] if %Receiver.visible else [])
 
 func _on_done_pressed():
+	%FunctionName.accept_selected()
+	
 	if not %Expression.visible:
 		var args = %Args.get_children()
 		var invoke = %FunctionName.text

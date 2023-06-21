@@ -230,6 +230,9 @@ func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
 func _run_script(from: Node, s: ConnectionScript, arguments: Array):
 	return s.run(arguments, from)
 
+func is_valid(from: Node):
+	return not is_target() or from.get_node_or_null(to) != null
+
 func print(flip = false, shorten = true, single_line = false):
 	var prefix = "[?] " if has_condition() else ""
 	if is_target():
@@ -243,3 +246,14 @@ func print(flip = false, shorten = true, single_line = false):
 	else:
 		assert(is_expression())
 		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.source_code.split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")
+
+## Iterate over connections and check whether the target still exists for them.
+## If not, remove the connection.
+static func garbage_collect(from: Node):
+	# FIXME is there a save way to make this undoable? If we just commit another action,
+	# undoing will first restore the invalid connection and we have to hope the user
+	# proceeds to also restore the target, but since gc is called from _process, this won't
+	# happen quickly enough.
+	for connection in get_connections(from).duplicate():
+		if not connection.is_valid(from):
+			connection.delete(from)
