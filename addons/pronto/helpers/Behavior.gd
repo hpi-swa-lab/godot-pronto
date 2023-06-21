@@ -39,9 +39,10 @@ func connect_ui():
 	return null
 
 func _process(delta):
-	Connection.garbage_collect(self)
-	if _lines._needs_update(lines()):
-		queue_redraw()
+	if Engine.is_editor_hint():
+		Connection.garbage_collect(self)
+		if _lines._needs_update(lines()):
+			queue_redraw()
 
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	_handles._forward_canvas_draw_over_viewport(self, viewport_control)
