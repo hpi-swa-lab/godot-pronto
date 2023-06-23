@@ -202,10 +202,10 @@ static func get_pronto_id(node):
 	node.set_meta("pronto_id", id)
 	return id
 
+const UUID = preload("res://uuid.gd")
+
 static func create_new_pronto_id():
-	var id = G.at("_pronto_global_id", 0)
-	G.put("_pronto_global_id", id + 1)
-	return id
+	return UUID.v4()
 
 static func find_pronto_id_in_children(node, id):
 	if node.has_meta("pronto_id"):

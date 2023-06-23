@@ -57,7 +57,7 @@ func _input(event):
 var receiver: Object:
 	set(value):
 		receiver = value
-		%ReceiverPath.text = "${0} ({1})".format([Utils.get_pronto_id(receiver), receiver.name])
+		%ReceiverPath.text = "${0} ({1})".format([from.get_path_to(receiver), receiver.name])
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 

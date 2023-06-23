@@ -36,26 +36,54 @@ func _enter_tree():
 	
 	get_undo_redo().history_changed.connect(history_changed)
 	
-	get_tree().node_added.connect(make_pronto_connections_unique)
+	get_tree().node_added.connect(retain_copied_node)
 
-var id_remappings = {}
+var copying = false
+var last_copied_nodes = []
+var copied_node_id_mapping = {}
 
-func make_pronto_connections_unique(node: Node):
+func retain_copied_node(node: Node):
+	if !copying: return
+	
 	var has_id = node.has_meta("pronto_id")
 	var has_connections = node.has_meta("pronto_connections")
 	if !has_id and !has_connections: return
 	
 	print("pronto node! %s id: %d connections: %d" % [str(node), node.get_meta("pronto_id", -1), node.get_meta("pronto_connections", []).size()])
+	last_copied_nodes.append(node)
 	
 	if has_id:
 		var new_id = Utils.create_new_pronto_id()
-		id_remappings[node.get_meta("pronto_id")] = new_id
+		copied_node_id_mapping[node.get_meta("pronto_id")] = new_id
 		node.set_meta("pronto_id", new_id)
+
+func remap_copied_connections():
+	print(last_copied_nodes)
+	print(copied_node_id_mapping)
 	
-	for connection in node.get_meta("pronto_connections", []):
-		if connection.to in id_remappings:
-			var new_connection = connection.make_unique(node, null)
-			new_connection.to = id_remappings[new_connection.to]
+	for node in last_copied_nodes:
+		var new_connections = []
+
+		for connection in node.get_meta("pronto_connections", []):
+			var new_conn = connection.duplicate(true)
+			if connection.to in copied_node_id_mapping:
+				new_conn.to = copied_node_id_mapping[connection.to]
+			new_connections.append(new_conn)
+
+		node.set_meta("pronto_connections", new_connections)
+
+func clear_copy_info():
+	last_copied_nodes.clear()
+	copied_node_id_mapping.clear()
+
+func _input(event):
+	if event.is_action("ui_paste") or event.is_action("ui_graph_duplicate"):
+		copying = event.is_pressed()
+		if copying:
+			clear_copy_info()
+		else:
+			remap_copied_connections()
+		
 
 func history_changed():
 	if _is_editing_behavior() and edited_object is Placeholder and edited_object.should_keep_in_origin():

@@ -15,7 +15,7 @@ class_name Connection
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_target(from: Node, signal_name: String, to: int, invoke: String, arguments: Array, only_if: ConnectionScript, undo_redo: EditorUndoRedoManager = null):
+static func connect_target(from: Node, signal_name: String, to: String, invoke: String, arguments: Array, only_if: ConnectionScript, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -27,7 +27,7 @@ static func connect_target(from: Node, signal_name: String, to: int, invoke: Str
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, to: int, expression: ConnectionScript, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, to: String, expression: ConnectionScript, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -42,7 +42,7 @@ static func get_connections(node: Node) -> Array:
 ## The signal name of the node that this connection is added on to connect to.
 @export var signal_name: String = ""
 ## (Optional) The pronto id to the node that this connection emits to.
-@export var to: int = -1
+@export var to: String = ""
 ## (Optional) The method to invoke on [member to].
 @export var invoke: String
 ## (Optional) The arguments to pass to method [member invoke] as [ConnectionScript]s.
@@ -61,7 +61,7 @@ func is_expression() -> bool:
 
 ## Return whether this connection will invoke a method on a target.
 func is_target() -> bool:
-	return to >= 0
+	return not to.is_empty()
 
 ## Remove this connection from [param node].
 func delete(from: Node, undo_redo: EditorUndoRedoManager = null):
