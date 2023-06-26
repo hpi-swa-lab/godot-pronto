@@ -109,12 +109,7 @@ func _is_editing_behavior():
 	if not is_instance_valid(edited_object):
 		# edited_object might be freed after inspecting an object from a prior debugging session
 		return false
-	if not edited_object.has_method('_forward_canvas_draw_over_viewport'):
-		# edited_object is EditorDebuggerRemoteObject, which we can only use to retrieve state
-		# but not to interact with
-		# https://github.com/hpi-swa-lab/godot-pronto/pull/22
-		return false
-	return edited_object is Behavior
+	return edited_object
 
 func show_signals(node: Node):
 	if popup:
