@@ -41,7 +41,7 @@ enum LABEL { None, Health, Fraction, Percentage }
 	set(v):
 		text_color = v
 		queue_redraw()
-		
+
 # the progress_colors are evenly distributed in the order they are defined over the health range
 @export var progress_colors: PackedColorArray = [
 	Color.RED, Color.RED, Color.YELLOW, Color.YELLOW, Color.YELLOW, 
@@ -77,7 +77,7 @@ func _get_text():
 		LABEL.Fraction:
 			return str(current) + "/" + str(max)
 		LABEL.Percentage:
-			return str(100*current/max) + "%"
+			return str(100*current/max) + " %"
 			
 func _get_color():
 	var color_index  = max(0, min(progress_colors.size() * (current/float(max)), progress_colors.size()-1))
