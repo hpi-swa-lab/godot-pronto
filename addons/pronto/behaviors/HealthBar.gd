@@ -50,6 +50,8 @@ enum LABEL { None, Health, Fraction, Percentage }
 ]:
 	set(v):
 		progress_colors = v
+		if progress_colors.is_empty():
+			progress_colors = [Color.LIME_GREEN]
 		queue_redraw()
 
 var size: Vector2:
