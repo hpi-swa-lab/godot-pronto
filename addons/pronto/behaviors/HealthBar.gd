@@ -37,14 +37,19 @@ enum LABEL { None, Health, Fraction, Percentage }
 		background_color = v
 		queue_redraw()
 		
-@export var bar_color = Color.MEDIUM_SEA_GREEN:
-	set(v):
-		bar_color = v
-		queue_redraw()
-		
 @export var text_color = Color.WHITE:
 	set(v):
 		text_color = v
+		queue_redraw()
+		
+# the progress_colors are evenly distributed in the order they are defined over the health range
+@export var progress_colors: PackedColorArray = [
+	Color.RED, Color.RED, Color.YELLOW, Color.YELLOW, Color.YELLOW, 
+	Color.LIME_GREEN,  Color.LIME_GREEN,  Color.LIME_GREEN,  Color.LIME_GREEN,  
+	Color.LIME_GREEN
+]:
+	set(v):
+		progress_colors = v
 		queue_redraw()
 
 var size: Vector2:
@@ -63,7 +68,7 @@ func set_health(value):
 func show_icon():
 	return false
 	
-func get_text():
+func _get_text():
 	match label:
 		LABEL.None:
 			return ""
@@ -73,16 +78,20 @@ func get_text():
 			return str(current) + "/" + str(max)
 		LABEL.Percentage:
 			return str(100*current/max) + "%"
+			
+func _get_color():
+	var color_index  = max(0, min(progress_colors.size() * (current/float(max)), progress_colors.size()-1))
+	return progress_colors[color_index]
 
 func _draw():
 	super._draw()
 	
 	draw_rect(Rect2(healthbar_size / -2, healthbar_size), background_color, true)
 	var inner_size = healthbar_size - Vector2(2, 2)
-	draw_rect(Rect2(inner_size / -2, inner_size * Vector2(current/float(max), 1)), bar_color, true)
+	draw_rect(Rect2(inner_size / -2, inner_size * Vector2(current/float(max), 1)), _get_color(), true)
 	
 	# draw health as text
-	var label = get_text()
+	var label = _get_text()
 	var font = ThemeDB.fallback_font
 	var height = inner_size.y
 	var text_height = min(height, healthbar_size.x / label.length() * 1.8)
