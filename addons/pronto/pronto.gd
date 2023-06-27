@@ -73,7 +73,7 @@ func _handles(object):
 	return !pronto_should_ignore(object)
 
 func _edit(object):
-	if _is_editing_behavior():
+	if _is_editing_behavior() and edited_object.has_method("deselected"):
 		edited_object.deselected()
 	
 	# get_editor_interface().edit_script(load("res://examples/platformer.tscn::GDScript_tb7ap"))
@@ -96,13 +96,15 @@ func _make_visible(visible):
 func _forward_canvas_gui_input(event):
 	if not _is_editing_behavior():
 		return false
+	if not edited_object.has_method("_forward_canvas_gui_input"):
+		return false
 	var ret = edited_object._forward_canvas_gui_input(event, get_undo_redo())
 	if ret:
 		update_overlays()
 	return ret
 
 func _forward_canvas_draw_over_viewport(viewport_control):#
-	if _is_editing_behavior():
+	if _is_editing_behavior() and edited_object.has_method("_forward_canvas_draw_over_viewport"):
 		return edited_object._forward_canvas_draw_over_viewport(viewport_control)
 
 func _is_editing_behavior():
