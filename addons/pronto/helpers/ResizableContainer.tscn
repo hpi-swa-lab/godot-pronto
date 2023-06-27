@@ -7,7 +7,7 @@
 resource_local_to_scene = false
 resource_name = ""
 script = ExtResource("1_2tmgn")
-name = "Breakpoint"
+name = "GuiResizer"
 
 [node name="ResizableContainer" type="PanelContainer"]
 script = ExtResource("1_7pj7u")
@@ -15,4 +15,7 @@ script = ExtResource("1_7pj7u")
 [node name="Handle" type="TextureRect" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_default_cursor_shape = 12
 texture = SubResource("Texture2D_1v5gm")
+expand_mode = 2
+stretch_mode = 2
