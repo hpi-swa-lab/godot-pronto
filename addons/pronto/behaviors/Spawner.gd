@@ -84,4 +84,7 @@ func spawn_at(pos: Vector2, index: int = -1):
 	return instances
 
 func lines():
-	return super.lines() + ([Lines.DashedLine.new(self, get_child(0), func (f): return "spawns", "spawns")] if get_child_count() > 0 else [])
+	var ret = super.lines()
+	for child in get_children():
+		ret.append(Lines.DashedLine.new(self, child, func (f): return "spawns", "spawns"))
+	return ret
