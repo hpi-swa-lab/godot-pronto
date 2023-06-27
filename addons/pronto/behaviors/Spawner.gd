@@ -2,6 +2,8 @@
 #thumb("GPUParticles3D")
 extends Behavior
 
+@export var spawn_shape: Shape2D = null
+
 ## Spawns its direct child by default. Alternatively, provide a scene path here.
 @export var scene_path: NodePath = ^""
 
@@ -77,6 +79,31 @@ func spawn_at(pos: Vector2, index: int = -1):
 	else:
 		instances = [_spawn(index, true)]
 		
+	for instance in instances:
+		instance.global_position = pos
+		spawned.emit(instance)
+	
+	return instances
+
+func spawn_in_shape(index: int = -1):
+	var instances = []
+	if index < 0:
+		for i in range(scenes.size()):
+			instances.append(_spawn(i, true))
+	else:
+		instances = [_spawn(index, true)]
+	
+	var pos = global_position
+	
+	if spawn_shape is CircleShape2D:
+		var radius = randf_range(0, spawn_shape.radius)
+		var angle = randf_range(0,2*PI)
+		pos = Vector2(global_position.x + radius * cos(angle), global_position.y + radius * sin(angle))
+	
+	if spawn_shape is RectangleShape2D:
+		pos.y = global_position.y + randf_range(-spawn_shape.size.y,spawn_shape.size.y)
+		pos.x = global_position.x + randf_range(-spawn_shape.size.x,spawn_shape.size.x)
+	
 	for instance in instances:
 		instance.global_position = pos
 		spawned.emit(instance)
