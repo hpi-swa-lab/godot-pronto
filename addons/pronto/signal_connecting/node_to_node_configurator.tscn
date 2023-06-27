@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=12 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_2ll7t"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ResizableCorner.gd" id="2_72gxx"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
 [ext_resource type="PackedScene" uid="uid://1ubsx3vbyfwv" path="res://addons/pronto/signal_connecting/function_name.tscn" id="4_x4sfm"]
+[ext_resource type="PackedScene" uid="uid://duootchnamvj6" path="res://addons/pronto/helpers/ResizableContainer.tscn" id="5_ika8o"]
 [ext_resource type="PackedScene" uid="uid://d1jujxfamsekk" path="res://addons/pronto/signal_connecting/expression_edit.tscn" id="5_ujudk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inije"]
@@ -38,8 +40,8 @@ name = "Remove"
 
 [node name="Node To Node Configurator" type="PanelContainer"]
 custom_minimum_size = Vector2(100, 100)
-offset_right = 431.0
-offset_bottom = 218.0
+offset_right = 311.0
+offset_bottom = 220.0
 scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -81,6 +83,7 @@ text = "Make unique"
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
+script = ExtResource("2_72gxx")
 
 [node name="Pinned" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -157,23 +160,30 @@ layout_mode = 2
 layout_mode = 2
 text = ")"
 
-[node name="Expression" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ujudk")]
+[node name="ResizableContainer" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ika8o")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Expression" parent="MarginContainer/VBoxContainer/ResizableContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 1
 return_value = false
 placeholder_text = "Statement(s)..."
-default_text = "<none>"
 max_width = 559
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ResizableContainer2" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ika8o")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ResizableContainer2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ResizableContainer2/HBoxContainer2"]
 layout_mode = 2
 text = "only if: "
 
-[node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("5_ujudk")]
+[node name="Condition" parent="MarginContainer/VBoxContainer/ResizableContainer2/HBoxContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
 layout_mode = 2
 default_text = "true"
@@ -199,7 +209,7 @@ text = "Cancel"
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Enabled" to="." method="_on_enabled_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="method_selected" from="MarginContainer/VBoxContainer/Receiver/FunctionName" to="." method="_on_function_selected"]
-[connection signal="text_changed" from="MarginContainer/VBoxContainer/Expression" to="." method="mark_changed"]
-[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/Condition" to="." method="mark_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/ResizableContainer/Expression" to="." method="mark_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/ResizableContainer2/HBoxContainer2/Condition" to="." method="mark_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/done" to="." method="_on_done_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/cancel" to="." method="_on_cancel_pressed"]

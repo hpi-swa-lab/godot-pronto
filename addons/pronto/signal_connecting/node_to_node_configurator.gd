@@ -287,15 +287,16 @@ func _on_gui_input(event: InputEvent):
 func _double_click():
 	pinned = not pinned
 
-func _start_drag(position: Vector2):
-	_drag_start_offset = position - position_offset
+func _start_drag(_position: Vector2):
+	_drag_start_offset = _position - position_offset
+	# come to front
 	self.get_parent().move_child(self, -1)
 
 func _stop_drag():
 	_drag_start_offset = null
 
-func _drag(position: Vector2):
-	position_offset = position - _drag_start_offset
+func _drag(_position: Vector2):
+	position_offset = _position - _drag_start_offset
 
 func _on_pinned_toggled(button_pressed):
 	pinned = button_pressed

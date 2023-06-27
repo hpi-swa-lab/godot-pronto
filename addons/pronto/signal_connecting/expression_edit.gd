@@ -201,22 +201,19 @@ func _on_expression_text_changed():
 func _on_expression_focus_exited():
 	blur.emit()
 
+var dragged_minimum_size = null
+
 func resize():
+	print(self, "ask resize")
 	if self == owner:
+		print(self, "nope")
 		return
-	if size_flags_horizontal == SIZE_FILL or size_flags_horizontal == SIZE_EXPAND_FILL:
-		# This is used in ExpressionInspector.gd such that Expression windows in the inspector take the full width.
-		custom_minimum_size = Vector2(0, 43)
-		Utils.fix_minimum_size(self)
-	else:
-		var size = get_theme_default_font().get_multiline_string_size(%Expression.text)
-		custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
-		Utils.fix_minimum_size(self)
-		reset_size()
+	custom_minimum_size = dragged_minimum_size if dragged_minimum_size else Vector2(0, 43)
+	Utils.fix_minimum_size(self)
+	reset_size()
 	var ntnc = find_parent("Node To Node Configurator")
 	if ntnc != null:
-		ntnc.set_size(Vector2.ZERO)
-		ntnc.position_offset += Vector2.ZERO
+		ntnc.reset_size()
 
 func _on_expression_on_errors(errors):
 	self.errors = errors
