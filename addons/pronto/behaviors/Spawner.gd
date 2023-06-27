@@ -2,16 +2,18 @@
 #thumb("GPUParticles3D")
 extends Behavior
 
-## Spawns its direct child by default. Alternatively, provide a scene path here.
+## Spawns all children by default. Alternatively, provide a scene path here.
 @export var scene_path: NodePath = ^""
 
+## Shape used by 'spawn_in_shape' method. Only supports 'CircleShape2D' and 'RectangleShape2D'.
 @export var spawn_shape: Shape2D = null:
 	set(v):
 		if !is_instance_of(v, RectangleShape2D) and !is_instance_of(v, CircleShape2D):
 			push_warning("Spawners only support CircleShape2D and RectangleShape2D")
 		spawn_shape = v
 		queue_redraw()
-	
+
+## Debug Color in Editor for the shape used by 'spawn_in_shape'.
 @export var spawn_shape_color: Color = Color('0099b36b')
 
 ## When set, spawns new nodes as children of the given node.
@@ -129,7 +131,8 @@ func _draw():
 	super._draw()
 	if Engine.is_editor_hint():
 		draw_set_transform(Vector2.ZERO)
-		spawn_shape.draw(get_canvas_item(),spawn_shape_color)
+		if spawn_shape:
+			spawn_shape.draw(get_canvas_item(),spawn_shape_color)
 
 func _process(delta):
 	super._process(delta)
