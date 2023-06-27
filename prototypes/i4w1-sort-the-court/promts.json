@@ -1,791 +1,791 @@
 {
-    "start_dialog": {
-        "person": "consultant",
-        "dialog": "6"
-    },
-    "persons": {
-        "consultant": {
-            "name": "Royal Consultant",
-            "color": "#ff0000",
-            "dialogs": {
-                "1": {
-                    "type": "task",
-                    "text": "People are getting sick. Do you want to get them medicine?",
-                    "yes": {
-                        "text": "The people will be happy about this.",
-                        "gold": -50,
-                        "happiness": 20,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": []
-                    },
-                    "no": {
-                        "text": "Yeah, it definitely is better to let them die.",
-                        "gold": 0,
-                        "happiness": -10,
-                        "people": -10,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": []
-                    }
-                },
-                "2": {
-                    "type": "task",
-                    "text": "A wandering knight is offering his services",
-                    "yes": {
-                        "text": "",
-                        "gold": -60,
-                        "happiness": 0,
-                        "people": 1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "1"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "",
-                        "gold": 0,
-                        "happiness": 0,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "consultant",
-                                "dialog": "2"
-                            }
-                        ]
-                    }
-                },
-                "3": {
-                    "type": "task",
-                    "text": "There is no more capacity in our prisons. Should we extend it?",
-                    "yes": {
-                        "text": "Very well",
-                        "gold": -50,
-                        "happiness": 5,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": []
-                    },
-                    "no": {
-                        "text": "Then vigilanties will roam the street.",
-                        "gold": 0,
-                        "happiness": -10,
-                        "people": -5,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": []
-                    }
-                },
-                "4": {
-                    "type": "event",
-                    "text": "The knight committed suicide. He left his belongings to you.",
-                    "result": {
-                        "gold": 20,
-                        "happiness": 0,
-                        "people": -1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": []
-                    }
-                },
-                "5": {
-                    "type": "task",
-                    "text": "Our settlement attracted a wizard. Should we allow them to live here?",
-                    "yes": {
-                        "text": "I will inform them",
-                        "gold": 0,
-                        "happiness": 0,
-                        "people": 1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "1"
-                            },
-                            {
-                                "person": "wizard_cat",
-                                "dialog": "1"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "I will decline their offer then.",
-                        "gold": 0,
-                        "happiness": 0,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "consultant",
-                                "dialog": "5"
-                            }
-                        ]
-                    }
-                },
-                "6": {
-                    "type": "event",
-                    "text": "Your highness, after you ascended to the throne, we need to manage this settlement to become a prosperous one. Maybe we will even become part of the Counsel of Kingdoms. But for now, just focus on managing your subject's needs.",
-                    "result": {
-                        "gold": 100,
-                        "happiness": 100,
-                        "people": 100,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "consultant",
-                                "dialog": "2"
-                            },
-                            {
-                                "person": "consultant",
-                                "dialog": "5"
-                            },
-                            {
-                                "person": "cat",
-                                "dialog": "2"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "mouse": {
-            "name": "Mouse",
-            "color": "#00ff00",
-            "dialogs": {
-                "1": {
-                    "type": "task",
-                    "text": "squeak (it seems to be holding something)",
-                    "yes": {
-                        "text": "(It gives you some gold)",
-                        "gold": 5,
-                        "happiness": 0,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "mouse",
-                                "dialog": "1"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "(It looks sad)",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "mouse",
-                                "dialog": "2"
-                            }
-                        ]
-                    }
-                },
-                "2": {
-                    "type": "task",
-                    "text": "squeak-a-dee (it seems to be sad)",
-                    "yes": {
-                        "text": "(It takes out a backback, turns around, and slowly leaves. You wonder: will you ever see them again?)",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": -1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "cat",
-                                "dialog": "1"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "(It runs away, smiling)",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "mouse",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "cat": {
-            "name": "Cat",
-            "color": "#0000ff",
-            "dialogs": {
-                "1": {
-                    "type": "task",
-                    "text": "The cat brought you a mouse. It seems hurt. Will you help it get back up?",
-                    "yes": {
-                        "text": "(You take care of the mouse. The cat does not seem to be too happy. After some days you relalize that the mouse is no longer in its cage.)",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "mouse",
-                                "dialog": "1"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "(The cat seems happy and leaves the mouse with you. It seems dead. You are not sure what to do with it so you leave it where it is.)",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": -1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "consultant",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                },
-                "2": {
-                    "type": "task",
-                    "text": "A cat came in. Will you pet it?",
-                    "yes": {
-                        "text": "(It seems happy)",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": 1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "cat",
-                                "dialog": "3"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "(It storms off)",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "cat",
-                                "dialog": "4"
-                            }
-                        ]
-                    }
-                },
-                "3": {
-                    "type": "task",
-                    "text": "The cat came back. Will you give it some food?",
-                    "yes": {
-                        "text": "(It seems happy)",
-                        "gold": -2,
-                        "happiness": 1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "cat",
-                                "dialog": "1"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "(It seems disappointed)",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "cat",
-                                "dialog": "4"
-                            }
-                        ]
-                    }
-                },
-                "4": {
-                    "type": "event",
-                    "text": "You see the cat wandering into the distance. You wonder, what will happen to all the rats that have been a plague for your city.",
-                    "result": {
-                        "gold": 0,
-                        "happiness": 0,
-                        "people": -1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "consultant",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "knight": {
-            "name": "Knight",
-            "color": "#ffff00",
-            "dialogs": {
-                "1": {
-                    "type": "task",
-                    "text": "I am you loyal knight. Shall I head off to adventure?",
-                    "yes": {
-                        "text": "Alright. I will be back soon.",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "2"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "3"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "4"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "5"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "I will wait for your orders",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                },
-                "2": {
-                    "type": "event",
-                    "text": "I am back and brought you these riches",
-                    "result": {
-                        "gold": 50,
-                        "happiness": 0,
-                        "people": 0,
-                        "removeable_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "3"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "4"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "5"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                },
-                "3": {
-                    "type": "task",
-                    "text": "I am afraid I failed. Please punish me as you see fit.",
-                    "yes": {
-                        "text": "I'll be heading off to the dungeon",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": -1,
-                        "removeable_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "2"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "4"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "5"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "consultant",
-                                "dialog": "3"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "Thank you. I will do better on the next adventure",
-                        "gold": 0,
-                        "happiness": 0,
-                        "people": 0,
-                        "removeable_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "2"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "4"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "5"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                },
-                "4": {
-                    "type": "task",
-                    "text": "I woke a horde of goblins that were not too happy and attacked some of our villagers. I must see consequences for this.",
-                    "yes": {
-                        "text": "I will be heading off to the dungeons.",
-                        "gold": 0,
-                        "happiness": 0,
-                        "people": -1,
-                        "removeable_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "2"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "3"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "5"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "consultant",
-                                "dialog": "3"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "But, why? I am responsible for so many deaths.",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 0,
-                        "removeable_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "2"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "3"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "5"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "consultant",
-                                "dialog": "4"
-                            }
-                        ]
-                    }
-                },
-                "5": {
-                    "type": "task",
-                    "text": "On my travels I met another knight. He looks shady but is trustworthy. Do we add him to your guards?",
-                    "yes": {
-                        "text": "I will inform them.",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": 0,
-                        "removeable_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "2"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "3"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "4"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "shady_knight",
-                                "dialog": "1"
-                            },
-                            {
-                                "person": "knight",
-                                "dialog": "1"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "Hmm. Okay. I was sure they would have been a formidable guard.",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "knight",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "shady_knight": {
-            "name": "Shady Knight",
-            "color": "#ff00ff",
-            "dialogs": {
-                "1": {
-                    "type": "event",
-                    "text": "Thank you for letting me join you. I will be offering my services after a short rest.",
-                    "result": {
-                        "gold": 0,
-                        "happiness": 0,
-                        "people": 1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": []
-                    }
-                }
-            }
-        },
-        "wizard": {
-            "name": "Wizard",
-            "color": "#00ffff",
-            "dialogs": {
-                "1": {
-                    "type": "task",
-                    "text": "Shall I try a spell?",
-                    "yes": {
-                        "text": "Very well. I will inform you, how it went.",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "3"
-                            },
-                            {
-                                "person": "wizard",
-                                "dialog": "4"
-                            },
-                            {
-                                "person": "wizard",
-                                "dialog": "5"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "But what is a court magician if they cannot use magic?",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                },
-                "2": {
-                    "type": "task",
-                    "text": "Have you seen my cat around here?",
-                    "yes": {
-                        "text": "Oh good. I am glad, they are well. I will go looking for them.",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard_cat",
-                                "dialog": "2"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "Oh dear. I worry about them.",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard_cat",
-                                "dialog": "3"
-                            }
-                        ]
-                    }
-                },
-                "3": {
-                    "type": "event",
-                    "text": "I tried my spell. It has brought you these riches.",
-                    "result": {
-                        "gold": 50,
-                        "happiness": 0,
-                        "people": 0,
-                        "removeable_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "4"
-                            },
-                            {
-                                "person": "wizard",
-                                "dialog": "5"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                },
-                "4": {
-                    "type": "event",
-                    "text": "I tried my spell. Unfortunately it resulted in a big explosion.",
-                    "result": {
-                        "gold": -10,
-                        "happiness": -10,
-                        "people": -10,
-                        "removeable_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "3"
-                            },
-                            {
-                                "person": "wizard",
-                                "dialog": "5"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                },
-                "5": {
-                    "type": "event",
-                    "text": "I tried my spell. As a result mugs of beer appeared in the central plaza. The citizens seemed to be happy about it. But we also had to clear it up which cost us some gold.",
-                    "result": {
-                        "gold": -10,
-                        "happiness": 20,
-                        "people": 0,
-                        "removeable_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "3"
-                            },
-                            {
-                                "person": "wizard",
-                                "dialog": "4"
-                            }
-                        ],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "1"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "wizard_cat": {
-            "name": "Magical Cat",
-            "color": "#ffffff",
-            "dialogs": {
-                "1": {
-                    "type": "task",
-                    "text": "Meow. (There seems to be something magical about it.)",
-                    "yes": {
-                        "text": "Meow. (It leaves seeming happy)",
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": 1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "2"
-                            }
-                        ]
-                    },
-                    "no": {
-                        "text": "Meow. (It seems disappointed)",
-                        "gold": 0,
-                        "happiness": -1,
-                        "people": 1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": [
-                            {
-                                "person": "wizard",
-                                "dialog": "2"
-                            }
-                        ]
-                    }
-                },
-                "2": {
-                    "type": "event",
-                    "text": "Meow (It seems to be angry at you)",
-                    "result": {
-                        "gold": 0,
-                        "happiness": -2,
-                        "people": -1,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": []
-                    }
-                },
-                "3": {
-                    "type": "event",
-                    "text": "Meow (It seems to be thankful)",
-                    "result": {
-                        "gold": 0,
-                        "happiness": 1,
-                        "people": 0,
-                        "removeable_dialogs": [],
-                        "additional_dialogs": []
-                    }
-                }
-            }
-        }
-    }
+	"start_dialog": {
+		"person": "consultant",
+		"dialog": "6"
+	},
+	"persons": {
+		"consultant": {
+			"name": "Royal Consultant",
+			"color": "#ff0000",
+			"dialogs": {
+				"1": {
+					"type": "task",
+					"text": "People are getting sick. Do you want to get them medicine?",
+					"yes": {
+						"text": "The people will be happy about this.",
+						"gold": -50,
+						"happiness": 20,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": []
+					},
+					"no": {
+						"text": "Yeah, it definitely is better to let them die.",
+						"gold": 0,
+						"happiness": -10,
+						"people": -10,
+						"removeable_dialogs": [],
+						"additional_dialogs": []
+					}
+				},
+				"2": {
+					"type": "task",
+					"text": "A wandering knight is offering his services",
+					"yes": {
+						"text": "",
+						"gold": -60,
+						"happiness": 0,
+						"people": 1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "1"
+							}
+						]
+					},
+					"no": {
+						"text": "",
+						"gold": 0,
+						"happiness": 0,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "consultant",
+								"dialog": "2"
+							}
+						]
+					}
+				},
+				"3": {
+					"type": "task",
+					"text": "There is no more capacity in our prisons. Should we extend it?",
+					"yes": {
+						"text": "Very well",
+						"gold": -50,
+						"happiness": 5,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": []
+					},
+					"no": {
+						"text": "Then vigilanties will roam the street.",
+						"gold": 0,
+						"happiness": -10,
+						"people": -5,
+						"removeable_dialogs": [],
+						"additional_dialogs": []
+					}
+				},
+				"4": {
+					"type": "event",
+					"text": "The knight committed suicide. He left his belongings to you.",
+					"result": {
+						"gold": 20,
+						"happiness": 0,
+						"people": -1,
+						"removeable_dialogs": [],
+						"additional_dialogs": []
+					}
+				},
+				"5": {
+					"type": "task",
+					"text": "Our settlement attracted a wizard. Should we allow them to live here?",
+					"yes": {
+						"text": "I will inform them",
+						"gold": 0,
+						"happiness": 0,
+						"people": 1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "1"
+							},
+							{
+								"person": "wizard_cat",
+								"dialog": "1"
+							}
+						]
+					},
+					"no": {
+						"text": "I will decline their offer then.",
+						"gold": 0,
+						"happiness": 0,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "consultant",
+								"dialog": "5"
+							}
+						]
+					}
+				},
+				"6": {
+					"type": "event",
+					"text": "Your highness, after you ascended to the throne, we need to manage this settlement to become a prosperous one. Maybe we will even become part of the Counsel of Kingdoms. But for now, just focus on managing your subject's needs.",
+					"result": {
+						"gold": 100,
+						"happiness": 100,
+						"people": 100,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "consultant",
+								"dialog": "2"
+							},
+							{
+								"person": "consultant",
+								"dialog": "5"
+							},
+							{
+								"person": "cat",
+								"dialog": "2"
+							}
+						]
+					}
+				}
+			}
+		},
+		"mouse": {
+			"name": "Mouse",
+			"color": "#00ff00",
+			"dialogs": {
+				"1": {
+					"type": "task",
+					"text": "squeak (it seems to be holding something)",
+					"yes": {
+						"text": "(It gives you some gold)",
+						"gold": 5,
+						"happiness": 0,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "mouse",
+								"dialog": "1"
+							}
+						]
+					},
+					"no": {
+						"text": "(It looks sad)",
+						"gold": 0,
+						"happiness": -1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "mouse",
+								"dialog": "2"
+							}
+						]
+					}
+				},
+				"2": {
+					"type": "task",
+					"text": "squeak-a-dee (it seems to be sad)",
+					"yes": {
+						"text": "(It takes out a backback, turns around, and slowly leaves. You wonder: will you ever see them again?)",
+						"gold": 0,
+						"happiness": -1,
+						"people": -1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "cat",
+								"dialog": "1"
+							}
+						]
+					},
+					"no": {
+						"text": "(It runs away, smiling)",
+						"gold": 0,
+						"happiness": 1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "mouse",
+								"dialog": "1"
+							}
+						]
+					}
+				}
+			}
+		},
+		"cat": {
+			"name": "Cat",
+			"color": "#0000ff",
+			"dialogs": {
+				"1": {
+					"type": "task",
+					"text": "The cat brought you a mouse. It seems hurt. Will you help it get back up?",
+					"yes": {
+						"text": "(You take care of the mouse. The cat does not seem to be too happy. After some days you relalize that the mouse is no longer in its cage.)",
+						"gold": 0,
+						"happiness": -1,
+						"people": 1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "mouse",
+								"dialog": "1"
+							}
+						]
+					},
+					"no": {
+						"text": "(The cat seems happy and leaves the mouse with you. It seems dead. You are not sure what to do with it so you leave it where it is.)",
+						"gold": 0,
+						"happiness": 1,
+						"people": -1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "consultant",
+								"dialog": "1"
+							}
+						]
+					}
+				},
+				"2": {
+					"type": "task",
+					"text": "A cat came in. Will you pet it?",
+					"yes": {
+						"text": "(It seems happy)",
+						"gold": 0,
+						"happiness": 1,
+						"people": 1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "cat",
+								"dialog": "3"
+							}
+						]
+					},
+					"no": {
+						"text": "(It storms off)",
+						"gold": 0,
+						"happiness": -1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "cat",
+								"dialog": "4"
+							}
+						]
+					}
+				},
+				"3": {
+					"type": "task",
+					"text": "The cat came back. Will you give it some food?",
+					"yes": {
+						"text": "(It seems happy)",
+						"gold": -2,
+						"happiness": 1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "cat",
+								"dialog": "1"
+							}
+						]
+					},
+					"no": {
+						"text": "(It seems disappointed)",
+						"gold": 0,
+						"happiness": -1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "cat",
+								"dialog": "4"
+							}
+						]
+					}
+				},
+				"4": {
+					"type": "event",
+					"text": "You see the cat wandering into the distance. You wonder, what will happen to all the rats that have been a plague for your city.",
+					"result": {
+						"gold": 0,
+						"happiness": 0,
+						"people": -1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "consultant",
+								"dialog": "1"
+							}
+						]
+					}
+				}
+			}
+		},
+		"knight": {
+			"name": "Knight",
+			"color": "#ffff00",
+			"dialogs": {
+				"1": {
+					"type": "task",
+					"text": "I am you loyal knight. Shall I head off to adventure?",
+					"yes": {
+						"text": "Alright. I will be back soon.",
+						"gold": 0,
+						"happiness": 1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "2"
+							},
+							{
+								"person": "knight",
+								"dialog": "3"
+							},
+							{
+								"person": "knight",
+								"dialog": "4"
+							},
+							{
+								"person": "knight",
+								"dialog": "5"
+							}
+						]
+					},
+					"no": {
+						"text": "I will wait for your orders",
+						"gold": 0,
+						"happiness": -1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "1"
+							}
+						]
+					}
+				},
+				"2": {
+					"type": "event",
+					"text": "I am back and brought you these riches",
+					"result": {
+						"gold": 50,
+						"happiness": 0,
+						"people": 0,
+						"removeable_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "3"
+							},
+							{
+								"person": "knight",
+								"dialog": "4"
+							},
+							{
+								"person": "knight",
+								"dialog": "5"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "1"
+							}
+						]
+					}
+				},
+				"3": {
+					"type": "task",
+					"text": "I am afraid I failed. Please punish me as you see fit.",
+					"yes": {
+						"text": "I'll be heading off to the dungeon",
+						"gold": 0,
+						"happiness": 1,
+						"people": -1,
+						"removeable_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "2"
+							},
+							{
+								"person": "knight",
+								"dialog": "4"
+							},
+							{
+								"person": "knight",
+								"dialog": "5"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "consultant",
+								"dialog": "3"
+							}
+						]
+					},
+					"no": {
+						"text": "Thank you. I will do better on the next adventure",
+						"gold": 0,
+						"happiness": 0,
+						"people": 0,
+						"removeable_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "2"
+							},
+							{
+								"person": "knight",
+								"dialog": "4"
+							},
+							{
+								"person": "knight",
+								"dialog": "5"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "1"
+							}
+						]
+					}
+				},
+				"4": {
+					"type": "task",
+					"text": "I woke a horde of goblins that were not too happy and attacked some of our villagers. I must see consequences for this.",
+					"yes": {
+						"text": "I will be heading off to the dungeons.",
+						"gold": 0,
+						"happiness": 0,
+						"people": -11,
+						"removeable_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "2"
+							},
+							{
+								"person": "knight",
+								"dialog": "3"
+							},
+							{
+								"person": "knight",
+								"dialog": "5"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "consultant",
+								"dialog": "3"
+							}
+						]
+					},
+					"no": {
+						"text": "But, why? I am responsible for so many deaths.",
+						"gold": 0,
+						"happiness": -1,
+						"people": -10,
+						"removeable_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "2"
+							},
+							{
+								"person": "knight",
+								"dialog": "3"
+							},
+							{
+								"person": "knight",
+								"dialog": "5"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "consultant",
+								"dialog": "4"
+							}
+						]
+					}
+				},
+				"5": {
+					"type": "task",
+					"text": "On my travels I met another knight. He looks shady but is trustworthy. Do we add him to your guards?",
+					"yes": {
+						"text": "I will inform them.",
+						"gold": 0,
+						"happiness": 1,
+						"people": 0,
+						"removeable_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "2"
+							},
+							{
+								"person": "knight",
+								"dialog": "3"
+							},
+							{
+								"person": "knight",
+								"dialog": "4"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "shady_knight",
+								"dialog": "1"
+							},
+							{
+								"person": "knight",
+								"dialog": "1"
+							}
+						]
+					},
+					"no": {
+						"text": "Hmm. Okay. I was sure they would have been a formidable guard.",
+						"gold": 0,
+						"happiness": -1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "knight",
+								"dialog": "1"
+							}
+						]
+					}
+				}
+			}
+		},
+		"shady_knight": {
+			"name": "Shady Knight",
+			"color": "#ff00ff",
+			"dialogs": {
+				"1": {
+					"type": "event",
+					"text": "Thank you for letting me join you. I will be offering my services after a short rest.",
+					"result": {
+						"gold": 0,
+						"happiness": 0,
+						"people": 1,
+						"removeable_dialogs": [],
+						"additional_dialogs": []
+					}
+				}
+			}
+		},
+		"wizard": {
+			"name": "Wizard",
+			"color": "#00ffff",
+			"dialogs": {
+				"1": {
+					"type": "task",
+					"text": "Shall I try a spell?",
+					"yes": {
+						"text": "Very well. I will inform you, how it went.",
+						"gold": 0,
+						"happiness": 1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "3"
+							},
+							{
+								"person": "wizard",
+								"dialog": "4"
+							},
+							{
+								"person": "wizard",
+								"dialog": "5"
+							}
+						]
+					},
+					"no": {
+						"text": "But what is a court magician if they cannot use magic?",
+						"gold": 0,
+						"happiness": -1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "1"
+							}
+						]
+					}
+				},
+				"2": {
+					"type": "task",
+					"text": "Have you seen my cat around here?",
+					"yes": {
+						"text": "Oh good. I am glad, they are well. I will go looking for them.",
+						"gold": 0,
+						"happiness": 1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "wizard_cat",
+								"dialog": "2"
+							}
+						]
+					},
+					"no": {
+						"text": "Oh dear. I worry about them.",
+						"gold": 0,
+						"happiness": -1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "wizard_cat",
+								"dialog": "3"
+							}
+						]
+					}
+				},
+				"3": {
+					"type": "event",
+					"text": "I tried my spell. It has brought you these riches.",
+					"result": {
+						"gold": 50,
+						"happiness": 0,
+						"people": 0,
+						"removeable_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "4"
+							},
+							{
+								"person": "wizard",
+								"dialog": "5"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "1"
+							}
+						]
+					}
+				},
+				"4": {
+					"type": "event",
+					"text": "I tried my spell. Unfortunately it resulted in a big explosion.",
+					"result": {
+						"gold": -10,
+						"happiness": -10,
+						"people": -10,
+						"removeable_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "3"
+							},
+							{
+								"person": "wizard",
+								"dialog": "5"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "1"
+							}
+						]
+					}
+				},
+				"5": {
+					"type": "event",
+					"text": "I tried my spell. As a result mugs of beer appeared in the central plaza. The citizens seemed to be happy about it. But we also had to clear it up which cost us some gold.",
+					"result": {
+						"gold": -10,
+						"happiness": 20,
+						"people": 0,
+						"removeable_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "3"
+							},
+							{
+								"person": "wizard",
+								"dialog": "4"
+							}
+						],
+						"additional_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "1"
+							}
+						]
+					}
+				}
+			}
+		},
+		"wizard_cat": {
+			"name": "Magical Cat",
+			"color": "#ffffff",
+			"dialogs": {
+				"1": {
+					"type": "task",
+					"text": "Meow. (There seems to be something magical about it.)",
+					"yes": {
+						"text": "Meow. (It leaves seeming happy)",
+						"gold": 0,
+						"happiness": 1,
+						"people": 1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "2"
+							}
+						]
+					},
+					"no": {
+						"text": "Meow. (It seems disappointed)",
+						"gold": 0,
+						"happiness": -1,
+						"people": 1,
+						"removeable_dialogs": [],
+						"additional_dialogs": [
+							{
+								"person": "wizard",
+								"dialog": "2"
+							}
+						]
+					}
+				},
+				"2": {
+					"type": "event",
+					"text": "Meow (It seems to be angry at you)",
+					"result": {
+						"gold": 0,
+						"happiness": -2,
+						"people": -1,
+						"removeable_dialogs": [],
+						"additional_dialogs": []
+					}
+				},
+				"3": {
+					"type": "event",
+					"text": "Meow (It seems to be thankful)",
+					"result": {
+						"gold": 0,
+						"happiness": 1,
+						"people": 0,
+						"removeable_dialogs": [],
+						"additional_dialogs": []
+					}
+				}
+			}
+		}
+	}
 }

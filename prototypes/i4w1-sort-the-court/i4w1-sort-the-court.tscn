@@ -1,8 +1,135 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4il6gn0ovkq7"]
+[gd_scene load_steps=16 format=3 uid="uid://c4il6gn0ovkq7"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_ypbqj"]
+[ext_resource type="Script" path="res://prototypes/i4w1-sort-the-court/Prompt.gd" id="2_lhtrv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_xjya0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="4_eq847"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_0x20m"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_jq874"]
+
+[sub_resource type="GDScript" id="GDScript_dxiq0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, duration, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bbbll"]
+script = ExtResource("5_0x20m")
+nested_script = SubResource("GDScript_dxiq0")
+argument_names = ["pos", "button", "duration", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_y7svt"]
+script = ExtResource("6_jq874")
+signal_name = "mouse_up"
+to = NodePath("../../Prompt")
+invoke = "register_yes"
+arguments = []
+only_if = SubResource("Resource_bbbll")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_33wlf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, duration, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_75iew"]
+script = ExtResource("5_0x20m")
+nested_script = SubResource("GDScript_33wlf")
+argument_names = ["pos", "button", "duration", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ltk0x"]
+script = ExtResource("6_jq874")
+signal_name = "mouse_up"
+to = NodePath("../../Prompt")
+invoke = "register_no"
+arguments = []
+only_if = SubResource("Resource_75iew")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_68chi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, duration, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_0nj71"]
+script = ExtResource("5_0x20m")
+nested_script = SubResource("GDScript_68chi")
+argument_names = ["pos", "button", "duration", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tydsg"]
+script = ExtResource("6_jq874")
+signal_name = "mouse_up"
+to = NodePath("../../Prompt")
+invoke = "register_acknowledge"
+arguments = []
+only_if = SubResource("Resource_0nj71")
+deferred = false
+enabled = true
 
 [node name="i4w1-sort-the-court" type="Node2D"]
 
 [node name="Background" type="Node2D" parent="."]
 script = ExtResource("1_ypbqj")
+
+[node name="Prompt" type="StaticBody2D" parent="."]
+position = Vector2(576, 250)
+script = ExtResource("2_lhtrv")
+
+[node name="Placeholder" type="Node2D" parent="Prompt"]
+script = ExtResource("3_xjya0")
+placeholder_size = Vector2(870, 376)
+
+[node name="button_yes" type="StaticBody2D" parent="."]
+position = Vector2(224, 535)
+
+[node name="Placeholder" type="Node2D" parent="button_yes"]
+script = ExtResource("3_xjya0")
+label = "yes"
+color = Color(0, 0.686275, 0.121569, 1)
+placeholder_size = Vector2(170, 60)
+
+[node name="Controls" type="Node2D" parent="button_yes"]
+position = Vector2(-90.1388, -3.94009e-06)
+script = ExtResource("4_eq847")
+metadata/pronto_connections = [SubResource("Resource_y7svt")]
+
+[node name="button_no" type="StaticBody2D" parent="."]
+position = Vector2(923, 535)
+
+[node name="Placeholder" type="Node2D" parent="button_no"]
+script = ExtResource("3_xjya0")
+label = "no"
+color = Color(0.992157, 0.121569, 0.560784, 1)
+placeholder_size = Vector2(170, 60)
+
+[node name="Controls" type="Node2D" parent="button_no"]
+position = Vector2(-90.1388, -3.94009e-06)
+script = ExtResource("4_eq847")
+metadata/pronto_connections = [SubResource("Resource_ltk0x")]
+
+[node name="button_acknowledge" type="StaticBody2D" parent="."]
+position = Vector2(544, 535)
+
+[node name="Placeholder" type="Node2D" parent="button_acknowledge"]
+script = ExtResource("3_xjya0")
+label = "okay"
+color = Color(0.843137, 0.835294, 0.85098, 1)
+placeholder_size = Vector2(170, 60)
+
+[node name="Controls" type="Node2D" parent="button_acknowledge"]
+position = Vector2(-90.1388, -3.94009e-06)
+script = ExtResource("4_eq847")
+metadata/pronto_connections = [SubResource("Resource_tydsg")]
