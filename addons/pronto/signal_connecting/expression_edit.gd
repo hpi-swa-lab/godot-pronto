@@ -213,6 +213,10 @@ func resize():
 		custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
 		Utils.fix_minimum_size(self)
 		reset_size()
+	var ntnc = find_parent("Node To Node Configurator")
+	if ntnc != null:
+		ntnc.set_size(Vector2.ZERO)
+		ntnc.position_offset += Vector2.ZERO
 
 func _on_expression_on_errors(errors):
 	self.errors = errors
