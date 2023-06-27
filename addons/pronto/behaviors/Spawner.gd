@@ -8,7 +8,7 @@ extends Behavior
 ## When set, spawns new nodes as children of the given node.
 @export var container: Node = null
 
-var scene = null
+var scenes = null
 
 signal spawned(instance: Node)
 
@@ -17,16 +17,17 @@ func _ready():
 	
 	if not Engine.is_editor_hint():
 		if not scene_path.is_empty():
-			scene = get_node(scene_path)
+			scenes = [get_node(scene_path)]
 		else:
-			scene = get_child(0)
-			remove_child(scene)
+			scenes = get_children()
+			for scene in scenes:
+				remove_child(scene)
 
-func _duplicate_blueprint():
-	return scene.duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
+func _duplicate_blueprint(index: int):
+	return scenes[index].duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
 
-func _spawn(top_level: bool = false):
-	var instance = _duplicate_blueprint()
+func _spawn(index: int, top_level: bool = false):
+	var instance = _duplicate_blueprint(index)
 	
 	instance.top_level = top_level
 	
@@ -39,32 +40,51 @@ func _spawn(top_level: bool = false):
 	
 	return instance
 
-func spawn():
-	var instance = _spawn()
+func spawn(index: int = -1):
+	var instances = []
+	if index < 0:
+		for i in range(scenes.size()):
+			instances.append(_spawn(i))
+	else:
+		instances = [_spawn(index)]
 	
-	instance.global_position = global_position
-	spawned.emit(instance)
+	for instance in instances:
+		instance.global_position = global_position
+		spawned.emit(instance)
 	
-	return instance
+	return instances
 
-func spawn_toward(pos: Vector2):
-	var instance = _spawn(true)
+func spawn_toward(pos: Vector2, index: int = -1):
+	var instances = []
+	if index < 0:
+		for i in range(scenes.size()):
+			instances.append(_spawn(i, true))
+	else:
+		instances = [_spawn(index, true)]
 	
-	instance.global_position = global_position
-	instance.rotation = global_position.angle_to_point(pos)
+	for instance in instances:
+		instance.global_position = global_position
+		instance.rotation = global_position.angle_to_point(pos)
+		spawned.emit(instance)
 	
-	spawned.emit(instance)
-	
-	return instance
+	return instances
 
-func spawn_at(pos: Vector2):
-	var instance = _spawn(true)
+func spawn_at(pos: Vector2, index: int = -1):
+	var instances = []
+	if index < 0:
+		for i in range(scenes.size()):
+			instances.append(_spawn(i, true))
+	else:
+		instances = [_spawn(index, true)]
+		
+	for instance in instances:
+		instance.global_position = pos
+		spawned.emit(instance)
 	
-	instance.global_position = pos
-	
-	spawned.emit(instance)
-	
-	return instance
+	return instances
 
 func lines():
-	return super.lines() + ([Lines.DashedLine.new(self, get_child(0), func (f): return "spawns", "spawns")] if get_child_count() > 0 else [])
+	var ret = super.lines()
+	for child in get_children():
+		ret.append(Lines.DashedLine.new(self, child, func (f): return "spawns", "spawns"))
+	return ret
