@@ -103,9 +103,11 @@ func spawn_in_shape(index: int = -1):
 	var pos = global_position
 	
 	if spawn_shape is CircleShape2D:
-		var radius = randf_range(0, spawn_shape.radius)
-		var angle = randf_range(0,2*PI)
-		pos = Vector2(global_position.x + radius * cos(angle), global_position.y + radius * sin(angle))
+		pos.x += spawn_shape.radius + 2
+		
+		while(global_position.distance_to(pos) > spawn_shape.radius):
+			pos.x = global_position.x +  randf_range(-spawn_shape.radius, spawn_shape.radius)
+			pos.y = global_position.y +  randf_range(-spawn_shape.radius, spawn_shape.radius)
 	
 	if spawn_shape is RectangleShape2D:
 		pos.y = global_position.y + randf_range(-spawn_shape.size.y * 0.5,spawn_shape.size.y * 0.5)
