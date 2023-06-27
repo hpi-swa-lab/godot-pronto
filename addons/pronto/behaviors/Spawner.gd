@@ -2,10 +2,15 @@
 #thumb("GPUParticles3D")
 extends Behavior
 
-@export var spawn_shape: Shape2D = null
-
 ## Spawns its direct child by default. Alternatively, provide a scene path here.
 @export var scene_path: NodePath = ^""
+
+@export var spawn_shape: Shape2D = null:
+	set(v):
+		spawn_shape = v
+		queue_redraw()
+	
+@export var spawn_shape_color: Color = Color('0099b36b')
 
 ## When set, spawns new nodes as children of the given node.
 @export var container: Node = null
@@ -101,8 +106,8 @@ func spawn_in_shape(index: int = -1):
 		pos = Vector2(global_position.x + radius * cos(angle), global_position.y + radius * sin(angle))
 	
 	if spawn_shape is RectangleShape2D:
-		pos.y = global_position.y + randf_range(-spawn_shape.size.y,spawn_shape.size.y)
-		pos.x = global_position.x + randf_range(-spawn_shape.size.x,spawn_shape.size.x)
+		pos.y = global_position.y + randf_range(-spawn_shape.size.y * 0.5,spawn_shape.size.y * 0.5)
+		pos.x = global_position.x + randf_range(-spawn_shape.size.x * 0.5,spawn_shape.size.x * 0.5)
 	
 	for instance in instances:
 		instance.global_position = pos
@@ -115,3 +120,9 @@ func lines():
 	for child in get_children():
 		ret.append(Lines.DashedLine.new(self, child, func (f): return "spawns", "spawns"))
 	return ret
+
+func _draw():
+	super._draw()
+	if Engine.is_editor_hint():
+		draw_set_transform(Vector2.ZERO)
+		spawn_shape.draw(get_canvas_item(),spawn_shape_color)

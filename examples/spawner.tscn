@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_f5i2b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ulphs"]
-size = Vector2(70, 120)
+size = Vector2(60, 20)
 
 [sub_resource type="GDScript" id="GDScript_wowfa"]
 script/source = "@tool
@@ -50,14 +50,15 @@ enabled = true
 [node name="Node2D" type="Node2D"]
 
 [node name="Spawner2" type="Node2D" parent="."]
-position = Vector2(391, 147)
+position = Vector2(367, 203)
 script = ExtResource("1_lu5kp")
 spawn_shape = SubResource("RectangleShape2D_ulphs")
 
 [node name="Placeholder" type="Node2D" parent="Spawner2"]
+position = Vector2(107, 5)
 script = ExtResource("2_pgkhl")
 color = Color(0.439216, 0.580392, 1, 1)
-placeholder_size = Vector2(7, 8)
+placeholder_size = Vector2(5, 8)
 
 [node name="Always" type="Node2D" parent="."]
 position = Vector2(448, 119)
