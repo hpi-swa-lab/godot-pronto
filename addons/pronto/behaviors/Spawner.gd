@@ -24,6 +24,7 @@ var last_spawn_shape_size_circle: float
 @export var container: Node = null
 
 var scenes = null
+var scene_offsets = null
 
 signal spawned(instance: Node)
 
@@ -35,7 +36,9 @@ func _ready():
 			scenes = [get_node(scene_path)]
 		else:
 			scenes = get_children()
+			scene_offsets = []
 			for scene in scenes:
+				scene_offsets.append(scene.position)
 				remove_child(scene)
 
 func _duplicate_blueprint(index: int):
@@ -55,17 +58,19 @@ func _spawn(index: int, top_level: bool = false):
 	
 	return instance
 
-func spawn(index: int = -1):
+func spawn(index: int = -1, relative: bool = false):
 	var instances = []
 	if index < 0:
 		for i in range(scenes.size()):
-			instances.append(_spawn(i))
+			instances.append([_spawn(i), scene_offsets[i]])
 	else:
-		instances = [_spawn(index)]
+		instances = [[_spawn(index), scene_offsets[index]]]
 	
-	for instance in instances:
-		instance.global_position = global_position
-		spawned.emit(instance)
+	for instance_pair in instances:
+		instance_pair[0].global_position = global_position
+		if relative:
+			instance_pair[0].global_position += instance_pair[1]
+		spawned.emit(instance_pair[0])
 	
 	return instances
 
