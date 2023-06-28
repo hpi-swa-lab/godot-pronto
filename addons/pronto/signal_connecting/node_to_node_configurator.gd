@@ -106,20 +106,62 @@ func update_argument_names():
 	%Expression.argument_names = names
 	%Condition.argument_names = names
 	for c in %Args.get_children(): c.argument_names = names
-	%SignalArgs.text = "({0}) {1}".format([
-		Utils.print_args(selected_signal),
-		", ".join(basic_argument_names())
-	])
 	
-	var basic_arg_string = ""
-	basic_arg_string += "from: {0}\n".format([from])
-	basic_arg_string += "\nto: {0}\n".format([receiver])
-	for i in len(more_references):
-		var name := "ref{0}".format([i])
-		var ref = more_references[i]
-		var node = from.get_node(ref)
-		basic_arg_string += "\n{0}: {1} ({2})\n".format([name, ref, node])
-	%SignalArgs.tooltip_text = basic_arg_string
+	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
+	
+	for i in %SignalBasicArgs.get_child_count():
+		if i == 0: continue
+		%SignalBasicArgs.get_child(i).queue_free()
+	var iref := -1
+	for name in basic_argument_names():
+		var label := Label.new()
+		label.text = "{0},".format([name])
+		%SignalBasicArgs.add_child(label)
+		
+		label.mouse_filter = Control.MOUSE_FILTER_PASS
+		var node_str
+		if name == "from":
+			node_str = from
+		elif name == "receiver":
+			node_str = receiver
+		elif name.begins_with("ref"):
+			iref += 1
+			var ref = more_references[iref]
+			node_str = "{0} ({1})".format([ref, from.get_node(ref)])
+			
+			# add popup menu for editing and removing reference
+			label.mouse_filter = Control.MOUSE_FILTER_STOP
+			label.gui_input.connect(func(event):
+				if !(event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and not event.pressed): return
+				
+				var menu := PopupMenu.new()
+				menu.add_item("Edit path", 0)
+				menu.add_item("Remove", 1)
+				menu.id_pressed.connect(func(id):
+					if id == 0:
+						_request_reference_path(ref, func(new_ref):
+							more_references[iref] = new_ref
+							update_argument_names())
+					elif id == 1:
+						var new_more_references = []
+						for i in range(more_references.size()):
+							if i != iref:
+								new_more_references.append(more_references[i])
+						more_references = new_more_references
+						update_argument_names()
+				)
+				label.add_child(menu)
+				menu.position = label.global_position + Vector2(50, 50)
+				menu.popup()
+			)
+		
+		label.tooltip_text = "{0}".format([node_str])
+	
+	# add deffered call to update size - HACKED
+	(func():
+		await get_tree().process_frame
+		self.size = Vector2.ZERO
+	).call_deferred()
 
 func _ready():
 	# adjust appearance (theme-aware!)
@@ -356,17 +398,23 @@ func _on_enabled_toggled(button_pressed):
 		mark_changed()
 
 func _on_add_reference_button_pressed():
-	# request NodePath from user
+	_request_reference_path(^"", func (path):
+		more_references += [path]
+		update_argument_names()
+		mark_changed())
+
+func _request_reference_path(path, callback: Callable):
 	var dialog := AcceptDialog.new()
-	dialog.dialog_text = "Enter a NodePath to reference"
+	dialog.set_title("Enter reference path")
 	var lineEdit := LineEdit.new()
+	lineEdit.text = path
 	dialog.add_child(lineEdit)
+	
 	dialog.connect("confirmed", func():
-		var path := NodePath(lineEdit.text)
+		path = NodePath(lineEdit.text)
 		dialog.queue_free()
 		if !path.is_empty():
-			more_references += [path]
-			update_argument_names()
-			mark_changed())
+			callback.call(path))
+	
 	add_child(dialog)
 	dialog.popup_centered()
