@@ -107,14 +107,14 @@ tooltip_text = "tooltip_text"
 mouse_filter = 1
 text = "(area)"
 
-[node name="SignalBasicArgs" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VSeparator3" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="BasicArgs" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="VSeparator" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/SignalBasicArgs"]
-layout_mode = 2
-
-[node name="From" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/SignalBasicArgs"]
+[node name="From" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/BasicArgs"]
 layout_mode = 2
 text = "from"
 

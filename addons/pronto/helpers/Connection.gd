@@ -51,6 +51,7 @@ static func get_connections(node: Node) -> Array:
 @export var more_references = []:
 	get:
 		if more_references == null:
+			# migrate old instances
 			more_references = []
 		return more_references
 ## (Optional) The method to invoke on [member to].
@@ -203,8 +204,8 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			values.append(ref_node)
 		
 		var args_string
+		if deferred: await ConnectionsList.get_tree().process_frame
 		if not c.is_expression():
-			if deferred: await ConnectionsList.get_tree().process_frame
 			var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
 			if target is Code:
 				target.call(c.invoke, args)
@@ -216,7 +217,6 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			target.callv(c.invoke, args)
 			args_string = ",".join(args.map(func (s): return str(s)))
 		else:
-			if deferred: await ConnectionsList.get_tree().process_frame
 			c._run_script(from, c.expression, values)
 			args_string = ""
 		

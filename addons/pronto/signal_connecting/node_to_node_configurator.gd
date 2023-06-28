@@ -109,14 +109,13 @@ func update_argument_names():
 	
 	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
 	
-	for i in %SignalBasicArgs.get_child_count():
-		if i == 0: continue
-		%SignalBasicArgs.get_child(i).queue_free()
+	for i in %BasicArgs.get_child_count():
+		%BasicArgs.get_child(i).queue_free()
 	var iref := -1
 	for name in basic_argument_names():
 		var label := Label.new()
-		label.text = "{0},".format([name])
-		%SignalBasicArgs.add_child(label)
+		label.text = "{0}{1}".format([name, "," if name != basic_argument_names().back() else ""])
+		%BasicArgs.add_child(label)
 		
 		label.mouse_filter = Control.MOUSE_FILTER_PASS
 		var node_str
@@ -138,12 +137,12 @@ func update_argument_names():
 				menu.add_item("Edit path", 0)
 				menu.add_item("Remove", 1)
 				menu.id_pressed.connect(func(id):
-					if id == 0:
+					if id == 0:  # edit
 						_request_reference_path(ref, func(new_ref):
 							more_references[iref] = new_ref
 							update_argument_names())
-					elif id == 1:
-						var new_more_references = []
+					elif id == 1:  # remove
+						var new_more_references := []
 						for i in range(more_references.size()):
 							if i != iref:
 								new_more_references.append(more_references[i])
@@ -151,7 +150,8 @@ func update_argument_names():
 						update_argument_names()
 				)
 				label.add_child(menu)
-				menu.position = label.global_position + Vector2(50, 50)
+				menu.size = Vector2.ZERO
+				menu.position = label.global_position
 				menu.popup()
 			)
 		
@@ -281,7 +281,7 @@ func empty_script(expr: String, return_value: bool):
 	script.argument_types = []
 	for i in len(selected_signal["args"]):
 		script.argument_types.append(null)
-		# TODO: use reflection to get type of arguments?
+		# TODO: use reflection to get type of signal arguments?
 	script.argument_types.append(from.get_class())
 	if receiver != null:
 		script.argument_types.append(receiver.get_class())
