@@ -106,8 +106,15 @@ func update_argument_names():
 	for c in %Args.get_children(): c.argument_names = names
 	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
 
+func _ready():
+	# set border width to 1 (theme-aware!)
+	var stylebox = get_theme_stylebox("panel").duplicate()
+	stylebox.set_border_width_all(1)
+	add_theme_stylebox_override("panel", stylebox)
+
 func _process(delta):
 	if not anchor: return
+	
 	visible = anchor.is_inside_tree()
 	if anchor.is_inside_tree():
 		position = Utils.popup_position(anchor) + position_offset
