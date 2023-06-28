@@ -1,0 +1,256 @@
+[gd_scene load_steps=34 format=3 uid="uid://dpetkgpiastiq"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_mtqpu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_nrmkl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="4_sactg"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="4_uacgv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_ffpju"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="5_k48y7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_kdabc"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="8_p3cta"]
+
+[sub_resource type="GDScript" id="GDScript_djt5o"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	to.color = Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_0k65f"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_djt5o")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_muq4s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_moxqq"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_muq4s")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xxx5b"]
+script = ExtResource("8_p3cta")
+signal_name = "up"
+to = NodePath("../Placeholder")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_moxqq")
+expression = SubResource("Resource_0k65f")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ssnmp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to, ref0):
+	to.color = ref0.color
+"
+
+[sub_resource type="Resource" id="Resource_vcsmc"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_ssnmp")
+argument_names = ["from", "to", "ref0"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_l537e"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_iivb7"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_l537e")
+argument_names = ["from", "to", "ref0"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dsxcl"]
+script = ExtResource("8_p3cta")
+signal_name = "down"
+to = NodePath("../Placeholder")
+more_references = [NodePath("../../StaticBody2D2/Placeholder")]
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_iivb7")
+expression = SubResource("Resource_vcsmc")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_n44j8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(down, from: Node2D, to: Node2D):
+	return 2
+"
+
+[sub_resource type="Resource" id="Resource_fali7"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_n44j8")
+argument_names = ["down", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_yiicu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(down, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ujjfy"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_yiicu")
+argument_names = ["down", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xvyar"]
+script = ExtResource("8_p3cta")
+signal_name = "toggled"
+to = NodePath("../Placeholder")
+more_references = []
+invoke = "set_rotation"
+arguments = [SubResource("Resource_fali7")]
+only_if = SubResource("Resource_ujjfy")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_x42pj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, from, to):
+	return pos
+"
+
+[sub_resource type="Resource" id="Resource_hvyy5"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_x42pj")
+argument_names = ["pos", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_nr0is"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jeuke"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_nr0is")
+argument_names = ["pos", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1tbau"]
+script = ExtResource("8_p3cta")
+signal_name = "mouse_move"
+to = NodePath("..")
+more_references = []
+invoke = "set_global_position"
+arguments = [SubResource("Resource_hvyy5")]
+only_if = SubResource("Resource_jeuke")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_4ljxe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	to.color = Color(to.global_position.x / to.get_parent().get_window().size.x, 0, 0)
+"
+
+[sub_resource type="Resource" id="Resource_w1i1y"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_4ljxe")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_vqfa8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2xum8"]
+script = ExtResource("2_mtqpu")
+nested_script = SubResource("GDScript_vqfa8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_p7j2x"]
+script = ExtResource("8_p3cta")
+signal_name = "elapsed"
+to = NodePath("../Placeholder")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_2xum8")
+expression = SubResource("Resource_w1i1y")
+deferred = false
+enabled = true
+
+[node name="test" type="Node2D"]
+
+[node name="StaticBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(314, 192)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D"]
+script = ExtResource("3_nrmkl")
+placeholder_size = Vector2(42, 93)
+keep_in_origin = false
+sprite_texture = ExtResource("4_uacgv")
+
+[node name="Clock" type="Node2D" parent="StaticBody2D"]
+position = Vector2(-139.089, -6.07978e-06)
+script = ExtResource("5_k48y7")
+trigger_interval_in_seconds = 1.0
+
+[node name="Move" type="Node2D" parent="StaticBody2D"]
+position = Vector2(147, 116)
+script = ExtResource("4_sactg")
+
+[node name="Key" type="Node2D" parent="StaticBody2D"]
+position = Vector2(-156, 221)
+script = ExtResource("5_ffpju")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_xxx5b"), SubResource("Resource_dsxcl"), SubResource("Resource_xvyar")]
+
+[node name="StaticBody2D2" type="RigidBody2D" parent="."]
+position = Vector2(712, 335)
+gravity_scale = 0.0
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D2"]
+script = ExtResource("3_nrmkl")
+color = Color(1, 0, 1, 1)
+placeholder_size = Vector2(67, 97)
+sprite_texture = ExtResource("4_uacgv")
+
+[node name="Controls" type="Node2D" parent="StaticBody2D2"]
+position = Vector2(-58.9449, -2.57656e-06)
+script = ExtResource("6_kdabc")
+metadata/pronto_connections = [SubResource("Resource_1tbau")]
+
+[node name="Clock" type="Node2D" parent="StaticBody2D2"]
+position = Vector2(153, -183)
+script = ExtResource("5_k48y7")
+duration_seconds = 0.5
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_p7j2x")]
