@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="5_co6ql"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="6_1ixte"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_u4aqk"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="8_16ug4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Store.gd" id="8_16ug4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReady.gd" id="8_nnihf"]
 [ext_resource type="PackedScene" uid="uid://bjav4pfwng5lu" path="res://examples/survivor/enemy.tscn" id="10_dn6f3"]
 [ext_resource type="PackedScene" uid="uid://d3nujwdlfc1cp" path="res://examples/survivor/xp.tscn" id="12_brsud"]
