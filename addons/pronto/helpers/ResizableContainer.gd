@@ -3,6 +3,7 @@ extends Control
 class_name ResizableContainer
 # Usage:
 # Add a single child node to this node. The child node will be displayed with a handle that the user can drag to resize the child node.
+# The child may customize handling of the resize by providing a `dragged_minimum_size` property and a `resize()` method.
 
 var child:
 	get:
