@@ -277,7 +277,18 @@ func _on_function_selected(name: String):
 	update_argument_names()
 
 func empty_script(expr: String, return_value: bool):
-	return ConnectionScript.new(argument_names(), return_value, expr)
+	var script := ConnectionScript.new(argument_names(), return_value, expr)
+	script.argument_types = []
+	for i in len(selected_signal["args"]):
+		script.argument_types.append(null)
+		# TODO: use reflection to get type of arguments?
+	script.argument_types.append(from.get_class())
+	if receiver != null:
+		script.argument_types.append(receiver.get_class())
+	for ref in more_references:
+		var node := from.get_node(ref)
+		script.argument_types.append(node.get_class())
+	return script
 
 func argument_names():
 	return selected_signal["args"].map(func (a): return a["name"]) \
