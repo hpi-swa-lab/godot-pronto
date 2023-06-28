@@ -39,9 +39,8 @@ script = ExtResource("2_2ll7t")
 name = "Remove"
 
 [node name="Node To Node Configurator" type="PanelContainer"]
-custom_minimum_size = Vector2(100, 100)
 offset_right = 311.0
-offset_bottom = 220.0
+offset_bottom = 202.0
 scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -61,7 +60,6 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 theme_override_constants/separation = 6
 
@@ -163,9 +161,13 @@ text = ")"
 [node name="ResizableContainer" parent="MarginContainer/VBoxContainer" instance=ExtResource("5_ika8o")]
 layout_mode = 2
 size_flags_vertical = 3
+sync_handles_parent_path = NodePath("../../..")
+sync_handles_x = true
+sync_handles_y = null
 
 [node name="Expression" parent="MarginContainer/VBoxContainer/ResizableContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 size_flags_horizontal = 1
 return_value = false
@@ -182,9 +184,13 @@ text = "only if: "
 [node name="ResizableContainer2" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("5_ika8o")]
 layout_mode = 2
 size_flags_horizontal = 3
+sync_handles_parent_path = NodePath("../../../..")
+sync_handles_x = true
+sync_handles_y = null
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
 default_text = "true"
 max_width = 500
