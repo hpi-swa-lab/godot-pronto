@@ -107,13 +107,14 @@ func update_argument_names():
 	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
 
 func _process(delta):
-	if anchor and anchor.is_inside_tree():
+	if not anchor: return
+	visible = anchor.is_inside_tree()
+	if anchor.is_inside_tree():
 		position = Utils.popup_position(anchor) + position_offset
 		var offscreen_delta = (position + size - get_parent().size).clamp(Vector2(0, 0), Vector2(1000000, 1000000))
 		position -= offscreen_delta
 		%FunctionName.anchor = anchor
 
-	if not anchor: return
 	var _parent = Utils.popup_parent(anchor)
 	if not _parent: return
 	var hovered_nodes = _parent.get_children(true).filter(func (n):
@@ -287,15 +288,16 @@ func _on_gui_input(event: InputEvent):
 func _double_click():
 	pinned = not pinned
 
-func _start_drag(position: Vector2):
-	_drag_start_offset = position - position_offset
+func _start_drag(_position: Vector2):
+	_drag_start_offset = _position - position_offset
+	# come to front
 	self.get_parent().move_child(self, -1)
 
 func _stop_drag():
 	_drag_start_offset = null
 
-func _drag(position: Vector2):
-	position_offset = position - _drag_start_offset
+func _drag(_position: Vector2):
+	position_offset = _position - _drag_start_offset
 
 func _on_pinned_toggled(button_pressed):
 	pinned = button_pressed
