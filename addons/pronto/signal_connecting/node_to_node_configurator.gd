@@ -108,14 +108,15 @@ func update_argument_names():
 
 func _ready():
 	# adjust appearance (theme-aware!)
-	var stylebox = get_theme_stylebox("panel").duplicate()
-	# set border width to 1 (theme-aware!)
-	stylebox.set_border_width_all(1)
-	# turn off background transparency
-	var bg_color = stylebox.get_bg_color()
-	bg_color.a = 0.9
-	stylebox.set_bg_color(bg_color)
-	add_theme_stylebox_override("panel", stylebox)
+	if not Engine.is_editor_hint():  # don't override in editor, otherwise it will be saved to scene
+		var stylebox = get_theme_stylebox("panel").duplicate()
+		# set border width to 1 (theme-aware!)
+		stylebox.set_border_width_all(1)
+		# turn off background transparency
+		var bg_color = stylebox.get_bg_color()
+		bg_color.a = 0.9
+		stylebox.set_bg_color(bg_color)
+		add_theme_stylebox_override("panel", stylebox)
 
 func _process(delta):
 	if not anchor: return

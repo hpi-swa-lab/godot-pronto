@@ -32,8 +32,8 @@ script = ExtResource("2_2ll7t")
 name = "Remove"
 
 [node name="Node To Node Configurator" type="PanelContainer"]
-offset_right = 311.0
-offset_bottom = 202.0
+offset_right = 309.0
+offset_bottom = 200.0
 scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
 size_flags_vertical = 3
