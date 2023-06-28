@@ -420,6 +420,7 @@ func _request_reference_path(path, callback: Callable):
 	var lineEdit := LineEdit.new()
 	lineEdit.text = path
 	dialog.add_child(lineEdit)
+	dialog.add_cancel_button("Cancel")
 	
 	dialog.connect("confirmed", func():
 		path = NodePath(lineEdit.text)
@@ -428,4 +429,5 @@ func _request_reference_path(path, callback: Callable):
 			callback.call(path))
 	
 	add_child(dialog)
+	dialog.size = Vector2(300, 100)
 	dialog.popup_centered()
