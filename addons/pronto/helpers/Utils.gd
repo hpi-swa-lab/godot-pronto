@@ -189,7 +189,7 @@ static func global_size_of_yourself(node: Node):
 
 static func global_rect_of(node: Node):
 	node = Utils.closest_parent_with_position(node)
-	if node is Placeholder: return Rect2(node.global_position - node.size / 2, node.size)
+	if node is Placeholder or node is HealthBar: return Rect2(node.global_position - node.size / 2, node.size)
 	if "size" in node: return Rect2(node.global_position, node.size)
 	if "shape" in node and node.shape:
 		var s = node.shape.get_rect().size
