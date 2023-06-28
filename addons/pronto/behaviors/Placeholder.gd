@@ -21,8 +21,7 @@ const OUTLINE_SHADER = "res://addons/pronto/shader/outline.gdshader"
 @export var placeholder_size = Vector2(20, 20):
 	set(v):
 		placeholder_size = v
-		editor_reload()
-		queue_redraw()
+		_editor_reload()
 		_update_shape()
 		
 ## If [code]true[/code], this Placeholder's parent will be moved instead of the placeholder in the editor.
@@ -36,7 +35,7 @@ const OUTLINE_SHADER = "res://addons/pronto/shader/outline.gdshader"
 @export var use_sprite = false:
 	set(v):
 		use_sprite = v
-		editor_reload()
+		_editor_reload()
 		queue_redraw()
 
 # The default texture used for the Sprite2D.
@@ -49,8 +48,7 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 			sprite_texture = DEFAULT_TEXTURE
 		else:
 			sprite_texture = v
-		editor_reload()
-		queue_redraw()
+		_editor_reload()
 
 ## Settings for configuring the outline.
 @export_category("Outline")
@@ -59,29 +57,25 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 @export var outline_visible: bool = false:
 	set(v):
 		outline_visible = v
-		editor_reload()
-		queue_redraw()
+		_editor_reload()
 
 ## The color used for the outline.
 @export var outline_color: Color = Color.YELLOW:
 	set(v):
 		outline_color = v
-		editor_reload()
-		queue_redraw()
+		_editor_reload()
 
 ## The width of the outline.
 @export var outline_width: float = 1:
 	set(v):
 		outline_width = v;
-		editor_reload()
-		queue_redraw()
+		_editor_reload()
 
 ## The rounding method for corners of the outline (only used if sprite is used).
 @export_enum("Circle", "Diamond", "Square") var outline_pattern = 0:
 	set(v):
 		outline_pattern = v
-		editor_reload()
-		queue_redraw()
+		_editor_reload()
 
 # The Sprite2D used as a child in the Placeholder.
 var sprite: Sprite2D = Sprite2D.new()
@@ -97,12 +91,13 @@ func _ready():
 		_init_sprite()
 		self.add_child(sprite, false, INTERNAL_MODE_FRONT)
 		
-func editor_reload():
+func _editor_reload():
 	if Engine.is_editor_hint() and is_active_scene():
 		if sprite.get_parent():
 			remove_child(sprite)
 		_ready()
-	
+	queue_redraw()
+
 func _init_sprite():
 	sprite.texture = sprite_texture
 	
@@ -115,6 +110,7 @@ func _init_sprite():
 	sprite.material = shader_mat
 	sprite.scale = placeholder_size / sprite.texture.get_size()
 	
+## Shows an outline around the Placeholder.
 func show_outline():
 	outline_visible = true
 	if use_sprite:
@@ -122,12 +118,14 @@ func show_outline():
 		material.set_shader_parameter("width", outline_width)
 	queue_redraw()
 
+## Hides the outline around the Placeholder.
 func hide_outline():
 	outline_visible = false
 	if use_sprite:
 		(sprite.material as ShaderMaterial).set_shader_parameter("width", 0)
 	queue_redraw()
 	
+## Toggles the visibility of the outline according to the given parameter.
 func set_outline_visible(visible):
 	if visible:
 		hide_outline()
