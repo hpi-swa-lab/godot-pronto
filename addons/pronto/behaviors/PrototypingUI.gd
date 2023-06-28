@@ -5,19 +5,27 @@ class_name PrototypingUI
 
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
+var minimized: bool = false
+var vbox = VBoxContainer.new()
+var header = HBoxContainer.new()
+var expanded_size = Vector2(0,0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready()
+	
 	#if not is_instance_of(self.get_parent(), PanelContainer):
 	#	push_error("Prototyping UI needs to be the child of a PanelContainer.")
 	#	return
 	panel = self.get_parent()
+	expanded_size = panel.size
 	
 	var scrollContainer = ScrollContainer.new()
-	var vbox = VBoxContainer.new()
+	#var vbox = VBoxContainer.new()
+	
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	vbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	#vbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
 	for childNode in self.get_children():
 		if is_instance_of(childNode, Code):
@@ -26,8 +34,20 @@ func _ready():
 			vbox.add_child(create_ui_for_value(childNode))
 	
 	scrollContainer.add_child(vbox)
+	scrollContainer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	
+	var outerVbox = VBoxContainer.new()
+	outerVbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	outerVbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	header = create_header()
+	outerVbox.add_child(header)
+	outerVbox.add_child(scrollContainer)
+	
 	# adding through deferred call as it might fail otherwise
-	panel.add_child.call_deferred(scrollContainer)
+	#outerVbox.size = Vector2(max(vbox.size.x,header.size.x), vbox.size.y + header.size.y+100)
+	
+	panel.add_child.call_deferred(outerVbox)
 	# print("Prototype UI generated successfully")
 	
 	
@@ -200,6 +220,33 @@ func create_ui_slider_for_value_float(value: Value):
 	hbox.add_child(current_vbox)
 	hbox.add_child(reset_button)
 	return hbox
+
+func create_minimizing_button():
+	var button = Button.new()
+	button.text = "−"
+	button.pressed.connect(handle_size_button_click.bind(button))
+	return button
+	
+
+func create_header():
+	var hbox = HBoxContainer.new()
+	var text = Label.new()
+	text.text = self.name
+	hbox.add_child(create_minimizing_button())
+	hbox.add_child(text)
+	hbox.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	return hbox
+
+func handle_size_button_click(button: Button):
+	minimized = !minimized
+	vbox.visible = !minimized
+	if minimized:
+		panel.size = header.size + Vector2(10,0)
+		button.text = "+"
+	else:
+		panel.size = expanded_size
+		button.text = "-"
+
 
 
 func handle_value_bool_change(index: int, value: Value, optionButton : OptionButton):

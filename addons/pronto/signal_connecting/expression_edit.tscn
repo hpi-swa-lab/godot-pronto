@@ -13,7 +13,7 @@ name = "RotateLeft"
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_kgj05"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_y3ggy"]
 number_color = Color(0.63, 1, 0.88, 1)
 symbol_color = Color(0.67, 0.79, 1, 1)
 function_color = Color(0.34, 0.7, 1, 1)
@@ -90,7 +90,7 @@ placeholder_text = "Expression..."
 [node name="row" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(180, 32)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 3
 theme_override_constants/separation = 0
 
 [node name="Reset" type="Button" parent="row"]
@@ -108,9 +108,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
+wrap_mode = 1
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_kgj05")
-scroll_fit_content_height = true
+syntax_highlighter = SubResource("CodeHighlighter_y3ggy")
 code_completion_enabled = true
 code_completion_prefixes = Array[String]([".", ",", "(", "=", "$", "@", "\"", "'"])
 indent_automatic = true

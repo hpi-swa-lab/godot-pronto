@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://duootchnamvj6"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="1_2tmgn"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ResizableContainer.gd" id="1_7pj7u"]
+
+[sub_resource type="Texture2D" id="Texture2D_1v5gm"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("1_2tmgn")
+name = "GuiResizer"
+
+[node name="ResizableContainer" type="PanelContainer"]
+script = ExtResource("1_7pj7u")
+
+[node name="Handle" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 12
+texture = SubResource("Texture2D_1v5gm")
+stretch_mode = 2

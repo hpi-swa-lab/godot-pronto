@@ -58,6 +58,9 @@ var text: String:
 			%Errors.visible = true
 		resize()
 
+# Can be set to override the default minimum size.
+var dragged_minimum_size = null
+
 func update_editable():
 	%Reset.visible = default_text != '<none>' and %Expression.text != default_text
 	if not edit_script: return
@@ -204,15 +207,20 @@ func _on_expression_focus_exited():
 func resize():
 	if self == owner:
 		return
-	if size_flags_horizontal == SIZE_FILL or size_flags_horizontal == SIZE_EXPAND_FILL:
-		# This is used in ExpressionInspector.gd such that Expression windows in the inspector take the full width.
-		custom_minimum_size = Vector2(0, 43)
-		Utils.fix_minimum_size(self)
-	else:
-		var size = get_theme_default_font().get_multiline_string_size(%Expression.text)
-		custom_minimum_size = Vector2(clamp(size.x, min_width, max_width) + extra_width(), clamp(size.y, 32, 32 * 4))
-		Utils.fix_minimum_size(self)
-		reset_size()
+	custom_minimum_size = dragged_minimum_size if dragged_minimum_size else Vector2(0, 43)
+	if dragged_minimum_size == null:
+		# resize to text
+		const pseudo_cursor = "|"
+		var text_size := get_theme_default_font().get_multiline_string_size(%Expression.text + pseudo_cursor)
+		const max_lines = 8
+		const line_height = 32
+		const spacing = 11
+		custom_minimum_size.y = clamp(text_size.y + spacing, line_height, line_height * max_lines)
+	Utils.fix_minimum_size(self)
+	reset_size()
+	var nodeToNodeConfigurator = Utils.parent_that(self, func(n): return n is NodeToNodeConfigurator)
+	if nodeToNodeConfigurator != null:
+		nodeToNodeConfigurator.reset_size()
 
 func _on_expression_on_errors(errors):
 	self.errors = errors
