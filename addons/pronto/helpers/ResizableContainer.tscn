@@ -11,9 +11,6 @@ name = "GuiResizer"
 
 [node name="ResizableContainer" type="PanelContainer"]
 script = ExtResource("1_7pj7u")
-sync_handles_parent_path = null
-sync_handles_x = null
-sync_handles_y = null
 
 [node name="Handle" type="TextureRect" parent="."]
 unique_name_in_owner = true

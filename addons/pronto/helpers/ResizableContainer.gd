@@ -51,18 +51,17 @@ func _drag(_position: Vector2):
 		return
 	set_child_size(_position - _drag_start_offset)
 	
+	# synchronize other containers
 	if self.sync_handles_parent_path != ^"":
 		var parent = get_node(self.sync_handles_parent_path)
-		print("sync parent", parent)
-		var otherContainers = Utils.all_nodes_that(parent, func(node): return node is ResizableContainer and node != self)
-		for otherContainer in otherContainers:
-			print("sync", otherContainer)
-			var other_child_size = otherContainer.get_child_size()
+		var other_containers = Utils.all_nodes_that(parent, func(node): return node is ResizableContainer and node != self)
+		for other_container in other_containers:
+			var other_child_size = other_container.get_child_size() + other_container.global_position
 			if self.sync_handles_x:
-				other_child_size.x = get_child_size().x
+				other_child_size.x = get_child_size().x + global_position.x
 			if self.sync_handles_y:
-				other_child_size.y = get_child_size().y
-			otherContainer.set_child_size(other_child_size)
+				other_child_size.y = get_child_size().y + global_position.y
+			other_container.set_child_size(other_child_size - other_container.global_position)
 
 func get_child_size():
 	return self.child.get_size()
