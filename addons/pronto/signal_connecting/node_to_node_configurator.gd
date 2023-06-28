@@ -282,12 +282,12 @@ func empty_script(expr: String, return_value: bool):
 	for i in len(selected_signal["args"]):
 		script.argument_types.append(null)
 		# TODO: use reflection to get type of signal arguments?
-	script.argument_types.append(from.get_class())
+	script.argument_types.append(Utils.get_specific_class_name(from))
 	if receiver != null:
-		script.argument_types.append(receiver.get_class())
+		script.argument_types.append(Utils.get_specific_class_name(receiver))
 	for ref in more_references:
 		var node := from.get_node(ref)
-		script.argument_types.append(node.get_class())
+		script.argument_types.append(Utils.get_specific_class_name(node))
 	return script
 
 func argument_names():

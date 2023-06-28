@@ -206,3 +206,10 @@ static func log(s):
 	a.seek_end()
 	a.store_string(str(s) + "\n")
 	a.close()
+
+static func get_specific_class_name(node: Node):
+	# See https://github.com/godotengine/godot/issues/21789.
+	var name := node.to_string()
+	if name.match("?*:?*"):
+		return name.split(":")[0]
+	return node.get_class()
