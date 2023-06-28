@@ -44,7 +44,7 @@ func get_full_source_code(body: String):
 		_indent(body),
 		", ".join(range(argument_names.size()).map(func(i):
 			if argument_types == null or i >= len(argument_types) or argument_types[i] == null:
-				assert(i < len(argument_types), "is this ever called?")
+				if argument_types != null: assert(i < len(argument_types), "is this ever called?")
 				return argument_names[i]
 			# add type hint
 			return "{0}: {1}".format([argument_names[i], argument_types[i]]))),
