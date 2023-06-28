@@ -20,8 +20,6 @@ func exit(transition_id):
 		active = false
 		exited.emit(transition_id)
 
-func _init():
-	pass
-
-func _process(delta):
-	pass
+func _ready():
+	if active:
+		entered.emit()
