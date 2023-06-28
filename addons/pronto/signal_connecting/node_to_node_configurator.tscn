@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=12 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_2ll7t"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ResizableCorner.gd" id="2_72gxx"]
@@ -19,6 +19,12 @@ resource_name = ""
 script = ExtResource("2_2ll7t")
 name = "Pin"
 
+[sub_resource type="Texture2D" id="Texture2D_i0w25"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_2ll7t")
+name = "Add"
+
 [sub_resource type="Texture2D" id="Texture2D_tlx1e"]
 resource_local_to_scene = false
 resource_name = ""
@@ -32,7 +38,7 @@ script = ExtResource("2_2ll7t")
 name = "Remove"
 
 [node name="Node To Node Configurator" type="PanelContainer"]
-offset_right = 309.0
+offset_right = 333.0
 offset_bottom = 200.0
 scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
@@ -97,8 +103,18 @@ flat = true
 [node name="SignalArgs" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
+tooltip_text = "tooltip_text"
+mouse_filter = 1
 text = "(area)"
+
+[node name="AddReferenceButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Add reference"
+icon = SubResource("Texture2D_i0w25")
+
+[node name="VSeparator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="ChangesNotifier" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -202,6 +218,7 @@ text = "Cancel"
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/SharedLinksNote/Button" to="." method="_on_make_unique_pressed"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Pinned" to="." method="_on_pinned_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/AddReferenceButton" to="." method="_on_add_reference_button_pressed"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Enabled" to="." method="_on_enabled_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="method_selected" from="MarginContainer/VBoxContainer/Receiver/FunctionName" to="." method="_on_function_selected"]

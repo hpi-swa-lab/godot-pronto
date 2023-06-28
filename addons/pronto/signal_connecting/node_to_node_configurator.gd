@@ -80,6 +80,8 @@ var receiver: Object:
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 
+var more_references: Array = []
+
 func init_empty_scripts():
 	%Expression.edit_script = empty_script("", false)
 	%Condition.edit_script = empty_script("true", true)
@@ -104,7 +106,20 @@ func update_argument_names():
 	%Expression.argument_names = names
 	%Condition.argument_names = names
 	for c in %Args.get_children(): c.argument_names = names
-	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
+	%SignalArgs.text = "({0}) {1}".format([
+		Utils.print_args(selected_signal),
+		", ".join(basic_argument_names())
+	])
+	
+	var basic_arg_string = ""
+	basic_arg_string += "from: {0}\n".format([from])
+	basic_arg_string += "\nto: {0}\n".format([receiver])
+	for i in len(more_references):
+		var name := "ref{0}".format([i])
+		var ref = more_references[i]
+		var node = from.get_node(ref)
+		basic_arg_string += "\n{0}: {1} ({2})\n".format([name, ref, node])
+	%SignalArgs.tooltip_text = basic_arg_string
 
 func _ready():
 	# adjust appearance (theme-aware!)
@@ -152,6 +167,9 @@ func set_existing_connection(from: Node, connection: Connection):
 		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke if not connection.is_expression() else "<statement(s)>"
 		_on_function_selected(%FunctionName.text)
+	for i in connection.more_references:
+		more_references.append(i)
+	update_argument_names()
 	if connection.expression != null:
 		%Expression.edit_script = connection.expression
 	
@@ -220,7 +238,16 @@ func empty_script(expr: String, return_value: bool):
 	return ConnectionScript.new(argument_names(), return_value, expr)
 
 func argument_names():
-	return selected_signal["args"].map(func (a): return a["name"]) + ["from"] + (["to"] if %Receiver.visible else [])
+	return selected_signal["args"].map(func (a): return a["name"]) \
+		+ basic_argument_names()
+
+func basic_argument_names():
+	var names = []
+	names += ["from"]
+	if %Receiver.visible:
+		names += ["to"]
+	names += range(len(more_references)).map(func (i): return "ref{0}".format([i]))
+	return names
 
 func _on_done_pressed():
 	%FunctionName.accept_selected()
@@ -242,9 +269,15 @@ func _on_done_pressed():
 				existing_connection,
 				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
 		else:
-			existing_connection = Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
+			existing_connection = Connection.connect_target(
+				from,
+				selected_signal["name"],
+				from.get_path_to(receiver),
+				invoke,
 				args.map(func (a): return a.updated_script(from, selected_signal["name"])),
-				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
+				more_references,
+				%Condition.updated_script(from, selected_signal["name"]), undo_redo
+			)
 	else:
 		if existing_connection:
 			Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
@@ -258,11 +291,12 @@ func _on_done_pressed():
 					existing_connection, {"expression": %Expression.updated_script(from, selected_signal["name"])})
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
-				existing_connection, {"signal_name": %Signal.text})
+				existing_connection, {"signal_name": %Signal.text, "more_references": more_references})
 		else:
 			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
 			existing_connection = Connection.connect_expr(from, selected_signal["name"], to_path,
 				%Expression.updated_script(from, selected_signal["name"]),
+				more_references,
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 
 	existing_connection.enabled = %Enabled.button_pressed
@@ -320,3 +354,19 @@ func _on_enabled_toggled(button_pressed):
 		existing_connection.enabled = button_pressed
 	else:
 		mark_changed()
+
+func _on_add_reference_button_pressed():
+	# request NodePath from user
+	var dialog := AcceptDialog.new()
+	dialog.dialog_text = "Enter a NodePath to reference"
+	var lineEdit := LineEdit.new()
+	dialog.add_child(lineEdit)
+	dialog.connect("confirmed", func():
+		var path := NodePath(lineEdit.text)
+		dialog.queue_free()
+		if !path.is_empty():
+			more_references += [path]
+			update_argument_names()
+			mark_changed())
+	add_child(dialog)
+	dialog.popup_centered()
