@@ -54,7 +54,7 @@ The following list of behaviors manage state or communicate visual properties.
 | -------- | -------- |
 | State | Use the Godot meta properties to store state. You can configure it to store values in the global dictionary `G` and access it via `G.at(prop)`. |
 | Value | Show a constant you can use in expression visually as a slider. Note that these are shared globally, so create new names if you need to use different values. |
-| Placeholder | Show a colored rectangle with a label. Useful as a quick means to communicate a game object's function. Functions as a collision shape, so you don't need to add another. Instead of a rectangle a placeholder can also display a sprite instead. |
+| Placeholder | Show a colored rectangle with a label. Useful as a quick means to communicate a game object's function. Functions as a collision shape, so you don't need to add another. Instead of a rectangle a placeholder can also display a sprite instead. Can be `flash()`ed in a different color. |
 | VisualLine | Show a colored Line between two Nodes. Useful as a quick visual connection. |
 | Instance | Allows you to define a template subtree of Nodes that you want to repeat multiple times without copy-pasting. Add your template as a child of the Instance node, then hover the connection dialog and click the "Instance" button. Note: internally, this creates a "hidden" scene that you need to commit as well. You can thus use **"Editable children"** in Godot by right-clicking the instance and tweaking properties while inherting the rest. |
 | Background | Add to your scene to change the background color of the scene. |
@@ -77,12 +77,14 @@ Connections are an extension of Godot signals to be more flexible. Connections c
 
 * Creating
 	* Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
-	* The type `target`, is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `two`.
-	* The type `expression` allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
+	* The type "target" is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `to`.
+	* The type "expression" allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
 * Editing
 	* You can define a condition for the connection to trigger by entering a Godot expression in condition field. You may refer to `from` and `to` in the expression.
+	* You can use the <kbd>+</kbd> icon in the header of the connection editor to add references to further nodes by specifying a node path relative to the `from` node. You can use these nodes in any statement, argument, or condition expression using `ref0`, `ref1`, etc. You can right-click these variables in the connection header to edit their path or remove them.
 	* You can disable a connection by unticking the checkbox in the top-right or in its context menu.
-	* You can also pin a connection editor so that it remains in the scene after saving them. You can click and drag editors in the scene as well.
+	* You can also pin a connection editor so that it remains in the scene after saving them. You can click and drag editors in the scene as well. You can drag the handles at the bottom right of each text field to resize the editor.
+	* You can press the "open script" button next to any code expression to edit it in a full-screen Godot tab which provides you better syntax highlighting and autocompletion.
 * Reordering
 	* From the context menu of a connection, choose "Move to top".
 * Deleting

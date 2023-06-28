@@ -416,7 +416,7 @@ func _on_add_reference_button_pressed():
 
 func _request_reference_path(path, callback: Callable):
 	var dialog := AcceptDialog.new()
-	dialog.set_title("Enter reference path")
+	dialog.set_title('Enter reference path (relative to "from")')
 	var lineEdit := LineEdit.new()
 	lineEdit.text = path
 	dialog.add_child(lineEdit)
@@ -429,5 +429,5 @@ func _request_reference_path(path, callback: Callable):
 			callback.call(path))
 	
 	add_child(dialog)
-	dialog.size = Vector2(300, 100)
+	dialog.size = Vector2(420, 100)
 	dialog.popup_centered()
