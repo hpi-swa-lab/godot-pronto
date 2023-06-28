@@ -11,11 +11,13 @@ name = "GuiResizer"
 
 [node name="ResizableContainer" type="PanelContainer"]
 script = ExtResource("1_7pj7u")
+sync_handles_parent_path = null
+sync_handles_x = null
+sync_handles_y = null
 
 [node name="Handle" type="TextureRect" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_default_cursor_shape = 12
 texture = SubResource("Texture2D_1v5gm")
-expand_mode = 2
 stretch_mode = 2
