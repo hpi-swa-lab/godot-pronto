@@ -42,7 +42,7 @@ The following list of behaviors primarily cause effects when triggered.
 | -------- | -------- |
 | Stopwatch | Starts counting up time when triggered. Can be reset. |
 | Move | When triggered, moves its parent. Can be set to move along global or local axes. Supports handling of gravity. |
-| Spawner | When triggered, spawns whatever its child node is at its current location in the scene. |
+| Spawner | When triggered, spawns whatever its child nodes are at its current location in the scene. Single children nodes can be spawned by modifying the optional index argument in each spawning method to just the respective child node. Use -1 as index to spawn all children. Can use spawn_in_shape to randomly spawn children in the given shape. |
 | Bind | Optionally reads some properties and then writes one property of its parent. Changes to the properties it reads are synced every frame. The read properties are accessible in the convert expression; the first under `value0`, the second under `value1` and so on. For example, create a Label node, add a Bind node as a child, use `text` as property and put any expression in its `convert` field. Another example would use a Clock with a Bind node as a child that uses `duration_seconds` as a property to change the trigger-time depending on a Value-Behavior. |
 | PlatformerController | Makes the parent behave like a platformer character, meaning that it can jump, move horizontally, and is affected by gravity. Must be a child of a [CharacterBody2D](https://docs.godotengine.org/en/stable/classes/class_characterbody2d.html). |
 | Code | It holds an `execute()` function with both user-definable arguments and a function body, which allows for arbitrary code execution. After `execute()` is called an `after` signal is emitted that carries the execution result, which can be used for chaining. |
@@ -83,7 +83,7 @@ Connections are an extension of Godot signals to be more flexible. Connections c
 	* You can disable a connection by unticking the checkbox in the top-right or in its context menu.
 	* You can also pin a connection editor so that it remains in the scene after saving them. You can click and drag editors in the scene as well.
 * Reordering
-    * From the context menu of a connection, choose "Move to top".
+	* From the context menu of a connection, choose "Move to top".
 * Deleting
 	* Open the connection, then click on the trash icon in the top-right.
 	* Alternatively, right-click the connection and choose "Delete".

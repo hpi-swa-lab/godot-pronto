@@ -6,12 +6,12 @@ extends Node
 ### Access via G.at("prop").
 
 var values = {}
-var _state_update = {}
+var _store_update = {}
 
 func put(name: String, value: Variant):
 	_put(name, value)
-	if name in _state_update:
-		_state_update[name].put(name, value)
+	if name in _store_update:
+		_store_update[name].put(name, value)
 
 func at(name: String, default = null):
 	if name in values:
@@ -31,6 +31,6 @@ func inc(prop: String, amount = 1):
 func _put(name: String, value: Variant):
 	values[name] = value
 
-func _register_state(state: State, prop: String):
-	assert(not prop in _state_update, "Property {0} has already been registered by a state node. Are you spawning the same State mutliple times?".format([prop]))
-	_state_update[prop] = state
+func _register_store(store: Store, prop: String):
+	assert(not prop in _store_update, "Property {0} has already been registered by a store node. Are you spawning the same Store mutliple times?".format([prop]))
+	_store_update[prop] = store

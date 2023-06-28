@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_kl4mf"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="8_o7kee"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="8_rccw5"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="9_nvvjn"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Store.gd" id="9_nvvjn"]
 [ext_resource type="PackedScene" uid="uid://baom0bqbudtp6" path="res://.scene-instances/examples_pong__Instance2.tscn" id="11_1xd55"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="12_3pt27"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="13_7xsb2"]

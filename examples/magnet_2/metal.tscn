@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ct11bj80ej44o"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="1_k0ano"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Store.gd" id="1_k0ano"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="2_x06ir"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_y4wj2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="5_b0xtj"]

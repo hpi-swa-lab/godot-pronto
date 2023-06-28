@@ -1,7 +1,7 @@
 @tool
 #thumb("CylinderMesh")
 extends Behavior
-class_name State
+class_name Store
 
 ## When enabled, add the value of all properties to the global G dictionary as well.
 @export var global = false
@@ -15,7 +15,7 @@ func _ready():
 	if global and not Engine.is_editor_hint():
 		for prop in get_meta_list():
 			if prop != "pronto_connections":
-				G._register_state(self, prop)
+				G._register_store(self, prop)
 				if global:
 					G.put(prop, get_meta(prop))
 
@@ -31,7 +31,7 @@ func put(prop: String, value: Variant):
 	if global:
 		G._put(prop, value)
 	changed.emit(prop, value)
-	EngineDebugger.send_message("pronto:state_put", [get_path(), prop, value])
+	EngineDebugger.send_message("pronto:store_put", [get_path(), prop, value])
 
 func at(prop: String, default = null):
 	return get_meta(prop, default)

@@ -1,0 +1,66 @@
+[gd_scene load_steps=12 format=3 uid="uid://oh2633lyiio8"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_lu5kp"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_pgkhl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="3_nxlrv"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_p1i6w"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_f5i2b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulphs"]
+size = Vector2(60, 20)
+
+[sub_resource type="GDScript" id="GDScript_wowfa"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return -1
+"
+
+[sub_resource type="Resource" id="Resource_bmprx"]
+script = ExtResource("4_p1i6w")
+nested_script = SubResource("GDScript_wowfa")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_v6n06"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_0mrcr"]
+script = ExtResource("4_p1i6w")
+nested_script = SubResource("GDScript_v6n06")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1vs4v"]
+script = ExtResource("5_f5i2b")
+signal_name = "always"
+to = NodePath("../Spawner2")
+invoke = "spawn_in_shape"
+arguments = [SubResource("Resource_bmprx")]
+only_if = SubResource("Resource_0mrcr")
+deferred = false
+enabled = true
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Spawner2" type="Node2D" parent="."]
+position = Vector2(367, 203)
+script = ExtResource("1_lu5kp")
+spawn_shape = SubResource("RectangleShape2D_ulphs")
+
+[node name="Placeholder" type="Node2D" parent="Spawner2"]
+position = Vector2(107, 5)
+script = ExtResource("2_pgkhl")
+color = Color(0.439216, 0.580392, 1, 1)
+placeholder_size = Vector2(5, 8)
+
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(448, 119)
+script = ExtResource("3_nxlrv")
+metadata/pronto_connections = [SubResource("Resource_1vs4v")]

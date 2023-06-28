@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_cc23q"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_lroqb"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="6_wop4v"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="6_ys06d"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Store.gd" id="6_ys06d"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="9_hmnix"]
 
 [sub_resource type="Resource" id="Resource_p1d5d"]
