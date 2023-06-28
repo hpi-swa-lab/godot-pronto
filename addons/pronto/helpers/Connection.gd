@@ -15,12 +15,13 @@ class_name Connection
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, only_if: ConnectionScript, undo_redo: EditorUndoRedoManager = null):
+static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, more_references: Array, only_if: ConnectionScript, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
 	c.invoke = invoke
 	c.arguments = arguments
+	c.more_references = more_references
 	c.only_if = only_if
 	c._store(from, undo_redo)
 	return c
@@ -28,11 +29,12 @@ static func connect_target(from: Node, signal_name: String, to: NodePath, invoke
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: ConnectionScript, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: ConnectionScript, more_references: Array, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
 	c.expression = expression
+	c.more_references = more_references
 	c.only_if = only_if
 	c._store(from, undo_redo)
 	return c
@@ -45,6 +47,13 @@ static func get_connections(node: Node) -> Array:
 @export var signal_name: String = ""
 ## (Optional) The path to the node that this connection emits to.
 @export var to: NodePath = ^""
+## (Optional) Paths to further nodes that the connection code may refer to.
+@export var more_references = []:
+	get:
+		if more_references == null:
+			# migrate old instances
+			more_references = []
+		return more_references
 ## (Optional) The method to invoke on [member to].
 @export var invoke: String
 ## (Optional) The arguments to pass to method [member invoke] as [ConnectionScript]s.
@@ -179,35 +188,39 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 		var values = argument_values.duplicate()
 		names.append("from")
 		values.append(from)
-		if not c.is_expression():
-			var target = from.get_node(c.to)
+		var target
+		if not c.is_expression() or c.is_target():
+			target = from.get_node(c.to)
 			names.append("to")
 			values.append(target)
-			if c.should_trigger(names, values, from):
-				if deferred: await ConnectionsList.get_tree().process_frame
-				var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
-				if target is Code:
-					target.call(c.invoke, args)
-				elif target is SceneRoot:
-					if c.invoke.begins_with("apply"):
-						# add "from" to all "apply.*" functions, so that they can be
-						# added to the context of the lambda functions.
-						args.append(from)
-						target.callv(c.invoke, args)
-					else:
-						target.callv(c.invoke, args)
-				else:
-					target.callv(c.invoke, args)
-				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ",".join(args.map(func (s): return str(s)))])
+		
+		if not c.should_trigger(names, values, from):
+			continue
+		
+		for i in len(self.more_references):
+			var ref_path = self.more_references[i]
+			var ref_node = from.get_node(ref_path)
+			names.append("ref" + str(i))
+			values.append(ref_node)
+		
+		var args_string
+		if deferred: await ConnectionsList.get_tree().process_frame
+		if not c.is_expression():
+			var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
+			if target is Code:
+				target.call(c.invoke, args)
+			elif target is SceneRoot:
+				if c.invoke.begins_with("apply"):
+					# add "from" to all "apply.*" functions, so that they can be
+					# added to the context of the lambda functions.
+					args.append(from)
+			target.callv(c.invoke, args)
+			args_string = ",".join(args.map(func (s): return str(s)))
 		else:
-			if c.is_target():
-				var target = from.get_node(c.to)
-				names.append("to")
-				values.append(target)
-			if c.should_trigger(names, values, from):
-				if deferred: await ConnectionsList.get_tree().process_frame
-				c._run_script(from, c.expression, values)
-				EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, ""])
+			c._run_script(from, c.expression, values)
+			args_string = ""
+		
+		EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, args_string])
 
 func has_condition():
 	return only_if.source_code != "true"

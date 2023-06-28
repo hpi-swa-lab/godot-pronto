@@ -80,6 +80,8 @@ var receiver: Object:
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
 
+var more_references: Array = []
+
 func init_empty_scripts():
 	%Expression.edit_script = empty_script("", false)
 	%Condition.edit_script = empty_script("true", true)
@@ -104,7 +106,62 @@ func update_argument_names():
 	%Expression.argument_names = names
 	%Condition.argument_names = names
 	for c in %Args.get_children(): c.argument_names = names
-	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
+	
+	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
+	
+	for i in %BasicArgs.get_child_count():
+		%BasicArgs.get_child(i).queue_free()
+	var iref := -1
+	for name in basic_argument_names():
+		var label := Label.new()
+		label.text = "{0}{1}".format([name, "," if name != basic_argument_names().back() else ""])
+		%BasicArgs.add_child(label)
+		
+		label.mouse_filter = Control.MOUSE_FILTER_PASS
+		var node_str
+		if name == "from":
+			node_str = from
+		elif name == "receiver":
+			node_str = receiver
+		elif name.begins_with("ref"):
+			iref += 1
+			var ref = more_references[iref]
+			node_str = "{0} ({1})".format([ref, from.get_node(ref)])
+			
+			# add popup menu for editing and removing reference
+			label.mouse_filter = Control.MOUSE_FILTER_STOP
+			label.gui_input.connect(func(event):
+				if !(event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and not event.pressed): return
+				
+				var menu := PopupMenu.new()
+				menu.add_item("Edit path", 0)
+				menu.add_item("Remove", 1)
+				menu.id_pressed.connect(func(id):
+					if id == 0:  # edit
+						_request_reference_path(ref, func(new_ref):
+							more_references[iref] = new_ref
+							update_argument_names())
+					elif id == 1:  # remove
+						var new_more_references := []
+						for i in range(more_references.size()):
+							if i != iref:
+								new_more_references.append(more_references[i])
+						more_references = new_more_references
+						update_argument_names()
+				)
+				label.add_child(menu)
+				menu.size = Vector2.ZERO
+				menu.position = label.global_position
+				menu.popup()
+			)
+		
+		label.tooltip_text = "{0}".format([node_str])
+	
+	# add deffered call to update size - HACKED
+	(func():
+		await get_tree().process_frame
+		self.size = Vector2.ZERO
+	).call_deferred()
 
 func _ready():
 	# adjust appearance (theme-aware!)
@@ -152,6 +209,9 @@ func set_existing_connection(from: Node, connection: Connection):
 		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke if not connection.is_expression() else "<statement(s)>"
 		_on_function_selected(%FunctionName.text)
+	for i in connection.more_references:
+		more_references.append(i)
+	update_argument_names()
 	if connection.expression != null:
 		%Expression.edit_script = connection.expression
 	
@@ -217,10 +277,30 @@ func _on_function_selected(name: String):
 	update_argument_names()
 
 func empty_script(expr: String, return_value: bool):
-	return ConnectionScript.new(argument_names(), return_value, expr)
+	var script := ConnectionScript.new(argument_names(), return_value, expr)
+	script.argument_types = []
+	for i in len(selected_signal["args"]):
+		script.argument_types.append(null)
+		# TODO: use reflection to get type of signal arguments?
+	script.argument_types.append(from.get_class())
+	if receiver != null:
+		script.argument_types.append(receiver.get_class())
+	for ref in more_references:
+		var node := from.get_node(ref)
+		script.argument_types.append(node.get_class())
+	return script
 
 func argument_names():
-	return selected_signal["args"].map(func (a): return a["name"]) + ["from"] + (["to"] if %Receiver.visible else [])
+	return selected_signal["args"].map(func (a): return a["name"]) \
+		+ basic_argument_names()
+
+func basic_argument_names():
+	var names = []
+	names += ["from"]
+	if %Receiver.visible:
+		names += ["to"]
+	names += range(len(more_references)).map(func (i): return "ref{0}".format([i]))
+	return names
 
 func _on_done_pressed():
 	%FunctionName.accept_selected()
@@ -242,9 +322,15 @@ func _on_done_pressed():
 				existing_connection,
 				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
 		else:
-			existing_connection = Connection.connect_target(from, selected_signal["name"], from.get_path_to(receiver), invoke,
+			existing_connection = Connection.connect_target(
+				from,
+				selected_signal["name"],
+				from.get_path_to(receiver),
+				invoke,
 				args.map(func (a): return a.updated_script(from, selected_signal["name"])),
-				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
+				more_references,
+				%Condition.updated_script(from, selected_signal["name"]), undo_redo
+			)
 	else:
 		if existing_connection:
 			Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
@@ -258,11 +344,12 @@ func _on_done_pressed():
 					existing_connection, {"expression": %Expression.updated_script(from, selected_signal["name"])})
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
-				existing_connection, {"signal_name": %Signal.text})
+				existing_connection, {"signal_name": %Signal.text, "more_references": more_references})
 		else:
 			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
 			existing_connection = Connection.connect_expr(from, selected_signal["name"], to_path,
 				%Expression.updated_script(from, selected_signal["name"]),
+				more_references,
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo)
 
 	existing_connection.enabled = %Enabled.button_pressed
@@ -320,3 +407,25 @@ func _on_enabled_toggled(button_pressed):
 		existing_connection.enabled = button_pressed
 	else:
 		mark_changed()
+
+func _on_add_reference_button_pressed():
+	_request_reference_path(^"", func (path):
+		more_references += [path]
+		update_argument_names()
+		mark_changed())
+
+func _request_reference_path(path, callback: Callable):
+	var dialog := AcceptDialog.new()
+	dialog.set_title("Enter reference path")
+	var lineEdit := LineEdit.new()
+	lineEdit.text = path
+	dialog.add_child(lineEdit)
+	
+	dialog.connect("confirmed", func():
+		path = NodePath(lineEdit.text)
+		dialog.queue_free()
+		if !path.is_empty():
+			callback.call(path))
+	
+	add_child(dialog)
+	dialog.popup_centered()

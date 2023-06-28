@@ -15,6 +15,7 @@ static func map_row_col(s: Resource, row: int, col: int, do: Callable):
 
 @export var nested_script: GDScript
 @export var argument_names: Array
+var argument_types = null  # optional Array for type hints
 @export var return_value = true
 var source_code: String:
 	get:
@@ -41,7 +42,12 @@ func needs_return(body: String):
 func get_full_source_code(body: String):
 	return TEMPLATE.format([
 		_indent(body),
-		', '.join(argument_names),
+		", ".join(range(argument_names.size()).map(func(i):
+			if argument_types == null or i >= len(argument_types) or argument_types[i] == null:
+				assert(i < len(argument_types), "is this ever called?")
+				return argument_names[i]
+			# add type hint
+			return "{0}: {1}".format([argument_names[i], argument_types[i]]))),
 		"return " if needs_return(body) else ""])
 
 var _dummy_object = null
