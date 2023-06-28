@@ -1,6 +1,7 @@
 @tool
 #thumb("KeyboardPhysical")
 extends Behavior
+class_name Key
 
 @export var key: String
 

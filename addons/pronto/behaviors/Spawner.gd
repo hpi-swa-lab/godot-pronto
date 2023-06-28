@@ -1,6 +1,7 @@
 @tool
 #thumb("GPUParticles3D")
 extends Behavior
+class_name Spawner
 
 ## Spawns all children by default. Alternatively, provide a scene path here.
 @export var scene_path: NodePath = ^""

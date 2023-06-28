@@ -1,6 +1,7 @@
 @tool
 #thumb("GPUParticlesCollisionBox3D")
 extends Behavior
+class_name Collision
 
 @export var limit_to_group: String = ""
 

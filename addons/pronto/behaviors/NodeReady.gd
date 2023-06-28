@@ -1,6 +1,7 @@
 @tool
 #thumb("PlayStart")
 extends Behavior
+class_name NodeReady
 
 signal node_ready
 

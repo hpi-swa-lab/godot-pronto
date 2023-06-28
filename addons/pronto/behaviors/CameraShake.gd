@@ -1,6 +1,7 @@
 @tool
 extends Behavior
 #thumb("CameraAttributes")
+class_name CameraShake
 
 # Adapted from https://kidscancode.org/godot_recipes/3.x/2d/screen_shake/
 

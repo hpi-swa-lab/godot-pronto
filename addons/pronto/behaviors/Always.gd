@@ -1,6 +1,7 @@
 @tool
 #thumb("Loop")
 extends Behavior
+class_name Always
 
 signal always(delta)
 signal physiscs_always(delta)

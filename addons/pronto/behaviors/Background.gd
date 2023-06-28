@@ -1,6 +1,7 @@
 @tool
 #thumb("ProceduralSkyMaterial")
 extends Behavior
+class_name Background
 
 @export var color = Color.CORNFLOWER_BLUE:
 	set(c):

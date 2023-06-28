@@ -1,6 +1,7 @@
 @tool
 #thumb("ToolMove")
 extends Behavior
+class_name Move
 
 signal touched_floor(velocity: float)
 
