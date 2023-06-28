@@ -107,10 +107,16 @@ func update_argument_names():
 	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
 
 func _ready():
-	# set border width to 1 (theme-aware!)
-	var stylebox = get_theme_stylebox("panel").duplicate()
-	stylebox.set_border_width_all(1)
-	add_theme_stylebox_override("panel", stylebox)
+	# adjust appearance (theme-aware!)
+	if not Engine.is_editor_hint():  # don't override in editor, otherwise it will be saved to scene
+		var stylebox = get_theme_stylebox("panel").duplicate()
+		# set border width to 1 (theme-aware!)
+		stylebox.set_border_width_all(1)
+		# turn off background transparency
+		var bg_color = stylebox.get_bg_color()
+		bg_color.a = 0.9
+		stylebox.set_bg_color(bg_color)
+		add_theme_stylebox_override("panel", stylebox)
 
 func _process(delta):
 	if not anchor: return
