@@ -52,7 +52,7 @@ var enum_default_index: int
 
 var enum_value: String:
 	set(val):
-		#print("State name: " + name)
+		#print("Store name: " + name)
 		if(!value_init):
 			enum_default_index = enum_choices.find(val)
 			#print("Setting default for Enum index to: " + val + " with index: "  + str(enum_default_index))
