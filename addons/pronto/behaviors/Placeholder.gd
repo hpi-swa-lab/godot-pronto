@@ -132,6 +132,22 @@ func set_outline_visible(visible):
 	else:
 		show_outline()
 
+
+## Tween used for flashing
+var _flash_tween : Tween
+
+## Flashes this Placeholder a certain color for a duration.
+## It will take on the desired color immediately and return to its original
+## color over the given duration.
+func flash(color: Color, duration: float = 0.2):
+	if _flash_tween:
+		_flash_tween.kill()
+	_flash_tween = create_tween()
+	
+	_flash_tween.tween_property(self, "modulate", self.color, duration)
+	_flash_tween.set_ease(Tween.EASE_OUT)
+	modulate = color
+
 func should_keep_in_origin():
 	return keep_in_origin and get_parent() is CollisionObject2D
 
