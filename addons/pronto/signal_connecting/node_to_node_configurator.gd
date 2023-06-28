@@ -107,13 +107,14 @@ func update_argument_names():
 	%SignalArgs.text = "({0}) {1}".format([Utils.print_args(selected_signal), "from, to" if %Receiver.visible else "from"])
 
 func _process(delta):
-	if anchor and anchor.is_inside_tree():
+	if not anchor: return
+	visible = anchor.is_inside_tree()
+	if anchor.is_inside_tree():
 		position = Utils.popup_position(anchor) + position_offset
 		var offscreen_delta = (position + size - get_parent().size).clamp(Vector2(0, 0), Vector2(1000000, 1000000))
 		position -= offscreen_delta
 		%FunctionName.anchor = anchor
 
-	if not anchor: return
 	var _parent = Utils.popup_parent(anchor)
 	if not _parent: return
 	var hovered_nodes = _parent.get_children(true).filter(func (n):
