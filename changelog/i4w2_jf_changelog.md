@@ -28,6 +28,13 @@ Last but not least we also added the option to set custom colors for the healthb
 * `20 % - 50 %`  - Yellow
 * `50 % - 100 %` - Green
 
+## Issues
+
+Currently the outgoing connections of the `HealthBar` are not shown in the editor. The
+connections do exit and work, just the arrow representation is missing in the editor. We currently
+don't know the source of this problem as no error is thrown then creating connections.
+Unfortunately we will not have enough time in this iteration to find a fix for this problem.
+
 ## Placeholder - Changes
 
 Out goal for this change was to find an easy solution for adding sprite textures to the placeholder in order to make them more appealing for the user tests. The time overhead of adding a suitable texture should be minimal and the developers should not spend a lot of time searching for the icon they want to use.
@@ -48,9 +55,11 @@ The visiblity of the outline is controlled by `outline_visible`. The color of th
 
 Additionally, for the outline that is created with the shader for the sprites there are 3 options for the method that is used in the shader to create the outline:
 
-* `Circle` - TODO
-* `Diamond` - TODO
-* `Square` - TODO
+* `Circle`
+* `Diamond`
+* `Square`
+
+These shapes decide the roundness of the corners of the outline with `Circle` being round edges, `Square` being right angles and `Diamond` being less rounded and a bit steeper than `Circle`.
 
 ## Not implemented yet
 
