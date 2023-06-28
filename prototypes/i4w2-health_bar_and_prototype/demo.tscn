@@ -1,0 +1,547 @@
+[gd_scene load_steps=63 format=3 uid="uid://bbj4g5j3sfrkc"]
+
+[ext_resource type="Script" path="res://prototypes/i4w2-health_bar_and_prototype/demo.gd" id="1_v4w2y"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_3w1cm"]
+[ext_resource type="Texture2D" uid="uid://b2x1c2kopelrq" path="res://prototypes/i4w2-health_bar_and_prototype/background.png" id="3_23322"]
+[ext_resource type="Script" path="res://prototypes/i4w2-health_bar_and_prototype/Enemy.gd" id="4_75co3"]
+[ext_resource type="Texture2D" uid="uid://bo4aa6pf22os7" path="res://prototypes/i4w2-health_bar_and_prototype/archer.png" id="4_tehbk"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="5_jjiqg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShape.gd" id="6_kd4si"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="7_gbie6"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="8_ijjc4"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="9_v75gg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="10_h1wyg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="11_jboc6"]
+[ext_resource type="Texture2D" uid="uid://b837ccyoo1mfk" path="res://prototypes/i4w2-health_bar_and_prototype/zombie.png" id="11_xiksw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="12_nha0p"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="15_jyuy0"]
+[ext_resource type="Texture2D" uid="uid://orvbvemtgrpe" path="res://prototypes/i4w2-health_bar_and_prototype/heal.png" id="16_1o4mw"]
+[ext_resource type="Texture2D" uid="uid://cfq6bc28586nb" path="res://prototypes/i4w2-health_bar_and_prototype/trap.png" id="17_57y4u"]
+
+[sub_resource type="GDScript" id="GDScript_p4cmp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from):
+	var enemy = from.get_tree().get_first_node_in_group(\"zombie\")
+	var player = from.get_tree().get_first_node_in_group(\"archer\")
+	if enemy != null && player != null:
+		instance.get_node(\"Move\").move_direction((enemy.global_position - player.global_position).normalized() * 10)
+"
+
+[sub_resource type="Resource" id="Resource_7ib1x"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_p4cmp")
+argument_names = ["instance", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_ujfd2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jas0r"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_ujfd2")
+argument_names = ["instance", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0xvxs"]
+script = ExtResource("9_v75gg")
+signal_name = "spawned"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_jas0r")
+expression = SubResource("Resource_7ib1x")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ityfb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return get_parent().velocity.abs() <= Vector2(0.1,0.1)
+"
+
+[sub_resource type="Resource" id="Resource_jycpq"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_ityfb")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4sjc8"]
+script = ExtResource("9_v75gg")
+signal_name = "always"
+to = NodePath("../..")
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_jycpq")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_d5lks"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	from.get_parent().queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_n3ny6"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_d5lks")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_w16xw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fcrfo"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_w16xw")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_5arx2"]
+script = ExtResource("9_v75gg")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_fcrfo")
+expression = SubResource("Resource_n3ny6")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_mfcmp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	other.get_node(\"HealthBar\").damage(10)
+"
+
+[sub_resource type="Resource" id="Resource_nopho"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_mfcmp")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_37wfs"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4rxo0"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_37wfs")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_k85x1"]
+script = ExtResource("9_v75gg")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_4rxo0")
+expression = SubResource("Resource_nopho")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_gnlmu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return -1
+"
+
+[sub_resource type="Resource" id="Resource_go47i"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_gnlmu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_kcx5x"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	var enemy = from.get_tree().get_first_node_in_group(\"zombie\")
+	if enemy != null:
+		return from.get_parent().global_position.distance_to(enemy.global_position) <= 250
+	else:
+		return false 
+	
+"
+
+[sub_resource type="Resource" id="Resource_v3ak0"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_kcx5x")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1vuas"]
+script = ExtResource("9_v75gg")
+signal_name = "elapsed"
+to = NodePath("../Spawner")
+invoke = "spawn_in_shape"
+arguments = [SubResource("Resource_go47i")]
+only_if = SubResource("Resource_v3ak0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_mu6p0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_648bl"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_mu6p0")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tmkul"]
+script = ExtResource("9_v75gg")
+signal_name = "death"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_648bl")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_wg04u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_svsxe"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_wg04u")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_syjrs"]
+script = ExtResource("9_v75gg")
+signal_name = "death"
+to = NodePath("..")
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_svsxe")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_4ofcm"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from):
+	var player = from.get_tree().get_first_node_in_group(\"archer\")
+	if player != null:
+		player.get_node(\"HealthBar\").damage(25)
+"
+
+[sub_resource type="Resource" id="Resource_ab218"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_4ofcm")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_mrtiw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from):
+	var player = from.get_tree().get_first_node_in_group(\"archer\")
+	if player != null:
+		return from.get_parent().global_position.distance_to(player.global_position) <= 70
+	else:
+		return false
+"
+
+[sub_resource type="Resource" id="Resource_owvnx"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_mrtiw")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_b0qbc"]
+script = ExtResource("9_v75gg")
+signal_name = "elapsed"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_owvnx")
+expression = SubResource("Resource_ab218")
+deferred = false
+enabled = true
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_b7gn3"]
+vertices = PackedVector2Array(-49, -28, 1170, -12, 1179, 680, 4, 686)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(4, 686, 1179, 680, 1170, -12, -49, -28)])
+
+[sub_resource type="GDScript" id="GDScript_j4yet"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	print(\"heal\")
+	other.get_node(\"HealthBar\").heal_full()
+"
+
+[sub_resource type="Resource" id="Resource_08gfl"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_j4yet")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_kns7x"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_6hyeo"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_kns7x")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_h72oj"]
+script = ExtResource("9_v75gg")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_6hyeo")
+expression = SubResource("Resource_08gfl")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_j5pdb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	other.get_node(\"HealthBar\").damage(20)
+"
+
+[sub_resource type="Resource" id="Resource_kq4dm"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_j5pdb")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_nrgp2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_wysuq"]
+script = ExtResource("8_ijjc4")
+nested_script = SubResource("GDScript_nrgp2")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7u3v7"]
+script = ExtResource("9_v75gg")
+signal_name = "collided"
+to = NodePath("")
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_wysuq")
+expression = SubResource("Resource_kq4dm")
+deferred = false
+enabled = true
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_v4w2y")
+
+[node name="Background" type="Area2D" parent="."]
+light_mask = 0
+z_index = -1
+position = Vector2(575, 326)
+
+[node name="Placeholder" type="Node2D" parent="Background"]
+script = ExtResource("2_3w1cm")
+color = Color(0.898039, 0.764706, 0.427451, 1)
+placeholder_size = Vector2(1150, 650)
+sprite_texture = ExtResource("3_23322")
+
+[node name="Archer" type="CharacterBody2D" parent="." groups=["archer", "selectable"]]
+position = Vector2(94, 307)
+script = ExtResource("4_75co3")
+
+[node name="Placeholder" type="Node2D" parent="Archer"]
+script = ExtResource("2_3w1cm")
+placeholder_size = Vector2(50, 50)
+use_sprite = true
+sprite_texture = ExtResource("4_tehbk")
+outline_color = Color(0, 0, 0.905882, 1)
+outline_width = 15.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Archer"]
+avoidance_enabled = true
+
+[node name="Spawner" type="Node2D" parent="Archer"]
+script = ExtResource("5_jjiqg")
+metadata/pronto_connections = [SubResource("Resource_0xvxs")]
+
+[node name="Ball" type="Area2D" parent="Archer/Spawner"]
+position = Vector2(73, -24)
+
+[node name="PlaceholderShape" type="Node2D" parent="Archer/Spawner/Ball"]
+script = ExtResource("6_kd4si")
+shape_type = "Circle"
+color = Color(0.713726, 0, 0.305882, 1)
+circle_radius = 5.0
+
+[node name="Move" type="Node2D" parent="Archer/Spawner/Ball"]
+position = Vector2(-37, -23)
+script = ExtResource("10_h1wyg")
+
+[node name="Always" type="Node2D" parent="Archer/Spawner/Ball/Move"]
+position = Vector2(45, -53)
+script = ExtResource("11_jboc6")
+metadata/pronto_connections = [SubResource("Resource_4sjc8")]
+
+[node name="Collision" type="Node2D" parent="Archer/Spawner/Ball"]
+position = Vector2(29, -13)
+script = ExtResource("12_nha0p")
+limit_to_group = "zombie"
+metadata/pronto_connections = [SubResource("Resource_5arx2"), SubResource("Resource_k85x1")]
+
+[node name="Clock" type="Node2D" parent="Archer"]
+position = Vector2(3, 68)
+script = ExtResource("7_gbie6")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_1vuas")]
+
+[node name="HealthBar" type="Node2D" parent="Archer"]
+position = Vector2(2, -35)
+script = ExtResource("15_jyuy0")
+healthbar_size = Vector2(80, 10)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_tmkul")]
+
+[node name="Zombie" type="CharacterBody2D" parent="." groups=["selectable", "zombie"]]
+position = Vector2(947, 316)
+script = ExtResource("4_75co3")
+
+[node name="Placeholder" type="Node2D" parent="Zombie"]
+script = ExtResource("2_3w1cm")
+placeholder_size = Vector2(50, 50)
+use_sprite = true
+sprite_texture = ExtResource("11_xiksw")
+outline_color = Color(1, 0, 0, 1)
+outline_width = 15.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Zombie"]
+
+[node name="HealthBar" type="Node2D" parent="Zombie"]
+position = Vector2(-2, -33)
+script = ExtResource("15_jyuy0")
+healthbar_size = Vector2(80, 10)
+label = 2
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_syjrs")]
+
+[node name="AttackClock" type="Node2D" parent="Zombie"]
+position = Vector2(4.45106e-06, -50.9141)
+script = ExtResource("7_gbie6")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_b0qbc")]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_b7gn3")
+
+[node name="HealField" type="Area2D" parent="."]
+position = Vector2(501, 287)
+
+[node name="Placeholder" type="Node2D" parent="HealField"]
+script = ExtResource("2_3w1cm")
+placeholder_size = Vector2(50, 50)
+use_sprite = true
+sprite_texture = ExtResource("16_1o4mw")
+
+[node name="Collision" type="Node2D" parent="HealField"]
+position = Vector2(-35.3553, -1.54543e-06)
+script = ExtResource("12_nha0p")
+limit_to_group = "selectable"
+metadata/pronto_connections = [SubResource("Resource_h72oj")]
+
+[node name="TrapField" type="Area2D" parent="."]
+position = Vector2(316, 392)
+
+[node name="Placeholder" type="Node2D" parent="TrapField"]
+script = ExtResource("2_3w1cm")
+placeholder_size = Vector2(50, 50)
+use_sprite = true
+sprite_texture = ExtResource("17_57y4u")
+outline_color = Color(1, 0, 0, 1)
+outline_width = 10.0
+
+[node name="Collision" type="Node2D" parent="TrapField"]
+position = Vector2(-35.3553, -1.54543e-06)
+script = ExtResource("12_nha0p")
+limit_to_group = "selectable"
+metadata/pronto_connections = [SubResource("Resource_7u3v7")]
+
+[node name="TrapField2" type="Area2D" parent="."]
+position = Vector2(778, 453)
+
+[node name="Placeholder" type="Node2D" parent="TrapField2"]
+script = ExtResource("2_3w1cm")
+placeholder_size = Vector2(50, 50)
+use_sprite = true
+sprite_texture = ExtResource("17_57y4u")
+
+[node name="Collision" type="Node2D" parent="TrapField2"]
+position = Vector2(-35.3553, -1.54543e-06)
+script = ExtResource("12_nha0p")
+limit_to_group = "selectable"
+metadata/pronto_connections = [SubResource("Resource_7u3v7")]
+
+[node name="TrapField3" type="Area2D" parent="."]
+position = Vector2(707, 169)
+
+[node name="Placeholder" type="Node2D" parent="TrapField3"]
+script = ExtResource("2_3w1cm")
+placeholder_size = Vector2(50, 50)
+use_sprite = true
+sprite_texture = ExtResource("17_57y4u")
+
+[node name="Collision" type="Node2D" parent="TrapField3"]
+position = Vector2(-35.3553, -1.54543e-06)
+script = ExtResource("12_nha0p")
+limit_to_group = "selectable"
+metadata/pronto_connections = [SubResource("Resource_7u3v7")]
