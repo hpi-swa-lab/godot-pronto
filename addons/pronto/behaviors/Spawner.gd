@@ -13,6 +13,10 @@ extends Behavior
 		spawn_shape = v
 		queue_redraw()
 
+# Needed to check if spawn shape has to be redrawn
+var last_spawn_shape_size_rectangle: Vector2
+var last_spawn_shape_size_circle: float
+
 ## Debug Color in Editor for the shape used by 'spawn_in_shape'.
 @export var spawn_shape_color: Color = Color('0099b36b')
 
@@ -136,4 +140,11 @@ func _draw():
 
 func _process(delta):
 	super._process(delta)
-	queue_redraw()
+	if spawn_shape:
+		if spawn_shape is RectangleShape2D and spawn_shape.size != last_spawn_shape_size_rectangle:
+			last_spawn_shape_size_rectangle = spawn_shape.size
+			queue_redraw()
+			
+		if spawn_shape is CircleShape2D and spawn_shape.radius != last_spawn_shape_size_circle:
+			last_spawn_shape_size_circle = spawn_shape.radius
+			queue_redraw()
