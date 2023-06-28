@@ -191,9 +191,6 @@ func open_file():
 func grab_focus():
 	%Expression.grab_focus()
 
-func extra_width():
-	return 100
-
 func _on_expression_text_changed():
 	resize()
 	text_changed.emit()
@@ -207,6 +204,12 @@ func _on_expression_focus_exited():
 func resize():
 	if self == owner:
 		return
+	# BEWARE! We're fighting against the windmills of Godot's layout system here which
+	# is pretty much a blackbox to us. Discover the uncertainties and strangenesses
+	# of the layout system by logging the node's size over the turn of frames (which
+	# seem to act as layout passes). Maybe our own _process() methods that override
+	# some layout properties are to blame as well. But hey, it (kinda) works!
+	# PS: If it ain't broke, don't fix it.
 	custom_minimum_size = dragged_minimum_size if dragged_minimum_size else Vector2(0, 43)
 	if dragged_minimum_size == null:
 		# resize to text
@@ -215,7 +218,11 @@ func resize():
 		const max_lines = 8
 		const line_height = 32
 		const spacing = 11
-		custom_minimum_size.y = clamp(text_size.y + spacing, line_height, line_height * max_lines)
+		custom_minimum_size.y = clamp(text_size.y + spacing, line_height, line_height * max_lines) \
+			+ randf() # yeah, seriously. if the height does not change, the width collapses.
+	else:
+		custom_minimum_size.x = max(custom_minimum_size.x, \
+			320)  # what's the original minimum width (not the custom one)?
 	Utils.fix_minimum_size(self)
 	reset_size()
 	var nodeToNodeConfigurator = Utils.parent_that(self, func(n): return n is NodeToNodeConfigurator)
