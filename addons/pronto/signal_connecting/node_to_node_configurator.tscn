@@ -1,7 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_2ll7t"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/ResizableCorner.gd" id="2_72gxx"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
 [ext_resource type="PackedScene" uid="uid://1ubsx3vbyfwv" path="res://addons/pronto/signal_connecting/function_name.tscn" id="4_x4sfm"]
 [ext_resource type="PackedScene" uid="uid://duootchnamvj6" path="res://addons/pronto/helpers/ResizableContainer.tscn" id="5_ika8o"]
@@ -79,7 +78,6 @@ text = "Make unique"
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
-script = ExtResource("2_72gxx")
 
 [node name="Pinned" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
