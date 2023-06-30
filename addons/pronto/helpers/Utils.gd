@@ -213,3 +213,8 @@ static func get_specific_class_name(node: Node):
 	if name.match("?*:?*"):
 		return name.split(":")[0]
 	return node.get_class()
+
+const TYPE_NAMES = ['nil', 'bool', 'int', 'float', 'String', 'Vector2', 'Vector2I', 'Rect2', 'Rect2i', 'Vector3', 'Vector3i', 'Transform2D', 'Vector4', 'Vector4i', 'Plane', 'Quaternion', 'AABB', 'Basis', 'Transform3D', 'Projection', 'Color', 'StringName', 'NodePath', 'RID', 'Object', 'Callable', 'Signal', 'Dictionary', 'Array', 'PackedByteArray', 'PackedInt32Array', 'PackedInt64Array', 'PackedFloat32Array', 'PackedFloat64Array', 'PackedStringArray', 'PackedVector2Array', 'PackedVector3Array', 'PackedColorArray']
+static func get_type_name_from_arg(arg: Dictionary) -> String:
+	if arg["type"] == 24: return arg["class_name"]
+	else: return TYPE_NAMES[arg["type"]]

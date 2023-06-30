@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ig2ib85womvq"]
+[gd_scene load_steps=11 format=3 uid="uid://ig2ib85womvq"]
 
 [ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_2ll7t"]
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/node_to_node_configurator.gd" id="2_fmteu"]
@@ -37,7 +37,7 @@ script = ExtResource("2_2ll7t")
 name = "Remove"
 
 [node name="Node To Node Configurator" type="PanelContainer"]
-offset_right = 333.0
+offset_right = 364.0
 offset_bottom = 200.0
 scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
@@ -188,9 +188,10 @@ sync_handles_x = true
 
 [node name="Expression" parent="MarginContainer/VBoxContainer/ResizableContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 34)
+custom_minimum_size = Vector2(0, 34.6666)
 layout_mode = 2
 size_flags_horizontal = 1
+expression_label = ""
 return_value = false
 placeholder_text = "Statement(s)..."
 max_width = 559
@@ -210,8 +211,9 @@ sync_handles_x = true
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 34)
+custom_minimum_size = Vector2(0, 34.4781)
 layout_mode = 2
+expression_label = ""
 default_text = "true"
 max_width = 500
 

@@ -8,6 +8,12 @@ signal blur()
 ## given script. If false, the argument_names will be taken from the script.
 var control_argument_names = true
 
+@export var expression_label: String:
+	set(v):
+		expression_label = v
+		%ExpressionLabel.text = v
+		%ExpressionLabel.visible = not v.is_empty()
+
 @export var return_value = true
 @export var argument_names: Array = []:
 	set(v):

@@ -263,6 +263,7 @@ func _on_function_selected(name: String):
 	
 	for arg in arguments:
 		var arg_ui = ExpressionEdit.instantiate()
+		arg_ui.expression_label = arg["name"] + ": " + Utils.get_type_name_from_arg(arg)
 		Utils.fix_minimum_size(arg_ui)
 		arg_ui.placeholder_text = "return " + arg["name"]
 		if name.begins_with("apply") && arg["type"] == 25:
