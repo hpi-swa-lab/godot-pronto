@@ -1,0 +1,104 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfaw7ve5q2474"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShape.gd" id="1_ui1dh"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_m4bil"]
+
+[node name="i5w1-modular-enemies" type="Node2D"]
+
+[node name="enemy" type="Node2D" parent="."]
+position = Vector2(727, 211)
+scale = Vector2(3.26054, 3.26054)
+
+[node name="head" type="Node2D" parent="enemy"]
+position = Vector2(0, -23)
+script = ExtResource("1_ui1dh")
+shape_type = "Circle"
+circle_radius = 10.0
+
+[node name="HealthBar" type="Node2D" parent="enemy/head"]
+position = Vector2(-1.52588e-05, -15.9506)
+script = ExtResource("2_m4bil")
+current = 10
+max = 10
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="torso" type="Node2D" parent="enemy"]
+position = Vector2(0, 14)
+script = ExtResource("1_ui1dh")
+shape_type = "Capsule"
+capsule_height = 57.6259
+capsule_radius = 12.9579
+
+[node name="HealthBar2" type="Node2D" parent="enemy/torso"]
+position = Vector2(0.306671, -23.2009)
+scale = Vector2(1, 1)
+script = ExtResource("2_m4bil")
+current = 10
+max = 10
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="arm_left" type="Node2D" parent="enemy"]
+position = Vector2(-22, 16)
+rotation = 0.227
+script = ExtResource("1_ui1dh")
+shape_type = "Capsule"
+capsule_height = 41.2661
+capsule_radius = 5.127
+
+[node name="HealthBar3" type="Node2D" parent="enemy/arm_left"]
+position = Vector2(-33.0565, 0.342552)
+rotation = -0.227
+script = ExtResource("2_m4bil")
+current = 10
+max = 10
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="arm_right" type="Node2D" parent="enemy"]
+position = Vector2(24, 17)
+rotation = -0.362796
+script = ExtResource("1_ui1dh")
+shape_type = "Capsule"
+capsule_height = 41.2661
+capsule_radius = 5.127
+
+[node name="HealthBar4" type="Node2D" parent="enemy/arm_right"]
+position = Vector2(31.1908, 3.16987)
+rotation = 0.362796
+scale = Vector2(1, 1)
+script = ExtResource("2_m4bil")
+current = 10
+max = 10
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="leg_left" type="Node2D" parent="enemy"]
+position = Vector2(-11, 63)
+rotation = 0.227
+script = ExtResource("1_ui1dh")
+shape_type = "Capsule"
+capsule_height = 41.2661
+capsule_radius = 5.127
+
+[node name="HealthBar5" type="Node2D" parent="enemy/leg_left"]
+position = Vector2(-31.7446, 7.20214)
+rotation = -0.227
+script = ExtResource("2_m4bil")
+current = 10
+max = 10
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="leg_rright" type="Node2D" parent="enemy"]
+position = Vector2(13, 62)
+rotation = -0.362796
+script = ExtResource("1_ui1dh")
+shape_type = "Capsule"
+capsule_height = 41.2661
+capsule_radius = 5.127
+
+[node name="HealthBar6" type="Node2D" parent="enemy/leg_rright"]
+position = Vector2(33.889, 11.5017)
+rotation = 0.362796
+scale = Vector2(1, 1)
+script = ExtResource("2_m4bil")
+current = 10
+max = 10
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
