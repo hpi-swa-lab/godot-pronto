@@ -33,5 +33,7 @@ func exit(transition_id):
 		exited.emit(transition_id)
 
 func _ready():
+	super._ready()
 	if active:
 		entered.emit()
+
