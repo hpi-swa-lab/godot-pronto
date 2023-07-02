@@ -209,9 +209,9 @@ static func log(s):
 
 static func get_specific_class_name(node: Node):
 	# See https://github.com/godotengine/godot/issues/21789.
-	var name := node.to_string()
-	if name.match("?*:?*"):
-		return name.split(":")[0]
+	# var name := node.to_string()
+	# if name.match("?*:?*"):
+	# 	return name.split(":")[0]
 	return node.get_class()
 
 const TYPE_NAMES = ['nil', 'bool', 'int', 'float', 'String', 'Vector2', 'Vector2I', 'Rect2', 'Rect2i', 'Vector3', 'Vector3i', 'Transform2D', 'Vector4', 'Vector4i', 'Plane', 'Quaternion', 'AABB', 'Basis', 'Transform3D', 'Projection', 'Color', 'StringName', 'NodePath', 'RID', 'Object', 'Callable', 'Signal', 'Dictionary', 'Array', 'PackedByteArray', 'PackedInt32Array', 'PackedInt64Array', 'PackedFloat32Array', 'PackedFloat64Array', 'PackedStringArray', 'PackedVector2Array', 'PackedVector3Array', 'PackedColorArray']
