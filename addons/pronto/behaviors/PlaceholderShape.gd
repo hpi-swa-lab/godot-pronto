@@ -148,7 +148,7 @@ func _draw():
 			draw_rect(r, debug_color, false)
 	elif shape_type == "Circle":
 		# feel free to improve text size calculation
-		var text_size = min(circle_radius*1.5, circle_radius*2.1 / label.length() * 1.8)
+		var text_size = min(circle_radius*1.5, circle_radius*2 / (label.length() * 1.8))
 		draw_circle(Vector2(0,0),circle_radius,color)
 		draw_string(default_font, Vector2(-circle_radius,+text_size/4),label,HORIZONTAL_ALIGNMENT_CENTER,-1,text_size,Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
 		if get_tree().debug_collisions_hint:

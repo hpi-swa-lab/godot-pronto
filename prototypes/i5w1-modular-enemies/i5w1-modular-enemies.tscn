@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://dfaw7ve5q2474"]
+[gd_scene load_steps=94 format=3 uid="uid://dfaw7ve5q2474"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShape.gd" id="1_ui1dh"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_m4bil"]
@@ -8,6 +8,73 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="6_2s4u3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="6_3m8bw"]
 [ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/Button.gd" id="6_adlgl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="9_lk3db"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="10_liufr"]
+
+[sub_resource type="GDScript" id="GDScript_jy73i"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_cwg6l"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_jy73i")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0s3tt"]
+script = ExtResource("5_w82r7")
+signal_name = "death"
+to = NodePath("../..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_cwg6l")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fexlv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	print(\"Defeated enemy\")
+"
+
+[sub_resource type="Resource" id="Resource_72mqv"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_fexlv")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_cvtpo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fdv0t"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_cvtpo")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_s5ikj"]
+script = ExtResource("5_w82r7")
+signal_name = "death"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_fdv0t")
+expression = SubResource("Resource_72mqv")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_gcl24"]
 script/source = "@tool
@@ -219,7 +286,30 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	print(\"I am the head\")
+	var phrases = [
+		\"You're no match for me!\",
+		\"Prepare to meet your doom!\",
+		\"I'll make you regret crossing my path!\",
+		\"Feel the wrath of my blade!\",
+		\"Your end is near!\",
+		\"You're nothing but a weakling!\",
+		\"I'll crush you like a bug!\",
+		\"I'll enjoy watching you suffer!\",
+		\"You'll beg for mercy before I'm done with you!\",
+		\"Your skills are laughable!\",
+		\"You can't escape your fate!\",
+		\"I'll send you straight to the afterlife!\",
+		\"Pathetic! Is that all you've got?\",
+		\"You're a mere speck of dust in my presence!\",
+		\"I'll make sure you never rise again!\",
+		\"Your feeble attempts won't save you!\",
+		\"You're about to witness true power!\",
+		\"Prepare to be annihilated!\",
+		\"Your resistance is futile!\",
+		\"I'll enjoy tearing you apart!\"
+	]
+	var rand_phrase = phrases[randi() % phrases.size()]
+	print(\"Enemy: \\\"\" + rand_phrase + \"\\\"\")
 
 "
 
@@ -323,7 +413,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	print(\"I am the torso\")
+	print(\">> Skipping Torso Turn << \")
 "
 
 [sub_resource type="Resource" id="Resource_pww34"]
@@ -426,7 +516,40 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	print(\"I am the arms group\")
+	var rng = RandomNumberGenerator.new()
+	var ref_player_health: HealthBar = G.get_parent().find_child(\"PLAYER_HEALTH\",true, false)
+	var ref_left_arm = G.get_parent().find_child(\"arm_left\",true, false)
+	var ref_right_arm = G.get_parent().find_child(\"arm_right\",true, false)
+	var base_chance_to_hit = G.at(\"EnemyChanceToHit\")
+	var base_damage = G.at(\"EnemyBaseDamage\")
+	var dead_arms = 0
+	var has_weapon = false
+	if is_alive(ref_left_arm):
+		has_weapon = carrying_weapon(ref_left_arm)	
+	else:
+		dead_arms += 1
+	if is_alive(ref_right_arm):
+		if not has_weapon:
+			has_weapon = carrying_weapon(ref_left_arm)	
+	else:
+		dead_arms += 1	
+	var modified_chance_to_hit = base_chance_to_hit * (1-(0.5*dead_arms))
+	if rng.randi_range(0, 100) < modified_chance_to_hit:
+		var damage = int(base_damage * rng.randf_range(1,2) if has_weapon else base_damage)
+		print(\">> Enemy attacks player for \" + str(damage) + \" damage\")
+		ref_player_health.damage(damage)
+	else:
+		print(\">> Enemy misses their attack\")	
+
+func is_alive(node):
+	for child in node.get_children():
+		if child is HealthBar:
+			return child.current > 0
+			
+func carrying_weapon(node):			
+	for child in node.get_children():
+		if child.name.begins_with(\"weapon\"):
+			return true
 "
 
 [sub_resource type="Resource" id="Resource_085n2"]
@@ -623,6 +746,7 @@ script = ExtResource("2_m4bil")
 current = 10
 max = 10
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_0s3tt"), SubResource("Resource_s5ikj")]
 
 [node name="torso" type="Node2D" parent="enemy"]
 position = Vector2(0, 14)
@@ -634,8 +758,8 @@ capsule_radius = 12.9579
 [node name="HealthBar2" type="Node2D" parent="enemy/torso"]
 position = Vector2(0.306671, -23.2009)
 script = ExtResource("2_m4bil")
-current = 10
-max = 10
+current = 30
+max = 30
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="arm_left" type="Node2D" parent="enemy"]
@@ -653,6 +777,15 @@ script = ExtResource("2_m4bil")
 current = 10
 max = 10
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="weapon_stick" type="Node2D" parent="enemy/arm_left"]
+position = Vector2(-20.6631, 14.4777)
+rotation = -1.45979
+script = ExtResource("1_ui1dh")
+shape_type = "Capsule"
+color = Color(0.603922, 0.388235, 0.137255, 1)
+capsule_height = 50.0804
+capsule_radius = 2.0
 
 [node name="arm_right" type="Node2D" parent="enemy"]
 position = Vector2(24, 17)
@@ -682,11 +815,11 @@ capsule_radius = 5.127
 position = Vector2(-31.7446, 7.20214)
 rotation = -0.227
 script = ExtResource("2_m4bil")
-current = 10
-max = 10
+current = 15
+max = 15
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
-[node name="leg_rright" type="Node2D" parent="enemy"]
+[node name="leg_right" type="Node2D" parent="enemy"]
 position = Vector2(13, 62)
 rotation = -0.362796
 script = ExtResource("1_ui1dh")
@@ -694,12 +827,12 @@ shape_type = "Capsule"
 capsule_height = 41.2661
 capsule_radius = 5.127
 
-[node name="HealthBar6" type="Node2D" parent="enemy/leg_rright"]
+[node name="HealthBar6" type="Node2D" parent="enemy/leg_right"]
 position = Vector2(33.889, 11.5017)
 rotation = 0.362796
 script = ExtResource("2_m4bil")
-current = 10
-max = 10
+current = 15
+max = 15
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="STATE" type="Node2D" parent="."]
@@ -761,6 +894,24 @@ evaluate = SubResource("Resource_00dm5")
 metadata/pronto_connections = [SubResource("Resource_2n01c")]
 
 [node name="UI" type="Node2D" parent="."]
+position = Vector2(0, 488)
+
+[node name="PLAYER_HEALTH" type="Node2D" parent="UI"]
+position = Vector2(145, -9)
+scale = Vector2(4, 4)
+script = ExtResource("2_m4bil")
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="Label" type="Label" parent="UI/PLAYER_HEALTH"]
+offset_left = -60.0
+offset_top = -18.25
+offset_right = 64.0
+offset_bottom = 7.75
+theme_override_font_sizes/font_size = 5
+text = "Player Health"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [node name="PanelContainer" type="PanelContainer" parent="UI"]
 offset_right = 294.0
@@ -779,3 +930,28 @@ position = Vector2(-16, 16)
 script = ExtResource("6_3m8bw")
 evaluate = SubResource("Resource_lsvs5")
 to_prop = "disabled"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_top = -2.0
+offset_right = 392.0
+offset_bottom = 154.0
+
+[node name="Values" type="Node2D" parent="PanelContainer"]
+position = Vector2(12, 13)
+script = ExtResource("9_lk3db")
+
+[node name="EnemyChanceToHit" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(-7.07107, 7.07107)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 100.0
+float_value = 50.0
+float_step_size = 1.0
+
+[node name="EnemyBaseDamage" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(-10, -4.37114e-07)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 100.0
+float_value = 5.0
+float_step_size = 1.0
