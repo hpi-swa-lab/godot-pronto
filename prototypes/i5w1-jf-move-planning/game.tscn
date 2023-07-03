@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://bgxt4wcv8r1mj"]
+[gd_scene load_steps=103 format=3 uid="uid://bgxt4wcv8r1mj"]
 
 [ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://assets/simple_tileset/overworld.png" id="1_il3if"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_ip00t"]
@@ -10,6 +10,10 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_pwq2o"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_0t503"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Store.gd" id="6_bmd4l"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="11_8luff"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="12_g46kd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="13_bk01k"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="14_i77nb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j0jqh"]
 texture = ExtResource("1_il3if")
@@ -196,6 +200,8 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(action):
+	if not get_parent().get_parent().get_parent().get_node(\"ActivationCheck\").get_node(\"Clock\").paused:
+		return false
 	if get_parent().current == get_parent().max:
 		print(\"Player1: \", at(\"player1\"))
 		return false
@@ -487,6 +493,8 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(action):
+	if not get_parent().get_parent().get_parent().get_node(\"ActivationCheck\").get_node(\"Clock\").paused:
+		return false
 	if get_parent().current == get_parent().max:
 		print(\"Player2: \", at(\"player2\"))
 		return false
@@ -773,6 +781,102 @@ only_if = SubResource("Resource_oambd")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_er6fi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_6nrmu"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_er6fi")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_j68tk"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	to.paused = false
+"
+
+[sub_resource type="Resource" id="Resource_xbiye"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_j68tk")
+argument_names = ["delta", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_5gxtn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	var pg1 = get_parent().get_node(\"HealthBar1\").get_node(\"ProgressBar1\")
+	var pg2 = get_parent().get_node(\"HealthBar2\").get_node(\"ProgressBar2\")
+	return pg1.current == pg1.max and pg2.current == pg2.max and to.paused
+"
+
+[sub_resource type="Resource" id="Resource_ixgwb"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_5gxtn")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gjgxo"]
+script = ExtResource("5_pwq2o")
+signal_name = "always"
+to = NodePath("Clock")
+more_references = []
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_6nrmu")]
+only_if = SubResource("Resource_ixgwb")
+expression = SubResource("Resource_xbiye")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fvp3v"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	print(\"elapsed\")
+"
+
+[sub_resource type="Resource" id="Resource_33y05"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_fvp3v")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_ru7pf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_j54pp"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_ru7pf")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_n8fxb"]
+script = ExtResource("5_pwq2o")
+signal_name = "elapsed"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_j54pp")
+expression = SubResource("Resource_33y05")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -848,7 +952,7 @@ script = ExtResource("2_ip00t")
 healthbar_size = Vector2(275, 40)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
-[node name="ProgressBar" type="Node2D" parent="HealthBar2"]
+[node name="ProgressBar2" type="Node2D" parent="HealthBar2"]
 position = Vector2(38, 49)
 script = ExtResource("2_ip00t")
 current = 0
@@ -858,44 +962,44 @@ label = 2
 background_color = Color(0, 0, 0, 0.501961)
 progress_colors = PackedColorArray(0.713726, 0.490196, 0.847059, 1)
 
-[node name="HandleInput" type="Node2D" parent="HealthBar2/ProgressBar"]
+[node name="HandleInput" type="Node2D" parent="HealthBar2/ProgressBar2"]
 position = Vector2(-12, -81)
 script = ExtResource("3_8sldm")
 arguments = PackedStringArray("action")
 evaluate = SubResource("Resource_y8mc5")
 metadata/pronto_connections = [SubResource("Resource_0rxul")]
 
-[node name="Up" type="Node2D" parent="HealthBar2/ProgressBar/HandleInput"]
+[node name="Up" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(-49, -97)
 script = ExtResource("6_0t503")
 key = "Up"
 metadata/pronto_connections = [SubResource("Resource_2wjop")]
 
-[node name="Down" type="Node2D" parent="HealthBar2/ProgressBar/HandleInput"]
+[node name="Down" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(-48, -77)
 script = ExtResource("6_0t503")
 key = "Down"
 metadata/pronto_connections = [SubResource("Resource_w5uqc")]
 
-[node name="Left" type="Node2D" parent="HealthBar2/ProgressBar/HandleInput"]
+[node name="Left" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(-69, -76)
 script = ExtResource("6_0t503")
 key = "Left"
 metadata/pronto_connections = [SubResource("Resource_7sj1s")]
 
-[node name="Right" type="Node2D" parent="HealthBar2/ProgressBar/HandleInput"]
+[node name="Right" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(-26, -77)
 script = ExtResource("6_0t503")
 key = "Right"
 metadata/pronto_connections = [SubResource("Resource_rb1lp")]
 
-[node name="CrossAttack" type="Node2D" parent="HealthBar2/ProgressBar/HandleInput"]
+[node name="CrossAttack" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(30, -78)
 script = ExtResource("6_0t503")
 key = "Period"
 metadata/pronto_connections = [SubResource("Resource_2di0c")]
 
-[node name="BoxAttack" type="Node2D" parent="HealthBar2/ProgressBar/HandleInput"]
+[node name="BoxAttack" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(50, -78)
 script = ExtResource("6_0t503")
 key = "Minus"
@@ -924,3 +1028,32 @@ position = Vector2(71, 59)
 script = ExtResource("6_bmd4l")
 metadata/player1 = []
 metadata/player2 = []
+
+[node name="ActivationCheck" type="Node2D" parent="."]
+position = Vector2(970, 103)
+script = ExtResource("11_8luff")
+metadata/pronto_connections = [SubResource("Resource_gjgxo")]
+
+[node name="Clock" type="Node2D" parent="ActivationCheck"]
+position = Vector2(-73, -1)
+script = ExtResource("12_g46kd")
+duration_seconds = 2.0
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_n8fxb")]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 199.0
+offset_bottom = 88.0
+
+[node name="Settings" type="Node2D" parent="PanelContainer"]
+position = Vector2(-20, 20)
+script = ExtResource("13_bk01k")
+
+[node name="Moves" type="Node2D" parent="PanelContainer/Settings"]
+position = Vector2(-7.07107, 7.07107)
+script = ExtResource("14_i77nb")
+float_from = 1.0
+float_to = 6.0
+float_value = 3.0
+float_step_size = 1.0
