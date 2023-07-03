@@ -5,7 +5,7 @@ class_name PrototypingUI
 
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
-var minimized: bool = false
+var minimized: bool = true
 var vbox = VBoxContainer.new()
 var header = HBoxContainer.new()
 var expanded_size = Vector2(0,0)
