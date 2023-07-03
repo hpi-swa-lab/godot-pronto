@@ -1,4 +1,4 @@
-[gd_scene load_steps=150 format=3 uid="uid://bgxt4wcv8r1mj"]
+[gd_scene load_steps=152 format=3 uid="uid://bgxt4wcv8r1mj"]
 
 [ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://assets/simple_tileset/overworld.png" id="1_il3if"]
 [ext_resource type="Texture2D" uid="uid://cu3poyas45glr" path="res://assets/simple_tileset/scifitiles-sheet.png" id="1_krj8n"]
@@ -1287,6 +1287,7 @@ func run():
 	else:
 		## reset
 		put(\"queue\", randf() <= at(\"QueueProb\"))
+		put(\"Moves\", randi_range(1, 5))
 		get_parent().get_node(\"ActivationCheck\").get_node(\"Clock\").paused = true
 	return null
 "
@@ -1417,6 +1418,20 @@ arguments = []
 only_if = SubResource("Resource_tn7my")
 deferred = false
 enabled = true
+
+[sub_resource type="GDScript" id="GDScript_5b8ub"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return at(\"ActionSpeed\")
+"
+
+[sub_resource type="Resource" id="Resource_4eo55"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_5b8ub")
+argument_names = []
+return_value = true
 
 [sub_resource type="GDScript" id="GDScript_c7juw"]
 script/source = "@tool
@@ -1781,6 +1796,12 @@ paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_n8fxb"), SubResource("Resource_ksg5b")]
 
+[node name="Bind" type="Node2D" parent="ActivationCheck/Clock"]
+position = Vector2(24, 54)
+script = ExtResource("8_0hls7")
+evaluate = SubResource("Resource_4eo55")
+to_prop = "duration_seconds"
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_right = 300.0
 offset_bottom = 127.0
@@ -1793,8 +1814,8 @@ script = ExtResource("13_bk01k")
 position = Vector2(-7.07107, 7.07107)
 script = ExtResource("14_i77nb")
 float_from = 1.0
-float_to = 6.0
-float_value = 5.0
+float_to = 5.0
+float_value = 3.0
 float_step_size = 1.0
 
 [node name="QueueProb" type="Node2D" parent="PanelContainer/Settings"]
@@ -1805,13 +1826,13 @@ float_to = 1.0
 float_value = 0.5
 float_step_size = 0.1
 
-[node name="Value2" type="Node2D" parent="PanelContainer/Settings"]
+[node name="ActionSpeed" type="Node2D" parent="PanelContainer/Settings"]
 position = Vector2(-17.0711, 7.07107)
 script = ExtResource("14_i77nb")
-float_from = 0.0
-float_to = 1.0
+float_from = 0.25
+float_to = 3.0
 float_value = 1.0
-float_step_size = 0.1
+float_step_size = 0.25
 
 [node name="CrossSpawner1" type="Node2D" parent="."]
 position = Vector2(216, 258)
