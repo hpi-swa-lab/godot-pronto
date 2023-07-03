@@ -18,9 +18,24 @@ func cross_attack():
 	var spwner_name = "CrossSpawner1" if player == 0 else "CrossSpawner2"
 	var spawner = get_parent().get_node(spwner_name)
 	for i in range(0,8,1):
-		spawner.spawn_at(_get_position(Vector2(i, current_field.y)))
+		spawner.spawn_at_with_damage(_get_position(Vector2(i, current_field.y)))
 		if i != current_field.y:
-			spawner.spawn_at(_get_position(Vector2(current_field.x, i)))
+			spawner.spawn_at_with_damage(_get_position(Vector2(current_field.x, i)))
+
+func box_attack():
+	for y in range(-1,2,1):
+		for x in range(-1,2,1):
+			_create_damage_field(current_field + Vector2(x, y), 20)
+		_create_damage_field(current_field + Vector2(y, -2), 10)
+		_create_damage_field(current_field + Vector2(y, +2), 10)
+		_create_damage_field(current_field + Vector2(-2, y), 10)
+		_create_damage_field(current_field + Vector2(+2, y), 10)
+		
+func _create_damage_field(field, damage):
+	var spwner_name = "CrossSpawner1" if player == 0 else "CrossSpawner2"
+	var spawner = get_parent().get_node(spwner_name)
+	if _is_valid_field(field):
+		spawner.spawn_at_with_damage(_get_position(field), damage)
 	
 func move_up():
 	if current_field.y > 0:
@@ -41,6 +56,9 @@ func move_right():
 	if current_field.x < 7:
 		current_field.x += 1
 		update_position()
+		
+func _is_valid_field(field):
+	return field.x >= 0 and field.x <= 7 && field.y >= 0 && field.y <= 7
 		
 func _get_position(field):
 	return zero_position + field * quadrant_size

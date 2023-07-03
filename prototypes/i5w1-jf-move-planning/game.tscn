@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://bgxt4wcv8r1mj"]
+[gd_scene load_steps=150 format=3 uid="uid://bgxt4wcv8r1mj"]
 
 [ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://assets/simple_tileset/overworld.png" id="1_il3if"]
 [ext_resource type="Texture2D" uid="uid://cu3poyas45glr" path="res://assets/simple_tileset/scifitiles-sheet.png" id="1_krj8n"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="16_bfvjy"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="17_y0ke2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="18_18wwb"]
+[ext_resource type="Script" path="res://prototypes/i5w1-jf-move-planning/DamageField.gd" id="19_pl3ob"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_44gr1"]
 texture = ExtResource("1_krj8n")
@@ -519,6 +520,47 @@ texture = ExtResource("1_il3if")
 sources/3 = SubResource("TileSetAtlasSource_j0jqh")
 sources/0 = SubResource("TileSetAtlasSource_44gr1")
 
+[sub_resource type="GDScript" id="GDScript_jkjhy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	get_parent().get_node(\"GameOverLabel\").visible = true
+	from.get_tree().paused = true
+"
+
+[sub_resource type="Resource" id="Resource_pc03s"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_jkjhy")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_h6ge1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_uu7oa"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_h6ge1")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3pjhv"]
+script = ExtResource("5_pwq2o")
+signal_name = "death"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_uu7oa")
+expression = SubResource("Resource_pc03s")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_42adc"]
 script/source = "@tool
 extends U
@@ -825,6 +867,67 @@ script = ExtResource("4_4hiwy")
 nested_script = SubResource("GDScript_ksiyy")
 argument_names = []
 return_value = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_ws746"]
+font_size = 29
+outline_size = 5
+outline_color = Color(1, 0, 1, 1)
+shadow_size = 0
+
+[sub_resource type="GDScript" id="GDScript_ff1y2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return \"queue\" if at(\"queue\") else \"stack\"
+"
+
+[sub_resource type="Resource" id="Resource_ouofw"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_ff1y2")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_42bur"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	get_parent().get_node(\"GameOverLabel\").visible = true
+	from.get_tree().paused = true
+"
+
+[sub_resource type="Resource" id="Resource_ivels"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_42bur")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_iqvm4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_a0mre"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_iqvm4")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_y82qp"]
+script = ExtResource("5_pwq2o")
+signal_name = "death"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_a0mre")
+expression = SubResource("Resource_ivels")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_jsh51"]
 script/source = "@tool
@@ -1149,7 +1252,7 @@ func run():
 	var prog_bar1 = get_parent().get_node(\"HealthBar1\").get_node(\"ProgressBar1\")
 	var prog_bar2 = get_parent().get_node(\"HealthBar2\").get_node(\"ProgressBar2\")
 	
-	var is_queue = true
+	var is_queue = at(\"queue\")
 	if actions1.size() > 0:
 		var task1 = actions1.pop_front() if is_queue else actions1.pop_back()
 		var task2 = actions2.pop_front() if is_queue else actions2.pop_back()
@@ -1165,7 +1268,7 @@ func run():
 			\"cross_attack\":
 				player1.cross_attack()
 			\"box_attack\":
-				pass
+				player1.box_attack()
 		match task2:
 			\"left\":
 				player2.move_left()
@@ -1178,11 +1281,12 @@ func run():
 			\"cross_attack\":
 				player2.cross_attack()
 			\"box_attack\":
-				pass
+				player2.box_attack()
 		prog_bar1.damage(1)
 		prog_bar2.damage(1)
 	else:
 		## reset
+		put(\"queue\", randi() % 2 == 0)
 		get_parent().get_node(\"ActivationCheck\").get_node(\"Clock\").paused = true
 	return null
 "
@@ -1343,8 +1447,8 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D):
-	other.get_parent().get_node(\"HealthBar2\").damage(30)
+func run(other, direction, from):
+	other.get_parent().get_node(\"HealthBar2\").damage(from.get_parent().damage)
 	other.damage_taken = true
 "
 
@@ -1409,8 +1513,8 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D):
-	other.get_parent().get_node(\"HealthBar1\").damage(30)
+func run(other, direction, from):
+	other.get_parent().get_node(\"HealthBar1\").damage(from.get_parent().damage)
 	other.damage_taken = true
 "
 
@@ -1446,6 +1550,11 @@ expression = SubResource("Resource_4gpsu")
 deferred = false
 enabled = true
 
+[sub_resource type="LabelSettings" id="LabelSettings_qqy7b"]
+font_size = 150
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -1460,6 +1569,7 @@ position = Vector2(155, 520)
 script = ExtResource("2_ip00t")
 healthbar_size = Vector2(275, 40)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_3pjhv")]
 
 [node name="ProgressBar1" type="Node2D" parent="HealthBar1"]
 position = Vector2(-37, 50)
@@ -1521,11 +1631,30 @@ script = ExtResource("8_0hls7")
 evaluate = SubResource("Resource_tlacp")
 to_prop = "max"
 
+[node name="Label" type="Label" parent="HealthBar1/ProgressBar1"]
+offset_left = -97.0
+offset_top = -120.0
+offset_right = 172.0
+offset_bottom = -76.0
+text = "Queue"
+label_settings = SubResource("LabelSettings_ws746")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+uppercase = true
+
+[node name="Bind" type="Node2D" parent="HealthBar1/ProgressBar1/Label"]
+position = Vector2(-96.3697, 96.3697)
+script = ExtResource("8_0hls7")
+evaluate = SubResource("Resource_ouofw")
+to_prop = "text"
+
 [node name="HealthBar2" type="Node2D" parent="."]
 position = Vector2(985, 520)
 script = ExtResource("2_ip00t")
 healthbar_size = Vector2(275, 40)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_y82qp")]
 
 [node name="ProgressBar2" type="Node2D" parent="HealthBar2"]
 position = Vector2(38, 49)
@@ -1586,10 +1715,28 @@ script = ExtResource("8_0hls7")
 evaluate = SubResource("Resource_6118u")
 to_prop = "max"
 
+[node name="Label2" type="Label" parent="HealthBar2/ProgressBar2"]
+offset_left = -170.0
+offset_top = -118.0
+offset_right = 99.0
+offset_bottom = -74.0
+text = "Queue"
+label_settings = SubResource("LabelSettings_ws746")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+uppercase = true
+
+[node name="Bind" type="Node2D" parent="HealthBar2/ProgressBar2/Label2"]
+position = Vector2(-96.3697, 96.3697)
+script = ExtResource("8_0hls7")
+evaluate = SubResource("Resource_ouofw")
+to_prop = "text"
+
 [node name="Player1" type="Area2D" parent="." groups=["player1"]]
 position = Vector2(345, 523)
 script = ExtResource("7_2akbo")
-current_field = Vector2(3, 3)
+current_field = Vector2(0, 7)
 
 [node name="Placeholder" type="Node2D" parent="Player1"]
 script = ExtResource("3_nqh52")
@@ -1614,6 +1761,7 @@ position = Vector2(71, 59)
 script = ExtResource("6_bmd4l")
 metadata/player1 = []
 metadata/player2 = []
+metadata/queue = true
 
 [node name="TurnExecutor" type="Node2D" parent="."]
 position = Vector2(868, 122)
@@ -1654,6 +1802,7 @@ position = Vector2(216, 258)
 script = ExtResource("16_bfvjy")
 
 [node name="DamageField" type="Area2D" parent="CrossSpawner1"]
+script = ExtResource("19_pl3ob")
 
 [node name="Placeholder" type="Node2D" parent="CrossSpawner1/DamageField"]
 script = ExtResource("3_nqh52")
@@ -1680,6 +1829,7 @@ position = Vector2(114, 261)
 script = ExtResource("16_bfvjy")
 
 [node name="DamageField" type="Area2D" parent="CrossSpawner2"]
+script = ExtResource("19_pl3ob")
 
 [node name="Placeholder" type="Node2D" parent="CrossSpawner2/DamageField"]
 script = ExtResource("3_nqh52")
@@ -1700,3 +1850,14 @@ position = Vector2(-38.833, -38.833)
 script = ExtResource("18_18wwb")
 limit_to_group = "player1"
 metadata/pronto_connections = [SubResource("Resource_co0b6")]
+
+[node name="GameOverLabel" type="Label" parent="."]
+visible = false
+offset_top = 140.0
+offset_right = 1150.0
+offset_bottom = 451.0
+text = "Game Over"
+label_settings = SubResource("LabelSettings_qqy7b")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true

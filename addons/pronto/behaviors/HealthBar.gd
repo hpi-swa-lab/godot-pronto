@@ -21,9 +21,9 @@ signal death()
 @export var max: int = 100:
 	set(v):
 		max = v
-		if Engine.is_editor_hint() and is_active_scene():
-			# If in editor scene set current to max when changed.
-			current = max
+#		if Engine.is_editor_hint() and is_active_scene():
+#			# If in editor scene set current to max when changed.
+#			current = max
 		queue_redraw()
 
 ## The size of the displayed healthbar.
