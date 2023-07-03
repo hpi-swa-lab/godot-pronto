@@ -1,12 +1,18 @@
 extends Area2D
 
 @export var current_field = Vector2(0, 0);
-@export var quadrant_size: float = 60
-@export var zero_position: Vector2 = Vector2(359, 90)
+@export var quadrant_size: float = 64
+@export var zero_position: Vector2 = Vector2(345, 76)
 @export_enum("Player1", "Player2") var player = 0
+
+var damage_taken = false
 	
 func _ready():
+	print(self.global_position)
 	update_position()
+	
+func start_turn():
+	damage_taken = false
 	
 func cross_attack():
 	var spwner_name = "CrossSpawner1" if player == 0 else "CrossSpawner2"
