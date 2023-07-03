@@ -1286,7 +1286,7 @@ func run():
 		prog_bar2.damage(1)
 	else:
 		## reset
-		put(\"queue\", randi() % 2 == 0)
+		put(\"queue\", randf() <= at(\"QueueProb\"))
 		get_parent().get_node(\"ActivationCheck\").get_node(\"Clock\").paused = true
 	return null
 "
@@ -1782,8 +1782,8 @@ trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_n8fxb"), SubResource("Resource_ksg5b")]
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-offset_right = 199.0
-offset_bottom = 88.0
+offset_right = 300.0
+offset_bottom = 127.0
 
 [node name="Settings" type="Node2D" parent="PanelContainer"]
 position = Vector2(-20, 20)
@@ -1796,6 +1796,22 @@ float_from = 1.0
 float_to = 6.0
 float_value = 5.0
 float_step_size = 1.0
+
+[node name="QueueProb" type="Node2D" parent="PanelContainer/Settings"]
+position = Vector2(-10, -4.37114e-07)
+script = ExtResource("14_i77nb")
+float_from = 0.0
+float_to = 1.0
+float_value = 0.5
+float_step_size = 0.1
+
+[node name="Value2" type="Node2D" parent="PanelContainer/Settings"]
+position = Vector2(-17.0711, 7.07107)
+script = ExtResource("14_i77nb")
+float_from = 0.0
+float_to = 1.0
+float_value = 1.0
+float_step_size = 0.1
 
 [node name="CrossSpawner1" type="Node2D" parent="."]
 position = Vector2(216, 258)
