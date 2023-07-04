@@ -1,13 +1,17 @@
-[gd_scene load_steps=100 format=3 uid="uid://dfaw7ve5q2474"]
+[gd_scene load_steps=118 format=3 uid="uid://dfaw7ve5q2474"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShape.gd" id="1_ui1dh"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_m4bil"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="3_rub11"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_wxur5"]
+[ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/BodyPartSelector.gd" id="5_mi3vp"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_w82r7"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="6_2s4u3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="6_3m8bw"]
 [ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/Button.gd" id="6_adlgl"]
+[ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/light_attack.gd" id="7_eoycw"]
+[ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/heavy_attack.gd" id="8_fqpas"]
+[ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/rest.gd" id="9_cnxar"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="9_lk3db"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="10_liufr"]
 
@@ -76,176 +80,6 @@ expression = SubResource("Resource_72mqv")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_37qhu"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	self.pressed.connect(_emit_pressed)
-
-var target_name = \"Head\"
-
-func _emit_pressed():
-	if G.at(\"Target\") != target_name:
-		for child in get_parent().get_parent().get_children():
-				(child as PlaceholderShape).color = Color.WHITE
-				
-		G.put(\"Target\", target_name)
-		get_parent().color = Color.FIREBRICK
-		print(target_name + \" selected\")
-	else:
-		G.put(\"Target\", \"None\")
-		get_parent().color = Color.WHITE
-		print(target_name + \" deselected\")
-	
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
-[sub_resource type="GDScript" id="GDScript_nrspf"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	self.pressed.connect(_emit_pressed)
-
-var target_name = \"Torso\"
-
-func _emit_pressed():
-	if G.at(\"Target\") != target_name:
-		for child in get_parent().get_parent().get_children():
-				(child as PlaceholderShape).color = Color.WHITE
-				
-		G.put(\"Target\", target_name)
-		get_parent().color = Color.FIREBRICK
-		print(target_name + \" selected\")
-	else:
-		G.put(\"Target\", \"None\")
-		get_parent().color = Color.WHITE
-		print(target_name + \" deselected\")
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
-[sub_resource type="GDScript" id="GDScript_3cywh"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	self.pressed.connect(_emit_pressed)
-
-var target_name = \"Arm_Left\"
-
-func _emit_pressed():
-	if G.at(\"Target\") != target_name:
-		for child in get_parent().get_parent().get_children():
-				(child as PlaceholderShape).color = Color.WHITE
-				
-		G.put(\"Target\", target_name)
-		get_parent().color = Color.FIREBRICK
-		print(target_name + \" selected\")
-	else:
-		G.put(\"Target\", \"None\")
-		get_parent().color = Color.WHITE
-		print(target_name + \" deselected\")
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
-[sub_resource type="GDScript" id="GDScript_uls4b"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	self.pressed.connect(_emit_pressed)
-
-var target_name = \"Arm_Right\"
-
-func _emit_pressed():
-	if G.at(\"Target\") != target_name:
-		for child in get_parent().get_parent().get_children():
-				(child as PlaceholderShape).color = Color.WHITE
-				
-		G.put(\"Target\", target_name)
-		get_parent().color = Color.FIREBRICK
-		print(target_name + \" selected\")
-	else:
-		G.put(\"Target\", \"None\")
-		get_parent().color = Color.WHITE
-		print(target_name + \" deselected\")
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
-[sub_resource type="GDScript" id="GDScript_1c2oq"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	self.pressed.connect(_emit_pressed)
-
-var target_name = \"Leg_Left\"
-
-func _emit_pressed():
-	if G.at(\"Target\") != target_name:
-		for child in get_parent().get_parent().get_children():
-				(child as PlaceholderShape).color = Color.WHITE
-				
-		G.put(\"Target\", target_name)
-		get_parent().color = Color.FIREBRICK
-		print(target_name + \" selected\")
-	else:
-		G.put(\"Target\", \"None\")
-		get_parent().color = Color.WHITE
-		print(target_name + \" deselected\")
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
-[sub_resource type="GDScript" id="GDScript_nvc8g"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	self.pressed.connect(_emit_pressed)
-
-var target_name = \"Leg_Right\"
-
-func _emit_pressed():
-	if G.at(\"Target\") != target_name:
-		for child in get_parent().get_parent().get_children():
-				(child as PlaceholderShape).color = Color.WHITE
-				
-		G.put(\"Target\", target_name)
-		get_parent().color = Color.FIREBRICK
-		print(target_name + \" selected\")
-	else:
-		G.put(\"Target\", \"None\")
-		get_parent().color = Color.WHITE
-		print(target_name + \" deselected\")
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
 [sub_resource type="GDScript" id="GDScript_gcl24"]
 script/source = "@tool
 extends U
@@ -277,6 +111,11 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Node2D):
 	print(\"Starting player turn\")
+	G.put(\"Target\", \"None\")
+	if G.get_parent().find_child(\"enemy\", true, false):
+		for child in G.get_parent().find_child(\"enemy\", true, false).get_children():
+			(child as PlaceholderShape).color = Color.WHITE
+		
 "
 
 [sub_resource type="Resource" id="Resource_nt4oa"]
@@ -308,6 +147,56 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_kap8k")
 expression = SubResource("Resource_nt4oa")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_d8y4y"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_77evc"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_d8y4y")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4p443"]
+script = ExtResource("5_w82r7")
+signal_name = "entered"
+to = NodePath("player_can_attack")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_77evc")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_b30ul"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(transition_id, from: Node2D, to: Node2D):
+	return transition_id==7
+"
+
+[sub_resource type="Resource" id="Resource_vakct"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_b30ul")
+argument_names = ["transition_id", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3h1w6"]
+script = ExtResource("5_w82r7")
+signal_name = "exited"
+to = NodePath("..")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_vakct")
 deferred = false
 enabled = true
 
@@ -356,7 +245,12 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Node2D, to: Node2D):
-	return true
+	if G.get_parent().find_child(\"enemy\", true, false):
+		return true
+	else:
+		print(\"There is no enemy for you to battle, come back later\")
+		G.get_parent().find_child(\"enemy_turn\", true, false).exit(6)
+		return false	
 "
 
 [sub_resource type="Resource" id="Resource_kk3gy"]
@@ -884,17 +778,115 @@ only_if = SubResource("Resource_6d1lw")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_laq7p"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return \"Light Attack (-\" + str(G.at(\"PlayerLightAttackStaminaCost\")) + \" Stamina)\"
+"
+
+[sub_resource type="Resource" id="Resource_an02p"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_laq7p")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0ki86"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return G.at(\"Target\") == \"None\" or not G.get_parent().get_node(\"i5w1-modular-enemies/STATE/player_turn/player_can_attack\").active or G.get_parent().find_child(\"STAMINA\", true, false).current < G.at(\"PlayerLightAttackStaminaCost\")
+"
+
+[sub_resource type="Resource" id="Resource_pv03s"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_0ki86")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xmlkg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return \"Heavy Attack (-\" + str(G.at(\"PlayerHeavyAttackStaminaCost\")) + \" Stamina)\"
+"
+
+[sub_resource type="Resource" id="Resource_emm0t"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_xmlkg")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xn8mx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return G.at(\"Target\") == \"None\" or not G.get_parent().get_node(\"i5w1-modular-enemies/STATE/player_turn/player_can_attack\").active or G.get_parent().find_child(\"STAMINA\", true, false).current < G.at(\"PlayerHeavyAttackStaminaCost\")
+"
+
+[sub_resource type="Resource" id="Resource_xyhe1"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_xn8mx")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_l2jqh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return not G.get_parent().get_node(\"i5w1-modular-enemies/STATE/player_turn/player_can_attack\").active
+"
+
+[sub_resource type="Resource" id="Resource_mj8ia"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_l2jqh")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_updk0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return \"Rest (+\" + str(G.at(\"PlayerRestStaminaRegenAmount\")) + \" Stamina)\"
+"
+
+[sub_resource type="Resource" id="Resource_c6khq"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_updk0")
+argument_names = []
+return_value = true
+
 [sub_resource type="GDScript" id="GDScript_adeiw"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return not G.get_parent().get_node(\"i5w1-modular-enemies/STATE/player_turn\").active
+	return not G.get_parent().get_node(\"i5w1-modular-enemies/STATE/player_turn\").active or G.get_parent().get_node(\"i5w1-modular-enemies/STATE/player_turn/player_can_attack\").active
 "
 
 [sub_resource type="Resource" id="Resource_lsvs5"]
 script = ExtResource("4_wxur5")
 nested_script = SubResource("GDScript_adeiw")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ox0b2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return not G.get_parent().find_child(\"enemy\", true, false)
+"
+
+[sub_resource type="Resource" id="Resource_nbduh"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_ox0b2")
 argument_names = []
 return_value = true
 
@@ -924,7 +916,7 @@ offset_left = -10.0
 offset_top = -10.0
 offset_right = 10.0
 offset_bottom = 9.0
-script = SubResource("GDScript_37qhu")
+script = ExtResource("5_mi3vp")
 
 [node name="torso" type="Node2D" parent="enemy"]
 position = Vector2(0, 14)
@@ -947,7 +939,7 @@ offset_left = -13.0
 offset_top = -28.0
 offset_right = 13.0
 offset_bottom = 29.0
-script = SubResource("GDScript_nrspf")
+script = ExtResource("5_mi3vp")
 
 [node name="arm_left" type="Node2D" parent="enemy"]
 position = Vector2(-22, 16)
@@ -980,7 +972,7 @@ offset_left = -5.0
 offset_top = -21.0
 offset_right = 5.0
 offset_bottom = 21.0
-script = SubResource("GDScript_3cywh")
+script = ExtResource("5_mi3vp")
 
 [node name="arm_right" type="Node2D" parent="enemy"]
 position = Vector2(24, 17)
@@ -1004,7 +996,7 @@ offset_left = -5.0
 offset_top = -21.0
 offset_right = 5.0
 offset_bottom = 21.0
-script = SubResource("GDScript_uls4b")
+script = ExtResource("5_mi3vp")
 
 [node name="leg_left" type="Node2D" parent="enemy"]
 position = Vector2(-11, 63)
@@ -1028,7 +1020,7 @@ offset_left = -5.0
 offset_top = -21.0
 offset_right = 5.0
 offset_bottom = 21.0
-script = SubResource("GDScript_1c2oq")
+script = ExtResource("5_mi3vp")
 
 [node name="leg_right" type="Node2D" parent="enemy"]
 position = Vector2(13, 62)
@@ -1052,7 +1044,7 @@ offset_left = -5.0
 offset_top = -21.0
 offset_right = 5.0
 offset_bottom = 21.0
-script = SubResource("GDScript_nvc8g")
+script = ExtResource("5_mi3vp")
 
 [node name="STATE" type="Node2D" parent="."]
 position = Vector2(552, -306)
@@ -1061,7 +1053,12 @@ position = Vector2(552, -306)
 position = Vector2(-280, 96)
 script = ExtResource("3_rub11")
 active = true
-metadata/pronto_connections = [SubResource("Resource_vu03w"), SubResource("Resource_odjah")]
+metadata/pronto_connections = [SubResource("Resource_vu03w"), SubResource("Resource_odjah"), SubResource("Resource_4p443")]
+
+[node name="player_can_attack" type="Node2D" parent="STATE/player_turn"]
+position = Vector2(-118, -136)
+script = ExtResource("3_rub11")
+metadata/pronto_connections = [SubResource("Resource_3h1w6")]
 
 [node name="enemy_turn" type="Node2D" parent="STATE"]
 position = Vector2(-122, 94)
@@ -1116,7 +1113,7 @@ metadata/pronto_connections = [SubResource("Resource_2n01c")]
 position = Vector2(0, 488)
 
 [node name="PLAYER_HEALTH" type="Node2D" parent="UI"]
-position = Vector2(145, -9)
+position = Vector2(99, -10)
 scale = Vector2(4, 4)
 script = ExtResource("2_m4bil")
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
@@ -1132,15 +1129,94 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
+[node name="STAMINA" type="Node2D" parent="UI"]
+position = Vector2(301, -10)
+scale = Vector2(4, 4)
+script = ExtResource("2_m4bil")
+current = 10
+max = 10
+progress_colors = PackedColorArray(0.709804, 0.768627, 0.0745098, 1, 0.560784, 0.713726, 0.643137, 1, 0, 0.72549, 0.996078, 1)
+
+[node name="Label" type="Label" parent="UI/STAMINA"]
+offset_left = -60.0
+offset_top = -18.25
+offset_right = 64.0
+offset_bottom = 7.75
+theme_override_font_sizes/font_size = 5
+text = "Stamina"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="PanelContainer" type="PanelContainer" parent="UI"]
-offset_right = 294.0
-offset_bottom = 158.0
+offset_right = 400.0
+offset_bottom = 161.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="UI/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="light_attack" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Light Attack (-1 Stamina)"
+script = ExtResource("7_eoycw")
+
+[node name="Bind2" type="Node2D" parent="UI/PanelContainer/VBoxContainer/HBoxContainer/light_attack"]
+position = Vector2(-122.602, -5.3591e-06)
+script = ExtResource("6_3m8bw")
+evaluate = SubResource("Resource_an02p")
+to_prop = "text"
+
+[node name="Bind3" type="Node2D" parent="UI/PanelContainer/VBoxContainer/HBoxContainer/light_attack"]
+position = Vector2(21, -108)
+script = ExtResource("6_3m8bw")
+evaluate = SubResource("Resource_pv03s")
+to_prop = "disabled"
+
+[node name="heavy_attack" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Heavy Attack (-3 Stamina)"
+script = ExtResource("8_fqpas")
+
+[node name="Bind" type="Node2D" parent="UI/PanelContainer/VBoxContainer/HBoxContainer/heavy_attack"]
+position = Vector2(-124.255, -5.43135e-06)
+script = ExtResource("6_3m8bw")
+evaluate = SubResource("Resource_emm0t")
+to_prop = "text"
+
+[node name="Bind2" type="Node2D" parent="UI/PanelContainer/VBoxContainer/HBoxContainer/heavy_attack"]
+position = Vector2(-165.853, -7.24968e-06)
+script = ExtResource("6_3m8bw")
+evaluate = SubResource("Resource_xyhe1")
+to_prop = "disabled"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="rest" type="Button" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Rest (+5 Stamina)"
+script = ExtResource("9_cnxar")
+
+[node name="Bind" type="Node2D" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2/rest"]
+position = Vector2(202, -70)
+script = ExtResource("6_3m8bw")
+evaluate = SubResource("Resource_mj8ia")
+to_prop = "disabled"
+
+[node name="Bind2" type="Node2D" parent="UI/PanelContainer/VBoxContainer/HBoxContainer2/rest"]
+position = Vector2(-200, -8.74228e-06)
+script = ExtResource("6_3m8bw")
+evaluate = SubResource("Resource_c6khq")
+to_prop = "text"
+
+[node name="Button" type="Button" parent="UI/PanelContainer/VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+size_flags_vertical = 3
 text = "End Turn"
 script = ExtResource("6_adlgl")
 
@@ -1174,3 +1250,67 @@ float_from = 0.0
 float_to = 100.0
 float_value = 5.0
 float_step_size = 1.0
+
+[node name="PlayerBaseDamage" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(-7.07107, -7.07107)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 100.0
+float_value = 4.0
+float_step_size = 0.5
+
+[node name="PlayerChanceToHit" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(8.74228e-07, -10)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 100.0
+float_value = 50.0
+float_step_size = 1.0
+
+[node name="PlayerLightAttackStaminaCost" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(7.07107, -7.07107)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 10.0
+float_value = 1.0
+float_step_size = 0.5
+
+[node name="PlayerHeavyAttackStaminaCost" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(12.0711, 1.43946e-07)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 10.0
+float_value = 3.0
+float_step_size = 0.5
+
+[node name="PlayerRestStaminaRegenAmount" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(9.86505, 9.86505)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 10.0
+float_value = 5.0
+float_step_size = 0.5
+
+[node name="PlayerHeavyAttackDamageMultiplier" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(-2.59596e-06, 14.8472)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 10.0
+float_value = 2.0
+float_step_size = 0.1
+
+[node name="Label" type="Label" parent="."]
+offset_left = 191.0
+offset_top = 187.0
+offset_right = 1029.0
+offset_bottom = 429.0
+theme_override_font_sizes/font_size = 171
+text = "YOU WON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bind" type="Node2D" parent="Label"]
+position = Vector2(-29.4045, 29.4045)
+script = ExtResource("6_3m8bw")
+evaluate = SubResource("Resource_nbduh")
+to_prop = "visible"
