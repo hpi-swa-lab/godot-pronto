@@ -1,0 +1,280 @@
+[gd_scene load_steps=29 format=3 uid="uid://b02egigh5i21k"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_s203y"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_6m4dm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_s2mpb"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_gnhcm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="5_36bca"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="7_kxp4j"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_ol4m8"]
+
+[sub_resource type="GDScript" id="GDScript_mnmtl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(200, 200)
+"
+
+[sub_resource type="Resource" id="Resource_sx8su"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_mnmtl")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_b5ssd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	var rng = RandomNumberGenerator.new()
+	return rng.randi_range(0, to.get_children().size())
+"
+
+[sub_resource type="Resource" id="Resource_al5fe"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_b5ssd")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_8lr2g"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_pr8hw"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_8lr2g")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a66if"]
+script = ExtResource("7_ol4m8")
+signal_name = "elapsed"
+to = NodePath("../EnemySpawner")
+more_references = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_sx8su"), SubResource("Resource_al5fe")]
+only_if = SubResource("Resource_pr8hw")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_cq3va"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(800, 200)
+"
+
+[sub_resource type="Resource" id="Resource_mt6p4"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_cq3va")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_sexj3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	var rng = RandomNumberGenerator.new()
+	return rng.randi_range(0, to.get_children().size())
+"
+
+[sub_resource type="Resource" id="Resource_qc1rs"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_sexj3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_7glpp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_xd4m5"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_7glpp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1hk5j"]
+script = ExtResource("7_ol4m8")
+signal_name = "elapsed"
+to = NodePath("../EnemySpawner")
+more_references = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_mt6p4"), SubResource("Resource_qc1rs")]
+only_if = SubResource("Resource_xd4m5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_2xo1o"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(1400, 200)
+"
+
+[sub_resource type="Resource" id="Resource_fx2fc"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_2xo1o")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_arow7"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	var rng = RandomNumberGenerator.new()
+	return rng.randi_range(0, to.get_children().size())
+"
+
+[sub_resource type="Resource" id="Resource_o8mdg"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_arow7")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0kswa"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_xsxii"]
+script = ExtResource("7_kxp4j")
+nested_script = SubResource("GDScript_0kswa")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_r1gxl"]
+script = ExtResource("7_ol4m8")
+signal_name = "elapsed"
+to = NodePath("../EnemySpawner")
+more_references = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_fx2fc"), SubResource("Resource_o8mdg")]
+only_if = SubResource("Resource_xsxii")
+deferred = false
+enabled = true
+
+[node name="roguelike_tetris" type="Node2D"]
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+position = Vector2(500, 250)
+script = ExtResource("1_s203y")
+
+[node name="I" type="Node2D" parent="EnemySpawner"]
+position = Vector2(343, -246)
+script = ExtResource("2_6m4dm")
+placeholder_size = Vector2(256, 256)
+sprite_texture = ExtResource("3_gnhcm")
+
+[node name="HealthBar" type="Node2D" parent="EnemySpawner/I"]
+position = Vector2(0, -144)
+script = ExtResource("2_s2mpb")
+healthbar_size = Vector2(256, 16)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="J" type="Node2D" parent="EnemySpawner"]
+position = Vector2(660, -246)
+script = ExtResource("2_6m4dm")
+placeholder_size = Vector2(256, 256)
+sprite_texture = ExtResource("3_gnhcm")
+
+[node name="HealthBar" type="Node2D" parent="EnemySpawner/J"]
+position = Vector2(0, -144)
+script = ExtResource("2_s2mpb")
+healthbar_size = Vector2(256, 16)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="L" type="Node2D" parent="EnemySpawner"]
+position = Vector2(956, -242)
+script = ExtResource("2_6m4dm")
+placeholder_size = Vector2(256, 256)
+sprite_texture = ExtResource("3_gnhcm")
+
+[node name="HealthBar" type="Node2D" parent="EnemySpawner/L"]
+position = Vector2(0, -144)
+script = ExtResource("2_s2mpb")
+healthbar_size = Vector2(256, 16)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="O" type="Node2D" parent="EnemySpawner"]
+position = Vector2(1239, -245)
+script = ExtResource("2_6m4dm")
+placeholder_size = Vector2(256, 256)
+sprite_texture = ExtResource("3_gnhcm")
+
+[node name="HealthBar" type="Node2D" parent="EnemySpawner/O"]
+position = Vector2(0, -144)
+script = ExtResource("2_s2mpb")
+healthbar_size = Vector2(256, 16)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="S" type="Node2D" parent="EnemySpawner"]
+position = Vector2(1519, -239)
+script = ExtResource("2_6m4dm")
+placeholder_size = Vector2(256, 256)
+sprite_texture = ExtResource("3_gnhcm")
+
+[node name="HealthBar" type="Node2D" parent="EnemySpawner/S"]
+position = Vector2(0, -144)
+script = ExtResource("2_s2mpb")
+healthbar_size = Vector2(256, 16)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="T" type="Node2D" parent="EnemySpawner"]
+position = Vector2(1815, -236)
+script = ExtResource("2_6m4dm")
+placeholder_size = Vector2(256, 256)
+sprite_texture = ExtResource("3_gnhcm")
+
+[node name="HealthBar" type="Node2D" parent="EnemySpawner/T"]
+position = Vector2(0, -144)
+script = ExtResource("2_s2mpb")
+healthbar_size = Vector2(256, 16)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="Z" type="Node2D" parent="EnemySpawner"]
+position = Vector2(2103, -235)
+script = ExtResource("2_6m4dm")
+placeholder_size = Vector2(256, 256)
+sprite_texture = ExtResource("3_gnhcm")
+
+[node name="HealthBar" type="Node2D" parent="EnemySpawner/Z"]
+position = Vector2(0, -144)
+script = ExtResource("2_s2mpb")
+healthbar_size = Vector2(256, 16)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="WeaponSpawner" type="Node2D" parent="."]
+position = Vector2(1.74846e-05, -200)
+script = ExtResource("1_s203y")
+
+[node name="HealthBar" type="Node2D" parent="."]
+position = Vector2(960, 1030)
+script = ExtResource("2_s2mpb")
+healthbar_size = Vector2(1920, 100)
+label = 3
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="Clock" type="Node2D" parent="."]
+position = Vector2(-105, -78)
+script = ExtResource("5_36bca")
+one_shot = true
+duration_seconds = 0.0001
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_a66if"), SubResource("Resource_1hk5j"), SubResource("Resource_r1gxl")]
