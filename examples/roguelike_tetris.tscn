@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://b02egigh5i21k"]
+[gd_scene load_steps=89 format=3 uid="uid://b02egigh5i21k"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_iiki0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_faeex"]
@@ -11,35 +11,37 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_eixic"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="10_x3ble"]
 
-[sub_resource type="GDScript" id="GDScript_7ws7x"]
+[sub_resource type="GDScript" id="GDScript_a0w8e"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return from.global_position
+func run(from):
+	var rng = RandomNumberGenerator.new()
+	c(\"EnemySpawner\").spawn_at(from.get_parent().global_position, rng.randi_range(0, 6))
+	from.queue_free()
 "
 
-[sub_resource type="Resource" id="Resource_1p7dp"]
+[sub_resource type="Resource" id="Resource_ccxvj"]
 script = ExtResource("6_2mfj3")
-nested_script = SubResource("GDScript_7ws7x")
-argument_names = ["from", "to"]
+nested_script = SubResource("GDScript_a0w8e")
+argument_names = ["from"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_cnyvh"]
+[sub_resource type="GDScript" id="GDScript_neocu"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return 0
+func run(from, to):
+	return from
 "
 
-[sub_resource type="Resource" id="Resource_cb4ir"]
+[sub_resource type="Resource" id="Resource_8ju6o"]
 script = ExtResource("6_2mfj3")
-nested_script = SubResource("GDScript_cnyvh")
+nested_script = SubResource("GDScript_neocu")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_45vpn"]
+[sub_resource type="GDScript" id="GDScript_do5h5"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -47,20 +49,254 @@ func run(from: Node2D, to: Node2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_3bubc"]
+[sub_resource type="Resource" id="Resource_yb7s0"]
 script = ExtResource("6_2mfj3")
-nested_script = SubResource("GDScript_45vpn")
+nested_script = SubResource("GDScript_do5h5")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_t6323"]
+[sub_resource type="Resource" id="Resource_vkgpl"]
 script = ExtResource("7_eixic")
 signal_name = "death"
-to = NodePath("../..")
+to = NodePath("../../../EnemySpawnerCode")
 more_references = []
-invoke = "spawn_at"
-arguments = [SubResource("Resource_1p7dp"), SubResource("Resource_cb4ir")]
-only_if = SubResource("Resource_3bubc")
+invoke = "execute"
+arguments = [SubResource("Resource_8ju6o")]
+only_if = SubResource("Resource_yb7s0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_elwos"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return from
+"
+
+[sub_resource type="Resource" id="Resource_nvigx"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_elwos")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jr008"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_pt05x"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_jr008")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ojxfs"]
+script = ExtResource("7_eixic")
+signal_name = "death"
+to = NodePath("../../../EnemySpawnerCode")
+more_references = []
+invoke = "execute"
+arguments = [SubResource("Resource_nvigx")]
+only_if = SubResource("Resource_pt05x")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_tjfne"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return from
+"
+
+[sub_resource type="Resource" id="Resource_8c7p8"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_tjfne")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_w6sd4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_hb5o4"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_w6sd4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dq5t4"]
+script = ExtResource("7_eixic")
+signal_name = "death"
+to = NodePath("../../../EnemySpawnerCode")
+more_references = []
+invoke = "execute"
+arguments = [SubResource("Resource_8c7p8")]
+only_if = SubResource("Resource_hb5o4")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_n207w"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return from
+"
+
+[sub_resource type="Resource" id="Resource_juv0b"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_n207w")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_1kacq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_6nqfm"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_1kacq")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_vo3wv"]
+script = ExtResource("7_eixic")
+signal_name = "death"
+to = NodePath("../../../EnemySpawnerCode")
+more_references = []
+invoke = "execute"
+arguments = [SubResource("Resource_juv0b")]
+only_if = SubResource("Resource_6nqfm")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_0t4u7"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return from
+"
+
+[sub_resource type="Resource" id="Resource_g48sg"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_0t4u7")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dgm0b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_b82wu"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_dgm0b")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1urbk"]
+script = ExtResource("7_eixic")
+signal_name = "death"
+to = NodePath("../../../EnemySpawnerCode")
+more_references = []
+invoke = "execute"
+arguments = [SubResource("Resource_g48sg")]
+only_if = SubResource("Resource_b82wu")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_oqsqe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return from
+"
+
+[sub_resource type="Resource" id="Resource_1qfco"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_oqsqe")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_2vl7c"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4j1vt"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_2vl7c")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ifs6o"]
+script = ExtResource("7_eixic")
+signal_name = "death"
+to = NodePath("../../../EnemySpawnerCode")
+more_references = []
+invoke = "execute"
+arguments = [SubResource("Resource_1qfco")]
+only_if = SubResource("Resource_4j1vt")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_7b5jg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return from
+"
+
+[sub_resource type="Resource" id="Resource_jetyw"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_7b5jg")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bhu2e"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_0fe27"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_bhu2e")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_n2uef"]
+script = ExtResource("7_eixic")
+signal_name = "death"
+to = NodePath("../../../EnemySpawnerCode")
+more_references = []
+invoke = "execute"
+arguments = [SubResource("Resource_jetyw")]
+only_if = SubResource("Resource_0fe27")
 deferred = false
 enabled = true
 
@@ -180,7 +416,7 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(from, to):
 	var rng = RandomNumberGenerator.new()
-	return rng.randi_range(0, to.get_children().size())
+	return rng.randi_range(0, 6)
 "
 
 [sub_resource type="Resource" id="Resource_al5fe"]
@@ -234,7 +470,7 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(from, to):
 	var rng = RandomNumberGenerator.new()
-	return rng.randi_range(0, to.get_children().size())
+	return rng.randi_range(0, 6)
 "
 
 [sub_resource type="Resource" id="Resource_qc1rs"]
@@ -288,7 +524,7 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(from, to):
 	var rng = RandomNumberGenerator.new()
-	return rng.randi_range(0, to.get_children().size())
+	return rng.randi_range(0, 6)
 "
 
 [sub_resource type="Resource" id="Resource_o8mdg"]
@@ -378,6 +614,13 @@ enabled = true
 [node name="roguelike_tetris" type="Node2D"]
 metadata/_edit_horizontal_guides_ = []
 
+[node name="EnemySpawnerCode" type="Node2D" parent="."]
+position = Vector2(481, 174)
+script = ExtResource("5_yrnr6")
+arguments = PackedStringArray("from")
+evaluate = SubResource("Resource_ccxvj")
+metadata/pronto_connections = []
+
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(500, 250)
 script = ExtResource("1_iiki0")
@@ -393,7 +636,7 @@ position = Vector2(0, -144)
 script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
-metadata/pronto_connections = [SubResource("Resource_t6323")]
+metadata/pronto_connections = [SubResource("Resource_vkgpl")]
 
 [node name="J" type="Node2D" parent="EnemySpawner"]
 position = Vector2(660, -246)
@@ -406,6 +649,7 @@ position = Vector2(0, -144)
 script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_ojxfs")]
 
 [node name="L" type="Node2D" parent="EnemySpawner"]
 position = Vector2(956, -242)
@@ -418,6 +662,7 @@ position = Vector2(0, -144)
 script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_dq5t4")]
 
 [node name="O" type="Node2D" parent="EnemySpawner"]
 position = Vector2(1239, -245)
@@ -430,6 +675,7 @@ position = Vector2(0, -144)
 script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_vo3wv")]
 
 [node name="S" type="Node2D" parent="EnemySpawner"]
 position = Vector2(1519, -239)
@@ -442,6 +688,7 @@ position = Vector2(0, -144)
 script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_1urbk")]
 
 [node name="T" type="Node2D" parent="EnemySpawner"]
 position = Vector2(1815, -236)
@@ -454,6 +701,7 @@ position = Vector2(0, -144)
 script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_ifs6o")]
 
 [node name="Z" type="Node2D" parent="EnemySpawner"]
 position = Vector2(2103, -235)
@@ -466,6 +714,7 @@ position = Vector2(0, -144)
 script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_n2uef")]
 
 [node name="WeaponSpawner" type="Node2D" parent="."]
 position = Vector2(489, 674)
