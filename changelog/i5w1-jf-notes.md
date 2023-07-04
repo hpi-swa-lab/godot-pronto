@@ -22,6 +22,16 @@ For our inputs we have 6 keys per player, however we only want to trigger the sa
 
 We had a problem with the HealthBar where it resets the current health to max on godot startup. We found the problem for this and want to fix it in the next week for master.
 
+### Value
+
+When changing the `min` or `max` of the value, the current value is not updated if it is outside these bounds.
+
+### Connection Window
+
+The text inputs for the parameters do not scale anymore. This means that for some input you cannot read it in the window which is annoying. Even moving the cursor further doesn't scroll the window. Resizing the window does nothing either.
+
+![Text in the parameter field is not readable](i5w1-jf-ProblemWindow.png)
+
 ## User study
 
 We also conducted a user study this week. For simplicity we also noted down the basic commands and goal of the game to present to the users.
@@ -89,3 +99,5 @@ We also thought about more improvements for our features from last week:
 * **Placeholder**: Add "Emoji-API" as a fast way of finding sprites.
 * **Select-Behavior**: Think about adding a new behavior for drag-to-select (or mayber even drag-and-drop) options (like we used in our last weeks prototype).
 * **Key**: Add option to show the key-node in the game with a label to describe the controls of the game.
+* **Value**: Fix out of bounds when changinig `min` or `max`.
+* **Code**: Remove Label from Code-Behavior and use the name from the object-tree instead

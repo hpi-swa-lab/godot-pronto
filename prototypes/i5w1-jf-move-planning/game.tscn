@@ -1,4 +1,4 @@
-[gd_scene load_steps=154 format=3 uid="uid://bgxt4wcv8r1mj"]
+[gd_scene load_steps=187 format=3 uid="uid://bgxt4wcv8r1mj"]
 
 [ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://assets/simple_tileset/overworld.png" id="1_il3if"]
 [ext_resource type="Texture2D" uid="uid://cu3poyas45glr" path="res://assets/simple_tileset/scifitiles-sheet.png" id="1_krj8n"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="17_y0ke2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="18_18wwb"]
 [ext_resource type="Script" path="res://prototypes/i5w1-jf-move-planning/DamageField.gd" id="19_pl3ob"]
+[ext_resource type="Texture2D" uid="uid://clp50jj8va5ku" path="res://prototypes/i5w1-jf-move-planning/heal.png" id="22_rbagc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_44gr1"]
 texture = ExtResource("1_krj8n")
@@ -1236,6 +1237,164 @@ nested_script = SubResource("GDScript_lcjet")
 argument_names = []
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_ubnj5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return at(\"HealAmount\")
+"
+
+[sub_resource type="Resource" id="Resource_cq0fi"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_ubnj5")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_44wlk"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_se546"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_44wlk")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ir76h"]
+script = ExtResource("5_pwq2o")
+signal_name = "collided"
+to = NodePath("../../HealthBar1")
+more_references = []
+invoke = "heal"
+arguments = [SubResource("Resource_cq0fi")]
+only_if = SubResource("Resource_se546")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_sm12t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_fl1a0"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_sm12t")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_vshb8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_dn3b6"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_vshb8")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a182f"]
+script = ExtResource("5_pwq2o")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_dn3b6")
+expression = SubResource("Resource_fl1a0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_rjl4e"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return at(\"HealAmount\")
+"
+
+[sub_resource type="Resource" id="Resource_sikb5"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_rjl4e")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_reogd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_dhgib"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_reogd")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_aumyc"]
+script = ExtResource("5_pwq2o")
+signal_name = "collided"
+to = NodePath("../../HealthBar2")
+more_references = []
+invoke = "heal"
+arguments = [SubResource("Resource_sikb5")]
+only_if = SubResource("Resource_dhgib")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_hfe14"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_d63au"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_hfe14")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_h257n"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8t4bj"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_h257n")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4bpso"]
+script = ExtResource("5_pwq2o")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_8t4bj")
+expression = SubResource("Resource_d63au")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_h55hd"]
 script/source = "@tool
 extends U
@@ -1284,12 +1443,13 @@ func run():
 				player2.box_attack()
 		prog_bar1.damage(1)
 		prog_bar2.damage(1)
+		return false
 	else:
 		## reset
 		put(\"queue\", randf() <= at(\"QueueProb\"))
 		put(\"Moves\", randi_range(1, 5))
 		get_parent().get_node(\"ActivationCheck\").get_node(\"Clock\").paused = true
-	return null
+		return true
 "
 
 [sub_resource type="Resource" id="Resource_upyne"]
@@ -1297,6 +1457,31 @@ script = ExtResource("4_4hiwy")
 nested_script = SubResource("GDScript_h55hd")
 argument_names = []
 return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hnt7p"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_3kki4"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_hnt7p")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ka677"]
+script = ExtResource("5_pwq2o")
+signal_name = "after"
+to = NodePath("../HealPlacer")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_3kki4")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_er6fi"]
 script/source = "@tool
@@ -1584,6 +1769,80 @@ font_size = 150
 outline_size = 20
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="GDScript" id="GDScript_h047g"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	const quadrant_size: float = 64
+	const zero_position: Vector2 = Vector2(345, 76)
+	
+	if randf() > at(\"HealSpawnProb\"): return false
+	var x = randi_range(0, 7)
+	var y = randi_range(0, 7)
+	
+	return zero_position + Vector2(x, y) * quadrant_size
+"
+
+[sub_resource type="Resource" id="Resource_q8j8e"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_h047g")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_uc76i"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_qelgn"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_uc76i")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_m0t66"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return -1
+"
+
+[sub_resource type="Resource" id="Resource_rxsk4"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_m0t66")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_aprcp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_808gh"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_aprcp")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_aom7c"]
+script = ExtResource("5_pwq2o")
+signal_name = "after"
+to = NodePath("HealSpawner")
+more_references = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_qelgn"), SubResource("Resource_rxsk4")]
+only_if = SubResource("Resource_808gh")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -1762,7 +2021,7 @@ script = ExtResource("8_0hls7")
 evaluate = SubResource("Resource_ouofw")
 to_prop = "text"
 
-[node name="Player1" type="Area2D" parent="." groups=["player1"]]
+[node name="Player1" type="Area2D" parent="." groups=["player", "player1"]]
 position = Vector2(345, 523)
 script = ExtResource("7_2akbo")
 current_field = Vector2(0, 7)
@@ -1773,7 +2032,13 @@ placeholder_size = Vector2(40, 50)
 use_sprite = true
 sprite_texture = ExtResource("10_xll7j")
 
-[node name="Player2" type="Area2D" parent="." groups=["player2"]]
+[node name="Collision" type="Node2D" parent="Player1"]
+position = Vector2(57, -1)
+script = ExtResource("18_18wwb")
+limit_to_group = "heal"
+metadata/pronto_connections = [SubResource("Resource_ir76h"), SubResource("Resource_a182f")]
+
+[node name="Player2" type="Area2D" parent="." groups=["player", "player2"]]
 position = Vector2(793, 76)
 script = ExtResource("7_2akbo")
 current_field = Vector2(7, 0)
@@ -1784,6 +2049,12 @@ script = ExtResource("3_nqh52")
 placeholder_size = Vector2(40, 50)
 use_sprite = true
 sprite_texture = ExtResource("11_g4c7b")
+
+[node name="Collision" type="Node2D" parent="Player2"]
+position = Vector2(-32.0156, -1.39945e-06)
+script = ExtResource("18_18wwb")
+limit_to_group = "heal"
+metadata/pronto_connections = [SubResource("Resource_aumyc"), SubResource("Resource_4bpso")]
 
 [node name="Store" type="Node2D" parent="."]
 position = Vector2(71, 59)
@@ -1797,6 +2068,7 @@ position = Vector2(868, 122)
 script = ExtResource("3_8sldm")
 label = "TurnExectuor"
 evaluate = SubResource("Resource_upyne")
+metadata/pronto_connections = [SubResource("Resource_ka677")]
 
 [node name="ActivationCheck" type="Node2D" parent="."]
 position = Vector2(970, 103)
@@ -1818,7 +2090,7 @@ to_prop = "duration_seconds"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_right = 300.0
-offset_bottom = 153.0
+offset_bottom = 204.0
 
 [node name="Settings" type="Node2D" parent="PanelContainer"]
 position = Vector2(-20, 20)
@@ -1847,6 +2119,22 @@ float_from = 0.25
 float_to = 3.0
 float_value = 1.0
 float_step_size = 0.25
+
+[node name="HealSpawnProb" type="Node2D" parent="PanelContainer/Settings"]
+position = Vector2(8.53554, -8.53554)
+script = ExtResource("14_i77nb")
+float_from = 0.0
+float_to = 1.0
+float_value = 0.3
+float_step_size = 0.05
+
+[node name="HealAmount" type="Node2D" parent="PanelContainer/Settings"]
+position = Vector2(8.74228e-07, -10)
+script = ExtResource("14_i77nb")
+float_from = 10.0
+float_to = 100.0
+float_value = 40.0
+float_step_size = 1.0
 
 [node name="CrossSpawner1" type="Node2D" parent="."]
 position = Vector2(216, 258)
@@ -1943,3 +2231,23 @@ text = "`IJKL`- Move
 `U` - Cross Attack
 `O` - Box-Attack"
 horizontal_alignment = 2
+
+[node name="HealPlacer" type="Node2D" parent="."]
+position = Vector2(885, 208)
+script = ExtResource("3_8sldm")
+label = "Heal Placer"
+evaluate = SubResource("Resource_q8j8e")
+metadata/pronto_connections = [SubResource("Resource_aom7c")]
+
+[node name="HealSpawner" type="Node2D" parent="HealPlacer"]
+position = Vector2(40, 7.00002)
+script = ExtResource("16_bfvjy")
+
+[node name="Area2D" type="Area2D" parent="HealPlacer/HealSpawner" groups=["heal"]]
+position = Vector2(46, 32)
+
+[node name="Placeholder" type="Node2D" parent="HealPlacer/HealSpawner/Area2D"]
+script = ExtResource("3_nqh52")
+placeholder_size = Vector2(35, 35)
+use_sprite = true
+sprite_texture = ExtResource("22_rbagc")
