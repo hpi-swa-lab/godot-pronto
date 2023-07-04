@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://b02egigh5i21k"]
+[gd_scene load_steps=109 format=3 uid="uid://b02egigh5i21k"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_iiki0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_faeex"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://qtsulse86m03" path="res://images/S.png" id="11_aq6vs"]
 [ext_resource type="Texture2D" uid="uid://k6jx8pkmg5d5" path="res://images/T.png" id="12_g3ktn"]
 [ext_resource type="Texture2D" uid="uid://cowwgha8ppn4q" path="res://images/Z.png" id="13_m4vd3"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Store.gd" id="14_0forn"]
 [ext_resource type="Texture2D" uid="uid://rs00g1r727kc" path="res://images/sword.png" id="15_ignc2"]
 [ext_resource type="Texture2D" uid="uid://o6khbx6rq3jm" path="res://images/mace.png" id="17_ukog8"]
 [ext_resource type="Texture2D" uid="uid://ogbft1ibweh3" path="res://images/spear.png" id="18_8hpah"]
@@ -307,6 +308,127 @@ more_references = []
 invoke = "execute"
 arguments = [SubResource("Resource_jetyw")]
 only_if = SubResource("Resource_0fe27")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fn5fi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return 5
+"
+
+[sub_resource type="Resource" id="Resource_sj0v5"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_fn5fi")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_do5tq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return \"Enemy\"
+"
+
+[sub_resource type="Resource" id="Resource_uw8xv"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_do5tq")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_go328"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return func(from, node): 
+		node.damage(G.at(\"dmg\"))
+"
+
+[sub_resource type="Resource" id="Resource_m6opp"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_go328")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_80l2o"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return Vector2(200,200)
+"
+
+[sub_resource type="Resource" id="Resource_nppsk"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_80l2o")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_5jccd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return 200
+"
+
+[sub_resource type="Resource" id="Resource_hyj25"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_5jccd")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_yhjgt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_5h4b0"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_yhjgt")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_smhb8"]
+script = ExtResource("7_eixic")
+signal_name = "after"
+to = NodePath("..")
+more_references = []
+invoke = "apply_within_dist"
+arguments = [SubResource("Resource_uw8xv"), SubResource("Resource_m6opp"), SubResource("Resource_nppsk"), SubResource("Resource_hyj25")]
+only_if = SubResource("Resource_5h4b0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_jfvvi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ilgha"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_jfvvi")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_culvy"]
+script = ExtResource("7_eixic")
+signal_name = "down"
+to = NodePath("../../../leftLane/Code2")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_ilgha")
 deferred = false
 enabled = true
 
@@ -679,16 +801,32 @@ healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 metadata/pronto_connections = [SubResource("Resource_n2uef")]
 
-[node name="SceneRoot" type="Node2D" parent="."]
-position = Vector2(200, 2.38498e-06)
+[node name="Store" type="Node2D" parent="."]
+position = Vector2(454, 71)
+script = ExtResource("14_0forn")
+global = true
+metadata/sword_dmg = 1
+metadata/mace_dmg = 5
+metadata/spear_dmg = 3
+metadata/shield_heal = 5
+metadata/dmg = 0
+
+[node name="leftLane" type="Node2D" parent="."]
+position = Vector2(287, 265)
 script = ExtResource("7_6o1cq")
 
-[node name="SceneRoot2" type="Node2D" parent="."]
-position = Vector2(141.421, 141.421)
+[node name="Code2" type="Node2D" parent="leftLane"]
+position = Vector2(42, 134)
+script = ExtResource("5_yrnr6")
+evaluate = SubResource("Resource_sj0v5")
+metadata/pronto_connections = [SubResource("Resource_smhb8")]
+
+[node name="middleLane" type="Node2D" parent="."]
+position = Vector2(1000, 270)
 script = ExtResource("7_6o1cq")
 
-[node name="SceneRoot3" type="Node2D" parent="."]
-position = Vector2(-3.49691e-05, 200)
+[node name="rightLane" type="Node2D" parent="."]
+position = Vector2(1699, 263)
 script = ExtResource("7_6o1cq")
 
 [node name="WeaponSpawner" type="Node2D" parent="."]
@@ -706,7 +844,7 @@ sprite_texture = ExtResource("15_ignc2")
 position = Vector2(-209, 142)
 script = ExtResource("10_x3ble")
 key = "G"
-metadata/pronto_connections = []
+metadata/pronto_connections = [SubResource("Resource_culvy")]
 
 [node name="Mace" type="Node2D" parent="WeaponSpawner"]
 position = Vector2(688, -119)
