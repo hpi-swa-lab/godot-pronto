@@ -1,4 +1,4 @@
-[gd_scene load_steps=152 format=3 uid="uid://bgxt4wcv8r1mj"]
+[gd_scene load_steps=154 format=3 uid="uid://bgxt4wcv8r1mj"]
 
 [ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://assets/simple_tileset/overworld.png" id="1_il3if"]
 [ext_resource type="Texture2D" uid="uid://cu3poyas45glr" path="res://assets/simple_tileset/scifitiles-sheet.png" id="1_krj8n"]
@@ -1458,6 +1458,20 @@ only_if = SubResource("Resource_vgxu3")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_qtiqq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return 0.8*at(\"ActionSpeed\")
+"
+
+[sub_resource type="Resource" id="Resource_43ixh"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_qtiqq")
+argument_names = []
+return_value = true
+
 [sub_resource type="GDScript" id="GDScript_eeidx"]
 script/source = "@tool
 extends U
@@ -1691,37 +1705,37 @@ metadata/pronto_connections = [SubResource("Resource_0rxul")]
 [node name="Up" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(-49, -97)
 script = ExtResource("6_0t503")
-key = "Up"
+key = "I"
 metadata/pronto_connections = [SubResource("Resource_2wjop")]
 
 [node name="Down" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(-48, -77)
 script = ExtResource("6_0t503")
-key = "Down"
+key = "K"
 metadata/pronto_connections = [SubResource("Resource_w5uqc")]
 
 [node name="Left" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(-69, -76)
 script = ExtResource("6_0t503")
-key = "Left"
+key = "J"
 metadata/pronto_connections = [SubResource("Resource_7sj1s")]
 
 [node name="Right" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(-26, -77)
 script = ExtResource("6_0t503")
-key = "Right"
+key = "L"
 metadata/pronto_connections = [SubResource("Resource_rb1lp")]
 
 [node name="CrossAttack" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(30, -78)
 script = ExtResource("6_0t503")
-key = "Period"
+key = "U"
 metadata/pronto_connections = [SubResource("Resource_2di0c")]
 
 [node name="BoxAttack" type="Node2D" parent="HealthBar2/ProgressBar2/HandleInput"]
 position = Vector2(50, -78)
 script = ExtResource("6_0t503")
-key = "Minus"
+key = "O"
 metadata/pronto_connections = [SubResource("Resource_anp70")]
 
 [node name="Bind" type="Node2D" parent="HealthBar2/ProgressBar2"]
@@ -1855,6 +1869,12 @@ duration_seconds = 0.75
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_s13g2")]
 
+[node name="Bind" type="Node2D" parent="CrossSpawner1/DamageField/Clock"]
+position = Vector2(-7.07107, 7.07107)
+script = ExtResource("8_0hls7")
+evaluate = SubResource("Resource_43ixh")
+to_prop = "duration_seconds"
+
 [node name="Collision" type="Node2D" parent="CrossSpawner1/DamageField"]
 position = Vector2(-33.252, -33.252)
 script = ExtResource("18_18wwb")
@@ -1882,6 +1902,12 @@ duration_seconds = 0.75
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_c1te7")]
 
+[node name="Bind" type="Node2D" parent="CrossSpawner2/DamageField/Clock"]
+position = Vector2(-23, 28)
+script = ExtResource("8_0hls7")
+evaluate = SubResource("Resource_43ixh")
+to_prop = "duration_seconds"
+
 [node name="Collision" type="Node2D" parent="CrossSpawner2/DamageField"]
 position = Vector2(-38.833, -38.833)
 script = ExtResource("18_18wwb")
@@ -1898,3 +1924,22 @@ label_settings = SubResource("LabelSettings_qqy7b")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="ControlsP1" type="Label" parent="."]
+offset_left = 312.0
+offset_top = 570.0
+offset_right = 519.0
+offset_bottom = 646.0
+text = "`WASD` - Move
+`Q` - Cross Attack
+`E` - Box-Attack"
+
+[node name="ControlsP2" type="Label" parent="."]
+offset_left = 657.0
+offset_top = 572.0
+offset_right = 825.0
+offset_bottom = 642.0
+text = "`IJKL`- Move
+`U` - Cross Attack
+`O` - Box-Attack"
+horizontal_alignment = 2
