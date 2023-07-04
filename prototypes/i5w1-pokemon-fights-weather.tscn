@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmddot0oquo7m"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_rbxjt"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="2_32j1j"]
+
+[node name="i5w1-pokemon-fights-weather" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+position = Vector2(-7.07107, 7.07107)
+script = ExtResource("1_rbxjt")
+
+[node name="Round State Machine" type="Node2D" parent="."]
+position = Vector2(568, 294)
+
+[node name="Attack Selection Player 1" type="Node2D" parent="Round State Machine"]
+position = Vector2(55, 31)
+script = ExtResource("2_32j1j")
+
+[node name="Attack Selection Player 2" type="Node2D" parent="Round State Machine"]
+position = Vector2(-48, 37)
+script = ExtResource("2_32j1j")
+
+[node name="Attack Player 1" type="Node2D" parent="Round State Machine"]
+position = Vector2(57, 83)
+script = ExtResource("2_32j1j")
+
+[node name="Attack Player 2" type="Node2D" parent="Round State Machine"]
+position = Vector2(-46, 91)
+script = ExtResource("2_32j1j")
+
+[node name="End of Round" type="Node2D" parent="Round State Machine"]
+position = Vector2(9, 125)
+script = ExtResource("2_32j1j")
+
+[node name="Weather Select" type="Node2D" parent="."]
