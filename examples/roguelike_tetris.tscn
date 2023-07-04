@@ -1,12 +1,12 @@
 [gd_scene load_steps=29 format=3 uid="uid://b02egigh5i21k"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_s203y"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_6m4dm"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_s2mpb"]
-[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_gnhcm"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="5_36bca"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="7_kxp4j"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_ol4m8"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_iiki0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_faeex"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_vwucv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="4_livwy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="5_3iphb"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2mfj3"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_eixic"]
 
 [sub_resource type="GDScript" id="GDScript_mnmtl"]
 script/source = "@tool
@@ -17,7 +17,7 @@ func run(from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_sx8su"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_mnmtl")
 argument_names = ["from", "to"]
 return_value = true
@@ -32,7 +32,7 @@ func run(from, to):
 "
 
 [sub_resource type="Resource" id="Resource_al5fe"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_b5ssd")
 argument_names = ["from", "to"]
 return_value = true
@@ -46,13 +46,13 @@ func run(from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_pr8hw"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_8lr2g")
 argument_names = ["from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_a66if"]
-script = ExtResource("7_ol4m8")
+script = ExtResource("7_eixic")
 signal_name = "elapsed"
 to = NodePath("../EnemySpawner")
 more_references = []
@@ -71,7 +71,7 @@ func run(from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_mt6p4"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_cq3va")
 argument_names = ["from", "to"]
 return_value = true
@@ -86,7 +86,7 @@ func run(from, to):
 "
 
 [sub_resource type="Resource" id="Resource_qc1rs"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_sexj3")
 argument_names = ["from", "to"]
 return_value = true
@@ -100,13 +100,13 @@ func run(from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_xd4m5"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_7glpp")
 argument_names = ["from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_1hk5j"]
-script = ExtResource("7_ol4m8")
+script = ExtResource("7_eixic")
 signal_name = "elapsed"
 to = NodePath("../EnemySpawner")
 more_references = []
@@ -125,7 +125,7 @@ func run(from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_fx2fc"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_2xo1o")
 argument_names = ["from", "to"]
 return_value = true
@@ -140,7 +140,7 @@ func run(from, to):
 "
 
 [sub_resource type="Resource" id="Resource_o8mdg"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_arow7")
 argument_names = ["from", "to"]
 return_value = true
@@ -154,13 +154,13 @@ func run(from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_xsxii"]
-script = ExtResource("7_kxp4j")
+script = ExtResource("6_2mfj3")
 nested_script = SubResource("GDScript_0kswa")
 argument_names = ["from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_r1gxl"]
-script = ExtResource("7_ol4m8")
+script = ExtResource("7_eixic")
 signal_name = "elapsed"
 to = NodePath("../EnemySpawner")
 more_references = []
@@ -171,109 +171,110 @@ deferred = false
 enabled = true
 
 [node name="roguelike_tetris" type="Node2D"]
+metadata/_edit_horizontal_guides_ = []
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 position = Vector2(500, 250)
-script = ExtResource("1_s203y")
+script = ExtResource("1_iiki0")
 
 [node name="I" type="Node2D" parent="EnemySpawner"]
 position = Vector2(343, -246)
-script = ExtResource("2_6m4dm")
+script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_gnhcm")
+sprite_texture = ExtResource("3_vwucv")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/I"]
 position = Vector2(0, -144)
-script = ExtResource("2_s2mpb")
+script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="J" type="Node2D" parent="EnemySpawner"]
 position = Vector2(660, -246)
-script = ExtResource("2_6m4dm")
+script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_gnhcm")
+sprite_texture = ExtResource("3_vwucv")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/J"]
 position = Vector2(0, -144)
-script = ExtResource("2_s2mpb")
+script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="L" type="Node2D" parent="EnemySpawner"]
 position = Vector2(956, -242)
-script = ExtResource("2_6m4dm")
+script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_gnhcm")
+sprite_texture = ExtResource("3_vwucv")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/L"]
 position = Vector2(0, -144)
-script = ExtResource("2_s2mpb")
+script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="O" type="Node2D" parent="EnemySpawner"]
 position = Vector2(1239, -245)
-script = ExtResource("2_6m4dm")
+script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_gnhcm")
+sprite_texture = ExtResource("3_vwucv")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/O"]
 position = Vector2(0, -144)
-script = ExtResource("2_s2mpb")
+script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="S" type="Node2D" parent="EnemySpawner"]
 position = Vector2(1519, -239)
-script = ExtResource("2_6m4dm")
+script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_gnhcm")
+sprite_texture = ExtResource("3_vwucv")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/S"]
 position = Vector2(0, -144)
-script = ExtResource("2_s2mpb")
+script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="T" type="Node2D" parent="EnemySpawner"]
 position = Vector2(1815, -236)
-script = ExtResource("2_6m4dm")
+script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_gnhcm")
+sprite_texture = ExtResource("3_vwucv")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/T"]
 position = Vector2(0, -144)
-script = ExtResource("2_s2mpb")
+script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="Z" type="Node2D" parent="EnemySpawner"]
 position = Vector2(2103, -235)
-script = ExtResource("2_6m4dm")
+script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_gnhcm")
+sprite_texture = ExtResource("3_vwucv")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/Z"]
 position = Vector2(0, -144)
-script = ExtResource("2_s2mpb")
+script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="WeaponSpawner" type="Node2D" parent="."]
-position = Vector2(1.74846e-05, -200)
-script = ExtResource("1_s203y")
+position = Vector2(489, 674)
+script = ExtResource("1_iiki0")
 
 [node name="HealthBar" type="Node2D" parent="."]
 position = Vector2(960, 1030)
-script = ExtResource("2_s2mpb")
+script = ExtResource("4_livwy")
 healthbar_size = Vector2(1920, 100)
 label = 3
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [node name="Clock" type="Node2D" parent="."]
 position = Vector2(-105, -78)
-script = ExtResource("5_36bca")
+script = ExtResource("5_3iphb")
 one_shot = true
 duration_seconds = 0.0001
 trigger_interval_in_seconds = 1.0
