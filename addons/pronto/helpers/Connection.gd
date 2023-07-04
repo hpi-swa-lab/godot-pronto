@@ -207,14 +207,15 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 		if deferred: await ConnectionsList.get_tree().process_frame
 		if not c.is_expression():
 			var args = c.arguments.map(func (arg): return c._run_script(from, arg, values))
-			if target is Code:
-				target.call(c.invoke, args)
-			elif target is SceneRoot:
+			if target is SceneRoot:
 				if c.invoke.begins_with("apply"):
 					# add "from" to all "apply.*" functions, so that they can be
 					# added to the context of the lambda functions.
 					args.append(from)
-			target.callv(c.invoke, args)
+			if target is Code:
+				target.call(c.invoke, args)
+			else:
+				target.callv(c.invoke, args)
 			args_string = ",".join(args.map(func (s): return str(s)))
 		else:
 			c._run_script(from, c.expression, values)
