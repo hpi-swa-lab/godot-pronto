@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=3 uid="uid://dfaw7ve5q2474"]
+[gd_scene load_steps=100 format=3 uid="uid://dfaw7ve5q2474"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShape.gd" id="1_ui1dh"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_m4bil"]
@@ -75,6 +75,176 @@ only_if = SubResource("Resource_fdv0t")
 expression = SubResource("Resource_72mqv")
 deferred = false
 enabled = true
+
+[sub_resource type="GDScript" id="GDScript_37qhu"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	self.pressed.connect(_emit_pressed)
+
+var target_name = \"Head\"
+
+func _emit_pressed():
+	if G.at(\"Target\") != target_name:
+		for child in get_parent().get_parent().get_children():
+				(child as PlaceholderShape).color = Color.WHITE
+				
+		G.put(\"Target\", target_name)
+		get_parent().color = Color.FIREBRICK
+		print(target_name + \" selected\")
+	else:
+		G.put(\"Target\", \"None\")
+		get_parent().color = Color.WHITE
+		print(target_name + \" deselected\")
+	
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_nrspf"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	self.pressed.connect(_emit_pressed)
+
+var target_name = \"Torso\"
+
+func _emit_pressed():
+	if G.at(\"Target\") != target_name:
+		for child in get_parent().get_parent().get_children():
+				(child as PlaceholderShape).color = Color.WHITE
+				
+		G.put(\"Target\", target_name)
+		get_parent().color = Color.FIREBRICK
+		print(target_name + \" selected\")
+	else:
+		G.put(\"Target\", \"None\")
+		get_parent().color = Color.WHITE
+		print(target_name + \" deselected\")
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_3cywh"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	self.pressed.connect(_emit_pressed)
+
+var target_name = \"Arm_Left\"
+
+func _emit_pressed():
+	if G.at(\"Target\") != target_name:
+		for child in get_parent().get_parent().get_children():
+				(child as PlaceholderShape).color = Color.WHITE
+				
+		G.put(\"Target\", target_name)
+		get_parent().color = Color.FIREBRICK
+		print(target_name + \" selected\")
+	else:
+		G.put(\"Target\", \"None\")
+		get_parent().color = Color.WHITE
+		print(target_name + \" deselected\")
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_uls4b"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	self.pressed.connect(_emit_pressed)
+
+var target_name = \"Arm_Right\"
+
+func _emit_pressed():
+	if G.at(\"Target\") != target_name:
+		for child in get_parent().get_parent().get_children():
+				(child as PlaceholderShape).color = Color.WHITE
+				
+		G.put(\"Target\", target_name)
+		get_parent().color = Color.FIREBRICK
+		print(target_name + \" selected\")
+	else:
+		G.put(\"Target\", \"None\")
+		get_parent().color = Color.WHITE
+		print(target_name + \" deselected\")
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_1c2oq"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	self.pressed.connect(_emit_pressed)
+
+var target_name = \"Leg_Left\"
+
+func _emit_pressed():
+	if G.at(\"Target\") != target_name:
+		for child in get_parent().get_parent().get_children():
+				(child as PlaceholderShape).color = Color.WHITE
+				
+		G.put(\"Target\", target_name)
+		get_parent().color = Color.FIREBRICK
+		print(target_name + \" selected\")
+	else:
+		G.put(\"Target\", \"None\")
+		get_parent().color = Color.WHITE
+		print(target_name + \" deselected\")
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_nvc8g"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	self.pressed.connect(_emit_pressed)
+
+var target_name = \"Leg_Right\"
+
+func _emit_pressed():
+	if G.at(\"Target\") != target_name:
+		for child in get_parent().get_parent().get_children():
+				(child as PlaceholderShape).color = Color.WHITE
+				
+		G.put(\"Target\", target_name)
+		get_parent().color = Color.FIREBRICK
+		print(target_name + \" selected\")
+	else:
+		G.put(\"Target\", \"None\")
+		get_parent().color = Color.WHITE
+		print(target_name + \" deselected\")
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
 
 [sub_resource type="GDScript" id="GDScript_gcl24"]
 script/source = "@tool
@@ -748,6 +918,14 @@ max = 10
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 metadata/pronto_connections = [SubResource("Resource_0s3tt"), SubResource("Resource_s5ikj")]
 
+[node name="Button" type="Button" parent="enemy/head"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 9.0
+script = SubResource("GDScript_37qhu")
+
 [node name="torso" type="Node2D" parent="enemy"]
 position = Vector2(0, 14)
 script = ExtResource("1_ui1dh")
@@ -761,6 +939,15 @@ script = ExtResource("2_m4bil")
 current = 30
 max = 30
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="Button" type="Button" parent="enemy/torso"]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -13.0
+offset_top = -28.0
+offset_right = 13.0
+offset_bottom = 29.0
+script = SubResource("GDScript_nrspf")
 
 [node name="arm_left" type="Node2D" parent="enemy"]
 position = Vector2(-22, 16)
@@ -787,6 +974,14 @@ color = Color(0.603922, 0.388235, 0.137255, 1)
 capsule_height = 50.0804
 capsule_radius = 2.0
 
+[node name="Button" type="Button" parent="enemy/arm_left"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -5.0
+offset_top = -21.0
+offset_right = 5.0
+offset_bottom = 21.0
+script = SubResource("GDScript_3cywh")
+
 [node name="arm_right" type="Node2D" parent="enemy"]
 position = Vector2(24, 17)
 rotation = -0.362796
@@ -802,6 +997,14 @@ script = ExtResource("2_m4bil")
 current = 10
 max = 10
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="Button" type="Button" parent="enemy/arm_right"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -5.0
+offset_top = -21.0
+offset_right = 5.0
+offset_bottom = 21.0
+script = SubResource("GDScript_uls4b")
 
 [node name="leg_left" type="Node2D" parent="enemy"]
 position = Vector2(-11, 63)
@@ -819,6 +1022,14 @@ current = 15
 max = 15
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
+[node name="Button" type="Button" parent="enemy/leg_left"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -5.0
+offset_top = -21.0
+offset_right = 5.0
+offset_bottom = 21.0
+script = SubResource("GDScript_1c2oq")
+
 [node name="leg_right" type="Node2D" parent="enemy"]
 position = Vector2(13, 62)
 rotation = -0.362796
@@ -835,60 +1046,68 @@ current = 15
 max = 15
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 
+[node name="Button" type="Button" parent="enemy/leg_right"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -5.0
+offset_top = -21.0
+offset_right = 5.0
+offset_bottom = 21.0
+script = SubResource("GDScript_nvc8g")
+
 [node name="STATE" type="Node2D" parent="."]
 position = Vector2(552, -306)
 
 [node name="player_turn" type="Node2D" parent="STATE"]
-position = Vector2(-178, 97)
+position = Vector2(-280, 96)
 script = ExtResource("3_rub11")
 active = true
 metadata/pronto_connections = [SubResource("Resource_vu03w"), SubResource("Resource_odjah")]
 
 [node name="enemy_turn" type="Node2D" parent="STATE"]
-position = Vector2(-132, 97)
+position = Vector2(-122, 94)
 script = ExtResource("3_rub11")
 metadata/pronto_connections = [SubResource("Resource_npar6"), SubResource("Resource_rdfaw"), SubResource("Resource_gbulo")]
 
 [node name="head" type="Node2D" parent="STATE/enemy_turn"]
-position = Vector2(76, -55)
+position = Vector2(75, -137)
 script = ExtResource("3_rub11")
 metadata/pronto_connections = [SubResource("Resource_dxgdp"), SubResource("Resource_5jou4")]
 
 [node name="Code" type="Node2D" parent="STATE/enemy_turn/head"]
-position = Vector2(93, -1.00001)
+position = Vector2(153, -2.00001)
 script = ExtResource("6_2s4u3")
 evaluate = SubResource("Resource_gy78w")
 metadata/pronto_connections = [SubResource("Resource_idsmn")]
 
 [node name="torso" type="Node2D" parent="STATE/enemy_turn"]
-position = Vector2(76, -20)
+position = Vector2(76, -76)
 script = ExtResource("3_rub11")
 metadata/pronto_connections = [SubResource("Resource_qugsu"), SubResource("Resource_nmegl")]
 
 [node name="Code" type="Node2D" parent="STATE/enemy_turn/torso"]
-position = Vector2(95, -3)
+position = Vector2(153, -2)
 script = ExtResource("6_2s4u3")
 evaluate = SubResource("Resource_pww34")
 metadata/pronto_connections = [SubResource("Resource_ghrl2")]
 
 [node name="arms" type="Node2D" parent="STATE/enemy_turn"]
-position = Vector2(76, 13)
+position = Vector2(75, -5)
 script = ExtResource("3_rub11")
 metadata/pronto_connections = [SubResource("Resource_8ejj3"), SubResource("Resource_e2iet")]
 
 [node name="Code" type="Node2D" parent="STATE/enemy_turn/arms"]
-position = Vector2(96, -4)
+position = Vector2(154, -1)
 script = ExtResource("6_2s4u3")
 evaluate = SubResource("Resource_085n2")
 metadata/pronto_connections = [SubResource("Resource_8am7k")]
 
 [node name="legs" type="Node2D" parent="STATE/enemy_turn"]
-position = Vector2(76, 42)
+position = Vector2(76, 64)
 script = ExtResource("3_rub11")
 metadata/pronto_connections = [SubResource("Resource_352tu"), SubResource("Resource_oisih")]
 
 [node name="Code" type="Node2D" parent="STATE/enemy_turn/legs"]
-position = Vector2(96, -2)
+position = Vector2(155, -2)
 script = ExtResource("6_2s4u3")
 evaluate = SubResource("Resource_00dm5")
 metadata/pronto_connections = [SubResource("Resource_2n01c")]
