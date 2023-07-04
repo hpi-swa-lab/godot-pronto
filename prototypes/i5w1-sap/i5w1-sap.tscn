@@ -1,14 +1,16 @@
-[gd_scene load_steps=36 format=3 uid="uid://3fym0dbaigeu"]
+[gd_scene load_steps=38 format=3 uid="uid://3fym0dbaigeu"]
 
-[ext_resource type="Script" path="res://prototypes/i5w1-sap/pet.gd" id="1_rw4gy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_yctow"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_1xthg"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_bo8eq"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_00r58"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="6_3oxrk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="6_hrdi7"]
+[ext_resource type="PackedScene" uid="uid://bxkuhk67gdcxc" path="res://prototypes/i5w1-sap/pet.tscn" id="9_dusni"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="9_nf4hl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReady.gd" id="10_808k7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="10_h3ice"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="11_nycra"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2dt2u"]
 size = Vector2(1175, 664)
@@ -300,37 +302,11 @@ metadata/pronto_connections = [SubResource("Resource_26gou")]
 position = Vector2(235, 391)
 script = ExtResource("9_nf4hl")
 
-[node name="Unicorn" type="RigidBody2D" parent="PetSpawner"]
-position = Vector2(73.5786, 238.579)
-collision_mask = 3
-can_sleep = false
-lock_rotation = true
-script = ExtResource("1_rw4gy")
+[node name="Unicorn" parent="PetSpawner" instance=ExtResource("9_dusni")]
+petname = "unicorn"
 
-[node name="Placeholder" type="Node2D" parent="PetSpawner/Unicorn"]
-script = ExtResource("1_yctow")
+[node name="Placeholder" parent="PetSpawner/Unicorn" index="0"]
 label = "🦄"
-placeholder_size = Vector2(100, 100)
-sprite_texture = ExtResource("2_1xthg")
-outline_visible = true
-outline_color = Color(0, 0, 0, 1)
-outline_pattern = 1
-
-[node name="Beetle" type="RigidBody2D" parent="PetSpawner"]
-position = Vector2(110.579, 83.5787)
-collision_mask = 3
-can_sleep = false
-lock_rotation = true
-linear_damp = 1.0
-script = ExtResource("1_rw4gy")
-
-[node name="Placeholder" type="Node2D" parent="PetSpawner/Beetle"]
-script = ExtResource("1_yctow")
-label = "🐜"
-placeholder_size = Vector2(100, 100)
-sprite_texture = ExtResource("2_1xthg")
-outline_visible = true
-outline_color = Color(0, 0, 0, 1)
 
 [node name="SpawnInitial" type="Node2D" parent="."]
 position = Vector2(159, 500)
@@ -359,3 +335,31 @@ offset_top = 90.0
 offset_right = 758.0
 offset_bottom = 112.333
 text = "TODO: Use SpawnShape"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 715.0
+offset_top = 300.0
+offset_right = 1050.0
+offset_bottom = 477.0
+
+[node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
+position = Vector2(-20, 20)
+script = ExtResource("10_h3ice")
+
+[node name="unicorn_damage" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(97, -102)
+script = ExtResource("11_nycra")
+float_from = 0.0
+float_to = 1.0
+float_value = 1.0
+float_step_size = 0.1
+
+[node name="unicorn_max_hp" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(93, -49)
+script = ExtResource("11_nycra")
+float_from = 0.0
+float_to = 10.0
+float_value = 1.0
+float_step_size = 1.0
+
+[editable path="PetSpawner/Unicorn"]

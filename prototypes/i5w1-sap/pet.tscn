@@ -1,0 +1,138 @@
+[gd_scene load_steps=19 format=3 uid="uid://bxkuhk67gdcxc"]
+
+[ext_resource type="Script" path="res://prototypes/i5w1-sap/pet.gd" id="1_l4uej"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_5nc1k"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_37fa4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="4_ug0lb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_kwvdt"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_h7rdj"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_8yvrg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReady.gd" id="8_yis0x"]
+
+[sub_resource type="GDScript" id="GDScript_cb84i"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return other.get_damage()
+"
+
+[sub_resource type="Resource" id="Resource_sfd2i"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_cb84i")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jpenf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_6q5xo"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_jpenf")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_t2j3a"]
+script = ExtResource("7_8yvrg")
+signal_name = "collided"
+to = NodePath("../HealthBar")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_sfd2i")]
+only_if = SubResource("Resource_6q5xo")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fg8p3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	var value = G.at(\"%_max_health\" % from.get_parent().petname)
+	print(value)
+	return value
+"
+
+[sub_resource type="Resource" id="Resource_pl6e1"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_fg8p3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_kb2mu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_yywuy"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_kb2mu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0lsg0"]
+script = ExtResource("7_8yvrg")
+signal_name = "tree_entered"
+to = NodePath("../HealthBar")
+more_references = []
+invoke = "set_health"
+arguments = [SubResource("Resource_pl6e1")]
+only_if = SubResource("Resource_yywuy")
+deferred = false
+enabled = true
+
+[node name="Pet" type="RigidBody2D"]
+position = Vector2(73.5786, 238.579)
+collision_mask = 3
+can_sleep = false
+lock_rotation = true
+script = ExtResource("1_l4uej")
+
+[node name="Placeholder" type="Node2D" parent="."]
+script = ExtResource("2_5nc1k")
+placeholder_size = Vector2(100, 100)
+sprite_texture = ExtResource("3_37fa4")
+outline_visible = true
+outline_color = Color(0, 0, 0, 1)
+outline_pattern = 1
+
+[node name="HealthBar" type="Node2D" parent="."]
+position = Vector2(-0.578598, 62.421)
+script = ExtResource("4_ug0lb")
+current = 5
+max = 5
+healthbar_size = Vector2(78, 19)
+progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -16.5786
+offset_top = 78.421
+offset_right = 23.4214
+offset_bottom = 100.754
+text = "ATK: "
+
+[node name="Collision" type="Node2D" parent="."]
+position = Vector2(89.4214, 129.421)
+script = ExtResource("5_kwvdt")
+metadata/pronto_connections = [SubResource("Resource_t2j3a")]
+
+[node name="NodeReady" type="Node2D" parent="."]
+position = Vector2(96.4214, -13.579)
+script = ExtResource("8_yis0x")
+metadata/pronto_connections = [SubResource("Resource_0lsg0")]
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 79.4214
+offset_top = 53.421
+offset_right = 447.421
+offset_bottom = 79.421
+text = "TODO: NodeReady does not work with Spawner
+"
