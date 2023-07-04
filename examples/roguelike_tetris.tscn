@@ -1,15 +1,25 @@
-[gd_scene load_steps=89 format=3 uid="uid://b02egigh5i21k"]
+[gd_scene load_steps=92 format=3 uid="uid://b02egigh5i21k"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_iiki0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_faeex"]
-[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_vwucv"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="4_livwy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="5_3iphb"]
+[ext_resource type="Texture2D" uid="uid://2tsxv758vi7s" path="res://images/I.png" id="5_wf14h"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="5_yrnr6"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2mfj3"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRoot.gd" id="7_6o1cq"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_eixic"]
+[ext_resource type="Texture2D" uid="uid://0b5ksppupybx" path="res://images/J.png" id="8_igexv"]
+[ext_resource type="Texture2D" uid="uid://c18jq1eweatyg" path="res://images/L.png" id="9_e6xwr"]
+[ext_resource type="Texture2D" uid="uid://bq041d7fys6sm" path="res://images/O.png" id="10_4hwj1"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="10_x3ble"]
+[ext_resource type="Texture2D" uid="uid://qtsulse86m03" path="res://images/S.png" id="11_aq6vs"]
+[ext_resource type="Texture2D" uid="uid://k6jx8pkmg5d5" path="res://images/T.png" id="12_g3ktn"]
+[ext_resource type="Texture2D" uid="uid://cowwgha8ppn4q" path="res://images/Z.png" id="13_m4vd3"]
+[ext_resource type="Texture2D" uid="uid://rs00g1r727kc" path="res://images/sword.png" id="15_ignc2"]
+[ext_resource type="Texture2D" uid="uid://o6khbx6rq3jm" path="res://images/mace.png" id="17_ukog8"]
+[ext_resource type="Texture2D" uid="uid://ogbft1ibweh3" path="res://images/spear.png" id="18_8hpah"]
+[ext_resource type="Texture2D" uid="uid://dfwv5kh0c5web" path="res://images/shield.png" id="19_0optb"]
 
 [sub_resource type="GDScript" id="GDScript_a0w8e"]
 script/source = "@tool
@@ -300,60 +310,6 @@ only_if = SubResource("Resource_0fe27")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_jaokq"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return \"Enemy\"
-"
-
-[sub_resource type="Resource" id="Resource_kmr7m"]
-script = ExtResource("6_2mfj3")
-nested_script = SubResource("GDScript_jaokq")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_m0807"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return func(from, node):
-		node.damage(5)
-"
-
-[sub_resource type="Resource" id="Resource_im5i0"]
-script = ExtResource("6_2mfj3")
-nested_script = SubResource("GDScript_m0807")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_g01hk"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_gatxg"]
-script = ExtResource("6_2mfj3")
-nested_script = SubResource("GDScript_g01hk")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_wtqhe"]
-script = ExtResource("7_eixic")
-signal_name = "down"
-to = NodePath("../SceneRoot")
-more_references = []
-invoke = "apply"
-arguments = [SubResource("Resource_kmr7m"), SubResource("Resource_im5i0")]
-only_if = SubResource("Resource_gatxg")
-deferred = false
-enabled = true
-
 [sub_resource type="GDScript" id="GDScript_ruokn"]
 script/source = "@tool
 extends U
@@ -629,7 +585,8 @@ script = ExtResource("1_iiki0")
 position = Vector2(343, -246)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("5_wf14h")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/I" groups=["Enemy"]]
 position = Vector2(0, -144)
@@ -642,7 +599,8 @@ metadata/pronto_connections = [SubResource("Resource_vkgpl")]
 position = Vector2(660, -246)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("8_igexv")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/J" groups=["Enemy"]]
 position = Vector2(0, -144)
@@ -655,7 +613,8 @@ metadata/pronto_connections = [SubResource("Resource_ojxfs")]
 position = Vector2(956, -242)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("9_e6xwr")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/L" groups=["Enemy"]]
 position = Vector2(0, -144)
@@ -668,7 +627,8 @@ metadata/pronto_connections = [SubResource("Resource_dq5t4")]
 position = Vector2(1239, -245)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("10_4hwj1")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/O" groups=["Enemy"]]
 position = Vector2(0, -144)
@@ -681,7 +641,8 @@ metadata/pronto_connections = [SubResource("Resource_vo3wv")]
 position = Vector2(1519, -239)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("11_aq6vs")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/S" groups=["Enemy"]]
 position = Vector2(0, -144)
@@ -694,7 +655,8 @@ metadata/pronto_connections = [SubResource("Resource_1urbk")]
 position = Vector2(1815, -236)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("12_g3ktn")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/T" groups=["Enemy"]]
 position = Vector2(0, -144)
@@ -707,7 +669,8 @@ metadata/pronto_connections = [SubResource("Resource_ifs6o")]
 position = Vector2(2103, -235)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("13_m4vd3")
 
 [node name="HealthBar" type="Node2D" parent="EnemySpawner/Z" groups=["Enemy"]]
 position = Vector2(0, -144)
@@ -715,6 +678,18 @@ script = ExtResource("4_livwy")
 healthbar_size = Vector2(256, 16)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
 metadata/pronto_connections = [SubResource("Resource_n2uef")]
+
+[node name="SceneRoot" type="Node2D" parent="."]
+position = Vector2(200, 2.38498e-06)
+script = ExtResource("7_6o1cq")
+
+[node name="SceneRoot2" type="Node2D" parent="."]
+position = Vector2(141.421, 141.421)
+script = ExtResource("7_6o1cq")
+
+[node name="SceneRoot3" type="Node2D" parent="."]
+position = Vector2(-3.49691e-05, 200)
+script = ExtResource("7_6o1cq")
 
 [node name="WeaponSpawner" type="Node2D" parent="."]
 position = Vector2(489, 674)
@@ -724,23 +699,21 @@ script = ExtResource("1_iiki0")
 position = Vector2(372, -109)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
-
-[node name="SceneRoot" type="Node2D" parent="WeaponSpawner/Sword"]
-position = Vector2(-107, 161)
-script = ExtResource("7_6o1cq")
+use_sprite = true
+sprite_texture = ExtResource("15_ignc2")
 
 [node name="Key" type="Node2D" parent="WeaponSpawner/Sword"]
 position = Vector2(-209, 142)
 script = ExtResource("10_x3ble")
 key = "G"
-metadata/pronto_connections = [SubResource("Resource_wtqhe")]
+metadata/pronto_connections = []
 
 [node name="Mace" type="Node2D" parent="WeaponSpawner"]
 position = Vector2(688, -119)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("17_ukog8")
 
 [node name="Attack" type="Node2D" parent="WeaponSpawner/Mace"]
 position = Vector2(-128, 128)
@@ -751,7 +724,8 @@ evaluate = SubResource("Resource_midv1")
 position = Vector2(999, -95)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("18_8hpah")
 
 [node name="Attack" type="Node2D" parent="WeaponSpawner/Spear"]
 position = Vector2(-128, 128)
@@ -762,7 +736,8 @@ evaluate = SubResource("Resource_2bbbd")
 position = Vector2(1329, -103)
 script = ExtResource("2_faeex")
 placeholder_size = Vector2(256, 256)
-sprite_texture = ExtResource("3_vwucv")
+use_sprite = true
+sprite_texture = ExtResource("19_0optb")
 
 [node name="Attack" type="Node2D" parent="WeaponSpawner/Shield"]
 position = Vector2(-128, 128)
