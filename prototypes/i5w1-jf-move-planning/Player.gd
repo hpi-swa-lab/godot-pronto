@@ -32,8 +32,8 @@ func box_attack():
 		_create_damage_field(current_field + Vector2(+2, y), 10)
 		
 func _create_damage_field(field, damage):
-	var spwner_name = "CrossSpawner1" if player == 0 else "CrossSpawner2"
-	var spawner = get_parent().get_node(spwner_name)
+	var spawner_name = "CrossSpawner1" if player == 0 else "CrossSpawner2"
+	var spawner = get_parent().get_node(spawner_name)
 	if _is_valid_field(field):
 		spawner.spawn_at_with_damage(_get_position(field), damage)
 	

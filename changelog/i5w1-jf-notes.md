@@ -8,11 +8,19 @@ We started this week by planning the basic game mechanics on a whiteboard. This 
 
 We used the Healthbar as actual healtch display for the players but also for displaying the number of moves a player has already planned (blue bar below the healthbar).
 
+## Where we used code
+
+We used code for the entire player logic. Pronto isn't good in providing a way to structure code with multiple functions, etc. which is what we used a lot here in order to have readable code.
+
 ## Problems
 
 ### Duplicating Code-Behavior
 
 We had a lot of situations where we basically had to copy many nodes for player 2. However, when copying a code-behavior and then changing its code (from `player1` to `player2`) we changed both the original and the copied node because they somehow share the expression. This meant for us that we needed to create each node invidiually and basically had to just copy paste the content.
+
+#### Duplicating in general
+
+We observed that when duplicating any Pronto node with an expression (e.g. `Code`, `Bind`, ...) they always refer to the exact same expression, so changing one of them always changes all other copies (and originals). In some cases (rarely) this is desired, but we thinking that by default it should copy those expressions to allow individual editing.
 
 ### Key Nodes
 
@@ -101,3 +109,4 @@ We also thought about more improvements for our features from last week:
 * **Key**: Add option to show the key-node in the game with a label to describe the controls of the game.
 * **Value**: Fix out of bounds when changinig `min` or `max`.
 * **Code**: Remove Label from Code-Behavior and use the name from the object-tree instead
+* **Function-Behavior**: A behavior that stores different functions that can be used anywhere (just like `at()`) in order to reduce duplicate code while still having a structure.
