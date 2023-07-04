@@ -1804,7 +1804,7 @@ to_prop = "duration_seconds"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_right = 300.0
-offset_bottom = 127.0
+offset_bottom = 153.0
 
 [node name="Settings" type="Node2D" parent="PanelContainer"]
 position = Vector2(-20, 20)
