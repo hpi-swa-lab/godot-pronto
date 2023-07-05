@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bxkuhk67gdcxc"]
+[gd_scene load_steps=40 format=3 uid="uid://bxkuhk67gdcxc"]
 
 [ext_resource type="Script" path="res://prototypes/i5w1-sap/pet.gd" id="1_l4uej"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_5nc1k"]
@@ -9,19 +9,144 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_8yvrg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="9_s8ghi"]
 
+[sub_resource type="GDScript" id="GDScript_savfp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	(to.get_node(\"Placeholder\") as Placeholder).placeholder_size /= 2
+	return to.get_node(\"../..\").get_node(\"%Graveyard\").position + to.get_node(\"../..\").get_node(\"%Graveyard\").size / 2
+"
+
+[sub_resource type="Resource" id="Resource_7drf7"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_savfp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_w0lgj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_dvw1g"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_w0lgj")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ywlk5"]
+script = ExtResource("7_8yvrg")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_7drf7")]
+only_if = SubResource("Resource_dvw1g")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_8wjrq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return \"dead\"
+"
+
+[sub_resource type="Resource" id="Resource_3hp3a"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_8wjrq")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_gui58"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_1uusu"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_gui58")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ywuno"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	(func(): to.add_to_group(\"dead\")).call_deferred()
+"
+
+[sub_resource type="Resource" id="Resource_qxu0e"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_ywuno")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_d3geh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bomce"]
+script = ExtResource("6_h7rdj")
+nested_script = SubResource("GDScript_d3geh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_kw471"]
+script = ExtResource("7_8yvrg")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "add_to_group"
+arguments = [SubResource("Resource_3hp3a"), SubResource("Resource_1uusu")]
+only_if = SubResource("Resource_bomce")
+expression = SubResource("Resource_qxu0e")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_2nda2"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
-	if to.to_string().contains(\"Health\"):
-		# ???
+func run(other, direction, from, to):
+	if to.to_string().contains(\"Health\"): # ???
 		to = to.get_parent()
-	print(\"collision!\", to, other)
 	
-	to.get_node(\"Placeholder\").flash(Color.YELLOW)
-	if to.is_in_group(\"our_pets\"):
-		to.get_node(\"../../\").get_node(\"%CameraShake\").add_trauma(0.5)
+	print(\"collided\", to, other, \" - \", to.is_in_group(\"our_pets\"))
+	for ab in [[to, other]]:
+		var a = ab[0]
+		var b = ab[1]
+		a.get_node(\"Placeholder\").flash(Color.YELLOW)
+		if a.is_in_group(\"our_pets\"):
+			a.get_node(\"../../\").get_node(\"%CameraShake\").add_trauma(0.4)
+		
+		a.get_node(\"HealthBar\").damage(b.get_node(\"AttackBar\").current)
+		
+		if to.is_in_group(\"our_pets\"):
+			(func():
+				for pet in Utils.all_nodes_that(to.get_node(\"../../\"), func(n): return n.is_in_group(\"our_pets\")):
+					print(\"move left\", pet)
+					pet.queue_position(pet.position - Vector2(60, 0))
+				print(\"moved all left\")).call_deferred()
+		elif to.is_in_group(\"their_pets\"):
+			(func():
+				for pet in Utils.all_nodes_that(to.get_node(\"../../\"), func(n): return n.is_in_group(\"their_pets\")):
+					print(\"move right\", pet)
+					pet.queue_position(pet.position + Vector2(60, 0))
+				print(\"moved all right\")).call_deferred()
 "
 
 [sub_resource type="Resource" id="Resource_fvgea"]
@@ -34,13 +159,15 @@ return_value = false
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
-	if to.to_string().contains(\"Health\"):
-		# ???
+func run(other, direction, from, to):
+	if to.to_string().contains(\"Health\"): # ???
 		to = to.get_parent()
-	#print(to.get_path(), \"<->\", other.get_path())
-	return to.is_in_group(\"our_pets\") and other.is_in_group(\"their_pets\") \\
-		or to.is_in_group(\"their_pets\") and other.is_in_group(\"our_pets\")
+	if not (to.is_in_group(\"our_pets\") and other.is_in_group(\"their_pets\") \\
+		or to.is_in_group(\"their_pets\") and other.is_in_group(\"our_pets\")):
+			return false
+	if to.is_in_group(\"dead\") or other.is_in_group(\"dead\"):
+		return false
+	return true
 "
 
 [sub_resource type="Resource" id="Resource_30xw1"]
@@ -157,7 +284,7 @@ expression = SubResource("Resource_7h1fs")
 deferred = false
 enabled = true
 
-[node name="Pet" type="RigidBody2D"]
+[node name="Pet" type="RigidBody2D" groups=["pets"]]
 collision_mask = 3
 can_sleep = false
 lock_rotation = true
@@ -178,6 +305,7 @@ current = 5
 max = 5
 healthbar_size = Vector2(78, 19)
 progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+metadata/pronto_connections = [SubResource("Resource_ywlk5"), SubResource("Resource_kw471")]
 
 [node name="AttackBar" type="Node2D" parent="."]
 position = Vector2(0, 81)
@@ -186,14 +314,6 @@ current = 5
 max = 5
 healthbar_size = Vector2(78, 19)
 progress_colors = PackedColorArray(0.392157, 0.588235, 1, 1)
-
-[node name="Label2" type="Label" parent="."]
-offset_left = 79.4214
-offset_top = 53.421
-offset_right = 447.421
-offset_bottom = 79.421
-text = "TODO: NodeReady does not work with Spawner
-"
 
 [node name="Collision" type="Node2D" parent="."]
 position = Vector2(200, 2.38498e-06)
