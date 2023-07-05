@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://3fym0dbaigeu"]
+[gd_scene load_steps=70 format=3 uid="uid://3fym0dbaigeu"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_yctow"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_1xthg"]
@@ -11,9 +11,13 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReady.gd" id="10_808k7"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="10_h3ice"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="11_nycra"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="12_qohg7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRoot.gd" id="13_1u28f"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="13_lnsrf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShake.gd" id="15_33d3t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2dt2u"]
-size = Vector2(1175, 664)
+size = Vector2(1391, 870)
 
 [sub_resource type="GDScript" id="GDScript_ncvrg"]
 script/source = "@tool
@@ -193,14 +197,20 @@ expression = SubResource("Resource_fjry0")
 deferred = false
 enabled = true
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rpgx6"]
+size = Vector2(500, 110)
+
 [sub_resource type="GDScript" id="GDScript_vptjp"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	for i in 3:
+func run(from, to):
+	# ours
+	var shop = to.get_node(\"%Shop\")
+	for i in 5:
 		var index = randi() % to.scenes.size()
-		to.spawn(index)
+		var pet = to.spawn_at(shop.position + shop.size / 2, index)[0]
+		pet.add_to_group(\"our_pets\")
 "
 
 [sub_resource type="Resource" id="Resource_6lmlw"]
@@ -235,28 +245,265 @@ expression = SubResource("Resource_6lmlw")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_u7ya6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	# theirs
+	var roster = to.get_node(\"%RosterTheirs\")
+	var size = roster.get_node(\"Placeholder\").size
+	for i in 4:
+		var index = randi() % to.scenes.size()
+		print(to.scenes[index].get_node(\"Placeholder\").size)
+		var pet = to.spawn_at(
+			roster.position + Vector2(
+				0,
+				size.y - to.scenes[index].get_node(\"Placeholder\").size.y
+			),
+			index
+		)[0]
+		pet.add_to_group(\"their_pets\")
+		pet.get_node(\"Placeholder\").color = Color.BLACK
+"
+
+[sub_resource type="Resource" id="Resource_8n404"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_u7ya6")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_q15wd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bvive"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_q15wd")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_71q6n"]
+script = ExtResource("5_00r58")
+signal_name = "node_ready"
+to = NodePath("../PetSpawner")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_bvive")
+expression = SubResource("Resource_8n404")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_2c0sp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"rosters\"
+"
+
+[sub_resource type="Resource" id="Resource_4to75"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_2c0sp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_m8cme"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return func(from, node: Area2D): node.gravity_space_override = Area2D.SPACE_OVERRIDE_REPLACE
+"
+
+[sub_resource type="Resource" id="Resource_uvlok"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_m8cme")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_u6uwy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fh3i3"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_u6uwy")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qhay1"]
+script = ExtResource("5_00r58")
+signal_name = "entered"
+to = NodePath("../SceneRoot")
+more_references = []
+invoke = "apply"
+arguments = [SubResource("Resource_4to75"), SubResource("Resource_uvlok")]
+only_if = SubResource("Resource_fh3i3")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_7p0xu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(transition_id, from: Node2D, to: Node2D):
+	return \"rosters\"
+"
+
+[sub_resource type="Resource" id="Resource_e462p"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_7p0xu")
+argument_names = ["transition_id", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dn6rv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(transition_id, from, to):
+	return func(from, node: Area2D): node.gravity_space_override = Area2D.SPACE_OVERRIDE_REPLACE
+"
+
+[sub_resource type="Resource" id="Resource_fnqlq"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_dn6rv")
+argument_names = ["transition_id", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_sf36j"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(transition_id, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_hwoxk"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_sf36j")
+argument_names = ["transition_id", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ma8i2"]
+script = ExtResource("5_00r58")
+signal_name = "exited"
+to = NodePath("../SceneRoot")
+more_references = []
+invoke = "apply"
+arguments = [SubResource("Resource_e462p"), SubResource("Resource_fnqlq")]
+only_if = SubResource("Resource_hwoxk")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_mtn85"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_11uis"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_mtn85")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jv5m3"]
+script = ExtResource("5_00r58")
+signal_name = "just_down"
+to = NodePath("..")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_11uis")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_cbgnx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_6d1wi"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_cbgnx")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_j0wbm"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_av1v8"]
+script = ExtResource("4_bo8eq")
+nested_script = SubResource("GDScript_j0wbm")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_vrm0k"]
+script = ExtResource("5_00r58")
+signal_name = "just_down"
+to = NodePath("..")
+more_references = []
+invoke = "exit"
+arguments = [SubResource("Resource_6d1wi")]
+only_if = SubResource("Resource_av1v8")
+deferred = false
+enabled = true
+
 [node name="Scene" type="Node2D"]
 
-[node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(570, 157)
+[node name="FenceTop" type="StaticBody2D" parent="."]
+position = Vector2(570, 48)
 collision_layer = 2
 
-[node name="Placeholder" type="Node2D" parent="Floor"]
-rotation = -1.5708
+[node name="Placeholder" type="Node2D" parent="FenceTop"]
 script = ExtResource("1_yctow")
-label = "Floor"
-placeholder_size = Vector2(307, 28)
+placeholder_size = Vector2(1137, 4)
 sprite_texture = ExtResource("2_1xthg")
 
-[node name="Roster" type="Area2D" parent="."]
+[node name="RosterOurs" type="Area2D" parent="." groups=["rosters"]]
+unique_name_in_owner = true
 position = Vector2(286, 163)
 priority = 1.0
-gravity_space_override = 3
 gravity_point_center = Vector2(1, 0)
 gravity_direction = Vector2(1, 0)
 linear_damp_space_override = 3
 
-[node name="Placeholder" type="Node2D" parent="Roster"]
+[node name="Placeholder" type="Node2D" parent="RosterOurs"]
+z_index = -10
+script = ExtResource("1_yctow")
+color = Color(0.152941, 0.152941, 0.152941, 1)
+placeholder_size = Vector2(566, 224)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="RosterTheirs" type="Area2D" parent="." groups=["rosters"]]
+unique_name_in_owner = true
+position = Vector2(852, 163)
+priority = 1.0
+gravity_point_center = Vector2(-1, 0)
+gravity_direction = Vector2(-1, 0)
+linear_damp_space_override = 3
+
+[node name="Placeholder" type="Node2D" parent="RosterTheirs"]
 z_index = -10
 script = ExtResource("1_yctow")
 color = Color(0.152941, 0.152941, 0.152941, 1)
@@ -264,18 +511,16 @@ placeholder_size = Vector2(566, 224)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="NoGravity" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 gravity_space_override = 3
-gravity_point_center = Vector2(1, 0)
-gravity_direction = Vector2(1, 0)
 gravity = 0.0
 linear_damp_space_override = 3
 linear_damp = 100.0
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NoGravity"]
-position = Vector2(577.5, 322)
+visible = false
+position = Vector2(566.5, 342)
 shape = SubResource("RectangleShape2D_2dt2u")
 debug_color = Color(0, 0.6, 0.701961, 0.0862745)
 
@@ -284,8 +529,9 @@ position = Vector2(491, 109)
 collision_layer = 0
 
 [node name="Placeholder" type="Node2D" parent="Cursor"]
+visible = false
 script = ExtResource("1_yctow")
-color = Color(1, 1, 1, 0.447059)
+color = Color(1, 1, 1, 0)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="Controls" type="Node2D" parent="Cursor"]
@@ -299,35 +545,62 @@ script = ExtResource("6_3oxrk")
 metadata/pronto_connections = [SubResource("Resource_26gou")]
 
 [node name="PetSpawner" type="Node2D" parent="."]
-position = Vector2(235, 391)
+position = Vector2(277, 388)
 script = ExtResource("9_nf4hl")
+spawn_shape = SubResource("RectangleShape2D_rpgx6")
 
 [node name="Unicorn" parent="PetSpawner" instance=ExtResource("9_dusni")]
+position = Vector2(42, 148)
 petname = "unicorn"
 
 [node name="Placeholder" parent="PetSpawner/Unicorn" index="0"]
 label = "🦄"
 
+[node name="Lizard" parent="PetSpawner" instance=ExtResource("9_dusni")]
+position = Vector2(-111, 156)
+petname = "lizard"
+
+[node name="Placeholder" parent="PetSpawner/Lizard" index="0"]
+label = "🦎"
+
 [node name="SpawnInitial" type="Node2D" parent="."]
 position = Vector2(159, 500)
 script = ExtResource("10_808k7")
-metadata/pronto_connections = [SubResource("Resource_ihvc0")]
+metadata/pronto_connections = [SubResource("Resource_ihvc0"), SubResource("Resource_71q6n")]
 
-[node name="Floor2" type="StaticBody2D" parent="."]
-position = Vector2(300, 30)
+[node name="FenceBottom" type="StaticBody2D" parent="."]
+position = Vector2(571, 289)
 collision_layer = 2
 
-[node name="Placeholder" type="Node2D" parent="Floor2"]
+[node name="Placeholder" type="Node2D" parent="FenceBottom"]
 script = ExtResource("1_yctow")
-label = "Floor"
-placeholder_size = Vector2(503, 34)
+placeholder_size = Vector2(1133, 6)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceLeft" type="StaticBody2D" parent="."]
+position = Vector2(7, 160)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="FenceLeft"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(6, 221)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceRight" type="StaticBody2D" parent="."]
+position = Vector2(1137, 160)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="FenceRight"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(6, 221)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="Shop" type="Panel" parent="."]
+unique_name_in_owner = true
 offset_left = 18.0
 offset_top = 328.0
-offset_right = 479.0
-offset_bottom = 448.0
+offset_right = 538.0
+offset_bottom = 451.0
 
 [node name="Label" type="Label" parent="."]
 offset_left = 718.0
@@ -337,29 +610,74 @@ offset_bottom = 112.333
 text = "TODO: Use SpawnShape"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-offset_left = 715.0
-offset_top = 300.0
-offset_right = 1050.0
-offset_bottom = 477.0
+offset_left = 803.0
+offset_top = 316.0
+offset_right = 1138.0
+offset_bottom = 493.0
 
 [node name="PrototypingUI" type="Node2D" parent="PanelContainer"]
 position = Vector2(-20, 20)
 script = ExtResource("10_h3ice")
 
-[node name="unicorn_damage" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(97, -102)
-script = ExtResource("11_nycra")
-float_from = 0.0
-float_to = 1.0
-float_value = 1.0
-float_step_size = 0.1
-
-[node name="unicorn_max_hp" type="Node2D" parent="PanelContainer/PrototypingUI"]
+[node name="unicorn_health" type="Node2D" parent="PanelContainer/PrototypingUI"]
 position = Vector2(93, -49)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
-float_value = 1.0
+float_value = 4.0
 float_step_size = 1.0
 
+[node name="unicorn_attacks" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(97, -102)
+script = ExtResource("11_nycra")
+float_from = 0.0
+float_to = 10.0
+float_value = 5.0
+float_step_size = 0.1
+
+[node name="lizard_health" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(93, -49)
+script = ExtResource("11_nycra")
+float_from = 0.0
+float_to = 10.0
+float_value = 2.0
+float_step_size = 1.0
+
+[node name="lizard_attacks" type="Node2D" parent="PanelContainer/PrototypingUI"]
+position = Vector2(93, -49)
+script = ExtResource("11_nycra")
+float_from = 0.0
+float_to = 10.0
+float_value = 4.0
+float_step_size = 1.0
+
+[node name="Battle" type="Node2D" parent="."]
+position = Vector2(580, 521)
+script = ExtResource("12_qohg7")
+metadata/pronto_connections = [SubResource("Resource_qhay1"), SubResource("Resource_ma8i2")]
+
+[node name="EnterKey" type="Node2D" parent="Battle"]
+position = Vector2(-68, -30)
+script = ExtResource("13_lnsrf")
+key = "Enter"
+metadata/pronto_connections = [SubResource("Resource_jv5m3")]
+
+[node name="ExitKey" type="Node2D" parent="Battle"]
+position = Vector2(-68, -30)
+script = ExtResource("13_lnsrf")
+key = "F1"
+metadata/pronto_connections = [SubResource("Resource_vrm0k")]
+
+[node name="SceneRoot" type="Node2D" parent="."]
+position = Vector2(685, 538)
+script = ExtResource("13_1u28f")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 322)
+
+[node name="CameraShake" type="Node2D" parent="Camera2D"]
+unique_name_in_owner = true
+script = ExtResource("15_33d3t")
+
 [editable path="PetSpawner/Unicorn"]
+[editable path="PetSpawner/Lizard"]
