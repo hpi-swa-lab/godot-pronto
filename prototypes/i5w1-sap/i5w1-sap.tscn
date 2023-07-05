@@ -1015,22 +1015,114 @@ enabled = true
 
 [node name="Scene" type="Node2D"]
 
-[node name="FenceTop" type="StaticBody2D" parent="."]
+[node name="fences" type="Node2D" parent="."]
+
+[node name="FenceTop" type="StaticBody2D" parent="fences"]
 position = Vector2(569, 85)
 collision_layer = 2
 
-[node name="Placeholder" type="Node2D" parent="FenceTop"]
+[node name="Placeholder" type="Node2D" parent="fences/FenceTop"]
 script = ExtResource("1_yctow")
 placeholder_size = Vector2(1137, 4)
 sprite_texture = ExtResource("2_1xthg")
 
-[node name="FenceTop2" type="StaticBody2D" parent="."]
+[node name="FenceTop2" type="StaticBody2D" parent="fences"]
 position = Vector2(940, 626)
 collision_layer = 2
 
-[node name="Placeholder" type="Node2D" parent="FenceTop2"]
+[node name="Placeholder" type="Node2D" parent="fences/FenceTop2"]
 script = ExtResource("1_yctow")
 placeholder_size = Vector2(385, 18)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceBottom" type="StaticBody2D" parent="fences"]
+position = Vector2(571, 200)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceBottom"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(1133, 6)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceBottom2" type="StaticBody2D" parent="fences"]
+position = Vector2(930, 494)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceBottom2"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(382, 3)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceBottom3" type="StaticBody2D" parent="fences"]
+position = Vector2(289, 280)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceBottom3"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(536, 4)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceBottom4" type="StaticBody2D" parent="fences"]
+position = Vector2(293, 408)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceBottom4"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(536, 4)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceLeft" type="StaticBody2D" parent="fences"]
+position = Vector2(7, 160)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceLeft"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(6, 221)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceLeft4" type="StaticBody2D" parent="fences"]
+position = Vector2(551, 344)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceLeft4"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(9, 128)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceLeft2" type="StaticBody2D" parent="fences"]
+position = Vector2(743, 557)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceLeft2"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(16, 143)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceLeft3" type="StaticBody2D" parent="fences"]
+position = Vector2(30, 343)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceLeft3"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(6, 138)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceRight" type="StaticBody2D" parent="fences"]
+position = Vector2(1137, 160)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceRight"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(6, 221)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceRight2" type="StaticBody2D" parent="fences"]
+position = Vector2(1124, 555)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="fences/FenceRight2"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(4, 129)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="RosterOurs" type="Area2D" parent="." groups=["rosters"]]
@@ -1124,7 +1216,7 @@ script = ExtResource("6_3oxrk")
 metadata/pronto_connections = [SubResource("Resource_26gou")]
 
 [node name="PetSpawner" type="Node2D" parent="."]
-position = Vector2(277, 388)
+position = Vector2(289, 345)
 script = ExtResource("9_nf4hl")
 spawn_shape = SubResource("RectangleShape2D_rpgx6")
 
@@ -1154,102 +1246,20 @@ position = Vector2(691, 390)
 script = ExtResource("10_808k7")
 metadata/pronto_connections = [SubResource("Resource_2ut5r")]
 
-[node name="FenceBottom" type="StaticBody2D" parent="."]
-position = Vector2(571, 200)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceBottom"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(1133, 6)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceBottom2" type="StaticBody2D" parent="."]
-position = Vector2(930, 494)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceBottom2"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(382, 3)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceBottom3" type="StaticBody2D" parent="."]
-position = Vector2(277, 323)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceBottom3"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(536, 4)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceBottom4" type="StaticBody2D" parent="."]
-position = Vector2(281, 451)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceBottom4"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(536, 4)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceLeft" type="StaticBody2D" parent="."]
-position = Vector2(7, 160)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceLeft"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(6, 221)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceLeft4" type="StaticBody2D" parent="."]
-position = Vector2(539, 387)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceLeft4"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(9, 128)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceLeft2" type="StaticBody2D" parent="."]
-position = Vector2(743, 557)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceLeft2"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(16, 143)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceLeft3" type="StaticBody2D" parent="."]
-position = Vector2(18, 386)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceLeft3"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(6, 138)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceRight" type="StaticBody2D" parent="."]
-position = Vector2(1137, 160)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceRight"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(6, 221)
-sprite_texture = ExtResource("2_1xthg")
-
-[node name="FenceRight2" type="StaticBody2D" parent="."]
-position = Vector2(1124, 555)
-collision_layer = 2
-
-[node name="Placeholder" type="Node2D" parent="FenceRight2"]
-script = ExtResource("1_yctow")
-placeholder_size = Vector2(4, 129)
-sprite_texture = ExtResource("2_1xthg")
-
 [node name="Shop" type="Panel" parent="."]
 unique_name_in_owner = true
-offset_left = 18.0
-offset_top = 328.0
-offset_right = 538.0
-offset_bottom = 451.0
+offset_left = 30.0
+offset_top = 285.0
+offset_right = 550.0
+offset_bottom = 408.0
+
+[node name="Label" type="Label" parent="Shop"]
+layout_mode = 0
+offset_left = 216.0
+offset_top = -31.0
+offset_right = 306.0
+offset_bottom = -5.0
+text = "✨ shop ✨"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_left = 394.0
@@ -1262,7 +1272,7 @@ position = Vector2(-20, 20)
 script = ExtResource("10_h3ice")
 
 [node name="unicorn_health" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(93, -49)
+position = Vector2(105, -92)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1270,7 +1280,7 @@ float_value = 3.0
 float_step_size = 1.0
 
 [node name="unicorn_attacks" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(97, -102)
+position = Vector2(145, -55)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1278,7 +1288,7 @@ float_value = 3.0
 float_step_size = 0.1
 
 [node name="lizard_health" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(93, -49)
+position = Vector2(105, -92)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1286,7 +1296,7 @@ float_value = 2.0
 float_step_size = 1.0
 
 [node name="lizard_attacks" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(93, -49)
+position = Vector2(105, -92)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1294,7 +1304,7 @@ float_value = 4.0
 float_step_size = 1.0
 
 [node name="snail_health" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(93, -49)
+position = Vector2(147, -44)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1302,7 +1312,7 @@ float_value = 6.0
 float_step_size = 1.0
 
 [node name="snail_attacks" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(93, -49)
+position = Vector2(135, -34)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1316,7 +1326,7 @@ script = ExtResource("12_qohg7")
 metadata/pronto_connections = [SubResource("Resource_qhay1"), SubResource("Resource_8e46h"), SubResource("Resource_rpjqa"), SubResource("Resource_rw8n8"), SubResource("Resource_egs5n"), SubResource("Resource_jsb64"), SubResource("Resource_bislf"), SubResource("Resource_dg5g6"), SubResource("Resource_eelke")]
 
 [node name="EnterKey" type="Node2D" parent="Battle"]
-position = Vector2(-34, -50)
+position = Vector2(-22, -93)
 script = ExtResource("13_lnsrf")
 key = "Enter"
 metadata/pronto_connections = [SubResource("Resource_jv5m3")]
