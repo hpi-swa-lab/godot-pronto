@@ -15,7 +15,7 @@ func _emit_pressed():
 	print(">> Resting and regenerating " + str(regen_amount) + " stamina")
 	
 	var label = Label.new()
-	label.text = "Resting and regenerating " + str(regen_amount) + " stamina"
+	label.text = "🤴: Player resting and regenerating " + str(regen_amount) + " stamina"
 	vbox.add_child(label)
 	scrollContainer.scroll_vertical = scrollBar.max_value
 	

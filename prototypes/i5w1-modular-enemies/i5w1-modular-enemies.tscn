@@ -495,7 +495,7 @@ func run():
 	]
 	var rand_phrase = phrases[randi() % phrases.size()]
 	var label = self.get_parent().get_children()[1] as Label
-	label.text =  rand_phrase
+	label.text = \"🧌: \" + rand_phrase
 	print(\"Enemy: \\\"\" + rand_phrase + \"\\\"\")
 
 "
@@ -711,6 +711,11 @@ func run():
 	var base_damage = G.at(\"EnemyBaseDamage\")
 	var dead_arms = 0
 	var has_weapon = false
+	
+	var vbox = G.get_parent().get_node(\"i5w1-modular-enemies/PanelContainer2/ScrollContainer/VBoxContainer\")
+	var scrollContainer = vbox.get_parent() as ScrollContainer
+	var scrollBar = scrollContainer.get_v_scroll_bar()
+	
 	if is_alive(ref_left_arm):
 		has_weapon = carrying_weapon(ref_left_arm)	
 	else:
@@ -723,9 +728,17 @@ func run():
 	var modified_chance_to_hit = base_chance_to_hit * (1-(0.5*dead_arms))
 	if rng.randi_range(0, 100) < modified_chance_to_hit:
 		var damage = int(base_damage * rng.randf_range(1,2) if has_weapon else base_damage)
+		var label = Label.new()
+		label.text = \"🧌: \" + \"Enemy attacks player for \" + str(damage) + \" damage\"
+		vbox.add_child(label)
+		scrollContainer.scroll_vertical = scrollBar.max_value
 		print(\">> Enemy attacks player for \" + str(damage) + \" damage\")
 		ref_player_health.damage(damage)
 	else:
+		var label = Label.new()
+		label.text = \"🧌: \" + \"Enemy misses their attack\"
+		vbox.add_child(label)
+		scrollContainer.scroll_vertical = scrollBar.max_value
 		print(\">> Enemy misses their attack\")	
 
 func is_alive(node):
@@ -1662,10 +1675,10 @@ float_value = 25.0
 float_step_size = 1.0
 
 [node name="Label" type="Label" parent="."]
-offset_left = 196.0
-offset_top = -178.0
-offset_right = 1034.0
-offset_bottom = 64.0
+offset_left = 185.0
+offset_top = 169.0
+offset_right = 1023.0
+offset_bottom = 411.0
 theme_override_font_sizes/font_size = 171
 text = "YOU WON"
 horizontal_alignment = 1

@@ -28,7 +28,7 @@ func _do_player_attack(type: String):
 			print(">> Damaged enemy " + G.at("Target") + " for " + str(base_damage) + " points with light attack")
 			
 			var label = Label.new()
-			label.text = "Damaged enemy " + G.at("Target") + " for " + str(base_damage) + " points with light attack"
+			label.text = "🤴: Damaged enemy " + G.at("Target") + " for " + str(base_damage) + " points with light attack"
 			vbox.add_child(label)
 			scrollContainer.scroll_vertical = scrollBar.max_value
 		elif type == "heavy":
@@ -38,14 +38,14 @@ func _do_player_attack(type: String):
 			print(">> Damaged enemy " + G.at("Target") + " for " + str(damage) + " points with heavy attack")
 			
 			var label = Label.new()
-			label.text = "Damaged enemy " + G.at("Target") + " for " + str(damage) + " points with heavy attack"
+			label.text = "🤴: Damaged enemy " + G.at("Target") + " for " + str(damage) + " points with heavy attack"
 			vbox.add_child(label)
 			scrollContainer.scroll_vertical = scrollBar.max_value
 		else:
 			push_error("INVALID ATTACK TYPE")	
 	else:
 		var label = Label.new()
-		label.text = "Player missed their attack"
+		label.text = "🤴: Player missed their attack"
 		vbox.add_child(label)
 		scrollContainer.scroll_vertical = scrollBar.max_value
 		
