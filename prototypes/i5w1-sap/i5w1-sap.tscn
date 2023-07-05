@@ -289,15 +289,15 @@ func run(from: Node2D, to: Node2D):
 	var size = roster.get_node(\"Placeholder\").size
 	for i in 4:
 		var index = randi() % to.scenes.size()
-		print(to.scenes[index].get_node(\"Placeholder\").size)
 		var pet = to.spawn_at(
 			roster.position + Vector2(
 				0,
 				size.y - to.scenes[index].get_node(\"Placeholder\").size.y
 			),
 			index
-		)[0]
+		)[0] as RigidBody2D
 		pet.add_to_group(\"their_pets\")
+		pet.set_collision_layer_value(4, true)
 		pet.get_node(\"Placeholder\").color = Color.BLACK
 "
 
@@ -709,8 +709,9 @@ func run(from: Node2D, to: Node2D):
 	var shop = to.get_node(\"%Shop\")
 	for i in 5:
 		var index = randi() % to.scenes.size()
-		var pet = to.spawn_at(shop.position + shop.size / 2, index)[0]
+		var pet = to.spawn_at(shop.position + shop.size / 2, index)[0] as RigidBody2D
 		pet.add_to_group(\"our_pets\")
+		pet.set_collision_layer_value(3, true)
 "
 
 [sub_resource type="Resource" id="Resource_vsnqc"]
@@ -1015,7 +1016,7 @@ enabled = true
 [node name="Scene" type="Node2D"]
 
 [node name="FenceTop" type="StaticBody2D" parent="."]
-position = Vector2(570, 48)
+position = Vector2(569, 85)
 collision_layer = 2
 
 [node name="Placeholder" type="Node2D" parent="FenceTop"]
@@ -1035,33 +1036,57 @@ sprite_texture = ExtResource("2_1xthg")
 [node name="RosterOurs" type="Area2D" parent="." groups=["rosters"]]
 unique_name_in_owner = true
 position = Vector2(286, 163)
+collision_layer = 4
+collision_mask = 4
 priority = 1.0
 gravity_point_center = Vector2(1, 0)
 gravity_direction = Vector2(1, 0)
 gravity = 50.0
 linear_damp_space_override = 3
 
+[node name="Gravity" type="Node2D" parent="RosterOurs"]
+visible = false
+position = Vector2(283, -18)
+script = ExtResource("1_yctow")
+color = Color(0, 1, 1, 1)
+placeholder_size = Vector2(1140, 126)
+keep_in_origin = false
+sprite_texture = ExtResource("2_1xthg")
+
 [node name="Placeholder" type="Node2D" parent="RosterOurs"]
 z_index = -10
+position = Vector2(0, -21)
 script = ExtResource("1_yctow")
 color = Color(0.152941, 0.152941, 0.152941, 1)
-placeholder_size = Vector2(566, 224)
+placeholder_size = Vector2(566, 125)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="RosterTheirs" type="Area2D" parent="." groups=["rosters"]]
 unique_name_in_owner = true
 position = Vector2(852, 163)
+collision_layer = 8
+collision_mask = 8
 priority = 1.0
 gravity_point_center = Vector2(-1, 0)
 gravity_direction = Vector2(-1, 0)
 gravity = 50.0
 linear_damp_space_override = 3
 
+[node name="Gravity" type="Node2D" parent="RosterTheirs"]
+visible = false
+position = Vector2(-285, -19)
+script = ExtResource("1_yctow")
+color = Color(0, 1, 1, 1)
+placeholder_size = Vector2(1141, 128)
+keep_in_origin = false
+sprite_texture = ExtResource("2_1xthg")
+
 [node name="Placeholder" type="Node2D" parent="RosterTheirs"]
 z_index = -10
+position = Vector2(0, -21)
 script = ExtResource("1_yctow")
 color = Color(0.152941, 0.152941, 0.152941, 1)
-placeholder_size = Vector2(566, 224)
+placeholder_size = Vector2(566, 125)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="NoGravity" type="Area2D" parent="."]
@@ -1130,7 +1155,7 @@ script = ExtResource("10_808k7")
 metadata/pronto_connections = [SubResource("Resource_2ut5r")]
 
 [node name="FenceBottom" type="StaticBody2D" parent="."]
-position = Vector2(571, 289)
+position = Vector2(571, 200)
 collision_layer = 2
 
 [node name="Placeholder" type="Node2D" parent="FenceBottom"]
@@ -1147,6 +1172,24 @@ script = ExtResource("1_yctow")
 placeholder_size = Vector2(382, 3)
 sprite_texture = ExtResource("2_1xthg")
 
+[node name="FenceBottom3" type="StaticBody2D" parent="."]
+position = Vector2(277, 323)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="FenceBottom3"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(536, 4)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceBottom4" type="StaticBody2D" parent="."]
+position = Vector2(281, 451)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="FenceBottom4"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(536, 4)
+sprite_texture = ExtResource("2_1xthg")
+
 [node name="FenceLeft" type="StaticBody2D" parent="."]
 position = Vector2(7, 160)
 collision_layer = 2
@@ -1156,6 +1199,15 @@ script = ExtResource("1_yctow")
 placeholder_size = Vector2(6, 221)
 sprite_texture = ExtResource("2_1xthg")
 
+[node name="FenceLeft4" type="StaticBody2D" parent="."]
+position = Vector2(539, 387)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="FenceLeft4"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(9, 128)
+sprite_texture = ExtResource("2_1xthg")
+
 [node name="FenceLeft2" type="StaticBody2D" parent="."]
 position = Vector2(743, 557)
 collision_layer = 2
@@ -1163,6 +1215,15 @@ collision_layer = 2
 [node name="Placeholder" type="Node2D" parent="FenceLeft2"]
 script = ExtResource("1_yctow")
 placeholder_size = Vector2(16, 143)
+sprite_texture = ExtResource("2_1xthg")
+
+[node name="FenceLeft3" type="StaticBody2D" parent="."]
+position = Vector2(18, 386)
+collision_layer = 2
+
+[node name="Placeholder" type="Node2D" parent="FenceLeft3"]
+script = ExtResource("1_yctow")
+placeholder_size = Vector2(6, 138)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="FenceRight" type="StaticBody2D" parent="."]
