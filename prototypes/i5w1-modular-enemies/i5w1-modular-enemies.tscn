@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=3 uid="uid://dfaw7ve5q2474"]
+[gd_scene load_steps=155 format=3 uid="uid://dfaw7ve5q2474"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShape.gd" id="1_ui1dh"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_m4bil"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="6_3m8bw"]
 [ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/Button.gd" id="6_adlgl"]
 [ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/light_attack.gd" id="7_eoycw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="7_lne7x"]
 [ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/heavy_attack.gd" id="8_fqpas"]
 [ext_resource type="Script" path="res://prototypes/i5w1-modular-enemies/rest.gd" id="9_cnxar"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="9_lk3db"]
@@ -79,6 +80,126 @@ only_if = SubResource("Resource_fdv0t")
 expression = SubResource("Resource_72mqv")
 deferred = false
 enabled = true
+
+[sub_resource type="GDScript" id="GDScript_u5gq1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	(get_parent().get_parent().get_children()[2] as Label).text = str(G.at(\"PlayerChanceToHitHead\")) + \"% ⚔️\"
+	(get_parent().get_parent().get_children()[2] as Label).visible = (get_parent() as Button).is_hovered()
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_costu"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_u5gq1")
+argument_names = []
+return_value = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_8w502"]
+font_size = 7
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_04oxr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	(get_parent().get_parent().get_children()[2] as Label).text = str(G.at(\"PlayerChanceToHit\")) + \"% ⚔️\"
+	(get_parent().get_parent().get_children()[2] as Label).visible = (get_parent() as Button).is_hovered()
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_e64qw"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_04oxr")
+argument_names = []
+return_value = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_55jjr"]
+font_size = 7
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_7m6x6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	(get_parent().get_parent().get_children()[3] as Label).text = str(G.at(\"PlayerChanceToHit\")) + \"% ⚔️\"
+	(get_parent().get_parent().get_children()[3] as Label).visible = (get_parent() as Button).is_hovered()
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_ovx6f"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_7m6x6")
+argument_names = []
+return_value = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_7i6ae"]
+font_size = 7
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_ej7kd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	(get_parent().get_parent().get_children()[2] as Label).text = str(G.at(\"PlayerChanceToHit\")) + \"% ⚔️\"
+	(get_parent().get_parent().get_children()[2] as Label).visible = (get_parent() as Button).is_hovered()
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_nkqt7"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_ej7kd")
+argument_names = []
+return_value = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_y6jfw"]
+font_size = 7
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_stxce"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	(get_parent().get_parent().get_children()[2] as Label).text = str(G.at(\"PlayerChanceToHit\")) + \"% ⚔️\"
+	(get_parent().get_parent().get_children()[2] as Label).visible = (get_parent() as Button).is_hovered()
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_h5fm4"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_stxce")
+argument_names = []
+return_value = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_a3ua5"]
+font_size = 7
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_mkpw6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	(get_parent().get_parent().get_children()[2] as Label).text = str(G.at(\"PlayerChanceToHit\")) + \"% ⚔️\"
+	(get_parent().get_parent().get_children()[2] as Label).visible = (get_parent() as Button).is_hovered()
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_34pl7"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_mkpw6")
+argument_names = []
+return_value = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_074hj"]
+font_size = 7
+font_color = Color(1, 0, 0, 1)
 
 [sub_resource type="GDScript" id="GDScript_gcl24"]
 script/source = "@tool
@@ -373,6 +494,8 @@ func run():
 		\"I'll enjoy tearing you apart!\"
 	]
 	var rand_phrase = phrases[randi() % phrases.size()]
+	var label = self.get_parent().get_children()[1] as Label
+	label.text =  rand_phrase
 	print(\"Enemy: \\\"\" + rand_phrase + \"\\\"\")
 
 "
@@ -890,6 +1013,156 @@ nested_script = SubResource("GDScript_ox0b2")
 argument_names = []
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_n07t6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_hppmo"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_n07t6")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_us4jw"]
+script = ExtResource("5_w82r7")
+signal_name = "always"
+to = NodePath("../enemy/head/Button/Code")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_hppmo")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_nuxte"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_hsfp3"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_nuxte")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_lp0wf"]
+script = ExtResource("5_w82r7")
+signal_name = "always"
+to = NodePath("../enemy/torso/Button/Code")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_hsfp3")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_1cov3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ib5qu"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_1cov3")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rhbj7"]
+script = ExtResource("5_w82r7")
+signal_name = "always"
+to = NodePath("../enemy/arm_left/Button/Code")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_ib5qu")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_awufp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ycp52"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_awufp")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_57m21"]
+script = ExtResource("5_w82r7")
+signal_name = "always"
+to = NodePath("../enemy/leg_left/Button/Code")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_ycp52")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_u5m4l"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_j7qrf"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_u5m4l")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_5wkms"]
+script = ExtResource("5_w82r7")
+signal_name = "always"
+to = NodePath("../enemy/arm_right/Button/Code")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_j7qrf")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_otvke"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_yxxjr"]
+script = ExtResource("4_wxur5")
+nested_script = SubResource("GDScript_otvke")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_fwn3i"]
+script = ExtResource("5_w82r7")
+signal_name = "always"
+to = NodePath("../enemy/leg_right/Button/Code")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_yxxjr")
+deferred = false
+enabled = true
+
 [node name="i5w1-modular-enemies" type="Node2D"]
 
 [node name="enemy" type="Node2D" parent="."]
@@ -918,6 +1191,20 @@ offset_right = 10.0
 offset_bottom = 9.0
 script = ExtResource("5_mi3vp")
 
+[node name="Code" type="Node2D" parent="enemy/head/Button"]
+position = Vector2(-13.9224, 6.3173)
+script = ExtResource("6_2s4u3")
+evaluate = SubResource("Resource_costu")
+
+[node name="Chances" type="Label" parent="enemy/head"]
+offset_left = -12.2679
+offset_top = -5.21619
+offset_right = 16.7321
+offset_bottom = 11.7838
+text = "25% ⚔️"
+label_settings = SubResource("LabelSettings_8w502")
+clip_text = true
+
 [node name="torso" type="Node2D" parent="enemy"]
 position = Vector2(0, 14)
 script = ExtResource("1_ui1dh")
@@ -940,6 +1227,19 @@ offset_top = -28.0
 offset_right = 13.0
 offset_bottom = 29.0
 script = ExtResource("5_mi3vp")
+
+[node name="Code" type="Node2D" parent="enemy/torso/Button"]
+position = Vector2(13.6134, 22.1501)
+script = ExtResource("6_2s4u3")
+evaluate = SubResource("Resource_e64qw")
+
+[node name="Chances" type="Label" parent="enemy/torso"]
+offset_left = -13.0
+offset_top = -18.0
+offset_right = 13.0
+offset_bottom = -5.0
+text = "50% ⚔️"
+label_settings = SubResource("LabelSettings_55jjr")
 
 [node name="arm_left" type="Node2D" parent="enemy"]
 position = Vector2(-22, 16)
@@ -974,6 +1274,18 @@ offset_right = 5.0
 offset_bottom = 21.0
 script = ExtResource("5_mi3vp")
 
+[node name="Code" type="Node2D" parent="enemy/arm_left/Button"]
+position = Vector2(-15.2643, 15.2643)
+script = ExtResource("6_2s4u3")
+evaluate = SubResource("Resource_ovx6f")
+
+[node name="Chances" type="Label" parent="enemy/arm_left"]
+offset_left = -31.0
+offset_top = -15.0
+offset_right = 4.0
+offset_bottom = 7.33333
+label_settings = SubResource("LabelSettings_7i6ae")
+
 [node name="arm_right" type="Node2D" parent="enemy"]
 position = Vector2(24, 17)
 rotation = -0.362796
@@ -997,6 +1309,18 @@ offset_top = -21.0
 offset_right = 5.0
 offset_bottom = 21.0
 script = ExtResource("5_mi3vp")
+
+[node name="Code" type="Node2D" parent="enemy/arm_right/Button"]
+position = Vector2(16.7303, 25.312)
+script = ExtResource("6_2s4u3")
+evaluate = SubResource("Resource_nkqt7")
+
+[node name="Chances" type="Label" parent="enemy/arm_right"]
+offset_left = 5.17999
+offset_top = -18.1856
+offset_right = 45.18
+offset_bottom = 4.14774
+label_settings = SubResource("LabelSettings_y6jfw")
 
 [node name="leg_left" type="Node2D" parent="enemy"]
 position = Vector2(-11, 63)
@@ -1022,6 +1346,18 @@ offset_right = 5.0
 offset_bottom = 21.0
 script = ExtResource("5_mi3vp")
 
+[node name="Code" type="Node2D" parent="enemy/leg_left/Button"]
+position = Vector2(-15.2643, 15.2643)
+script = ExtResource("6_2s4u3")
+evaluate = SubResource("Resource_h5fm4")
+
+[node name="Chances" type="Label" parent="enemy/leg_left"]
+offset_left = -34.0
+offset_top = -10.0
+offset_right = -5.0
+offset_bottom = 12.3333
+label_settings = SubResource("LabelSettings_a3ua5")
+
 [node name="leg_right" type="Node2D" parent="enemy"]
 position = Vector2(13, 62)
 rotation = -0.362796
@@ -1045,6 +1381,18 @@ offset_top = -21.0
 offset_right = 5.0
 offset_bottom = 21.0
 script = ExtResource("5_mi3vp")
+
+[node name="Code" type="Node2D" parent="enemy/leg_right/Button"]
+position = Vector2(15.4645, 28.5305)
+script = ExtResource("6_2s4u3")
+evaluate = SubResource("Resource_34pl7")
+
+[node name="Chances" type="Label" parent="enemy/leg_right"]
+offset_left = 5.02138
+offset_top = -13.5626
+offset_right = 43.0214
+offset_bottom = 8.7707
+label_settings = SubResource("LabelSettings_074hj")
 
 [node name="STATE" type="Node2D" parent="."]
 position = Vector2(552, -306)
@@ -1075,6 +1423,12 @@ position = Vector2(153, -2.00001)
 script = ExtResource("6_2s4u3")
 evaluate = SubResource("Resource_gy78w")
 metadata/pronto_connections = [SubResource("Resource_idsmn")]
+
+[node name="Label" type="Label" parent="STATE/enemy_turn/head"]
+offset_left = 143.0
+offset_top = 395.0
+offset_right = 411.0
+offset_bottom = 417.333
 
 [node name="torso" type="Node2D" parent="STATE/enemy_turn"]
 position = Vector2(76, -76)
@@ -1229,7 +1583,7 @@ to_prop = "disabled"
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_top = -2.0
 offset_right = 392.0
-offset_bottom = 154.0
+offset_bottom = 309.0
 
 [node name="Values" type="Node2D" parent="PanelContainer"]
 position = Vector2(12, 13)
@@ -1299,11 +1653,19 @@ float_to = 10.0
 float_value = 2.0
 float_step_size = 0.1
 
+[node name="PlayerChanceToHitHead" type="Node2D" parent="PanelContainer/Values"]
+position = Vector2(-11.7501, 11.7501)
+script = ExtResource("10_liufr")
+float_from = 0.0
+float_to = 100.0
+float_value = 25.0
+float_step_size = 1.0
+
 [node name="Label" type="Label" parent="."]
-offset_left = 191.0
-offset_top = 187.0
-offset_right = 1029.0
-offset_bottom = 429.0
+offset_left = 196.0
+offset_top = -178.0
+offset_right = 1034.0
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 171
 text = "YOU WON"
 horizontal_alignment = 1
@@ -1314,3 +1676,21 @@ position = Vector2(-29.4045, 29.4045)
 script = ExtResource("6_3m8bw")
 evaluate = SubResource("Resource_nbduh")
 to_prop = "visible"
+
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+offset_left = 458.0
+offset_top = 500.0
+offset_right = 1037.0
+offset_bottom = 642.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer2"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2/ScrollContainer"]
+layout_mode = 2
+
+[node name="Always" type="Node2D" parent="."]
+position = Vector2(538, 73)
+scale = Vector2(3.26054, 3.26054)
+script = ExtResource("7_lne7x")
+metadata/pronto_connections = [SubResource("Resource_us4jw"), SubResource("Resource_lp0wf"), SubResource("Resource_rhbj7"), SubResource("Resource_57m21"), SubResource("Resource_5wkms"), SubResource("Resource_fwn3i")]
