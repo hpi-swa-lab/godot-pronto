@@ -284,7 +284,6 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Node2D, to: Node2D):
-	print(\"HTIERS\")
 	# theirs
 	var roster = to.get_node(\"%RosterTheirs\")
 	var size = roster.get_node(\"Placeholder\").size
@@ -484,6 +483,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Node2D, to: Node2D):
+	# resume game end watcher (but give the game a few ticks to set up first)
 	(func():
 		await from.get_tree().create_timer(1.0).timeout
 		to.resume()).call_deferred()
@@ -552,10 +552,6 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Node2D, to: Node2D):
 	var intersects = func(pet: RigidBody2D, roster: Area2D):
-		#print(\"intersects?\", pet, roster)
-		#print(Utils.global_rect_of(roster.get_node(\"Placeholder\")))
-		#print((Utils.global_rect_of(pet.get_node(\"Placeholder\"))))
-		#print(Utils.global_rect_of(roster.get_node(\"Placeholder\")).intersects(Utils.global_rect_of(pet.get_node(\"Placeholder\"))))
 		return Utils.global_rect_of(roster.get_node(\"Placeholder\")).intersects(Utils.global_rect_of(pet.get_node(\"Placeholder\")))
 	
 	var rosters = Utils.all_nodes_that(from.get_parent(), func(o):
@@ -563,14 +559,10 @@ func run(from: Node2D, to: Node2D):
 	var pets_outside_rosters = Utils.all_nodes_that(from.get_parent(), func(n):
 		return n.is_in_group(\"pets\") and \\
 			not (rosters.any(func(o: Area2D):
-				#o.overlaps_body(n)
+				#return o.overlaps_body(n)))) # ???
 				return intersects.call(n, o))))
 	for pet in pets_outside_rosters:
 		pet.queue_free()
-		#print(\"\")
-		#print(\"not overlapped:\", pet, rosters[0], intersects.call(pet, rosters[0]))
-		#print(\"not overlapped:\", pet, rosters[1], intersects.call(pet, rosters[1]))
-		#pet.get_node(\"Placeholder\").color = Color.BLUE
 "
 
 [sub_resource type="Resource" id="Resource_4pwfc"]
@@ -1302,12 +1294,12 @@ text = "☠ graveyard ☠"
 
 [node name="Planning" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(638, 382)
+position = Vector2(637, 440)
 script = ExtResource("12_qohg7")
 metadata/pronto_connections = [SubResource("Resource_drutk"), SubResource("Resource_yanxn")]
 
 [node name="GameEndWatcher" type="Node2D" parent="."]
-position = Vector2(863, 387)
+position = Vector2(851, 448)
 script = ExtResource("6_3oxrk")
 paused = true
 metadata/pronto_connections = [SubResource("Resource_t2o76")]

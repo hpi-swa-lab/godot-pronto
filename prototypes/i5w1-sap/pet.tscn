@@ -125,28 +125,24 @@ func run(other, direction, from, to):
 	if to.to_string().contains(\"Health\"): # ???
 		to = to.get_parent()
 	
-	print(\"collided\", to, other, \" - \", to.is_in_group(\"our_pets\"))
-	for ab in [[to, other]]:
-		var a = ab[0]
-		var b = ab[1]
-		a.get_node(\"Placeholder\").flash(Color.YELLOW)
-		if a.is_in_group(\"our_pets\"):
-			a.get_node(\"../../\").get_node(\"%CameraShake\").add_trauma(0.4)
-		
-		a.get_node(\"HealthBar\").damage(b.get_node(\"AttackBar\").current)
-		
-		if to.is_in_group(\"our_pets\"):
-			(func():
-				for pet in Utils.all_nodes_that(to.get_node(\"../../\"), func(n): return n.is_in_group(\"our_pets\")):
-					print(\"move left\", pet)
-					pet.queue_position(pet.position - Vector2(60, 0))
-				print(\"moved all left\")).call_deferred()
-		elif to.is_in_group(\"their_pets\"):
-			(func():
-				for pet in Utils.all_nodes_that(to.get_node(\"../../\"), func(n): return n.is_in_group(\"their_pets\")):
-					print(\"move right\", pet)
-					pet.queue_position(pet.position + Vector2(60, 0))
-				print(\"moved all right\")).call_deferred()
+	to.get_node(\"Placeholder\").flash(Color.YELLOW)
+	if to.is_in_group(\"our_pets\"):
+		to.get_node(\"../../\").get_node(\"%CameraShake\").add_trauma(0.4)
+	
+	to.get_node(\"HealthBar\").damage(other.get_node(\"AttackBar\").current)
+	
+	if to.is_in_group(\"our_pets\"):
+		(func():
+			for pet in Utils.all_nodes_that(to.get_node(\"../../\"), func(n): return n.is_in_group(\"our_pets\")):
+				print(\"move left\", pet)
+				pet.queue_position(pet.position - Vector2(60, 0))
+			print(\"moved all left\")).call_deferred()
+	elif to.is_in_group(\"their_pets\"):
+		(func():
+			for pet in Utils.all_nodes_that(to.get_node(\"../../\"), func(n): return n.is_in_group(\"their_pets\")):
+				print(\"move right\", pet)
+				pet.queue_position(pet.position + Vector2(60, 0))
+			print(\"moved all right\")).call_deferred()
 "
 
 [sub_resource type="Resource" id="Resource_fvgea"]
