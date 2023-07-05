@@ -3532,7 +3532,7 @@ func run():
 	var power = float(closest(\"Store\").at(\"power\"))
 	
 	var attack_type = closest(\"Store\").at(\"attack_type\")
-	var current_weather = (closest(\"State Machine - Weather/Store\") as Store).at(\"current_weather\")
+	var current_weather = (closest(\"State Machine - Weather\").get_child(5) as Store).at(\"current_weather\")
 	
 	const weather_effect_map = {
 		# Clear
@@ -4518,7 +4518,7 @@ func run():
 	var power = float(closest(\"Store\").at(\"power\"))
 	
 	var attack_type = closest(\"Store\").at(\"attack_type\")
-	var current_weather = (closest(\"State Machine - Weather/Store\") as Store).at(\"current_weather\")
+	var current_weather = (closest(\"State Machine - Weather\").get_child(5) as Store).at(\"current_weather\")
 	
 	const weather_effect_map = {
 		# Clear
