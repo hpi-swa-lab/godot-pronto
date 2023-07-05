@@ -26,7 +26,7 @@ func _ready():
 			var radius = (parent_full_rect.size.length() + Utils.global_rect_of(self).size.length()) / 2
 			radius = clamp(radius, 10, 200)
 			position = Vector2(0, radius).rotated(get_parent().get_child_count() * PI / 4)
-			global_position = clamp(global_position, parent_rect.global_position, parent_rect.global_position + parent_rect.size)
+			global_position = clamp(global_position, parent_rect.position, parent_rect.position + parent_rect.size)
 
 func is_active_scene() -> bool:
 	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
