@@ -1,4 +1,4 @@
-[gd_scene load_steps=187 format=3 uid="uid://bgxt4wcv8r1mj"]
+[gd_scene load_steps=226 format=3 uid="uid://bgxt4wcv8r1mj"]
 
 [ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://assets/simple_tileset/overworld.png" id="1_il3if"]
 [ext_resource type="Texture2D" uid="uid://cu3poyas45glr" path="res://assets/simple_tileset/scifitiles-sheet.png" id="1_krj8n"]
@@ -20,8 +20,10 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="16_bfvjy"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="17_y0ke2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="18_18wwb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRoot.gd" id="18_m8w01"]
 [ext_resource type="Script" path="res://prototypes/i5w1-jf-move-planning/DamageField.gd" id="19_pl3ob"]
 [ext_resource type="Texture2D" uid="uid://clp50jj8va5ku" path="res://prototypes/i5w1-jf-move-planning/heal.png" id="22_rbagc"]
+[ext_resource type="Texture2D" uid="uid://bse68sslqtedq" path="res://prototypes/i5w1-jf-move-planning/poison.png" id="23_hkt14"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_44gr1"]
 texture = ExtResource("1_krj8n")
@@ -1316,6 +1318,85 @@ expression = SubResource("Resource_fl1a0")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_q32o8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_amres"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_q32o8")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_4asos"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rrc06"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_4asos")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ed8kq"]
+script = ExtResource("5_pwq2o")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_rrc06")
+expression = SubResource("Resource_amres")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_uxxw1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return at(\"PoisonDamage\")
+"
+
+[sub_resource type="Resource" id="Resource_knp20"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_uxxw1")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_1snix"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_l68jt"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_1snix")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rgojc"]
+script = ExtResource("5_pwq2o")
+signal_name = "collided"
+to = NodePath("../../HealthBar1")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_knp20")]
+only_if = SubResource("Resource_l68jt")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_rjl4e"]
 script/source = "@tool
 extends U
@@ -1392,6 +1473,85 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_8t4bj")
 expression = SubResource("Resource_d63au")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_vir0s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_tvlt4"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_vir0s")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_vccd3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_0jbql"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_vccd3")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_w3l1e"]
+script = ExtResource("5_pwq2o")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_0jbql")
+expression = SubResource("Resource_tvlt4")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_g67ny"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return at(\"PoisonDamage\")
+"
+
+[sub_resource type="Resource" id="Resource_qnutv"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_g67ny")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_nj6uc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_wgju6"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_nj6uc")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tbqa2"]
+script = ExtResource("5_pwq2o")
+signal_name = "collided"
+to = NodePath("../../HealthBar2")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_qnutv")]
+only_if = SubResource("Resource_wgju6")
 deferred = false
 enabled = true
 
@@ -1480,6 +1640,31 @@ more_references = []
 invoke = "execute"
 arguments = []
 only_if = SubResource("Resource_3kki4")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ruqmt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_5r8ex"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_ruqmt")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a1y07"]
+script = ExtResource("5_pwq2o")
+signal_name = "after"
+to = NodePath("../MinePlacer")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_5r8ex")
 deferred = false
 enabled = true
 
@@ -1617,6 +1802,45 @@ script = ExtResource("4_4hiwy")
 nested_script = SubResource("GDScript_5b8ub")
 argument_names = []
 return_value = true
+
+[sub_resource type="GDScript" id="GDScript_lftn1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_jox52"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_lftn1")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ojcwi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_au4ai"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_ojcwi")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_lkm08"]
+script = ExtResource("5_pwq2o")
+signal_name = "after"
+to = NodePath("SceneRoot")
+more_references = []
+invoke = "reload_current_scene"
+arguments = []
+only_if = SubResource("Resource_au4ai")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_c7juw"]
 script/source = "@tool
@@ -1843,6 +2067,80 @@ only_if = SubResource("Resource_808gh")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_r7gf1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	const quadrant_size: float = 64
+	const zero_position: Vector2 = Vector2(345, 76)
+	
+	if randf() > at(\"PoisonSpawnProb\"): return false
+	var x = randi_range(0, 7)
+	var y = randi_range(0, 7)
+	
+	return zero_position + Vector2(x, y) * quadrant_size
+"
+
+[sub_resource type="Resource" id="Resource_ynsek"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_r7gf1")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_mduw6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_d0wb7"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_mduw6")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_1dvvy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return -1
+"
+
+[sub_resource type="Resource" id="Resource_tfn23"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_1dvvy")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bk1v1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_nau3s"]
+script = ExtResource("4_4hiwy")
+nested_script = SubResource("GDScript_bk1v1")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tvr2c"]
+script = ExtResource("5_pwq2o")
+signal_name = "after"
+to = NodePath("MineSpawner")
+more_references = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_d0wb7"), SubResource("Resource_tfn23")]
+only_if = SubResource("Resource_nau3s")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -2038,6 +2336,12 @@ script = ExtResource("18_18wwb")
 limit_to_group = "heal"
 metadata/pronto_connections = [SubResource("Resource_ir76h"), SubResource("Resource_a182f")]
 
+[node name="PoisonCollision" type="Node2D" parent="Player1"]
+position = Vector2(-32.4596, -32.4596)
+script = ExtResource("18_18wwb")
+limit_to_group = "poison"
+metadata/pronto_connections = [SubResource("Resource_ed8kq"), SubResource("Resource_rgojc")]
+
 [node name="Player2" type="Area2D" parent="." groups=["player", "player2"]]
 position = Vector2(793, 76)
 script = ExtResource("7_2akbo")
@@ -2056,6 +2360,12 @@ script = ExtResource("18_18wwb")
 limit_to_group = "heal"
 metadata/pronto_connections = [SubResource("Resource_aumyc"), SubResource("Resource_4bpso")]
 
+[node name="PoisonCollision" type="Node2D" parent="Player2"]
+position = Vector2(-92, -1)
+script = ExtResource("18_18wwb")
+limit_to_group = "poison"
+metadata/pronto_connections = [SubResource("Resource_w3l1e"), SubResource("Resource_tbqa2")]
+
 [node name="Store" type="Node2D" parent="."]
 position = Vector2(71, 59)
 script = ExtResource("6_bmd4l")
@@ -2068,7 +2378,7 @@ position = Vector2(868, 122)
 script = ExtResource("3_8sldm")
 label = "TurnExectuor"
 evaluate = SubResource("Resource_upyne")
-metadata/pronto_connections = [SubResource("Resource_ka677")]
+metadata/pronto_connections = [SubResource("Resource_ka677"), SubResource("Resource_a1y07")]
 
 [node name="ActivationCheck" type="Node2D" parent="."]
 position = Vector2(970, 103)
@@ -2090,14 +2400,25 @@ to_prop = "duration_seconds"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_right = 300.0
-offset_bottom = 204.0
+offset_bottom = 336.0
 
 [node name="Settings" type="Node2D" parent="PanelContainer"]
 position = Vector2(-20, 20)
 script = ExtResource("13_bk01k")
 
+[node name="Reset" type="Node2D" parent="PanelContainer/Settings"]
+position = Vector2(-10, 38)
+script = ExtResource("3_8sldm")
+label = "Reset"
+evaluate = SubResource("Resource_jox52")
+metadata/pronto_connections = [SubResource("Resource_lkm08")]
+
+[node name="SceneRoot" type="Node2D" parent="PanelContainer/Settings/Reset"]
+position = Vector2(-2, 31)
+script = ExtResource("18_m8w01")
+
 [node name="Moves" type="Node2D" parent="PanelContainer/Settings"]
-position = Vector2(-7.07107, 7.07107)
+position = Vector2(-65, -1)
 script = ExtResource("14_i77nb")
 float_from = 1.0
 float_to = 5.0
@@ -2105,7 +2426,7 @@ float_value = 3.0
 float_step_size = 1.0
 
 [node name="QueueProb" type="Node2D" parent="PanelContainer/Settings"]
-position = Vector2(-10, -4.37114e-07)
+position = Vector2(-65, 30)
 script = ExtResource("14_i77nb")
 float_from = 0.0
 float_to = 1.0
@@ -2113,7 +2434,7 @@ float_value = 0.5
 float_step_size = 0.1
 
 [node name="ActionSpeed" type="Node2D" parent="PanelContainer/Settings"]
-position = Vector2(-17.0711, 7.07107)
+position = Vector2(-61, 58)
 script = ExtResource("14_i77nb")
 float_from = 0.25
 float_to = 3.0
@@ -2121,7 +2442,7 @@ float_value = 1.0
 float_step_size = 0.25
 
 [node name="HealSpawnProb" type="Node2D" parent="PanelContainer/Settings"]
-position = Vector2(8.53554, -8.53554)
+position = Vector2(-63, 90)
 script = ExtResource("14_i77nb")
 float_from = 0.0
 float_to = 1.0
@@ -2129,11 +2450,27 @@ float_value = 0.3
 float_step_size = 0.05
 
 [node name="HealAmount" type="Node2D" parent="PanelContainer/Settings"]
-position = Vector2(8.74228e-07, -10)
+position = Vector2(-63, 117)
 script = ExtResource("14_i77nb")
 float_from = 10.0
 float_to = 100.0
 float_value = 40.0
+float_step_size = 1.0
+
+[node name="PoisonSpawnProb" type="Node2D" parent="PanelContainer/Settings"]
+position = Vector2(-63, 145)
+script = ExtResource("14_i77nb")
+float_from = 0.0
+float_to = 1.0
+float_value = 0.3
+float_step_size = 0.05
+
+[node name="PoisonDamage" type="Node2D" parent="PanelContainer/Settings"]
+position = Vector2(-66, 178)
+script = ExtResource("14_i77nb")
+float_from = 0.0
+float_to = 100.0
+float_value = 30.0
 float_step_size = 1.0
 
 [node name="CrossSpawner1" type="Node2D" parent="."]
@@ -2251,3 +2588,30 @@ script = ExtResource("3_nqh52")
 placeholder_size = Vector2(35, 35)
 use_sprite = true
 sprite_texture = ExtResource("22_rbagc")
+outline_visible = true
+outline_color = Color(0, 1, 0, 1)
+outline_width = 20.0
+
+[node name="MinePlacer" type="Node2D" parent="."]
+position = Vector2(1048, 209)
+script = ExtResource("3_8sldm")
+label = "Poison Placer"
+evaluate = SubResource("Resource_ynsek")
+metadata/pronto_connections = [SubResource("Resource_tvr2c")]
+
+[node name="MineSpawner" type="Node2D" parent="MinePlacer"]
+position = Vector2(39, 11)
+script = ExtResource("16_bfvjy")
+
+[node name="Area2D" type="Area2D" parent="MinePlacer/MineSpawner" groups=["poison"]]
+position = Vector2(27, 37)
+
+[node name="Placeholder" type="Node2D" parent="MinePlacer/MineSpawner/Area2D"]
+script = ExtResource("3_nqh52")
+label = "Mine"
+placeholder_size = Vector2(35, 35)
+use_sprite = true
+sprite_texture = ExtResource("23_hkt14")
+outline_visible = true
+outline_color = Color(1, 0, 0, 1)
+outline_width = 20.0

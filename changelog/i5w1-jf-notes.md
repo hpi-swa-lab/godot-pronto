@@ -12,6 +12,8 @@ We used the Healthbar as actual healtch display for the players but also for dis
 
 We used code for the entire player logic. Pronto isn't good in providing a way to structure code with multiple functions, etc. which is what we used a lot here in order to have readable code.
 
+Unfortunately, when we used Code Behaviors we sometimes had to still duplicate our code (for each player). This is where we wished for having global functions that we can write once in a central place and use at different locations.
+
 ## Problems
 
 ### Duplicating Code-Behavior
@@ -106,7 +108,7 @@ As feedback they proposed to add items to the game in order to add randomness to
 
 Other proposed features include:
 
-* **Mines**: Similiar to health potions they spawn and deal damage when stepping on them.
+* **Mines**: Similiar to health potions they spawn and deal damage when stepping on them (*Note: Added after first user-testing Session as Poison*).
 * **Walls**: They can be placed on a tile to block `Cross-Attack` and movement. They can either have a lifetime or stay till the end of the game
 * **Battle Royale Mode**: Make the playing area smaller after a few rounds by removing a few outermost tiles. This causes more "action" and shortens the duration of a game (average rounds took around 5 - 6 min because both players played defensive and went for the health item).
 * **Limited Attacks**: Since one of the tacics included "spamming" attacks, one player supposed to limit the number of attacks that a player can schedule. Each round the player gets 1 or 2 attacks that are kept if not used, up to a limit of 5.
@@ -117,7 +119,7 @@ Unfortunately, the developers of this prototype (us) have discontinued their wor
 
 ## Improvements for next week
 
-We also thought about more improvements for our features from last week:
+We also thought about more improvements for our features from last week and other things we would like to have implemented/added to Pronto:
 
 * **Healthbar**: Fix issue where `current` is set to `max` on godot start.
 * **Healthbar**: Use gradient instead of Array of colors.
@@ -129,3 +131,6 @@ We also thought about more improvements for our features from last week:
 * **Value**: Fix out of bounds when changinig `min` or `max`.
 * **Code**: Remove Label from Code-Behavior and use the name from the object-tree instead
 * **Function-Behavior**: A behavior that stores different functions that can be used anywhere (just like `at()`) in order to reduce duplicate code while still having a structure.
+* **GLOBAL-Nodes**: Very often we have to traverse the tree in order to get to a specific node. It would be very nice if we could just give certain (Pronto)-nodes a global ID and access them via `at(...)` so we don't need to go through parents and children anymore.
+* **Autocomplete for `at()`**: It would be nice if we could have an autocompletion/suggestion for the `at` method because sometimes you are just not 100 % certain, how you named a Value.
+* **Prototyping UI**: Add option to start the UI closed.
