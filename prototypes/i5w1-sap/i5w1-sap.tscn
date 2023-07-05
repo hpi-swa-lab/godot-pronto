@@ -1054,7 +1054,7 @@ placeholder_size = Vector2(382, 3)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="FenceBottom3" type="StaticBody2D" parent="fences"]
-position = Vector2(289, 280)
+position = Vector2(293, 249)
 collision_layer = 2
 
 [node name="Placeholder" type="Node2D" parent="fences/FenceBottom3"]
@@ -1063,7 +1063,7 @@ placeholder_size = Vector2(536, 4)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="FenceBottom4" type="StaticBody2D" parent="fences"]
-position = Vector2(293, 408)
+position = Vector2(297, 377)
 collision_layer = 2
 
 [node name="Placeholder" type="Node2D" parent="fences/FenceBottom4"]
@@ -1081,7 +1081,7 @@ placeholder_size = Vector2(6, 221)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="FenceLeft4" type="StaticBody2D" parent="fences"]
-position = Vector2(551, 344)
+position = Vector2(555, 313)
 collision_layer = 2
 
 [node name="Placeholder" type="Node2D" parent="fences/FenceLeft4"]
@@ -1099,7 +1099,7 @@ placeholder_size = Vector2(16, 143)
 sprite_texture = ExtResource("2_1xthg")
 
 [node name="FenceLeft3" type="StaticBody2D" parent="fences"]
-position = Vector2(30, 343)
+position = Vector2(34, 312)
 collision_layer = 2
 
 [node name="Placeholder" type="Node2D" parent="fences/FenceLeft3"]
@@ -1216,7 +1216,7 @@ script = ExtResource("6_3oxrk")
 metadata/pronto_connections = [SubResource("Resource_26gou")]
 
 [node name="PetSpawner" type="Node2D" parent="."]
-position = Vector2(289, 345)
+position = Vector2(293, 314)
 script = ExtResource("9_nf4hl")
 spawn_shape = SubResource("RectangleShape2D_rpgx6")
 
@@ -1248,10 +1248,10 @@ metadata/pronto_connections = [SubResource("Resource_2ut5r")]
 
 [node name="Shop" type="Panel" parent="."]
 unique_name_in_owner = true
-offset_left = 30.0
-offset_top = 285.0
-offset_right = 550.0
-offset_bottom = 408.0
+offset_left = 34.0
+offset_top = 254.0
+offset_right = 554.0
+offset_bottom = 377.0
 
 [node name="Label" type="Label" parent="Shop"]
 layout_mode = 0
@@ -1263,7 +1263,7 @@ text = "✨ shop ✨"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_left = 394.0
-offset_top = 467.0
+offset_top = 407.0
 offset_right = 729.0
 offset_bottom = 644.0
 
@@ -1272,7 +1272,7 @@ position = Vector2(-20, 20)
 script = ExtResource("10_h3ice")
 
 [node name="unicorn_health" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(105, -92)
+position = Vector2(109, -123)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1280,7 +1280,7 @@ float_value = 3.0
 float_step_size = 1.0
 
 [node name="unicorn_attacks" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(145, -55)
+position = Vector2(248, -89)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1288,7 +1288,7 @@ float_value = 3.0
 float_step_size = 0.1
 
 [node name="lizard_health" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(105, -92)
+position = Vector2(109, -123)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1296,7 +1296,7 @@ float_value = 2.0
 float_step_size = 1.0
 
 [node name="lizard_attacks" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(105, -92)
+position = Vector2(289, -148)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1304,7 +1304,7 @@ float_value = 4.0
 float_step_size = 1.0
 
 [node name="snail_health" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(147, -44)
+position = Vector2(250, -78)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1312,7 +1312,7 @@ float_value = 6.0
 float_step_size = 1.0
 
 [node name="snail_attacks" type="Node2D" parent="PanelContainer/PrototypingUI"]
-position = Vector2(135, -34)
+position = Vector2(238, -68)
 script = ExtResource("11_nycra")
 float_from = 0.0
 float_to = 10.0
@@ -1326,7 +1326,7 @@ script = ExtResource("12_qohg7")
 metadata/pronto_connections = [SubResource("Resource_qhay1"), SubResource("Resource_8e46h"), SubResource("Resource_rpjqa"), SubResource("Resource_rw8n8"), SubResource("Resource_egs5n"), SubResource("Resource_jsb64"), SubResource("Resource_bislf"), SubResource("Resource_dg5g6"), SubResource("Resource_eelke")]
 
 [node name="EnterKey" type="Node2D" parent="Battle"]
-position = Vector2(-22, -93)
+position = Vector2(-18, -124)
 script = ExtResource("13_lnsrf")
 key = "Enter"
 metadata/pronto_connections = [SubResource("Resource_jv5m3")]
