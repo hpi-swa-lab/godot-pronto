@@ -1,4 +1,4 @@
-[gd_scene load_steps=570 format=3 uid="uid://dptmkluqf7jet"]
+[gd_scene load_steps=605 format=3 uid="uid://dptmkluqf7jet"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_ypaav"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="2_fqlo4"]
@@ -1866,6 +1866,59 @@ only_if = SubResource("Resource_fe4or")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_6q02n"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"current_weather\"
+"
+
+[sub_resource type="Resource" id="Resource_7ae1t"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_6q02n")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_uh7ab"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_5ibh5"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_uh7ab")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_belhq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7uhws"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_belhq")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4qaj4"]
+script = ExtResource("4_2t5a6")
+signal_name = "entered"
+to = NodePath("../Store")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_7ae1t"), SubResource("Resource_5ibh5")]
+only_if = SubResource("Resource_7uhws")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_iexfk"]
 script/source = "@tool
 extends U
@@ -1980,6 +2033,59 @@ more_references = []
 invoke = "@label_setter"
 arguments = [SubResource("Resource_xyyii")]
 only_if = SubResource("Resource_ogjlr")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_wparm"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"current_weather\"
+"
+
+[sub_resource type="Resource" id="Resource_hluvo"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_wparm")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_f1g2d"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 1
+"
+
+[sub_resource type="Resource" id="Resource_7cqpg"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_f1g2d")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_r2kun"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_uewyc"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_r2kun")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_j732h"]
+script = ExtResource("4_2t5a6")
+signal_name = "entered"
+to = NodePath("../Store")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_hluvo"), SubResource("Resource_7cqpg")]
+only_if = SubResource("Resource_uewyc")
 deferred = false
 enabled = true
 
@@ -2100,6 +2206,59 @@ only_if = SubResource("Resource_jsoe2")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_0ufte"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"current_weather\"
+"
+
+[sub_resource type="Resource" id="Resource_aj7jv"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_0ufte")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_qss4n"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 2
+"
+
+[sub_resource type="Resource" id="Resource_l1qnh"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_qss4n")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xuc2b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bt24d"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_xuc2b")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_lt8o3"]
+script = ExtResource("4_2t5a6")
+signal_name = "entered"
+to = NodePath("../Store")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_aj7jv"), SubResource("Resource_l1qnh")]
+only_if = SubResource("Resource_bt24d")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_lqa27"]
 script/source = "@tool
 extends U
@@ -2214,6 +2373,59 @@ more_references = []
 invoke = "@label_setter"
 arguments = [SubResource("Resource_idxrn")]
 only_if = SubResource("Resource_kgjfo")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_exmqa"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"current_weather\"
+"
+
+[sub_resource type="Resource" id="Resource_0xvm1"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_exmqa")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ca7m2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 4
+"
+
+[sub_resource type="Resource" id="Resource_45vbh"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_ca7m2")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_kj6gc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_h2d5t"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_kj6gc")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_oayew"]
+script = ExtResource("4_2t5a6")
+signal_name = "entered"
+to = NodePath("../Store")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_0xvm1"), SubResource("Resource_45vbh")]
+only_if = SubResource("Resource_h2d5t")
 deferred = false
 enabled = true
 
@@ -2382,6 +2594,59 @@ more_references = []
 invoke = "@label_setter"
 arguments = [SubResource("Resource_m52vu")]
 only_if = SubResource("Resource_um5xg")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_u3ay5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"current_weather\"
+"
+
+[sub_resource type="Resource" id="Resource_uh7m2"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_u3ay5")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4sfic"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 3
+"
+
+[sub_resource type="Resource" id="Resource_licme"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_4sfic")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0q2mo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_1hrc6"]
+script = ExtResource("3_ctav5")
+nested_script = SubResource("GDScript_0q2mo")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0hnac"]
+script = ExtResource("4_2t5a6")
+signal_name = "entered"
+to = NodePath("../Store")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_uh7m2"), SubResource("Resource_licme")]
+only_if = SubResource("Resource_1hrc6")
 deferred = false
 enabled = true
 
@@ -3260,7 +3525,56 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return null
+	const level = 50.0
+	const attack = 90.0
+	const defense = 70.0
+	
+	var power = float(closest(\"Store\").at(\"power\"))
+	
+	var attack_type = closest(\"Store\").at(\"attack_type\")
+	var current_weather = (closest(\"State Machine - Weather/Store\") as Store).at(\"current_weather\")
+	
+	const weather_effect_map = {
+		# Clear
+		0: {
+			0: 1.0, # Psychic
+			1: 1.0, # Fire
+			2: 1.0, # Water
+			3: 1.0 # Grass
+		},
+		# Heat
+		1: {
+			0: 1.0, # Psychic
+			1: 1.5, # Fire
+			2: 0.5, # Water
+			3: 0.5 # Grass
+		},
+		# Wind
+		2: {
+			0: 1.0, # Psychic
+			1: 1.5, # Fire
+			2: 1.0, # Water
+			3: 1.5 # Grass
+		},
+		# Rain
+		3: {
+			0: 1.5, # Psychic
+			1: 0.5, # Fire
+			2: 1.5, # Water
+			3: 0.5 # Grass
+		},
+		# Hail
+		4: {
+			0: 0.5, # Psychic
+			1: 0.5, # Fire
+			2: 0.5, # Water
+			3: 0.5 # Grass
+		}
+	}
+	
+	var weather = weather_effect_map[current_weather][attack_type]
+	
+	return (((2.0*level/5.0 + 2.0) * power * attack / defense / 50.0 + 2.0) * weather + 2.0) * RandomNumberGenerator.new().randf_range(0.85, 1.0)
 "
 
 [sub_resource type="Resource" id="Resource_qwywv"]
@@ -4197,7 +4511,56 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return null
+	const level = 50.0
+	const attack = 90.0
+	const defense = 70.0
+	
+	var power = float(closest(\"Store\").at(\"power\"))
+	
+	var attack_type = closest(\"Store\").at(\"attack_type\")
+	var current_weather = (closest(\"State Machine - Weather/Store\") as Store).at(\"current_weather\")
+	
+	const weather_effect_map = {
+		# Clear
+		0: {
+			0: 1.0, # Psychic
+			1: 1.0, # Fire
+			2: 1.0, # Water
+			3: 1.0 # Grass
+		},
+		# Heat
+		1: {
+			0: 1.0, # Psychic
+			1: 1.5, # Fire
+			2: 0.5, # Water
+			3: 0.5 # Grass
+		},
+		# Wind
+		2: {
+			0: 1.0, # Psychic
+			1: 1.5, # Fire
+			2: 1.0, # Water
+			3: 1.5 # Grass
+		},
+		# Rain
+		3: {
+			0: 1.5, # Psychic
+			1: 0.5, # Fire
+			2: 1.5, # Water
+			3: 0.5 # Grass
+		},
+		# Hail
+		4: {
+			0: 0.5, # Psychic
+			1: 0.5, # Fire
+			2: 0.5, # Water
+			3: 0.5 # Grass
+		}
+	}
+	
+	var weather = weather_effect_map[current_weather][attack_type]
+	
+	return (((2.0*level/5.0 + 2.0) * power * attack / defense / 50.0 + 2.0) * weather + 2.0) * RandomNumberGenerator.new().randf_range(0.85, 1.0)
 "
 
 [sub_resource type="Resource" id="Resource_bxgrw"]
@@ -4392,32 +4755,33 @@ position = Vector2(-791, -196)
 position = Vector2(981, 155)
 script = ExtResource("2_fqlo4")
 active = true
-metadata/pronto_connections = [SubResource("Resource_i4853"), SubResource("Resource_fva11"), SubResource("Resource_joc3n"), SubResource("Resource_iy7em"), SubResource("Resource_x23im")]
+metadata/pronto_connections = [SubResource("Resource_i4853"), SubResource("Resource_fva11"), SubResource("Resource_joc3n"), SubResource("Resource_iy7em"), SubResource("Resource_x23im"), SubResource("Resource_4qaj4")]
 
 [node name="Heat" type="Node2D" parent="State Machine - Weather"]
 position = Vector2(890, 83)
 script = ExtResource("2_fqlo4")
-metadata/pronto_connections = [SubResource("Resource_2anun"), SubResource("Resource_5y336"), SubResource("Resource_i6m6i")]
+metadata/pronto_connections = [SubResource("Resource_2anun"), SubResource("Resource_5y336"), SubResource("Resource_i6m6i"), SubResource("Resource_j732h")]
 
 [node name="Wind" type="Node2D" parent="State Machine - Weather"]
 position = Vector2(995, 86)
 script = ExtResource("2_fqlo4")
-metadata/pronto_connections = [SubResource("Resource_n41cn"), SubResource("Resource_65n5r"), SubResource("Resource_fjcm0")]
+metadata/pronto_connections = [SubResource("Resource_n41cn"), SubResource("Resource_65n5r"), SubResource("Resource_fjcm0"), SubResource("Resource_lt8o3")]
 
 [node name="Hail" type="Node2D" parent="State Machine - Weather"]
 position = Vector2(1084, 57)
 script = ExtResource("2_fqlo4")
-metadata/pronto_connections = [SubResource("Resource_iwqr5"), SubResource("Resource_q0yko"), SubResource("Resource_v1sho")]
+metadata/pronto_connections = [SubResource("Resource_iwqr5"), SubResource("Resource_q0yko"), SubResource("Resource_v1sho"), SubResource("Resource_oayew")]
 
 [node name="Rain" type="Node2D" parent="State Machine - Weather"]
 position = Vector2(948, 29)
 script = ExtResource("2_fqlo4")
-metadata/pronto_connections = [SubResource("Resource_ny3xs"), SubResource("Resource_rbrxw"), SubResource("Resource_yf4mn"), SubResource("Resource_5msq4"), SubResource("Resource_iik0h")]
+metadata/pronto_connections = [SubResource("Resource_ny3xs"), SubResource("Resource_rbrxw"), SubResource("Resource_yf4mn"), SubResource("Resource_5msq4"), SubResource("Resource_iik0h"), SubResource("Resource_0hnac")]
 
 [node name="Store" type="Node2D" parent="State Machine - Weather"]
 position = Vector2(1079, 155)
 script = ExtResource("5_jvdjy")
 metadata/random_value = 60.0
+metadata/current_weather = 0
 
 [node name="Current Action" type="Node2D" parent="."]
 position = Vector2(572, 72)
