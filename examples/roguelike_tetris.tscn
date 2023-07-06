@@ -1,4 +1,4 @@
-[gd_scene load_steps=269 format=3 uid="uid://b02egigh5i21k"]
+[gd_scene load_steps=274 format=3 uid="uid://b02egigh5i21k"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_iiki0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_faeex"]
@@ -818,6 +818,46 @@ only_if = SubResource("Resource_x2kds")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_2nk1r"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(prop, value, from: Node2D):
+	print(\"Changed {prop} to {value}\".format({\"prop\":prop, \"value\":value}))
+"
+
+[sub_resource type="Resource" id="Resource_tnmhj"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_2nk1r")
+argument_names = ["prop", "value", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_qx0t5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(prop, value, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fgal6"]
+script = ExtResource("6_2mfj3")
+nested_script = SubResource("GDScript_qx0t5")
+argument_names = ["prop", "value", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_llgxl"]
+script = ExtResource("7_eixic")
+signal_name = "changed"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_fgal6")
+expression = SubResource("Resource_tnmhj")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_fn5fi"]
 script/source = "@tool
 extends U
@@ -1109,7 +1149,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return null
+	return G.put(\"dmg\", 3)
 "
 
 [sub_resource type="Resource" id="Resource_2yhct"]
@@ -1198,7 +1238,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return null
+	return G.put(\"dmg\", 5)
 "
 
 [sub_resource type="Resource" id="Resource_midv1"]
@@ -1262,7 +1302,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return null
+	return G.put(\"dmg\", 10)
 "
 
 [sub_resource type="Resource" id="Resource_2bbbd"]
@@ -2090,6 +2130,7 @@ metadata/mace_dmg = 5
 metadata/spear_dmg = 3
 metadata/shield_heal = 5
 metadata/dmg = 0
+metadata/pronto_connections = [SubResource("Resource_llgxl")]
 
 [node name="leftLane" type="Node2D" parent="."]
 position = Vector2(287, 265)
