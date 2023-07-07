@@ -40,6 +40,9 @@ func show_icon():
 func connect_ui():
 	return null
 
+func show_background_around_children():
+	return false
+
 func _process(delta):
 	if Engine.is_editor_hint():
 		Connection.garbage_collect(self)
