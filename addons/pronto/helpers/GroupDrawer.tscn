@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://co3kc6g87njiy"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/GroupDrawer.gd" id="1_tubqq"]
+
+[node name="GroupDrawer" type="Node2D"]
+script = ExtResource("1_tubqq")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -13.0
+offset_right = 21.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Label"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -32,7 +32,9 @@ signal spawned(instance: Node)
 func _ready():
 	super._ready()
 	
-	if not Engine.is_editor_hint():
+	if Engine.is_editor_hint():
+		add_child(preload("res://addons/pronto/helpers/GroupDrawer.tscn").instantiate(), false, INTERNAL_MODE_BACK)
+	else:
 		if not scene_path.is_empty():
 			scenes = [get_node(scene_path)]
 		else:

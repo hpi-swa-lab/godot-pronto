@@ -7,7 +7,9 @@ var scene_path: String = ""
 
 func _ready():
 	super._ready()
-	if not Engine.is_editor_hint():
+	if Engine.is_editor_hint():
+		add_child(preload("res://addons/pronto/helpers/GroupDrawer.tscn").instantiate(), false, INTERNAL_MODE_BACK)
+	else:
 		get_child(0).queue_free()
 
 func connect_ui():
