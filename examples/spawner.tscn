@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://oh2633lyiio8"]
+[gd_scene load_steps=12 format=3]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="1_lu5kp"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_pgkhl"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="3_nxlrv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="1_lu5kp"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_pgkhl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="3_nxlrv"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_p1i6w"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_f5i2b"]
 

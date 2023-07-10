@@ -1,10 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://djwtj60chgdsh"]
+[gd_scene load_steps=33 format=3]
 
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_4y7ja"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="2_tbn87"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StateBehavior.gd" id="2_tbn87"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_73m08"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_ejoys"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="6_ftwda"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="5_ejoys"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="6_ftwda"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="7_0ahkn"]
 
 [sub_resource type="GDScript" id="GDScript_dfra2"]

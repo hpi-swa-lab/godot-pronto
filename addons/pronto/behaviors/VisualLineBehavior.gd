@@ -1,7 +1,7 @@
 @tool
 #thumb("EditBezier")
 extends Behavior
-class_name VisualLine
+class_name VisualLineBehavior
 
 @export var from: Node2D
 @export var to: Node2D

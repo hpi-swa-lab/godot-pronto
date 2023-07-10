@@ -251,9 +251,9 @@ func _on_function_selected(name: String):
 	var ExpressionEdit = preload("res://addons/pronto/signal_connecting/expression_edit.tscn")
 	
 	var arguments = []
-	if receiver is Code and name == "execute":
+	if receiver is CodeBehavior and name == "execute":
 		arguments = Array(receiver.arguments).map(func (argument_name): return {"name": argument_name})
-	elif receiver is SceneRoot and name.begins_with("apply"):
+	elif receiver is SceneRootBehavior and name.begins_with("apply"):
 		# remove "from" argument so it does not appear in the connection window, 
 		# which is automatically set later in Connection.gd::_trigger.
 		arguments = method["args"]

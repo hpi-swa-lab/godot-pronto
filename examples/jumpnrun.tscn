@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b185xnr6xxyhc"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_tc671"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="2_qr0oj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_tc671"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="2_qr0oj"]
 
 [node name="jumpnrun" type="Node2D"]
 

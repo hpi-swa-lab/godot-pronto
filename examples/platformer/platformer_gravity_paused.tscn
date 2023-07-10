@@ -1,9 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://pcvirp44au2y"]
+[gd_scene load_steps=17 format=3]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_wkkvy"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="2_g2k13"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerController.gd" id="3_h1uyp"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="4_bdlcu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_wkkvy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_g2k13"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="3_h1uyp"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="4_bdlcu"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_bcaxq"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_uttg8"]
 

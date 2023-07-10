@@ -1,7 +1,7 @@
 @tool
 #thumb("Search")
 extends Behavior
-class_name Inspect
+class_name InspectBehavior
 
 var default_property = 'position'
 var default_expression = 'return self.%s' % default_property
@@ -23,7 +23,7 @@ class Item:
 			value
 		]
 	
-	func update(target: Node, index: int, inspect: Inspect) -> bool:
+	func update(target: Node, index: int, inspect: InspectBehavior) -> bool:
 		var new_value
 		if expression:
 			label = "<expr%s>" % index

@@ -1,7 +1,7 @@
 @tool
 #thumb("JoyButton")
 extends Behavior
-class_name PlatformerController
+class_name PlatformerControllerBehavior
 
 @export_category("Gameplay")
 ## The speed with which the character jumps.

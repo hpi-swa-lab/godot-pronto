@@ -1,7 +1,7 @@
 @tool
 #thumb("ToolMove")
 extends Behavior
-class_name Move
+class_name MoveBehavior
 
 signal touched_floor(velocity: float)
 
@@ -118,7 +118,7 @@ func _notification(what):
 		update_configuration_warnings()
 
 func _get_configuration_warnings():
-	if get_parent() is Placeholder and get_parent().get_parent() is CollisionObject2D:
+	if get_parent() is PlaceholderBehavior and get_parent().get_parent() is CollisionObject2D:
 		return ["Do not move the Placeholder, instead move the CollisionObject (Area, Character, Rigid, ...). Otherwise, the collision shape is out-of-sync."]
 	return ""
 

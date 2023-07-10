@@ -1,7 +1,7 @@
 @tool
 #thumb("Timer")
 extends Behavior
-class_name Clock
+class_name ClockBehavior
 
 signal elapsed()
 signal until_elapsed()

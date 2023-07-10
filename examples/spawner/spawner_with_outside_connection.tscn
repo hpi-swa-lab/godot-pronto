@@ -1,13 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://derf7h2bn4q73"]
+[gd_scene load_steps=12 format=3]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Background.gd" id="1_ipoc4"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="2_go5h6"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_0aikm"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="4_ueql2"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="5_qc86o"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_ipoc4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="2_go5h6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_0aikm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_ueql2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="5_qc86o"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_qkgxs"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="7_apm0c"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="8_q31li"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="7_apm0c"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="8_q31li"]
 
 [sub_resource type="Resource" id="Resource_860sg"]
 script = ExtResource("6_qkgxs")

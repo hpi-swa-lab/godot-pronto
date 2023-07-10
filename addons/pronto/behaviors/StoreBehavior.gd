@@ -1,7 +1,7 @@
 @tool
 #thumb("CylinderMesh")
 extends Behavior
-class_name Store
+class_name StoreBehavior
 
 ## When enabled, add the value of all properties to the global G dictionary as well.
 @export var global = false

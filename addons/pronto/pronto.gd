@@ -37,7 +37,7 @@ func _enter_tree():
 	get_undo_redo().history_changed.connect(history_changed)
 
 func history_changed():
-	if _is_editing_behavior() and edited_object is Placeholder and edited_object.should_keep_in_origin():
+	if _is_editing_behavior() and edited_object is PlaceholderBehavior and edited_object.should_keep_in_origin():
 		var u = get_undo_redo().get_history_undo_redo(get_undo_redo().get_object_history_id(edited_object))
 		if edited_object.position != Vector2.ZERO:
 			var p = edited_object.get_parent()
@@ -138,7 +138,7 @@ func _notification(what):
 	if what == NOTIFICATION_DRAG_BEGIN:
 		var data = get_viewport().gui_get_drag_data()
 		if _valid_drop_for_slider(data):
-			_drop_popup = Value.DropPropertyPrompt.new(get_editor_interface())
+			_drop_popup = ValueBehavior.DropPropertyPrompt.new(get_editor_interface())
 			var scene = get_editor_interface().get_edited_scene_root()
 			Utils.spawn_popup_from_canvas(scene, _drop_popup)
 			var anchor = scene.get_viewport().get_parent().get_parent()

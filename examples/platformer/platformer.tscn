@@ -1,13 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://88vl7ypda1n1"]
+[gd_scene load_steps=15 format=3]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_rpa0n"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="2_pahj6"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Controls.gd" id="3_vo8i5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_rpa0n"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="2_pahj6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="3_vo8i5"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_7c7a3"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Store.gd" id="5_5l8ei"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="7_flr1a"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="7_wp8p8"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShake.gd" id="8_m4ien"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="5_5l8ei"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="7_flr1a"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="7_wp8p8"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="8_m4ien"]
 
 [sub_resource type="Resource" id="Resource_labnx"]
 script = ExtResource("4_7c7a3")

@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3nujwdlfc1cp"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_amyfm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_amyfm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o4oa3"]
 

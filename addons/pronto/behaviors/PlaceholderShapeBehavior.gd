@@ -1,7 +1,7 @@
 @tool
 #thumb("Skeleton2D")
 extends Behavior
-class_name PlaceholderShape
+class_name PlaceholderShapeBehavior
 
 @export_enum("Rect", "Circle", "Capsule") var shape_type: String = "Rect":
 	set(v):

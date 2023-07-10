@@ -1,7 +1,7 @@
 @tool
 #thumb("PinJoint2D")
 extends Behavior
-class_name Value
+class_name ValueBehavior
 # PLEASE READ: 
 # AdvancedValue is the new extended Value logic
 # AdvancedValue will be merged into the current Value logic at the end of the s#print
@@ -197,7 +197,7 @@ class DropPropertyPrompt extends ColorRect:
 		var root = editor_interface.get_edited_scene_root()
 		var current = data["object"].get(data["property"])
 		
-		var v = Value.new()
+		var v = ValueBehavior.new()
 		v.from = min(0.0, current)
 		v.to = max(1.0, current)
 		v.value = current
@@ -206,7 +206,7 @@ class DropPropertyPrompt extends ColorRect:
 		data["object"].add_child(v)
 		v.owner = root
 		
-		var b = Bind.new()
+		var b = BindBehavior.new()
 		b.to_prop = data["property"]
 		b.name = "bind_" + b.to_prop
 		b.position = Vector2(100, 50)

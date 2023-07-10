@@ -1,7 +1,7 @@
 @tool
 #thumb("CircleShape2D")
 extends Behavior
-class_name State
+class_name StateBehavior
 
 
 ## Signal that gets emitted when the state becomes active
@@ -36,7 +36,7 @@ func _get_connected_states(seen_nodes = []):
 	seen_nodes.append(self)
 	for connection in Connection.get_connections(self):
 		var target = get_node_or_null(connection.to)
-		if target is State and target not in seen_nodes:
+		if target is StateBehavior and target not in seen_nodes:
 			target._get_connected_states(seen_nodes)
 	return seen_nodes
 

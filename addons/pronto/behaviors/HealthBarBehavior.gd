@@ -1,7 +1,7 @@
 @tool
 #thumb("Heart")
 extends Behavior
-class_name HealthBar
+class_name HealthBarBehavior
 
 ## Emitted when the health value is changed.
 signal changed(health)

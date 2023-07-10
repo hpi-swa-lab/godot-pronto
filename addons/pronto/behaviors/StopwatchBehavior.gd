@@ -1,7 +1,7 @@
 @tool
 #thumb("Time")
 extends Behavior
-class_name Stopwatch
+class_name StopwatchBehavior
 
 var _start: int = 0
 

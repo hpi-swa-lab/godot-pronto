@@ -1,7 +1,7 @@
 @tool
 #thumb("EditBezier")
 extends Behavior
-class_name Bind
+class_name BindBehavior
 
 ### Script to evaluate to find the current property value to set.
 @export var evaluate: ConnectionScript

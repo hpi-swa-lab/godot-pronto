@@ -1,7 +1,10 @@
 @tool
-#thumb("GraphNode")
 extends Behavior
-class_name StateMachine
+#thumb("PointMesh")
+class_name GroupBehavior
+
+# This node is purely visual.
+# Use it for organization.
 
 func _ready():
 	super._ready()

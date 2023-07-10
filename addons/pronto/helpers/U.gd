@@ -64,7 +64,7 @@ static func mouse_position() -> Vector2:
 	return Engine.get_main_loop().root.get_mouse_position()
 
 func next_store(name: String):
-	var s = closest_that(func (n): return n is Store and n.has_meta(name))
+	var s = closest_that(func (n): return n is StoreBehavior and n.has_meta(name))
 	if s == null:
 		return G
 	else:

@@ -1,7 +1,7 @@
 @tool
 #thumb("Joypad")
 extends Behavior
-class_name Controls
+class_name ControlsBehavior
 
 @export_enum("Player 1", "Player 2", "Player 3") var player: int = 0
 

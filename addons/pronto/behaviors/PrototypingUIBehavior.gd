@@ -1,7 +1,7 @@
 @tool
 #thumb("Grid")
 extends Behavior
-class_name PrototypingUI
+class_name PrototypingUIBehavior
 
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
@@ -28,9 +28,9 @@ func _ready():
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
 	for childNode in self.get_children():
-		if is_instance_of(childNode, Code):
+		if is_instance_of(childNode, CodeBehavior):
 			vbox.add_child(create_ui_for_code(childNode))
-		elif is_instance_of(childNode,Value):
+		elif is_instance_of(childNode,ValueBehavior):
 			vbox.add_child(create_ui_for_value(childNode))
 	
 	scrollContainer.add_child(vbox)
@@ -51,7 +51,7 @@ func _ready():
 	# print("Prototype UI generated successfully")
 	
 	
-func create_ui_for_value(value: Value):
+func create_ui_for_value(value: ValueBehavior):
 	if value.selectType == "Float":
 		return create_ui_slider_for_value_float(value)
 	elif value.selectType == "Enum":
@@ -62,7 +62,7 @@ func create_ui_for_value(value: Value):
 	
 	
 	
-func create_ui_for_value_enum(value: Value):
+func create_ui_for_value_enum(value: ValueBehavior):
 	var name = value.name
 	var label = Label.new()
 	label.text = name + ":"
@@ -92,7 +92,7 @@ func create_ui_for_value_enum(value: Value):
 	
 	return hbox
 	
-func create_ui_for_value_bool(value: Value):
+func create_ui_for_value_bool(value: ValueBehavior):
 	
 	var name = value.name
 	var label = Label.new()
@@ -132,7 +132,7 @@ func create_ui_for_value_bool(value: Value):
 	hbox.add_child(reset_button)
 	return hbox
 	
-func create_ui_for_code(code: Code):
+func create_ui_for_code(code: CodeBehavior):
 	var button = Button.new()
 	button.text = code.name
 	button.focus_mode = 0
@@ -140,7 +140,7 @@ func create_ui_for_code(code: Code):
 	return(button)
 	
 	
-func create_ui_slider_for_value_float(value: Value):
+func create_ui_slider_for_value_float(value: ValueBehavior):
 	var name = value.name
 	#print("Adding slider for " + name)
 	
@@ -249,15 +249,15 @@ func handle_size_button_click(button: Button):
 
 
 
-func handle_value_bool_change(index: int, value: Value, optionButton : OptionButton):
+func handle_value_bool_change(index: int, value: ValueBehavior, optionButton : OptionButton):
 	optionButton.select(index)
 	value.bool_value = optionButton.get_item_text(index)
 	
-func handle_value_enum_change(index: int, value: Value, optionButton: OptionButton):
+func handle_value_enum_change(index: int, value: ValueBehavior, optionButton: OptionButton):
 	optionButton.select(index)
 	value.enum_value = value.enum_choices[index]
 	
-func handle_update_value_float_change(new_value: float, value: Value, label_current: Label, slider :HSlider):
+func handle_update_value_float_change(new_value: float, value: ValueBehavior, label_current: Label, slider :HSlider):
 	value.float_value = new_value
 	slider.value = new_value
 	label_current.text = str(new_value)
@@ -278,7 +278,7 @@ func _get_configuration_warnings():
 
 func _at_least_one_valid_child():
 	for childNode in self.get_children():
-		if is_instance_of(childNode, Code) or is_instance_of(childNode, Value):
+		if is_instance_of(childNode, CodeBehavior) or is_instance_of(childNode, ValueBehavior):
 			return true
 	return false
 	

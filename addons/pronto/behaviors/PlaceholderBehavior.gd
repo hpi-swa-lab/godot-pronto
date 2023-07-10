@@ -1,7 +1,7 @@
 @tool
 #thumb("Skeleton2D")
 extends Behavior
-class_name Placeholder
+class_name PlaceholderBehavior
 
 const OUTLINE_SHADER = "res://addons/pronto/shader/outline.gdshader"
 

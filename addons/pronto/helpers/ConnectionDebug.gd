@@ -30,12 +30,12 @@ func _capture(message, data, session_id):
 		return true
 	if message == "pronto:store_put":
 		var store = editor_interface.get_edited_scene_root().get_parent().get_node_or_null(str(data[0]).substr(6))
-		if store != null and store is Store:
+		if store != null and store is StoreBehavior:
 			store._report_game_value(data[1], data[2])
 		return true
 	if message == "pronto:watch_put":
 		var store = editor_interface.get_edited_scene_root().get_parent().get_node_or_null(str(data[0]).substr(6))
-		if store != null and store is Store:
+		if store != null and store is StoreBehavior:
 			store._report_game_value(data[1])
 		return true
 	return true

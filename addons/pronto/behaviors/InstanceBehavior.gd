@@ -1,7 +1,7 @@
 @tool
 #thumb("Instance")
 extends Behavior
-class_name Instance
+class_name InstanceBehavior
 
 var scene_path: String = ""
 

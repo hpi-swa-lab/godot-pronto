@@ -2,18 +2,18 @@ extends EditorInspectorPlugin
 class_name ExpressionInspector
 
 func _can_handle(object):
-	return (object is Bind
-		or object is Code
-		or object is Watch
-		or object is Node and object.get_child_count() > 0 and object.get_child(0) is Bind)
+	return (object is BindBehavior
+		or object is CodeBehavior
+		or object is WatchBehavior
+		or object is Node and object.get_child_count() > 0 and object.get_child(0) is BindBehavior)
 
 func _parse_property(object, type, name, hint_type, hint_string, usage_flags, wide):
-	if (object is Bind and name == "evaluate"
-	or object is Code and name == "evaluate"
-	or object is Watch and name == "evaluate"):
+	if (object is BindBehavior and name == "evaluate"
+	or object is CodeBehavior and name == "evaluate"
+	or object is WatchBehavior and name == "evaluate"):
 		add_property_editor(name, ExpressionProperty.new())
 		return true
-	if object is Node and object.get_child_count() > 0 and object.get_child(0) is Bind and object.get_child(0).to_prop == name:
+	if object is Node and object.get_child_count() > 0 and object.get_child(0) is BindBehavior and object.get_child(0).to_prop == name:
 		add_property_editor(name, BoundProperty.new(object.get_child(0)))
 		return true
 	return false
@@ -34,7 +34,7 @@ class ExpressionProperty extends EditorProperty:
 		editor.edit_script = val
 
 class BoundProperty extends EditorProperty:
-	func _init(bind: Bind):
+	func _init(bind: BindBehavior):
 		var l = Button.new()
 		l.text = "Bound. Click to see Bind."
 		l.pressed.connect(func ():

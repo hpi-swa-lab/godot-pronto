@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjav4pfwng5lu"]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="1_7f0yf"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="2_n8cfl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_7f0yf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="2_n8cfl"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_627jd"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Move.gd" id="4_fxs73"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_fxs73"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iamis"]
 size = Vector2(38, 24)

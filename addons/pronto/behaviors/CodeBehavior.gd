@@ -1,7 +1,7 @@
 @tool
 #thumb("ScriptCreateDialog")
 extends Behavior
-class_name Code
+class_name CodeBehavior
 
 ## Emittet when the execution of the code returns. Contains the result of the execution as parameter.
 signal after(result)

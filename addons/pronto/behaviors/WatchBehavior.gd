@@ -1,7 +1,7 @@
 @tool
 #thumb("Search")
 extends Behavior
-class_name Watch
+class_name WatchBehavior
 
 @export var evaluate: ConnectionScript
 

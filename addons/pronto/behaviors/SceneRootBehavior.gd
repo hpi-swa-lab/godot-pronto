@@ -1,7 +1,7 @@
 @tool
 #thumb("ClassList")
 extends Behavior
-class_name SceneRoot
+class_name SceneRootBehavior
 
 ## Allows for easy access of the SceneTree.
 
