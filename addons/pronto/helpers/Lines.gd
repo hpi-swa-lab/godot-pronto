@@ -91,7 +91,10 @@ class Line:
 		
 		var col := current_color(lines)
 		
-		c.draw_set_transform(Vector2.ZERO)
+		# Used for displaying everything correctly if Behavior is rotated
+		var c_rotation = c.get_transform().get_rotation()
+		
+		c.draw_set_transform(Vector2.ZERO, -c_rotation)
 		
 		var begin = Vector2.ZERO
 		var end = Utils.global_rect_of(to).get_center() - from.global_position
@@ -109,7 +112,8 @@ class Line:
 		arrow = arrow.map(func (p): return (p * arrow_size).rotated(angle) + end)
 		c.draw_polygon(arrow, [col, col, col])
 		
-		var flip = Utils.between(angle, PI / 2, PI) or Utils.between(angle, -PI, -PI / 2)
+		var flip = abs(angle) > PI / 2
+		angle -= c_rotation # Apply correction for drawing the text if Behavior is rotated
 		c.draw_set_transform_matrix(Transform2D(angle + PI if flip else angle, Vector2.ZERO) * Transform2D(0.0, Vector2(12, -2)))
 		draw_text(c, font, text_size, flip, lines)
 
