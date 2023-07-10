@@ -71,6 +71,7 @@ var _default_progress_gradient = Gradient.new()
 			progress_gradient = gradient
 		else:
 			progress_gradient = _default_progress_gradient.duplicate()
+		progress_gradient.changed.connect(queue_redraw)
 		queue_redraw()
 
 var size: Vector2:
