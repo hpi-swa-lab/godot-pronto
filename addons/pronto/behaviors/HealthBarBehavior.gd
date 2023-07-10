@@ -9,14 +9,6 @@ signal changed(health)
 ## Emitted when the health value drops to zero or below.
 signal death()
 
-## The current health value.
-@export var current: int = 100:
-	set(v):
-		current = max(0, min(v, max))
-		queue_redraw()
-		changed.emit(current)
-		if current == 0: death.emit()
-
 ## The maximum health value.
 @export var max: int = 100:
 	set(v):
@@ -25,6 +17,14 @@ signal death()
 			# If in editor scene set current to max when changed.
 			current = max
 		queue_redraw()
+
+## The current health value (cannot exceed max).
+@export var current: int = 100:
+	set(v):
+		current = max(0, min(v, max))
+		queue_redraw()
+		changed.emit(current)
+		if current == 0: death.emit()
 
 ## The size of the displayed healthbar.
 @export var healthbar_size = Vector2(50, 5):
@@ -59,22 +59,33 @@ enum LABEL {
 		text_color = v
 		queue_redraw()
 
-## The progress_colors are evenly distributed in the order they are defined over the health range.
-## The current color is chosen according to the value of [code]current[/code].
-@export var progress_colors: PackedColorArray = [
-	Color.RED, Color.RED, Color.YELLOW, Color.YELLOW, Color.YELLOW, 
-	Color.LIME_GREEN,  Color.LIME_GREEN,  Color.LIME_GREEN,  Color.LIME_GREEN,  
-	Color.LIME_GREEN
-]:
-	set(v):
-		progress_colors = v
-		if progress_colors.is_empty():
-			progress_colors = [Color.LIME_GREEN]
+# We use this as the default since we need to configure it in _init()
+var _default_progress_gradient = Gradient.new()
+
+## The progress_gradient is used for coloring the HealthBar according to the current health.
+## The current color is chosen according to the value of [code]current/max[/code].
+@export var progress_gradient: Gradient = _default_progress_gradient.duplicate():
+	set(gradient):
+		# On reset, gradient will be null, in which case we want to duplicte the default gradient
+		if (gradient != null):
+			progress_gradient = gradient
+		else:
+			progress_gradient = _default_progress_gradient.duplicate()
+		progress_gradient.changed.connect(queue_redraw)
 		queue_redraw()
 
 var size: Vector2:
 	get:
 		return healthbar_size
+
+func _init():
+	# Setup the default gradient for usage
+	_default_progress_gradient.set_colors([])
+	_default_progress_gradient.add_point(0, Color.RED)
+	_default_progress_gradient.add_point(0.5, Color.YELLOW)
+	_default_progress_gradient.add_point(1, Color.LIME_GREEN)
+	progress_gradient = _default_progress_gradient.duplicate()
+
 
 ## Reduces the current health value by the given [code]amount[/code].
 func damage(amount):
@@ -107,8 +118,7 @@ func _get_text():
 			return str(100*current/max) + " %"
 			
 func _get_color():
-	var color_index  = max(0, min(progress_colors.size() * (current/float(max)), progress_colors.size()-1))
-	return progress_colors[color_index]
+	return progress_gradient.sample(float(current)/max)
 
 func _draw():
 	super._draw()
