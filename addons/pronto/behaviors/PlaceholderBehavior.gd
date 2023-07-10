@@ -17,6 +17,7 @@ const OUTLINE_SHADER = "res://addons/pronto/shader/outline.gdshader"
 		color = v
 		queue_redraw()
 
+
 ## The size of the placeholder.
 @export var placeholder_size = Vector2(20, 20):
 	set(v):
@@ -48,6 +49,15 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 			sprite_texture = DEFAULT_TEXTURE
 		else:
 			sprite_texture = v
+		_editor_reload()
+
+@export var sprite_library: Texture2D:
+	set(v):
+		sprite_texture = v
+		
+@export var sprite_color: Color = Color(0,0,1,1):
+	set(v):
+		sprite.modulate = v
 		_editor_reload()
 
 ## Settings for configuring the outline.

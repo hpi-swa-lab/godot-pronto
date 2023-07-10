@@ -6,7 +6,7 @@ var edited_object
 var popup
 var behaviors = {}
 var debugger: ConnectionDebug
-var inspectors = [ExpressionInspector.new()]
+var inspectors = [ExpressionInspector.new(), SpriteInspector.new()]
 
 func _enter_tree():
 	if not Engine.is_editor_hint():
