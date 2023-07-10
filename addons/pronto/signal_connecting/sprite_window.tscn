@@ -1148,6 +1148,7 @@ layout_mode = 2
 text = "Select any tile."
 
 [node name="preview" type="TextureRect" parent="body/icons/info/icon"]
+texture_filter = 1
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 0
