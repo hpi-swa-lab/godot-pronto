@@ -222,3 +222,6 @@ func handles():
 			"placeholder_size",
 			func (coord): return (floor(coord * 2) * transform.translated(-position)).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
+
+func _groupDrawerRadius():
+	return placeholder_size.length() / 2 + 20

@@ -11,6 +11,8 @@ extends Node2D
 @export var color: Color = Color(1, 1, 1, 0.2)
 @export var onlyInEditor: bool = true
 
+const default_radius = 30
+
 var last_child_positions = {}
 
 var label_nodes = [Node2D.new(), Node2D.new()]
@@ -19,6 +21,13 @@ func _ready():
 	# these nodes are used to make sure that the label is covered by the polygon
 	for n in label_nodes:
 		add_child(n, false, INTERNAL_MODE_BACK)
+	
+	redraw_periodically()
+
+func redraw_periodically():
+	while is_inside_tree():
+		await get_tree().create_timer(1).timeout
+		queue_redraw()
 
 func _process(_delta):
 	if !(get_parent() is CanvasItem) or (onlyInEditor and !Engine.is_editor_hint()): return
@@ -53,7 +62,10 @@ func _draw():
 	var node_circles = []
 	for node in nodes:
 		var pos = to_local(node.global_position)
-		var circle = _circle(30, 20, pos)
+		
+		var radius = node._groupDrawerRadius() if node.has_method("_groupDrawerRadius") else default_radius
+		
+		var circle = _circle(radius, 20, pos)
 		node_circles.append_array(circle)
 		
 		left = min(left, pos.x)
