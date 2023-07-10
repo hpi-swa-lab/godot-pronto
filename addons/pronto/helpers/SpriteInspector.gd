@@ -34,7 +34,7 @@ class SpriteProperty extends EditorProperty:
 		var y_count = tile_texture.get_height() / tile_size
 		
 		for i in range(x_count):
-			for j in range(5):
+			for j in range(y_count):
 				var rect = Rect2(tile_size * i, tile_size * j, tile_size, tile_size)
 				var image_tex = ImageTexture.create_from_image(img.get_region(rect))
 				icon_window.add_icon(image_tex, "Unnamed")

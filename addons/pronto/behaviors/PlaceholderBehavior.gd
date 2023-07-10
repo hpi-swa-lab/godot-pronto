@@ -55,9 +55,10 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 	set(v):
 		sprite_texture = v
 		
-@export var sprite_color: Color = Color(0,0,1,1):
+@export var sprite_modulate: Color = Color.WHITE:
 	set(v):
-		sprite.modulate = v
+		sprite_modulate = v
+		sprite.self_modulate = sprite_modulate
 		_editor_reload()
 
 ## Settings for configuring the outline.
@@ -110,12 +111,12 @@ func _editor_reload():
 
 func _init_sprite():
 	sprite.texture = sprite_texture
-	
 	var shader_mat = ShaderMaterial.new()
 	shader_mat.shader = load(OUTLINE_SHADER)
 	# to hide the shader we set its width to 0 if outline_visible is false
 	shader_mat.set_shader_parameter("width", outline_width if outline_visible else 0)
 	shader_mat.set_shader_parameter("color", outline_color)
+	shader_mat.set_shader_parameter("tint_color", sprite_modulate)
 	shader_mat.set_shader_parameter("pattern", outline_pattern)
 	sprite.material = shader_mat
 	sprite.scale = placeholder_size / sprite.texture.get_size()
