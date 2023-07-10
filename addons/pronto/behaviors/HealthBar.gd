@@ -9,14 +9,6 @@ signal changed(health)
 ## Emitted when the health value drops to zero or below.
 signal death()
 
-## The current health value.
-@export var current: int = 100:
-	set(v):
-		current = max(0, min(v, max))
-		queue_redraw()
-		changed.emit(current)
-		if current == 0: death.emit()
-
 ## The maximum health value.
 @export var max: int = 100:
 	set(v):
@@ -25,6 +17,14 @@ signal death()
 			# If in editor scene set current to max when changed.
 			current = max
 		queue_redraw()
+
+## The current health value (cannot exceed max).
+@export var current: int = 100:
+	set(v):
+		current = max(0, min(v, max))
+		queue_redraw()
+		changed.emit(current)
+		if current == 0: death.emit()
 
 ## The size of the displayed healthbar.
 @export var healthbar_size = Vector2(50, 5):
