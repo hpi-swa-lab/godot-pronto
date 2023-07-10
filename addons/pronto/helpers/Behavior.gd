@@ -108,6 +108,6 @@ func lines() -> Array:
 	).filter(func (connection): return connection != null)
 
 func _draw():
-	if not Engine.is_editor_hint() or not _icon or not is_inside_tree():
+	if not Engine.is_editor_hint() or not is_inside_tree():
 		return
 	_lines._draw_lines(self, lines())
