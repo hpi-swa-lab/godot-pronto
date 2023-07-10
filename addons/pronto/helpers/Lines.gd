@@ -40,10 +40,8 @@ func _draw_lines(c: CanvasItem, lines: Array):
 		var combined = group[0].as_combined(group)
 		if to == group[0].from: # draw connection to itself
 			var y = 0 if not c._icon else c._icon.get_size().y / 2 # for behaviors without displayed icon use y = 0
-			print(c)
 			c.draw_set_transform(Vector2(0, y + text_size))
 			combined.draw_text(c, font, text_size, false, self)
-			c.draw_set_transform(Vector2.ZERO)
 		else:
 			combined._draw(c, font, text_size, self)
 
@@ -114,7 +112,6 @@ class Line:
 		var flip = Utils.between(angle, PI / 2, PI) or Utils.between(angle, -PI, -PI / 2)
 		c.draw_set_transform_matrix(Transform2D(angle + PI if flip else angle, Vector2.ZERO) * Transform2D(0.0, Vector2(12, -2)))
 		draw_text(c, font, text_size, flip, lines)
-		c.draw_set_transform(Vector2.ZERO) # Reset transform for further drawings
 
 class DashedLine extends Line:
 	func draw_line(c: CanvasItem, begin: Vector2, end: Vector2, color: Color, width: float):

@@ -111,3 +111,4 @@ func _draw():
 	if not Engine.is_editor_hint() or not is_inside_tree():
 		return
 	_lines._draw_lines(self, lines())
+	draw_set_transform(Vector2.ZERO) # Reset transform after it has been changed when drawing lines
