@@ -23,7 +23,7 @@ signal dropped(position: Vector2, start_position: Vector2)
 ## Last position is the last position the parent node was move from.
 signal dragged(position: Vector2, start_position: Vector2, last_position: Vector2)
 
-@export_flags("Left", "Middle", "Right") var button_mask := 1
+@export_flags("Left", "Right", "Middle") var button_mask := 1
 
 ## Offset of parent node from mouse position
 var _offset
