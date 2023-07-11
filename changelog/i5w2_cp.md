@@ -11,3 +11,5 @@
 - Fixes adding of more references in connection window: Generated source code will no longer contain syntax errors. Generated code is updated immediately after adding/editing/deleting more references.
 
 - Avoids loosing changes in connection windows when opening a script in the Godot editor by automatically saving the connection at that point.
+
+- Fixes opening of multiple similar connetion windows. Opening a connection with the same receiver and signal as another open one will not fail any longer.
