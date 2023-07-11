@@ -18,6 +18,19 @@ class SpriteProperty extends EditorProperty:
 	var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 	var current_value: Texture2D = DEFAULT_TEXTURE
 	
+	func get_tile_name(x, y):
+		if (x in range(24,32) and y in range(0, 11)):
+			return "Characters"
+		if (x in range(18,24) and y in range(7, 10)):
+			return "Characters"
+		if (x in range(32,48) and y in range(0, 15)):
+			return "Accessories"
+		if (x in range(0,488) and y in range(0, 5)):
+			return "Nature"
+		if (x in range(19,33) and y in range(15, 20)):
+			return "Cards"
+		return "Unnamed" # Default name.
+	
 	func _init():
 		icon_window = preload("res://addons/pronto/signal_connecting/sprite_window.tscn").instantiate()
 		add_child(icon_window)
@@ -33,11 +46,11 @@ class SpriteProperty extends EditorProperty:
 		var x_count = tile_texture.get_width() / tile_size
 		var y_count = tile_texture.get_height() / tile_size
 		
-		for i in range(x_count):
-			for j in range(y_count):
-				var rect = Rect2(tile_size * i, tile_size * j, tile_size, tile_size)
+		for x in range(x_count):
+			for y in range(y_count):
+				var rect = Rect2(tile_size * x, tile_size * y, tile_size, tile_size)
 				var image_tex = ImageTexture.create_from_image(img.get_region(rect))
-				icon_window.add_icon(image_tex, "Unnamed")
+				icon_window.add_icon(image_tex, get_tile_name(x,y))
 				
 	func _on_change(texture):
 		if (updating):
