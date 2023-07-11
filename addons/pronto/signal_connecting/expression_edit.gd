@@ -120,8 +120,8 @@ func fake_a_godot_highlighter():
 	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
 	var h = CodeHighlighter.new()
 	h.color_regions = {
-		"\"": s.get("text_editor/theme/highlighting/string_color"),
-		"'": s.get("text_editor/theme/highlighting/string_color")
+		"\" \"": s.get("text_editor/theme/highlighting/string_color"),
+		"' '": s.get("text_editor/theme/highlighting/string_color")
 	}
 	h.number_color = s.get("text_editor/theme/highlighting/number_color")
 	h.symbol_color = s.get("text_editor/theme/highlighting/symbol_color")
