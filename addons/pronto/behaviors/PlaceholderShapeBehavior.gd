@@ -252,26 +252,26 @@ func handles():
 	elif shape_type == "Circle":
 		return [
 			Handles.SetPropHandle.new(
-				(transform * Vector2(circle_radius, 0)),
+				(transform * Vector2(circle_radius, 0) - position),
 				Utils.icon_from_theme("EditorHandle", self),
 				self,
 				"circle_radius",
-				func (coord): return clamp(coord.distance_to(position),1.0, 10000.0))
+				func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0))
 		]
 	elif shape_type == "Capsule":
 		return [
 			Handles.SetPropHandle.new(
-				(transform * Vector2(capsule_radius, 0)),
+				(transform * Vector2(capsule_radius, 0) - position),
 				Utils.icon_from_theme("EditorHandle", self),
 				self,
 				"capsule_radius",
-				func (coord): return clamp(coord.distance_to(position),1.0, 10000.0)),
+				func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0)),
 			Handles.SetPropHandle.new(
-				(transform * Vector2(0, capsule_height)),
+				(transform * Vector2(0, capsule_height/2) - position),
 				Utils.icon_from_theme("EditorHandle", self),
 				self,
 				"capsule_height",
-				func (coord): return clamp(coord.distance_to(position),1.0, 10000.0))
+				func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0)*2)
 		]
 	else:
 		# no shape has been set, should only exist for legacy scenes

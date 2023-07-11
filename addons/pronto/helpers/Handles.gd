@@ -58,8 +58,9 @@ func deselected():
 	_dragging = null
 
 func _forward_canvas_draw_over_viewport(node: Behavior, viewport_control: Control):
-	for handle in node.handles():
-		viewport_control.draw_texture(handle.icon, handle.rect_in(node).position)
+	if node.handles():
+		for handle in node.handles():
+			viewport_control.draw_texture(handle.icon, handle.rect_in(node).position)
 
 func _forward_canvas_gui_input(node: Behavior, event: InputEvent, undo_redo: EditorUndoRedoManager):
 	if event is InputEventMouse:
@@ -75,9 +76,10 @@ func _forward_canvas_gui_input(node: Behavior, event: InputEvent, undo_redo: Edi
 					_dragging.apply.call(event.position - node.get_viewport_transform() * node.global_position)
 				return true
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			for handle in node.handles():
-				if handle.rect_in(node).has_point(event.position):
-					_dragging = handle
-					_dragging.begin()
-					return true
+			if node.handles():
+				for handle in node.handles():
+					if handle.rect_in(node).has_point(event.position):
+						_dragging = handle
+						_dragging.begin()
+						return true
 	return false

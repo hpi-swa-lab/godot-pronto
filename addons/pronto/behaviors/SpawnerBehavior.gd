@@ -12,11 +12,20 @@ class_name SpawnerBehavior
 		if !is_instance_of(v, RectangleShape2D) and !is_instance_of(v, CircleShape2D) and !is_instance_of(v, ConvexPolygonShape2D):
 			push_warning("Spawners only support CircleShape2D, RectangleShape2D and ConvexPolygonShape2D")
 		spawn_shape = v
+		
+		if spawn_shape is RectangleShape2D:
+			shape_size = spawn_shape.size
+		
+		if spawn_shape is CircleShape2D:
+			shape_radius = spawn_shape.radius
+		
 		queue_redraw()
 
 # Needed to check if spawn shape has to be redrawn
 var last_spawn_shape_size_rectangle: Vector2
 var last_spawn_shape_size_circle: float
+var shape_radius: float
+var shape_size: Vector2
 
 var spawn_shape_polygon_randomizer: PolygonRandomPointGenerator
 
@@ -156,6 +165,12 @@ func _draw():
 func _process(delta):
 	super._process(delta)
 	if spawn_shape:
+		if spawn_shape is RectangleShape2D and spawn_shape.size != shape_size:
+			spawn_shape.size = shape_size
+		
+		if spawn_shape is CircleShape2D and spawn_shape.radius != shape_radius:
+			spawn_shape.radius = shape_radius
+		
 		if spawn_shape is RectangleShape2D and spawn_shape.size != last_spawn_shape_size_rectangle:
 			last_spawn_shape_size_rectangle = spawn_shape.size
 			queue_redraw()
@@ -167,3 +182,24 @@ func _process(delta):
 		# there has to be a simple way to detect changes - Tried around a bit with the property_list_changed signal, but to no avail
 		if spawn_shape is ConvexPolygonShape2D:
 			queue_redraw()
+
+func handles():
+	if spawn_shape:
+		if is_instance_of(spawn_shape, RectangleShape2D):
+			return [
+				Handles.SetPropHandle.new(
+					(transform * spawn_shape.size - position) / 2,
+					Utils.icon_from_theme("EditorHandle", self),
+					self,
+					"spawn_shape.size",
+					func (coord): return (floor(coord * 2) * transform.translated(-position)).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+			]
+		elif is_instance_of(spawn_shape, CircleShape2D):
+			return [
+				Handles.SetPropHandle.new(
+					(transform * Vector2(spawn_shape.radius, 0) - position),
+					Utils.icon_from_theme("EditorHandle", self),
+					self,
+					"shape_radius",
+					func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0))
+			]
