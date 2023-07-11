@@ -2,6 +2,7 @@
 extends VBoxContainer
 
 signal text_changed()
+signal save_requested()
 signal blur()
 
 ## Set to direct that this editor should override the argument_names of the
@@ -190,6 +191,7 @@ func get_a_godot_highlighter():
 		%Expression.syntax_highlighter = s
 
 func open_file():
+	save_requested.emit()
 	var interface = G.at("_pronto_editor_plugin").get_editor_interface()
 	interface.edit_script(edit_script.nested_script)
 	interface.set_main_screen_editor("Script")

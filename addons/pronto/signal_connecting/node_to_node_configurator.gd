@@ -275,6 +275,7 @@ func _on_function_selected(name: String):
 			arg_ui.edit_script = empty_script("null", true)
 		%Args.add_child(arg_ui)
 		arg_ui.text_changed.connect(func(): mark_changed())
+		arg_ui.save_requested.connect(func(): save())
 	update_argument_names()
 
 func empty_script(expr: String, return_value: bool):
@@ -303,7 +304,8 @@ func basic_argument_names():
 	names += range(len(more_references)).map(func (i): return "ref{0}".format([i]))
 	return names
 
-func _on_done_pressed():
+func save():
+	print("save")
 	%FunctionName.accept_selected()
 	
 	if not %Expression.visible:
@@ -357,6 +359,9 @@ func _on_done_pressed():
 	# FIXME doesn't respect undo
 	ConnectionsList.emit_connections_changed()
 	mark_changed(false)
+
+func _on_done_pressed():
+	save()
 	if not pinned:
 		queue_free()
 
