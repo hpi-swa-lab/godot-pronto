@@ -1160,11 +1160,6 @@ stretch_mode = 5
 [node name="size" type="Label" parent="body/icons/info/icon"]
 layout_mode = 2
 
-[node name="copied" type="Label" parent="body/icons/info/icon"]
-visible = false
-layout_mode = 2
-text = "Copied to clipboard!"
-
 [node name="Export" type="HBoxContainer" parent="body/icons/info/icon"]
 layout_mode = 2
 alignment = 1

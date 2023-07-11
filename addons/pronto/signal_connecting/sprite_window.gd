@@ -1,8 +1,7 @@
-## based and adapted from https://godotengine.org/asset-library/asset/374
+## based on https://godotengine.org/asset-library/asset/374
 @tool
 extends VBoxContainer
 
-signal update_request()
 signal texture_selected(texture)
 
 @onready var search_box
@@ -16,7 +15,6 @@ signal texture_selected(texture)
 @onready var icon_preview_size_range
 @onready var icon_info_label
 @onready var icon_preview
-@onready var icon_copied_label
 @onready var icon_size_label
 @onready var icon_preview_size
 
@@ -48,7 +46,6 @@ func _ready():
 	icon_preview_size_range = icon_info.get_node("params/size/range")
 	icon_info_label = icon_info.get_node("label")
 	icon_preview = icon_info.get_node("preview")
-	icon_copied_label = icon_info.get_node("copied")
 	icon_size_label = icon_info.get_node("size")
 	icon_preview_size = icon_info.get_node("params/size/pixels")
 	
@@ -93,13 +90,6 @@ func _icon_gui_input(event, icon):
 		icon_info_label.text = icon.tooltip_text
 		icon_preview.texture = icon.texture
 		icon_size_label.text = ICON_SIZE_MSG + str(icon.texture.get_size())
-
-
-func display():
-	if previews_container.get_child_count() == 0:
-		# First time, request to create previews by the plugin
-		emit_signal("update_request")
-		call_deferred('popup_centered_ratio', 0.5)
 
 func clear():
 	for idx in previews_container.get_child_count():
@@ -152,7 +142,6 @@ func _on_search_text_changed(text):
 func _on_container_mouse_exited():
 	icon_info_label.text = SELECT_ICON_MSG if selected == null else "Current Selection"
 	icon_size_label.text = ''
-	icon_copied_label.hide()
 	icon_preview.texture = null if selected == null else selected.texture
 
 
