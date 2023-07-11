@@ -42,7 +42,10 @@ func open(receiver: Node):
 	return self
 
 func has_same_connection(other: NodeToNodeConfigurator):
-	return other.from == from and other.selected_signal == selected_signal
+	return other.from == from \
+		and other.selected_signal == selected_signal \
+		and other.receiver == receiver \
+		and other.existing_connection == existing_connection
 
 var undo_redo: EditorUndoRedoManager
 
@@ -164,7 +167,9 @@ func update_argument_names():
 	
 	# add deffered call to update size - HACKED
 	(func():
-		await get_tree().process_frame
+		var tree = get_tree()
+		if tree == null: return
+		await tree.process_frame
 		self.size = Vector2.ZERO
 	).call_deferred()
 
