@@ -103,9 +103,14 @@ func default_focus():
 
 func update_argument_names():
 	var names = argument_names()
+	var types = argument_types()
 	%Expression.argument_names = names
+	%Expression.argument_types = types
 	%Condition.argument_names = names
-	for c in %Args.get_children(): c.argument_names = names
+	%Condition.argument_types = types
+	for c in %Args.get_children():
+		c.argument_names = names
+		c.argument_types = types
 	
 	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
 	
@@ -280,32 +285,36 @@ func _on_function_selected(name: String):
 
 func empty_script(expr: String, return_value: bool):
 	var script := ConnectionScript.new(argument_names(), return_value, expr)
-	script.argument_types = []
-	for i in len(selected_signal["args"]):
-		script.argument_types.append(null)
-		# TODO: use reflection to get type of signal arguments?
-	script.argument_types.append(Utils.get_specific_class_name(from))
-	if receiver != null:
-		script.argument_types.append(Utils.get_specific_class_name(receiver))
-	for ref in more_references:
-		var node := from.get_node(ref)
-		script.argument_types.append(Utils.get_specific_class_name(node))
+	script.argument_types = argument_types()
 	return script
 
 func argument_names():
-	return selected_signal["args"].map(func (a): return a["name"]) \
-		+ basic_argument_names()
+	return argument_names_and_types().map(func (a): return a[0])
+
+func argument_types():
+	return argument_names_and_types().map(func (a): return a[1])
+
+func argument_names_and_types():
+	return selected_signal["args"].map(func (a):
+		# TODO: use reflection to get type of signal arguments?
+		return [a["name"], null]) \
+		+ basic_argument_names_and_types()
 
 func basic_argument_names():
-	var names = []
-	names += ["from"]
+	return basic_argument_names_and_types().map(func (a): return a[0])
+
+func basic_argument_names_and_types():
+	var names_and_types = []
+	names_and_types.append(["from", Utils.get_specific_class_name(from)])
 	if %Receiver.visible:
-		names += ["to"]
-	names += range(len(more_references)).map(func (i): return "ref{0}".format([i]))
-	return names
+		names_and_types.append(["to", Utils.get_specific_class_name(receiver)])
+	names_and_types += range(len(more_references)).map(func (i):
+		var ref = more_references[i]
+		var node = from.get_node(ref)
+		return ["ref{0}".format([i]), Utils.get_specific_class_name(node)])
+	return names_and_types
 
 func save():
-	print("save")
 	%FunctionName.accept_selected()
 	
 	if not %Expression.visible:
@@ -323,7 +332,13 @@ func save():
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
-				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
+				{
+					"expression": null,
+					"invoke": invoke,
+					"signal_name": %Signal.text,
+					"more_references": more_references,
+					"arguments": args.map(func (a): return a.edit_script)
+				})
 		else:
 			existing_connection = Connection.connect_target(
 				from,
@@ -343,11 +358,15 @@ func save():
 					{"source_code": %Expression.text}, "reload")
 			else:
 				Utils.commit_undoable(undo_redo,
-					"Set connection expression",
-					existing_connection, {"expression": %Expression.updated_script(from, selected_signal["name"])})
+				"Set connection expression",
+				existing_connection, {"expression": %Expression.updated_script(from, selected_signal["name"])})
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
-				existing_connection, {"signal_name": %Signal.text, "more_references": more_references})
+				existing_connection,
+				{
+					"signal_name": %Signal.text,
+					"more_references": more_references
+				})
 		else:
 			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
 			existing_connection = Connection.connect_expr(from, selected_signal["name"], to_path,

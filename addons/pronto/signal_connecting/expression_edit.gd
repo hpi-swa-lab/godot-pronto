@@ -26,6 +26,15 @@ var control_argument_names = true
 			return argument_names
 		else:
 			return edit_script.argument_names
+var argument_types: Variant = []:
+	set(v):
+		if edit_script != null and "argument_types" in edit_script:
+			edit_script.argument_types = v
+	get:
+		if "argument_types" in edit_script:
+			return edit_script.argument_types
+		else:
+			return null
 @export var placeholder_text: String:
 	get: return %Expression.placeholder_text
 	set(v):
@@ -40,6 +49,7 @@ var control_argument_names = true
 		edit_script = v
 		if control_argument_names:
 			edit_script.argument_names = argument_names
+			edit_script.argument_types = argument_types
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
 		%Expression.text = edit_script.source_code

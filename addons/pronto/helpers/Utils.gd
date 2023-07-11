@@ -221,6 +221,8 @@ static func log(s):
 
 static func get_specific_class_name(node: Node):
 	# See https://github.com/godotengine/godot/issues/21789.
+	if node == null:
+		return null
 	# var name := node.to_string()
 	# if name.match("?*:?*"):
 	# 	return name.split(":")[0]
