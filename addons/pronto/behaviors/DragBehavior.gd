@@ -89,6 +89,9 @@ func _pick(position: Vector2):
 	picked.emit(position)
 	start_position = position
 	last_position = position
+
+	if get_parent() is RigidBody2D:
+		get_parent().freeze = true
 	
 func _drag(position: Vector2):
 	get_parent().global_position = position + _offset
@@ -98,3 +101,7 @@ func _drag(position: Vector2):
 func _drop(position: Vector2):
 	print("Drop")
 	dropped.emit(position, start_position)
+
+	if get_parent() is RigidBody2D:
+		get_parent().freeze = false
+		get_parent().apply_central_impulse(Input.get_last_mouse_velocity())
