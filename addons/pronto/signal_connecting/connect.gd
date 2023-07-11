@@ -63,7 +63,7 @@ func _process(delta):
 		var name = %connections.get_item_text(idx)
 		var conn = Utils.find(Connection.get_connections(node),
 			func (c: Connection): return c.print(false, false, true) == name)
-		if conn:
+		if conn and node.has_method("highlight_activated"):
 			node.highlight_activated(conn)
 
 func _on_add_mouse_entered():
