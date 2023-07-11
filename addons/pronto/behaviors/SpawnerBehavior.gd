@@ -191,7 +191,7 @@ func handles():
 					(transform * spawn_shape.size - position) / 2,
 					Utils.icon_from_theme("EditorHandle", self),
 					self,
-					"spawn_shape.size",
+					"shape_size",
 					func (coord): return (floor(coord * 2) * transform.translated(-position)).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 			]
 		elif is_instance_of(spawn_shape, CircleShape2D):
