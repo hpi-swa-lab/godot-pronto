@@ -6,17 +6,19 @@ class_name SpawnerBehavior
 ## Spawns all children by default. Alternatively, provide a scene path here.
 @export var scene_path: NodePath = ^""
 
-## Shape used by 'spawn_in_shape' method. Only supports 'CircleShape2D' and 'RectangleShape2D'.
+## Shape used by 'spawn_in_shape' method. Supports 'CircleShape2D', 'RectangleShape2D' and 'ConvexPolygonShape2D'.
 @export var spawn_shape: Shape2D = null:
 	set(v):
-		if !is_instance_of(v, RectangleShape2D) and !is_instance_of(v, CircleShape2D):
-			push_warning("Spawners only support CircleShape2D and RectangleShape2D")
+		if !is_instance_of(v, RectangleShape2D) and !is_instance_of(v, CircleShape2D) and !is_instance_of(v, ConvexPolygonShape2D):
+			push_warning("Spawners only support CircleShape2D, RectangleShape2D and ConvexPolygonShape2D")
 		spawn_shape = v
 		queue_redraw()
 
 # Needed to check if spawn shape has to be redrawn
 var last_spawn_shape_size_rectangle: Vector2
 var last_spawn_shape_size_circle: float
+
+var spawn_shape_polygon_randomizer: PolygonRandomPointGenerator
 
 ## Debug Color in Editor for the shape used by 'spawn_in_shape'.
 @export var spawn_shape_color: Color = Color('0099b36b')
@@ -127,6 +129,11 @@ func spawn_in_shape(index: int = -1):
 		pos.y = global_position.y + randf_range(-spawn_shape.size.y * 0.5,spawn_shape.size.y * 0.5)
 		pos.x = global_position.x + randf_range(-spawn_shape.size.x * 0.5,spawn_shape.size.x * 0.5)
 	
+	if spawn_shape is ConvexPolygonShape2D:
+		if spawn_shape_polygon_randomizer == null:
+			spawn_shape_polygon_randomizer = PolygonRandomPointGenerator.new(spawn_shape.points)
+		pos = global_position + spawn_shape_polygon_randomizer.get_random_point()
+		
 	for instance in instances:
 		instance.global_position = pos
 		spawned.emit(instance)
@@ -155,4 +162,8 @@ func _process(delta):
 			
 		if spawn_shape is CircleShape2D and spawn_shape.radius != last_spawn_shape_size_circle:
 			last_spawn_shape_size_circle = spawn_shape.radius
+			queue_redraw()
+		
+		# there has to be a simple way to detect changes - Tried around a bit with the property_list_changed signal, but to no avail
+		if spawn_shape is ConvexPolygonShape2D:
 			queue_redraw()
