@@ -187,14 +187,26 @@ static func global_size_of_yourself(node: Node):
 	if "size" in node: return Rect2(node.global_position, node.size)
 	return Rect2(node.global_position, Vector2.ZERO)
 
-static func global_rect_of(node: Node):
+static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> Rect2:
+	var rect = Rect2(node.global_position, Vector2.ZERO)
 	node = Utils.closest_parent_with_position(node)
-	if node is PlaceholderBehavior or node is HealthBarBehavior: return Rect2(node.global_position - node.size / 2, node.size)
-	if "size" in node: return Rect2(node.global_position, node.size)
-	if "shape" in node and node.shape:
+	if node is PlaceholderBehavior or node is HealthBarBehavior:
+		rect = Rect2(node.global_position - node.size / 2, node.size)
+	elif "size" in node:
+		rect = Rect2(node.global_position, node.size)
+	elif "shape" in node and node.shape:
 		var s = node.shape.get_rect().size
-		return Rect2(node.global_position - s / -2, s)
-	return Rect2(node.global_position, Vector2.ZERO)
+		rect = Rect2(node.global_position - s / -2, s)
+	elif "get_rect" in node:
+		rect = node.global_transform * node.get_rect()
+
+	if depth == 0:
+		return rect
+	
+	return node.get_children() \
+		.filter(func(child): return child not in excluded) \
+		.map(func(child): return global_rect_of(child, depth - 1, excluded)) \
+		.reduce(func(a, b): return a.merge(b), rect)
 
 static func fix_minimum_size(n: Control):
 	if G.at("_pronto_editor_plugin") == null:
