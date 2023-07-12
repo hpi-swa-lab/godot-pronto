@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://irpeeca7ehxs"]
 
-[ext_resource type="Script" path="res://addons/pronto/signal_connecting/sprite_window.gd" id="1_ewrks"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/sprite_window.gd" id="1_fqma4"]
 [ext_resource type="Texture2D" uid="uid://7m05bcuv3nvx" path="res://addons/pronto/icons/monochrome-transparent_packed.png" id="2_dyjbd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0pt01"]
@@ -1090,7 +1090,7 @@ sources/0 = SubResource("TileSetAtlasSource_0pt01")
 [node name="window" type="VBoxContainer"]
 offset_right = 212.0
 offset_bottom = 414.0
-script = ExtResource("1_ewrks")
+script = ExtResource("1_fqma4")
 
 [node name="body" type="VBoxContainer" parent="."]
 layout_mode = 2

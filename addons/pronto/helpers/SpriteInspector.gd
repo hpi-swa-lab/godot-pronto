@@ -33,7 +33,7 @@ class SpriteProperty extends EditorProperty:
 		return "Unnamed" # Default name.
 	
 	func _init():
-		icon_window = preload("res://addons/pronto/signal_connecting/sprite_window.tscn").instantiate()
+		icon_window = preload("res://addons/pronto/helpers/sprite_window.tscn").instantiate()
 		add_child(icon_window)
 		icon_window._ready()
 		icon_window.texture_selected.connect(_on_change)

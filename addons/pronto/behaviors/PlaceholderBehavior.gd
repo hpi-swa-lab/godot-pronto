@@ -42,7 +42,7 @@ const OUTLINE_SHADER = "res://addons/pronto/shader/outline.gdshader"
 # The default texture used for the Sprite2D.
 var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 
-## The texture used for the Sprite2D.
+## The texture used for the Sprite2D. Can be loaded from a file or from the sprite_library.
 @export var sprite_texture: Texture2D = DEFAULT_TEXTURE:
 	set(v):
 		if v == null:
@@ -51,11 +51,14 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 			sprite_texture = v
 		_editor_reload()
 
+# The sprite library is desribed in "addons/pronto/signal_connecting
+## Search through a library of textures to choose your sprite.
 @export var sprite_library: Texture2D:
 	set(v):
 		sprite_texture = v
 		use_sprite = true
-		
+
+## Modulate the color of the sprite.
 @export var sprite_modulate: Color = Color.WHITE:
 	set(v):
 		sprite_modulate = v
