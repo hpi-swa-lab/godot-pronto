@@ -48,7 +48,6 @@ func _request_code_completion(force):
 		put_regex.compile("put\\(")
 		txt = txt.substr(max(0,col-6), min(6, txt.length()))
 		var contains_quotes = txt.contains("\"")
-		print("Contains quotes: " + str(contains_quotes))
 		if at_regex.search(txt) or put_regex.search(txt):
 			var store_list = Utils.all_nodes_that(G.get_parent(), func(node): return is_instance_of(node, StoreBehavior))
 			for store in store_list:
@@ -62,7 +61,6 @@ func _request_code_completion(force):
 	
 	ConnectionScript.map_row_col(edited_script, get_caret_line(), get_caret_column(), func (row, col):
 		LanguageClient.completion(edited_script, row, col, func (entries):
-			print(entries)
 			for entry in entries:
 				var insert = entry["insertText"]
 				if insert.is_empty(): insert = entry["label"]
