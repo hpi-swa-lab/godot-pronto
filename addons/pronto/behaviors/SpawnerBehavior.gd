@@ -6,6 +6,11 @@ class_name SpawnerBehavior
 ## Spawns all children by default. Alternatively, provide a scene path here.
 @export var scene_path: NodePath = ^""
 
+@export var spawn_poly: Polygon2D = null:
+	set(v):
+		spawn_poly = v
+		v.set_visible(false)
+
 ## Shape used by 'spawn_in_shape' method. Supports 'CircleShape2D', 'RectangleShape2D' and 'ConvexPolygonShape2D'.
 @export var spawn_shape: Shape2D = null:
 	set(v):
@@ -53,7 +58,8 @@ func _ready():
 			scene_offsets = []
 			for scene in scenes:
 				scene_offsets.append(scene.position)
-				remove_child(scene)
+				if scene != spawn_poly:
+					remove_child(scene)
 
 func _duplicate_blueprint(index: int):
 	return scenes[index].duplicate(DUPLICATE_USE_INSTANTIATION | DUPLICATE_SCRIPTS | DUPLICATE_SIGNALS | DUPLICATE_GROUPS)
@@ -121,28 +127,29 @@ func spawn_in_shape(index: int = -1):
 	var instances = []
 	if index < 0:
 		for i in range(scenes.size()):
-			instances.append(_spawn(i, true))
+			if _duplicate_blueprint(index) != spawn_poly:
+				instances.append(_spawn(i, true))
 	else:
 		instances = [_spawn(index, true)]
 	
 	var pos = global_position
 	
-	if spawn_shape is CircleShape2D:
+	if spawn_poly:
+		if spawn_shape_polygon_randomizer == null:
+			spawn_shape_polygon_randomizer = PolygonRandomPointGenerator.new(spawn_poly.polygon)
+		pos = global_position + spawn_shape_polygon_randomizer.get_random_point() * spawn_poly.scale
+		pos += spawn_poly.position + spawn_poly.offset
+	elif spawn_shape is CircleShape2D:
 		pos.x += spawn_shape.radius + 2
 		
 		while(global_position.distance_to(pos) > spawn_shape.radius):
 			pos.x = global_position.x +  randf_range(-spawn_shape.radius, spawn_shape.radius)
 			pos.y = global_position.y +  randf_range(-spawn_shape.radius, spawn_shape.radius)
-	
-	if spawn_shape is RectangleShape2D:
+	elif spawn_shape is RectangleShape2D:
 		pos.y = global_position.y + randf_range(-spawn_shape.size.y * 0.5,spawn_shape.size.y * 0.5)
 		pos.x = global_position.x + randf_range(-spawn_shape.size.x * 0.5,spawn_shape.size.x * 0.5)
 	
-	if spawn_shape is ConvexPolygonShape2D:
-		if spawn_shape_polygon_randomizer == null:
-			spawn_shape_polygon_randomizer = PolygonRandomPointGenerator.new(spawn_shape.points)
-		pos = global_position + spawn_shape_polygon_randomizer.get_random_point()
-		
+
 	for instance in instances:
 		instance.global_position = pos
 		spawned.emit(instance)
@@ -164,6 +171,7 @@ func _draw():
 
 func _process(delta):
 	super._process(delta)
+	
 	if spawn_shape:
 		if spawn_shape is RectangleShape2D and spawn_shape.size != shape_size:
 			spawn_shape.size = shape_size
@@ -179,11 +187,11 @@ func _process(delta):
 			last_spawn_shape_size_circle = spawn_shape.radius
 			queue_redraw()
 		
-		# there has to be a simple way to detect changes - Tried around a bit with the property_list_changed signal, but to no avail
-		if spawn_shape is ConvexPolygonShape2D:
-			queue_redraw()
 
 func handles():
+	if spawn_poly:
+		return null
+	
 	if spawn_shape:
 		if is_instance_of(spawn_shape, RectangleShape2D):
 			return [
@@ -203,3 +211,4 @@ func handles():
 					"shape_radius",
 					func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0))
 			]
+
