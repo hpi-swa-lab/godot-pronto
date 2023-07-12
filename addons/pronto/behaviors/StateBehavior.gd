@@ -2,16 +2,20 @@
 extends Behavior
 class_name StateBehavior
 
+## The StateBehavior is the fundamental building block of a state machine.
+## 
+## Each StateBehavior emits the signals [signal StateBehavior.entered] and
+## [signal StateBehavior.exited] to communicate the state machine's state
 
 ## Signal that gets emitted when the state becomes active
 signal entered
 
 ## Signal that gets emitted when the state becomes inactive.
-## Use `transition_id` to determine in the transitions' condition which transition to trigger.
+## Use [param transition_id] to determine in the transitions' condition which transition to trigger.
 signal exited(target_state_name: String)
 
-## Modelles whether the state reacts to transitions at all.
-## The sum of all `active` variables is the state of the state machine
+## Modeles whether the state reacts to transitions at all.
+## The sum of all [code]active[/code] variables is the state of the state machine
 ## Use this variable to determine the initial state.
 @export var active: bool = false:
 	get: return active
@@ -29,14 +33,14 @@ func enter():
 		entered.emit()
 
 ## Function that tells the state to become inactive. Works only if the state is active.
-## The `transition_id` is forwarded to the `exited` signal and can thus be used to determine
-## which transition to trigger.
+## The [param transition_id] is forwarded to the [signal StateBehavior.exited] signal and 
+## can thus be used to determine which transition to trigger.
 func exit(target_state_name: String):
 	if active:
 		active = false
 		exited.emit(target_state_name)
 
-## Override of the corresponding method in Behavior.gd
+## Override of the corresponding method in [class Behavior]
 ## Used to display the node name of a target StateBehavior on a line
 func line_text_function(connection: Connection) -> Callable:
 	var addendum = ""
@@ -46,6 +50,9 @@ func line_text_function(connection: Connection) -> Callable:
 	return func(flipped):
 		return connection.print(flipped) + addendum
 
+func lines():
+	return super.lines() + [Lines.BottomText.new(self, str(name))]
+	
 func _get_connected_states(seen_nodes = []):
 	seen_nodes.append(self)
 	for connection in Connection.get_connections(self):
