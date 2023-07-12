@@ -9,7 +9,7 @@ signal entered
 
 ## Signal that gets emitted when the state becomes inactive.
 ## Use `transition_id` to determine in the transitions' condition which transition to trigger.
-signal exited(transition_id: int)
+signal exited(target_state_name: String)
 
 ## Modelles whether the state reacts to transitions at all.
 ## The sum of all `active` variables is the state of the state machine
@@ -27,10 +27,10 @@ func enter():
 ## Function that tells the state to become inactive. Works only if the state is active.
 ## The `transition_id` is forwarded to the `exited` signal and can thus be used to determine
 ## which transition to trigger.
-func exit(transition_id):
+func exit(target_state_name: String):
 	if active:
 		active = false
-		exited.emit(transition_id)
+		exited.emit(target_state_name)
 
 func _get_connected_states(seen_nodes = []):
 	seen_nodes.append(self)
