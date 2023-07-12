@@ -76,6 +76,7 @@ func add_icon(p_icon, p_name):
 	icon.custom_minimum_size = Vector2(icon_size, icon_size)
 	icon.tooltip_text = p_name
 	icon.name = p_name
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 	icon.gui_input.connect(Callable(_icon_gui_input).bind(icon))
 	previews_container.add_child(icon)

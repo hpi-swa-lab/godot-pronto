@@ -18,6 +18,7 @@ class SpriteProperty extends EditorProperty:
 	var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 	var current_value: Texture2D = DEFAULT_TEXTURE
 	
+	## Add names to certain areas in the tilemap for searching
 	func get_tile_name(x, y):
 		if (x in range(24,32) and y in range(0, 11)):
 			return "Characters"

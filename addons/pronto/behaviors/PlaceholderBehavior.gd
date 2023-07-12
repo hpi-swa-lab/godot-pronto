@@ -54,6 +54,7 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 @export var sprite_library: Texture2D:
 	set(v):
 		sprite_texture = v
+		use_sprite = true
 		
 @export var sprite_modulate: Color = Color.WHITE:
 	set(v):
