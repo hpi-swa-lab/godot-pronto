@@ -46,7 +46,7 @@ The following list of behaviors primarily cause effects when triggered.
 | MoveBehavior | When triggered, moves its parent. Can be set to move along global or local axes. Supports handling of gravity. |
 | PlatformerControllerBehavior | Makes the parent behave like a platformer character, meaning that it can jump, move horizontally, and is affected by gravity. Must be a child of a [CharacterBody2D](https://docs.godotengine.org/en/stable/classes/class_characterbody2d.html). |
 | SceneRootBehavior | Provides access to the `SceneTree` from Godot. It offers the signals `node_added(node: Node)`, `node_remove(node: Node)` and `tree_changed()` from the `SceneTree`. Additionally, it implements three methods for executing lambda functions on all or a specific subset of nodes in a given `group`. |
-| SpawnerBehavior | When triggered, spawns whatever its child nodes are at its current location in the scene. Single children nodes can be spawned by modifying the optional index argument in each spawning method to just the respective child node. Use -1 as index to spawn all children. Can use spawn_in_shape to randomly spawn children in the given shape. |
+| SpawnerBehavior | When triggered, spawns whatever its child nodes are at its current location in the scene. Single children nodes can be spawned by modifying the optional index argument in each spawning method to just the respective child node. Use -1 as index to spawn all children. Can use spawn_in_shape to randomly spawn children in the given shape or polygon. When using a Polygon2D dont use it as a child of the spawner. |
 | StopwatchBehavior | Starts counting up time when triggered. Can be reset. |
 
 The following list of behaviors manage state or communicate visual properties.
