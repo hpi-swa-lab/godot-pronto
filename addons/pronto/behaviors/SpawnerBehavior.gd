@@ -6,39 +6,56 @@ class_name SpawnerBehavior
 ## Spawns all children by default. Alternatively, provide a scene path here.
 @export var scene_path: NodePath = ^""
 
-@export var spawn_poly: Polygon2D = null:
-	set(v):
-		spawn_poly = v
-		v.set_visible(false)
+## When set, spawns new nodes as children of the given node.
+@export var container: Node = null
 
-## Shape used by 'spawn_in_shape' method. Supports 'CircleShape2D', 'RectangleShape2D' and 'ConvexPolygonShape2D'.
-@export var spawn_shape: Shape2D = null:
+## Type of Shape used for the 'spawn_in_shape' method.
+@export_enum("Polygon", "Generic") var shape_type: String = "Generic":
+	set(val):
+		shape_type = val
+		queue_redraw()
+
+## Polygon used by 'spawn_in_shape' method. Dont set the PolygonShape2D itself as child of the spawner.
+@export var spawn_shape_polygon: Polygon2D = null:
 	set(v):
-		if !is_instance_of(v, RectangleShape2D) and !is_instance_of(v, CircleShape2D) and !is_instance_of(v, ConvexPolygonShape2D):
-			push_warning("Spawners only support CircleShape2D, RectangleShape2D and ConvexPolygonShape2D")
-		spawn_shape = v
+		spawn_shape_polygon = v
+		spawn_shape_polygon.color = Color('0099b36b')
+		spawn_shape_polygon.set_visible(false)
+		queue_redraw()
+
+## Shape used by 'spawn_in_shape' method. Supports 'CircleShape2D', 'RectangleShape2D' and 'CapsuleShape2D'.
+@export var spawn_shape_generic: Shape2D = null:
+	set(v):
+		if !is_instance_of(v, RectangleShape2D) and !is_instance_of(v, CircleShape2D) and !is_instance_of(v, CapsuleShape2D):
+			push_warning("Spawners only support CircleShape2D, RectangleShape2D and CapsuleShape2D")
+		spawn_shape_generic = v
 		
-		if spawn_shape is RectangleShape2D:
-			shape_size = spawn_shape.size
+		if spawn_shape_generic is RectangleShape2D:
+			shape_size = spawn_shape_generic.size
 		
-		if spawn_shape is CircleShape2D:
-			shape_radius = spawn_shape.radius
+		if spawn_shape_generic is CircleShape2D:
+			shape_radius = spawn_shape_generic.radius
 		
+		if spawn_shape_generic is CapsuleShape2D:
+			shape_radius = spawn_shape_generic.radius
+			shape_height = spawn_shape_generic.height
+		queue_redraw()
+
+## Debug Color in Editor for the shape used by 'spawn_in_shape'.
+@export var spawn_shape_color: Color = Color('0099b36b'):
+	set(v):
+		spawn_shape_color = v
 		queue_redraw()
 
 # Needed to check if spawn shape has to be redrawn
 var last_spawn_shape_size_rectangle: Vector2
 var last_spawn_shape_size_circle: float
+var last_spawn_shape_size_capsule: float
 var shape_radius: float
+var shape_height: float
 var shape_size: Vector2
 
 var spawn_shape_polygon_randomizer: PolygonRandomPointGenerator
-
-## Debug Color in Editor for the shape used by 'spawn_in_shape'.
-@export var spawn_shape_color: Color = Color('0099b36b')
-
-## When set, spawns new nodes as children of the given node.
-@export var container: Node = null
 
 var scenes = null
 var scene_offsets = null
@@ -57,8 +74,8 @@ func _ready():
 			scenes = get_children()
 			scene_offsets = []
 			for scene in scenes:
-				scene_offsets.append(scene.position)
-				if scene != spawn_poly:
+				if scene != spawn_shape_polygon:
+					scene_offsets.append(scene.position)
 					remove_child(scene)
 
 func _duplicate_blueprint(index: int):
@@ -127,29 +144,55 @@ func spawn_in_shape(index: int = -1):
 	var instances = []
 	if index < 0:
 		for i in range(scenes.size()):
-			if _duplicate_blueprint(index) != spawn_poly:
-				instances.append(_spawn(i, true))
+			instances.append(_spawn(i, true))
 	else:
 		instances = [_spawn(index, true)]
 	
 	var pos = global_position
 	
-	if spawn_poly:
+	if shape_type == "Polygon":
+		if spawn_shape_polygon == null:
+			push_warning("No Polygon2D specified.")
+			return null
 		if spawn_shape_polygon_randomizer == null:
-			spawn_shape_polygon_randomizer = PolygonRandomPointGenerator.new(spawn_poly.polygon)
-		pos = global_position + spawn_shape_polygon_randomizer.get_random_point() * spawn_poly.scale
-		pos += spawn_poly.position + spawn_poly.offset
-	elif spawn_shape is CircleShape2D:
-		pos.x += spawn_shape.radius + 2
+			spawn_shape_polygon_randomizer = PolygonRandomPointGenerator.new(spawn_shape_polygon.polygon)
 		
-		while(global_position.distance_to(pos) > spawn_shape.radius):
-			pos.x = global_position.x +  randf_range(-spawn_shape.radius, spawn_shape.radius)
-			pos.y = global_position.y +  randf_range(-spawn_shape.radius, spawn_shape.radius)
-	elif spawn_shape is RectangleShape2D:
-		pos.y = global_position.y + randf_range(-spawn_shape.size.y * 0.5,spawn_shape.size.y * 0.5)
-		pos.x = global_position.x + randf_range(-spawn_shape.size.x * 0.5,spawn_shape.size.x * 0.5)
+		# pos = global.position # for positioning when Polygon2D is child of SpawnBehavior
+		pos = spawn_shape_polygon_randomizer.get_random_point() * spawn_shape_polygon.scale
+		pos += spawn_shape_polygon.position + spawn_shape_polygon.offset
+		
+	elif spawn_shape_generic == null:
+		push_warning("No Shape2D specified.")
+		return null
+	elif spawn_shape_generic is CircleShape2D:
+		pos.x += spawn_shape_generic.radius + 2
+		
+		while(global_position.distance_to(pos) > spawn_shape_generic.radius):
+			pos.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+			pos.y = global_position.y +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+			
+	elif spawn_shape_generic is RectangleShape2D:
+		pos.y = global_position.y + randf_range(-spawn_shape_generic.size.y * 0.5,spawn_shape_generic.size.y * 0.5)
+		pos.x = global_position.x + randf_range(-spawn_shape_generic.size.x * 0.5,spawn_shape_generic.size.x * 0.5)
+		
+	elif spawn_shape_generic is CapsuleShape2D:
+		pos.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+		pos.y = global_position.y +  randf_range(-spawn_shape_generic.height/2, spawn_shape_generic.height/2)
+		var is_out_of_radius
+		var is_out_of_height
+		var is_out_of_radius_height
+		
+		while(is_out_of_radius or is_out_of_height):
+			var true_rect = spawn_shape_generic.height/2 - spawn_shape_generic.radius
+			
+			if (global_position + Vector2(0,true_rect)).distance_to(pos) < spawn_shape_generic.radius or (global_position - Vector2(0,true_rect)).distance_to(pos) < spawn_shape_generic.radius:
+				break
+			pos.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+			pos.y = global_position.y +  randf_range(-true_rect, true_rect)
+			
+			is_out_of_radius = global_position.distance_to(Vector2(pos.x,global_position.y)) > spawn_shape_generic.radius
+			is_out_of_height = global_position.distance_to(Vector2(global_position.x,pos.y)) > true_rect
 	
-
 	for instance in instances:
 		instance.global_position = pos
 		spawned.emit(instance)
@@ -166,49 +209,74 @@ func _draw():
 	super._draw()
 	if Engine.is_editor_hint():
 		draw_set_transform(Vector2.ZERO)
-		if spawn_shape:
-			spawn_shape.draw(get_canvas_item(),spawn_shape_color)
+		if shape_type == "Generic" and spawn_shape_generic:
+			spawn_shape_generic.draw(get_canvas_item(),spawn_shape_color)
 
 func _process(delta):
 	super._process(delta)
 	
-	if spawn_shape:
-		if spawn_shape is RectangleShape2D and spawn_shape.size != shape_size:
-			spawn_shape.size = shape_size
+	if shape_type == "Generic" and spawn_shape_generic:
+		if spawn_shape_generic is RectangleShape2D and spawn_shape_generic.size != shape_size:
+			spawn_shape_generic.size = shape_size
 		
-		if spawn_shape is CircleShape2D and spawn_shape.radius != shape_radius:
-			spawn_shape.radius = shape_radius
+		if spawn_shape_generic is CircleShape2D and spawn_shape_generic.radius != shape_radius:
+			spawn_shape_generic.radius = shape_radius
 		
-		if spawn_shape is RectangleShape2D and spawn_shape.size != last_spawn_shape_size_rectangle:
-			last_spawn_shape_size_rectangle = spawn_shape.size
+		if spawn_shape_generic is CapsuleShape2D:
+			if spawn_shape_generic.radius != shape_radius or spawn_shape_generic.height != shape_height:
+				spawn_shape_generic.radius = shape_radius
+				spawn_shape_generic.height = shape_height
+		
+		if spawn_shape_generic is RectangleShape2D and spawn_shape_generic.size != last_spawn_shape_size_rectangle:
+			last_spawn_shape_size_rectangle = spawn_shape_generic.size
 			queue_redraw()
 			
-		if spawn_shape is CircleShape2D and spawn_shape.radius != last_spawn_shape_size_circle:
-			last_spawn_shape_size_circle = spawn_shape.radius
+		if spawn_shape_generic is CircleShape2D and spawn_shape_generic.radius != last_spawn_shape_size_circle:
+			last_spawn_shape_size_circle = spawn_shape_generic.radius
 			queue_redraw()
-		
+			
+		if spawn_shape_generic is CapsuleShape2D and spawn_shape_generic.height != last_spawn_shape_size_capsule or spawn_shape_generic.radius != last_spawn_shape_size_circle:
+			last_spawn_shape_size_circle = spawn_shape_generic.radius
+			last_spawn_shape_size_capsule = spawn_shape_generic.height
+			queue_redraw()
+
 
 func handles():
-	if spawn_poly:
+	if shape_type == "Polygon":
 		return null
 	
-	if spawn_shape:
-		if is_instance_of(spawn_shape, RectangleShape2D):
+	if shape_type == "Generic" and spawn_shape_generic:
+		if is_instance_of(spawn_shape_generic, RectangleShape2D):
 			return [
 				Handles.SetPropHandle.new(
-					(transform * spawn_shape.size - position) / 2,
+					(transform * spawn_shape_generic.size - position) / 2,
 					Utils.icon_from_theme("EditorHandle", self),
 					self,
 					"shape_size",
 					func (coord): return (floor(coord * 2) * transform.translated(-position)).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 			]
-		elif is_instance_of(spawn_shape, CircleShape2D):
+		elif is_instance_of(spawn_shape_generic, CircleShape2D):
 			return [
 				Handles.SetPropHandle.new(
-					(transform * Vector2(spawn_shape.radius, 0) - position),
+					(transform * Vector2(spawn_shape_generic.radius, 0) - position),
 					Utils.icon_from_theme("EditorHandle", self),
 					self,
 					"shape_radius",
 					func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0))
+			]
+		elif is_instance_of(spawn_shape_generic, CapsuleShape2D):
+			return [
+				Handles.SetPropHandle.new(
+					(transform * Vector2(spawn_shape_generic.radius, 0) - position),
+					Utils.icon_from_theme("EditorHandle", self),
+					self,
+					"shape_radius",
+					func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0)),
+				Handles.SetPropHandle.new(
+					(transform * Vector2(0, spawn_shape_generic.height/2) - position),
+					Utils.icon_from_theme("EditorHandle", self),
+					self,
+					"shape_height",
+					func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0)*2)
 			]
 

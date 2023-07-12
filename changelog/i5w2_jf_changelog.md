@@ -1,5 +1,7 @@
 # Iteration 5 Week 2 - Julian & Finn
 
+In this week we focused mainly on the Placeholder Behavior and its sprite functionality. We also fixed some issues with the HealthBar and Code Behavior.
+
 ## Code-Behavior
 
 We removed the `label` from the Code-Behavior and use its scenename instead. We found ourself labeling nodes twice (once in the tree and then again in the label) so we decided to change this.
@@ -20,11 +22,15 @@ As already mentioned in the Slack channel, the documentation comments for the in
 
 ### Sprite Library
 
-We want to enable the user to quickly select and apply fitting sprite images to the Placeholder. For the textures we used the Kenney 1-Bit Pack ([https://kenney.nl/assets/1-bit-pack](https://kenney.nl/assets/1-bit-pack)).
+We want to enable the user to quickly select and apply fitting sprite images to the Placeholder. For the textures we used the Kenney 1-Bit Pack ([https://kenney.nl/assets/1-bit-pack](https://kenney.nl/assets/1-bit-pack)) as suggested by Tom.
 
-To allow for displaying different suggestions and a quick selection we want a visual representation of all textures ideally combined with an option for filtering.  We used the Editor-Icon Previewer Plugin as an inspiration and basis to start from, because it already has a nice visual representation and other features like a preview, scaling and a search bar. ![image](i5w2_jf_editor_icon_previewer.png)
+To allow for displaying different suggestions and a quick selection we want a visual representation of all textures ideally combined with an option for filtering.  We used the Editor-Icon Previewer Plugin as an inspiration and basis to start from, because it already has a nice visual representation and other features like a preview, scaling and a search bar.
 
-Similar to the expressions, we created a new `EditorInspectorPlugin` for the `PlaceholderBehavior` for selection and applying tiles from our tilemap as textures for the sprite. ![image](i5w2_jf_sprite_window.png)
+![Editor Icon Previewer](i5w2_jf_editor_icon_previewer.png)
+
+Similar to the pronto expressions, we created a new `EditorInspectorPlugin` (this is a godot class and not a "plugin" like pronto!) for the `PlaceholderBehavior` for selecting and applying tiles from our tilemap as textures for the sprite.
+
+![Our version of the sprite window in the inspector](i5w2_jf_sprite_window.png)
 
 The searchbar can be used for filtering the textures. Currently only the following categories are available:
 
@@ -33,9 +39,11 @@ The searchbar can be used for filtering the textures. Currently only the followi
 - Nature
 - Cards
 
+Those categories were created manually by us which makes it difficult to associate a name with every single icon since they are not provided by the tilemap.
+
 ### Modulate Color
 
-We added a new color option to modulate the color of the sprite. This works well with the 1-Bit textures because they can be entirely colored with this.
+We added a new color option to modulate the color of the sprite. This works well with the 1-Bit textures because they can be entirely colored with this. Nevertheless, this also works for every sprite that is selected.
 
 ## General Behavior Fixes
 
