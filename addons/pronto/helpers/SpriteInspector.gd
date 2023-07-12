@@ -10,7 +10,8 @@ func _parse_property(object, type, name, hint_type, hint_string, usage_flags, wi
 		return true
 	else:
 		return false
-	
+
+## Contains the visual representation of the sprite library in the inspector
 class SpriteProperty extends EditorProperty:
 	var updating = false
 	var icon_window
@@ -18,7 +19,8 @@ class SpriteProperty extends EditorProperty:
 	var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 	var current_value: Texture2D = DEFAULT_TEXTURE
 	
-	## Add names to certain areas in the tilemap for searching
+	## Add names to certain areas in the tilemap for searching. These valeus are currently
+	## specified for the selected tile map from "sprite_window.tscn".
 	func get_tile_name(x, y):
 		if (x in range(24,32) and y in range(0, 11)):
 			return "Characters"
