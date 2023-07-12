@@ -44,11 +44,13 @@ func _request_code_completion(force):
 		var txt: String = %Expression.text
 		var at_regex = RegEx.new()
 		at_regex.compile("at\\(")
+		var at_and_erase_regex = RegEx.new()
+		at_and_erase_regex.compile("at_and_remove\\(")
 		var put_regex = RegEx.new()
 		put_regex.compile("put\\(")
-		txt = txt.substr(max(0,col-6), min(6, txt.length()))
-		var contains_quotes = txt.contains("\"")
-		if at_regex.search(txt) or put_regex.search(txt):
+		txt = txt.substr(max(0,col-15), min(15, txt.length()))
+		var contains_quotes = txt.contains("(\"\"")
+		if at_regex.search(txt) or put_regex.search(txt) or at_and_erase_regex.search(txt):
 			var store_list = Utils.all_nodes_that(G.get_parent(), func(node): return is_instance_of(node, StoreBehavior))
 			for store in store_list:
 				for store_entry in store.get_meta_list():
