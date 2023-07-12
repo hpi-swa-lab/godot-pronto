@@ -1,6 +1,6 @@
 # Changelog
 
-## i2w2_cp
+## i3w2_cp
 
 ### New Features
 

@@ -238,6 +238,7 @@ text = "Cancel"
 [connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/Enabled" to="." method="_on_enabled_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="method_selected" from="MarginContainer/VBoxContainer/Receiver/FunctionName" to="." method="_on_function_selected"]
+[connection signal="save_requested" from="MarginContainer/VBoxContainer/ResizableContainer/Expression" to="." method="save"]
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/ResizableContainer/Expression" to="." method="mark_changed"]
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2/Condition" to="." method="mark_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/done" to="." method="_on_done_pressed"]

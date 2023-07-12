@@ -1,11 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://ccpmaayylsj0a"]
+[gd_scene load_steps=22 format=3 uid="uid://ccpmaayylsj0a"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/DragBehavior.gd" id="2_tq4ry"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_85iuu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="3_ulch4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="4_ojitf"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="4_tlojr"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_usyh8"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_4s77k"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="8_7pdlv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_g4yk5"]
 bounce = 0.3
@@ -63,97 +65,48 @@ only_if = SubResource("Resource_jkyc0")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_txfqc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	for i in 5:
+		to.spawn()
+"
+
+[sub_resource type="Resource" id="Resource_x0ick"]
+script = ExtResource("5_usyh8")
+nested_script = SubResource("GDScript_txfqc")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_d4u6j"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_d828c"]
+script = ExtResource("5_usyh8")
+nested_script = SubResource("GDScript_d4u6j")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_x47vs"]
+script = ExtResource("6_4s77k")
+signal_name = "node_ready"
+to = NodePath("../SpawnerBehavior")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_d828c")
+expression = SubResource("Resource_x0ick")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
-
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2(820, 143)
-physics_material_override = SubResource("PhysicsMaterial_g4yk5")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="RigidBody2D"]
-script = ExtResource("3_85iuu")
-placeholder_size = Vector2(116, 100)
-sprite_texture = ExtResource("4_tlojr")
-
-[node name="DragBehavior" type="Node2D" parent="RigidBody2D"]
-script = ExtResource("2_tq4ry")
-
-[node name="CollisionBehavior" type="Node2D" parent="RigidBody2D"]
-position = Vector2(124, 132)
-script = ExtResource("4_ojitf")
-metadata/pronto_connections = [SubResource("Resource_0cef5")]
-
-[node name="RigidBody2D2" type="RigidBody2D" parent="."]
-position = Vector2(820, 143)
-physics_material_override = SubResource("PhysicsMaterial_g4yk5")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="RigidBody2D2"]
-script = ExtResource("3_85iuu")
-placeholder_size = Vector2(116, 100)
-sprite_texture = ExtResource("4_tlojr")
-
-[node name="DragBehavior" type="Node2D" parent="RigidBody2D2"]
-script = ExtResource("2_tq4ry")
-
-[node name="CollisionBehavior" type="Node2D" parent="RigidBody2D2"]
-position = Vector2(124, 132)
-script = ExtResource("4_ojitf")
-metadata/pronto_connections = [SubResource("Resource_0cef5")]
-
-[node name="RigidBody2D3" type="RigidBody2D" parent="."]
-position = Vector2(820, 143)
-physics_material_override = SubResource("PhysicsMaterial_g4yk5")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="RigidBody2D3"]
-script = ExtResource("3_85iuu")
-placeholder_size = Vector2(116, 100)
-sprite_texture = ExtResource("4_tlojr")
-
-[node name="DragBehavior" type="Node2D" parent="RigidBody2D3"]
-script = ExtResource("2_tq4ry")
-
-[node name="CollisionBehavior" type="Node2D" parent="RigidBody2D3"]
-position = Vector2(124, 132)
-script = ExtResource("4_ojitf")
-metadata/pronto_connections = [SubResource("Resource_0cef5")]
-
-[node name="RigidBody2D4" type="RigidBody2D" parent="."]
-position = Vector2(820, 143)
-physics_material_override = SubResource("PhysicsMaterial_g4yk5")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="RigidBody2D4"]
-script = ExtResource("3_85iuu")
-placeholder_size = Vector2(116, 100)
-sprite_texture = ExtResource("4_tlojr")
-
-[node name="DragBehavior" type="Node2D" parent="RigidBody2D4"]
-script = ExtResource("2_tq4ry")
-
-[node name="CollisionBehavior" type="Node2D" parent="RigidBody2D4"]
-position = Vector2(124, 132)
-script = ExtResource("4_ojitf")
-metadata/pronto_connections = [SubResource("Resource_0cef5")]
-
-[node name="RigidBody2D5" type="RigidBody2D" parent="."]
-position = Vector2(820, 143)
-physics_material_override = SubResource("PhysicsMaterial_g4yk5")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="RigidBody2D5"]
-script = ExtResource("3_85iuu")
-placeholder_size = Vector2(116, 100)
-sprite_texture = ExtResource("4_tlojr")
-
-[node name="DragBehavior" type="Node2D" parent="RigidBody2D5"]
-script = ExtResource("2_tq4ry")
-
-[node name="CollisionBehavior" type="Node2D" parent="RigidBody2D5"]
-position = Vector2(124, 132)
-script = ExtResource("4_ojitf")
-metadata/pronto_connections = [SubResource("Resource_0cef5")]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(562, 642)
@@ -178,3 +131,31 @@ script = ExtResource("3_85iuu")
 placeholder_size = Vector2(554, 978)
 keep_in_origin = false
 sprite_texture = ExtResource("4_tlojr")
+
+[node name="SpawnerBehavior" type="Node2D" parent="."]
+position = Vector2(736, 81)
+script = ExtResource("3_ulch4")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="SpawnerBehavior"]
+position = Vector2(137, 334)
+physics_material_override = SubResource("PhysicsMaterial_g4yk5")
+can_sleep = false
+
+[node name="PlaceholderBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
+script = ExtResource("3_85iuu")
+placeholder_size = Vector2(116, 100)
+sprite_texture = ExtResource("4_tlojr")
+
+[node name="DragBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
+position = Vector2(-723, 130)
+script = ExtResource("2_tq4ry")
+
+[node name="CollisionBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
+position = Vector2(160, 69)
+script = ExtResource("4_ojitf")
+metadata/pronto_connections = [SubResource("Resource_0cef5")]
+
+[node name="NodeReadyBehavior" type="Node2D" parent="."]
+position = Vector2(90, 231)
+script = ExtResource("8_7pdlv")
+metadata/pronto_connections = [SubResource("Resource_x47vs")]

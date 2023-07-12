@@ -4,7 +4,7 @@ extends Behavior
 class_name ValueBehavior
 # PLEASE READ: 
 # AdvancedValue is the new extended Value logic
-# AdvancedValue will be merged into the current Value logic at the end of the s#print
+# AdvancedValue will be merged into the current Value logic at the end of the sprint
 # It is only a new behavior for now as the merge will most likely be some sort of breaking change 
 
 signal value_changed(value: float)
@@ -33,9 +33,9 @@ var float_step_size:float = 0.1:
 
 var float_value:float = 1:
 	set(val):
-		print("Updateting Value to: " + str(val))
+		#print("Updating Value to: " + str(val))
 		if(!value_init):
-			print("Set float default to: " + str(val))
+			#print("Set float default to: " + str(val))
 			#float_default = clamp(float(round(val/float_step_size)*float_step_size), float_from, float_to)
 			float_default = clamp(snapped(val, float_step_size) , float_from, float_to)
 			value_init = true
@@ -82,7 +82,7 @@ var _bool_value: bool
 var bool_default: bool
 
 func _handle_update_value(value):
-	print("Updateing Value to:" + str(value))
+	#print("Updating Value to:" + str(value))
 	if not is_inside_tree(): await ready
 	G.put(name, value)
 	value_changed.emit(value)
