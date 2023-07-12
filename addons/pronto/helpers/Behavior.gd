@@ -2,15 +2,21 @@
 extends Node2D
 class_name Behavior
 
-var _icon
+var _icon := TextureRect.new()
 var _handles := Handles.new()
 var _lines := Lines.new()
 
+func reload_icon():
+	_icon.texture = icon_texture()
+	_icon.queue_redraw()
+
+func icon_texture():
+	return Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
+
 func _ready():
 	if Engine.is_editor_hint() and show_icon() and is_active_scene():
-		_icon = TextureRect.new()
 		var name = get_script().resource_path.get_file().split('.')[0]
-		_icon.texture = Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
+		_icon.texture = icon_texture()
 		_icon.position = _icon.texture.get_size() / -2
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
 		
