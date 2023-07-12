@@ -32,6 +32,14 @@ func exit(target_state_name: String):
 		active = false
 		exited.emit(target_state_name)
 
+func line_text_function(connection: Connection) -> Callable:
+	var addendum = ""
+	if get_node(connection.to) is StateBehavior:
+		addendum = "\ntransition '%s'" % connection.to.get_name(connection.to.get_name_count() - 1)
+	
+	return func(flipped):
+		return connection.print(flipped) + addendum
+
 func _get_connected_states(seen_nodes = []):
 	seen_nodes.append(self)
 	for connection in Connection.get_connections(self):

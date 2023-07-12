@@ -95,6 +95,9 @@ func flash_line(value: float, key: Variant, type: String):
 	_lines.flash_line(key, type, value)
 	queue_redraw()
 
+func line_text_function(connection: Connection) -> Callable:
+	return func(flipped): return connection.print(flipped)
+
 func lines() -> Array:
 	return Connection.get_connections(self).map(func (connection):
 		var other = self if not connection.is_target() else get_node_or_null(connection.to)
@@ -102,7 +105,7 @@ func lines() -> Array:
 			return null
 		return Lines.Line.new(self,
 			other,
-			func (flipped): return connection.print(flipped),
+			line_text_function(connection),
 			connection,
 			Color.WHITE if connection.enabled else Color.WHITE.lerp(Color.BLACK, 0.5))
 	).filter(func (connection): return connection != null)
