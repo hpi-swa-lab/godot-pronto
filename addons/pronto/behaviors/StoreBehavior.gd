@@ -36,6 +36,12 @@ func put(prop: String, value: Variant):
 func at(prop: String, default = null):
 	return get_meta(prop, default)
 
+func at_and_remove(prop: String, default = null):
+	var val = at(prop,default)
+	if(has_meta(prop)):
+		remove_meta(prop)
+	return val
+
 func _report_game_value(prop: String, value: Variant):
 	_last_reported_game_values[prop] = value
 

@@ -18,6 +18,13 @@ func at(name: String, default = null):
 		return values[name]
 	else:
 		return default
+		
+func at_and_remove(name: String, default = null):
+	var val = at(name,default)
+	if(name in values):
+		values.erase(name)
+	return val
+		
 
 func default(name: String, call: Callable):
 	if not name in values:
