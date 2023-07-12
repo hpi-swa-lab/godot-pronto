@@ -51,7 +51,8 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 			sprite_texture = v
 		_editor_reload()
 
-# The sprite library is desribed in "addons/pronto/signal_connecting
+# The sprite library is desribed in "addons/pronto/helpers/SpriteInspector.gd" as well as
+# "addons/pronto/helpers/sprite_window.tscn".
 ## Search through a library of textures to choose your sprite.
 @export var sprite_library: Texture2D:
 	set(v):
