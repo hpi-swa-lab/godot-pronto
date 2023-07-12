@@ -14,4 +14,4 @@
 - Avoids losing changes in connection windows when opening a script in the Godot editor by automatically saving the connection at that point.
   - **Possible future work:** Maybe always auto-save all connections?
 
-- Fixes opening of multiple similar connetion windows. Opening a connection with the same receiver and signal as another open one will not fail any longer.
+- Fixes opening of multiple similar connection windows. Opening a connection with the same receiver and signal as another open one will not fail any longer.
