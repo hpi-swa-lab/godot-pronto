@@ -3,8 +3,19 @@
 extends Behavior
 class_name CollisionBehavior
 
+## The CollisionBehavior is a [class Behavior] that emits [signal CollisionBehavior.collided]
+## when its parent collides with another node.
+
+## Set this to a group label in order to limit collisions to nodes in that group.
+## Leave it at [code]""[/code] to collide with every node.
 @export var limit_to_group: String = ""
 
+## Gets emitted when the parent collides with another node.
+##
+## [param other] is the node that the parent collided with
+##
+## [param direction] is the normalized direction in which the [param other] 
+## is from the parent node's position
 signal collided(other: Node, direction: Vector2)
 
 func _ready():

@@ -5,7 +5,7 @@ class_name PlaceholderBehavior
 
 const OUTLINE_SHADER = "res://addons/pronto/shader/outline.gdshader"
 
-## The label that is shown inside the Placholder, unless a sprite is used.
+## The label that is shown inside the Placeholder, unless a sprite is used.
 @export var label = "":
 	set(v):
 		label = v
@@ -29,20 +29,20 @@ const OUTLINE_SHADER = "res://addons/pronto/shader/outline.gdshader"
 ## Convenient for not having to switch selected items all the time.
 @export var keep_in_origin = true
 
-## Placeholder options for displaying a Sprite2D instead of a shape.
+## Placeholder options for displaying a [class Sprite2D] instead of a shape.
 @export_category("Sprite")
 
-## If [code]true[/code] a Sprite2D is shown.
+## If [code]true[/code] a [class Sprite2D] is shown.
 @export var use_sprite = false:
 	set(v):
 		use_sprite = v
 		_editor_reload()
 		queue_redraw()
 
-# The default texture used for the Sprite2D.
+# The default texture used for the [class Sprite2D].
 var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 
-## The texture used for the Sprite2D. Can be loaded from a file or from the sprite_library.
+## The texture used for the [class Sprite2D]. Can be loaded from a file or from the sprite_library.
 @export var sprite_texture: Texture2D = DEFAULT_TEXTURE:
 	set(v):
 		if v == null:
@@ -51,8 +51,8 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 			sprite_texture = v
 		_editor_reload()
 
-# The sprite library is desribed in "addons/pronto/helpers/SpriteInspector.gd" as well as
-# "addons/pronto/helpers/sprite_window.tscn".
+## The sprite library is desribed in [class SpriteInspector] as well as
+## "addons/pronto/helpers/sprite_window.tscn".
 ## Search through a library of textures to choose your sprite.
 @export var sprite_library: Texture2D:
 	set(v):
@@ -87,16 +87,16 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 		outline_width = v;
 		_editor_reload()
 
-## The rounding method for corners of the outline (only used if sprite is used).
+## The rounding method for corners of the outline (only used if [class Sprite2D] is used).
 @export_enum("Circle", "Diamond", "Square") var outline_pattern = 0:
 	set(v):
 		outline_pattern = v
 		_editor_reload()
 
-# The Sprite2D used as a child in the Placeholder.
+# The [class Sprite2D] used as a child in the Placeholder.
 var sprite: Sprite2D = Sprite2D.new()
 
-# The size of the Placholder, overridden by the placeholder_size.
+# The size of the Placeholder, overridden by the [member PlaceholderBehavior.placeholder_size].
 var size: Vector2:
 	get:
 		return placeholder_size

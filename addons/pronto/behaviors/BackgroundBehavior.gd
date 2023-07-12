@@ -3,6 +3,11 @@
 extends Behavior
 class_name BackgroundBehavior
 
+## The BackgroundBehavior is a [class Behavior] that adds a colored 
+## rectangle with the size of the game's viewport 
+## (see [method Utils.get_game_size]) to the scene.
+
+## The color of the background rectangle
 @export var color = Color.CORNFLOWER_BLUE:
 	set(c):
 		color = c

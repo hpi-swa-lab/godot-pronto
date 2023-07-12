@@ -3,15 +3,18 @@
 extends Behavior
 class_name CodeBehavior
 
-## Emittet when the execution of the code returns. Contains the result of the execution as parameter.
+## The CodeBehavior is a [class Behavior] that can run arbitrary code
+## and communicates the result with [signal CodeBehavior.after].
+
+## Emittet when the execution of the code returns. [param result] is the result of the execution.
 signal after(result)
 
-## The names of the arguments that the code receives. Those can be accessed in [code]evaluate[/code].
+## The names of the arguments that the code receives. Those can be accessed in [member CodeBehavior.evaluate].
 @export var arguments: PackedStringArray:
 	set(a): if evaluate: evaluate.argument_names = a
 	get: return PackedStringArray(evaluate.argument_names) if evaluate else []
 
-## The Code that gets executed when [code]execute()[/code] method is called.
+## The Code that gets executed when the [method CodeBehavior.execute] method is called.
 @export var evaluate: ConnectionScript
 
 func _ready():
@@ -24,7 +27,7 @@ func _ready():
 func lines():
 	return super.lines() + [Lines.BottomText.new(self, self.name)]
 
-## Executes the code provided in [code]evaluate[/code] and emits the [code]after[/code] signal afterwards.
+## Executes the code provided in [member CodeBehavior.evaluate] and emits the [signal CodeBehavior.after] signal afterwards.
 func execute(args: Array):
 	assert(args.size() == arguments.size(), "Argument names and values for eval need to have the same size.")
 	var result = evaluate.run(args, self)

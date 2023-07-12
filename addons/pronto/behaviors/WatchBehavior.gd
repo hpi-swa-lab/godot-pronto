@@ -3,6 +3,10 @@
 extends Behavior
 class_name WatchBehavior
 
+## The Watchbehavior is a [class Behavior] that calculates a given script's results
+## and puts it into the [class EngineDebugger] for every frame
+
+## The script to evaluate whose results get printed
 @export var evaluate: ConnectionScript
 
 var _value = ""

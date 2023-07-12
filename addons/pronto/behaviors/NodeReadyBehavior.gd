@@ -3,6 +3,10 @@
 extends Behavior
 class_name NodeReadyBehavior
 
+## The NodeReadyBehavior is a [class Behavior] that emits its [signal NodeReadyBehavior.node_ready]
+## when the node's [NodeReadyBehavior._ready] was called and the node is still in the scene tree
+
+## Emitted when the node is ready and still in the scene tree
 signal node_ready
 
 func _ready():

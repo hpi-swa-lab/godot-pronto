@@ -3,8 +3,8 @@ extends Behavior
 #thumb("PointMesh")
 class_name GroupBehavior
 
-# This node is purely visual.
-# Use it for organization.
+## The GroupBehavior is a [class Behavior] that visually represents
+## a group of notes. It has no further functionality. Use it for organization.
 
 func _ready():
 	super._ready()

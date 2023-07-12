@@ -40,7 +40,7 @@ func exit(target_state_name: String):
 		active = false
 		exited.emit(target_state_name)
 
-## Override of the corresponding method in [class Behavior]
+## Override of [method Behavior.line_text_function].
 ## Used to display the node name of a target StateBehavior on a line
 func line_text_function(connection: Connection) -> Callable:
 	var addendum = ""
@@ -50,6 +50,8 @@ func line_text_function(connection: Connection) -> Callable:
 	return func(flipped):
 		return connection.print(flipped) + addendum
 
+## Override of [method Behavior.lines] 
+## Used to add the State name below the icon
 func lines():
 	return super.lines() + [Lines.BottomText.new(self, str(name))]
 	

@@ -3,24 +3,40 @@
 extends Behavior
 class_name DragBehavior
 
+## The DragBehavior is a [class Behavior] that encapsulates mouse movement bahavior
+## on its parent node.
 
 ## Emitted when the mouse enters the parent node.
+##
+## [param position] is the global position where the mouse entered the parent node
 signal mouse_entered(position: Vector2)
 
 ## Emitted when the mouse leaves the parent node.
+##
+## [param position] is the global position where the mouse exited the parent node
 signal mouse_exited(position: Vector2)
 
 ## Emitted when picked up by clicking
-## Position is the global position of the parent node.
+##
+## [param position] is the global position of the parent node.
 signal picked(position: Vector2)
 
 ## Emitted when dropping
-## Position and start_position are the global position of the parent node and its position at the start of dragging 
+##
+## [param position] is the global position of the parent node.
+##
+## [param  start_position] is the parent's global position at the start of dragging 
 signal dropped(position: Vector2, start_position: Vector2)
 
 ## Emitted during dragging
-## All positions are the global position of the parent node.
-## Last position is the last position the parent node was move from.
+##
+## [param position] is the global position of the parent node
+##
+## [param start_position] is the global position at which 
+## the parent node was started to be dragged
+##
+## [param last_position] is the global position where the last movement
+## of the parent started
 signal dragged(position: Vector2, start_position: Vector2, last_position: Vector2)
 
 @export_flags("Left", "Right", "Middle") var button_mask := 1
@@ -32,7 +48,6 @@ var last_position : Vector2
 var start_position : Vector2
 
 var is_hovering_parent = false
-
 
 func _unhandled_input(event: InputEvent):
 	if not (event is InputEventMouseButton or event is InputEventMouseMotion):

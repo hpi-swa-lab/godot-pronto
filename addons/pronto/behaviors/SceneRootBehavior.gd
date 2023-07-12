@@ -3,12 +3,23 @@
 extends Behavior
 class_name SceneRootBehavior
 
-## Allows for easy access of the SceneTree.
+## The SceneRootBehavior is a [class Behavior] that 
+## allows for easy access of the [class SceneTree].
 
+## The scene tree (calculated in [method SceneRootBehavior._ready])
 var scene_tree: SceneTree
 
+## Emitted when a node was added to the [member SceneRootBehavior.scene_tree]
+##
+## [param node]: the node that was added
 signal node_added(node: Node)
+
+## Emitted when a node was removed from the [member SceneRootBehavior.scene_tree]
+##
+## [param node]: the node that was removed
 signal node_removed(node: Node)
+
+## Emitted on any change in the [member SceneRootBehavior.scene_tree]
 signal tree_changed()
 
 func _ready():
@@ -18,24 +29,24 @@ func _ready():
 	scene_tree.node_removed.connect(func(node): node_removed.emit(node))
 	scene_tree.tree_changed.connect(func(): tree_changed.emit())
 
-# For future changes of all functions beginning with "apply" it is immportant
-# to also change the corresponding lines in "node_to_node_configuration.gd::_on_function_selected"
-# and "Connection.gd::_trigger".
+## For future changes of all functions beginning with "apply" it is important
+## to also change the corresponding lines in "node_to_node_configuration.gd::_on_function_selected"
+## and [method Connection._trigger].
 
-## This will execute 'lamda_func' on all group elements in the given group.
+## This will execute [param lamda_func] on all group elements in the given group.
 func apply(group: StringName, lamda_func: Callable, from: Node2D):
 	for node in scene_tree.get_nodes_in_group(group):
 		lamda_func.call(from, node)
 		
-## This will execute 'lamda_func' on all group elements in the given group, where 'filter_func'
+## This will execute [param lamda_func] on all group elements in the given group, where [param filter_func]
 ## evaluates to true.
 func apply_with_filter(group: StringName, lamda_func: Callable, filter_func: Callable, from: Node2D):
 	for node in scene_tree.get_nodes_in_group(group):
 		if filter_func.call(from, node):
 			lamda_func.call(from, node)
 
-## This will execute 'lamda_func' on all group elements in the given group, that have a maximum
-## distance of 'max_dist' from the provied position.
+## This will execute [param lamda_func] on all group elements in the given group, that have a maximum
+## distance of [param max_dist] from the provied position.
 func apply_within_dist(group: StringName, lamda_func: Callable, position: Vector2, max_dist: float, from: Node2D):
 	for node in scene_tree.get_nodes_in_group(group):
 		if node.global_position.distance_to(position) <= max_dist:

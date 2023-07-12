@@ -2,10 +2,14 @@
 #thumb("PinJoint2D")
 extends Behavior
 class_name ValueBehavior
-# PLEASE READ: 
-# AdvancedValue is the new extended Value logic
-# AdvancedValue will be merged into the current Value logic at the end of the sprint
-# It is only a new behavior for now as the merge will most likely be some sort of breaking change 
+
+## A ValueBehavior is a [class Behavior] that allows for easier representation of single 
+## float values while prototyping.
+##
+## [b]PLEASE READ[/b]: 
+## AdvancedValue is the new extended Value logic
+## AdvancedValue will be merged into the current Value logic at the end of the sprint
+## It is only a new behavior for now as the merge will most likely be some sort of breaking change 
 
 signal value_changed(value: float)
 

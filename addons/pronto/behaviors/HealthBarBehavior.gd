@@ -3,6 +3,12 @@
 extends Behavior
 class_name HealthBarBehavior
 
+## The HealthBarBehavior is a [class Behavior] that
+## adds a health system to characters/objects. 
+##
+## It communicates the current live and the death via the signals
+## [signal HealthBehavior.changed] and [signal HealthBehavior.death].
+
 ## Emitted when the health value is changed.
 signal changed(health)
 
@@ -32,12 +38,14 @@ signal death()
 		healthbar_size = v
 		queue_redraw()
 
+## This enum defines how the label is supposed to be displayed.
 enum LABEL {
-	None, ## No text is shown.
-	Health, ## text shown as '{current}'.
-	Fraction, ## text show as '{current}/{max}'.
-	Percentage, ## text shown as '{100*current/max} %'.
+	None,       ## No label is shown.
+	Health,     ## label shown as '{current}'.
+	Fraction,   ## label show as '{current}/{max}'.
+	Percentage, ## label shown as '{100*current/max} %'.
 }
+
 ## The style for displaying the current health as text inside the healthbar.
 @export var label: LABEL = LABEL.Health:
 	set(v):
@@ -74,6 +82,7 @@ var _default_progress_gradient = Gradient.new()
 		progress_gradient.changed.connect(queue_redraw)
 		queue_redraw()
 
+## The height and width of the health bar
 var size: Vector2:
 	get:
 		return healthbar_size

@@ -3,11 +3,16 @@
 extends Behavior
 class_name BindBehavior
 
-### Script to evaluate to find the current property value to set.
+## The BindBehavior is a [class Behavior] that helps connecting values from one node
+## to properties in another one.
+
+## Script to evaluate to find the current property value to set.
 @export var evaluate: ConnectionScript
-### Property of the parent node to write the result of evaluate to.
+
+## Property of the parent node to write the result of evaluate to.
 @export var to_prop: String
-### Update only when the update() function is called.
+
+## Update only when the update() function is called.
 @export var one_shot: bool = false
 
 var _last = null

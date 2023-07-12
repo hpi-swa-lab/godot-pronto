@@ -3,26 +3,102 @@
 extends Behavior
 class_name ControlsBehavior
 
-@export_enum("Player 1", "Player 2", "Player 3") var player: int = 0
+## The ControlsBehavior is a [class Behavior] that encapsulates common
+## control mechanisms for one of three players.
 
+## Defines the available players
+enum Player {
+	Player_1 = 0, ## Selecting this makes the controls react to the arrow keys
+	Player_2 = 1, ## Selecting this makes the controls react to WASD
+	Player_3 = 2  ## Selecting this makes the controls react to IJKL
+}
+
+## Determines which player these controls are for. This determines the keys
+## that the controls react to. Which keys that are is defined in [member ControlsBehavior.key_map]
+##
+## See [enum ControlsBehavior.Player] for possible values
+@export var player: Player = Player.Player_1
+
+## Emitted when the player's left key is pressed
 signal left
+
+## Emitted when the player's right key is pressed
 signal right
+
+## Emitted when the player's up key is pressed
 signal up
+
+## Emitted when the player's down key is pressed
 signal down
+
+## Emitted when any of the player's movement keys is pressed.
+##
+## [param dir] gives the direction as 
+## [constant Vector2.UP], [constant Vector2.DOWN], [constant Vector2.LEFT] or [constant Vector2.RIGHT]
 signal direction(dir: Vector2)
+
+## Emitted when any of the player's horizontal movement keys is pressed
+##
+## [param dir] gives the direction as
+## [constant Vector2.LEFT] or [constant Vector2.RIGHT]
 signal horizontal_direction(dir: Vector2)
+
+## Emitted when any of the player's vertival movement keys is pressed
+##
+## [param dir] gives the direction as
+## [constant Vector2.UP] or [constant Vector2.DOWN]
 signal vertical_direction(dir: Vector2)
 
-# positions emitted are local to viewport
+## Emitted when a mouse button was pressed.
+##
+## [param pos] gives the mouse position local to the viewport
+##
+## [param button] gives the mouse button that was pressed down
 signal mouse_down(pos: Vector2, button: MouseButton)
+
+## Emitted when a mouse button was raised.
+##
+## [param pos] gives the mouse position local to the viewport
+##
+## [param button] gives the mouse button that was raised
+##
+## [param duration] gives the duration in milliseconds that the button was pressed
 signal mouse_up(pos: Vector2, button: MouseButton, duration: int)
+
+## Emitted when the mouse moved.
+##
+## [param pos] gives the mouse position local to the viewport
 signal mouse_move(pos: Vector2)
+
+## Emitted when the mouse is moved while it is pressed.
+##
+## [param pos] gives the mouse position local to the viewport
 signal mouse_drag(pos: Vector2)
 
-# duplicated events for global positions
+## Emitted when a mouse button was pressed.
+##
+## [param pos] gives the global mouse position
+##
+## [param button] gives the mouse button that was pressed down
 signal mouse_down_global(pos: Vector2, button: MouseButton)
+
+## Emitted when a mouse button was raised.
+##
+## [param pos] gives the global mouse position
+##
+## [param button] gives the mouse button that was raised
+##
+## [param duration] gives the duration in milliseconds that the button was pressed
 signal mouse_up_global(pos: Vector2, button: MouseButton, duration: int)
+
+## Emitted when the mouse moved.
+##
+## [param pos] gives the global mouse position
 signal mouse_move_global(pos: Vector2)
+
+## Emitted when the mouse is moved while it is pressed.
+##
+## [param pos] gives the global mouse position
 signal mouse_drag_global(pos: Vector2)
 
 var enable_drag = false
