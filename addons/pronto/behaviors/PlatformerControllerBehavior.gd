@@ -49,7 +49,7 @@ func _update_jump():
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
 		
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_pressed("ui_accept"):
 		_last_jump_input = now
 
 func _can_jump():
