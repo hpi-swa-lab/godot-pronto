@@ -1,9 +1,9 @@
-[gd_scene load_steps=129 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=135 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
-[ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="13_euqfa"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="13_kertt"]
 [ext_resource type="PackedScene" uid="uid://bjgevao00usos" path="res://prototypes/i6w1-jf-geometry-dash/mid_air_jump.tscn" id="14_uvony"]
+[ext_resource type="AudioStream" uid="uid://ddw6nnit26q3g" path="res://prototypes/i6w1-jf-geometry-dash/assets/death.mp3" id="17_24r8g"]
 [ext_resource type="PackedScene" uid="uid://bfw5ph3g4dl8d" path="res://prototypes/i6w1-jf-geometry-dash/air_launcher.tscn" id="18_himv5"]
 [ext_resource type="Texture2D" uid="uid://crfmh4dl7i7ur" path="res://prototypes/i6w1-jf-geometry-dash/assets/level_complete.png" id="19_uy1dv"]
 [ext_resource type="Texture2D" uid="uid://bpypp3wg2bmfj" path="res://prototypes/i6w1-jf-geometry-dash/assets/play.png" id="20_nq1lm"]
@@ -280,6 +281,45 @@ more_references = []
 invoke = "pause"
 arguments = []
 only_if = SubResource("Resource_57y3d")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_la3bl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: AudioStreamPlayer):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_ac33q"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_la3bl")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xgpkt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: AudioStreamPlayer):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_kqxu2"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_xgpkt")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xicax"]
+script = ExtResource("7_ryytl")
+signal_name = "after"
+to = NodePath("../../AudioStreamPlayer")
+more_references = []
+invoke = "play"
+arguments = [SubResource("Resource_ac33q")]
+only_if = SubResource("Resource_kqxu2")
 deferred = false
 enabled = true
 
@@ -942,7 +982,7 @@ metadata/pronto_connections = [SubResource("Resource_nr6jk")]
 position = Vector2(3, 47)
 script = ExtResource("11_5fkq4")
 evaluate = SubResource("Resource_gye5m")
-metadata/pronto_connections = [SubResource("Resource_v584m"), SubResource("Resource_wvyry"), SubResource("Resource_xln36")]
+metadata/pronto_connections = [SubResource("Resource_v584m"), SubResource("Resource_wvyry"), SubResource("Resource_xln36"), SubResource("Resource_xicax")]
 
 [node name="ClockBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior/End Game"]
 position = Vector2(39, 1)
@@ -960,6 +1000,9 @@ position = Vector2(30, -66)
 script = ExtResource("13_kertt")
 limit_to_group = "spike"
 metadata/pronto_connections = [SubResource("Resource_8q2is"), SubResource("Resource_7i7rq")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Camera2D/World/Player"]
+stream = ExtResource("17_24r8g")
 
 [node name="Label" type="Label" parent="Camera2D"]
 z_index = 1

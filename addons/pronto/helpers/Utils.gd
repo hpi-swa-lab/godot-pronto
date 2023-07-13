@@ -188,7 +188,12 @@ static func global_size_of_yourself(node: Node):
 	return Rect2(node.global_position, Vector2.ZERO)
 
 static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> Rect2:
-	var rect = Rect2(node.global_position, Vector2.ZERO)
+	var node_global_position
+	if node is AudioStreamPlayer:
+		node_global_position = node.get_parent().global_position
+	else:
+		node_global_position = node.global_position
+	var rect = Rect2(node_global_position, Vector2.ZERO)
 	node = Utils.closest_parent_with_position(node)
 	if node is PlaceholderBehavior or node is HealthBarBehavior:
 		rect = Rect2(node.global_position - node.size / 2, node.size)
