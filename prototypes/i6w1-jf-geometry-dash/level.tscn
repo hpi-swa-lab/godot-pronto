@@ -1,19 +1,22 @@
-[gd_scene load_steps=40 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=50 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
-[ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_ryytl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="8_57mit"]
+[ext_resource type="Texture2D" uid="uid://bvm0fxex7hbbs" path="res://prototypes/i6w1-jf-geometry-dash/assets/cube.png" id="8_egm8n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="9_514jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="9_q3n0x"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRootBehavior.gd" id="10_2lhvw"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="12_4e6ei"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="13_euqfa"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="13_kertt"]
 [ext_resource type="PackedScene" uid="uid://bjgevao00usos" path="res://prototypes/i6w1-jf-geometry-dash/mid_air_jump.tscn" id="14_uvony"]
+[ext_resource type="Texture2D" uid="uid://hcpfxjjhrm2o" path="res://prototypes/i6w1-jf-geometry-dash/mytilemap.png" id="15_ioynh"]
 
 [sub_resource type="GDScript" id="GDScript_nqhmh"]
 script/source = "@tool
@@ -58,7 +61,7 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Node2D):
+func run(delta, from, to):
 	return false
 "
 
@@ -93,46 +96,6 @@ only_if = SubResource("Resource_j7mjw")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_dyybk"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D):
-	from.get_parent().visible = false
-"
-
-[sub_resource type="Resource" id="Resource_g0rhu"]
-script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_dyybk")
-argument_names = ["delta", "from"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_4x8qq"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D):
-	return from.get_parent().position.x < -200
-"
-
-[sub_resource type="Resource" id="Resource_nvhw0"]
-script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_4x8qq")
-argument_names = ["delta", "from"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_7o1rq"]
-script = ExtResource("7_ryytl")
-signal_name = "physiscs_always"
-to = NodePath("")
-more_references = []
-invoke = ""
-arguments = []
-only_if = SubResource("Resource_nvhw0")
-expression = SubResource("Resource_g0rhu")
-deferred = false
-enabled = true
-
 [sub_resource type="GDScript" id="GDScript_8snq0"]
 script/source = "@tool
 extends U
@@ -155,6 +118,85 @@ more_references = []
 invoke = "reload_current_scene"
 arguments = []
 only_if = SubResource("Resource_s3ckd")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_po1yx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	from.get_parent().visible = false
+"
+
+[sub_resource type="Resource" id="Resource_fmgi5"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_po1yx")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_bsfsu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_vtwf2"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_bsfsu")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_8q2is"]
+script = ExtResource("7_ryytl")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_vtwf2")
+expression = SubResource("Resource_fmgi5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_wr7tl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_5w3hi"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_wr7tl")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bxj1k"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_038p5"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_bxj1k")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_c46xs"]
+script = ExtResource("7_ryytl")
+signal_name = "collided"
+to = NodePath("../AlwaysBehavior/ClockBehavior")
+more_references = []
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_5w3hi")]
+only_if = SubResource("Resource_038p5")
 deferred = false
 enabled = true
 
@@ -191,17 +233,47 @@ nested_script = SubResource("GDScript_miwd5")
 argument_names = []
 return_value = true
 
-[sub_resource type="Image" id="Image_hx738"]
-data = {
-"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nx8jm"]
+texture = ExtResource("15_ioynh")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 32, -0.5, -32, 32, 32)
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 32, -2.5, -25, 13.5, 32)
 
-[sub_resource type="ImageTexture" id="ImageTexture_3qkyq"]
-image = SubResource("Image_hx738")
+[sub_resource type="TileSet" id="TileSet_ppvob"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_nx8jm")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_78ity"]
+texture = ExtResource("15_ioynh")
+texture_region_size = Vector2i(64, 64)
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+1:1/0 = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:1/0 = 0
+2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSet" id="TileSet_d8v6u"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_78ity")
 
 [node name="Node2D" type="Node2D"]
 
@@ -246,11 +318,13 @@ sprite_texture = ExtResource("2_dptxb")
 
 [node name="Player" type="CharacterBody2D" parent="Camera2D/World" groups=["player"]]
 position = Vector2(-200, 153)
+collision_mask = 3
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Camera2D/World/Player"]
 script = ExtResource("1_k1a43")
-placeholder_size = Vector2(50, 50)
-sprite_texture = ExtResource("2_dptxb")
+placeholder_size = Vector2(64, 64)
+use_sprite = true
+sprite_texture = ExtResource("8_egm8n")
 
 [node name="Controller" type="Node2D" parent="Camera2D/World/Player"]
 position = Vector2(-43, -51)
@@ -265,7 +339,7 @@ to_prop = "jump_velocity"
 [node name="AlwaysBehavior" type="Node2D" parent="Camera2D/World/Player"]
 position = Vector2(57, -50)
 script = ExtResource("4_slgut")
-metadata/pronto_connections = [SubResource("Resource_ulp6v"), SubResource("Resource_7o1rq")]
+metadata/pronto_connections = [SubResource("Resource_ulp6v")]
 
 [node name="ClockBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior"]
 position = Vector2(2, 37)
@@ -277,6 +351,12 @@ metadata/pronto_connections = [SubResource("Resource_too6c")]
 [node name="SceneRootBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior/ClockBehavior"]
 position = Vector2(48, 0)
 script = ExtResource("10_2lhvw")
+
+[node name="CollisionBehavior" type="Node2D" parent="Camera2D/World/Player"]
+position = Vector2(30, -66)
+script = ExtResource("13_kertt")
+limit_to_group = "spike"
+metadata/pronto_connections = [SubResource("Resource_8q2is"), SubResource("Resource_c46xs")]
 
 [node name="BindBehavior" type="Node2D" parent="Camera2D/World"]
 script = ExtResource("9_q3n0x")
@@ -326,17 +406,22 @@ script = ExtResource("1_k1a43")
 placeholder_size = Vector2(10000, 50)
 sprite_texture = ExtResource("2_dptxb")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(1086, -138)
-
-[node name="PlaceholderBehavior" type="Node2D" parent="StaticBody2D2"]
-script = ExtResource("1_k1a43")
-placeholder_size = Vector2(50, 50)
-use_sprite = true
-sprite_texture = SubResource("ImageTexture_3qkyq")
-
 [node name="MidAirJump" parent="." instance=ExtResource("14_uvony")]
 position = Vector2(1155, -213)
 
 [node name="MidAirJump2" parent="." instance=ExtResource("14_uvony")]
 position = Vector2(1308, -265)
+
+[node name="SpikeTileMap" type="TileMap" parent="." groups=["spike"]]
+position = Vector2(-1, -117)
+tile_set = SubResource("TileSet_ppvob")
+cell_quadrant_size = 64
+format = 2
+layer_0/tile_data = PackedInt32Array(-65516, 0, 0, -65515, 0, 0, -65517, 0, 0, -65518, 0, 0)
+
+[node name="BlockTileMap" type="TileMap" parent="." groups=["block"]]
+position = Vector2(-1, -117)
+tile_set = SubResource("TileSet_d8v6u")
+cell_quadrant_size = 64
+format = 2
+layer_0/tile_data = PackedInt32Array(-65511, 65536, 0, -65510, 65536, 0, -65509, 65536, 0, -65508, 65536, 0, -65507, 65536, 0)
