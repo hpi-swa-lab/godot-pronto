@@ -13,6 +13,8 @@ class_name PlatformerControllerBehavior
 ## The amount of time a jump input will trigger a jump if the character is not touching the floor, in seconds.
 @export_range(0.0, 1.0) var jump_buffer = 0.1
 
+@export var can_always_jump = false
+
 @export_category("Physics")
 @export var gravity_paused: bool = false:
 	get: return gravity_paused
@@ -51,7 +53,7 @@ func _can_jump():
 	var now = Time.get_ticks_msec()
 	var input = _last_jump_input > now - 1000 * jump_buffer
 	var floored = _last_on_floor > now - 1000 * coyote_time
-	return input and floored
+	return input and (can_always_jump or floored)
 
 func _reset_jump():
 	_last_jump_input = -10000
