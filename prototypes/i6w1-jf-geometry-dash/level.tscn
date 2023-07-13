@@ -1,9 +1,9 @@
-[gd_scene load_steps=63 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=64 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
-[ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
@@ -19,7 +19,8 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="13_kertt"]
 [ext_resource type="PackedScene" uid="uid://bjgevao00usos" path="res://prototypes/i6w1-jf-geometry-dash/mid_air_jump.tscn" id="14_uvony"]
 [ext_resource type="Texture2D" uid="uid://hcpfxjjhrm2o" path="res://prototypes/i6w1-jf-geometry-dash/mytilemap.png" id="15_ioynh"]
-[ext_resource type="PackedScene" uid="uid://dai6lx4kmvj5y" path="res://prototypes/i6w1-jf-geometry-dash/air_launcher.tscn" id="18_himv5"]
+[ext_resource type="PackedScene" path="res://prototypes/i6w1-jf-geometry-dash/air_launcher.tscn" id="18_himv5"]
+[ext_resource type="PackedScene" uid="uid://chneliutw766p" path="res://prototypes/i6w1-jf-geometry-dash/floor.tscn" id="21_wcc3c"]
 
 [sub_resource type="GDScript" id="GDScript_nqhmh"]
 script/source = "@tool
@@ -304,10 +305,12 @@ return_value = true
 texture = ExtResource("15_ioynh")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
+0:0/0/modulate = Color(0.584314, 0, 0.588235, 1)
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 32, -0.5, -32, 32, 32)
 0:1/0 = 0
+0:1/0/modulate = Color(0.584314, 0, 0.588235, 1)
 0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:1/0/physics_layer_0/angular_velocity = 0.0
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, 32, -2.5, -25, 13.5, 32)
@@ -321,18 +324,22 @@ sources/0 = SubResource("TileSetAtlasSource_nx8jm")
 texture = ExtResource("15_ioynh")
 texture_region_size = Vector2i(64, 64)
 1:0/0 = 0
+1:0/0/modulate = Color(0.584314, 0, 0.588235, 1)
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 2:0/0 = 0
+2:0/0/modulate = Color(0.584314, 0, 0.588235, 1)
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 1:1/0 = 0
+1:1/0/modulate = Color(0.584314, 0, 0.588235, 1)
 1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:1/0/physics_layer_0/angular_velocity = 0.0
 1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 2:1/0 = 0
+2:1/0/modulate = Color(0.584314, 0, 0.588235, 1)
 2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_0/angular_velocity = 0.0
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
@@ -507,14 +514,6 @@ color = Color(0, 0, 0, 1)
 placeholder_size = Vector2(10000, 50)
 sprite_texture = ExtResource("2_dptxb")
 
-[node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(135, -92)
-
-[node name="PlaceholderBehavior" type="Node2D" parent="Floor"]
-script = ExtResource("1_k1a43")
-placeholder_size = Vector2(10000, 50)
-sprite_texture = ExtResource("2_dptxb")
-
 [node name="MidAirJump" parent="." instance=ExtResource("14_uvony")]
 position = Vector2(1155, -213)
 
@@ -533,7 +532,7 @@ position = Vector2(-1, -117)
 tile_set = SubResource("TileSet_d8v6u")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(-65511, 65536, 0, -65510, 65536, 0, -65509, 65536, 0, -65508, 65536, 0, -65507, 65536, 0)
+layer_0/tile_data = PackedInt32Array(-65511, 65536, 0, -65510, 65536, 0, -65509, 65536, 0, -65508, 65536, 0, -65507, 65536, 0, -327644, 131072, 1, -327643, 131072, 1, -327642, 131072, 1, -327641, 131072, 1, -327640, 131072, 1, -458711, 131072, 0, -458710, 131072, 0, -458709, 131072, 0, -458708, 131072, 0, -458707, 131072, 0, -458706, 131072, 0, -393168, 131072, 0, -393167, 131072, 0, -393166, 131072, 0, -393165, 131072, 0, -393164, 131072, 0, -393163, 131072, 0, -327625, 131072, 0, -327624, 131072, 0, -327623, 131072, 0, -327622, 131072, 0, -327621, 131072, 0, -327620, 131072, 0)
 
 [node name="air_launcher" parent="." instance=ExtResource("18_himv5")]
 position = Vector2(849, -127)
@@ -554,3 +553,6 @@ sprite_texture = ExtResource("2_dptxb")
 script = ExtResource("9_q3n0x")
 evaluate = SubResource("Resource_h746v")
 to_prop = "gravity"
+
+[node name="Node2D" parent="." instance=ExtResource("21_wcc3c")]
+position = Vector2(-357, -117)

@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://chneliutw766p"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_yuf6j"]
+[ext_resource type="Texture2D" uid="uid://dfrhuoy5b6ixv" path="res://prototypes/i6w1-jf-geometry-dash/assets/groundSquare_13_2_001-hd.png" id="2_aq2r2"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_moocf"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+position = Vector2(2399, 100)
+script = ExtResource("1_yuf6j")
+color = Color(0, 0, 0.176471, 0.862745)
+placeholder_size = Vector2(4800, 200)
+sprite_texture = ExtResource("2_moocf")
+
+[node name="floor" type="StaticBody2D" parent="."]
+position = Vector2(400, 50)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="floor"]
+script = ExtResource("1_yuf6j")
+placeholder_size = Vector2(800, 100)
+use_sprite = true
+sprite_texture = ExtResource("2_aq2r2")
+sprite_modulate = Color(0.0745098, 0.0862745, 0.619608, 1)
+
+[node name="floor6" type="StaticBody2D" parent="."]
+position = Vector2(4399, 50)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="floor6"]
+script = ExtResource("1_yuf6j")
+placeholder_size = Vector2(800, 100)
+use_sprite = true
+sprite_texture = ExtResource("2_aq2r2")
+sprite_modulate = Color(0.0745098, 0.0862745, 0.619608, 1)
+
+[node name="floor5" type="StaticBody2D" parent="."]
+position = Vector2(3599, 50)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="floor5"]
+script = ExtResource("1_yuf6j")
+placeholder_size = Vector2(800, 100)
+use_sprite = true
+sprite_texture = ExtResource("2_aq2r2")
+sprite_modulate = Color(0.0745098, 0.0862745, 0.619608, 1)
+
+[node name="floor4" type="StaticBody2D" parent="."]
+position = Vector2(2799, 50)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="floor4"]
+script = ExtResource("1_yuf6j")
+placeholder_size = Vector2(800, 100)
+use_sprite = true
+sprite_texture = ExtResource("2_aq2r2")
+sprite_modulate = Color(0.0745098, 0.0862745, 0.619608, 1)
+
+[node name="floor3" type="StaticBody2D" parent="."]
+position = Vector2(1999, 50)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="floor3"]
+script = ExtResource("1_yuf6j")
+placeholder_size = Vector2(800, 100)
+use_sprite = true
+sprite_texture = ExtResource("2_aq2r2")
+sprite_modulate = Color(0.0745098, 0.0862745, 0.619608, 1)
+
+[node name="floor2" type="StaticBody2D" parent="."]
+position = Vector2(1199, 50)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="floor2"]
+script = ExtResource("1_yuf6j")
+placeholder_size = Vector2(800, 100)
+use_sprite = true
+sprite_texture = ExtResource("2_aq2r2")
+sprite_modulate = Color(0.0745098, 0.0862745, 0.619608, 1)

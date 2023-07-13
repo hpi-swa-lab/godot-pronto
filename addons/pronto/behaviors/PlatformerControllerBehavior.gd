@@ -15,6 +15,8 @@ class_name PlatformerControllerBehavior
 
 @export var can_always_jump = false
 
+var target_rotation = 0
+
 @export_category("Physics")
 @export var gravity_paused: bool = false:
 	get: return gravity_paused
@@ -84,6 +86,7 @@ func _physics_process(delta):
 		if _parent.position.y > _last_floor_height:
 			_parent.position.y = _last_floor_height
 		_parent.velocity.y = -jump_velocity * gravity.normalized().y
+		target_rotation += deg_to_rad(90 * gravity.normalized().y)
 	else:
 		_parent.velocity.y += gravity.y * delta
 	
@@ -98,6 +101,8 @@ func _physics_process(delta):
 	if _last_positions.size() > _last_positions_max:
 		_last_positions.pop_front()
 	
+	var current_rotation = _parent.get_node("PlaceholderBehavior").sprite.rotation
+	_parent.get_node("PlaceholderBehavior").sprite.rotation = lerp_angle(current_rotation, target_rotation, delta*6)
 	queue_redraw()
 
 func lines():
