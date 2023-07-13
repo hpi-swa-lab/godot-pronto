@@ -84,10 +84,6 @@ func _physics_process(delta):
 	else:
 		_parent.velocity.y += gravity.y * delta
 	
-	# horizontal
-	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
-	_parent.velocity.x += gravity.x * delta
-	
 	# move
 	var did_collide = _parent.move_and_slide()
 	

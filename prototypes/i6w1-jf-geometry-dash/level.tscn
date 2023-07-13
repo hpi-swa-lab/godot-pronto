@@ -1,0 +1,344 @@
+[gd_scene load_steps=40 format=3 uid="uid://dgtvy2gh8t7ox"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
+[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_ryytl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="8_57mit"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="9_514jg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="9_q3n0x"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRootBehavior.gd" id="10_2lhvw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="12_4e6ei"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="13_euqfa"]
+[ext_resource type="Texture2D" uid="uid://dth4bkml2hoxe" path="res://prototypes/i6w1-jf-geometry-dash/assets/groundSquare_07_001-hd.png" id="14_j4g2d"]
+
+[sub_resource type="GDScript" id="GDScript_nqhmh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_w3ufe"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_nqhmh")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nkr2s"]
+script = ExtResource("7_ryytl")
+signal_name = "physiscs_always"
+to = NodePath("..")
+more_references = []
+invoke = "move_right"
+arguments = []
+only_if = SubResource("Resource_w3ufe")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_c26a2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return at(\"JumpVelocity\")
+"
+
+[sub_resource type="Resource" id="Resource_xcuwp"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_c26a2")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_77g05"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_1wuui"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_77g05")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_1pdng"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return from.get_parent().position.x < -200
+"
+
+[sub_resource type="Resource" id="Resource_j7mjw"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_1pdng")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ulp6v"]
+script = ExtResource("7_ryytl")
+signal_name = "physiscs_always"
+to = NodePath("ClockBehavior")
+more_references = []
+invoke = "@paused_setter"
+arguments = [SubResource("Resource_1wuui")]
+only_if = SubResource("Resource_j7mjw")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_dyybk"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	from.get_parent().visible = false
+"
+
+[sub_resource type="Resource" id="Resource_g0rhu"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_dyybk")
+argument_names = ["delta", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_4x8qq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	return from.get_parent().position.x < -200
+"
+
+[sub_resource type="Resource" id="Resource_nvhw0"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_4x8qq")
+argument_names = ["delta", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7o1rq"]
+script = ExtResource("7_ryytl")
+signal_name = "physiscs_always"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_nvhw0")
+expression = SubResource("Resource_g0rhu")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_8snq0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_s3ckd"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_8snq0")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_too6c"]
+script = ExtResource("7_ryytl")
+signal_name = "elapsed"
+to = NodePath("SceneRootBehavior")
+more_references = []
+invoke = "reload_current_scene"
+arguments = []
+only_if = SubResource("Resource_s3ckd")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_d0pvp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return at(\"Gravity\")
+"
+
+[sub_resource type="Resource" id="Resource_4mt8u"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_d0pvp")
+argument_names = []
+return_value = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_5uw1s"]
+font_size = 20
+outline_color = Color(0.254902, 0.254902, 0.254902, 1)
+
+[sub_resource type="GDScript" id="GDScript_miwd5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	var score = floor(get_parent().get_parent().get_node(\"World\").get_node(\"Player\").global_position.x / 100)
+	return \"Score: \" + str(score)
+"
+
+[sub_resource type="Resource" id="Resource_d250o"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_miwd5")
+argument_names = []
+return_value = true
+
+[sub_resource type="Image" id="Image_u4ocw"]
+data = {
+"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_3qkyq"]
+image = SubResource("Image_u4ocw")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(220, -324)
+
+[node name="MoveBehavior" type="Node2D" parent="Camera2D"]
+script = ExtResource("4_dirb5")
+
+[node name="AlwaysBehavior" type="Node2D" parent="Camera2D/MoveBehavior"]
+position = Vector2(55, -88)
+script = ExtResource("4_slgut")
+metadata/pronto_connections = [SubResource("Resource_nkr2s")]
+
+[node name="BackgroundTile" type="Node2D" parent="Camera2D"]
+position = Vector2(-277, 0)
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(600, 650)
+use_sprite = true
+sprite_texture = ExtResource("3_sk58a")
+sprite_modulate = Color(0.176471, 0.286275, 0.964706, 1)
+metadata/_edit_lock_ = true
+
+[node name="BackgroundTile2" type="Node2D" parent="Camera2D"]
+position = Vector2(323, 0)
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(600, 650)
+use_sprite = true
+sprite_texture = ExtResource("3_sk58a")
+sprite_modulate = Color(0.176471, 0.286275, 0.964706, 1)
+metadata/_edit_lock_ = true
+
+[node name="World" type="Area2D" parent="Camera2D"]
+gravity_space_override = 3
+gravity = 1807.06
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Camera2D/World"]
+script = ExtResource("1_k1a43")
+color = Color(1, 1, 1, 0)
+placeholder_size = Vector2(1300, 650)
+sprite_texture = ExtResource("2_dptxb")
+
+[node name="Player" type="CharacterBody2D" parent="Camera2D/World"]
+position = Vector2(-200, 153)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Camera2D/World/Player"]
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(50, 50)
+sprite_texture = ExtResource("2_dptxb")
+
+[node name="PlatformerControllerBehavior" type="Node2D" parent="Camera2D/World/Player"]
+script = ExtResource("8_57mit")
+
+[node name="BindBehavior" type="Node2D" parent="Camera2D/World/Player/PlatformerControllerBehavior"]
+script = ExtResource("9_q3n0x")
+evaluate = SubResource("Resource_xcuwp")
+to_prop = "jump_velocity"
+
+[node name="AlwaysBehavior" type="Node2D" parent="Camera2D/World/Player"]
+position = Vector2(57, -50)
+script = ExtResource("4_slgut")
+metadata/pronto_connections = [SubResource("Resource_ulp6v"), SubResource("Resource_7o1rq")]
+
+[node name="ClockBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior"]
+position = Vector2(2, 37)
+script = ExtResource("9_514jg")
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_too6c")]
+
+[node name="SceneRootBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior/ClockBehavior"]
+position = Vector2(48, 0)
+script = ExtResource("10_2lhvw")
+
+[node name="BindBehavior" type="Node2D" parent="Camera2D/World"]
+script = ExtResource("9_q3n0x")
+evaluate = SubResource("Resource_4mt8u")
+to_prop = "gravity"
+
+[node name="Label" type="Label" parent="Camera2D"]
+offset_left = -540.0
+offset_top = -305.0
+offset_right = -395.0
+offset_bottom = -255.0
+label_settings = SubResource("LabelSettings_5uw1s")
+
+[node name="BindBehavior" type="Node2D" parent="Camera2D/Label"]
+script = ExtResource("9_q3n0x")
+evaluate = SubResource("Resource_d250o")
+to_prop = "text"
+
+[node name="PanelContainer" type="PanelContainer" parent="Camera2D"]
+offset_left = -348.0
+offset_top = -314.0
+offset_right = -82.0
+offset_bottom = -184.0
+
+[node name="Settings" type="Node2D" parent="Camera2D/PanelContainer"]
+script = ExtResource("12_4e6ei")
+
+[node name="JumpVelocity" type="Node2D" parent="Camera2D/PanelContainer/Settings"]
+script = ExtResource("13_euqfa")
+float_from = 100.0
+float_to = 1500.0
+float_value = 675.0
+float_step_size = 25.0
+
+[node name="Gravity" type="Node2D" parent="Camera2D/PanelContainer/Settings"]
+script = ExtResource("13_euqfa")
+float_from = 500.0
+float_to = 4000.0
+float_value = 2500.0
+float_step_size = 50.0
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(135, -92)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Floor"]
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(10000, 50)
+sprite_texture = ExtResource("2_dptxb")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(1097, -143)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="StaticBody2D2"]
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(50, 50)
+sprite_texture = SubResource("ImageTexture_3qkyq")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(1097, -143)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="StaticBody2D3"]
+rotation = 3.14159
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(50, 50)
+use_sprite = true
+sprite_texture = ExtResource("14_j4g2d")
+sprite_modulate = Color(0.176471, 0.286275, 0.964706, 1)
