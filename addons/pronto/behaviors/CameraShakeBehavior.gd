@@ -3,13 +3,25 @@ extends Behavior
 #thumb("CameraAttributes")
 class_name CameraShakeBehavior
 
-# Adapted from https://kidscancode.org/godot_recipes/3.x/2d/screen_shake/
+## The CameraShakeBehavior is a [class Behavior] that applies a shreen shake to the
+## camera. This allows to add a rapid movement of the camera in small steps for a short amount of time
+##
+## The functionality was adapted from https://kidscancode.org/godot_recipes/3.x/2d/screen_shake/
 
+## Determines how quickly the shake stops. Values must lie in [0, 1].
+## [code]0[/code] means it will never stop and [code]1[/code] will stop
+## it instantly.
 @export var decay = 0.8
+
+## The maximum horizontal and vertical shake in pixels
 @export var max_offset = Vector2(100, 75)
+
+## The maximum rotation in radiants
 @export var max_roll = 0.1
 
+## The current shake strength
 var trauma = 0.0
+
 var noise_y = 0.0
 var noise = FastNoiseLite.new()
 

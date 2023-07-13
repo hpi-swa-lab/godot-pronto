@@ -3,19 +3,23 @@
 extends Behavior
 class_name SpawnerBehavior
 
+## The SpawnerBehavior is a [class Behavior] that allows to spawn 
+## new nodes based off a number of blueprint nodes (its children)
+
 ## Spawns all children by default. Alternatively, provide a scene path here.
 @export var scene_path: NodePath = ^""
 
 ## When set, spawns new nodes as children of the given node.
 @export var container: Node = null
 
-## Type of Shape used for the 'spawn_in_shape' method.
+## Type of shape used for the [method SpawnerBehavior.spawn_in_shape] method.
 @export_enum("Polygon", "Generic") var shape_type: String = "Generic":
 	set(val):
 		shape_type = val
 		queue_redraw()
 
-## Polygon used by 'spawn_in_shape' method. Dont set the PolygonShape2D itself as child of the spawner.
+## Polygon used by [method SpawnerBehavior.spawn_in_shape] method. 
+## Dont set the [class PolygonShape2D] itself as child of the spawner.
 @export var spawn_shape_polygon: Polygon2D = null:
 	set(v):
 		spawn_shape_polygon = v
@@ -23,7 +27,8 @@ class_name SpawnerBehavior
 		spawn_shape_polygon.set_visible(false)
 		queue_redraw()
 
-## Shape used by 'spawn_in_shape' method. Supports 'CircleShape2D', 'RectangleShape2D' and 'CapsuleShape2D'.
+## Shape used by [method SpawnerBehavior.spawn_in_shape] method. 
+## Supports [class CircleShape2D], [class RectangleShape2D] and [class CapsuleShape2D].
 @export var spawn_shape_generic: Shape2D = null:
 	set(v):
 		if !is_instance_of(v, RectangleShape2D) and !is_instance_of(v, CircleShape2D) and !is_instance_of(v, CapsuleShape2D):
@@ -41,7 +46,7 @@ class_name SpawnerBehavior
 			shape_height = spawn_shape_generic.height
 		queue_redraw()
 
-## Debug Color in Editor for the shape used by 'spawn_in_shape'.
+## Debug Color in Editor for the shape used by [method SpawnerBehavior.spawn_in_shape].
 @export var spawn_shape_color: Color = Color('0099b36b'):
 	set(v):
 		spawn_shape_color = v
@@ -57,9 +62,19 @@ var shape_size: Vector2
 
 var spawn_shape_polygon_randomizer: PolygonRandomPointGenerator
 
+## List of all blueprints the spawner can spawn
+## gets calculated automatically in [method SpawnerBehavior._ready]
 var scenes = null
+
+## A list of offsets that can be used for spawning the new instances.
+## This was added so that the new instances don't spawn at the same position
+## which might result in unwanted collision behavior etc. The offsets are mapped
+## to the blueprints by their index in the respective arrays.
 var scene_offsets = null
 
+## Emitted when [method SpawnerBehavior.spawn] completed successfully.
+##
+## [param instance]: the newly spawned node
 signal spawned(instance: Node)
 
 func _ready():
@@ -95,6 +110,15 @@ func _spawn(index: int, top_level: bool = false):
 	
 	return instance
 
+## Spawns the selected blueprint(s) as the SpawnerBehavior's sibling node.
+##
+## [param index]: selects the blueprint to spawn. If set to [code]-1[/code],
+## every blueprint gets spawned.
+##
+## [param relative]: selects whether the the [member SpawnerBehavior.scene_offsets]
+## should be used for the spawning. If set to [code]false[/code], the new instance(s)
+## will be spawned at the spawner's position. If set to [code]true[/code], the 
+## corresponding offset is applied afterwards.
 func spawn(index: int = -1, relative: bool = false):
 	var instances = []
 	if index < 0:
@@ -111,6 +135,13 @@ func spawn(index: int = -1, relative: bool = false):
 	
 	return instances
 
+## Spawns the selected blueprint(s) as the SpawnerBehavior's sibling node 
+## rotated towars the given position
+##
+## [param pos]: The position to rotate the new instance(s) towards
+##
+## [param index]: selects the blueprint to spawn. If set to [code]-1[/code],
+## every blueprint gets spawned.
 func spawn_toward(pos: Vector2, index: int = -1):
 	var instances = []
 	if index < 0:
@@ -126,6 +157,13 @@ func spawn_toward(pos: Vector2, index: int = -1):
 	
 	return instances
 
+## Spawns the selected blueprint(s) as the SpawnerBehavior's sibling node 
+## at a given position
+##
+## [param pos]: The position to spawn the new instance(+) at
+##
+## [param index]: selects the blueprint to spawn. If set to [code]-1[/code],
+## every blueprint gets spawned.
 func spawn_at(pos: Vector2, index: int = -1):
 	var instances = []
 	if index < 0:
@@ -140,6 +178,16 @@ func spawn_at(pos: Vector2, index: int = -1):
 	
 	return instances
 
+## Spawns the selected blueprint(s) at a random position within the
+## shape determined by [member SpawnerBehavior.shape_type], 
+## [member SpawnerBehavior.spawn_shape_polygon] and [member SpawnerBehavior.spawn_shape_generic]
+##
+## If [member SpawnerBehavior.shape_type] is set to [code]"Polygon"[/code] it will use the
+## [member SpawnerBehavior.spawn_shape_polygon] to determine the spawn coordinates.
+## Otherwise it will use the shape given in [member SpawnerBehavior.spawn_shape_generic]
+##
+## [param index]: selects the blueprint(s) to spawn. If set to [code]-1[/code],
+## every blueprint gets spawned.
 func spawn_in_shape(index: int = -1):
 	var instances = []
 	if index < 0:
@@ -199,6 +247,9 @@ func spawn_in_shape(index: int = -1):
 	
 	return instances
 
+
+## Override of [method Behavior.lines] in order to display
+## dashed lines towards the spawner's blueprints (aka its childs)
 func lines():
 	var ret = super.lines()
 	for child in get_children():
