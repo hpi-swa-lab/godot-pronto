@@ -1,6 +1,7 @@
-[gd_scene load_steps=51 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=63 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
 [ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
@@ -12,6 +13,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="9_514jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="9_q3n0x"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRootBehavior.gd" id="10_2lhvw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="11_5fkq4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="12_4e6ei"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="13_euqfa"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="13_kertt"]
@@ -44,6 +46,20 @@ only_if = SubResource("Resource_w3ufe")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_d0pvp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return at(\"Gravity\")
+"
+
+[sub_resource type="Resource" id="Resource_4mt8u"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_d0pvp")
+argument_names = []
+return_value = true
+
 [sub_resource type="GDScript" id="GDScript_c26a2"]
 script/source = "@tool
 extends U
@@ -58,21 +74,7 @@ nested_script = SubResource("GDScript_c26a2")
 argument_names = []
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_77g05"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from, to):
-	return false
-"
-
-[sub_resource type="Resource" id="Resource_1wuui"]
-script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_77g05")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_1pdng"]
+[sub_resource type="GDScript" id="GDScript_c74d7"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -80,20 +82,112 @@ func run(delta, from: Node2D, to: Node2D):
 	return from.get_parent().position.x < -200
 "
 
-[sub_resource type="Resource" id="Resource_j7mjw"]
+[sub_resource type="Resource" id="Resource_jk55w"]
 script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_1pdng")
+nested_script = SubResource("GDScript_c74d7")
 argument_names = ["delta", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_ulp6v"]
+[sub_resource type="Resource" id="Resource_nr6jk"]
 script = ExtResource("7_ryytl")
 signal_name = "physiscs_always"
+to = NodePath("End Game")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_jk55w")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_47v2m"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return get_parent().get_node(\"End Game\").get_node(\"ClockBehavior\").paused
+"
+
+[sub_resource type="Resource" id="Resource_gye5m"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_47v2m")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_lc0rg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from, to):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_kje3d"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_lc0rg")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_277ga"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_5x5c8"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_277ga")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_v584m"]
+script = ExtResource("7_ryytl")
+signal_name = "after"
 to = NodePath("ClockBehavior")
 more_references = []
 invoke = "@paused_setter"
-arguments = [SubResource("Resource_1wuui")]
-only_if = SubResource("Resource_j7mjw")
+arguments = [SubResource("Resource_kje3d")]
+only_if = SubResource("Resource_5x5c8")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_vxppp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return 0.5
+"
+
+[sub_resource type="Resource" id="Resource_lsp34"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_vxppp")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ssk6j"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return result
+"
+
+[sub_resource type="Resource" id="Resource_rvgmh"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_ssk6j")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_wvyry"]
+script = ExtResource("7_ryytl")
+signal_name = "after"
+to = NodePath("../../../../CameraShakeBehavior")
+more_references = []
+invoke = "add_trauma"
+arguments = [SubResource("Resource_lsp34")]
+only_if = SubResource("Resource_rvgmh")
 deferred = false
 enabled = true
 
@@ -162,21 +256,7 @@ expression = SubResource("Resource_fmgi5")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_wr7tl"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
-	return false
-"
-
-[sub_resource type="Resource" id="Resource_5w3hi"]
-script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_wr7tl")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_bxj1k"]
+[sub_resource type="GDScript" id="GDScript_yvgou"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -184,36 +264,22 @@ func run(other, direction, from: Node2D, to: Node2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_038p5"]
+[sub_resource type="Resource" id="Resource_vcj7a"]
 script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_bxj1k")
+nested_script = SubResource("GDScript_yvgou")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_c46xs"]
+[sub_resource type="Resource" id="Resource_7i7rq"]
 script = ExtResource("7_ryytl")
 signal_name = "collided"
-to = NodePath("../AlwaysBehavior/ClockBehavior")
+to = NodePath("../AlwaysBehavior/End Game")
 more_references = []
-invoke = "@paused_setter"
-arguments = [SubResource("Resource_5w3hi")]
-only_if = SubResource("Resource_038p5")
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_vcj7a")
 deferred = false
 enabled = true
-
-[sub_resource type="GDScript" id="GDScript_d0pvp"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run():
-	return at(\"Gravity\")
-"
-
-[sub_resource type="Resource" id="Resource_4mt8u"]
-script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_d0pvp")
-argument_names = []
-return_value = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_5uw1s"]
 font_size = 20
@@ -276,10 +342,28 @@ tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_78ity")
 
+[sub_resource type="GDScript" id="GDScript_1354h"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return at(\"Gravity\")
+"
+
+[sub_resource type="Resource" id="Resource_h746v"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_1354h")
+argument_names = []
+return_value = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(220, -324)
+
+[node name="CameraShakeBehavior" type="Node2D" parent="Camera2D"]
+position = Vector2(-191, 307)
+script = ExtResource("1_l4f51")
 
 [node name="MoveBehavior" type="Node2D" parent="Camera2D"]
 script = ExtResource("4_dirb5")
@@ -289,7 +373,7 @@ position = Vector2(55, -88)
 script = ExtResource("4_slgut")
 metadata/pronto_connections = [SubResource("Resource_nkr2s")]
 
-[node name="BackgroundTile" type="Node2D" parent="Camera2D"]
+[node name="BackgroundTileLeft" type="Node2D" parent="Camera2D"]
 position = Vector2(-277, 0)
 script = ExtResource("1_k1a43")
 placeholder_size = Vector2(600, 650)
@@ -298,7 +382,7 @@ sprite_texture = ExtResource("3_sk58a")
 sprite_modulate = Color(0.176471, 0.286275, 0.964706, 1)
 metadata/_edit_lock_ = true
 
-[node name="BackgroundTile2" type="Node2D" parent="Camera2D"]
+[node name="BackgroundTileRight" type="Node2D" parent="Camera2D"]
 position = Vector2(323, 0)
 script = ExtResource("1_k1a43")
 placeholder_size = Vector2(600, 650)
@@ -310,6 +394,11 @@ metadata/_edit_lock_ = true
 [node name="World" type="Area2D" parent="Camera2D"]
 gravity_space_override = 3
 gravity = 1807.06
+
+[node name="BindGravity" type="Node2D" parent="Camera2D/World"]
+script = ExtResource("9_q3n0x")
+evaluate = SubResource("Resource_4mt8u")
+to_prop = "gravity"
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Camera2D/World"]
 script = ExtResource("1_k1a43")
@@ -340,16 +429,22 @@ to_prop = "jump_velocity"
 [node name="AlwaysBehavior" type="Node2D" parent="Camera2D/World/Player"]
 position = Vector2(57, -50)
 script = ExtResource("4_slgut")
-metadata/pronto_connections = [SubResource("Resource_ulp6v")]
+metadata/pronto_connections = [SubResource("Resource_nr6jk")]
 
-[node name="ClockBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior"]
-position = Vector2(2, 37)
+[node name="End Game" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior"]
+position = Vector2(3, 47)
+script = ExtResource("11_5fkq4")
+evaluate = SubResource("Resource_gye5m")
+metadata/pronto_connections = [SubResource("Resource_v584m"), SubResource("Resource_wvyry")]
+
+[node name="ClockBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior/End Game"]
+position = Vector2(39, 1)
 script = ExtResource("9_514jg")
 paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_too6c")]
 
-[node name="SceneRootBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior/ClockBehavior"]
+[node name="SceneRootBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior/End Game/ClockBehavior"]
 position = Vector2(48, 0)
 script = ExtResource("10_2lhvw")
 
@@ -357,30 +452,27 @@ script = ExtResource("10_2lhvw")
 position = Vector2(30, -66)
 script = ExtResource("13_kertt")
 limit_to_group = "spike"
-metadata/pronto_connections = [SubResource("Resource_8q2is"), SubResource("Resource_c46xs")]
-
-[node name="BindBehavior" type="Node2D" parent="Camera2D/World"]
-script = ExtResource("9_q3n0x")
-evaluate = SubResource("Resource_4mt8u")
-to_prop = "gravity"
+metadata/pronto_connections = [SubResource("Resource_8q2is"), SubResource("Resource_7i7rq")]
 
 [node name="Label" type="Label" parent="Camera2D"]
+z_index = 1
 offset_left = -540.0
 offset_top = -305.0
 offset_right = -395.0
 offset_bottom = -255.0
 label_settings = SubResource("LabelSettings_5uw1s")
 
-[node name="BindBehavior" type="Node2D" parent="Camera2D/Label"]
+[node name="BindScore" type="Node2D" parent="Camera2D/Label"]
 script = ExtResource("9_q3n0x")
 evaluate = SubResource("Resource_d250o")
 to_prop = "text"
 
 [node name="PanelContainer" type="PanelContainer" parent="Camera2D"]
-offset_left = -348.0
-offset_top = -314.0
-offset_right = 98.0
-offset_bottom = -156.0
+z_index = 2
+offset_left = 172.0
+offset_top = -317.0
+offset_right = 618.0
+offset_bottom = -159.0
 
 [node name="Settings" type="Node2D" parent="Camera2D/PanelContainer"]
 script = ExtResource("12_4e6ei")
@@ -405,6 +497,15 @@ float_from = 100.0
 float_to = 2000.0
 float_value = 1000.0
 float_step_size = 10.0
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+position = Vector2(69, -624)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Ceiling"]
+script = ExtResource("1_k1a43")
+color = Color(0, 0, 0, 1)
+placeholder_size = Vector2(10000, 50)
+sprite_texture = ExtResource("2_dptxb")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(135, -92)
@@ -436,3 +537,20 @@ layer_0/tile_data = PackedInt32Array(-65511, 65536, 0, -65510, 65536, 0, -65509,
 
 [node name="air_launcher" parent="." instance=ExtResource("18_himv5")]
 position = Vector2(849, -127)
+
+[node name="InvertedGravity" type="Area2D" parent="."]
+position = Vector2(2948, -354)
+gravity_space_override = 3
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
+
+[node name="Placeholder" type="Node2D" parent="InvertedGravity"]
+script = ExtResource("1_k1a43")
+color = Color(1, 1, 0.356863, 0.462745)
+placeholder_size = Vector2(1500, 500)
+sprite_texture = ExtResource("2_dptxb")
+
+[node name="BindGravity" type="Node2D" parent="InvertedGravity"]
+script = ExtResource("9_q3n0x")
+evaluate = SubResource("Resource_h746v")
+to_prop = "gravity"

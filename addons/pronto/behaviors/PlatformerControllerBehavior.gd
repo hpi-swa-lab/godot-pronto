@@ -41,8 +41,9 @@ func _enter_tree():
 
 func _update_jump():
 	var now = Time.get_ticks_msec()
+	var gravity = PhysicsServer2D.body_get_direct_state(_parent).total_gravity.normalized()
 	
-	if _parent.is_on_floor():
+	if (_parent.is_on_floor() and gravity.angle_to(Vector2.DOWN) < PI) or (_parent.is_on_ceiling() and gravity.angle_to(Vector2.UP) < PI):
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
 		
@@ -82,7 +83,7 @@ func _physics_process(delta):
 		_reset_jump()
 		if _parent.position.y > _last_floor_height:
 			_parent.position.y = _last_floor_height
-		_parent.velocity.y = -jump_velocity
+		_parent.velocity.y = -jump_velocity * gravity.normalized().y
 	else:
 		_parent.velocity.y += gravity.y * delta
 	
