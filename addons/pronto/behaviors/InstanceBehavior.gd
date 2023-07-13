@@ -3,6 +3,7 @@
 extends Behavior
 class_name InstanceBehavior
 
+
 var scene_path: String = ""
 
 func _ready():
