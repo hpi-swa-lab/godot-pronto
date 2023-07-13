@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=128 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
@@ -20,6 +20,9 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="13_kertt"]
 [ext_resource type="PackedScene" uid="uid://bjgevao00usos" path="res://prototypes/i6w1-jf-geometry-dash/mid_air_jump.tscn" id="14_uvony"]
 [ext_resource type="PackedScene" uid="uid://bfw5ph3g4dl8d" path="res://prototypes/i6w1-jf-geometry-dash/air_launcher.tscn" id="18_himv5"]
+[ext_resource type="Texture2D" uid="uid://crfmh4dl7i7ur" path="res://prototypes/i6w1-jf-geometry-dash/assets/level_complete.png" id="19_uy1dv"]
+[ext_resource type="Texture2D" uid="uid://bpypp3wg2bmfj" path="res://prototypes/i6w1-jf-geometry-dash/assets/play.png" id="20_nq1lm"]
+[ext_resource type="Script" path="res://prototypes/i6w1-jf-geometry-dash/LevelComplete.gd" id="20_opx5f"]
 [ext_resource type="Texture2D" uid="uid://cvcr4bw7a14dj" path="res://prototypes/i6w1-jf-geometry-dash/assets/tilemap.png" id="21_o5ugj"]
 [ext_resource type="PackedScene" uid="uid://chneliutw766p" path="res://prototypes/i6w1-jf-geometry-dash/floor.tscn" id="21_wcc3c"]
 [ext_resource type="Texture2D" uid="uid://diopsq17ldbq0" path="res://prototypes/i6w1-jf-geometry-dash/assets/gravity_swap_portal.webp" id="22_mgnf0"]
@@ -661,7 +664,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(other, direction, from: Node2D):
-	other.get_node(\"PlaceholderBehavior\").reset_texture()
+	other.get_node(\"PlaceholderBehavior\").set_hpi()
 "
 
 [sub_resource type="Resource" id="Resource_my7m2"]
@@ -736,10 +739,115 @@ expression = SubResource("Resource_2in4r")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_6d3vv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jgcp5"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_6d3vv")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_c2dqm"]
+script = ExtResource("7_ryytl")
+signal_name = "collided"
+to = NodePath("../../Camera2D/MoveBehavior/AlwaysBehavior")
+more_references = []
+invoke = "pause"
+arguments = []
+only_if = SubResource("Resource_jgcp5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_sxgws"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Sprite2D):
+	to.visible = true
+"
+
+[sub_resource type="Resource" id="Resource_086mj"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_sxgws")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_m6nwl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Sprite2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_xvniv"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_m6nwl")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_8m8uw"]
+script = ExtResource("7_ryytl")
+signal_name = "collided"
+to = NodePath("../../Camera2D/LevelComplete")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_xvniv")
+expression = SubResource("Resource_086mj")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_q1ydq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Button):
+	to.visible = true
+"
+
+[sub_resource type="Resource" id="Resource_gvosw"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_q1ydq")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_hrgvn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Button):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_d0e6u"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_hrgvn")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ur2h7"]
+script = ExtResource("7_ryytl")
+signal_name = "collided"
+to = NodePath("../../Camera2D/StartButton")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_d0e6u")
+expression = SubResource("Resource_gvosw")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(7000, -324)
+position = Vector2(250, -324)
 
 [node name="CameraShakeBehavior" type="Node2D" parent="Camera2D"]
 position = Vector2(-191, 307)
@@ -896,6 +1004,22 @@ float_to = 2000.0
 float_value = 1000.0
 float_step_size = 10.0
 
+[node name="LevelComplete" type="Sprite2D" parent="Camera2D"]
+visible = false
+position = Vector2(0, -100)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("19_uy1dv")
+script = ExtResource("20_opx5f")
+
+[node name="StartButton" type="Button" parent="Camera2D"]
+visible = false
+offset_left = -65.0
+offset_top = -35.0
+offset_right = 51.0
+offset_bottom = 80.0
+icon = ExtResource("20_nq1lm")
+icon_alignment = 1
+
 [node name="Ceiling" type="StaticBody2D" parent="."]
 position = Vector2(69, -624)
 
@@ -919,11 +1043,11 @@ format = 2
 layer_0/tile_data = PackedInt32Array(-65516, 1, 0, -65515, 1, 1, -65517, 1, 0, -65518, 1, 1, -65456, 1, 0, -65455, 1, 0, -65454, 1, 0, -65453, 1, 1, -196520, 131073, 2, -196519, 131073, 3, -196518, 131073, 3, -196517, 131073, 2, -65443, 1, 0, -65442, 1, 0, -393171, 131073, 2, -393170, 131073, 3, -65487, 1, 0, -65486, 1, 0, -65485, 1, 0, -65484, 1, 0, -65483, 1, 0, -65497, 1, 0, -65496, 1, 0, -65495, 1, 0, -65494, 1, 1, -65498, 1, 1, -262084, 131073, 2, -262085, 131073, 3, -262086, 131073, 2, -65457, 1, 1, -65441, 1, 1)
 
 [node name="BlockTileMap" type="TileMap" parent="." groups=["block"]]
-position = Vector2(100, -116)
+position = Vector2(-6, -115)
 tile_set = SubResource("TileSet_d8v6u")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(-65511, 65537, 0, -65510, 65537, 0, -65509, 65537, 0, -65508, 65537, 0, -65507, 65537, 0, -327644, 1, 2, -327643, 65537, 2, -327642, 1, 2, -327641, 1, 2, -327640, 65537, 2, -458711, 1, 3, -458710, 65537, 2, -458709, 65537, 2, -458708, 65537, 2, -458707, 1, 3, -458706, 1, 3, -393168, 1, 2, -393167, 1, 2, -393166, 1, 3, -393165, 1, 3, -393164, 1, 2, -393163, 1, 2, -327625, 1, 3, -327624, 1, 3, -327623, 1, 3, -327622, 1, 3, -327621, 1, 2, -327620, 1, 2, -262067, 1, 2, -262066, 1, 2, -262065, 1, 2, -262064, 1, 2, -262063, 1, 2, -262062, 1, 2, -262061, 1, 2, -262060, 1, 2, -262059, 1, 2, -262058, 1, 2, -262057, 1, 2, -262056, 1, 2, -262055, 1, 2, -262054, 1, 2, -262053, 1, 2, -262052, 1, 2, -262051, 1, 2, -262050, 1, 2, -262049, 1, 2, -65428, 65537, 0, -65427, 65537, 0, -524121, 65537, 0, -458585, 65537, 0, -393049, 65537, 0, -196441, 65537, 0, -130905, 65537, 0, -65369, 65537, 0, -196440, 65537, 0, -196439, 65537, 0, -196438, 65537, 0, -196437, 65537, 0, -196436, 65537, 0, -196435, 65537, 0, -196434, 65537, 0, -196433, 65537, 0, -196432, 65537, 0, -196431, 65537, 0, -196430, 65537, 0)
+layer_0/tile_data = PackedInt32Array(-65511, 65537, 0, -65510, 65537, 0, -65509, 65537, 0, -65508, 65537, 0, -65507, 65537, 0, -327644, 1, 2, -327643, 65537, 2, -327642, 1, 2, -327641, 1, 2, -327640, 65537, 2, -458711, 1, 3, -458710, 65537, 2, -458709, 65537, 2, -458708, 65537, 2, -458707, 1, 3, -458706, 1, 3, -393168, 1, 2, -393167, 1, 2, -393166, 1, 3, -393165, 1, 3, -393164, 1, 2, -393163, 1, 2, -327625, 1, 3, -327624, 1, 3, -327623, 1, 3, -327622, 1, 3, -327621, 1, 2, -327620, 1, 2, -262067, 1, 2, -262066, 1, 2, -262065, 1, 2, -262064, 1, 2, -262063, 1, 2, -262062, 1, 2, -262061, 1, 2, -262060, 1, 2, -262059, 1, 2, -262058, 1, 2, -262057, 1, 2, -262056, 1, 2, -262055, 1, 2, -262054, 1, 2, -262053, 1, 2, -262052, 1, 2, -262051, 1, 2, -262050, 1, 2, -262049, 1, 2, -65428, 65537, 0, -65427, 65537, 0, -524121, 65537, 0, -458585, 65537, 0, -393049, 65537, 0, -196441, 65537, 0, -130905, 65537, 0, -65369, 65537, 0, -196440, 65537, 0, -196439, 65537, 0, -196438, 65537, 0, -196437, 65537, 0, -196436, 65537, 0, -196435, 65537, 0, -196434, 65537, 0, -196433, 65537, 0, -196432, 65537, 0, -196431, 65537, 0, -196430, 65537, 0, -65325, 65537, 1, -130861, 65537, 1, -196397, 65537, 1, -261933, 65537, 1, -327469, 65537, 1, -393005, 65537, 1, -458541, 65537, 1, -524077, 65537, 1, -589613, 65537, 1, -655149, 65537, 1, -720685, 65537, 1, -786221, 65537, 1, -851757, 65537, 1)
 
 [node name="air_launcher" parent="." instance=ExtResource("18_himv5")]
 position = Vector2(850, -130)
@@ -1042,3 +1166,19 @@ sprite_texture = ExtResource("24_os7ef")
 script = ExtResource("13_kertt")
 limit_to_group = "player"
 metadata/pronto_connections = [SubResource("Resource_y3dow"), SubResource("Resource_u73pp")]
+
+[node name="EndGame" type="Area2D" parent="."]
+position = Vector2(13009, -360)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="EndGame"]
+script = ExtResource("1_k1a43")
+color = Color(1, 1, 1, 0.105882)
+placeholder_size = Vector2(1000, 480)
+sprite_texture = ExtResource("2_dptxb")
+
+[node name="CollisionBehavior" type="Node2D" parent="EndGame"]
+script = ExtResource("13_kertt")
+limit_to_group = "player"
+metadata/pronto_connections = [SubResource("Resource_c2dqm"), SubResource("Resource_8m8uw"), SubResource("Resource_ur2h7")]
+
+[connection signal="pressed" from="Camera2D/StartButton" to="Camera2D/LevelComplete" method="_on_start_button_pressed"]

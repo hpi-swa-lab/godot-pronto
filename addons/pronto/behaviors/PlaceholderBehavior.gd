@@ -98,6 +98,7 @@ var sprite: Sprite2D = Sprite2D.new()
 
 var ball_texture: Texture2D
 var bird_texture: Texture2D
+var hpi_texture: Texture2D
 var last_texture: Texture2D
 
 # The size of the Placeholder, overridden by the [member PlaceholderBehavior.placeholder_size].
@@ -110,6 +111,11 @@ func set_ball():
 		last_texture = sprite.texture
 		sprite.texture = ball_texture
 		
+func set_hpi():
+	if use_sprite:
+		last_texture = sprite.texture
+		sprite.texture = hpi_texture
+		
 func set_bird():
 	if use_sprite:
 		last_texture = sprite.texture
@@ -121,6 +127,7 @@ func reset_texture():
 		
 func _ready():
 	super._ready()
+	hpi_texture = load("res://prototypes/i6w1-jf-geometry-dash/assets/hpi_cube.png")
 	ball_texture = load("res://prototypes/i6w1-jf-geometry-dash/assets/ball.png")
 	bird_texture = load("res://prototypes/i6w1-jf-geometry-dash/assets/bird.png")
 	if use_sprite:
