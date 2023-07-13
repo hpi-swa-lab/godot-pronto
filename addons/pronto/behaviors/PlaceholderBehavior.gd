@@ -96,13 +96,33 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 # The [class Sprite2D] used as a child in the Placeholder.
 var sprite: Sprite2D = Sprite2D.new()
 
+var ball_texture: Texture2D
+var bird_texture: Texture2D
+var last_texture: Texture2D
+
 # The size of the Placeholder, overridden by the [member PlaceholderBehavior.placeholder_size].
 var size: Vector2:
 	get:
 		return placeholder_size
 		
+func set_ball():
+	if use_sprite:
+		last_texture = sprite.texture
+		sprite.texture = ball_texture
+		
+func set_bird():
+	if use_sprite:
+		last_texture = sprite.texture
+		sprite.texture = bird_texture
+		
+func reset_texture():
+	if use_sprite:
+		sprite.texture = last_texture
+		
 func _ready():
 	super._ready()
+	ball_texture = load("res://prototypes/i6w1-jf-geometry-dash/assets/ball.png")
+	bird_texture = load("res://prototypes/i6w1-jf-geometry-dash/assets/bird.png")
 	if use_sprite:
 		_init_sprite()
 		self.add_child(sprite, false, INTERNAL_MODE_FRONT)

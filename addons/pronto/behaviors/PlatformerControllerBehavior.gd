@@ -28,6 +28,8 @@ var target_rotation = 0
 ## If enabled, the parent leaves a trail of recent positions.
 @export var show_trail: bool = false
 
+@export var rotation_lerp_speed = 12
+
 @onready var _parent: CharacterBody2D = get_parent()
 
 var _last_on_floor = -10000
@@ -108,7 +110,7 @@ func _physics_process(delta):
 		_last_positions.pop_front()
 	
 	var current_rotation = _parent.get_node("PlaceholderBehavior").sprite.rotation
-	_parent.get_node("PlaceholderBehavior").sprite.rotation = lerp_angle(current_rotation, target_rotation, delta*6)
+	_parent.get_node("PlaceholderBehavior").sprite.rotation = lerp_angle(current_rotation, target_rotation, delta*rotation_lerp_speed)
 	queue_redraw()
 
 func lines():
