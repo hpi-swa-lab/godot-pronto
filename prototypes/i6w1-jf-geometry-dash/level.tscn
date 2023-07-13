@@ -1,9 +1,9 @@
-[gd_scene load_steps=128 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=129 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
-[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://cpvx34b420e4c" path="res://prototypes/i6w1-jf-geometry-dash/assets/ball_portal.webp" id="23_8obby"]
 [ext_resource type="Texture2D" uid="uid://de74aras2j8c8" path="res://prototypes/i6w1-jf-geometry-dash/assets/square_portal.webp" id="24_os7ef"]
 [ext_resource type="Texture2D" uid="uid://cfs6es8oj3gd3" path="res://prototypes/i6w1-jf-geometry-dash/assets/UFOPortal.webp" id="25_i0map"]
+[ext_resource type="AudioStream" uid="uid://8hln6gk3kb8a" path="res://prototypes/i6w1-jf-geometry-dash/GeometryDashSoundtrack.mp3" id="30_wtyl8"]
 
 [sub_resource type="GDScript" id="GDScript_nqhmh"]
 script/source = "@tool
@@ -1180,5 +1181,9 @@ sprite_texture = ExtResource("2_dptxb")
 script = ExtResource("13_kertt")
 limit_to_group = "player"
 metadata/pronto_connections = [SubResource("Resource_c2dqm"), SubResource("Resource_8m8uw"), SubResource("Resource_ur2h7")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("30_wtyl8")
+autoplay = true
 
 [connection signal="pressed" from="Camera2D/StartButton" to="Camera2D/LevelComplete" method="_on_start_button_pressed"]
