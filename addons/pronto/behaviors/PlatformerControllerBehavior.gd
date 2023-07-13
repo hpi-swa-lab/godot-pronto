@@ -3,6 +3,8 @@
 extends Behavior
 class_name PlatformerControllerBehavior
 
+signal jump()
+
 @export_category("Gameplay")
 ## The speed with which the character jumps.
 @export var jump_velocity: float = 400
@@ -87,6 +89,7 @@ func _physics_process(delta):
 			_parent.position.y = _last_floor_height
 		_parent.velocity.y = -jump_velocity * gravity.normalized().y
 		target_rotation += deg_to_rad(90 * gravity.normalized().y)
+		jump.emit()
 	else:
 		_parent.velocity.y += gravity.y * delta
 	

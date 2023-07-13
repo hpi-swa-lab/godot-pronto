@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=74 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
@@ -21,6 +21,9 @@
 [ext_resource type="Texture2D" uid="uid://hcpfxjjhrm2o" path="res://prototypes/i6w1-jf-geometry-dash/mytilemap.png" id="15_ioynh"]
 [ext_resource type="PackedScene" path="res://prototypes/i6w1-jf-geometry-dash/air_launcher.tscn" id="18_himv5"]
 [ext_resource type="PackedScene" uid="uid://chneliutw766p" path="res://prototypes/i6w1-jf-geometry-dash/floor.tscn" id="21_wcc3c"]
+[ext_resource type="Texture2D" uid="uid://diopsq17ldbq0" path="res://prototypes/i6w1-jf-geometry-dash/assets/gravity_swap_portal.webp" id="22_mgnf0"]
+[ext_resource type="Texture2D" uid="uid://cpvx34b420e4c" path="res://prototypes/i6w1-jf-geometry-dash/assets/ball_portal.webp" id="23_8obby"]
+[ext_resource type="Texture2D" uid="uid://de74aras2j8c8" path="res://prototypes/i6w1-jf-geometry-dash/assets/square_portal.webp" id="24_os7ef"]
 
 [sub_resource type="GDScript" id="GDScript_nqhmh"]
 script/source = "@tool
@@ -60,6 +63,45 @@ script = ExtResource("6_2xkus")
 nested_script = SubResource("GDScript_d0pvp")
 argument_names = []
 return_value = true
+
+[sub_resource type="GDScript" id="GDScript_wem7v"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Area2D):
+	return -1 * to.get_gravity_direction()
+"
+
+[sub_resource type="Resource" id="Resource_ur00j"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_wem7v")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3m17b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Area2D):
+	return to.overlaps_body(from.get_parent())
+"
+
+[sub_resource type="Resource" id="Resource_j12br"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_3m17b")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jj0ap"]
+script = ExtResource("7_ryytl")
+signal_name = "jump"
+to = NodePath("../../../../GravtityBall")
+more_references = []
+invoke = "set_gravity_direction"
+arguments = [SubResource("Resource_ur00j")]
+only_if = SubResource("Resource_j12br")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_c26a2"]
 script/source = "@tool
@@ -363,10 +405,24 @@ nested_script = SubResource("GDScript_1354h")
 argument_names = []
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_1fcab"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return at(\"Gravity\")
+"
+
+[sub_resource type="Resource" id="Resource_hsydr"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_1fcab")
+argument_names = []
+return_value = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(220, -324)
+position = Vector2(2203, -324)
 
 [node name="CameraShakeBehavior" type="Node2D" parent="Camera2D"]
 position = Vector2(-191, 307)
@@ -426,6 +482,8 @@ sprite_texture = ExtResource("8_egm8n")
 [node name="Controller" type="Node2D" parent="Camera2D/World/Player"]
 position = Vector2(-43, -51)
 script = ExtResource("8_57mit")
+jump_buffer = 0.011
+metadata/pronto_connections = [SubResource("Resource_jj0ap")]
 
 [node name="BindBehavior" type="Node2D" parent="Camera2D/World/Player/Controller"]
 position = Vector2(42, 0)
@@ -511,7 +569,7 @@ position = Vector2(69, -624)
 [node name="PlaceholderBehavior" type="Node2D" parent="Ceiling"]
 script = ExtResource("1_k1a43")
 color = Color(0, 0, 0, 1)
-placeholder_size = Vector2(10000, 50)
+placeholder_size = Vector2(20000, 50)
 sprite_texture = ExtResource("2_dptxb")
 
 [node name="MidAirJump" parent="." instance=ExtResource("14_uvony")]
@@ -525,14 +583,14 @@ position = Vector2(-1, -117)
 tile_set = SubResource("TileSet_ppvob")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(-65516, 0, 0, -65515, 0, 0, -65517, 0, 0, -65518, 0, 0)
+layer_0/tile_data = PackedInt32Array(-65516, 0, 0, -65515, 0, 0, -65517, 0, 0, -65518, 0, 0, -65456, 0, 0, -65455, 0, 0, -65454, 0, 0, -65453, 0, 0, -196520, 0, 0, -196519, 0, 0, -196518, 0, 0, -196517, 0, 0, -65443, 0, 0, -65442, 0, 0)
 
 [node name="BlockTileMap" type="TileMap" parent="." groups=["block"]]
 position = Vector2(-1, -117)
 tile_set = SubResource("TileSet_d8v6u")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(-65511, 65536, 0, -65510, 65536, 0, -65509, 65536, 0, -65508, 65536, 0, -65507, 65536, 0, -327644, 131072, 1, -327643, 131072, 1, -327642, 131072, 1, -327641, 131072, 1, -327640, 131072, 1, -458711, 131072, 0, -458710, 131072, 0, -458709, 131072, 0, -458708, 131072, 0, -458707, 131072, 0, -458706, 131072, 0, -393168, 131072, 0, -393167, 131072, 0, -393166, 131072, 0, -393165, 131072, 0, -393164, 131072, 0, -393163, 131072, 0, -327625, 131072, 0, -327624, 131072, 0, -327623, 131072, 0, -327622, 131072, 0, -327621, 131072, 0, -327620, 131072, 0)
+layer_0/tile_data = PackedInt32Array(-65511, 65536, 0, -65510, 65536, 0, -65509, 65536, 0, -65508, 65536, 0, -65507, 65536, 0, -327644, 131072, 1, -327643, 131072, 1, -327642, 131072, 1, -327641, 131072, 1, -327640, 131072, 1, -458711, 131072, 0, -458710, 131072, 0, -458709, 131072, 0, -458708, 131072, 0, -458707, 131072, 0, -458706, 131072, 0, -393168, 131072, 0, -393167, 131072, 0, -393166, 131072, 0, -393165, 131072, 0, -393164, 131072, 0, -393163, 131072, 0, -327625, 131072, 0, -327624, 131072, 0, -327623, 131072, 0, -327622, 131072, 0, -327621, 131072, 0, -327620, 131072, 0, -262067, 65536, 0, -262066, 65536, 0, -262065, 65536, 0, -262064, 65536, 0, -262063, 65536, 0, -262062, 65536, 0, -262061, 65536, 0, -262060, 65536, 0, -262059, 65536, 0, -262058, 65536, 0, -262057, 65536, 0, -262056, 65536, 0, -262055, 65536, 0, -262054, 65536, 0, -262053, 65536, 0, -262052, 65536, 0, -262051, 65536, 0, -262050, 65536, 0, -262049, 65536, 0)
 
 [node name="air_launcher" parent="." instance=ExtResource("18_himv5")]
 position = Vector2(849, -127)
@@ -545,7 +603,7 @@ gravity_direction = Vector2(0, -1)
 
 [node name="Placeholder" type="Node2D" parent="InvertedGravity"]
 script = ExtResource("1_k1a43")
-color = Color(1, 1, 0.356863, 0.462745)
+color = Color(1, 1, 0.356863, 0.145098)
 placeholder_size = Vector2(1500, 500)
 sprite_texture = ExtResource("2_dptxb")
 
@@ -554,5 +612,53 @@ script = ExtResource("9_q3n0x")
 evaluate = SubResource("Resource_h746v")
 to_prop = "gravity"
 
-[node name="Node2D" parent="." instance=ExtResource("21_wcc3c")]
+[node name="Floor" parent="." instance=ExtResource("21_wcc3c")]
 position = Vector2(-357, -117)
+
+[node name="Node2D" parent="." instance=ExtResource("21_wcc3c")]
+position = Vector2(4442, -117)
+
+[node name="GravityPortal" type="Node2D" parent="."]
+position = Vector2(2204, -218)
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(90, 192)
+keep_in_origin = false
+use_sprite = true
+sprite_texture = ExtResource("22_mgnf0")
+
+[node name="GravityPortal2" type="Node2D" parent="."]
+position = Vector2(3688, -249)
+rotation = 3.14159
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(90, 192)
+use_sprite = true
+sprite_texture = ExtResource("22_mgnf0")
+
+[node name="GravtityBall" type="Area2D" parent="."]
+position = Vector2(5519, -364)
+gravity_space_override = 3
+
+[node name="PlaceholderBehavior" type="Node2D" parent="GravtityBall"]
+script = ExtResource("1_k1a43")
+color = Color(0.266667, 1, 1, 0.145098)
+placeholder_size = Vector2(1300, 500)
+sprite_texture = ExtResource("2_dptxb")
+
+[node name="BindBehavior" type="Node2D" parent="GravtityBall"]
+script = ExtResource("9_q3n0x")
+evaluate = SubResource("Resource_hsydr")
+to_prop = "gravity"
+
+[node name="BallPortal" type="Node2D" parent="."]
+position = Vector2(4875, -227)
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(90, 192)
+use_sprite = true
+sprite_texture = ExtResource("23_8obby")
+
+[node name="SquarePortal" type="Node2D" parent="."]
+position = Vector2(6186, -227)
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(90, 192)
+use_sprite = true
+sprite_texture = ExtResource("24_os7ef")
