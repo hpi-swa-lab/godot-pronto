@@ -1,15 +1,16 @@
-[gd_scene load_steps=74 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=84 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
-[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_ryytl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="8_57mit"]
 [ext_resource type="Texture2D" uid="uid://bvm0fxex7hbbs" path="res://prototypes/i6w1-jf-geometry-dash/assets/cube.png" id="8_egm8n"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="8_fe6hw"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="9_514jg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="9_q3n0x"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRootBehavior.gd" id="10_2lhvw"]
@@ -19,11 +20,12 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="13_kertt"]
 [ext_resource type="PackedScene" uid="uid://bjgevao00usos" path="res://prototypes/i6w1-jf-geometry-dash/mid_air_jump.tscn" id="14_uvony"]
 [ext_resource type="Texture2D" uid="uid://hcpfxjjhrm2o" path="res://prototypes/i6w1-jf-geometry-dash/mytilemap.png" id="15_ioynh"]
-[ext_resource type="PackedScene" path="res://prototypes/i6w1-jf-geometry-dash/air_launcher.tscn" id="18_himv5"]
+[ext_resource type="PackedScene" uid="uid://dai6lx4kmvj5y" path="res://prototypes/i6w1-jf-geometry-dash/air_launcher.tscn" id="18_himv5"]
 [ext_resource type="PackedScene" uid="uid://chneliutw766p" path="res://prototypes/i6w1-jf-geometry-dash/floor.tscn" id="21_wcc3c"]
 [ext_resource type="Texture2D" uid="uid://diopsq17ldbq0" path="res://prototypes/i6w1-jf-geometry-dash/assets/gravity_swap_portal.webp" id="22_mgnf0"]
 [ext_resource type="Texture2D" uid="uid://cpvx34b420e4c" path="res://prototypes/i6w1-jf-geometry-dash/assets/ball_portal.webp" id="23_8obby"]
 [ext_resource type="Texture2D" uid="uid://de74aras2j8c8" path="res://prototypes/i6w1-jf-geometry-dash/assets/square_portal.webp" id="24_os7ef"]
+[ext_resource type="Texture2D" uid="uid://cfs6es8oj3gd3" path="res://prototypes/i6w1-jf-geometry-dash/assets/UFOPortal.webp" id="25_i0map"]
 
 [sub_resource type="GDScript" id="GDScript_nqhmh"]
 script/source = "@tool
@@ -49,6 +51,24 @@ arguments = []
 only_if = SubResource("Resource_w3ufe")
 deferred = false
 enabled = true
+
+[sub_resource type="Gradient" id="Gradient_ke8j1"]
+offsets = PackedFloat32Array(0.624)
+colors = PackedColorArray(0, 0.403922, 0.501961, 1)
+
+[sub_resource type="GDScript" id="GDScript_ru187"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return floor(get_parent().get_parent().get_node(\"World\").get_node(\"Player\").global_position.x)
+"
+
+[sub_resource type="Resource" id="Resource_rxpiq"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_ru187")
+argument_names = []
+return_value = true
 
 [sub_resource type="GDScript" id="GDScript_d0pvp"]
 script/source = "@tool
@@ -333,7 +353,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	var score = floor(get_parent().get_parent().get_node(\"World\").get_node(\"Player\").global_position.x / 100)
+	var score = floor(get_parent().get_parent().get_node(\"World\").get_node(\"Player\").global_position.x)
 	return \"Score: \" + str(score)
 "
 
@@ -419,10 +439,50 @@ nested_script = SubResource("GDScript_1fcab")
 argument_names = []
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_cejcq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.get_node(\"Controller\").can_always_jump = true
+"
+
+[sub_resource type="Resource" id="Resource_a4bxj"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_cejcq")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_ns5hb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_027o2"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_ns5hb")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_k2bh5"]
+script = ExtResource("7_ryytl")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_027o2")
+expression = SubResource("Resource_a4bxj")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(2203, -324)
+position = Vector2(6868, -324)
 
 [node name="CameraShakeBehavior" type="Node2D" parent="Camera2D"]
 position = Vector2(-191, 307)
@@ -453,6 +513,22 @@ use_sprite = true
 sprite_texture = ExtResource("3_sk58a")
 sprite_modulate = Color(0.176471, 0.286275, 0.964706, 1)
 metadata/_edit_lock_ = true
+
+[node name="Progress" type="Node2D" parent="Camera2D"]
+z_index = 1
+position = Vector2(0, -315)
+script = ExtResource("8_fe6hw")
+max = 10000
+current = 10000
+healthbar_size = Vector2(1200, 20)
+label = 0
+progress_gradient = SubResource("Gradient_ke8j1")
+
+[node name="BindProgress" type="Node2D" parent="Camera2D/Progress"]
+position = Vector2(-141.421, 141.421)
+script = ExtResource("9_q3n0x")
+evaluate = SubResource("Resource_rxpiq")
+to_prop = "current"
 
 [node name="World" type="Area2D" parent="Camera2D"]
 gravity_space_override = 3
@@ -615,8 +691,11 @@ to_prop = "gravity"
 [node name="Floor" parent="." instance=ExtResource("21_wcc3c")]
 position = Vector2(-357, -117)
 
-[node name="Node2D" parent="." instance=ExtResource("21_wcc3c")]
+[node name="Floor2" parent="." instance=ExtResource("21_wcc3c")]
 position = Vector2(4442, -117)
+
+[node name="Floor3" parent="." instance=ExtResource("21_wcc3c")]
+position = Vector2(9242, -117)
 
 [node name="GravityPortal" type="Node2D" parent="."]
 position = Vector2(2204, -218)
@@ -662,3 +741,18 @@ script = ExtResource("1_k1a43")
 placeholder_size = Vector2(90, 192)
 use_sprite = true
 sprite_texture = ExtResource("24_os7ef")
+
+[node name="UFOPortal" type="Area2D" parent="."]
+position = Vector2(7585, -227)
+
+[node name="PortalPlaceholder" type="Node2D" parent="UFOPortal"]
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(90, 190)
+use_sprite = true
+sprite_texture = ExtResource("25_i0map")
+
+[node name="CollisionBehavior" type="Node2D" parent="UFOPortal"]
+position = Vector2(70, 0)
+script = ExtResource("13_kertt")
+limit_to_group = "player"
+metadata/pronto_connections = [SubResource("Resource_k2bh5")]

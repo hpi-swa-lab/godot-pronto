@@ -50,14 +50,16 @@ func _update_jump():
 	if (_parent.is_on_floor() and gravity.angle_to(Vector2.DOWN) < PI) or (_parent.is_on_ceiling() and gravity.angle_to(Vector2.UP) < PI):
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
-		
-	if Input.is_action_pressed("ui_accept"):
+	
+	if can_always_jump and Input.is_action_just_pressed("ui_accept"):
+		_last_jump_input = now
+	if not can_always_jump and Input.is_action_pressed("ui_accept"):
 		_last_jump_input = now
 
 func _can_jump():
 	var now = Time.get_ticks_msec()
-	var input = _last_jump_input > now - 1000 * jump_buffer
-	var floored = _last_on_floor > now - 1000 * coyote_time
+	var input = _last_jump_input >= now - 1000 * jump_buffer
+	var floored = _last_on_floor >= now - 1000 * coyote_time
 	return input and (can_always_jump or floored)
 
 func _reset_jump():
@@ -88,7 +90,8 @@ func _physics_process(delta):
 		if _parent.position.y > _last_floor_height:
 			_parent.position.y = _last_floor_height
 		_parent.velocity.y = -jump_velocity * gravity.normalized().y
-		target_rotation += deg_to_rad(90 * gravity.normalized().y)
+		if not can_always_jump:
+			target_rotation += deg_to_rad(90 * gravity.normalized().y)
 		jump.emit()
 	else:
 		_parent.velocity.y += gravity.y * delta
