@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
-[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
@@ -436,25 +436,25 @@ return_value = true
 texture = ExtResource("21_o5ugj")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
-0:0/0/modulate = Color(1, 0, 1, 1)
+0:0/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 32, -1.5, -32, 32, 32)
 0:1/0 = 0
-0:1/0/modulate = Color(1, 0, 1, 1)
+0:1/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:1/0/physics_layer_0/angular_velocity = 0.0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 32, -0.5, 4, 27.5, 32)
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-22.5, 32, 1.5, 10.5, 23, 32)
 2:2/0 = 0
-2:2/0/modulate = Color(1, 0, 1, 1)
+2:2/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-27.5, -32, -1.5, -5, 27.5, -32)
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20, -32, -1, -10.5, 23.5, -32)
 2:3/0 = 0
-2:3/0/modulate = Color(1, 0, 1, 1)
+2:3/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:3/0/physics_layer_0/angular_velocity = 0.0
-2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 0.5, 32, 28, -32)
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 0, 32, 32, -32)
 
 [sub_resource type="TileSet" id="TileSet_ppvob"]
 tile_size = Vector2i(64, 64)
@@ -465,45 +465,55 @@ sources/1 = SubResource("TileSetAtlasSource_gp6as")
 texture = ExtResource("21_o5ugj")
 texture_region_size = Vector2i(64, 64)
 1:0/0 = 0
-1:0/0/modulate = Color(1, 0, 1, 1)
+1:0/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 2:0/0 = 0
-2:0/0/modulate = Color(1, 0, 1, 1)
+2:0/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 1:1/0 = 0
-1:1/0/modulate = Color(1, 0, 1, 1)
+1:1/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:1/0/physics_layer_0/angular_velocity = 0.0
 1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 2:1/0 = 0
-2:1/0/modulate = Color(1, 0, 1, 1)
+2:1/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_0/angular_velocity = 0.0
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 0:2/0 = 0
-0:2/0/modulate = Color(1, 0, 1, 1)
+0:2/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 0:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:2/0/physics_layer_0/angular_velocity = 0.0
 0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 1:2/0 = 0
-1:2/0/modulate = Color(1, 0, 1, 1)
+1:2/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 1:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:2/0/physics_layer_0/angular_velocity = 0.0
 1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 1:3/0 = 0
-1:3/0/modulate = Color(1, 0, 1, 1)
+1:3/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:3/0/physics_layer_0/angular_velocity = 0.0
 1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 0:3/0 = 0
-0:3/0/modulate = Color(1, 0, 1, 1)
+0:3/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:3/0/physics_layer_0/angular_velocity = 0.0
 0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:0/0 = 0
+3:0/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, -2, -32, -2.5)
+3:1/0 = 0
+3:1/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
+3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:1/0/physics_layer_0/angular_velocity = 0.0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 5, 32, 4.5, 32, 32, -32, 32)
 
 [sub_resource type="TileSet" id="TileSet_d8v6u"]
 tile_size = Vector2i(64, 64)
@@ -888,7 +898,8 @@ enabled = true
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(250, -324)
+position = Vector2(200, -324)
+metadata/_edit_lock_ = true
 
 [node name="CameraShakeBehavior" type="Node2D" parent="Camera2D"]
 position = Vector2(-191, 307)
@@ -1003,6 +1014,7 @@ metadata/pronto_connections = [SubResource("Resource_8q2is"), SubResource("Resou
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Camera2D/World/Player"]
 stream = ExtResource("17_24r8g")
+volume_db = 15.0
 
 [node name="Label" type="Label" parent="Camera2D"]
 z_index = 1
@@ -1019,10 +1031,10 @@ to_prop = "text"
 
 [node name="PanelContainer" type="PanelContainer" parent="Camera2D"]
 z_index = 2
-offset_left = 172.0
-offset_top = -317.0
-offset_right = 618.0
-offset_bottom = -159.0
+offset_left = 127.0
+offset_top = -301.0
+offset_right = 573.0
+offset_bottom = -143.0
 
 [node name="Settings" type="Node2D" parent="Camera2D/PanelContainer"]
 script = ExtResource("12_4e6ei")
@@ -1031,14 +1043,14 @@ script = ExtResource("12_4e6ei")
 script = ExtResource("13_euqfa")
 float_from = 100.0
 float_to = 1500.0
-float_value = 675.0
+float_value = 900.0
 float_step_size = 25.0
 
 [node name="Gravity" type="Node2D" parent="Camera2D/PanelContainer/Settings"]
 script = ExtResource("13_euqfa")
 float_from = 500.0
 float_to = 4000.0
-float_value = 2500.0
+float_value = 3450.0
 float_step_size = 50.0
 
 [node name="AirLauncherPower" type="Node2D" parent="Camera2D/PanelContainer/Settings"]
@@ -1065,39 +1077,37 @@ icon = ExtResource("20_nq1lm")
 icon_alignment = 1
 
 [node name="Ceiling" type="StaticBody2D" parent="."]
-position = Vector2(69, -624)
+position = Vector2(19631, -604)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Ceiling"]
 script = ExtResource("1_k1a43")
 color = Color(0, 0, 0, 1)
-placeholder_size = Vector2(20000, 50)
+placeholder_size = Vector2(40000, 50)
 sprite_texture = ExtResource("2_dptxb")
 
 [node name="MidAirJump" parent="." instance=ExtResource("14_uvony")]
-position = Vector2(1155, -213)
+position = Vector2(931, -397)
 
 [node name="MidAirJump2" parent="." instance=ExtResource("14_uvony")]
-position = Vector2(1308, -265)
+position = Vector2(1084, -449)
 
 [node name="SpikeTileMap" type="TileMap" parent="." groups=["spike"]]
-position = Vector2(-1, -117)
 tile_set = SubResource("TileSet_ppvob")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(-65516, 1, 0, -65515, 1, 1, -65517, 1, 0, -65518, 1, 1, -65456, 1, 0, -65455, 1, 0, -65454, 1, 0, -65453, 1, 1, -196520, 131073, 2, -196519, 131073, 3, -196518, 131073, 3, -196517, 131073, 2, -65443, 1, 0, -65442, 1, 0, -393171, 131073, 2, -393170, 131073, 3, -65487, 1, 0, -65486, 1, 0, -65485, 1, 0, -65484, 1, 0, -65483, 1, 0, -65497, 1, 0, -65496, 1, 0, -65495, 1, 0, -65494, 1, 1, -65498, 1, 1, -262084, 131073, 2, -262085, 131073, 3, -262086, 131073, 2, -65457, 1, 1, -65441, 1, 1)
+layer_0/tile_data = PackedInt32Array(-196592, 1, 0, -196580, 1, 1, -196579, 1, 0, -196566, 1, 0, -196565, 1, 0, -196541, 1, 0, -196540, 1, 0, -196516, 1, 1, -196515, 1, 0, -196524, 1, 1, -196508, 1, 1, -196507, 1, 1, -196506, 1, 1, -196505, 1, 1, -196504, 1, 1, -196503, 1, 1, -262055, 131073, 3, -196545, 1, 0, -196546, 1, 1, -262056, 131073, 2, -196502, 1, 1, -196501, 1, 1)
 
 [node name="BlockTileMap" type="TileMap" parent="." groups=["block"]]
-position = Vector2(-6, -115)
 tile_set = SubResource("TileSet_d8v6u")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(-65511, 65537, 0, -65510, 65537, 0, -65509, 65537, 0, -65508, 65537, 0, -65507, 65537, 0, -327644, 1, 2, -327643, 65537, 2, -327642, 1, 2, -327641, 1, 2, -327640, 65537, 2, -458711, 1, 3, -458710, 65537, 2, -458709, 65537, 2, -458708, 65537, 2, -458707, 1, 3, -458706, 1, 3, -393168, 1, 2, -393167, 1, 2, -393166, 1, 3, -393165, 1, 3, -393164, 1, 2, -393163, 1, 2, -327625, 1, 3, -327624, 1, 3, -327623, 1, 3, -327622, 1, 3, -327621, 1, 2, -327620, 1, 2, -262067, 1, 2, -262066, 1, 2, -262065, 1, 2, -262064, 1, 2, -262063, 1, 2, -262062, 1, 2, -262061, 1, 2, -262060, 1, 2, -262059, 1, 2, -262058, 1, 2, -262057, 1, 2, -262056, 1, 2, -262055, 1, 2, -262054, 1, 2, -262053, 1, 2, -262052, 1, 2, -262051, 1, 2, -262050, 1, 2, -262049, 1, 2, -65428, 65537, 0, -65427, 65537, 0, -524121, 65537, 0, -458585, 65537, 0, -393049, 65537, 0, -196441, 65537, 0, -130905, 65537, 0, -65369, 65537, 0, -196440, 65537, 0, -196439, 65537, 0, -196438, 65537, 0, -196437, 65537, 0, -196436, 65537, 0, -196435, 65537, 0, -196434, 65537, 0, -196433, 65537, 0, -196432, 65537, 0, -196431, 65537, 0, -196430, 65537, 0, -65325, 65537, 1, -130861, 65537, 1, -196397, 65537, 1, -261933, 65537, 1, -327469, 65537, 1, -393005, 65537, 1, -458541, 65537, 1, -524077, 65537, 1, -589613, 65537, 1, -655149, 65537, 1, -720685, 65537, 1, -786221, 65537, 1, -851757, 65537, 1)
+layer_0/tile_data = PackedInt32Array(-196564, 65537, 0, -196561, 65537, 1, -262097, 65537, 0, -196558, 65537, 1, -262094, 65537, 1, -327630, 65537, 0, -196534, 65537, 0, -196533, 65537, 0, -196532, 65537, 0, -196531, 65537, 0, -196530, 65537, 0, -196529, 65537, 0, -196528, 65537, 0, -327592, 65537, 2, -327591, 65537, 2, -196509, 196609, 0, -262041, 196609, 0)
 
 [node name="air_launcher" parent="." instance=ExtResource("18_himv5")]
-position = Vector2(850, -130)
+position = Vector2(881, -310)
 
 [node name="InvertedGravity" type="Area2D" parent="."]
-position = Vector2(2948, -354)
+position = Vector2(7535, -351)
 gravity_space_override = 3
 gravity_point_center = Vector2(0, -1)
 gravity_direction = Vector2(0, -1)
@@ -1114,16 +1124,22 @@ evaluate = SubResource("Resource_h746v")
 to_prop = "gravity"
 
 [node name="Floor" parent="." instance=ExtResource("21_wcc3c")]
-position = Vector2(-357, -117)
+position = Vector2(-361, -128)
 
 [node name="Floor2" parent="." instance=ExtResource("21_wcc3c")]
-position = Vector2(4442, -117)
+position = Vector2(4439, -128)
 
 [node name="Floor3" parent="." instance=ExtResource("21_wcc3c")]
-position = Vector2(9242, -117)
+position = Vector2(9239, -128)
+
+[node name="Floor4" parent="." instance=ExtResource("21_wcc3c")]
+position = Vector2(14039, -128)
+
+[node name="Floor5" parent="." instance=ExtResource("21_wcc3c")]
+position = Vector2(18841, -128)
 
 [node name="GravityPortal" type="Node2D" parent="."]
-position = Vector2(2204, -218)
+position = Vector2(6786, -341)
 script = ExtResource("1_k1a43")
 placeholder_size = Vector2(90, 192)
 keep_in_origin = false
@@ -1131,21 +1147,20 @@ use_sprite = true
 sprite_texture = ExtResource("22_mgnf0")
 
 [node name="GravityPortal2" type="Node2D" parent="."]
-position = Vector2(3688, -249)
-rotation = 3.14159
+position = Vector2(10275, -315)
 script = ExtResource("1_k1a43")
 placeholder_size = Vector2(90, 192)
 use_sprite = true
 sprite_texture = ExtResource("22_mgnf0")
 
 [node name="GravtityBall" type="Area2D" parent="."]
-position = Vector2(5519, -364)
+position = Vector2(15062, -353)
 gravity_space_override = 3
 
 [node name="PlaceholderBehavior" type="Node2D" parent="GravtityBall"]
 script = ExtResource("1_k1a43")
 color = Color(0.266667, 1, 1, 0.145098)
-placeholder_size = Vector2(1300, 500)
+placeholder_size = Vector2(3000, 500)
 sprite_texture = ExtResource("2_dptxb")
 
 [node name="BindBehavior" type="Node2D" parent="GravtityBall"]
@@ -1154,7 +1169,7 @@ evaluate = SubResource("Resource_hsydr")
 to_prop = "gravity"
 
 [node name="BallEntry" type="Area2D" parent="."]
-position = Vector2(4875, -227)
+position = Vector2(13568, -228)
 
 [node name="CollisionBehavior" type="Node2D" parent="BallEntry"]
 position = Vector2(-45, -96)
@@ -1169,7 +1184,7 @@ use_sprite = true
 sprite_texture = ExtResource("23_8obby")
 
 [node name="BallExit" type="Area2D" parent="."]
-position = Vector2(6186, -227)
+position = Vector2(16946, -246)
 
 [node name="SquarePortal" type="Node2D" parent="BallExit"]
 script = ExtResource("1_k1a43")
@@ -1183,7 +1198,7 @@ limit_to_group = "player"
 metadata/pronto_connections = [SubResource("Resource_kc8gi")]
 
 [node name="UFOPortal" type="Area2D" parent="."]
-position = Vector2(7585, -227)
+position = Vector2(18174, -322)
 
 [node name="PortalPlaceholder" type="Node2D" parent="UFOPortal"]
 script = ExtResource("1_k1a43")
@@ -1198,7 +1213,7 @@ limit_to_group = "player"
 metadata/pronto_connections = [SubResource("Resource_k2bh5"), SubResource("Resource_fufqa")]
 
 [node name="UfoExit" type="Area2D" parent="."]
-position = Vector2(10818, -381)
+position = Vector2(21407, -476)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="UfoExit"]
 script = ExtResource("1_k1a43")
@@ -1212,7 +1227,7 @@ limit_to_group = "player"
 metadata/pronto_connections = [SubResource("Resource_y3dow"), SubResource("Resource_u73pp")]
 
 [node name="EndGame" type="Area2D" parent="."]
-position = Vector2(13009, -360)
+position = Vector2(19910, -463)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="EndGame"]
 script = ExtResource("1_k1a43")
