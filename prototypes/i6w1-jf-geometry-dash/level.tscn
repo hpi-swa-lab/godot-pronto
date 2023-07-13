@@ -1,8 +1,8 @@
-[gd_scene load_steps=50 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=51 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
-[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="13_kertt"]
 [ext_resource type="PackedScene" uid="uid://bjgevao00usos" path="res://prototypes/i6w1-jf-geometry-dash/mid_air_jump.tscn" id="14_uvony"]
 [ext_resource type="Texture2D" uid="uid://hcpfxjjhrm2o" path="res://prototypes/i6w1-jf-geometry-dash/mytilemap.png" id="15_ioynh"]
+[ext_resource type="PackedScene" uid="uid://dai6lx4kmvj5y" path="res://prototypes/i6w1-jf-geometry-dash/air_launcher.tscn" id="18_himv5"]
 
 [sub_resource type="GDScript" id="GDScript_nqhmh"]
 script/source = "@tool
@@ -378,8 +379,8 @@ to_prop = "text"
 [node name="PanelContainer" type="PanelContainer" parent="Camera2D"]
 offset_left = -348.0
 offset_top = -314.0
-offset_right = -82.0
-offset_bottom = -184.0
+offset_right = 98.0
+offset_bottom = -156.0
 
 [node name="Settings" type="Node2D" parent="Camera2D/PanelContainer"]
 script = ExtResource("12_4e6ei")
@@ -397,6 +398,13 @@ float_from = 500.0
 float_to = 4000.0
 float_value = 2500.0
 float_step_size = 50.0
+
+[node name="AirLauncherPower" type="Node2D" parent="Camera2D/PanelContainer/Settings"]
+script = ExtResource("13_euqfa")
+float_from = 100.0
+float_to = 2000.0
+float_value = 1000.0
+float_step_size = 10.0
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(135, -92)
@@ -425,3 +433,6 @@ tile_set = SubResource("TileSet_d8v6u")
 cell_quadrant_size = 64
 format = 2
 layer_0/tile_data = PackedInt32Array(-65511, 65536, 0, -65510, 65536, 0, -65509, 65536, 0, -65508, 65536, 0, -65507, 65536, 0)
+
+[node name="air_launcher" parent="." instance=ExtResource("18_himv5")]
+position = Vector2(849, -127)
