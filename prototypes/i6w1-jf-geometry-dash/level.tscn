@@ -898,7 +898,7 @@ enabled = true
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(8700, -324)
+position = Vector2(200, -324)
 metadata/_edit_lock_ = true
 
 [node name="CameraShakeBehavior" type="Node2D" parent="Camera2D"]
@@ -1131,7 +1131,7 @@ gravity_direction = Vector2(0, -1)
 
 [node name="Placeholder" type="Node2D" parent="InvertedGravity2"]
 script = ExtResource("1_k1a43")
-color = Color(1, 1, 0.356863, 0.145098)
+color = Color(1, 1, 0.356863, 0)
 placeholder_size = Vector2(2700, 500)
 sprite_texture = ExtResource("2_dptxb")
 
@@ -1184,7 +1184,7 @@ gravity_space_override = 3
 
 [node name="PlaceholderBehavior" type="Node2D" parent="GravtityBall"]
 script = ExtResource("1_k1a43")
-color = Color(0.266667, 1, 1, 0.145098)
+color = Color(0.266667, 1, 1, 0)
 placeholder_size = Vector2(3050, 500)
 sprite_texture = ExtResource("2_dptxb")
 
