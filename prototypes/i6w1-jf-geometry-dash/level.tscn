@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_dptxb"]
-[ext_resource type="Texture2D" uid="uid://bpwxleelhruka" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
+[ext_resource type="Texture2D" uid="uid://dgjf3dxuj1rhk" path="res://prototypes/i6w1-jf-geometry-dash/assets/game_bg_01_001-hd.png" id="3_sk58a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_dirb5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_slgut"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_2xkus"]
@@ -439,7 +439,7 @@ texture_region_size = Vector2i(64, 64)
 0:0/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 32, -1.5, -32, 32, 32)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 32, 0, -25, 32, 32)
 0:1/0 = 0
 0:1/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -454,7 +454,7 @@ texture_region_size = Vector2i(64, 64)
 2:3/0/modulate = Color(0.423529, 0.352941, 0.956863, 1)
 2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:3/0/physics_layer_0/angular_velocity = 0.0
-2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 0, 32, 32, -32)
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 0.5, 22, 32, -32)
 
 [sub_resource type="TileSet" id="TileSet_ppvob"]
 tile_size = Vector2i(64, 64)
@@ -1057,7 +1057,7 @@ float_step_size = 50.0
 script = ExtResource("13_euqfa")
 float_from = 100.0
 float_to = 2000.0
-float_value = 1000.0
+float_value = 1250.0
 float_step_size = 10.0
 
 [node name="LevelComplete" type="Sprite2D" parent="Camera2D"]
@@ -1086,39 +1086,56 @@ placeholder_size = Vector2(40000, 50)
 sprite_texture = ExtResource("2_dptxb")
 
 [node name="MidAirJump" parent="." instance=ExtResource("14_uvony")]
-position = Vector2(931, -397)
+position = Vector2(10267, -263)
 
 [node name="MidAirJump2" parent="." instance=ExtResource("14_uvony")]
-position = Vector2(1084, -449)
+position = Vector2(10551, -312)
 
 [node name="SpikeTileMap" type="TileMap" parent="." groups=["spike"]]
 tile_set = SubResource("TileSet_ppvob")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(-196592, 1, 0, -196580, 1, 1, -196579, 1, 0, -196566, 1, 0, -196565, 1, 0, -196541, 1, 0, -196540, 1, 0, -196516, 1, 1, -196515, 1, 0, -196524, 1, 1, -196508, 1, 1, -196507, 1, 1, -196506, 1, 1, -196505, 1, 1, -196504, 1, 1, -196503, 1, 1, -262055, 131073, 3, -196545, 1, 0, -196546, 1, 1, -262056, 131073, 2, -196502, 1, 1, -196501, 1, 1)
+layer_0/tile_data = PackedInt32Array(-196592, 1, 0, -196580, 1, 1, -196579, 1, 0, -196566, 1, 0, -196565, 1, 0, -196541, 1, 0, -196540, 1, 0, -196516, 1, 1, -196515, 1, 0, -196524, 1, 1, -196508, 1, 1, -196507, 1, 1, -196506, 1, 1, -196505, 1, 1, -196504, 1, 1, -196503, 1, 1, -262055, 131073, 3, -196545, 1, 0, -196546, 1, 1, -262056, 131073, 2, -196502, 1, 1, -196501, 1, 1, -589702, 131073, 3, -196551, 1, 1, -393095, 1, 0, -393094, 1, 0, -589712, 131073, 2, -589711, 131073, 2, -589710, 131073, 2, -589709, 131073, 2, -589708, 131073, 2, -589714, 131073, 2, -589713, 131073, 2, -393100, 1, 1, -589701, 131073, 2, -327599, 1, 1, -589696, 131073, 3, -589697, 131073, 2, -196496, 1, 1, -196495, 1, 0, -196494, 1, 0, -196493, 1, 0, -196492, 1, 0, -196491, 1, 1, -196482, 1, 1, -196481, 1, 0, -196480, 1, 1, -196483, 1, 1, -196468, 1, 1, -196467, 1, 0, -196466, 1, 0, -196465, 1, 0, -196464, 1, 0, -196463, 1, 0, -196462, 1, 0, -196461, 1, 0, -196460, 1, 0, -196459, 1, 0, -196458, 1, 0, -196457, 1, 0, -196456, 1, 0, -196455, 1, 0, -196454, 1, 0, -524141, 131073, 3, -524140, 131073, 3, -524137, 131073, 3, -524136, 131073, 3, -524139, 131073, 2, -524138, 131073, 2, -524142, 131073, 2, -524135, 131073, 2, -196452, 1, 0, -196451, 1, 0, -196450, 1, 0, -196449, 1, 0, -196448, 1, 1, -196447, 1, 0, -196446, 1, 0, -196445, 1, 0, -196444, 1, 1, -196443, 1, 0, -196442, 1, 0, -196441, 1, 0, -196440, 1, 0, -196439, 1, 1, -589649, 131073, 2, -589648, 131073, 2, -589647, 131073, 2, -589646, 131073, 2, -589645, 131073, 3, -589644, 131073, 3, -589643, 131073, 2, -589642, 131073, 2, -589641, 131073, 2, -589640, 131073, 2, -589639, 131073, 2, -589638, 131073, 2, -589637, 131073, 3, -589636, 131073, 3, -589635, 131073, 3, -589634, 131073, 3, -589633, 131073, 2, -589632, 131073, 2, -589631, 131073, 2, -589630, 131073, 2, -589623, 131073, 3, -589622, 131073, 3, -589621, 131073, 3, -589620, 131073, 3, -589619, 131073, 3, -589618, 131073, 3, -589617, 131073, 3, -589616, 131073, 3, -589615, 131073, 3, -589614, 131073, 3, -589613, 131073, 3, -589624, 131073, 3, -589629, 131073, 3, -589628, 131073, 3, -327503, 1, 0, -261959, 1, 0, -327482, 1, 0, -327481, 1, 0, -261940, 1, 0, -327479, 1, 1, -327483, 1, 1, -327480, 1, 0, -196412, 1, 0, -196406, 1, 0, -196420, 1, 0, -196419, 1, 0, -196418, 1, 0, -196417, 1, 0, -196416, 1, 0, -196421, 1, 1, -196415, 1, 1)
 
 [node name="BlockTileMap" type="TileMap" parent="." groups=["block"]]
 tile_set = SubResource("TileSet_d8v6u")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(-196564, 65537, 0, -196561, 65537, 1, -262097, 65537, 0, -196558, 65537, 1, -262094, 65537, 1, -327630, 65537, 0, -196534, 65537, 0, -196533, 65537, 0, -196532, 65537, 0, -196531, 65537, 0, -196530, 65537, 0, -196529, 65537, 0, -196528, 65537, 0, -327592, 65537, 2, -327591, 65537, 2, -196509, 196609, 0, -262041, 196609, 0)
+layer_0/tile_data = PackedInt32Array(-196564, 65537, 0, -196561, 65537, 1, -262097, 65537, 0, -196558, 65537, 1, -262094, 65537, 1, -327630, 65537, 0, -196534, 65537, 0, -196533, 65537, 0, -196532, 65537, 0, -196531, 65537, 0, -327592, 65537, 2, -327591, 65537, 2, -196509, 196609, 0, -262041, 196609, 0, -589712, 196609, 1, -524172, 196609, 1, -458632, 196609, 1, -327559, 65537, 0, -327558, 65537, 0, -327564, 65537, 0, -262063, 196609, 0, -262001, 65537, 0, -196465, 65537, 1, -262000, 196609, 0, -261999, 196609, 0, -261998, 196609, 0, -261997, 196609, 0, -261996, 196609, 0, -261995, 196609, 0, -261994, 196609, 0, -261993, 196609, 0, -261992, 196609, 0, -261991, 196609, 0, -261990, 196609, 0, -261989, 65537, 0, -196453, 65537, 1, -589678, 1, 2, -589677, 1, 2, -589676, 1, 2, -589675, 1, 2, -589674, 1, 2, -589673, 1, 2, -589672, 1, 2, -589671, 1, 2, -589679, 1, 2, -393048, 196609, 0, -589647, 196609, 1, -524107, 196609, 1, -589626, 1, 2, -589625, 1, 2, -589627, 1, 2, -589624, 1, 2, -589623, 1, 2, -589622, 1, 2, -524082, 196609, 1, -589612, 65537, 2, -524076, 65537, 2, -196396, 65537, 1, -261932, 65537, 1, -261967, 131073, 0, -196423, 131073, 0, -261946, 196609, 0, -261945, 196609, 0, -196404, 131073, 0, -196431, 131073, 0, -196411, 131073, 0, -261947, 131073, 0, -261944, 196609, 0, -261943, 131073, 0, -196407, 131073, 0)
 
 [node name="air_launcher" parent="." instance=ExtResource("18_himv5")]
-position = Vector2(881, -310)
+position = Vector2(8913, -141)
 
 [node name="InvertedGravity" type="Area2D" parent="."]
-position = Vector2(7535, -351)
+position = Vector2(7514, -349)
 gravity_space_override = 3
 gravity_point_center = Vector2(0, -1)
 gravity_direction = Vector2(0, -1)
 
 [node name="Placeholder" type="Node2D" parent="InvertedGravity"]
 script = ExtResource("1_k1a43")
-color = Color(1, 1, 0.356863, 0.145098)
-placeholder_size = Vector2(1500, 500)
+color = Color(1, 1, 0.356863, 0)
+placeholder_size = Vector2(1480, 500)
 sprite_texture = ExtResource("2_dptxb")
 
 [node name="BindGravity" type="Node2D" parent="InvertedGravity"]
+script = ExtResource("9_q3n0x")
+evaluate = SubResource("Resource_h746v")
+to_prop = "gravity"
+
+[node name="InvertedGravity2" type="Area2D" parent="."]
+position = Vector2(12211, -341)
+gravity_space_override = 3
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
+
+[node name="Placeholder" type="Node2D" parent="InvertedGravity2"]
+script = ExtResource("1_k1a43")
+color = Color(1, 1, 0.356863, 0.145098)
+placeholder_size = Vector2(2700, 500)
+sprite_texture = ExtResource("2_dptxb")
+
+[node name="BindGravity" type="Node2D" parent="InvertedGravity2"]
 script = ExtResource("9_q3n0x")
 evaluate = SubResource("Resource_h746v")
 to_prop = "gravity"
@@ -1146,8 +1163,16 @@ keep_in_origin = false
 use_sprite = true
 sprite_texture = ExtResource("22_mgnf0")
 
+[node name="GravityPortal3" type="Node2D" parent="."]
+position = Vector2(10862, -467)
+script = ExtResource("1_k1a43")
+placeholder_size = Vector2(90, 192)
+keep_in_origin = false
+use_sprite = true
+sprite_texture = ExtResource("22_mgnf0")
+
 [node name="GravityPortal2" type="Node2D" parent="."]
-position = Vector2(10275, -315)
+position = Vector2(8282, -425)
 script = ExtResource("1_k1a43")
 placeholder_size = Vector2(90, 192)
 use_sprite = true
@@ -1169,7 +1194,7 @@ evaluate = SubResource("Resource_hsydr")
 to_prop = "gravity"
 
 [node name="BallEntry" type="Area2D" parent="."]
-position = Vector2(13568, -228)
+position = Vector2(13578, -350)
 
 [node name="CollisionBehavior" type="Node2D" parent="BallEntry"]
 position = Vector2(-45, -96)
@@ -1243,5 +1268,26 @@ metadata/pronto_connections = [SubResource("Resource_c2dqm"), SubResource("Resou
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("30_wtyl8")
 autoplay = true
+
+[node name="air_launcher2" parent="." instance=ExtResource("18_himv5")]
+position = Vector2(9375, -271)
+
+[node name="air_launcher3" parent="." instance=ExtResource("18_himv5")]
+position = Vector2(9635, -270)
+
+[node name="air_launcher4" parent="." instance=ExtResource("18_himv5")]
+position = Vector2(9953, -272)
+
+[node name="MidAirJump3" parent="." instance=ExtResource("14_uvony")]
+position = Vector2(11882, -395)
+
+[node name="MidAirJump4" parent="." instance=ExtResource("14_uvony")]
+position = Vector2(12122, -400)
+
+[node name="MidAirJump5" parent="." instance=ExtResource("14_uvony")]
+position = Vector2(12396, -455)
+
+[node name="MidAirJump6" parent="." instance=ExtResource("14_uvony")]
+position = Vector2(13432, -400)
 
 [connection signal="pressed" from="Camera2D/StartButton" to="Camera2D/LevelComplete" method="_on_start_button_pressed"]
