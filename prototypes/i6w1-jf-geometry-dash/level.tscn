@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=141 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
@@ -31,6 +31,8 @@
 [ext_resource type="Texture2D" uid="uid://de74aras2j8c8" path="res://prototypes/i6w1-jf-geometry-dash/assets/square_portal.webp" id="24_os7ef"]
 [ext_resource type="Texture2D" uid="uid://cfs6es8oj3gd3" path="res://prototypes/i6w1-jf-geometry-dash/assets/UFOPortal.webp" id="25_i0map"]
 [ext_resource type="AudioStream" uid="uid://8hln6gk3kb8a" path="res://prototypes/i6w1-jf-geometry-dash/GeometryDashSoundtrack.mp3" id="30_wtyl8"]
+[ext_resource type="Texture2D" uid="uid://dc2jdack2pfjd" path="res://prototypes/i6w1-jf-geometry-dash/assets/green-pipe-tileset.png" id="32_juxy7"]
+[ext_resource type="Texture2D" uid="uid://2rl6ebjsk8xj" path="res://prototypes/i6w1-jf-geometry-dash/assets/base_ufo.png" id="33_oewmy"]
 
 [sub_resource type="GDScript" id="GDScript_nqhmh"]
 script/source = "@tool
@@ -672,7 +674,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D):
+func run(other, direction, from):
 	var placeholder = other.get_node(\"PlaceholderBehavior\")
 	other.get_node(\"Controller\").target_rotation = 0
 	placeholder.set_bird()
@@ -895,6 +897,89 @@ expression = SubResource("Resource_gvosw")
 deferred = false
 enabled = true
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_or6rn"]
+texture = ExtResource("32_juxy7")
+texture_region_size = Vector2i(52, 26)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(20, 13, -20.25, 13, -9.5, -7, 8.25, -8)
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-26, -13, 26, -13, 26, 13, -26, 13)
+1:2/0 = 0
+1:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:2/0/physics_layer_0/angular_velocity = 0.0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-26, -13, 26, -13, 26, 13, -26, 13)
+1:3/0 = 0
+1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:3/0/physics_layer_0/angular_velocity = 0.0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20.5, -13, -10.5, 4.75, 8.5, 3.75, 19.5, -13)
+
+[sub_resource type="TileSet" id="TileSet_rs24u"]
+tile_size = Vector2i(52, 26)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_or6rn")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wooi7"]
+texture = ExtResource("33_oewmy")
+texture_region_size = Vector2i(56, 56)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
+1:0/next_alternative_id = 2
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
+1:1/0 = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0 = 0
+2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:1/0/physics_layer_0/angular_velocity = 0.0
+3:1/0 = 0
+3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:1/0/physics_layer_0/angular_velocity = 0.0
+4:1/0 = 0
+4:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:1/0/physics_layer_0/angular_velocity = 0.0
+5:1/0 = 0
+5:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:1/0/physics_layer_0/angular_velocity = 0.0
+5:0/next_alternative_id = 2
+5:0/0 = 0
+5:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:0/0/physics_layer_0/angular_velocity = 0.0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
+4:0/next_alternative_id = 2
+4:0/0 = 0
+4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:0/0/physics_layer_0/angular_velocity = 0.0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
+3:0/next_alternative_id = 2
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
+2:0/next_alternative_id = 2
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-28, -28, 28, -28, 28, 28, -28, 28)
+
+[sub_resource type="TileSet" id="TileSet_80ddl"]
+tile_size = Vector2i(56, 56)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_wooi7")
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -976,6 +1061,7 @@ sprite_texture = ExtResource("8_egm8n")
 position = Vector2(-43, -51)
 script = ExtResource("8_57mit")
 jump_buffer = 0.0
+always_jump_multiplier = 0.8
 metadata/pronto_connections = [SubResource("Resource_jj0ap")]
 
 [node name="BindBehavior" type="Node2D" parent="Camera2D/World/Player/Controller"]
@@ -1241,6 +1327,7 @@ metadata/pronto_connections = [SubResource("Resource_k2bh5"), SubResource("Resou
 position = Vector2(21407, -476)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="UfoExit"]
+position = Vector2(-979, 107)
 script = ExtResource("1_k1a43")
 placeholder_size = Vector2(90, 192)
 use_sprite = true
@@ -1252,7 +1339,7 @@ limit_to_group = "player"
 metadata/pronto_connections = [SubResource("Resource_y3dow"), SubResource("Resource_u73pp")]
 
 [node name="EndGame" type="Area2D" parent="."]
-position = Vector2(19910, -463)
+position = Vector2(22898, -736)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="EndGame"]
 script = ExtResource("1_k1a43")
@@ -1295,5 +1382,19 @@ position = Vector2(17788, -224)
 
 [node name="MidAirJump8" parent="." instance=ExtResource("14_uvony")]
 position = Vector2(18019, -280)
+
+[node name="PipeMap" type="TileMap" parent="." groups=["spike"]]
+scale = Vector2(2, 2)
+tile_set = SubResource("TileSet_rs24u")
+cell_quadrant_size = 52
+format = 2
+layer_0/tile_data = PackedInt32Array(-393039, 1, 0, -327503, 1, 1, -261967, 1, 1, -196431, 1, 1, -655183, 65537, 3, -720719, 65537, 2, -786255, 65537, 2, -851791, 65537, 2, -393035, 1, 0, -327499, 1, 1, -261963, 1, 1, -196427, 1, 1, -720715, 65537, 3, -786251, 65537, 2, -261960, 1, 0, -196424, 1, 1, -655176, 65537, 2, -720712, 65537, 2, -786248, 65537, 2, -589640, 65537, 3, -327485, 1, 0, -327486, 1, 0, -327487, 1, 0, -261951, 1, 1, -261950, 1, 1, -196414, 1, 1, -196413, 1, 1, -130877, 1, 1, -261949, 1, 1, -196415, 1, 1, -130878, 1, 1, -130879, 1, 1, -655167, 65537, 3, -655166, 65537, 3, -655165, 65537, 3, -720703, 65537, 2, -786239, 65537, 2, -786238, 65537, 2, -786237, 65537, 2, -720701, 65537, 2, -720702, 65537, 2, -851775, 65537, 2, -851774, 65537, 2, -851773, 65537, 2, -851784, 65537, 2, -851787, 65537, 2, -130888, 1, 1, -130891, 1, 1, -393029, 1, 0, -327493, 1, 1, -261957, 1, 1, -196421, 1, 1, -130885, 1, 1, -720709, 65537, 3, -786245, 65537, 2, -851781, 65537, 2, -655170, 65537, 2, -589634, 65537, 3, -720706, 65537, 2, -786242, 65537, 2, -851778, 65537, 2, -261954, 1, 0, -196418, 1, 1, -130882, 1, 1)
+
+[node name="UfoFloor" type="TileMap" parent="." groups=["spike"]]
+position = Vector2(22, 42)
+tile_set = SubResource("TileSet_80ddl")
+cell_quadrant_size = 56
+format = 2
+layer_0/tile_data = PackedInt32Array(-130744, 0, 1, -65208, 0, 1, 328, 0, 1, 329, 0, 1, 65864, 0, 1, 65865, 0, 1, 65866, 0, 1, 65867, 0, 1, 331, 0, 1, 332, 0, 1, 333, 0, 1, 65869, 0, 1, 65870, 0, 1, 65871, 0, 1, -130743, 0, 1, -65207, 0, 1, -130742, 0, 1, -65206, 0, 1, 330, 0, 1, -130741, 0, 1, -65205, 0, 1, -130740, 0, 1, -65204, 0, 1, 65868, 0, 1, -130739, 0, 1, -65203, 0, 1, -130738, 0, 1, -65202, 0, 1, 334, 0, 1, -130737, 0, 1, -65201, 0, 1, 335, 0, 1, -130736, 0, 1, -65200, 0, 1, 336, 0, 1, 65872, 0, 1, -130735, 0, 1, -65199, 0, 1, 337, 0, 1, 65873, 0, 1, -130734, 0, 1, -65198, 0, 1, 338, 0, 1, 65874, 0, 1, -130733, 0, 1, -65197, 0, 1, 339, 0, 1, 65875, 0, 1, -130732, 0, 1, -65196, 0, 1, 340, 0, 1, 65876, 0, 1, -130731, 0, 1, -65195, 0, 1, 341, 0, 1, 65877, 0, 1, -130730, 0, 1, -65194, 0, 1, 342, 0, 1, 65878, 0, 1, -130729, 0, 1, -65193, 0, 1, 343, 0, 1, 65879, 0, 1, -130728, 0, 1, -65192, 0, 1, 344, 0, 1, 65880, 0, 1, -130727, 0, 1, -65191, 0, 1, 345, 0, 1, 65881, 0, 1, -130726, 0, 1, -65190, 0, 1, 346, 0, 1, 65882, 0, 1, -130725, 0, 1, -65189, 0, 1, 347, 0, 1, 65883, 0, 1, -130724, 0, 1, -65188, 0, 1, 348, 0, 1, 65884, 0, 1, -130723, 0, 1, -65187, 0, 1, 349, 0, 1, 65885, 0, 1, -130722, 0, 1, -65186, 0, 1, 350, 0, 1, 65886, 0, 1, -130721, 0, 1, -65185, 0, 1, 351, 0, 1, 65887, 0, 1, -130720, 0, 1, -65184, 0, 1, 352, 0, 1, 65888, 0, 1, -130719, 0, 1, -65183, 0, 1, 353, 0, 1, 65889, 0, 1, -130718, 0, 1, -65182, 0, 1, 354, 0, 1, 65890, 0, 1, -130717, 0, 1, -65181, 0, 1, 355, 0, 1, 65891, 0, 1, -130716, 0, 1, -65180, 0, 1, 356, 0, 1, 65892, 0, 1, -130715, 0, 1, -65179, 0, 1, 357, 0, 1, 65893, 0, 1, -130714, 0, 1, -65178, 0, 1, 358, 0, 1, 65894, 0, 1, -130713, 0, 1, -65177, 0, 1, 359, 0, 1, 65895, 0, 1, -130712, 0, 1, -65176, 0, 1, 360, 0, 1, 65896, 0, 1, -130711, 0, 1, -65175, 0, 1, 361, 0, 1, 65897, 0, 1, -130710, 0, 1, -65174, 0, 1, 362, 0, 1, 65898, 0, 1, -130709, 0, 1, -65173, 0, 1, 363, 0, 1, 65899, 0, 1, -196280, 0, 0, -196279, 65536, 0, -196278, 131072, 0, -196277, 196608, 0, -196276, 262144, 0, -196275, 327680, 0, -196274, 0, 0, -196273, 65536, 0, -196272, 131072, 0, -196271, 196608, 0, -196270, 262144, 0, -196269, 327680, 0, -196268, 0, 0, -196267, 65536, 0, -196266, 131072, 0, -196265, 196608, 0, -196264, 262144, 0, -196263, 327680, 0, -196262, 0, 0, -196261, 65536, 0, -196260, 131072, 0, -196259, 196608, 0, -196258, 262144, 0, -196257, 327680, 0, -196256, 0, 0, -196255, 65536, 0, -196254, 131072, 0, -196253, 196608, 0, -196252, 262144, 0, -196251, 327680, 0, -196250, 0, 0, -196249, 65536, 0, -196248, 131072, 0, -196247, 196608, 0, -196246, 262144, 0, -196245, 327680, 0)
 
 [connection signal="pressed" from="Camera2D/StartButton" to="Camera2D/LevelComplete" method="_on_start_button_pressed"]

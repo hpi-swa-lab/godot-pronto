@@ -15,6 +15,8 @@ signal jump()
 ## The amount of time a jump input will trigger a jump if the character is not touching the floor, in seconds.
 @export_range(0.0, 1.0) var jump_buffer = 0.1
 
+@export var always_jump_multiplier = 0.5
+
 @export var can_always_jump = false
 
 var target_rotation = 0
@@ -89,11 +91,13 @@ func _physics_process(delta):
 	_update_jump()
 	if _can_jump():
 		_reset_jump()
-		if _parent.position.y > _last_floor_height:
+		if _parent.position.y > _last_floor_height and not can_always_jump:
 			_parent.position.y = _last_floor_height
 		_parent.velocity.y = -jump_velocity * gravity.normalized().y
 		if not can_always_jump:
 			target_rotation += deg_to_rad(90 * gravity.normalized().y)
+		else:
+			_parent.velocity.y *= always_jump_multiplier
 		jump.emit()
 	else:
 		_parent.velocity.y += gravity.y * delta
