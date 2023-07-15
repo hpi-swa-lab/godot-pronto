@@ -20,6 +20,9 @@ var group = null
 
 var top_n = null
 
+## A node inside the scene to be used for navigation. Relevant for internal copies only.
+var _reference = null
+
 func _get_property_list():
 	var property_list = []
 	
@@ -44,7 +47,7 @@ func _get_property_list():
 		'type': TYPE_STRING_NAME,
 		'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CHECKABLE,
 		'hint': PROPERTY_HINT_ENUM_SUGGESTION,
-		'hint_string': ','.join(Utils.all_used_groups())
+		'hint_string': ','.join(Utils.all_used_groups(_reference)) if _reference else null
 	})
 	property_list.append({
 		'name': 'radius',
@@ -71,16 +74,31 @@ func _get_property_list():
 	
 	return property_list
 
+func _ready():
+	super._ready()
+	
+	if _reference == null:
+		_reference = self
+
 func query(token = null, parameters = {}):
 	var nodes = _search(parameters)
 	found_all.emit(nodes, token)
 	for node in nodes:
 		found.emit(node, token)
 
-func _search(parameters = {}):
+func _search(parameters = null):
+	if parameters:
+		var query = duplicate()
+		query._reference = _reference
+		for key in parameters.keys():
+			query[key] = parameters[key]
+		return query._search()
+
+
 	var nodes
 	
-	var root = get_node(only_below) if only_below != null else get_tree().current_scene
+	
+	var root = _reference.get_node(only_below) if only_below != null else _reference.get_tree().current_scene
 	nodes = Utils.all_nodes(root, include_internal if include_internal != null else false)
 	
 	if group != null:
@@ -90,7 +108,7 @@ func _search(parameters = {}):
 	
 	if radius != null:
 		nodes = nodes.filter(func (node):
-			return node.global_position.radius_to(global_position) <= radius
+			return node.global_position.distance_to(_reference.global_position) <= radius
 		)
 	
 	

@@ -208,9 +208,13 @@ static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> 
 		.map(func(child): return global_rect_of(child, depth - 1, excluded)) \
 		.reduce(func(a, b): return a.merge(b), rect)
 
-static func all_used_groups(root = null, include_internal = false):
+static func all_used_groups(from, root = null, include_internal = false):
 	if root == null:
-		root = G.at('_pronto_editor_plugin').get_tree().get_edited_scene_root()
+		if Engine.is_editor_hint():
+			root = G.at('_pronto_editor_plugin').get_tree().get_edited_scene_root()
+		else:
+			if not from.get_tree(): return []
+			root = from.get_tree().current_scene
 	var groups := []
 	all_nodes_do(root, func (node):
 		if node != root:
