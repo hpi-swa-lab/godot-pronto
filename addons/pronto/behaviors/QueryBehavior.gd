@@ -18,8 +18,11 @@ var radius = null:
 		queue_redraw()
 var group = null
 
+var top_n = null
+
 func _get_property_list():
 	var property_list = []
+	
 	property_list.append({
 		'name': "Search",
 		'type': TYPE_NIL,
@@ -36,7 +39,6 @@ func _get_property_list():
 			'type': TYPE_BOOL,
 			'default': false
 		})
-	print("groups", Utils.all_used_groups())
 	property_list.append({
 		'name': 'group',
 		'type': TYPE_STRING_NAME,
@@ -52,6 +54,21 @@ func _get_property_list():
 		'hint': PROPERTY_HINT_RANGE,
 		'hint_string': '0,%s,or_greater' % Utils.get_game_size().length()
 	})
+	
+	property_list.append({
+		'name': "Selection",
+		'type': TYPE_NIL,
+		'usage': PROPERTY_USAGE_GROUP,
+	})
+	property_list.append({
+		'name': 'top_n',
+		'type': TYPE_INT,
+		'default': null,
+		'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CHECKABLE,
+		'hint': PROPERTY_HINT_RANGE,
+		'hint_string': '1,10,or_greater'
+	})
+	
 	return property_list
 
 func query(token = null, parameters = {}):
@@ -75,6 +92,14 @@ func _search(parameters = {}):
 		nodes = nodes.filter(func (node):
 			return node.global_position.radius_to(global_position) <= radius
 		)
+	
+	
+	if top_n != null:
+		nodes.sort_custom(func (a, b):
+			return a.global_position.distance_to(_reference.global_position) < b.global_position.distance_to(_reference.global_position)
+		)
+		nodes = nodes.slice(0, min(top_n, len(nodes)))
+	
 	
 	return nodes
 
