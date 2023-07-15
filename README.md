@@ -36,6 +36,7 @@ The following list of behaviors act primarily as triggers of events.
 | DragBehavior | Allows users to drag and drop the parent node using the mouse. Offers signals for hovering/unhovering, dragging/dropping, and moving the node. Supports different types of nodes, including character bodies, rigid bodies, static bodies, sprites, placeholders, and controls. |
 | KeyBehavior | Triggers when a single keyboard key is pressed or released.                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | NodeReadyBehavior | Triggers once after the node (and all its siblings) are [ready](https://docs.godotengine.org/en/stable/classes/class_node.html#class-node-method-ready).                                                                                                                                                                                                                                                                                                                                                            |
+| SignalBehavior	| Forwards a signal when triggered, including arguments.	|
 
 The following list of behaviors primarily cause effects when triggered.
 
