@@ -1,4 +1,5 @@
 @tool
+#thumb("Slot")
 extends Behavior
 class_name StateBehavior
 
