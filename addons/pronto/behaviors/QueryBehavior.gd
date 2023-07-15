@@ -18,6 +18,7 @@ var radius = null:  # Optional[float]
 	set(v):
 		radius = v
 		queue_redraw()
+var predicate_for_node = null  # Optional[ConnectionScript]
 
 var top_n = null  # Optional[int]
 
@@ -58,6 +59,13 @@ func _get_property_list():
 		'hint_string': ','.join(Utils.all_node_classes())
 	})
 	property_list.append({
+		'name': 'predicate_for_node',  # WORKAROUND: poor man's description (https://godotforums.org/d/32557-how-to-add-custom-description-to-properties-from-get-property-list)
+		'type': TYPE_OBJECT,
+		'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CHECKABLE,
+		'hint': PROPERTY_HINT_RESOURCE_TYPE,
+		'hint_string': 'ConnectionScript'
+	})
+	property_list.append({
 		'name': 'radius',
 		'type': TYPE_FLOAT,
 		'default': 10,
@@ -81,6 +89,13 @@ func _get_property_list():
 	})
 	
 	return property_list
+
+func wants_expression_inspector(property_name):
+	return property_name == 'predicate_for_node'
+
+func initialize_connection_script(property_name, connection_script):
+	connection_script.argument_names = ['node']
+	connection_script.argument_types = ['Node2D']
 
 func _ready():
 	super._ready()
@@ -117,6 +132,11 @@ func _search(parameters = null):
 	if clazz != null:
 		nodes = nodes.filter(func (node):
 			return node.is_class(clazz)
+		)
+	
+	if predicate_for_node != null:
+		nodes = nodes.filter(func (node):
+			return predicate_for_node.run([node], self)
 		)
 	
 	if radius != null:
