@@ -208,6 +208,13 @@ static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> 
 		.map(func(child): return global_rect_of(child, depth - 1, excluded)) \
 		.reduce(func(a, b): return a.merge(b), rect)
 
+static func all_node_classes():
+	var classes = ClassDB.get_inheriters_from_class('Node')
+	# could include these, but no usable for Node.is_class() anyway
+	# classes.append_array(ProjectSettings.get_global_class_list().map(func (c): return c['class']))
+	classes.sort()
+	return classes
+
 static func all_used_groups(from, root = null, include_internal = false):
 	if root == null:
 		if Engine.is_editor_hint():

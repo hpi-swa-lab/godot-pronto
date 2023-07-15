@@ -12,11 +12,12 @@ var only_below = null:
 		only_below = v
 		notify_property_list_changed()
 var include_internal = null
+var group = null
+var clazz = null
 var radius = null:
 	set(v):
 		radius = v
 		queue_redraw()
-var group = null
 
 var top_n = null
 
@@ -48,6 +49,13 @@ func _get_property_list():
 		'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CHECKABLE,
 		'hint': PROPERTY_HINT_ENUM_SUGGESTION,
 		'hint_string': ','.join(Utils.all_used_groups(_reference)) if _reference else null
+	})
+	property_list.append({
+		'name': 'clazz',
+		'type': TYPE_STRING_NAME,
+		'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CHECKABLE,
+		'hint': PROPERTY_HINT_ENUM,
+		'hint_string': ','.join(Utils.all_node_classes())
 	})
 	property_list.append({
 		'name': 'radius',
@@ -104,6 +112,11 @@ func _search(parameters = null):
 	if group != null:
 		nodes = nodes.filter(func (node):
 			return node.is_in_group(group)
+		)
+	
+	if clazz != null:
+		nodes = nodes.filter(func (node):
+			return node.is_class(clazz)
 		)
 	
 	if radius != null:
