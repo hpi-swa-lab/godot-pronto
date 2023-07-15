@@ -169,7 +169,7 @@ static func commit_undoable(undo_redo: EditorUndoRedoManager, title: String, obj
 		undo_redo.add_undo_method(object, action)
 	undo_redo.commit_action()
 
-static func get_game_size():
+static func get_game_size() -> Vector2:
 	return Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"), ProjectSettings.get_setting("display/window/size/viewport_height"))
 
 static func random_point_on_screen():
@@ -207,6 +207,19 @@ static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> 
 		.filter(func(child): return child not in excluded) \
 		.map(func(child): return global_rect_of(child, depth - 1, excluded)) \
 		.reduce(func(a, b): return a.merge(b), rect)
+
+static func all_used_groups(root = null, include_internal = false):
+	if root == null:
+		root = G.at('_pronto_editor_plugin').get_tree().get_edited_scene_root()
+	var groups := []
+	all_nodes_do(root, func (node):
+		if node != root:
+			groups.append_array(node.get_groups()))
+	groups = remove_duplicates(groups)
+	if not include_internal:
+		groups = groups.filter(func (group): return not group.begins_with('_'))
+	groups.sort()
+	return groups
 
 static func fix_minimum_size(n: Control):
 	if G.at("_pronto_editor_plugin") == null:

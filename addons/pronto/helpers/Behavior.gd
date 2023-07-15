@@ -37,6 +37,11 @@ func _ready():
 func is_active_scene() -> bool:
 	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
 
+func is_being_edited() -> bool:
+	if not Engine.is_editor_hint():
+		return false
+	return get_editor_plugin().edited_object == self
+
 func get_editor_plugin() -> EditorPlugin:
 	return G.at("_pronto_editor_plugin")
 
@@ -60,6 +65,9 @@ func _forward_canvas_draw_over_viewport(viewport_control: Control):
 
 func _forward_canvas_gui_input(event: InputEvent, undo_redo: EditorUndoRedoManager):
 	return _handles._forward_canvas_gui_input(self, event, undo_redo)
+
+func selected():
+	pass
 
 func deselected():
 	_handles.deselected()
