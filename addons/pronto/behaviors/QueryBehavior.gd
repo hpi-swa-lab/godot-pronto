@@ -7,19 +7,19 @@ class_name QueryBehavior
 signal found(node, token)
 signal found_all(nodes, token)
 
-var only_below = null:
+var only_below = null:  # Optional[NodePath]
 	set(v):
 		only_below = v
 		notify_property_list_changed()
-var include_internal = null
-var group = null
-var clazz = null
-var radius = null:
+var include_internal = null  # Boolean if only_below else Null
+var group = null  # Optional[StringName]
+var clazz = null  # Optional[StringName]
+var radius = null:  # Optional[float]
 	set(v):
 		radius = v
 		queue_redraw()
 
-var top_n = null
+var top_n = null  # Optional[int]
 
 ## A node inside the scene to be used for navigation. Relevant for internal copies only.
 var _reference = null
