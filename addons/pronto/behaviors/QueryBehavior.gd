@@ -4,8 +4,8 @@ extends Behavior
 class_name QueryBehavior
 
 
-signal found(node, token)
-signal found_all(nodes, token)
+signal found(node, selection_arg, token)
+signal found_all(nodes, selection_args, token)
 
 var only_below = null:  # Optional[NodePath]
 	set(v):
@@ -229,10 +229,15 @@ func _ready():
 	get_tree().node_removed.connect(_node_removed)
 
 func query(token = null, parameters = {}):
-	var nodes = _query(parameters)
-	found_all.emit(nodes, token)
-	for node in nodes:
-		found.emit(node, token)
+	var nodes_and_selection_args = _query(parameters)
+	var nodes = nodes_and_selection_args[0]
+	var selection_args = nodes_and_selection_args[1]
+	
+	found_all.emit(nodes, selection_args, token)
+	for i in len(nodes):
+		var node = nodes[i]
+		var selection_arg = selection_args[i] if selection_args else null
+		found.emit(node, selection_arg, token)
 
 func _query(parameters = null):
 	if parameters:
@@ -244,8 +249,8 @@ func _query(parameters = null):
 
 
 	var nodes = _search()
-	nodes = _select(nodes)
-	return nodes
+	var nodes_and_selection_args = _select(nodes)
+	return nodes_and_selection_args
 
 func _search():
 	var root = _reference.get_node(only_below) if only_below != null else _reference.get_tree().current_scene
@@ -290,9 +295,10 @@ func _search():
 
 func _select(nodes):
 	if max_results == null:
-		return nodes
+		return [nodes, null]
 	
 	var n = min(max_results, len(nodes))
+	var selection_args = null
 	
 	if selection_strategy == 'top':
 		var priority_func
@@ -302,8 +308,14 @@ func _select(nodes):
 		elif priority_strategy == 'custom':
 			priority_func = func (node):
 				return priority_script.run([node], self)
-		nodes.sort_custom(func (a, b): return priority_func.call(a) < priority_func.call(b))
-		return nodes.slice(0, n)
+		
+		var priorities = {}
+		for node in nodes:
+			priorities[node] = priority_func.call(node)
+		nodes.sort_custom(func (a, b): return priorities[a] < priorities[b])
+					
+		nodes = nodes.slice(0, n)
+		selection_args = nodes.map(func (node): return priorities[node])
 	
 	elif selection_strategy == 'random':
 		var random_weight_func
@@ -313,9 +325,14 @@ func _select(nodes):
 		elif random_weight_strategy == 'custom':
 			random_weight_func = func (node):
 				return random_weight_script.run([node], self)
-		return Utils.random_sample(nodes, n, random_weight_func)
+		
+		nodes = Utils.random_sample(nodes, n, random_weight_func)
+		selection_args = nodes.map(func (node): return random_weight_func.call(node))
 	
-	return nodes
+	var sum = Utils.sum(selection_args)
+	selection_args = selection_args.map(func (arg): return arg / sum)
+	
+	return [nodes, selection_args]
 
 func _draw():
 	if is_being_edited():
@@ -346,3 +363,6 @@ func deselected():
 # TODOS
 # - implement or remove shapes
 # - test everything thoroughly
+# - create example
+# - comment signals + document new behaviors in readme
+# - changelog + video
