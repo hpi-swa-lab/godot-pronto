@@ -15,7 +15,7 @@ class_name Connection
 ## When the [param from] [Node] emits [param signal_name], call method [param invoke] on
 ## [Node] [param to], passing [param arguments] to the method.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, more_references: Array, only_if: ConnectionScript, undo_redo: EditorUndoRedoManager = null):
+static func connect_target(from: Node, signal_name: String, to: NodePath, invoke: String, arguments: Array, more_references: Array, only_if: ConnectionScript, undo_redo = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -29,7 +29,7 @@ static func connect_target(from: Node, signal_name: String, to: NodePath, invoke
 ## When the [param from] [Node] emits [param signal_name], execute [param expression].
 ## [param expression] is passed as a string and parsed by the [Connection] instance.
 ## Optionally pass an [EditorUndoRedoManager] to make this action undoable.
-static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: ConnectionScript, more_references: Array, only_if: Resource, undo_redo: EditorUndoRedoManager = null):
+static func connect_expr(from: Node, signal_name: String, to: NodePath, expression: ConnectionScript, more_references: Array, only_if: Resource, undo_redo = null):
 	var c = Connection.new()
 	c.signal_name = signal_name
 	c.to = to
@@ -83,7 +83,7 @@ func is_target() -> bool:
 	return not to.is_empty()
 
 ## Remove this connection from [param node].
-func delete(from: Node, undo_redo: EditorUndoRedoManager = null):
+func delete(from: Node, undo_redo = null):
 	if undo_redo == null:
 		_ensure_connections(from).erase(self)
 	else:
@@ -93,7 +93,7 @@ func delete(from: Node, undo_redo: EditorUndoRedoManager = null):
 		undo_redo.commit_action()
 
 ## Toggle this node on and off
-func toggle_enabled(undo_redo: EditorUndoRedoManager = null):
+func toggle_enabled(undo_redo = null):
 	if undo_redo == null:
 		enabled = !enabled
 		return 
@@ -105,7 +105,7 @@ func toggle_enabled(undo_redo: EditorUndoRedoManager = null):
 	undo_redo.commit_action()
 
 ## Reorder the connection at the given index in its connection list to be the first.
-static func reorder_to_top(from: Node, index: int, undo_redo: EditorUndoRedoManager = null, update_display = null):
+static func reorder_to_top(from: Node, index: int, undo_redo = null, update_display = null):
 	if undo_redo != null:
 		undo_redo.create_action("Move connection first")
 		undo_redo.add_do_method(Connection, "_move_connection", from, index, 0)
@@ -118,7 +118,7 @@ static func reorder_to_top(from: Node, index: int, undo_redo: EditorUndoRedoMana
 		_move_connection(from, index, 0)
 		ConnectionsList.emit_connections_changed()
 
-func _store(from: Node, undo_redo: EditorUndoRedoManager = null):
+func _store(from: Node, undo_redo = null):
 	var connections = _ensure_connections(from)
 	if connections.any(func (c: Connection): return c == self): return
 	
@@ -221,7 +221,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			c._run_script(from, c.expression, values)
 			args_string = ""
 		
-		EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, args_string])
+		if EngineDebugger.is_active(): EngineDebugger.send_message("pronto:connection_activated", [c.resource_path, args_string])
 
 func has_condition():
 	return only_if.source_code != "true"
@@ -229,7 +229,7 @@ func has_condition():
 func should_trigger(names, values, from):
 	return not has_condition() or _run_script(from, only_if, values)
 
-func make_unique(from: Node, undo_redo: EditorUndoRedoManager):
+func make_unique(from: Node, undo_redo):
 	var old = _ensure_connections(from)
 	var new = old.duplicate()
 	var new_connection = duplicate(true)

@@ -24,7 +24,7 @@ class Handle:
 	func begin():
 		pass
 	
-	func end(undo_redo: EditorUndoRedoManager):
+	func end(undo_redo):
 		pass
 
 class SetPropHandle extends Handle:
@@ -48,7 +48,7 @@ class SetPropHandle extends Handle:
 	func begin():
 		_initial = object.get(property)
 	
-	func end(undo_redo: EditorUndoRedoManager):
+	func end(undo_redo):
 		undo_redo.create_action("Set {0}".format([property]))
 		undo_redo.add_do_property(object, property, object.get(property))
 		undo_redo.add_undo_property(object, property, _initial)
@@ -62,7 +62,7 @@ func _forward_canvas_draw_over_viewport(node: Behavior, viewport_control: Contro
 		for handle in node.handles():
 			viewport_control.draw_texture(handle.icon, handle.rect_in(node).position)
 
-func _forward_canvas_gui_input(node: Behavior, event: InputEvent, undo_redo: EditorUndoRedoManager):
+func _forward_canvas_gui_input(node: Behavior, event: InputEvent, undo_redo):
 	if event is InputEventMouse:
 		if _dragging != null:
 			if event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
