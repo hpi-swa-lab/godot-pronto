@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=139 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
@@ -15,7 +15,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="9_q3n0x"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRootBehavior.gd" id="10_2lhvw"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="11_5fkq4"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="12_4e6ei"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="13_euqfa"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="13_kertt"]
 [ext_resource type="PackedScene" uid="uid://bjgevao00usos" path="res://prototypes/i6w1-jf-geometry-dash/mid_air_jump.tscn" id="14_uvony"]
@@ -83,7 +82,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return at(\"Gravity\")
+	return 3450
 "
 
 [sub_resource type="Resource" id="Resource_4mt8u"]
@@ -130,20 +129,6 @@ arguments = [SubResource("Resource_ur00j")]
 only_if = SubResource("Resource_j12br")
 deferred = false
 enabled = true
-
-[sub_resource type="GDScript" id="GDScript_c26a2"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run():
-	return at(\"JumpVelocity\")
-"
-
-[sub_resource type="Resource" id="Resource_xcuwp"]
-script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_c26a2")
-argument_names = []
-return_value = true
 
 [sub_resource type="GDScript" id="GDScript_c74d7"]
 script/source = "@tool
@@ -326,6 +311,46 @@ only_if = SubResource("Resource_kqxu2")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_11lis"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: CharacterBody2D):
+	to.visible = false
+"
+
+[sub_resource type="Resource" id="Resource_8kx03"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_11lis")
+argument_names = ["result", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_uyhx5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_s04yy"]
+script = ExtResource("6_2xkus")
+nested_script = SubResource("GDScript_uyhx5")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_8nqq0"]
+script = ExtResource("7_ryytl")
+signal_name = "after"
+to = NodePath("../..")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_s04yy")
+expression = SubResource("Resource_8kx03")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_8snq0"]
 script/source = "@tool
 extends U
@@ -348,46 +373,6 @@ more_references = []
 invoke = "reload_current_scene"
 arguments = []
 only_if = SubResource("Resource_s3ckd")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_po1yx"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D):
-	from.get_parent().visible = false
-"
-
-[sub_resource type="Resource" id="Resource_fmgi5"]
-script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_po1yx")
-argument_names = ["other", "direction", "from"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_bsfsu"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_vtwf2"]
-script = ExtResource("6_2xkus")
-nested_script = SubResource("GDScript_bsfsu")
-argument_names = ["other", "direction", "from"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_8q2is"]
-script = ExtResource("7_ryytl")
-signal_name = "collided"
-to = NodePath("")
-more_references = []
-invoke = ""
-arguments = []
-only_if = SubResource("Resource_vtwf2")
-expression = SubResource("Resource_fmgi5")
 deferred = false
 enabled = true
 
@@ -528,7 +513,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return at(\"Gravity\")
+	return 3450
 "
 
 [sub_resource type="Resource" id="Resource_h746v"]
@@ -542,7 +527,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return at(\"Gravity\")
+	return 3450
 "
 
 [sub_resource type="Resource" id="Resource_hsydr"]
@@ -1052,6 +1037,30 @@ sprite_texture = ExtResource("2_dptxb")
 position = Vector2(-200, 153)
 collision_mask = 3
 
+[node name="JumpVelocity" type="Node2D" parent="Camera2D/World/Player"]
+position = Vector2(327, -454)
+script = ExtResource("13_euqfa")
+float_from = 100.0
+float_to = 1500.0
+float_value = 900.0
+float_step_size = 25.0
+
+[node name="Gravity" type="Node2D" parent="Camera2D/World/Player"]
+position = Vector2(327, -454)
+script = ExtResource("13_euqfa")
+float_from = 500.0
+float_to = 4000.0
+float_value = 3450.0
+float_step_size = 50.0
+
+[node name="AirLauncherPower" type="Node2D" parent="Camera2D/World/Player"]
+position = Vector2(327, -454)
+script = ExtResource("13_euqfa")
+float_from = 100.0
+float_to = 2000.0
+float_value = 1250.0
+float_step_size = 10.0
+
 [node name="PlaceholderBehavior" type="Node2D" parent="Camera2D/World/Player"]
 script = ExtResource("1_k1a43")
 placeholder_size = Vector2(64, 64)
@@ -1061,15 +1070,10 @@ sprite_texture = ExtResource("8_egm8n")
 [node name="Controller" type="Node2D" parent="Camera2D/World/Player"]
 position = Vector2(-43, -51)
 script = ExtResource("8_57mit")
+jump_velocity = 900.0
 jump_buffer = 0.0
 always_jump_multiplier = 0.8
 metadata/pronto_connections = [SubResource("Resource_jj0ap")]
-
-[node name="BindBehavior" type="Node2D" parent="Camera2D/World/Player/Controller"]
-position = Vector2(42, 0)
-script = ExtResource("9_q3n0x")
-evaluate = SubResource("Resource_xcuwp")
-to_prop = "jump_velocity"
 
 [node name="AlwaysBehavior" type="Node2D" parent="Camera2D/World/Player"]
 position = Vector2(57, -50)
@@ -1080,7 +1084,7 @@ metadata/pronto_connections = [SubResource("Resource_nr6jk")]
 position = Vector2(3, 47)
 script = ExtResource("11_5fkq4")
 evaluate = SubResource("Resource_gye5m")
-metadata/pronto_connections = [SubResource("Resource_v584m"), SubResource("Resource_wvyry"), SubResource("Resource_xln36"), SubResource("Resource_xicax")]
+metadata/pronto_connections = [SubResource("Resource_v584m"), SubResource("Resource_wvyry"), SubResource("Resource_xln36"), SubResource("Resource_xicax"), SubResource("Resource_8nqq0")]
 
 [node name="ClockBehavior" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior/End Game"]
 position = Vector2(39, 1)
@@ -1097,7 +1101,7 @@ script = ExtResource("10_2lhvw")
 position = Vector2(30, -66)
 script = ExtResource("13_kertt")
 limit_to_group = "spike"
-metadata/pronto_connections = [SubResource("Resource_8q2is"), SubResource("Resource_7i7rq")]
+metadata/pronto_connections = [SubResource("Resource_7i7rq")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Camera2D/World/Player"]
 stream = ExtResource("17_24r8g")
@@ -1116,38 +1120,6 @@ label_settings = SubResource("LabelSettings_5uw1s")
 script = ExtResource("9_q3n0x")
 evaluate = SubResource("Resource_d250o")
 to_prop = "text"
-
-[node name="PanelContainer" type="PanelContainer" parent="Camera2D"]
-visible = false
-z_index = 2
-offset_left = 127.0
-offset_top = -301.0
-offset_right = 573.0
-offset_bottom = -143.0
-
-[node name="Settings" type="Node2D" parent="Camera2D/PanelContainer"]
-script = ExtResource("12_4e6ei")
-
-[node name="JumpVelocity" type="Node2D" parent="Camera2D/PanelContainer/Settings"]
-script = ExtResource("13_euqfa")
-float_from = 100.0
-float_to = 1500.0
-float_value = 900.0
-float_step_size = 25.0
-
-[node name="Gravity" type="Node2D" parent="Camera2D/PanelContainer/Settings"]
-script = ExtResource("13_euqfa")
-float_from = 500.0
-float_to = 4000.0
-float_value = 3450.0
-float_step_size = 50.0
-
-[node name="AirLauncherPower" type="Node2D" parent="Camera2D/PanelContainer/Settings"]
-script = ExtResource("13_euqfa")
-float_from = 100.0
-float_to = 2000.0
-float_value = 1250.0
-float_step_size = 10.0
 
 [node name="LevelComplete" type="Sprite2D" parent="Camera2D"]
 visible = false
