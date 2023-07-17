@@ -1,5 +1,7 @@
 # Iteration 6 Week 1 - Geometry Dash
 
+You can play our game on [itch.io](https://finnxyz.itch.io/geometry-dash).
+
 We want to foucs on following functionality from the original game:
 
 - Simple Cube: Press space to jump (casual mechanic)
@@ -63,7 +65,17 @@ First, lets start this section of with some expressions:
 
 Overall, many people failed in the first third of our level (in the first upside-down part or before) and didn't even make it to the rolling part (where Space switches gravity).
 
+We also got the feedback that the player should disappear when he hits a wall (before, the player was still visible but didnt continue moving and then the game restartet), just like it is when he collides with a spike.
+
 We also noticed during testing, that some jumps are just a little bit too difficult, so we decided to remove certain spikes/blocks.
+
+Since we were ready for playertests very early this week, we were able to conduct a user test with many people at my weekly dance-party. Everyone wanted to try out the game but didn't manage to get that far due to the bad performance of my laptop used in the tests.
+
+![User test with many people](i6w1_user_test.jpg)
+
+With the deployment of the game working on monday (you can find our game [here](https://finnxyz.itch.io/geometry-dash)), we managed to give everyone the opportunity to play the game at home with their own computer which was a way nicer experience.
+
+We wish we had used this method in the past weeks as well as it would've made user testing so much easier. Deploying the game (when all requirements are met) only takes a minute now, so shipping out a new version can be done quickly.
 
 ## What we want to improve next week
 
@@ -71,3 +83,5 @@ We also noticed during testing, that some jumps are just a little bit too diffic
 - Fix issue with Placeholder, where the sprite does not get copied.
 - Fix issue with Placeholder, where `use_sprite` of the copy is set to true, even though the original has it false (and doesn't even have a sprite).
 - If possible: Instantiating a scene or pasting a copied object should spawn at the position of the cursor in the scene and not the origing (or wherever they currently spawn).
+- Improve documentation on how to export a game and upload it to [itch.io](https://itch.io)
+- Fix export of game with `at()` which currently doesn't seem to work properly as mentioned in Slack
