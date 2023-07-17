@@ -1076,12 +1076,12 @@ always_jump_multiplier = 0.8
 metadata/pronto_connections = [SubResource("Resource_jj0ap")]
 
 [node name="AlwaysBehavior" type="Node2D" parent="Camera2D/World/Player"]
-position = Vector2(57, -50)
+position = Vector2(122, -55)
 script = ExtResource("4_slgut")
 metadata/pronto_connections = [SubResource("Resource_nr6jk")]
 
 [node name="End Game" type="Node2D" parent="Camera2D/World/Player/AlwaysBehavior"]
-position = Vector2(3, 47)
+position = Vector2(1, 56)
 script = ExtResource("11_5fkq4")
 evaluate = SubResource("Resource_gye5m")
 metadata/pronto_connections = [SubResource("Resource_v584m"), SubResource("Resource_wvyry"), SubResource("Resource_xln36"), SubResource("Resource_xicax"), SubResource("Resource_8nqq0")]

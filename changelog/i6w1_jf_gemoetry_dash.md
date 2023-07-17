@@ -28,6 +28,10 @@ Surprinsingly we didn't have to create any non-pronto script and were able to cr
 
 However, we had to change certain behaviors like the PlatformController to work for our use-cases.
 
+Almost all of our game logic was built with pronto nodes, as you can see here:
+
+![Main game logic in Pronto](i6w1_main_game_logic.png)
+
 ## User testing
 
 ### Dev playtest
@@ -58,10 +62,13 @@ First, lets start this section of with some expressions:
 - "Das ist echt so wie das original"
 - "Wo sind die Checkpoints?"
 - "Huch, jetzt dreht sich die Schwerkraft um"
+- "Das ist gemein"
 - "Kann ich bitte die Musik ausmachen?"
 - "Es laggt zu sehr" (Grund: Mein Laptop ist nicht der beste, erst recht nicht bei 33 °C in der Sonne draußen)
 - "Arggghh" (x50 und öfter)
 - "Flappy Bird?! Lol"
+- "Kannst du den Laptop morgen wieder mitbringen, ich muss das Level schaffen" (Die Person war sehr froh über die mobile Version im Browser)
+- "Das erinnert mich an meine Bachelorarbeit" (die Person hat beim schreiben ihrer Arbeit eine Playlist von Geometry Dash Liedern gehört :D)
 
 Overall, many people failed in the first third of our level (in the first upside-down part or before) and didn't even make it to the rolling part (where Space switches gravity).
 
@@ -77,6 +84,10 @@ With the deployment of the game working on monday (you can find our game [here](
 
 We wish we had used this method in the past weeks as well as it would've made user testing so much easier. Deploying the game (when all requirements are met) only takes a minute now, so shipping out a new version can be done quickly.
 
+Quickly after publishing our game on itch.io, one of our testers mentioned that they would like to play the game on their phone, so we added touch input to our game and deployed it.
+
+![Mobile version of our game](i6w1_mobile_version.png)
+
 ## What we want to improve next week
 
 - We should definitly fix copying/duplicating pronto nodes as this is really annoying when designing a level
@@ -84,4 +95,4 @@ We wish we had used this method in the past weeks as well as it would've made us
 - Fix issue with Placeholder, where `use_sprite` of the copy is set to true, even though the original has it false (and doesn't even have a sprite).
 - If possible: Instantiating a scene or pasting a copied object should spawn at the position of the cursor in the scene and not the origing (or wherever they currently spawn).
 - Improve documentation on how to export a game and upload it to [itch.io](https://itch.io)
-- Fix export of game with `at()` which currently doesn't seem to work properly as mentioned in Slack
+- Fix export of game with `ValueBehavior` which currently doesn't seem to work properly as mentioned in Slack (already done, thx Tom)
