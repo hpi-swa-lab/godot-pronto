@@ -11,13 +11,30 @@ var only_below = null:  # Optional[NodePath]
 	set(v):
 		only_below = v
 		notify_property_list_changed()
-var include_internal = null  # Boolean if only_below else Null
+var include_internal = null  # Boolean if only_below else null
 var group = null  # Optional[StringName]
 var clazz = null  # Optional[StringName]
+var proximity = null:  # Optional[StringName] # null, 'radius' or 'shapes'
+	set(v):
+		proximity = v
+		if proximity != 'radius':
+			radius = null
+		notify_property_list_changed()
 var radius = null:  # Optional[float]
 	set(v):
-		radius = v
+		if v != null:
+			radius = v
+			self.proximity = 'radius'
 		queue_redraw()
+var shapes:
+	get:
+		var _shapes = _reference.get_children().filter(func (child):
+			return child is Shape2D
+		)
+		return _shapes if _shapes else null
+var shapes_info:
+	get:
+		return ",".join(shapes) if shapes else "(add ≥1 shape child)"
 var predicate_for_node = null  # Optional[ConnectionScript]
 
 var top_n = null  # Optional[int]
@@ -66,13 +83,28 @@ func _get_property_list():
 		'hint_string': 'ConnectionScript'
 	})
 	property_list.append({
-		'name': 'radius',
-		'type': TYPE_FLOAT,
-		'default': 10,
+		'name': 'proximity',
+		'type': TYPE_STRING_NAME,
+		'default': null,
 		'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CHECKABLE,
-		'hint': PROPERTY_HINT_RANGE,
-		'hint_string': '0,%s,or_greater' % Utils.get_game_size().length()
+		'hint': PROPERTY_HINT_ENUM,
+		'hint_string': 'radius,shapes'
 	})
+	if proximity == 'radius':
+		property_list.append({
+			'name': 'radius',
+			'type': TYPE_FLOAT,
+			'default': 10,
+			'usage': PROPERTY_USAGE_DEFAULT,
+			'hint': PROPERTY_HINT_RANGE,
+			'hint_string': '0,%s,or_greater' % Utils.get_game_size().length()
+		})
+	elif proximity == 'shapes':
+		property_list.append({
+			'name': 'shapes_info',
+			'type': TYPE_STRING,
+			'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_READ_ONLY
+		})
 	
 	property_list.append({
 		'name': "Selection",
@@ -102,6 +134,9 @@ func _ready():
 	
 	if _reference == null:
 		_reference = self
+	
+	get_tree().node_added.connect(_node_added)
+	get_tree().node_removed.connect(_node_removed)
 
 func query(token = null, parameters = {}):
 	var nodes = _search(parameters)
@@ -139,9 +174,24 @@ func _search(parameters = null):
 			return predicate_for_node.run([node], self)
 		)
 	
-	if radius != null:
+	if proximity == 'radius':
 		nodes = nodes.filter(func (node):
 			return node.global_position.distance_to(_reference.global_position) <= radius
+		)
+	elif proximity == 'shapes':
+		# TODO: get this to work. Shape2Ds are no nodes. What nodes would the user have to add? Is there a generic way to do this?
+		nodes = nodes.filter(func (node):
+			var node_shape
+			if node is Shape2D:
+				node_shape = node
+			else:
+				var rect = Utils.get_global_rect(node)
+				node_shape = RectangleShape2D.new()
+				node_shape.position = node.global_position
+				node_shape.size = rect.size
+			return shapes.any(func (shape):
+				return shape.collide(Transform2D.IDENTITY, node_shape, Transform2D.IDENTITY)
+			)
 		)
 	
 	
@@ -160,6 +210,16 @@ func _draw():
 			# FOR LATER: offer handle to change radius
 			draw_circle(Vector2.ZERO, radius, Color(1, 1, 1, 0.5))
 	super._draw()
+
+func _node_added(node):
+	if Engine.is_editor_hint():
+		if shapes:
+			proximity = 'shapes'
+
+func _node_removed(node):
+	if Engine.is_editor_hint():
+		if not shapes:
+			proximity = null
 
 func selected():
 	super.selected()
