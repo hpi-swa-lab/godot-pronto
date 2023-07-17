@@ -47,6 +47,25 @@ static func sum(list: Array):
 static func max(list: Array):
 	return list.reduce(func (accum, i): return max(accum, i), list[0])
 
+static func random_sample(list: Array, n: int, weight_func: Callable) -> Array:
+	var sample = []
+	var weights = {}
+	for ea in list:
+		weights[ea] = weight_func.call(ea)
+	for i in n:
+		var total = sum(weights.values())
+		if total <= 0:
+			break
+		var random = randf() * total
+		var accum = 0
+		for ea in list:
+			accum += weights[ea]
+			if accum >= random:
+				sample.append(ea)
+				weights[ea] = 0
+				break
+	return sample
+
 static func remove_duplicates(list: Array):
 	var out = []
 	for i in list:

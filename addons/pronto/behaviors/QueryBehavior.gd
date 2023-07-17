@@ -14,16 +14,16 @@ var only_below = null:  # Optional[NodePath]
 var include_internal = null  # Boolean if only_below else null
 var group = null  # Optional[StringName]
 var clazz = null  # Optional[StringName]
-var proximity = null:  # Optional[StringName] # null, 'radius' or 'shapes'
+var proximity = null:  # Optional[StringName] # null, 'radius', or 'shapes'
 	set(v):
 		proximity = v
 		if proximity != 'radius':
-			radius = null
+			self.radius = null
 		notify_property_list_changed()
 var radius = null:  # Optional[float]
 	set(v):
+		radius = v
 		if v != null:
-			radius = v
 			self.proximity = 'radius'
 		queue_redraw()
 var shapes:
@@ -37,7 +37,54 @@ var shapes_info:
 		return ",".join(shapes) if shapes else "(add ≥1 shape child)"
 var predicate_for_node = null  # Optional[ConnectionScript]
 
-var top_n = null  # Optional[int]
+var max_results = null:  # Optional[int]
+	set(v):
+		max_results = v
+		if max_results != null and selection_strategy == null:
+			print("setting selection_strategy to 'top'")
+			self.selection_strategy = 'top'
+		notify_property_list_changed()
+var selection_strategy = null:  # Optional[StringName] # null, 'top', or 'random'
+	set(v):
+		selection_strategy = v
+		if selection_strategy == 'top' and priority_strategy == null:
+			print("setting priority_strategy to 'distance'")
+			self.priority_strategy = 'distance'
+		elif selection_strategy == 'random' and random_weight_strategy == null:
+			self.random_weight_strategy = 'inverse_distance'
+		if selection_strategy != 'top':
+			self.priority_strategy = null
+		if selection_strategy != 'random':
+			self.random_weight_strategy = null
+		notify_property_list_changed()
+var priority_strategy = null:  # Optional[Union['distance', 'custom']]
+	set(v):
+		priority_strategy = v
+		if priority_strategy != null:
+			self.selection_strategy = 'top'
+		if priority_strategy != 'custom':
+			self.priority_script = null
+		notify_property_list_changed()
+var priority_script = null:  # Optional[ConnectionScript]
+	set(v):
+		priority_script = v
+		if priority_script != null:
+			self.priority_strategy = 'custom'
+		notify_property_list_changed()
+var random_weight_strategy = null:  # Optional[Union[null, 'inverse_distance', 'custom']]
+	set(v):
+		random_weight_strategy = v
+		if random_weight_strategy != null:
+			self.selection_strategy = 'random'
+		if random_weight_strategy != 'custom':
+			self.random_weight_script = null
+		notify_property_list_changed()
+var random_weight_script = null:  # Optional[ConnectionScript]
+	set(v):
+		random_weight_script = v
+		if random_weight_script != null:
+			self.random_weight_strategy = 'custom'
+		notify_property_list_changed()
 
 ## A node inside the scene to be used for navigation. Relevant for internal copies only.
 var _reference = null
@@ -112,18 +159,61 @@ func _get_property_list():
 		'usage': PROPERTY_USAGE_GROUP,
 	})
 	property_list.append({
-		'name': 'top_n',
+		'name': 'max_results',
 		'type': TYPE_INT,
 		'default': null,
 		'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CHECKABLE,
 		'hint': PROPERTY_HINT_RANGE,
 		'hint_string': '1,10,or_greater'
 	})
+	if max_results != null:
+		property_list.append({
+			'name': 'selection_strategy',
+			'type': TYPE_STRING_NAME,
+			'default': 'top',
+			'usage': PROPERTY_USAGE_DEFAULT,
+			'hint': PROPERTY_HINT_ENUM,
+			'hint_string': 'top,random'
+		})
+		if selection_strategy == 'top':
+			property_list.append({
+				'name': 'priority_strategy',
+				'type': TYPE_STRING_NAME,
+				'default': 'distance',
+				'usage': PROPERTY_USAGE_DEFAULT,
+				'hint': PROPERTY_HINT_ENUM,
+				'hint_string': 'distance,custom'
+			})
+			if priority_strategy == 'custom':
+				property_list.append({
+					'name': 'priority_script',
+					'type': TYPE_OBJECT,
+					'usage': PROPERTY_USAGE_DEFAULT,
+					'hint': PROPERTY_HINT_RESOURCE_TYPE,
+					'hint_string': 'ConnectionScript'
+				})
+		elif selection_strategy == 'random':
+			property_list.append({
+				'name': 'random_weight_strategy',
+				'type': TYPE_STRING_NAME,
+				'default': 'inverse_distance',
+				'usage': PROPERTY_USAGE_DEFAULT,
+				'hint': PROPERTY_HINT_ENUM,
+				'hint_string': 'inverse_distance,custom'
+			})
+			if random_weight_strategy == 'custom':
+				property_list.append({
+					'name': 'random_weight_script',
+					'type': TYPE_OBJECT,
+					'usage': PROPERTY_USAGE_DEFAULT,
+					'hint': PROPERTY_HINT_RESOURCE_TYPE,
+					'hint_string': 'ConnectionScript'
+				})
 	
 	return property_list
 
 func wants_expression_inspector(property_name):
-	return property_name == 'predicate_for_node'
+	return property_name in ['predicate_for_node', 'priority_script', 'random_weight_script']
 
 func initialize_connection_script(property_name, connection_script):
 	connection_script.argument_names = ['node']
@@ -139,25 +229,27 @@ func _ready():
 	get_tree().node_removed.connect(_node_removed)
 
 func query(token = null, parameters = {}):
-	var nodes = _search(parameters)
+	var nodes = _query(parameters)
 	found_all.emit(nodes, token)
 	for node in nodes:
 		found.emit(node, token)
 
-func _search(parameters = null):
+func _query(parameters = null):
 	if parameters:
 		var query = duplicate()
 		query._reference = _reference
 		for key in parameters.keys():
 			query[key] = parameters[key]
-		return query._search()
+		return query._query()
 
 
-	var nodes
-	
-	
+	var nodes = _search()
+	nodes = _select(nodes)
+	return nodes
+
+func _search():
 	var root = _reference.get_node(only_below) if only_below != null else _reference.get_tree().current_scene
-	nodes = Utils.all_nodes(root, include_internal if include_internal != null else false)
+	var nodes = Utils.all_nodes(root, include_internal if include_internal != null else false)
 	
 	if group != null:
 		nodes = nodes.filter(func (node):
@@ -194,13 +286,34 @@ func _search(parameters = null):
 			)
 		)
 	
+	return nodes
+
+func _select(nodes):
+	if max_results == null:
+		return nodes
 	
-	if top_n != null:
-		nodes.sort_custom(func (a, b):
-			return a.global_position.distance_to(_reference.global_position) < b.global_position.distance_to(_reference.global_position)
-		)
-		nodes = nodes.slice(0, min(top_n, len(nodes)))
+	var n = min(max_results, len(nodes))
 	
+	if selection_strategy == 'top':
+		var priority_func
+		if priority_strategy == 'distance':
+			priority_func = func (node):
+				return node.global_position.distance_to(_reference.global_position)
+		elif priority_strategy == 'custom':
+			priority_func = func (node):
+				return priority_script.run([node], self)
+		nodes.sort_custom(func (a, b): return priority_func.call(a) < priority_func.call(b))
+		return nodes.slice(0, n)
+	
+	elif selection_strategy == 'random':
+		var random_weight_func
+		if random_weight_strategy == 'inverse_distance':
+			random_weight_func = func (node):
+				return 1 / node.global_position.distance_to(_reference.global_position)
+		elif random_weight_strategy == 'custom':
+			random_weight_func = func (node):
+				return random_weight_script.run([node], self)
+		return Utils.random_sample(nodes, n, random_weight_func)
 	
 	return nodes
 
@@ -228,3 +341,8 @@ func selected():
 func deselected():
 	super.deselected()
 	queue_redraw()
+
+
+# TODOS
+# - implement or remove shapes
+# - test everything thoroughly
