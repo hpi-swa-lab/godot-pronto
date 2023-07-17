@@ -41,7 +41,14 @@ var _last_jump_input = -10000
 var _last_positions_max = 30
 var _last_positions = []
 
+var _touch_down = false
+
 signal collided(last_collision: KinematicCollision2D)
+
+# Implement jumping for mobile/touch
+func _input(event):
+	if not event is InputEventScreenTouch: return
+	_touch_down = event.pressed
 
 func _enter_tree():
 	if not get_parent() is CharacterBody2D:
@@ -54,7 +61,9 @@ func _update_jump():
 	if (_parent.is_on_floor() and gravity.angle_to(Vector2.DOWN) < PI) or (_parent.is_on_ceiling() and gravity.angle_to(Vector2.UP) < PI):
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
-	
+	# Account for touch input
+	if (_touch_down):
+		_last_jump_input = now
 	if can_always_jump and Input.is_action_just_pressed("ui_accept"):
 		_last_jump_input = now
 	if not can_always_jump and Input.is_action_pressed("ui_accept"):
