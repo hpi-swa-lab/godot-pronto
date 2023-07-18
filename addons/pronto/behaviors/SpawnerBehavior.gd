@@ -152,7 +152,7 @@ func spawn_toward(pos: Vector2, index: int = -1):
 	
 	for instance in instances:
 		instance.global_position = global_position
-		instance.rotation = global_position.angle_to_point(pos)
+		instance.rotation = pos.angle_to_point(pos)
 		spawned.emit(instance)
 	
 	return instances
@@ -189,6 +189,7 @@ func spawn_at(pos: Vector2, index: int = -1):
 ## [param toward]: The position to rotate the new instance(s) towards.
 ## If not set, does not rotate.
 func spawn_at_toward(pos: Vector2, index: int = -1, toward: Vector2 = global_position):
+	print(toward)
 	var instances = []
 	if index < 0:
 		for i in range(scenes.size()):
@@ -199,7 +200,7 @@ func spawn_at_toward(pos: Vector2, index: int = -1, toward: Vector2 = global_pos
 	for instance in instances:
 		instance.global_position = pos
 		if toward != global_position:
-			instance.rotation = global_position.angle_to_point(toward)
+			instance.rotation = pos.angle_to_point(toward)
 		spawned.emit(instance)
 	
 	return instances

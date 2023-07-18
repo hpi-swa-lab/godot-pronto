@@ -1,4 +1,4 @@
-[gd_scene load_steps=172 format=3 uid="uid://bmnvx75sa8vaq"]
+[gd_scene load_steps=181 format=3 uid="uid://bmnvx75sa8vaq"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_m3vl8"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_eueui"]
@@ -16,7 +16,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="11_p5fa2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="15_vuix7"]
 
-[sub_resource type="Image" id="Image_k4o5q"]
+[sub_resource type="Image" id="Image_rj5si"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0),
 "format": "RGBA8",
@@ -26,7 +26,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_xtg3u"]
-image = SubResource("Image_k4o5q")
+image = SubResource("Image_rj5si")
 
 [sub_resource type="GDScript" id="GDScript_t4lqf"]
 script/source = "@tool
@@ -843,7 +843,7 @@ only_if = SubResource("Resource_ogemm")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_01o5l"]
+[sub_resource type="Image" id="Image_pqbht"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -853,7 +853,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_esb76"]
-image = SubResource("Image_01o5l")
+image = SubResource("Image_pqbht")
 
 [sub_resource type="GDScript" id="GDScript_xx2y5"]
 script/source = "@tool
@@ -1194,6 +1194,81 @@ only_if = SubResource("Resource_am7gl")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_rv1m1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3lcm7"]
+script = ExtResource("4_3avti")
+nested_script = SubResource("GDScript_rv1m1")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_w3lpi"]
+script = ExtResource("5_qah0v")
+signal_name = "always"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_left"
+arguments = []
+only_if = SubResource("Resource_3lcm7")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_mu2eh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fgpnv"]
+script = ExtResource("4_3avti")
+nested_script = SubResource("GDScript_mu2eh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0n0fe"]
+script = ExtResource("5_qah0v")
+signal_name = "elapsed"
+to = NodePath("../AlwaysBehavior")
+more_references = []
+invoke = "resume"
+arguments = []
+only_if = SubResource("Resource_fgpnv")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_emxxc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_mqo4w"]
+script = ExtResource("4_3avti")
+nested_script = SubResource("GDScript_emxxc")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_focvs"]
+script = ExtResource("5_qah0v")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_mqo4w")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_4ajkn"]
 script/source = "@tool
 extends U
@@ -1209,11 +1284,12 @@ func get_spawner():
 var rng = RandomNumberGenerator.new()
 enum SpawnType {
 	FLY = 0,
-	ARROW = 1,
+	ARROW_RIGHT = 1,
 	WALL_RIGHT = 2,
 	WALL_LEFT = 3,
 	WALL_UP = 4,
-	WALL_DOWN = 5
+	WALL_DOWN = 5,
+	ARROW_LEFT = 6
 }
 enum ScreenSide {
 	RIGHT = 0,
@@ -1230,18 +1306,20 @@ const PATTERNS = [
 		{
 			time = 0,
 			type = SpawnType.FLY,
-			pos = Vector2(0,0)
+			pos = Vector2(0,0),
+			toward = Vector2(1152,648)
 		},
 		{
 			time = 0,
 			type = SpawnType.FLY,
-			pos = Vector2(0,0)
+			pos = Vector2(0,648),
+			toward = Vector2(1152,0)
 		}
 	]
 ]
 
 func get_opposite_on_screen(v: Vector2):
-	return Vector2(648 - v.y, 1152 - v.x)
+	return Vector2(1152 - v.x, 648 - v.y)
 
 func generate_random_corner_coord(side: int = ScreenSide.values().pick_random()):
 	if side == ScreenSide.RIGHT:
@@ -1272,8 +1350,10 @@ func run():
 			if new_spawn_event.type == SpawnType.FLY:
 				new_spawn_event.pos = generate_random_corner_coord()
 				new_spawn_event.toward = get_opposite_on_screen(new_spawn_event.pos)
-			elif new_spawn_event.type == SpawnType.ARROW:
-				new_spawn_event.pos = generate_random_corner_coord([ScreenSide.LEFT, ScreenSide.RIGHT].pick_random())
+			elif new_spawn_event.type == SpawnType.ARROW_LEFT:
+				new_spawn_event.pos = generate_random_corner_coord(ScreenSide.RIGHT)
+			elif new_spawn_event.type == SpawnType.ARROW_RIGHT:
+				new_spawn_event.pos = generate_random_corner_coord(ScreenSide.LEFT)
 			else:
 				# WALL
 				if new_spawn_event.type in [SpawnType.WALL_UP, SpawnType.WALL_DOWN]:
@@ -1538,7 +1618,7 @@ metadata/pronto_connections = [SubResource("Resource_ekvdk")]
 
 [node name="PlaceholderBehavior" type="Node2D" parent="EnemySpawner/UpWall"]
 script = ExtResource("2_eueui")
-placeholder_size = Vector2(300, 25)
+placeholder_size = Vector2(150, 25)
 sprite_texture = ExtResource("3_3r8gg")
 
 [node name="ClockBehavior" type="Node2D" parent="EnemySpawner/UpWall"]
@@ -1554,7 +1634,7 @@ collision_mask = 0
 
 [node name="PlaceholderBehavior" type="Node2D" parent="EnemySpawner/DownWall"]
 script = ExtResource("2_eueui")
-placeholder_size = Vector2(300, 25)
+placeholder_size = Vector2(150, 25)
 sprite_texture = ExtResource("3_3r8gg")
 
 [node name="AlwaysBehavior" type="Node2D" parent="EnemySpawner/DownWall"]
@@ -1572,6 +1652,42 @@ script = ExtResource("8_ovxb0")
 duration_seconds = 3.0
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_jkwi2")]
+
+[node name="ArrowLeft" type="CharacterBody2D" parent="EnemySpawner"]
+position = Vector2(-552, 192)
+collision_mask = 0
+
+[node name="PlaceholderBehavior" type="Node2D" parent="EnemySpawner/ArrowLeft"]
+script = ExtResource("2_eueui")
+placeholder_size = Vector2(169, 12)
+sprite_texture = ExtResource("3_3r8gg")
+
+[node name="MoveBehavior" type="Node2D" parent="EnemySpawner/ArrowLeft"]
+position = Vector2(33, 68)
+script = ExtResource("6_u57fy")
+max_velocity = 3000.0
+acceleration = 1000.0
+
+[node name="AlwaysBehavior" type="Node2D" parent="EnemySpawner/ArrowLeft"]
+position = Vector2(-45, 100)
+script = ExtResource("11_p5fa2")
+paused = true
+metadata/pronto_connections = [SubResource("Resource_w3lpi")]
+
+[node name="ClockBehavior" type="Node2D" parent="EnemySpawner/ArrowLeft"]
+position = Vector2(-116, 104)
+script = ExtResource("8_ovxb0")
+one_shot = true
+duration_seconds = 2.0
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_0n0fe")]
+
+[node name="ClockBehavior2" type="Node2D" parent="EnemySpawner/ArrowLeft"]
+position = Vector2(-192, 65)
+script = ExtResource("8_ovxb0")
+duration_seconds = 4.0
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_focvs")]
 
 [node name="CodeBehavior" type="Node2D" parent="."]
 position = Vector2(-366, 84)
