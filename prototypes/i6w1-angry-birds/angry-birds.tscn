@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://7yv7h4ilqmgg"]
+[gd_scene load_steps=70 format=3 uid="uid://7yv7h4ilqmgg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_oe11t"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_5a507"]
@@ -8,15 +8,159 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_yqc71"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="7_3gwg1"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_vjssu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="7_vtxpv"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="8_epnhk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="9_4jww6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="9_o6cql"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="12_j4kw5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="13_olwqe"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_va3t0"]
+bounce = 0.2
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bpuw1"]
+absorbent = true
+
 [sub_resource type="Gradient" id="Gradient_6068g"]
 offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_s60fg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(health, from: Node2D, to: Node2D):
+	return from._get_color()
+"
+
+[sub_resource type="Resource" id="Resource_dvgds"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_s60fg")
+argument_names = ["health", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_uxi7r"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(health, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_io17b"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_uxi7r")
+argument_names = ["health", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ej1ho"]
+script = ExtResource("7_vjssu")
+signal_name = "changed"
+to = NodePath("../PlaceholderShapeBehavior")
+more_references = []
+invoke = "@color_setter"
+arguments = [SubResource("Resource_dvgds")]
+only_if = SubResource("Resource_io17b")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_jjoku"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_w5otk"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_jjoku")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nevs7"]
+script = ExtResource("7_vjssu")
+signal_name = "death"
+to = NodePath("../DeathClock")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_w5otk")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_2w1sp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	var pig = to.get_parent() as RigidBody2D
+	if other.is_in_group(\"boundary\"):
+		return pig.linear_velocity.length() * G.at(\"BoundaryDamage\")
+		
+	var other_impulse = other.linear_velocity * other.mass
+	var pig_impulse = pig.linear_velocity * pig.mass
+	
+	var impulse = other_impulse - pig_impulse
+	var bird_damage = G.at(\"BirdDamage\") if other.is_in_group(\"birds\") else 0
+	return impulse.length() * (G.at(\"ImpactDamage\") + bird_damage)
+"
+
+[sub_resource type="Resource" id="Resource_wtjyr"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_2w1sp")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_c0y72"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rojne"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_c0y72")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_d315v"]
+script = ExtResource("7_vjssu")
+signal_name = "collided"
+to = NodePath("../HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_wtjyr")]
+only_if = SubResource("Resource_rojne")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_s7nli"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_micvq"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_s7nli")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_syxu5"]
+script = ExtResource("7_vjssu")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_micvq")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_xxg3t"]
 script/source = "@tool
@@ -72,7 +216,6 @@ deferred = false
 enabled = true
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ru3cs"]
-bounce = 0.2
 
 [sub_resource type="GDScript" id="GDScript_hepfj"]
 script/source = "@tool
@@ -135,11 +278,11 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(position, start_position, from: Node2D, to: RigidBody2D, ref0: Marker2D):
+func run(position, start_position, from, to, ref0):
 	var bird = from.get_parent()
 	var delta = ref0.global_position - bird.global_position
 	delta = delta.limit_length(G.at(\"CatapultRadius\"))
-	to.call_deferred(\"apply_central_impulse\", delta * G.at(\"CatapultStrength\"))
+	to.call_deferred(\"apply_central_impulse\", delta * G.at(\"CatapultStrength\") * bird.mass)
 "
 
 [sub_resource type="Resource" id="Resource_eqp7i"]
@@ -171,6 +314,56 @@ invoke = "apply_central_impulse"
 arguments = [SubResource("Resource_c4ycm")]
 only_if = SubResource("Resource_p38dt")
 expression = SubResource("Resource_eqp7i")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_4fwo6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return to.linear_velocity.length() < 10
+"
+
+[sub_resource type="Resource" id="Resource_8clre"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_4fwo6")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_50fhf"]
+script = ExtResource("7_vjssu")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_8clre")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_mhtnf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_o60jj"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_mhtnf")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_skcrj"]
+script = ExtResource("7_vjssu")
+signal_name = "collided"
+to = NodePath("../DespawnClock")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_o60jj")
 deferred = false
 enabled = true
 
@@ -254,8 +447,9 @@ enabled = true
 
 [node name="angry-birds" type="Node2D"]
 
-[node name="Boundary" type="StaticBody2D" parent="."]
+[node name="Boundary" type="StaticBody2D" parent="." groups=["boundary"]]
 position = Vector2(864, 320)
+physics_material_override = SubResource("PhysicsMaterial_va3t0")
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Boundary"]
 position = Vector2(-287, -325)
@@ -285,8 +479,10 @@ placeholder_size = Vector2(7, 656)
 keep_in_origin = false
 sprite_texture = ExtResource("2_5a507")
 
-[node name="Board2" type="RigidBody2D" parent="."]
-position = Vector2(868, 572)
+[node name="Board2" type="RigidBody2D" parent="." groups=["can_damage", "enemies"]]
+position = Vector2(868, 580)
+physics_material_override = SubResource("PhysicsMaterial_bpuw1")
+can_sleep = false
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Board2"]
 script = ExtResource("1_oe11t")
@@ -294,8 +490,10 @@ color = Color(0.392641, 0.313366, 0.150292, 1)
 placeholder_size = Vector2(8, 96)
 sprite_texture = ExtResource("2_5a507")
 
-[node name="Board3" type="RigidBody2D" parent="."]
-position = Vector2(988, 572)
+[node name="Board3" type="RigidBody2D" parent="." groups=["can_damage", "enemies"]]
+position = Vector2(988, 580)
+physics_material_override = SubResource("PhysicsMaterial_bpuw1")
+can_sleep = false
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Board3"]
 script = ExtResource("1_oe11t")
@@ -303,8 +501,10 @@ color = Color(0.392641, 0.313366, 0.150292, 1)
 placeholder_size = Vector2(8, 96)
 sprite_texture = ExtResource("2_5a507")
 
-[node name="Board4" type="RigidBody2D" parent="."]
-position = Vector2(928, 624)
+[node name="Board4" type="RigidBody2D" parent="." groups=["can_damage", "enemies"]]
+position = Vector2(928, 632)
+physics_material_override = SubResource("PhysicsMaterial_bpuw1")
+can_sleep = false
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Board4"]
 script = ExtResource("1_oe11t")
@@ -312,8 +512,10 @@ color = Color(0.392641, 0.313366, 0.150292, 1)
 placeholder_size = Vector2(128, 8)
 sprite_texture = ExtResource("2_5a507")
 
-[node name="Board5" type="RigidBody2D" parent="."]
-position = Vector2(928, 520)
+[node name="Board5" type="RigidBody2D" parent="." groups=["can_damage", "enemies"]]
+position = Vector2(928, 528)
+physics_material_override = SubResource("PhysicsMaterial_bpuw1")
+can_sleep = false
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Board5"]
 script = ExtResource("1_oe11t")
@@ -321,21 +523,37 @@ color = Color(0.392641, 0.313366, 0.150292, 1)
 placeholder_size = Vector2(128, 8)
 sprite_texture = ExtResource("2_5a507")
 
-[node name="Pig" type="RigidBody2D" parent="."]
-position = Vector2(918, 586)
+[node name="Pig" type="RigidBody2D" parent="." groups=["enemies"]]
+position = Vector2(920, 576)
 
 [node name="PlaceholderShapeBehavior" type="Node2D" parent="Pig"]
-position = Vector2(10, 10)
+position = Vector2(8, 28)
 script = ExtResource("3_6wpat")
 shape_type = "Circle"
 label = "🐷"
 color = Color(0, 1, 0, 1)
-circle_radius = 20.3844
+circle_radius = 24.0
 
 [node name="HealthBarBehavior" type="Node2D" parent="Pig"]
-position = Vector2(10, -18)
+visible = false
+position = Vector2(110, 10)
 script = ExtResource("4_phcpe")
 progress_gradient = SubResource("Gradient_6068g")
+metadata/pronto_connections = [SubResource("Resource_ej1ho"), SubResource("Resource_nevs7")]
+
+[node name="CollisionBehavior" type="Node2D" parent="Pig"]
+position = Vector2(110, 80)
+script = ExtResource("7_vtxpv")
+limit_to_group = "can_damage"
+metadata/pronto_connections = [SubResource("Resource_d315v")]
+
+[node name="DeathClock" type="Node2D" parent="Pig"]
+position = Vector2(56, 84)
+script = ExtResource("13_olwqe")
+one_shot = true
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_syxu5")]
 
 [node name="PlaceholderBehavior" type="Node2D" parent="."]
 z_index = -1
@@ -382,6 +600,28 @@ float_to = 200.0
 float_value = 100.0
 float_step_size = 0.1
 
+[node name="BirdDamage" type="Node2D" parent="PanelContainer/PrototypingUIBehavior"]
+position = Vector2(166, 162)
+script = ExtResource("9_4jww6")
+float_from = 0.0
+float_to = 2.0
+float_value = 0.2
+float_step_size = 0.01
+
+[node name="ImpactDamage" type="Node2D" parent="PanelContainer/PrototypingUIBehavior"]
+script = ExtResource("9_4jww6")
+float_from = 0.0
+float_to = 2.0
+float_value = 0.2
+float_step_size = 0.01
+
+[node name="BoundaryDamage" type="Node2D" parent="PanelContainer/PrototypingUIBehavior"]
+script = ExtResource("9_4jww6")
+float_from = 0.0
+float_to = 2.0
+float_value = 0.1
+float_step_size = 0.01
+
 [node name="SpawnKey" type="Node2D" parent="PanelContainer"]
 position = Vector2(41, 269)
 script = ExtResource("7_3gwg1")
@@ -392,8 +632,9 @@ metadata/pronto_connections = [SubResource("Resource_n2ue5")]
 position = Vector2(93, 410)
 script = ExtResource("9_o6cql")
 
-[node name="Bird" type="RigidBody2D" parent="SpawnerBehavior" groups=["birds"]]
+[node name="Bird" type="RigidBody2D" parent="SpawnerBehavior" groups=["birds", "can_damage"]]
 position = Vector2(-27, 173)
+mass = 0.3
 physics_material_override = SubResource("PhysicsMaterial_ru3cs")
 
 [node name="PlaceholderShapeBehavior" type="Node2D" parent="SpawnerBehavior/Bird"]
@@ -415,6 +656,20 @@ offset_left = -24.0
 offset_top = -24.0
 offset_right = 24.0
 offset_bottom = 24.0
+
+[node name="DespawnClock" type="Node2D" parent="SpawnerBehavior/Bird"]
+position = Vector2(-18, 41)
+script = ExtResource("13_olwqe")
+duration_seconds = 3.0
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_50fhf")]
+
+[node name="CollisionBehavior" type="Node2D" parent="SpawnerBehavior/Bird"]
+position = Vector2(50, 81)
+script = ExtResource("7_vtxpv")
+limit_to_group = "enemies"
+metadata/pronto_connections = [SubResource("Resource_skcrj")]
 
 [node name="SpawnBirds" type="Node2D" parent="."]
 position = Vector2(97, 523)
