@@ -11,11 +11,11 @@ func reload_icon():
 	_icon.queue_redraw()
 
 func icon_texture():
+	var name = get_script().resource_path.get_file().split('.')[0]
 	return Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
 
 func _ready():
 	if Engine.is_editor_hint() and show_icon() and is_active_scene():
-		var name = get_script().resource_path.get_file().split('.')[0]
 		_icon.texture = icon_texture()
 		_icon.position = _icon.texture.get_size() / -2
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
@@ -37,7 +37,7 @@ func _ready():
 func is_active_scene() -> bool:
 	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
 
-func get_editor_plugin() -> EditorPlugin:
+func get_editor_plugin():
 	return G.at("_pronto_editor_plugin")
 
 func show_icon():
@@ -58,7 +58,7 @@ func _process(delta):
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	_handles._forward_canvas_draw_over_viewport(self, viewport_control)
 
-func _forward_canvas_gui_input(event: InputEvent, undo_redo: EditorUndoRedoManager):
+func _forward_canvas_gui_input(event: InputEvent, undo_redo):
 	return _handles._forward_canvas_gui_input(self, event, undo_redo)
 
 func deselected():
