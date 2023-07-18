@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://7yv7h4ilqmgg"]
+[gd_scene load_steps=45 format=3 uid="uid://7yv7h4ilqmgg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_oe11t"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_5a507"]
@@ -6,22 +6,82 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="4_phcpe"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/DragBehavior.gd" id="5_2b2xo"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_yqc71"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="7_3gwg1"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_vjssu"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="8_epnhk"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="9_4jww6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="9_o6cql"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="12_j4kw5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="13_olwqe"]
 
 [sub_resource type="Gradient" id="Gradient_6068g"]
 offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
 
+[sub_resource type="GDScript" id="GDScript_xxg3t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_vx2nl"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_xxg3t")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_x0crc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_i57w8"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_x0crc")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_mxw4y"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_vcdn0"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_mxw4y")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_n2ue5"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("../../SpawnerBehavior")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_vx2nl"), SubResource("Resource_i57w8")]
+only_if = SubResource("Resource_vcdn0")
+deferred = false
+enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ru3cs"]
+bounce = 0.2
+
 [sub_resource type="GDScript" id="GDScript_hepfj"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(position: Vector2, start_position, last_position, from: Node2D, to: RigidBody2D, ref0: Node2D):
+func run(position, start_position, last_position, from, to, ref0):
 	var bird = from.get_parent()
 	var v = bird.global_position - ref0.global_position
-	var max_length = 100
+	var max_length = G.at(\"CatapultRadius\")
 	v = v.limit_length(max_length)
 	return ref0.global_position + v
 "
@@ -50,7 +110,7 @@ return_value = true
 script = ExtResource("7_vjssu")
 signal_name = "dragged"
 to = NodePath("..")
-more_references = [NodePath("../../Catapult/Marker2D")]
+more_references = [NodePath("../../../Catapult/CatapultMarker")]
 invoke = "set_position"
 arguments = [SubResource("Resource_u7pe7")]
 only_if = SubResource("Resource_y2crl")
@@ -71,6 +131,23 @@ nested_script = SubResource("GDScript_m2hke")
 argument_names = ["position", "start_position", "from", "to", "ref0"]
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_uke1b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, from: Node2D, to: RigidBody2D, ref0: Marker2D):
+	var bird = from.get_parent()
+	var delta = ref0.global_position - bird.global_position
+	delta = delta.limit_length(G.at(\"CatapultRadius\"))
+	to.call_deferred(\"apply_central_impulse\", delta * G.at(\"CatapultStrength\"))
+"
+
+[sub_resource type="Resource" id="Resource_eqp7i"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_uke1b")
+argument_names = ["position", "start_position", "from", "to", "ref0"]
+return_value = false
+
 [sub_resource type="GDScript" id="GDScript_qdomj"]
 script/source = "@tool
 extends U
@@ -89,10 +166,89 @@ return_value = true
 script = ExtResource("7_vjssu")
 signal_name = "dropped"
 to = NodePath("..")
-more_references = [NodePath("../../Catapult/Marker2D")]
+more_references = [NodePath("../../../Catapult/CatapultMarker")]
 invoke = "apply_central_impulse"
 arguments = [SubResource("Resource_c4ycm")]
 only_if = SubResource("Resource_p38dt")
+expression = SubResource("Resource_eqp7i")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_wj1km"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_gpmc7"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_wj1km")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_pyhcv"]
+script = ExtResource("7_vjssu")
+signal_name = "node_ready"
+to = NodePath("ThreeTImes")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_gpmc7")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_n0kwu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_cu0n3"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_n0kwu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_saly2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_r8uml"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_saly2")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0yqi8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_cwxux"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_0yqi8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_l6w7v"]
+script = ExtResource("7_vjssu")
+signal_name = "until_elapsed"
+to = NodePath("../../SpawnerBehavior")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_cu0n3"), SubResource("Resource_r8uml")]
+only_if = SubResource("Resource_cwxux")
 deferred = false
 enabled = true
 
@@ -190,30 +346,6 @@ placeholder_size = Vector2(1419, 909)
 sprite_texture = ExtResource("2_5a507")
 metadata/_edit_lock_ = true
 
-[node name="Bird" type="RigidBody2D" parent="."]
-position = Vector2(216, 492)
-freeze = true
-
-[node name="PlaceholderShapeBehavior" type="Node2D" parent="Bird"]
-script = ExtResource("3_6wpat")
-shape_type = "Circle"
-label = "🐦"
-color = Color(1, 0, 0, 1)
-keep_in_origin = false
-circle_radius = 23.0877
-
-[node name="DragBehavior" type="Node2D" parent="Bird"]
-position = Vector2(96, 32)
-script = ExtResource("5_2b2xo")
-metadata/pronto_connections = [SubResource("Resource_ct1tn"), SubResource("Resource_3chew")]
-
-[node name="Panel" type="Panel" parent="Bird"]
-visible = false
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 24.0
-offset_bottom = 24.0
-
 [node name="Catapult" type="Node2D" parent="."]
 show_behind_parent = true
 position = Vector2(216, 564)
@@ -222,14 +354,15 @@ color = Color(0.392157, 0.313726, 0.14902, 1)
 placeholder_size = Vector2(12, 130)
 sprite_texture = ExtResource("2_5a507")
 
-[node name="Marker2D" type="Marker2D" parent="Catapult"]
+[node name="CatapultMarker" type="Marker2D" parent="Catapult"]
+unique_name_in_owner = true
 position = Vector2(0, -64)
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_left = 48.0
 offset_top = 20.0
 offset_right = 452.0
-offset_bottom = 104.0
+offset_bottom = 254.0
 
 [node name="PrototypingUIBehavior" type="Node2D" parent="PanelContainer"]
 script = ExtResource("8_epnhk")
@@ -238,5 +371,61 @@ script = ExtResource("8_epnhk")
 script = ExtResource("9_4jww6")
 float_from = 0.1
 float_to = 50.0
-float_value = 8.0
+float_value = 12.0
 float_step_size = 0.1
+
+[node name="CatapultRadius" type="Node2D" parent="PanelContainer/PrototypingUIBehavior"]
+position = Vector2(146, 97)
+script = ExtResource("9_4jww6")
+float_from = 20.0
+float_to = 200.0
+float_value = 100.0
+float_step_size = 0.1
+
+[node name="SpawnKey" type="Node2D" parent="PanelContainer"]
+position = Vector2(41, 269)
+script = ExtResource("7_3gwg1")
+key = "S"
+metadata/pronto_connections = [SubResource("Resource_n2ue5")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="."]
+position = Vector2(93, 410)
+script = ExtResource("9_o6cql")
+
+[node name="Bird" type="RigidBody2D" parent="SpawnerBehavior" groups=["birds"]]
+position = Vector2(-27, 173)
+physics_material_override = SubResource("PhysicsMaterial_ru3cs")
+
+[node name="PlaceholderShapeBehavior" type="Node2D" parent="SpawnerBehavior/Bird"]
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+label = "🐦"
+color = Color(1, 0, 0, 1)
+keep_in_origin = false
+circle_radius = 23.0877
+
+[node name="DragBehavior" type="Node2D" parent="SpawnerBehavior/Bird"]
+position = Vector2(96, 32)
+script = ExtResource("5_2b2xo")
+metadata/pronto_connections = [SubResource("Resource_ct1tn"), SubResource("Resource_3chew")]
+
+[node name="Panel" type="Panel" parent="SpawnerBehavior/Bird"]
+visible = false
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+
+[node name="SpawnBirds" type="Node2D" parent="."]
+position = Vector2(97, 523)
+script = ExtResource("12_j4kw5")
+metadata/pronto_connections = [SubResource("Resource_pyhcv")]
+
+[node name="ThreeTImes" type="Node2D" parent="SpawnBirds"]
+position = Vector2(53, 47)
+script = ExtResource("13_olwqe")
+one_shot = true
+paused = true
+trigger_every_x_seconds = true
+trigger_interval_in_seconds = 0.333
+metadata/pronto_connections = [SubResource("Resource_l6w7v")]
