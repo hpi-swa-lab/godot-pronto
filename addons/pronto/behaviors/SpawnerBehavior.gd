@@ -178,6 +178,32 @@ func spawn_at(pos: Vector2, index: int = -1):
 	
 	return instances
 
+## Spawns the selected blueprint(s) as the SpawnerBehavior's sibling node 
+## at a given position towards a given position
+##
+## [param pos]: The position to spawn the new instance(+) at
+##
+## [param index]: selects the blueprint to spawn. If set to [code]-1[/code],
+## every blueprint gets spawned.
+##
+## [param toward]: The position to rotate the new instance(s) towards.
+## If not set, does not rotate.
+func spawn_at_toward(pos: Vector2, index: int = -1, toward: Vector2 = global_position):
+	var instances = []
+	if index < 0:
+		for i in range(scenes.size()):
+			instances.append(_spawn(i, true))
+	else:
+		instances = [_spawn(index, true)]
+		
+	for instance in instances:
+		instance.global_position = pos
+		if toward != global_position:
+			instance.rotation = global_position.angle_to_point(toward)
+		spawned.emit(instance)
+	
+	return instances
+
 ## Spawns the selected blueprint(s) at a random position within the
 ## shape determined by [member SpawnerBehavior.shape_type], 
 ## [member SpawnerBehavior.spawn_shape_polygon] and [member SpawnerBehavior.spawn_shape_generic]

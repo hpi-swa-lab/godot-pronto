@@ -12,25 +12,93 @@
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run():
-	var pattern = [
-		# a spawn event is defined as:
-		# [time, index, pos]
-		# (index as in spawner's child index for the spawn_at call)
-		[0, 0, Vector2(100,100)],
-		[500, 0, Vector2(200,200)],
-		[1000, 0, Vector2(150,150)]
+
+var root = closest('sans') # HACK: get root is not in base self, but accessing the scene root works like this
+
+var rng = RandomNumberGenerator.new()
+var spawner = closest('EnemySpawner')
+enum SpawnType {
+	FLY = 0,
+	ARROW = 1,
+	WALL_RIGHT = 2,
+	WALL_LEFT = 3,
+	WALL_UP = 4,
+	WALL_DOWN = 5
+}
+enum ScreenSide {
+	RIGHT = 0,
+	LEFT = 1,
+	UP = 2,
+	DOWN = 3
+}
+
+# a pattern is a series of spawn events.
+# a spawn event is defined as a dict of time, type, position and optionally a \"toward\"
+# (index as in spawner's child index for the spawn_at call)
+const PATTERNS = [
+	[ # Fly pattern
+		{
+			time = 0,
+			type = SpawnType.FLY,
+			pos = Vector2(0,0)
+		},
+		{
+			time = 0,
+			type = SpawnType.FLY,
+			pos = Vector2(0,0)
+		}
 	]
-	# iterate through the pattern. time is in msec since this method was called
-	var pattern_index = 0
+]
+
+func get_opposite_on_screen(v: Vector2):
+	return Vector2(root.get_viewport().size.y - v.y, root.get_viewport().size.x - v.x)
+
+func generate_random_corner_coord(side: int = ScreenSide.keys().pick_random()):
+	if side == ScreenSide.RIGHT:
+		return Vector2(root.get_viewport().size.x, rng.randi_range(0,root.get_viewport().size.y))
+	elif side == ScreenSide.LEFT:
+		return Vector2(0, rng.randi_range(0,root.get_viewport().size.y))
+	elif side == ScreenSide.UP:
+		return Vector2(rng.randi_range(0,root.get_viewport().size.x), 0)
+	# ScreenSide.DOWN
+	return Vector2(rng.randi_range(0,root.get_viewport().size.x), root.get_viewport().size.y)
+
+func run():	
 	var start_time = Time.get_ticks_msec()
-	var spawner = closest('EnemySpawner')
+	var spawn_events = []
 	
-	while pattern_index < pattern.size():
+	# 50% chance to have a pattern-based attack
+	if rng.randf() > 0.5:
+		# choose a random pattern
+		spawn_events = PATTERNS.pick_random()
+	else:
+		# generate spawn events
+		var amount_of_spawn_events = rng.randi_range(5, 10)
+		for i in range(amount_of_spawn_events):
+			var new_spawn_event = {
+				time = rng.randi_range(0,2000),
+				type = SpawnType.keys().pick_random()
+			}
+			if new_spawn_event.type == SpawnType.FLY:
+				new_spawn_event.pos = generate_random_corner_coord()
+				new_spawn_event.toward = get_opposite_on_screen(new_spawn_event.pos)
+			elif new_spawn_event.type == SpawnType.ARROW:
+				new_spawn_event.pos = generate_random_corner_coord([ScreenSide.LEFT, ScreenSide.RIGHT].pick_random())
+			else:
+				# WALL
+				if new_spawn_event.type in [SpawnType.WALL_UP, SpawnType.WALL_DOWN]:
+					new_spawn_event.pos = generate_random_corner_coord([ScreenSide.UP, ScreenSide.DOWN].pick_random())
+				else:
+					new_spawn_event.pos = generate_random_corner_coord([ScreenSide.LEFT, ScreenSide.RIGHT].pick_random())
+	
+	for spawn_event in spawn_events:
 		(func ():
-			await closest('sans').get_tree().create_timer(float(start_time + pattern[pattern_index][0] - Time.get_ticks_msec()) / 1000).timeout
-			spawner.callv(\"spawn_at\",[pattern[pattern_index][2], pattern[pattern_index][1]])).call()
-		pattern_index+=1
+			await root.get_tree().create_timer(float(start_time + spawn_event.time - Time.get_ticks_msec()) / 1000).timeout
+			if spawn_event.has('toward'):
+				spawner.callv(\"spawn_at_toward\",[spawn_event.pos, spawn_event.type, spawn_event.toward])
+			else:
+				spawner.callv(\"spawn_at\",[spawn_event.pos, spawn_event.type])
+		).call()
 	
 	return null
 "
