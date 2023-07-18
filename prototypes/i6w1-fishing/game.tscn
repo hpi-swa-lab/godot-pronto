@@ -1,0 +1,660 @@
+[gd_scene load_steps=81 format=3 uid="uid://cljw2c047x3a6"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="1_1ktuq"]
+[ext_resource type="Texture2D" uid="uid://onopyq1oinpg" path="res://prototypes/i6w1-fishing/Ocean.png" id="2_wcbe2"]
+[ext_resource type="Gradient" uid="uid://cwmmwv4o70ocq" path="res://prototypes/i6w1-fishing/sky_grad.tres" id="3_5yco7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="4_hafn3"]
+[ext_resource type="Gradient" uid="uid://db12fs3w440bn" path="res://prototypes/i6w1-fishing/sea_grad.tres" id="4_rci6e"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="5_cml4c"]
+[ext_resource type="Texture2D" uid="uid://yl2qr2fivwmi" path="res://prototypes/i6w1-fishing/fishing_game_assets/1 Fisherman/Fisherman_idle.png" id="5_di3y5"]
+[ext_resource type="Texture2D" uid="uid://dnv1lkmwgvofo" path="res://prototypes/i6w1-fishing/fishing_game_assets/1 Fisherman/Fisherman_fish.png" id="5_jojbm"]
+[ext_resource type="Texture2D" uid="uid://d08qy8h016wx5" path="res://prototypes/i6w1-fishing/fishing_game_assets/1 Fisherman/Fisherman_hook.png" id="6_efjlq"]
+[ext_resource type="Texture2D" uid="uid://2knkpyfequ30" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Boat.png" id="6_uk8ag"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StateBehavior.gd" id="9_g4jyv"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="10_0cugf"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="11_5t5d2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="13_yjnbd"]
+[ext_resource type="Script" path="res://prototypes/i6w1-fishing/custom_cam.gd" id="14_hcfxl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="15_o0esm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="16_y66kb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="17_rxvo2"]
+[ext_resource type="Script" path="res://prototypes/i6w1-fishing/start_button.gd" id="18_bmya0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="18_uibmu"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3rx47"]
+gradient = ExtResource("3_5yco7")
+width = 500
+height = 200
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h0d0l"]
+gradient = ExtResource("4_rci6e")
+width = 500
+height = 5000
+fill_to = Vector2(0, 0.957265)
+
+[sub_resource type="GDScript" id="GDScript_7i6gh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	closest(\"down\").exit(\"\")
+"
+
+[sub_resource type="Resource" id="Resource_jsf3s"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_7i6gh")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_w6cq1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other.name == \"hooka2d\"
+"
+
+[sub_resource type="Resource" id="Resource_u8chx"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_w6cq1")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_x4ikd"]
+script = ExtResource("11_5t5d2")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_u8chx")
+expression = SubResource("Resource_jsf3s")
+deferred = false
+enabled = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5bqv"]
+atlas = ExtResource("5_jojbm")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsupk"]
+atlas = ExtResource("5_jojbm")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0d1jo"]
+atlas = ExtResource("5_jojbm")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ts7cy"]
+atlas = ExtResource("5_jojbm")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3h8s"]
+atlas = ExtResource("6_efjlq")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ck3g"]
+atlas = ExtResource("6_efjlq")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyscs"]
+atlas = ExtResource("6_efjlq")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxerj"]
+atlas = ExtResource("6_efjlq")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ymyy"]
+atlas = ExtResource("6_efjlq")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsvhx"]
+atlas = ExtResource("6_efjlq")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1hptk"]
+atlas = ExtResource("5_di3y5")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkb27"]
+atlas = ExtResource("5_di3y5")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h6nc"]
+atlas = ExtResource("5_di3y5")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_senss"]
+atlas = ExtResource("5_di3y5")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rjy1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5bqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hsupk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0d1jo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ts7cy")
+}],
+"loop": true,
+"name": &"fishing",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l3h8s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ck3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uyscs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxerj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ymyy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsvhx")
+}],
+"loop": true,
+"name": &"hook",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1hptk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkb27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h6nc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_senss")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_bm3ko"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_xex42"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_bm3ko")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_c2r0o"]
+script = ExtResource("11_5t5d2")
+signal_name = "exited"
+to = NodePath("../fishing")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_xex42")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_s3ya1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2ddx6"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_s3ya1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_sf5ff"]
+script = ExtResource("11_5t5d2")
+signal_name = "entered"
+to = NodePath("../down")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_2ddx6")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_d62m6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return target_state_name == \"score\"
+"
+
+[sub_resource type="Resource" id="Resource_l8y1r"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_d62m6")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_iv3qr"]
+script = ExtResource("11_5t5d2")
+signal_name = "exited"
+to = NodePath("../score")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_l8y1r")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_sqwfg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_yy5ku"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_sqwfg")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_5i2gq"]
+script = ExtResource("11_5t5d2")
+signal_name = "exited"
+to = NodePath("../up")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_yy5ku")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_1if8k"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return \"score\"
+"
+
+[sub_resource type="Resource" id="Resource_cdoxc"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_1if8k")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_vkchx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_pn4jd"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_vkchx")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_td4ho"]
+script = ExtResource("11_5t5d2")
+signal_name = "exited"
+to = NodePath("../fishing")
+more_references = []
+invoke = "exit"
+arguments = [SubResource("Resource_cdoxc")]
+only_if = SubResource("Resource_pn4jd")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_5hxtp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return to.position + Vector2(0, at(\"drop_speed\"))
+"
+
+[sub_resource type="Resource" id="Resource_idcmm"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_5hxtp")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dj7o2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return closest(\"down\").active
+"
+
+[sub_resource type="Resource" id="Resource_b7svf"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_dj7o2")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_u5phs"]
+script = ExtResource("11_5t5d2")
+signal_name = "always"
+to = NodePath("../hooka2d")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_idcmm")]
+only_if = SubResource("Resource_b7svf")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_cyssu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return to.position - Vector2(0, at(\"up_speed\"))
+"
+
+[sub_resource type="Resource" id="Resource_44gk1"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_cyssu")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0oto3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return closest(\"up\").active
+"
+
+[sub_resource type="Resource" id="Resource_hpvh3"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_0oto3")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4puol"]
+script = ExtResource("11_5t5d2")
+signal_name = "always"
+to = NodePath("../hooka2d")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_44gk1")]
+only_if = SubResource("Resource_hpvh3")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_5bwvq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return G.get_parent().find_child(\"menu\",true,false).active
+"
+
+[sub_resource type="Resource" id="Resource_5amnd"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_5bwvq")
+argument_names = []
+return_value = true
+
+[sub_resource type="Image" id="Image_06aqo"]
+data = {
+"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_j8ov4"]
+image = SubResource("Image_06aqo")
+
+[sub_resource type="GDScript" id="GDScript_bnrg3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_axebj"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_bnrg3")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_2wtpe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	closest(\"up\").exit(\"\")
+"
+
+[sub_resource type="Resource" id="Resource_ngdp0"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_2wtpe")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_781pq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other.name == \"hooka2d\"
+"
+
+[sub_resource type="Resource" id="Resource_bh0om"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_781pq")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_j76f5"]
+script = ExtResource("11_5t5d2")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_bh0om")
+expression = SubResource("Resource_ngdp0")
+deferred = false
+enabled = true
+
+[node name="game" type="Node2D"]
+
+[node name="BACKGROUND" type="Node2D" parent="."]
+
+[node name="ocean" type="Sprite2D" parent="BACKGROUND"]
+position = Vector2(212, 107)
+texture = ExtResource("2_wcbe2")
+
+[node name="sky" type="Sprite2D" parent="BACKGROUND"]
+position = Vector2(216, -23345)
+scale = Vector2(1, 233.5)
+texture = SubResource("GradientTexture2D_3rx47")
+
+[node name="water" type="Sprite2D" parent="BACKGROUND"]
+position = Vector2(214, 2713)
+texture = SubResource("GradientTexture2D_h0d0l")
+
+[node name="seafloora2d" type="Area2D" parent="BACKGROUND"]
+position = Vector2(210, 5243)
+
+[node name="CollisionBehavior" type="Node2D" parent="BACKGROUND/seafloora2d"]
+position = Vector2(367, -117)
+script = ExtResource("4_hafn3")
+metadata/pronto_connections = [SubResource("Resource_x4ikd")]
+
+[node name="seafloor" type="Node2D" parent="BACKGROUND/seafloora2d"]
+script = ExtResource("13_yjnbd")
+label = "    SEA FLOOR"
+color = Color(0.278431, 0.160784, 0.0235294, 1)
+placeholder_size = Vector2(546, 67)
+sprite_texture = ExtResource("5_cml4c")
+
+[node name="ClockBehavior" type="Node2D" parent="."]
+position = Vector2(596, 55)
+script = ExtResource("1_1ktuq")
+trigger_interval_in_seconds = 1.0
+
+[node name="Player" type="AnimatedSprite2D" parent="."]
+position = Vector2(175, 111)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_rjy1o")
+animation = &"hook"
+autoplay = "idle"
+speed_scale = 2.0
+
+[node name="Boat" type="Sprite2D" parent="."]
+position = Vector2(164, 151)
+scale = Vector2(2, 2)
+texture = ExtResource("6_uk8ag")
+
+[node name="STATE" type="Node2D" parent="."]
+position = Vector2(577, -77)
+
+[node name="menu" type="Node2D" parent="STATE"]
+position = Vector2(-1, 11)
+script = ExtResource("9_g4jyv")
+active = true
+metadata/pronto_connections = [SubResource("Resource_c2r0o")]
+
+[node name="fishing" type="Node2D" parent="STATE"]
+position = Vector2(44, 25)
+script = ExtResource("9_g4jyv")
+metadata/pronto_connections = [SubResource("Resource_sf5ff"), SubResource("Resource_iv3qr")]
+
+[node name="down" type="Node2D" parent="STATE"]
+position = Vector2(75, 2)
+script = ExtResource("9_g4jyv")
+metadata/pronto_connections = [SubResource("Resource_5i2gq")]
+
+[node name="up" type="Node2D" parent="STATE"]
+position = Vector2(75, 52)
+script = ExtResource("9_g4jyv")
+metadata/pronto_connections = [SubResource("Resource_td4ho")]
+
+[node name="score" type="Node2D" parent="STATE"]
+position = Vector2(0, 49)
+script = ExtResource("9_g4jyv")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target_to_follow")]
+position = Vector2(213, 162)
+scale = Vector2(2, 2)
+script = ExtResource("14_hcfxl")
+target_to_follow = NodePath("../hooka2d")
+
+[node name="ControlsBehavior" type="Node2D" parent="."]
+position = Vector2(303, 119)
+script = ExtResource("15_o0esm")
+metadata/pronto_connections = []
+
+[node name="Values" type="Node2D" parent="."]
+position = Vector2(550, 120)
+
+[node name="horizontal_speed_multiplier" type="Node2D" parent="Values"]
+script = ExtResource("16_y66kb")
+float_from = 0.0
+float_to = 10.0
+float_value = 2.0
+float_step_size = 0.1
+
+[node name="drop_speed" type="Node2D" parent="Values"]
+position = Vector2(-2, 31)
+script = ExtResource("16_y66kb")
+float_from = 0.0
+float_to = 100.0
+float_value = 5.0
+float_step_size = 0.1
+
+[node name="up_speed" type="Node2D" parent="Values"]
+position = Vector2(-4, 65)
+script = ExtResource("16_y66kb")
+float_from = 0.0
+float_to = 100.0
+float_value = 5.0
+float_step_size = 0.1
+
+[node name="AlwaysBehavior" type="Node2D" parent="."]
+position = Vector2(485, 73)
+script = ExtResource("17_rxvo2")
+metadata/pronto_connections = [SubResource("Resource_u5phs"), SubResource("Resource_4puol")]
+
+[node name="menu_ui" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="menu_ui"]
+offset_left = 138.0
+offset_top = -234.0
+offset_right = 297.0
+offset_bottom = -208.0
+text = "Press 'START' to fish!"
+
+[node name="Button" type="Button" parent="menu_ui"]
+offset_left = 185.0
+offset_top = -203.0
+offset_right = 241.0
+offset_bottom = -172.0
+text = "START"
+script = ExtResource("18_bmya0")
+
+[node name="BindBehavior" type="Node2D" parent="menu_ui"]
+position = Vector2(-68, -31)
+script = ExtResource("18_uibmu")
+evaluate = SubResource("Resource_5amnd")
+to_prop = "visible"
+
+[node name="hooka2d" type="Area2D" parent="."]
+position = Vector2(212, 165)
+
+[node name="hook" type="Node2D" parent="hooka2d"]
+scale = Vector2(2, 2)
+script = ExtResource("13_yjnbd")
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_j8ov4")
+sprite_modulate = Color(0.121569, 0.121569, 0.121569, 1)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(220, 117)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Area2D"]
+script = ExtResource("13_yjnbd")
+label = "HOOK RETURN ZONE"
+color = Color(1, 1, 1, 0.486275)
+placeholder_size = Vector2(532, 34)
+sprite_texture = ExtResource("5_cml4c")
+
+[node name="BindBehavior" type="Node2D" parent="Area2D"]
+position = Vector2(28, -45)
+script = ExtResource("18_uibmu")
+evaluate = SubResource("Resource_axebj")
+to_prop = "visible"
+
+[node name="CollisionBehavior" type="Node2D" parent="Area2D"]
+position = Vector2(73, -54)
+script = ExtResource("4_hafn3")
+metadata/pronto_connections = [SubResource("Resource_j76f5")]
