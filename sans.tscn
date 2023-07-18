@@ -1,0 +1,94 @@
+[gd_scene load_steps=13 format=3 uid="uid://d4lwgj5sqwhly"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="1_k0cyg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_dkxhb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="2_s43h7"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_1d7w5"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="3_vyugp"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="4_4j2y3"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_meshp"]
+
+[sub_resource type="GDScript" id="GDScript_w7wfe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	var pattern = [
+		# a spawn event is defined as:
+		# [time, index, pos]
+		# (index as in spawner's child index for the spawn_at call)
+		[0, 0, Vector2(100,100)],
+		[500, 0, Vector2(200,200)],
+		[1000, 0, Vector2(150,150)]
+	]
+	# iterate through the pattern. time is in msec since this method was called
+	var pattern_index = 0
+	var start_time = Time.get_ticks_msec()
+	var spawner = closest('EnemySpawner')
+	
+	while pattern_index < pattern.size():
+		(func ():
+			await closest('sans').get_tree().create_timer(float(start_time + pattern[pattern_index][0] - Time.get_ticks_msec()) / 1000).timeout
+			spawner.callv(\"spawn_at\",[pattern[pattern_index][2], pattern[pattern_index][1]])).call()
+		pattern_index+=1
+	
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_urcuh"]
+script = ExtResource("3_vyugp")
+nested_script = SubResource("GDScript_w7wfe")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_v5m7g"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3akwk"]
+script = ExtResource("3_vyugp")
+nested_script = SubResource("GDScript_v5m7g")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ukgyi"]
+script = ExtResource("7_meshp")
+signal_name = "just_down"
+to = NodePath("../CodeBehavior")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_3akwk")
+deferred = false
+enabled = true
+
+[node name="sans" type="Node2D"]
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+position = Vector2(373, 167)
+script = ExtResource("1_k0cyg")
+
+[node name="GoLeft" type="Node2D" parent="EnemySpawner"]
+position = Vector2(61, -47)
+script = ExtResource("2_dkxhb")
+sprite_texture = ExtResource("3_1d7w5")
+
+[node name="CodeBehavior" type="Node2D" parent="."]
+position = Vector2(159, 126)
+script = ExtResource("2_s43h7")
+evaluate = SubResource("Resource_urcuh")
+
+[node name="KeyBehavior" type="Node2D" parent="."]
+position = Vector2(83, 82)
+script = ExtResource("4_4j2y3")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_ukgyi")]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="."]
+script = ExtResource("2_dkxhb")
+sprite_texture = ExtResource("3_1d7w5")
+outline_width = 100.0
