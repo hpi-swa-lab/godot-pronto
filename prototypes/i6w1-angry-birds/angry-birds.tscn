@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://7yv7h4ilqmgg"]
+[gd_scene load_steps=87 format=3 uid="uid://7yv7h4ilqmgg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_oe11t"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_5a507"]
@@ -14,16 +14,14 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="9_o6cql"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="12_j4kw5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="13_olwqe"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/QueryBehavior.gd" id="15_nalm8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_va3t0"]
 bounce = 0.2
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bpuw1"]
-absorbent = true
-
 [sub_resource type="Gradient" id="Gradient_6068g"]
-offsets = PackedFloat32Array(0, 0.5, 1)
-colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+offsets = PackedFloat32Array(0.151515, 0.5, 1)
+colors = PackedColorArray(0.393078, 0.231823, 0, 1, 0.594877, 0.594877, 9.62615e-07, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [sub_resource type="GDScript" id="GDScript_s60fg"]
 script/source = "@tool
@@ -445,6 +443,136 @@ only_if = SubResource("Resource_cwxux")
 deferred = false
 enabled = true
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bpuw1"]
+absorbent = true
+
+[sub_resource type="GDScript" id="GDScript_mnl2w"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_ffarg"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_mnl2w")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_sa0ce"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_8y2cf"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_sa0ce")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ykq1j"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_wvti5"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_ykq1j")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rumke"]
+script = ExtResource("7_vjssu")
+signal_name = "node_ready"
+to = NodePath("QueryBoards")
+more_references = []
+invoke = "query"
+arguments = [SubResource("Resource_ffarg"), SubResource("Resource_8y2cf")]
+only_if = SubResource("Resource_wvti5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_tk35f"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node, selection_arg, token, from: Node2D, to: Node2D):
+	return node.global_position
+"
+
+[sub_resource type="Resource" id="Resource_7st2i"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_tk35f")
+argument_names = ["node", "selection_arg", "token", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_55eye"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node, selection_arg, token, from: Node2D, to: Node2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_t7u3a"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_55eye")
+argument_names = ["node", "selection_arg", "token", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xofrg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node, selection_arg, token, from: Node2D, to: Node2D):
+	var new_board = to.spawn_at(node.global_position,0)[0]
+	var placeholder = new_board.get_node(\"PlaceholderBehavior\")
+	placeholder.placeholder_size = node.placeholder_size
+	placeholder.get_child(0, true).visible = false
+	placeholder.use_sprite = false
+	node.queue_free()
+	
+"
+
+[sub_resource type="Resource" id="Resource_gpacm"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_xofrg")
+argument_names = ["node", "selection_arg", "token", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_kxxfw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node, selection_arg, token, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_inkbd"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_kxxfw")
+argument_names = ["node", "selection_arg", "token", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7gg4o"]
+script = ExtResource("7_vjssu")
+signal_name = "found"
+to = NodePath("../../BoardSpawner")
+more_references = []
+invoke = "spawn_at"
+arguments = [SubResource("Resource_7st2i"), SubResource("Resource_t7u3a")]
+only_if = SubResource("Resource_inkbd")
+expression = SubResource("Resource_gpacm")
+deferred = false
+enabled = true
+
 [node name="angry-birds" type="Node2D"]
 
 [node name="Boundary" type="StaticBody2D" parent="." groups=["boundary"]]
@@ -477,50 +605,6 @@ position = Vector2(-854, 3)
 script = ExtResource("1_oe11t")
 placeholder_size = Vector2(7, 656)
 keep_in_origin = false
-sprite_texture = ExtResource("2_5a507")
-
-[node name="Board2" type="RigidBody2D" parent="." groups=["can_damage", "enemies"]]
-position = Vector2(868, 580)
-physics_material_override = SubResource("PhysicsMaterial_bpuw1")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="Board2"]
-script = ExtResource("1_oe11t")
-color = Color(0.392641, 0.313366, 0.150292, 1)
-placeholder_size = Vector2(8, 96)
-sprite_texture = ExtResource("2_5a507")
-
-[node name="Board3" type="RigidBody2D" parent="." groups=["can_damage", "enemies"]]
-position = Vector2(988, 580)
-physics_material_override = SubResource("PhysicsMaterial_bpuw1")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="Board3"]
-script = ExtResource("1_oe11t")
-color = Color(0.392641, 0.313366, 0.150292, 1)
-placeholder_size = Vector2(8, 96)
-sprite_texture = ExtResource("2_5a507")
-
-[node name="Board4" type="RigidBody2D" parent="." groups=["can_damage", "enemies"]]
-position = Vector2(928, 632)
-physics_material_override = SubResource("PhysicsMaterial_bpuw1")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="Board4"]
-script = ExtResource("1_oe11t")
-color = Color(0.392641, 0.313366, 0.150292, 1)
-placeholder_size = Vector2(128, 8)
-sprite_texture = ExtResource("2_5a507")
-
-[node name="Board5" type="RigidBody2D" parent="." groups=["can_damage", "enemies"]]
-position = Vector2(928, 528)
-physics_material_override = SubResource("PhysicsMaterial_bpuw1")
-can_sleep = false
-
-[node name="PlaceholderBehavior" type="Node2D" parent="Board5"]
-script = ExtResource("1_oe11t")
-color = Color(0.392641, 0.313366, 0.150292, 1)
-placeholder_size = Vector2(128, 8)
 sprite_texture = ExtResource("2_5a507")
 
 [node name="Pig" type="RigidBody2D" parent="." groups=["enemies"]]
@@ -634,7 +718,7 @@ script = ExtResource("9_o6cql")
 
 [node name="Bird" type="RigidBody2D" parent="SpawnerBehavior" groups=["birds", "can_damage"]]
 position = Vector2(-27, 173)
-mass = 0.3
+mass = 0.6
 physics_material_override = SubResource("PhysicsMaterial_ru3cs")
 
 [node name="PlaceholderShapeBehavior" type="Node2D" parent="SpawnerBehavior/Bird"]
@@ -684,3 +768,65 @@ paused = true
 trigger_every_x_seconds = true
 trigger_interval_in_seconds = 0.333
 metadata/pronto_connections = [SubResource("Resource_l6w7v")]
+
+[node name="BoardSpawner" type="Node2D" parent="."]
+position = Vector2(436, 428)
+script = ExtResource("9_o6cql")
+
+[node name="Board" type="RigidBody2D" parent="BoardSpawner" groups=["can_damage", "enemies"]]
+position = Vector2(52, -56)
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_bpuw1")
+can_sleep = false
+
+[node name="PlaceholderBehavior" type="Node2D" parent="BoardSpawner/Board"]
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(52, 44)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="SpawnBoards" type="Node2D" parent="."]
+position = Vector2(400, 488)
+script = ExtResource("12_j4kw5")
+metadata/pronto_connections = [SubResource("Resource_rumke")]
+
+[node name="QueryBoards" type="Node2D" parent="SpawnBoards"]
+position = Vector2(-8, 44)
+script = ExtResource("15_nalm8")
+only_below = null
+group = &"future_boards"
+clazz = null
+predicate_for_node = null
+proximity = null
+max_results = null
+metadata/pronto_connections = [SubResource("Resource_7gg4o")]
+
+[node name="Building" type="Node2D" parent="."]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Building" groups=["future_boards"]]
+position = Vector2(868, 580)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(8, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="PlaceholderBehavior2" type="Node2D" parent="Building" groups=["future_boards"]]
+position = Vector2(988, 580)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(8, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="PlaceholderBehavior3" type="Node2D" parent="Building" groups=["future_boards"]]
+position = Vector2(928, 632)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(128, 8)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="PlaceholderBehavior4" type="Node2D" parent="Building" groups=["future_boards"]]
+position = Vector2(928, 528)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(128, 8)
+sprite_texture = ExtResource("2_5a507")
