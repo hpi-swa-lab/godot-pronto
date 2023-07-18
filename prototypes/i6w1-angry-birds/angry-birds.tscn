@@ -880,9 +880,10 @@ metadata/pronto_connections = [SubResource("Resource_pyhcv")]
 position = Vector2(53, 47)
 script = ExtResource("13_olwqe")
 one_shot = true
+duration_seconds = 2.0
 paused = true
 trigger_every_x_seconds = true
-trigger_interval_in_seconds = 0.333
+trigger_interval_in_seconds = 0.667
 metadata/pronto_connections = [SubResource("Resource_l6w7v")]
 
 [node name="BoardSpawner" type="Node2D" parent="."]
