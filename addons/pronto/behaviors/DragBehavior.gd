@@ -110,8 +110,8 @@ func _drag(position: Vector2):
 	last_position = position
 	
 func _drop(position: Vector2):
-	dropped.emit(position, start_position)
-
 	if get_parent() is RigidBody2D:
 		get_parent().freeze = false
 		get_parent().apply_central_impulse(Input.get_last_mouse_velocity())
+	
+	dropped.emit(position, start_position)

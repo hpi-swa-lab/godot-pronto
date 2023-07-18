@@ -1,0 +1,242 @@
+[gd_scene load_steps=21 format=3 uid="uid://7yv7h4ilqmgg"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_oe11t"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_5a507"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShapeBehavior.gd" id="3_6wpat"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="4_phcpe"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/DragBehavior.gd" id="5_2b2xo"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_yqc71"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_vjssu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="8_epnhk"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="9_4jww6"]
+
+[sub_resource type="Gradient" id="Gradient_6068g"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_hepfj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position: Vector2, start_position, last_position, from: Node2D, to: RigidBody2D, ref0: Node2D):
+	var bird = from.get_parent()
+	var v = bird.global_position - ref0.global_position
+	var max_length = 100
+	v = v.limit_length(max_length)
+	return ref0.global_position + v
+"
+
+[sub_resource type="Resource" id="Resource_u7pe7"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_hepfj")
+argument_names = ["position", "start_position", "last_position", "from", "to", "ref0"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_rr12e"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, last_position, from: Node2D, to: RigidBody2D, ref0: Marker2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_y2crl"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_rr12e")
+argument_names = ["position", "start_position", "last_position", "from", "to", "ref0"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ct1tn"]
+script = ExtResource("7_vjssu")
+signal_name = "dragged"
+to = NodePath("..")
+more_references = [NodePath("../../Catapult/Marker2D")]
+invoke = "set_position"
+arguments = [SubResource("Resource_u7pe7")]
+only_if = SubResource("Resource_y2crl")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_m2hke"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, from: Node2D, to: RigidBody2D, ref0: Marker2D):
+	return (ref0.global_position - position) * G.at(\"CatapultStrength\")
+"
+
+[sub_resource type="Resource" id="Resource_c4ycm"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_m2hke")
+argument_names = ["position", "start_position", "from", "to", "ref0"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_qdomj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, from: Node2D, to: RigidBody2D, ref0: Marker2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_p38dt"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_qdomj")
+argument_names = ["position", "start_position", "from", "to", "ref0"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3chew"]
+script = ExtResource("7_vjssu")
+signal_name = "dropped"
+to = NodePath("..")
+more_references = [NodePath("../../Catapult/Marker2D")]
+invoke = "apply_central_impulse"
+arguments = [SubResource("Resource_c4ycm")]
+only_if = SubResource("Resource_p38dt")
+deferred = false
+enabled = true
+
+[node name="angry-birds" type="Node2D"]
+
+[node name="Boundary" type="StaticBody2D" parent="."]
+position = Vector2(864, 320)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Boundary"]
+position = Vector2(-287, -325)
+script = ExtResource("1_oe11t")
+placeholder_size = Vector2(1134, 12)
+keep_in_origin = false
+sprite_texture = ExtResource("2_5a507")
+
+[node name="PlaceholderBehavior2" type="Node2D" parent="Boundary"]
+position = Vector2(-295, 322)
+script = ExtResource("1_oe11t")
+placeholder_size = Vector2(1163, 11)
+keep_in_origin = false
+sprite_texture = ExtResource("2_5a507")
+
+[node name="PlaceholderBehavior3" type="Node2D" parent="Boundary"]
+position = Vector2(278, 2)
+script = ExtResource("1_oe11t")
+placeholder_size = Vector2(13, 640)
+keep_in_origin = false
+sprite_texture = ExtResource("2_5a507")
+
+[node name="PlaceholderBehavior4" type="Node2D" parent="Boundary"]
+position = Vector2(-854, 3)
+script = ExtResource("1_oe11t")
+placeholder_size = Vector2(7, 656)
+keep_in_origin = false
+sprite_texture = ExtResource("2_5a507")
+
+[node name="Board2" type="RigidBody2D" parent="."]
+position = Vector2(868, 572)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Board2"]
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(8, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="Board3" type="RigidBody2D" parent="."]
+position = Vector2(988, 572)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Board3"]
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(8, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="Board4" type="RigidBody2D" parent="."]
+position = Vector2(928, 624)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Board4"]
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(128, 8)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="Board5" type="RigidBody2D" parent="."]
+position = Vector2(928, 520)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Board5"]
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(128, 8)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="Pig" type="RigidBody2D" parent="."]
+position = Vector2(918, 586)
+
+[node name="PlaceholderShapeBehavior" type="Node2D" parent="Pig"]
+position = Vector2(10, 10)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+label = "🐷"
+color = Color(0, 1, 0, 1)
+circle_radius = 20.3844
+
+[node name="HealthBarBehavior" type="Node2D" parent="Pig"]
+position = Vector2(10, -18)
+script = ExtResource("4_phcpe")
+progress_gradient = SubResource("Gradient_6068g")
+
+[node name="PlaceholderBehavior" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(554, 386)
+script = ExtResource("1_oe11t")
+color = Color(0.333333, 1, 1, 1)
+placeholder_size = Vector2(1419, 909)
+sprite_texture = ExtResource("2_5a507")
+metadata/_edit_lock_ = true
+
+[node name="Bird" type="RigidBody2D" parent="."]
+position = Vector2(216, 492)
+freeze = true
+
+[node name="PlaceholderShapeBehavior" type="Node2D" parent="Bird"]
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+label = "🐦"
+color = Color(1, 0, 0, 1)
+keep_in_origin = false
+circle_radius = 23.0877
+
+[node name="DragBehavior" type="Node2D" parent="Bird"]
+position = Vector2(96, 32)
+script = ExtResource("5_2b2xo")
+metadata/pronto_connections = [SubResource("Resource_ct1tn"), SubResource("Resource_3chew")]
+
+[node name="Panel" type="Panel" parent="Bird"]
+visible = false
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+
+[node name="Catapult" type="Node2D" parent="."]
+show_behind_parent = true
+position = Vector2(216, 564)
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(12, 130)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="Marker2D" type="Marker2D" parent="Catapult"]
+position = Vector2(0, -64)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = 48.0
+offset_top = 20.0
+offset_right = 452.0
+offset_bottom = 104.0
+
+[node name="PrototypingUIBehavior" type="Node2D" parent="PanelContainer"]
+script = ExtResource("8_epnhk")
+
+[node name="CatapultStrength" type="Node2D" parent="PanelContainer/PrototypingUIBehavior"]
+script = ExtResource("9_4jww6")
+float_from = 0.1
+float_to = 50.0
+float_value = 8.0
+float_step_size = 0.1
