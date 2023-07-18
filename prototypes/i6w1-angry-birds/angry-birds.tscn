@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://7yv7h4ilqmgg"]
+[gd_scene load_steps=101 format=3 uid="uid://7yv7h4ilqmgg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_oe11t"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_5a507"]
@@ -27,7 +27,7 @@ colors = PackedColorArray(0.393078, 0.231823, 0, 1, 0.594877, 0.594877, 9.62615e
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(health, from: Node2D, to: Node2D):
+func run(health, from, to):
 	return from._get_color()
 "
 
@@ -446,6 +446,122 @@ enabled = true
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bpuw1"]
 absorbent = true
 
+[sub_resource type="GDScript" id="GDScript_b8qpv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	var board = to.get_parent() as RigidBody2D
+	if other.is_in_group(\"boundary\"):
+		return board.linear_velocity.length() * G.at(\"BoundaryDamage\")
+		
+	var other_impulse = other.linear_velocity * other.mass
+	var board_impulse = board.linear_velocity * board.mass
+	
+	var impulse = other_impulse - board_impulse
+	var bird_damage = G.at(\"BirdDamage\") if other.is_in_group(\"birds\") else 0
+	return impulse.length() * (G.at(\"ImpactDamage\") + bird_damage)
+	
+"
+
+[sub_resource type="Resource" id="Resource_ht785"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_b8qpv")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dr0i0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_084u0"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_dr0i0")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dgdw1"]
+script = ExtResource("7_vjssu")
+signal_name = "collided"
+to = NodePath("../HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_ht785")]
+only_if = SubResource("Resource_084u0")
+deferred = false
+enabled = true
+
+[sub_resource type="Gradient" id="Gradient_3x6u4"]
+colors = PackedColorArray(0.654902, 0.560784, 0.298039, 0.34902, 0.48585, 0.413428, 0.201516, 1)
+
+[sub_resource type="GDScript" id="GDScript_oi4h0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bkcfa"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_oi4h0")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ysrl3"]
+script = ExtResource("7_vjssu")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_bkcfa")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ykwwe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(health, from: Node2D, to: Node2D):
+	return from._get_color()
+"
+
+[sub_resource type="Resource" id="Resource_dlmjh"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_ykwwe")
+argument_names = ["health", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_fyofi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(health, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_foybs"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_fyofi")
+argument_names = ["health", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dluqt"]
+script = ExtResource("7_vjssu")
+signal_name = "changed"
+to = NodePath("../PlaceholderBehavior")
+more_references = []
+invoke = "@color_setter"
+arguments = [SubResource("Resource_dlmjh")]
+only_if = SubResource("Resource_foybs")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_mnl2w"]
 script/source = "@tool
 extends U
@@ -784,6 +900,22 @@ script = ExtResource("1_oe11t")
 color = Color(0.392641, 0.313366, 0.150292, 1)
 placeholder_size = Vector2(52, 44)
 sprite_texture = ExtResource("2_5a507")
+outline_visible = true
+outline_color = Color(0, 0, 0, 1)
+
+[node name="CollisionBehavior" type="Node2D" parent="BoardSpawner/Board"]
+position = Vector2(36, 36)
+script = ExtResource("7_vtxpv")
+metadata/pronto_connections = [SubResource("Resource_dgdw1")]
+
+[node name="HealthBarBehavior" type="Node2D" parent="BoardSpawner/Board"]
+visible = false
+position = Vector2(60, -16)
+script = ExtResource("4_phcpe")
+max = 500
+current = 500
+progress_gradient = SubResource("Gradient_3x6u4")
+metadata/pronto_connections = [SubResource("Resource_ysrl3"), SubResource("Resource_dluqt")]
 
 [node name="SpawnBoards" type="Node2D" parent="."]
 position = Vector2(400, 488)
