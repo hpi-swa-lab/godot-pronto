@@ -38,6 +38,13 @@ signal death()
 		healthbar_size = v
 		queue_redraw()
 
+## If this is set to [code]true[/code], then the healthbar cannot take damage. 
+## It can be healed though
+@export var invincible: bool = false:
+	get: return invincible
+	set(v):
+		invincible = v
+
 ## This enum defines how the label is supposed to be displayed.
 enum LABEL {
 	None,       ## No label is shown.
@@ -98,7 +105,8 @@ func _init():
 
 ## Reduces the current health value by the given [code]amount[/code].
 func damage(amount):
-	set_health(current - amount)
+	if not invincible:
+		set_health(current - amount)
 
 ## Increases the current health value by the given [code]amount[/code].
 func heal(amount):
@@ -110,7 +118,8 @@ func heal_full():
 
 ## Sets the current health value to the given [code]value[/code].
 func set_health(value):
-	current = value
+	if not (invincible and value < current):
+		current = value
 
 func die():
 	set_health(0)
