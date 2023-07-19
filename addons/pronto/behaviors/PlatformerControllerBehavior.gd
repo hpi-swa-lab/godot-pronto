@@ -3,6 +3,20 @@
 extends Behavior
 class_name PlatformerControllerBehavior
 
+## Defines the available players
+enum Player {
+	Player_1 = 0, ## Selecting this makes the controls react to the arrow keys
+	Player_2 = 1, ## Selecting this makes the controls react to WASD
+	Player_3 = 2  ## Selecting this makes the controls react to IJKL
+}
+
+@export_category("Controls")
+## Determines which player these controls are for. This determines the keys
+## that the controls react to. Which keys that are is defined in [member PlatformerControllerBehavior.key_map]
+##
+## See [enum PlatformerControllerBehavior.Player] for possible values
+@export var player: Player = Player.Player_1
+
 @export_category("Gameplay")
 ## The speed with which the character jumps.
 @export var jump_velocity: float = 400
@@ -31,6 +45,47 @@ var _last_jump_input = -10000
 var _last_positions_max = 30
 var _last_positions = []
 
+var key_map = [{
+	"jump_check": Input.is_action_pressed,
+	"move_check": Input.is_action_pressed,
+	"left": "ui_left",
+	"right": "ui_right",
+	"jump": "ui_up",
+},
+{
+	"jump_check": Input.is_physical_key_pressed,
+	"move_check": Input.is_physical_key_pressed,
+	"left": KEY_A,
+	"right": KEY_D,
+	"jump": KEY_W,
+},
+{
+	"jump_check": Input.is_physical_key_pressed,
+	"move_check": Input.is_physical_key_pressed,
+	"left": KEY_J,
+	"right": KEY_L,
+	"jump": KEY_I,
+}]
+
+func _horizontal_direction():
+	var keys = key_map[player]
+	
+	if keys['move_check'].call(keys['left']):
+		return -1
+	
+	if keys['move_check'].call(keys['right']):
+		return 1
+	
+	return 0
+
+func _move_check(direction: String):
+	var keys = key_map[player]
+	return keys["move_check"].call(keys[direction])
+
+func _jump_check():
+	var keys = key_map[player]
+	return keys['jump_check'].call(keys["jump"])
+
 signal collided(last_collision: KinematicCollision2D)
 
 func _enter_tree():
@@ -44,7 +99,7 @@ func _update_jump():
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
 		
-	if Input.is_action_just_pressed("ui_accept"):
+	if _jump_check():
 		_last_jump_input = now
 
 func _can_jump():
@@ -85,7 +140,7 @@ func _physics_process(delta):
 		_parent.velocity.y += gravity.y * delta
 	
 	# horizontal
-	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
+	_parent.velocity.x = _horizontal_direction() * horizontal_velocity
 	_parent.velocity.x += gravity.x * delta
 	
 	# move
