@@ -105,7 +105,8 @@ func _ready():
 	super._ready()
 	if use_sprite:
 		_init_sprite()
-		self.add_child(sprite, false, INTERNAL_MODE_FRONT)
+		if sprite:
+			self.add_child(sprite, false, INTERNAL_MODE_FRONT)
 		
 func _editor_reload():
 	if Engine.is_editor_hint() and is_active_scene():
@@ -116,6 +117,9 @@ func _editor_reload():
 
 func _init_sprite():
 	sprite.texture = sprite_texture
+	if sprite.texture is CompressedTexture2D:
+		sprite = null
+		return
 	var shader_mat = ShaderMaterial.new()
 	shader_mat.shader = load(OUTLINE_SHADER)
 	# to hide the shader we set its width to 0 if outline_visible is false
