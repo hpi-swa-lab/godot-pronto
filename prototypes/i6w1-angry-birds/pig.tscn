@@ -188,7 +188,7 @@ only_if = SubResource("Resource_lmfjk")
 deferred = false
 enabled = true
 
-[node name="Pig" type="RigidBody2D" groups=["enemies"]]
+[node name="Pig" type="RigidBody2D" groups=["enemies", "pigs"]]
 
 [node name="PlaceholderShapeBehavior" type="Node2D" parent="."]
 script = ExtResource("1_jgq8a")
