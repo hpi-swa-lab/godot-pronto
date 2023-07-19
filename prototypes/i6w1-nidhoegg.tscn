@@ -1,4 +1,4 @@
-[gd_scene load_steps=250 format=3 uid="uid://b0kgndmuyxujx"]
+[gd_scene load_steps=260 format=3 uid="uid://b0kgndmuyxujx"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_5ma0w"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_pbeu2"]
@@ -855,6 +855,86 @@ more_references = []
 invoke = "move_left"
 arguments = []
 only_if = SubResource("Resource_kfbms")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_gsrtt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.get_node(\"HealthBarBehavior\").damage(20)
+"
+
+[sub_resource type="Resource" id="Resource_8l81a"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_gsrtt")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_2s1f6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other == closest(\"Player2\")
+"
+
+[sub_resource type="Resource" id="Resource_jwvfb"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_2s1f6")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xh3v3"]
+script = ExtResource("8_umq6k")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_jwvfb")
+expression = SubResource("Resource_8l81a")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_laym2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	from.get_parent().queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_5cuxp"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_laym2")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_e58qn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other == closest(\"Player2\")
+"
+
+[sub_resource type="Resource" id="Resource_kmh7b"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_e58qn")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_2nqrp"]
+script = ExtResource("8_umq6k")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_kmh7b")
+expression = SubResource("Resource_5cuxp")
 deferred = false
 enabled = true
 
@@ -1837,7 +1917,7 @@ capsule_radius = 5.0
 metadata/pronto_connections = []
 
 [node name="ClockBehavior" type="Node2D" parent="StartPlatformPlayer1"]
-position = Vector2(-89, -1)
+position = Vector2(-37, 36)
 script = ExtResource("5_l740t")
 one_shot = true
 duration_seconds = 4.0
@@ -1991,6 +2071,11 @@ script = ExtResource("13_o7n8i")
 position = Vector2(-62, 34)
 script = ExtResource("14_ale4y")
 metadata/pronto_connections = [SubResource("Resource_y2vn3")]
+
+[node name="CollisionBehavior" type="Node2D" parent="Player1/Arrow Spawner/Arrow Left"]
+position = Vector2(-2, 35)
+script = ExtResource("11_l2oh4")
+metadata/pronto_connections = [SubResource("Resource_xh3v3"), SubResource("Resource_2nqrp")]
 
 [node name="Attack Button" type="Node2D" parent="Player1"]
 position = Vector2(2, 143)
