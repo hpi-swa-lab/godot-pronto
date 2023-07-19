@@ -1,4 +1,4 @@
-[gd_scene load_steps=260 format=3 uid="uid://b0kgndmuyxujx"]
+[gd_scene load_steps=288 format=3 uid="uid://b0kgndmuyxujx"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_5ma0w"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_pbeu2"]
@@ -661,46 +661,6 @@ more_references = []
 invoke = "set_visible"
 arguments = [SubResource("Resource_pdjn5")]
 only_if = SubResource("Resource_tyddo")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_y4ry5"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(instance, from: Node2D):
-	instance.set_velocity(Vector2(100, 0))
-"
-
-[sub_resource type="Resource" id="Resource_rv485"]
-script = ExtResource("7_22m23")
-nested_script = SubResource("GDScript_y4ry5")
-argument_names = ["instance", "from"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_i5xjd"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(instance, from: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_m4pb3"]
-script = ExtResource("7_22m23")
-nested_script = SubResource("GDScript_i5xjd")
-argument_names = ["instance", "from"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_i3vww"]
-script = ExtResource("8_umq6k")
-signal_name = "spawned"
-to = NodePath("")
-more_references = []
-invoke = ""
-arguments = []
-only_if = SubResource("Resource_m4pb3")
-expression = SubResource("Resource_rv485")
 deferred = false
 enabled = true
 
@@ -1482,6 +1442,269 @@ only_if = SubResource("Resource_gatkj")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_6enpr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_wmutu"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_6enpr")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_lg1xh"]
+script = ExtResource("8_umq6k")
+signal_name = "always"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_right"
+arguments = []
+only_if = SubResource("Resource_wmutu")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_gax8b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	other.get_node(\"HealthBarBehavior\").damage(20)
+"
+
+[sub_resource type="Resource" id="Resource_ofwcc"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_gax8b")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_vvc65"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other == closest(\"Player1\")
+"
+
+[sub_resource type="Resource" id="Resource_4b770"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_vvc65")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7tt4b"]
+script = ExtResource("8_umq6k")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_4b770")
+expression = SubResource("Resource_ofwcc")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_dcq3t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	from.get_parent().queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_lwfc5"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_dcq3t")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_f4jhc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other == closest(\"Player1\")
+"
+
+[sub_resource type="Resource" id="Resource_suq4e"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_f4jhc")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rdqdf"]
+script = ExtResource("8_umq6k")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_suq4e")
+expression = SubResource("Resource_lwfc5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_tgw1f"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ro265"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_tgw1f")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3es6a"]
+script = ExtResource("8_umq6k")
+signal_name = "always"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_left"
+arguments = []
+only_if = SubResource("Resource_ro265")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_3yskw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	other.get_node(\"HealthBarBehavior\").damage(20)
+"
+
+[sub_resource type="Resource" id="Resource_blbc5"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_3yskw")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_0oyis"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other == closest(\"Player1\")
+"
+
+[sub_resource type="Resource" id="Resource_j2jya"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_0oyis")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_533bf"]
+script = ExtResource("8_umq6k")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_j2jya")
+expression = SubResource("Resource_blbc5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_nr0si"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	from.get_parent().queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_rya6a"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_nr0si")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_xiqfe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other == closest(\"Player1\")
+"
+
+[sub_resource type="Resource" id="Resource_uypuj"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_xiqfe")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_x63py"]
+script = ExtResource("8_umq6k")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_uypuj")
+expression = SubResource("Resource_rya6a")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_0rsyw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return -1
+"
+
+[sub_resource type="Resource" id="Resource_8yhka"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_0rsyw")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_pab3h"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_6m4vc"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_pab3h")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_rn1wj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_j6y5g"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_rn1wj")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gw3jn"]
+script = ExtResource("8_umq6k")
+signal_name = "up"
+to = NodePath("../Arrow Spawner")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_8yhka"), SubResource("Resource_6m4vc")]
+only_if = SubResource("Resource_j6y5g")
+deferred = false
+enabled = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gryjk"]
 size = Vector2(2190, 948)
 
@@ -2016,10 +2239,10 @@ metadata/lives = 5
 metadata/pronto_connections = [SubResource("Resource_ktmfb"), SubResource("Resource_0npa2"), SubResource("Resource_4eswn"), SubResource("Resource_dwxw5"), SubResource("Resource_dmcmm")]
 
 [node name="Arrow Spawner" type="Node2D" parent="Player1" node_paths=PackedStringArray("container")]
-position = Vector2(1, 75)
+position = Vector2(0, 75)
 script = ExtResource("12_j2hfl")
 container = NodePath("../..")
-metadata/pronto_connections = [SubResource("Resource_i3vww")]
+metadata/pronto_connections = []
 
 [node name="Arrow Right" type="CharacterBody2D" parent="Player1/Arrow Spawner"]
 position = Vector2(60, -73)
@@ -2156,6 +2379,74 @@ position = Vector2(0, -40)
 script = ExtResource("10_cndnx")
 metadata/lives = 5
 metadata/pronto_connections = [SubResource("Resource_4b1n7"), SubResource("Resource_edcqu"), SubResource("Resource_7815l"), SubResource("Resource_ocfsp"), SubResource("Resource_srpho")]
+
+[node name="Arrow Spawner" type="Node2D" parent="Player2" node_paths=PackedStringArray("container")]
+position = Vector2(0, 75)
+script = ExtResource("12_j2hfl")
+container = NodePath("../..")
+metadata/pronto_connections = []
+
+[node name="Arrow Right" type="CharacterBody2D" parent="Player2/Arrow Spawner"]
+position = Vector2(60, -73)
+collision_layer = 3
+collision_mask = 3
+slide_on_ceiling = false
+floor_constant_speed = true
+floor_block_on_wall = false
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Player2/Arrow Spawner/Arrow Right"]
+rotation = 0.785398
+script = ExtResource("2_pbeu2")
+use_sprite = true
+sprite_texture = ExtResource("3_h52sy")
+
+[node name="MoveBehavior" type="Node2D" parent="Player2/Arrow Spawner/Arrow Right"]
+position = Vector2(64, 0)
+script = ExtResource("13_o7n8i")
+
+[node name="AlwaysBehavior" type="Node2D" parent="Player2/Arrow Spawner/Arrow Right"]
+position = Vector2(64, 29)
+script = ExtResource("14_ale4y")
+metadata/pronto_connections = [SubResource("Resource_lg1xh")]
+
+[node name="CollisionBehavior" type="Node2D" parent="Player2/Arrow Spawner/Arrow Right"]
+position = Vector2(0, 32)
+script = ExtResource("11_l2oh4")
+metadata/pronto_connections = [SubResource("Resource_7tt4b"), SubResource("Resource_rdqdf")]
+
+[node name="Arrow Left" type="CharacterBody2D" parent="Player2/Arrow Spawner"]
+position = Vector2(-72, -76)
+collision_layer = 3
+collision_mask = 3
+slide_on_ceiling = false
+floor_constant_speed = true
+floor_block_on_wall = false
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Player2/Arrow Spawner/Arrow Left"]
+rotation = 3.92699
+script = ExtResource("2_pbeu2")
+use_sprite = true
+sprite_texture = ExtResource("3_h52sy")
+
+[node name="MoveBehavior" type="Node2D" parent="Player2/Arrow Spawner/Arrow Left"]
+position = Vector2(-62, -1)
+script = ExtResource("13_o7n8i")
+
+[node name="AlwaysBehavior" type="Node2D" parent="Player2/Arrow Spawner/Arrow Left"]
+position = Vector2(-62, 34)
+script = ExtResource("14_ale4y")
+metadata/pronto_connections = [SubResource("Resource_3es6a")]
+
+[node name="CollisionBehavior" type="Node2D" parent="Player2/Arrow Spawner/Arrow Left"]
+position = Vector2(-2, 35)
+script = ExtResource("11_l2oh4")
+metadata/pronto_connections = [SubResource("Resource_533bf"), SubResource("Resource_x63py")]
+
+[node name="Attack Button" type="Node2D" parent="Player2"]
+position = Vector2(0, 113)
+script = ExtResource("12_fauhh")
+key = "H"
+metadata/pronto_connections = [SubResource("Resource_gw3jn")]
 
 [node name="Gravity" type="Area2D" parent="."]
 visible = false
