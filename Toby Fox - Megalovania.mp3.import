@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://chl2ngdbtvwlx"
+path="res://.godot/imported/Toby Fox - Megalovania.mp3-43e0f5a2492b52af4c7d4e56bdd8c8f6.mp3str"
+
+[deps]
+
+source_file="res://Toby Fox - Megalovania.mp3"
+dest_files=["res://.godot/imported/Toby Fox - Megalovania.mp3-43e0f5a2492b52af4c7d4e56bdd8c8f6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
