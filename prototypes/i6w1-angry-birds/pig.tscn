@@ -9,8 +9,8 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="7_insqa"]
 
 [sub_resource type="Gradient" id="Gradient_6068g"]
-offsets = PackedFloat32Array(0.151515, 0.5, 1)
-colors = PackedColorArray(0.393078, 0.231823, 0, 1, 0.594877, 0.594877, 9.62615e-07, 1, 0.196078, 0.803922, 0.196078, 1)
+offsets = PackedFloat32Array(0, 0.0454545, 0.5, 1)
+colors = PackedColorArray(0.392157, 0.231373, 0, 0.32549, 0.430558, 0.300051, 0, 0.691826, 0.596078, 0.596078, 0, 0.85098, 0.196078, 0.803922, 0.196078, 1)
 
 [sub_resource type="GDScript" id="GDScript_s60fg"]
 script/source = "@tool
