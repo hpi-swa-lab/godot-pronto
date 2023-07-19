@@ -1,9 +1,10 @@
-[gd_scene load_steps=126 format=3 uid="uid://b0kgndmuyxujx"]
+[gd_scene load_steps=173 format=3 uid="uid://b0kgndmuyxujx"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_5ma0w"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_pbeu2"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_h52sy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShapeBehavior.gd" id="4_fi6tu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="5_l740t"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="5_q0b8b"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="6_0yp2m"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="7_22m23"]
@@ -11,6 +12,162 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/GroupBehavior.gd" id="9_y5dtb"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="10_cndnx"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="11_l2oh4"]
+
+[sub_resource type="GDScript" id="GDScript_uurr3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_4n0om"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_uurr3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_620t2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3a1qe"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_620t2")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4rvjq"]
+script = ExtResource("8_umq6k")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "set_collision_layer"
+arguments = [SubResource("Resource_4n0om")]
+only_if = SubResource("Resource_3a1qe")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_5qu38"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_cjaxa"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_5qu38")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_o8wxq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_vy1hb"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_o8wxq")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_d1885"]
+script = ExtResource("8_umq6k")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_cjaxa")]
+only_if = SubResource("Resource_vy1hb")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_vyd8a"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_fl6jt"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_vyd8a")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_7h0e8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_yfjqp"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_7h0e8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0ly4c"]
+script = ExtResource("8_umq6k")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "set_collision_layer"
+arguments = [SubResource("Resource_fl6jt")]
+only_if = SubResource("Resource_yfjqp")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_e0k4p"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_38m66"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_e0k4p")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_y0isp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_q8spn"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_y0isp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qmhl2"]
+script = ExtResource("8_umq6k")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_38m66")]
+only_if = SubResource("Resource_q8spn")
+deferred = false
+enabled = true
 
 [sub_resource type="Image" id="Image_jstiq"]
 data = {
@@ -103,6 +260,148 @@ more_references = []
 invoke = "heal_full"
 arguments = []
 only_if = SubResource("Resource_d2cva")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_e44o0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return Vector2(340, 100)
+"
+
+[sub_resource type="Resource" id="Resource_jiow5"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_e44o0")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_fynld"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_an03j"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_fynld")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_l68uh"]
+script = ExtResource("8_umq6k")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_jiow5")]
+only_if = SubResource("Resource_an03j")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_vqrld"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7xbm3"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_vqrld")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_yb0df"]
+script = ExtResource("8_umq6k")
+signal_name = "death"
+to = NodePath("../../StartPlatformPlayer1/ClockBehavior")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_7xbm3")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_wk28n"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_otsxr"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_wk28n")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bb53t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ob5me"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_bb53t")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rxuix"]
+script = ExtResource("8_umq6k")
+signal_name = "death"
+to = NodePath("../../StartPlatformPlayer1")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_otsxr")]
+only_if = SubResource("Resource_ob5me")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_kqe4l"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return 3
+"
+
+[sub_resource type="Resource" id="Resource_bde0r"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_kqe4l")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_038ma"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_i3ofu"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_038ma")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0p7j3"]
+script = ExtResource("8_umq6k")
+signal_name = "death"
+to = NodePath("../../StartPlatformPlayer1")
+more_references = []
+invoke = "set_collision_layer"
+arguments = [SubResource("Resource_bde0r")]
+only_if = SubResource("Resource_i3ofu")
 deferred = false
 enabled = true
 
@@ -455,6 +754,148 @@ only_if = SubResource("Resource_vp206")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_0kb8u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return Vector2(940, 140)
+"
+
+[sub_resource type="Resource" id="Resource_ogpb0"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_0kb8u")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_er66e"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_0kx07"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_er66e")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_hhy2e"]
+script = ExtResource("8_umq6k")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_ogpb0")]
+only_if = SubResource("Resource_0kx07")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_hl6bo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_igcl5"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_hl6bo")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_y5gss"]
+script = ExtResource("8_umq6k")
+signal_name = "death"
+to = NodePath("../../StartPlarformPlayer2/ClockBehavior")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_igcl5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_rrgye"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return 3
+"
+
+[sub_resource type="Resource" id="Resource_762vw"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_rrgye")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0rcev"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_vxeny"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_0rcev")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_r3bqu"]
+script = ExtResource("8_umq6k")
+signal_name = "death"
+to = NodePath("../../StartPlarformPlayer2")
+more_references = []
+invoke = "set_collision_layer"
+arguments = [SubResource("Resource_762vw")]
+only_if = SubResource("Resource_vxeny")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_3lg4h"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ck2ua"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_3lg4h")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_s6hl0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: StaticBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_5f8tm"]
+script = ExtResource("7_22m23")
+nested_script = SubResource("GDScript_s6hl0")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_02p85"]
+script = ExtResource("8_umq6k")
+signal_name = "death"
+to = NodePath("../../StartPlarformPlayer2")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_ck2ua")]
+only_if = SubResource("Resource_5f8tm")
+deferred = false
+enabled = true
+
 [sub_resource type="Image" id="Image_nk4cv"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -741,84 +1182,6 @@ only_if = SubResource("Resource_oqftv")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_kiipl"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: CharacterBody2D):
-	return Vector2(340, 140)
-"
-
-[sub_resource type="Resource" id="Resource_xjesx"]
-script = ExtResource("7_22m23")
-nested_script = SubResource("GDScript_kiipl")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_15qcy"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: CharacterBody2D):
-	return other == to
-"
-
-[sub_resource type="Resource" id="Resource_q75ep"]
-script = ExtResource("7_22m23")
-nested_script = SubResource("GDScript_15qcy")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_dpi3w"]
-script = ExtResource("8_umq6k")
-signal_name = "collided"
-to = NodePath("../../Player1")
-more_references = []
-invoke = "set_position"
-arguments = [SubResource("Resource_xjesx")]
-only_if = SubResource("Resource_q75ep")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_tp2kt"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: CharacterBody2D):
-	return Vector2(940, 140)
-"
-
-[sub_resource type="Resource" id="Resource_m0txo"]
-script = ExtResource("7_22m23")
-nested_script = SubResource("GDScript_tp2kt")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_yjllk"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: CharacterBody2D):
-	return other == to
-"
-
-[sub_resource type="Resource" id="Resource_rux2o"]
-script = ExtResource("7_22m23")
-nested_script = SubResource("GDScript_yjllk")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_biwgj"]
-script = ExtResource("8_umq6k")
-signal_name = "collided"
-to = NodePath("../../Player2")
-more_references = []
-invoke = "set_position"
-arguments = [SubResource("Resource_m0txo")]
-only_if = SubResource("Resource_rux2o")
-deferred = false
-enabled = true
-
 [sub_resource type="GDScript" id="GDScript_u4wm7"]
 script/source = "@tool
 extends U
@@ -901,6 +1264,15 @@ script = ExtResource("4_fi6tu")
 shape_type = "Capsule"
 capsule_height = 100.0
 capsule_radius = 5.0
+metadata/pronto_connections = []
+
+[node name="ClockBehavior" type="Node2D" parent="StartPlatformPlayer1"]
+position = Vector2(-35, 22)
+script = ExtResource("5_l740t")
+one_shot = true
+duration_seconds = 4.0
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_4rvjq"), SubResource("Resource_d1885")]
 
 [node name="StartPlarformPlayer2" type="StaticBody2D" parent="."]
 position = Vector2(940, 190)
@@ -913,6 +1285,14 @@ script = ExtResource("4_fi6tu")
 shape_type = "Capsule"
 capsule_height = 100.0
 capsule_radius = 5.0
+
+[node name="ClockBehavior" type="Node2D" parent="StartPlarformPlayer2"]
+position = Vector2(0, 24)
+script = ExtResource("5_l740t")
+one_shot = true
+duration_seconds = 4.0
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_0ly4c"), SubResource("Resource_qmhl2")]
 
 [node name="Player1" type="CharacterBody2D" parent="."]
 position = Vector2(340, 141)
@@ -935,7 +1315,7 @@ current = 200
 healthbar_size = Vector2(200, 20)
 label = 2
 progress_gradient = SubResource("Gradient_j4a5e")
-metadata/pronto_connections = [SubResource("Resource_urn88"), SubResource("Resource_l8xl1")]
+metadata/pronto_connections = [SubResource("Resource_urn88"), SubResource("Resource_l8xl1"), SubResource("Resource_l68uh"), SubResource("Resource_yb0df"), SubResource("Resource_rxuix"), SubResource("Resource_0p7j3")]
 
 [node name="Lives" type="Node2D" parent="Player1"]
 position = Vector2(0, -100)
@@ -1007,8 +1387,9 @@ script = ExtResource("6_0yp2m")
 max = 200
 current = 200
 healthbar_size = Vector2(200, 20)
+label = 2
 progress_gradient = SubResource("Gradient_me7np")
-metadata/pronto_connections = [SubResource("Resource_yvc1g"), SubResource("Resource_0hheg")]
+metadata/pronto_connections = [SubResource("Resource_yvc1g"), SubResource("Resource_0hheg"), SubResource("Resource_hhy2e"), SubResource("Resource_y5gss"), SubResource("Resource_r3bqu"), SubResource("Resource_02p85")]
 
 [node name="Lives" type="Node2D" parent="Player2"]
 position = Vector2(0, -100)
@@ -1078,4 +1459,4 @@ shape = SubResource("RectangleShape2D_lckcw")
 
 [node name="CollisionBehavior" type="Node2D" parent="Bottom Barrier"]
 script = ExtResource("11_l2oh4")
-metadata/pronto_connections = [SubResource("Resource_q1s76"), SubResource("Resource_dpi3w"), SubResource("Resource_biwgj"), SubResource("Resource_5iadv")]
+metadata/pronto_connections = [SubResource("Resource_q1s76"), SubResource("Resource_5iadv")]
