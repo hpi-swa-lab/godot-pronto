@@ -78,10 +78,6 @@ func _horizontal_direction():
 	
 	return 0
 
-func _move_check(direction: String):
-	var keys = key_map[player]
-	return keys["move_check"].call(keys[direction])
-
 func _jump_check():
 	var keys = key_map[player]
 	return keys['jump_check'].call(keys["jump"])
