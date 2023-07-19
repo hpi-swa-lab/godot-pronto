@@ -1,4 +1,4 @@
-[gd_scene load_steps=173 format=3 uid="uid://7yv7h4ilqmgg"]
+[gd_scene load_steps=196 format=3 uid="uid://7yv7h4ilqmgg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_oe11t"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_5a507"]
@@ -72,6 +72,109 @@ more_references = []
 invoke = "spawn"
 arguments = [SubResource("Resource_vx2nl"), SubResource("Resource_i57w8")]
 only_if = SubResource("Resource_vcdn0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_mak4q"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 1
+"
+
+[sub_resource type="Resource" id="Resource_u1rhl"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_mak4q")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_r5xda"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_raunq"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_r5xda")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_j8vpt"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("../../BuildLevel")
+more_references = []
+invoke = "trigger1"
+arguments = [SubResource("Resource_u1rhl")]
+only_if = SubResource("Resource_raunq")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fm46p"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 2
+"
+
+[sub_resource type="Resource" id="Resource_vecli"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_fm46p")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_tb64s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4sgep"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_tb64s")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_2n466"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("../../BuildLevel")
+more_references = []
+invoke = "trigger1"
+arguments = [SubResource("Resource_vecli")]
+only_if = SubResource("Resource_4sgep")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_4ey4c"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_sorio"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_4ey4c")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jc4qq"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("../../StartGame")
+more_references = []
+invoke = "trigger"
+arguments = []
+only_if = SubResource("Resource_sorio")
 deferred = false
 enabled = true
 
@@ -528,7 +631,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from: Node2D, to: Node2D):
+func run(node, selection_arg, token, from, to):
 	var new_board = to.spawn_at(node.global_position,0)[0] as Node2D
 	new_board.global_transform = node.global_transform
 	
@@ -915,35 +1018,21 @@ expression = SubResource("Resource_ko2gx")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_teol6"]
+[sub_resource type="GDScript" id="GDScript_xchpf"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
+func run(arg0, arg1, arg2, arg3, from, to):
+	return int(randf() * 2) + 1
 "
 
-[sub_resource type="Resource" id="Resource_uwvis"]
+[sub_resource type="Resource" id="Resource_dk67x"]
 script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_teol6")
+nested_script = SubResource("GDScript_xchpf")
 argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_a0x3o"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_rs048"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_a0x3o")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_0kqlb"]
+[sub_resource type="GDScript" id="GDScript_tiot5"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -951,232 +1040,20 @@ func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_bhv3g"]
+[sub_resource type="Resource" id="Resource_cd4ci"]
 script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_0kqlb")
+nested_script = SubResource("GDScript_tiot5")
 argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_okq0v"]
+[sub_resource type="Resource" id="Resource_bc0ji"]
 script = ExtResource("7_vjssu")
 signal_name = "triggered"
-to = NodePath("QueryEnemies")
+to = NodePath("../BuildLevel")
 more_references = []
-invoke = "query"
-arguments = [SubResource("Resource_uwvis"), SubResource("Resource_rs048")]
-only_if = SubResource("Resource_bhv3g")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_v7b2b"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_s2t5i"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_v7b2b")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_yknph"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_83e65"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_yknph")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_qgyk1"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_lu4dk"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_qgyk1")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_0vf7p"]
-script = ExtResource("7_vjssu")
-signal_name = "triggered"
-to = NodePath("QueryBirds")
-more_references = []
-invoke = "query"
-arguments = [SubResource("Resource_s2t5i"), SubResource("Resource_83e65")]
-only_if = SubResource("Resource_lu4dk")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_ib1ia"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_0nrd4"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_ib1ia")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_skg1a"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_wyl3u"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_skg1a")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_7fdkp"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_7818a"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_7fdkp")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_6iyo5"]
-script = ExtResource("7_vjssu")
-signal_name = "triggered"
-to = NodePath("../QueryFuturePigs")
-more_references = []
-invoke = "query"
-arguments = [SubResource("Resource_0nrd4"), SubResource("Resource_wyl3u")]
-only_if = SubResource("Resource_7818a")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_m1q4u"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_kgy6c"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_m1q4u")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_g2xrx"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_jnfxv"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_g2xrx")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_qneqs"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_kdh73"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_qneqs")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_1ect4"]
-script = ExtResource("7_vjssu")
-signal_name = "triggered"
-to = NodePath("../QueryFutureBirds")
-more_references = []
-invoke = "query"
-arguments = [SubResource("Resource_kgy6c"), SubResource("Resource_jnfxv")]
-only_if = SubResource("Resource_kdh73")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_vx25a"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_pcdry"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_vx25a")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_8cy3p"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return null
-"
-
-[sub_resource type="Resource" id="Resource_lfo5e"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_8cy3p")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_7xdnr"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_d1qfd"]
-script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_7xdnr")
-argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_b2ekf"]
-script = ExtResource("7_vjssu")
-signal_name = "triggered"
-to = NodePath("../QueryFutureBoards")
-more_references = []
-invoke = "query"
-arguments = [SubResource("Resource_pcdry"), SubResource("Resource_lfo5e")]
-only_if = SubResource("Resource_d1qfd")
+invoke = "trigger1"
+arguments = [SubResource("Resource_dk67x")]
+only_if = SubResource("Resource_cd4ci")
 deferred = false
 enabled = true
 
@@ -1242,6 +1119,311 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_o5r54")
 expression = SubResource("Resource_pw7d7")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_yyoru"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from, to):
+	print(\"../Buildings/Level%s\" % arg0)
+	return \"../Buildings/Level%s\" % arg0
+"
+
+[sub_resource type="Resource" id="Resource_we8va"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_yyoru")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_w6g8v"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return arg0 is int
+"
+
+[sub_resource type="Resource" id="Resource_dmm5j"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_w6g8v")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ddo5d"]
+script = ExtResource("7_vjssu")
+signal_name = "triggered"
+to = NodePath(".")
+more_references = []
+invoke = "trigger1"
+arguments = [SubResource("Resource_we8va")]
+only_if = SubResource("Resource_dmm5j")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_u5w6c"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_kfsyn"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_u5w6c")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_yjuu0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_ohm1g"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_yjuu0")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_5m33u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return not (arg0 is int)
+"
+
+[sub_resource type="Resource" id="Resource_1pnre"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_5m33u")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_pcju6"]
+script = ExtResource("7_vjssu")
+signal_name = "triggered"
+to = NodePath("../StartGame/QueryBirds")
+more_references = []
+invoke = "query"
+arguments = [SubResource("Resource_kfsyn"), SubResource("Resource_ohm1g")]
+only_if = SubResource("Resource_1pnre")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ejom0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_rmejb"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_ejom0")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ayk04"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_hem8e"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_ayk04")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hsmj6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return not (arg0 is int)
+"
+
+[sub_resource type="Resource" id="Resource_cgqkn"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_hsmj6")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ormga"]
+script = ExtResource("7_vjssu")
+signal_name = "triggered"
+to = NodePath("../StartGame/QueryEnemies")
+more_references = []
+invoke = "query"
+arguments = [SubResource("Resource_rmejb"), SubResource("Resource_hem8e")]
+only_if = SubResource("Resource_cgqkn")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_3xoth"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from, to):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_fynjd"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_3xoth")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hdu84"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from, to):
+	return {'only_below': arg0}
+"
+
+[sub_resource type="Resource" id="Resource_x5fws"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_hdu84")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xibhq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return not (arg0 is int)
+"
+
+[sub_resource type="Resource" id="Resource_jkh7o"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_xibhq")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_atbbm"]
+script = ExtResource("7_vjssu")
+signal_name = "triggered"
+to = NodePath("../QueryFutureBoards")
+more_references = []
+invoke = "query"
+arguments = [SubResource("Resource_fynjd"), SubResource("Resource_x5fws")]
+only_if = SubResource("Resource_jkh7o")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_rxxwf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_b0n3c"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_rxxwf")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_sjeg4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return {'only_below': arg0}
+"
+
+[sub_resource type="Resource" id="Resource_ialji"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_sjeg4")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_lym8r"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return not (arg0 is int)
+"
+
+[sub_resource type="Resource" id="Resource_cyh5l"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_lym8r")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_5i6ln"]
+script = ExtResource("7_vjssu")
+signal_name = "triggered"
+to = NodePath("../QueryFuturePigs")
+more_references = []
+invoke = "query"
+arguments = [SubResource("Resource_b0n3c"), SubResource("Resource_ialji")]
+only_if = SubResource("Resource_cyh5l")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_16vke"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_w64dj"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_16vke")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_w3pmr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return {'only_below': arg0}
+"
+
+[sub_resource type="Resource" id="Resource_gw38e"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_w3pmr")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_nutof"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return not (arg0 is int)
+"
+
+[sub_resource type="Resource" id="Resource_wdabs"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_nutof")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_f03tt"]
+script = ExtResource("7_vjssu")
+signal_name = "triggered"
+to = NodePath("../QueryFutureBirds")
+more_references = []
+invoke = "query"
+arguments = [SubResource("Resource_w64dj"), SubResource("Resource_gw38e")]
+only_if = SubResource("Resource_wdabs")
 deferred = false
 enabled = true
 
@@ -1374,12 +1556,30 @@ script = ExtResource("7_3gwg1")
 key = "S"
 metadata/pronto_connections = [SubResource("Resource_n2ue5")]
 
+[node name="Level1Key" type="Node2D" parent="PrototypingUIPanel"]
+position = Vector2(12, 240)
+script = ExtResource("7_3gwg1")
+key = "1"
+metadata/pronto_connections = [SubResource("Resource_j8vpt")]
+
+[node name="Level2Key" type="Node2D" parent="PrototypingUIPanel"]
+position = Vector2(28, 240)
+script = ExtResource("7_3gwg1")
+key = "2"
+metadata/pronto_connections = [SubResource("Resource_2n466")]
+
+[node name="NewGameKey" type="Node2D" parent="PrototypingUIPanel"]
+position = Vector2(44, 240)
+script = ExtResource("7_3gwg1")
+key = "R"
+metadata/pronto_connections = [SubResource("Resource_jc4qq")]
+
 [node name="BirdSpawner" type="Node2D" parent="."]
-position = Vector2(600, 476)
+position = Vector2(92, 380)
 script = ExtResource("9_o6cql")
 
 [node name="Bird" type="RigidBody2D" parent="BirdSpawner" groups=["birds", "can_damage", "inactive_birds"]]
-position = Vector2(-104, 96)
+position = Vector2(376, 176)
 mass = 0.6
 physics_material_override = SubResource("PhysicsMaterial_ru3cs")
 
@@ -1494,87 +1694,6 @@ proximity = null
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_f3nh8")]
 
-[node name="Building" type="Node2D" parent="."]
-
-[node name="FutureBoard" type="Node2D" parent="Building" groups=["future_boards"]]
-position = Vector2(872, 588)
-script = ExtResource("1_oe11t")
-color = Color(0.392641, 0.313366, 0.150292, 1)
-placeholder_size = Vector2(16, 96)
-sprite_texture = ExtResource("2_5a507")
-
-[node name="FutureBoard2" type="Node2D" parent="Building" groups=["future_boards"]]
-position = Vector2(824, 596)
-rotation = 0.785397
-script = ExtResource("1_oe11t")
-color = Color(0.392157, 0.313726, 0.14902, 1)
-placeholder_size = Vector2(16, 96)
-sprite_texture = ExtResource("2_5a507")
-
-[node name="FutureBoard3" type="Node2D" parent="Building" groups=["future_boards"]]
-position = Vector2(1032, 596)
-rotation = -0.785397
-script = ExtResource("1_oe11t")
-color = Color(0.392641, 0.313366, 0.150292, 1)
-placeholder_size = Vector2(16, 96)
-sprite_texture = ExtResource("2_5a507")
-
-[node name="FutureBoard4" type="Node2D" parent="Building" groups=["future_boards"]]
-position = Vector2(984, 588)
-script = ExtResource("1_oe11t")
-color = Color(0.392641, 0.313366, 0.150292, 1)
-placeholder_size = Vector2(16, 96)
-sprite_texture = ExtResource("2_5a507")
-
-[node name="FutureBoard5" type="Node2D" parent="Building" groups=["future_boards"]]
-position = Vector2(928, 532)
-script = ExtResource("1_oe11t")
-color = Color(0.392641, 0.313366, 0.150292, 1)
-placeholder_size = Vector2(128, 16)
-sprite_texture = ExtResource("2_5a507")
-
-[node name="FuturePig" type="Node2D" parent="Building" groups=["future_pigs"]]
-position = Vector2(928, 500)
-script = ExtResource("3_6wpat")
-shape_type = "Circle"
-color = Color(0, 1, 0, 1)
-circle_radius = 23.065
-
-[node name="FuturePig2" type="Node2D" parent="Building" groups=["future_pigs"]]
-position = Vector2(744, 608)
-script = ExtResource("3_6wpat")
-shape_type = "Circle"
-color = Color(0, 1, 0, 1)
-circle_radius = 23.065
-
-[node name="FuturePig3" type="Node2D" parent="Building" groups=["future_pigs"]]
-position = Vector2(928, 612)
-script = ExtResource("3_6wpat")
-shape_type = "Circle"
-color = Color(0, 1, 0, 1)
-circle_radius = 23.065
-
-[node name="FutureBird" type="Node2D" parent="Building" groups=["future_birds"]]
-position = Vector2(44, 608)
-script = ExtResource("3_6wpat")
-shape_type = "Circle"
-color = Color(1, 0, 0, 1)
-circle_radius = 23.065
-
-[node name="FutureBird2" type="Node2D" parent="Building" groups=["future_birds"]]
-position = Vector2(96, 608)
-script = ExtResource("3_6wpat")
-shape_type = "Circle"
-color = Color(1, 0, 0, 1)
-circle_radius = 23.065
-
-[node name="FutureBird3" type="Node2D" parent="Building" groups=["future_birds"]]
-position = Vector2(148, 608)
-script = ExtResource("3_6wpat")
-shape_type = "Circle"
-color = Color(1, 0, 0, 1)
-circle_radius = 23.065
-
 [node name="QueryBirds" type="Node2D" parent="."]
 position = Vector2(184, 408)
 script = ExtResource("15_nalm8")
@@ -1626,17 +1745,17 @@ theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 
 [node name="StartGame" type="Node2D" parent="."]
-position = Vector2(156, 324)
+position = Vector2(164, 292)
 script = ExtResource("13_iy080")
-metadata/pronto_connections = [SubResource("Resource_okq0v"), SubResource("Resource_0vf7p"), SubResource("Resource_6iyo5"), SubResource("Resource_1ect4"), SubResource("Resource_b2ekf")]
+metadata/pronto_connections = [SubResource("Resource_bc0ji")]
 
 [node name="NodeReadyBehavior" type="Node2D" parent="StartGame"]
-position = Vector2(60, -24)
+position = Vector2(-32, -8)
 script = ExtResource("12_j4kw5")
 metadata/pronto_connections = [SubResource("Resource_n0nxy")]
 
 [node name="QueryEnemies" type="Node2D" parent="StartGame"]
-position = Vector2(-16, -28)
+position = Vector2(128, -28)
 script = ExtResource("15_nalm8")
 only_below = null
 group = &"enemies"
@@ -1647,7 +1766,7 @@ max_results = null
 metadata/pronto_connections = [SubResource("Resource_6psaf")]
 
 [node name="QueryBirds" type="Node2D" parent="StartGame"]
-position = Vector2(12, -44)
+position = Vector2(104, -24)
 script = ExtResource("15_nalm8")
 only_below = null
 group = &"birds"
@@ -1656,3 +1775,262 @@ predicate_for_node = null
 proximity = null
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_6psaf")]
+
+[node name="Buildings" type="Node" parent="."]
+
+[node name="Level1" type="Node2D" parent="Buildings"]
+visible = false
+
+[node name="FutureBoard" type="Node2D" parent="Buildings/Level1" groups=["future_boards"]]
+position = Vector2(872, 588)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard2" type="Node2D" parent="Buildings/Level1" groups=["future_boards"]]
+position = Vector2(824, 596)
+rotation = 0.785397
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard3" type="Node2D" parent="Buildings/Level1" groups=["future_boards"]]
+position = Vector2(1032, 596)
+rotation = -0.785397
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard4" type="Node2D" parent="Buildings/Level1" groups=["future_boards"]]
+position = Vector2(984, 588)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard5" type="Node2D" parent="Buildings/Level1" groups=["future_boards"]]
+position = Vector2(928, 532)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(128, 16)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FuturePig" type="Node2D" parent="Buildings/Level1" groups=["future_pigs"]]
+position = Vector2(928, 500)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(0, 1, 0, 1)
+circle_radius = 23.065
+
+[node name="FuturePig2" type="Node2D" parent="Buildings/Level1" groups=["future_pigs"]]
+position = Vector2(744, 608)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(0, 1, 0, 1)
+circle_radius = 23.065
+
+[node name="FuturePig3" type="Node2D" parent="Buildings/Level1" groups=["future_pigs"]]
+position = Vector2(928, 612)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(0, 1, 0, 1)
+circle_radius = 23.065
+
+[node name="FutureBird" type="Node2D" parent="Buildings/Level1" groups=["future_birds"]]
+position = Vector2(44, 608)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(1, 0, 0, 1)
+circle_radius = 23.065
+
+[node name="FutureBird2" type="Node2D" parent="Buildings/Level1" groups=["future_birds"]]
+position = Vector2(96, 608)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(1, 0, 0, 1)
+circle_radius = 23.065
+
+[node name="FutureBird3" type="Node2D" parent="Buildings/Level1" groups=["future_birds"]]
+position = Vector2(148, 608)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(1, 0, 0, 1)
+circle_radius = 23.065
+
+[node name="Level2" type="Node2D" parent="Buildings"]
+visible = false
+
+[node name="FutureBoard" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(872, 588)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard2" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(824, 596)
+rotation = 0.785397
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard3" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(897, 254.5)
+rotation = 0.523598
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard4" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(959, 254.5)
+rotation = -0.523598
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard5" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(708, 588)
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard6" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(708, 492)
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard7" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(872, 476)
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard8" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(984, 476)
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard9" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(928, 420)
+rotation = 1.57079
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 128)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard10" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(1032, 596)
+rotation = -0.785397
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard11" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(984, 588)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard12" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(928, 532)
+script = ExtResource("1_oe11t")
+color = Color(0.392641, 0.313366, 0.150292, 1)
+placeholder_size = Vector2(128, 16)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard13" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(872, 364)
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard14" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(984, 364)
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 96)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FutureBoard15" type="Node2D" parent="Buildings/Level2" groups=["future_boards"]]
+position = Vector2(928, 308)
+rotation = 1.57079
+script = ExtResource("1_oe11t")
+color = Color(0.392157, 0.313726, 0.14902, 1)
+placeholder_size = Vector2(16, 128)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="FuturePig" type="Node2D" parent="Buildings/Level2" groups=["future_pigs"]]
+position = Vector2(928, 500)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(0, 1, 0, 1)
+circle_radius = 23.065
+
+[node name="FuturePig3" type="Node2D" parent="Buildings/Level2" groups=["future_pigs"]]
+position = Vector2(928, 612)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(0, 1, 0, 1)
+circle_radius = 23.065
+
+[node name="FuturePig4" type="Node2D" parent="Buildings/Level2" groups=["future_pigs"]]
+position = Vector2(928, 388)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(0, 1, 0, 1)
+circle_radius = 23.065
+
+[node name="FuturePig5" type="Node2D" parent="Buildings/Level2" groups=["future_pigs"]]
+position = Vector2(928, 276)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(0, 1, 0, 1)
+circle_radius = 23.065
+
+[node name="FuturePig2" type="Node2D" parent="Buildings/Level2" groups=["future_pigs"]]
+position = Vector2(744, 608)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(0, 1, 0, 1)
+circle_radius = 23.065
+
+[node name="FutureBird" type="Node2D" parent="Buildings/Level2" groups=["future_birds"]]
+position = Vector2(44, 608)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(1, 0, 0, 1)
+circle_radius = 23.065
+
+[node name="FutureBird2" type="Node2D" parent="Buildings/Level2" groups=["future_birds"]]
+position = Vector2(96, 608)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(1, 0, 0, 1)
+circle_radius = 23.065
+
+[node name="FutureBird3" type="Node2D" parent="Buildings/Level2" groups=["future_birds"]]
+position = Vector2(148, 608)
+script = ExtResource("3_6wpat")
+shape_type = "Circle"
+color = Color(1, 0, 0, 1)
+circle_radius = 23.065
+
+[node name="BuildLevel" type="Node2D" parent="."]
+position = Vector2(280, 284)
+script = ExtResource("13_iy080")
+metadata/pronto_connections = [SubResource("Resource_ddo5d"), SubResource("Resource_pcju6"), SubResource("Resource_ormga"), SubResource("Resource_atbbm"), SubResource("Resource_5i6ln"), SubResource("Resource_f03tt")]
