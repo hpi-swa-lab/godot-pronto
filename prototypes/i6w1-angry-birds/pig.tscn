@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bw40gnxnijxnh"]
+[gd_scene load_steps=30 format=3 uid="uid://bw40gnxnijxnh"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShapeBehavior.gd" id="1_jgq8a"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="2_coa6y"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_maa1c"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="5_1fh8t"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="6_bnbk2"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="7_insqa"]
 
 [sub_resource type="Gradient" id="Gradient_6068g"]
 offsets = PackedFloat32Array(0.151515, 0.5, 1)
@@ -148,6 +149,45 @@ only_if = SubResource("Resource_micvq")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_vkyj1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return Vector2.UP * 500
+"
+
+[sub_resource type="Resource" id="Resource_gp68f"]
+script = ExtResource("3_pg7jj")
+nested_script = SubResource("GDScript_vkyj1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_2tuic"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_lmfjk"]
+script = ExtResource("3_pg7jj")
+nested_script = SubResource("GDScript_2tuic")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_afqrg"]
+script = ExtResource("4_maa1c")
+signal_name = "just_down"
+to = NodePath("..")
+more_references = []
+invoke = "apply_central_impulse"
+arguments = [SubResource("Resource_gp68f")]
+only_if = SubResource("Resource_lmfjk")
+deferred = false
+enabled = true
+
 [node name="Pig" type="RigidBody2D" groups=["enemies"]]
 
 [node name="PlaceholderShapeBehavior" type="Node2D" parent="."]
@@ -177,3 +217,9 @@ one_shot = true
 paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_syxu5")]
+
+[node name="Jump" type="Node2D" parent="."]
+position = Vector2(-48, 104)
+script = ExtResource("7_insqa")
+key = "J"
+metadata/pronto_connections = [SubResource("Resource_afqrg")]
