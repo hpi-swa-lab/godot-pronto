@@ -4,28 +4,51 @@ extends Behavior
 class_name QueryBehavior
 
 
-signal found(node, selection_arg, token)
-signal found_all(nodes, selection_args, token)
+## Emitted for each node found, ordered according to the priority strategy.
+## [param node] The node that was found.
+## [param token] The associated token with the request.
+## [param priority] The priority of the node, according to the priority strategy.
+## [param selection_arg] The selection argument of the node, e.g., the normalized random weight. Optional.
+signal found(node, token, priority, selection_arg)
+## Emitted once all nodes have been found.
+## [param nodes] The nodes that were found, ordered according to the priority strategy.
+## [param token] The associated token with the request.
+## [param priorities] The priorities of the nodes, according to the priority strategy.
+## [param selection_args] The selection arguments of the nodes, e.g., the normalized random weights. Optional.
+signal found_all(nodes, token, priorities, selection_args)
+## Emitted if no node was found.
+## [param token] The associated token with the request.
+signal found_none(token)
 
+## Only search for nodes below this node. If null, search in the entire scene.
 var only_below = null:  # Optional[NodePath]
 	set(v):
 		only_below = v
 		notify_property_list_changed()
+## Whether to include internal nodes in the search. Only relevant if only_below is set.
 var include_internal = null  # Boolean if only_below else null
+## Only search for nodes in this group. Optional.
 var group = null  # Optional[StringName]
+## Only search for nodes of this class. Optional.
 var clazz = null  # Optional[StringName]
+## Mode for selecting nodes based on their spatial proximity to the reference node. Optional.
 var proximity = null:  # Optional[StringName] # null, 'radius', or 'shapes'
 	set(v):
+		if proximity == v:
+			return
 		proximity = v
 		if proximity != 'radius':
 			self.radius = null
-		notify_property_list_changed()
+		notify_property_list_changed()  # influences presence of radius/shapes
+## Only search for nodes within this radius of the reference node. Optional.
 var radius = null:  # Optional[float]
 	set(v):
 		radius = v
 		if v != null:
 			self.proximity = 'radius'
 		queue_redraw()
+## Only search for nodes that are colliding with one of these shapes. Optional.
+# NOTE: Shapes are not yet implemented. Interface might change. See comment in _search() below.
 var shapes:
 	get:
 		var _shapes = _reference.get_children().filter(func (child):
@@ -34,57 +57,70 @@ var shapes:
 		return _shapes if _shapes else null
 var shapes_info:
 	get:
-		return ",".join(shapes) if shapes else "(add ≥1 shape child)"
-var predicate_for_node = null  # Optional[ConnectionScript]
+		return "⚠ not yet implemented"
+		#return ",".join(shapes) if shapes else "(add ≥1 shape child)"
+## Optional script to filter nodes. Has access to a [code]node[/code] argument and must return a boolean.
+var predicate = null  # Optional[ConnectionScript]
 
-var max_results = null:  # Optional[int]
+## Strategy for ordering found nodes. Optional.
+var priority_strategy = 'distance':  # Optional[Union['distance', 'custom']]
 	set(v):
-		max_results = v
-		if max_results != null and selection_strategy == null:
-			print("setting selection_strategy to 'top'")
-			self.selection_strategy = 'top'
-		notify_property_list_changed()
-var selection_strategy = null:  # Optional[StringName] # null, 'top', or 'random'
-	set(v):
-		selection_strategy = v
-		if selection_strategy == 'top' and priority_strategy == null:
-			print("setting priority_strategy to 'distance'")
-			self.priority_strategy = 'distance'
-		elif selection_strategy == 'random' and random_weight_strategy == null:
-			self.random_weight_strategy = 'inverse_distance'
-		if selection_strategy != 'top':
-			self.priority_strategy = null
-		if selection_strategy != 'random':
-			self.random_weight_strategy = null
-		notify_property_list_changed()
-var priority_strategy = null:  # Optional[Union['distance', 'custom']]
-	set(v):
+		if priority_strategy == v:
+			return
 		priority_strategy = v
-		if priority_strategy != null:
-			self.selection_strategy = 'top'
 		if priority_strategy != 'custom':
 			self.priority_script = null
-		notify_property_list_changed()
+		notify_property_list_changed()  # influences presence of priority_script
+## Optional script to order found nodes. Has access to a [code]node[/code] argument and must return a number. Smaller numbers are prioritized over larger numbers.
 var priority_script = null:  # Optional[ConnectionScript]
 	set(v):
 		priority_script = v
 		if priority_script != null:
 			self.priority_strategy = 'custom'
-		notify_property_list_changed()
-var random_weight_strategy = null:  # Optional[Union[null, 'inverse_distance', 'custom']]
+## Limit the number of results. Optional.
+var max_results = null:  # Optional[int]
 	set(v):
+		if max_results == v:
+			return
+		max_results = v
+		if max_results != null and selection_strategy == null:
+			self.selection_strategy = 'top'
+		elif max_results == null:
+			self.selection_strategy = null
+		notify_property_list_changed()  # influences presence of selection_strategy
+## Strategy for selecting nodes when max_results is set.
+var selection_strategy = null:  # Optional[StringName] # null, 'top', or 'random'
+	set(v):
+		if selection_strategy == v:
+			return
+		selection_strategy = v
+		if selection_strategy == 'top' and priority_strategy == null:
+			self.priority_strategy = 'distance'
+		elif selection_strategy == 'random' and random_weight_strategy == null:
+			self.random_weight_strategy = 'uniform'
+		if selection_strategy != 'random':
+			self.random_weight_strategy = null
+		notify_property_list_changed()  # influences presence of random_weight_strategy
+## Strategy for weighting nodes when selection_strategy is set to 'random'.
+var random_weight_strategy = null:  # Optional[Union[null, 'uniform', 'inverse_distance', 'custom']]
+	set(v):
+		if random_weight_strategy == v:
+			return
 		random_weight_strategy = v
 		if random_weight_strategy != null:
 			self.selection_strategy = 'random'
 		if random_weight_strategy != 'custom':
 			self.random_weight_script = null
-		notify_property_list_changed()
+		notify_property_list_changed()  # influences presence of random_weight_script
+		if random_weight_strategy == 'custom':
+			self.random_weight_script = ConnectionScript.new()
+			initialize_connection_script('random_weight_script', self.random_weight_script)
+## Script to weight nodes when random_weight_strategy is set to 'custom'. Has access to a [code]node[/code] argument and must return a non-negative number.
 var random_weight_script = null:  # Optional[ConnectionScript]
 	set(v):
 		random_weight_script = v
 		if random_weight_script != null:
 			self.random_weight_strategy = 'custom'
-		notify_property_list_changed()
 
 ## A node inside the scene to be used for navigation. Relevant for internal copies only.
 var _reference = null
@@ -92,11 +128,6 @@ var _reference = null
 func _get_property_list():
 	var property_list = []
 	
-	property_list.append({
-		'name': "Search",
-		'type': TYPE_NIL,
-		'usage': PROPERTY_USAGE_GROUP,
-	})
 	property_list.append({
 		'name': 'only_below',
 		'type': TYPE_NODE_PATH,
@@ -123,7 +154,7 @@ func _get_property_list():
 		'hint_string': ','.join(Utils.all_node_classes())
 	})
 	property_list.append({
-		'name': 'predicate_for_node',  # WORKAROUND: poor man's description (https://godotforums.org/d/32557-how-to-add-custom-description-to-properties-from-get-property-list)
+		'name': 'predicate',
 		'type': TYPE_OBJECT,
 		'usage': PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_CHECKABLE,
 		'hint': PROPERTY_HINT_RESOURCE_TYPE,
@@ -154,10 +185,21 @@ func _get_property_list():
 		})
 	
 	property_list.append({
-		'name': "Selection",
-		'type': TYPE_NIL,
-		'usage': PROPERTY_USAGE_GROUP,
+		'name': 'priority_strategy',
+		'type': TYPE_STRING_NAME,
+		'default': 'distance',
+		'usage': PROPERTY_USAGE_DEFAULT,
+		'hint': PROPERTY_HINT_ENUM,
+		'hint_string': 'distance,custom'
 	})
+	if priority_strategy == 'custom':
+		property_list.append({
+			'name': 'priority_script',
+			'type': TYPE_OBJECT,
+			'usage': PROPERTY_USAGE_DEFAULT,
+			'hint': PROPERTY_HINT_RESOURCE_TYPE,
+			'hint_string': 'ConnectionScript'
+		})
 	property_list.append({
 		'name': 'max_results',
 		'type': TYPE_INT,
@@ -175,31 +217,14 @@ func _get_property_list():
 			'hint': PROPERTY_HINT_ENUM,
 			'hint_string': 'top,random'
 		})
-		if selection_strategy == 'top':
-			property_list.append({
-				'name': 'priority_strategy',
-				'type': TYPE_STRING_NAME,
-				'default': 'distance',
-				'usage': PROPERTY_USAGE_DEFAULT,
-				'hint': PROPERTY_HINT_ENUM,
-				'hint_string': 'distance,custom'
-			})
-			if priority_strategy == 'custom':
-				property_list.append({
-					'name': 'priority_script',
-					'type': TYPE_OBJECT,
-					'usage': PROPERTY_USAGE_DEFAULT,
-					'hint': PROPERTY_HINT_RESOURCE_TYPE,
-					'hint_string': 'ConnectionScript'
-				})
-		elif selection_strategy == 'random':
+		if selection_strategy == 'random':
 			property_list.append({
 				'name': 'random_weight_strategy',
 				'type': TYPE_STRING_NAME,
 				'default': 'inverse_distance',
 				'usage': PROPERTY_USAGE_DEFAULT,
 				'hint': PROPERTY_HINT_ENUM,
-				'hint_string': 'inverse_distance,custom'
+				'hint_string': 'uniform,inverse_distance,custom'
 			})
 			if random_weight_strategy == 'custom':
 				property_list.append({
@@ -213,11 +238,16 @@ func _get_property_list():
 	return property_list
 
 func wants_expression_inspector(property_name):
-	return property_name in ['predicate_for_node', 'priority_script', 'random_weight_script']
+	return property_name in ['predicate', 'priority_script', 'random_weight_script']
 
 func initialize_connection_script(property_name, connection_script):
 	connection_script.argument_names = ['node']
 	connection_script.argument_types = ['Node2D']
+	connection_script.source_code = {
+		'predicate': "node != null",
+		'priority_script': "node.z_index",
+		'random_weight_script': "1"
+	}[property_name]
 
 func _ready():
 	super._ready()
@@ -228,16 +258,23 @@ func _ready():
 	get_tree().node_added.connect(_node_added)
 	get_tree().node_removed.connect(_node_removed)
 
+## Request to find nodes. Can override any property of the query through the [code]parameters[/code] argument.
+## Results are emitted through signals.
 func query(token = null, parameters = {}):
-	var nodes_and_selection_args = _query(parameters)
-	var nodes = nodes_and_selection_args[0]
-	var selection_args = nodes_and_selection_args[1]
+	var results = _query(parameters)
+	var nodes = results[0]
+	var priorities = results[1]
+	var selection_args = results[2]
 	
-	found_all.emit(nodes, selection_args, token)
-	for i in len(nodes):
-		var node = nodes[i]
-		var selection_arg = selection_args[i] if selection_args else null
-		found.emit(node, selection_arg, token)
+	found_all.emit(nodes, token, priorities, selection_args)
+	if len(nodes) == 0:
+		found_none.emit(token)
+	else:
+		for i in len(nodes):
+			var node = nodes[i]
+			var priority = priorities[i] if priorities else null
+			var selection_arg = selection_args[i] if selection_args else null
+			found.emit(node, token, priority, selection_arg)
 
 func _query(parameters = null):
 	if parameters:
@@ -246,11 +283,24 @@ func _query(parameters = null):
 		for key in parameters.keys():
 			query[key] = parameters[key]
 		return query._query()
-
-
+	
+	
 	var nodes = _search()
+	
+	var nodes_and_priorities = _sort(nodes)
+	nodes = nodes_and_priorities[0]
+	var priorities = nodes_and_priorities[1]
+	
 	var nodes_and_selection_args = _select(nodes)
-	return nodes_and_selection_args
+	nodes = nodes_and_selection_args[0]
+	var selection_args = nodes_and_selection_args[1]
+	if priorities != null:
+		for node in priorities.keys():
+			if node not in nodes:
+				priorities.erase(node)
+	
+	priorities = priorities.values() if priorities != null else null
+	return [nodes, priorities, selection_args]
 
 func _search():
 	var root = _reference.get_node(only_below) if only_below != null else _reference.get_tree().current_scene
@@ -266,9 +316,9 @@ func _search():
 			return node.is_class(clazz)
 		)
 	
-	if predicate_for_node != null:
+	if predicate != null:
 		nodes = nodes.filter(func (node):
-			return predicate_for_node.run([node], self)
+			return predicate.run([node], self)
 		)
 	
 	if proximity == 'radius':
@@ -276,9 +326,11 @@ func _search():
 			return node.global_position.distance_to(_reference.global_position) <= radius
 		)
 	elif proximity == 'shapes':
-		# TODO: get this to work. Shape2Ds are no nodes. What nodes would the user have to add? Is there a generic way to do this?
+		# TODO: implement this. Is there a generic way to check whether one of our shapes collides with the shape of a node? If not, we have to maintain the shape ourselves and offer handles in a similar way to SpawnerBehavior. Fix handles there first, and extract this into a reusable unit. Below is untested pseudocode.
+		assert(false, "not yet implemented")
 		nodes = nodes.filter(func (node):
 			var node_shape
+			# node_shape = magic_node_to_shape(node)
 			if node is Shape2D:
 				node_shape = node
 			else:
@@ -287,11 +339,31 @@ func _search():
 				node_shape.position = node.global_position
 				node_shape.size = rect.size
 			return shapes.any(func (shape):
+				# again, this is untested. do identity transforms make sense here?
 				return shape.collide(Transform2D.IDENTITY, node_shape, Transform2D.IDENTITY)
 			)
 		)
 	
 	return nodes
+
+func _sort(nodes):
+	if priority_strategy == null:
+		return [nodes, null]
+	
+	var priority_func
+	if priority_strategy == 'distance':
+		priority_func = func (node):
+			return node.global_position.distance_to(_reference.global_position)
+	elif priority_strategy == 'custom':
+		priority_func = func (node):
+			return priority_script.run([node], self)
+	
+	var priorities = {}
+	for node in nodes:
+		priorities[node] = priority_func.call(node)
+	nodes.sort_custom(func (a, b): return priorities[a] < priorities[b])
+	
+	return [nodes, priorities]
 
 func _select(nodes):
 	if max_results == null:
@@ -301,25 +373,14 @@ func _select(nodes):
 	var selection_args = null
 	
 	if selection_strategy == 'top':
-		var priority_func
-		if priority_strategy == 'distance':
-			priority_func = func (node):
-				return node.global_position.distance_to(_reference.global_position)
-		elif priority_strategy == 'custom':
-			priority_func = func (node):
-				return priority_script.run([node], self)
-		
-		var priorities = {}
-		for node in nodes:
-			priorities[node] = priority_func.call(node)
-		nodes.sort_custom(func (a, b): return priorities[a] < priorities[b])
-					
 		nodes = nodes.slice(0, n)
-		selection_args = nodes.map(func (node): return priorities[node])
 	
 	elif selection_strategy == 'random':
 		var random_weight_func
-		if random_weight_strategy == 'inverse_distance':
+		if random_weight_strategy == 'uniform':
+			random_weight_func = func (node):
+				return 1
+		elif random_weight_strategy == 'inverse_distance':
 			random_weight_func = func (node):
 				return 1 / node.global_position.distance_to(_reference.global_position)
 		elif random_weight_strategy == 'custom':
@@ -327,17 +388,17 @@ func _select(nodes):
 				return random_weight_script.run([node], self)
 		
 		nodes = Utils.random_sample(nodes, n, random_weight_func)
+		# selection args: normalized random weights
 		selection_args = nodes.map(func (node): return random_weight_func.call(node))
-	
-	var sum = Utils.sum(selection_args)
-	selection_args = selection_args.map(func (arg): return arg / sum)
+		var sum = Utils.sum(selection_args)
+		selection_args = selection_args.map(func (arg): return arg * 1.0 / sum)
 	
 	return [nodes, selection_args]
 
 func _draw():
 	if is_being_edited():
 		if radius != null:
-			# FOR LATER: offer handle to change radius
+			# FOR LATER: offer handle to change radius, or extract this into a reusable shape mechanism
 			draw_circle(Vector2.ZERO, radius, Color(1, 1, 1, 0.5))
 	super._draw()
 
@@ -361,8 +422,6 @@ func deselected():
 
 
 # TODOS
-# - implement or remove shapes
-# - test everything thoroughly
 # - create example
 # - comment signals + document new behaviors in readme
 # - changelog + video
