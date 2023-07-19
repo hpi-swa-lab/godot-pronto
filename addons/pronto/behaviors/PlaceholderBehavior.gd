@@ -207,6 +207,7 @@ func _draw():
 	var default_font = ThemeDB.fallback_font
 	var height = placeholder_size.y
 	var text_size = min(height, placeholder_size.x / label.length() * 1.8)
+	var text_color = Color(Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK, color.a)
 	
 	if not use_sprite:
 		draw_rect(Rect2(placeholder_size / -2, placeholder_size), color, true)
@@ -216,7 +217,7 @@ func _draw():
 			HORIZONTAL_ALIGNMENT_CENTER,
 			-1,
 			text_size,
-			Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
+			text_color)
 		
 		if outline_visible:
 			draw_rect(Rect2(placeholder_size / -2, placeholder_size), outline_color, false, outline_width)
