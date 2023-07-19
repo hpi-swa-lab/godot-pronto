@@ -1,4 +1,4 @@
-[gd_scene load_steps=196 format=3 uid="uid://7yv7h4ilqmgg"]
+[gd_scene load_steps=256 format=3 uid="uid://7yv7h4ilqmgg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_oe11t"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_5a507"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="12_j4kw5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SignalBehavior.gd" id="13_iy080"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="13_olwqe"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="15_fquue"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/QueryBehavior.gd" id="15_nalm8"]
 [ext_resource type="PackedScene" uid="uid://bw40gnxnijxnh" path="res://prototypes/i6w1-angry-birds/pig.tscn" id="16_j5qyn"]
 
@@ -247,6 +248,7 @@ func run(position, start_position, from, to, ref0):
 	delta = delta.limit_length(G.at(\"CatapultRadius\"))
 	to.call_deferred(\"apply_central_impulse\", delta * G.at(\"CatapultStrength\") * bird.mass)
 	bird.remove_from_group(\"inactive_birds\")
+	bird.add_to_group(\"active_birds\")
 "
 
 [sub_resource type="Resource" id="Resource_eqp7i"]
@@ -508,6 +510,471 @@ expression = SubResource("Resource_p7li3")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_rgeuq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return \"loaded_functionalities\"
+"
+
+[sub_resource type="Resource" id="Resource_7s4c8"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_rgeuq")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_t86yd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_pmbiq"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_t86yd")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_7ik77"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return not (from.get_parent().get_parent() is SpawnerBehavior)
+"
+
+[sub_resource type="Resource" id="Resource_8xrue"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_7ik77")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qtj8e"]
+script = ExtResource("7_vjssu")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "add_to_group"
+arguments = [SubResource("Resource_7s4c8"), SubResource("Resource_pmbiq")]
+only_if = SubResource("Resource_8xrue")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_xd6w8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return \"ready_functionalities\"
+"
+
+[sub_resource type="Resource" id="Resource_3rymo"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_xd6w8")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_b46t7"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_vn0n1"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_b46t7")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_gdcrx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return from.get_parent().is_in_group(\"loaded_functionalities\") and from.get_parent().get_parent().get_parent().is_in_group(\"active_birds\")
+"
+
+[sub_resource type="Resource" id="Resource_ex2kx"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_gdcrx")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_kgsqt"]
+script = ExtResource("7_vjssu")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "add_to_group"
+arguments = [SubResource("Resource_3rymo"), SubResource("Resource_vn0n1")]
+only_if = SubResource("Resource_ex2kx")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_t0gk1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	to.color = Color.YELLOW
+	from.pause()
+"
+
+[sub_resource type="Resource" id="Resource_uh6mq"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_t0gk1")
+argument_names = ["delta", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_g6ush"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return from.get_parent().is_in_group(\"loaded_functionalities\")
+"
+
+[sub_resource type="Resource" id="Resource_p5ls0"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_g6ush")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jt82t"]
+script = ExtResource("7_vjssu")
+signal_name = "always"
+to = NodePath("../../../PlaceholderShapeBehavior")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_p5ls0")
+expression = SubResource("Resource_uh6mq")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_v6iol"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return to.mass * 3
+"
+
+[sub_resource type="Resource" id="Resource_pxeay"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_v6iol")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_rl8ei"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return from.get_parent().is_in_group(\"ready_functionalities\")
+"
+
+[sub_resource type="Resource" id="Resource_nrftg"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_rl8ei")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_mxv0a"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("../../..")
+more_references = []
+invoke = "set_mass"
+arguments = [SubResource("Resource_pxeay")]
+only_if = SubResource("Resource_nrftg")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ckd20"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return to.linear_velocity * 2
+"
+
+[sub_resource type="Resource" id="Resource_yqlh1"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_ckd20")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_a8dyb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return from.get_parent().is_in_group(\"ready_functionalities\")
+"
+
+[sub_resource type="Resource" id="Resource_1gjgo"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_a8dyb")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_yscgj"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("../../..")
+more_references = []
+invoke = "set_linear_velocity"
+arguments = [SubResource("Resource_yqlh1")]
+only_if = SubResource("Resource_1gjgo")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_wk6pu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fxh30"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_wk6pu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_bmw8l"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_fxh30")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_8xtt1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return \"loaded_functionalities\"
+"
+
+[sub_resource type="Resource" id="Resource_apmli"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_8xtt1")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_kj145"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_xsg81"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_kj145")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hm250"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return not (from.get_parent().get_parent() is SpawnerBehavior)
+"
+
+[sub_resource type="Resource" id="Resource_dr6j4"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_hm250")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_471k8"]
+script = ExtResource("7_vjssu")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "add_to_group"
+arguments = [SubResource("Resource_apmli"), SubResource("Resource_xsg81")]
+only_if = SubResource("Resource_dr6j4")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_x8cvu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return \"ready_functionalities\"
+"
+
+[sub_resource type="Resource" id="Resource_ndsgv"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_x8cvu")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_cesjr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_e6tg6"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_cesjr")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_8gwcd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return from.get_parent().is_in_group(\"loaded_functionalities\") and from.get_parent().get_parent().get_parent().is_in_group(\"active_birds\")
+"
+
+[sub_resource type="Resource" id="Resource_05sik"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_8gwcd")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_r55cx"]
+script = ExtResource("7_vjssu")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "add_to_group"
+arguments = [SubResource("Resource_ndsgv"), SubResource("Resource_e6tg6")]
+only_if = SubResource("Resource_05sik")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_kl1sb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	to.color = Color.ORANGE
+	from.pause()
+"
+
+[sub_resource type="Resource" id="Resource_to5su"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_kl1sb")
+argument_names = ["delta", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_xmkj1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return from.get_parent().is_in_group(\"loaded_functionalities\")
+"
+
+[sub_resource type="Resource" id="Resource_4d10w"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_xmkj1")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1o4dk"]
+script = ExtResource("7_vjssu")
+signal_name = "always"
+to = NodePath("../../../PlaceholderShapeBehavior")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_4d10w")
+expression = SubResource("Resource_to5su")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_6xfuo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	for angle in [PI * 1 / 12.0, PI * -1 / 12.0]:
+		var d := to.duplicate() as RigidBody2D
+		d.linear_velocity = d.linear_velocity.rotated(angle)
+		to.get_parent().add_child(d)
+"
+
+[sub_resource type="Resource" id="Resource_177sg"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_6xfuo")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_4limu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return from.get_parent().is_in_group(\"ready_functionalities\")
+"
+
+[sub_resource type="Resource" id="Resource_ijt7p"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_4limu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0u307"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("../../..")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_ijt7p")
+expression = SubResource("Resource_177sg")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_utxkn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return from.get_parent().is_in_group(\"ready_functionalities\")
+"
+
+[sub_resource type="Resource" id="Resource_qgttw"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_utxkn")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_8jh8d"]
+script = ExtResource("7_vjssu")
+signal_name = "just_down"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_qgttw")
+deferred = false
+enabled = true
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bpuw1"]
 absorbent = true
 
@@ -729,10 +1196,15 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from: Node2D, to: Node2D):
+func run(node, selection_arg, token, from, to):
 	var new_bird = to.spawn_at(node.global_position,0)[0] as Node2D
 	new_bird.global_transform = node.global_transform
 	node.visible = false
+	
+	if node.is_in_group(\"future_feature_bomb\"):
+		new_bird.get_node(\"BombFunctionalitySpawner\").spawn()
+	if node.is_in_group(\"future_feature_split\"):
+		new_bird.get_node(\"SplitFunctionalitySpawner\").spawn()
 "
 
 [sub_resource type="Resource" id="Resource_8lanh"]
@@ -1490,13 +1962,13 @@ unique_name_in_owner = true
 position = Vector2(0, -64)
 
 [node name="RigidBody2D" type="RigidBody2D" parent="Catapult"]
-position = Vector2(0, 24)
+position = Vector2(0, 40)
 freeze = true
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Catapult/RigidBody2D"]
 visible = false
 script = ExtResource("1_oe11t")
-placeholder_size = Vector2(12, 84)
+placeholder_size = Vector2(13, 64)
 sprite_texture = ExtResource("2_5a507")
 
 [node name="CatapultLine" type="Node2D" parent="Catapult" node_paths=PackedStringArray("from")]
@@ -1621,6 +2093,53 @@ metadata/pronto_connections = []
 position = Vector2(-30, -67)
 script = ExtResource("13_iy080")
 metadata/pronto_connections = [SubResource("Resource_rdpni"), SubResource("Resource_sxp1m")]
+
+[node name="BombFunctionalitySpawner" type="Node2D" parent="BirdSpawner/Bird"]
+position = Vector2(124, -4)
+script = ExtResource("9_o6cql")
+scene_path = NodePath("BombFunctionality")
+
+[node name="BombFunctionality" type="Node2D" parent="BirdSpawner/Bird/BombFunctionalitySpawner"]
+
+[node name="Load" type="Node2D" parent="BirdSpawner/Bird/BombFunctionalitySpawner/BombFunctionality"]
+position = Vector2(32, 0)
+script = ExtResource("15_fquue")
+metadata/pronto_connections = [SubResource("Resource_qtj8e"), SubResource("Resource_kgsqt")]
+
+[node name="SetColor" type="Node2D" parent="BirdSpawner/Bird/BombFunctionalitySpawner/BombFunctionality"]
+position = Vector2(44, 20)
+script = ExtResource("15_fquue")
+metadata/pronto_connections = [SubResource("Resource_jt82t")]
+
+[node name="BombKey" type="Node2D" parent="BirdSpawner/Bird/BombFunctionalitySpawner/BombFunctionality"]
+position = Vector2(24, 20)
+script = ExtResource("7_3gwg1")
+key = "Space"
+metadata/pronto_connections = [SubResource("Resource_mxv0a"), SubResource("Resource_yscgj"), SubResource("Resource_bmw8l")]
+
+[node name="SplitFunctionalitySpawner" type="Node2D" parent="BirdSpawner/Bird"]
+position = Vector2(52, -40)
+script = ExtResource("9_o6cql")
+scene_path = NodePath("SplitFunctionality")
+
+[node name="SplitFunctionality" type="Node2D" parent="BirdSpawner/Bird/SplitFunctionalitySpawner"]
+position = Vector2(12, -16)
+
+[node name="Load" type="Node2D" parent="BirdSpawner/Bird/SplitFunctionalitySpawner/SplitFunctionality"]
+position = Vector2(-36, -12)
+script = ExtResource("15_fquue")
+metadata/pronto_connections = [SubResource("Resource_471k8"), SubResource("Resource_r55cx")]
+
+[node name="SetColor" type="Node2D" parent="BirdSpawner/Bird/SplitFunctionalitySpawner/SplitFunctionality"]
+position = Vector2(20, 0)
+script = ExtResource("15_fquue")
+metadata/pronto_connections = [SubResource("Resource_1o4dk")]
+
+[node name="SplitKey" type="Node2D" parent="BirdSpawner/Bird/SplitFunctionalitySpawner/SplitFunctionality"]
+position = Vector2(32, 16)
+script = ExtResource("7_3gwg1")
+key = "Space"
+metadata/pronto_connections = [SubResource("Resource_0u307"), SubResource("Resource_8jh8d")]
 
 [node name="BoardSpawner" type="Node2D" parent="."]
 position = Vector2(436, 428)
@@ -2016,18 +2535,18 @@ shape_type = "Circle"
 color = Color(1, 0, 0, 1)
 circle_radius = 23.065
 
-[node name="FutureBird2" type="Node2D" parent="Buildings/Level2" groups=["future_birds"]]
+[node name="FutureBird2" type="Node2D" parent="Buildings/Level2" groups=["future_birds", "future_feature_split"]]
 position = Vector2(96, 608)
 script = ExtResource("3_6wpat")
 shape_type = "Circle"
 color = Color(1, 0, 0, 1)
 circle_radius = 23.065
 
-[node name="FutureBird3" type="Node2D" parent="Buildings/Level2" groups=["future_birds"]]
+[node name="FutureBird3" type="Node2D" parent="Buildings/Level2" groups=["future_birds", "future_feature_bomb"]]
 position = Vector2(148, 608)
 script = ExtResource("3_6wpat")
 shape_type = "Circle"
-color = Color(1, 0, 0, 1)
+color = Color(1, 1, 0, 1)
 circle_radius = 23.065
 
 [node name="BuildLevel" type="Node2D" parent="."]

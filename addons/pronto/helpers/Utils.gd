@@ -223,7 +223,7 @@ static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> 
 		return rect
 	
 	return node.get_children() \
-		.filter(func(child): return child not in excluded) \
+		.filter(func(child): return child not in excluded and child is Node2D) \
 		.map(func(child): return global_rect_of(child, depth - 1, excluded)) \
 		.reduce(func(a, b): return a.merge(b), rect)
 
