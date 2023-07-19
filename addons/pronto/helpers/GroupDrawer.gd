@@ -34,7 +34,8 @@ func _process(_delta):
 	
 	var child_positions = {}
 	for node in Utils.all_nodes(get_parent(), true):
-		child_positions[node] = node.position
+		if node.get_property_list()[0].has("position"):
+			child_positions[node] = node.position
 	
 	for node in child_positions:
 		if child_positions != last_child_positions:

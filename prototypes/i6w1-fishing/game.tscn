@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://cljw2c047x3a6"]
+[gd_scene load_steps=113 format=3 uid="uid://cljw2c047x3a6"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="1_1ktuq"]
 [ext_resource type="Texture2D" uid="uid://onopyq1oinpg" path="res://prototypes/i6w1-fishing/Ocean.png" id="2_wcbe2"]
@@ -20,6 +20,10 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="17_rxvo2"]
 [ext_resource type="Script" path="res://prototypes/i6w1-fishing/start_button.gd" id="18_bmya0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="18_uibmu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="21_xr5y2"]
+[ext_resource type="Texture2D" uid="uid://cyc4bt8i31fuy" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/1.png" id="22_0ol37"]
+[ext_resource type="Texture2D" uid="uid://b05n81e5lmw6r" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/2.png" id="22_xayr0"]
+[ext_resource type="Texture2D" uid="uid://yd82tj6grecw" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/7.png" id="24_8womo"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3rx47"]
 gradient = ExtResource("3_5yco7")
@@ -419,7 +423,7 @@ nested_script = SubResource("GDScript_5bwvq")
 argument_names = []
 return_value = true
 
-[sub_resource type="Image" id="Image_06aqo"]
+[sub_resource type="Image" id="Image_tn3s5"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -429,7 +433,169 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_j8ov4"]
-image = SubResource("Image_06aqo")
+image = SubResource("Image_tn3s5")
+
+[sub_resource type="Curve2D" id="Curve2D_57b6f"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0.00293732, -0.5, 0, 0, 0, 0, 103.492, 1.60767, 0, 0, 0, 0, -106.998, -0.628235, 0, 0, 0, 0, 0.0117416, -1.99997)
+}
+point_count = 4
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_odsr1"]
+atlas = ExtResource("22_xayr0")
+region = Rect2(0, 0, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7x2e"]
+atlas = ExtResource("22_xayr0")
+region = Rect2(16, 0, 16, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rk1v0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_odsr1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7x2e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1u2ls"]
+height = 34.0
+
+[sub_resource type="GDScript" id="GDScript_ra7ns"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: PathFollow2D):
+	print(to.get_progress_ratio())
+	print(at(\"fish0_speed\"))
+	return to.get_progress_ratio() + 0.001
+"
+
+[sub_resource type="Resource" id="Resource_asvoq"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_ra7ns")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0ypf1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: PathFollow2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_yq86o"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_0ypf1")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_78dif"]
+script = ExtResource("11_5t5d2")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "set_progress_ratio"
+arguments = [SubResource("Resource_asvoq")]
+only_if = SubResource("Resource_yq86o")
+deferred = false
+enabled = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tick6"]
+atlas = ExtResource("22_0ol37")
+region = Rect2(0, 0, 12, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djito"]
+atlas = ExtResource("22_0ol37")
+region = Rect2(12, 0, 12, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_clq08"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tick6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djito")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tyrja"]
+radius = 3.00003
+height = 11.0057
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdiwd"]
+atlas = ExtResource("24_8womo")
+region = Rect2(0, 0, 30, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kevno"]
+atlas = ExtResource("24_8womo")
+region = Rect2(30, 0, 30, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5l86j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdiwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kevno")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j3p7d"]
+radius = 6.50479
+
+[sub_resource type="GDScript" id="GDScript_uccfa"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_dlaro"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_uccfa")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_csbup"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fdwnw"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_csbup")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_t00iy"]
+script = ExtResource("11_5t5d2")
+signal_name = "until_elapsed"
+to = NodePath("../SpawnerBehavior")
+more_references = []
+invoke = "spawn_in_shape"
+arguments = [SubResource("Resource_dlaro")]
+only_if = SubResource("Resource_fdwnw")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_bnrg3"]
 script/source = "@tool
@@ -482,6 +648,46 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_bh0om")
 expression = SubResource("Resource_ngdp0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_l1vmy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	closest(\"spawn_poly\").position = closest(\"spawn_poly\").position + Vector2(0, at(\"drop_speed\"))
+"
+
+[sub_resource type="Resource" id="Resource_0fuoi"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_l1vmy")
+argument_names = ["delta", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_po5pn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8wveu"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_po5pn")
+argument_names = ["delta", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a8q4j"]
+script = ExtResource("11_5t5d2")
+signal_name = "always"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_8wveu")
+expression = SubResource("Resource_0fuoi")
 deferred = false
 enabled = true
 
@@ -600,6 +806,13 @@ float_to = 100.0
 float_value = 5.0
 float_step_size = 0.1
 
+[node name="fish0_speed" type="Node2D" parent="Values"]
+script = ExtResource("16_y66kb")
+float_from = 0.0
+float_to = 1.0
+float_value = 0.01
+float_step_size = 0.01
+
 [node name="AlwaysBehavior" type="Node2D" parent="."]
 position = Vector2(485, 73)
 script = ExtResource("17_rxvo2")
@@ -638,6 +851,76 @@ use_sprite = true
 sprite_texture = SubResource("ImageTexture_j8ov4")
 sprite_modulate = Color(0.121569, 0.121569, 0.121569, 1)
 
+[node name="SpawnerBehavior" type="Node2D" parent="hooka2d/hook" node_paths=PackedStringArray("container", "spawn_shape_polygon")]
+position = Vector2(-0.5, 254.5)
+rotation = -0.00587131
+script = ExtResource("21_xr5y2")
+container = NodePath("../../..")
+shape_type = "Polygon"
+spawn_shape_polygon = NodePath("../../../spawn_area/spawn_poly")
+
+[node name="fishy0" type="Path2D" parent="hooka2d/hook/SpawnerBehavior"]
+curve = SubResource("Curve2D_57b6f")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="hooka2d/hook/SpawnerBehavior/fishy0"]
+position = Vector2(0.00293732, -0.5)
+rotation = 0.0203632
+rotates = false
+
+[node name="fish_0_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior/fishy0/PathFollow2D"]
+position = Vector2(0.0072403, 0.499969)
+rotation = 0.00403765
+scale = Vector2(1, 1)
+
+[node name="fish_0" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fishy0/PathFollow2D/fish_0_parent"]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_rk1v0")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hooka2d/hook/SpawnerBehavior/fishy0/PathFollow2D/fish_0_parent"]
+position = Vector2(-0.5, 4.5)
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_1u2ls")
+
+[node name="AlwaysBehavior" type="Node2D" parent="hooka2d/hook/SpawnerBehavior/fishy0/PathFollow2D"]
+position = Vector2(-50.6541, 24.2366)
+script = ExtResource("17_rxvo2")
+metadata/pronto_connections = [SubResource("Resource_78dif")]
+
+[node name="fish_1_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior"]
+visible = false
+scale = Vector2(2, 2)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fish_1_parent"]
+sprite_frames = SubResource("SpriteFrames_clq08")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hooka2d/hook/SpawnerBehavior/fish_1_parent"]
+position = Vector2(-0.50293, 0.497009)
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_tyrja")
+
+[node name="fish_2_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior"]
+visible = false
+scale = Vector2(3, 3)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fish_2_parent"]
+sprite_frames = SubResource("SpriteFrames_5l86j")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hooka2d/hook/SpawnerBehavior/fish_2_parent"]
+position = Vector2(-0.499008, -0.169601)
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_j3p7d")
+
+[node name="ClockBehavior" type="Node2D" parent="hooka2d/hook"]
+position = Vector2(143.5, 203)
+script = ExtResource("1_1ktuq")
+duration_seconds = 120.0
+trigger_every_x_seconds = true
+trigger_interval_in_seconds = 0.5
+metadata/pronto_connections = [SubResource("Resource_t00iy")]
+
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(220, 117)
 
@@ -658,3 +941,15 @@ to_prop = "visible"
 position = Vector2(73, -54)
 script = ExtResource("4_hafn3")
 metadata/pronto_connections = [SubResource("Resource_j76f5")]
+
+[node name="spawn_area" type="Node2D" parent="."]
+
+[node name="spawn_poly" type="Polygon2D" parent="spawn_area"]
+visible = false
+position = Vector2(0, 621)
+polygon = PackedVector2Array(-2, -2, 425, -1, 423, 204, -5, 198)
+
+[node name="AlwaysBehavior" type="Node2D" parent="spawn_area"]
+position = Vector2(755, 673)
+script = ExtResource("17_rxvo2")
+metadata/pronto_connections = [SubResource("Resource_a8q4j")]
