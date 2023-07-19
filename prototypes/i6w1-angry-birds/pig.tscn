@@ -1,0 +1,179 @@
+[gd_scene load_steps=24 format=3 uid="uid://bw40gnxnijxnh"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShapeBehavior.gd" id="1_jgq8a"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="2_coa6y"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="3_pg7jj"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_maa1c"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="5_1fh8t"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="6_bnbk2"]
+
+[sub_resource type="Gradient" id="Gradient_6068g"]
+offsets = PackedFloat32Array(0.151515, 0.5, 1)
+colors = PackedColorArray(0.393078, 0.231823, 0, 1, 0.594877, 0.594877, 9.62615e-07, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_s60fg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(health, from, to):
+	return from._get_color()
+"
+
+[sub_resource type="Resource" id="Resource_dvgds"]
+script = ExtResource("3_pg7jj")
+nested_script = SubResource("GDScript_s60fg")
+argument_names = ["health", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_uxi7r"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(health, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_io17b"]
+script = ExtResource("3_pg7jj")
+nested_script = SubResource("GDScript_uxi7r")
+argument_names = ["health", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ej1ho"]
+script = ExtResource("4_maa1c")
+signal_name = "changed"
+to = NodePath("../PlaceholderShapeBehavior")
+more_references = []
+invoke = "@color_setter"
+arguments = [SubResource("Resource_dvgds")]
+only_if = SubResource("Resource_io17b")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_jjoku"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_w5otk"]
+script = ExtResource("3_pg7jj")
+nested_script = SubResource("GDScript_jjoku")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nevs7"]
+script = ExtResource("4_maa1c")
+signal_name = "death"
+to = NodePath("../DeathClock")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_w5otk")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_2w1sp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	var pig = to.get_parent() as RigidBody2D
+	if other.is_in_group(\"boundary\"):
+		return pig.linear_velocity.length() * G.at(\"BoundaryDamage\")
+		
+	var other_impulse = other.linear_velocity * other.mass
+	var pig_impulse = pig.linear_velocity * pig.mass
+	
+	var impulse = other_impulse - pig_impulse
+	var bird_damage = G.at(\"BirdDamage\") if other.is_in_group(\"birds\") else 0
+	return impulse.length() * (G.at(\"ImpactDamage\") + bird_damage)
+"
+
+[sub_resource type="Resource" id="Resource_wtjyr"]
+script = ExtResource("3_pg7jj")
+nested_script = SubResource("GDScript_2w1sp")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_c0y72"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rojne"]
+script = ExtResource("3_pg7jj")
+nested_script = SubResource("GDScript_c0y72")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_d315v"]
+script = ExtResource("4_maa1c")
+signal_name = "collided"
+to = NodePath("../HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_wtjyr")]
+only_if = SubResource("Resource_rojne")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_s7nli"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: RigidBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_micvq"]
+script = ExtResource("3_pg7jj")
+nested_script = SubResource("GDScript_s7nli")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_syxu5"]
+script = ExtResource("4_maa1c")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_micvq")
+deferred = false
+enabled = true
+
+[node name="Pig" type="RigidBody2D" groups=["enemies"]]
+
+[node name="PlaceholderShapeBehavior" type="Node2D" parent="."]
+script = ExtResource("1_jgq8a")
+shape_type = "Circle"
+label = "🐷"
+color = Color(0, 1, 0, 1)
+circle_radius = 24.0
+
+[node name="HealthBarBehavior" type="Node2D" parent="."]
+visible = false
+position = Vector2(110, 10)
+script = ExtResource("2_coa6y")
+progress_gradient = SubResource("Gradient_6068g")
+metadata/pronto_connections = [SubResource("Resource_ej1ho"), SubResource("Resource_nevs7")]
+
+[node name="CollisionBehavior" type="Node2D" parent="."]
+position = Vector2(110, 80)
+script = ExtResource("5_1fh8t")
+limit_to_group = "can_damage"
+metadata/pronto_connections = [SubResource("Resource_d315v")]
+
+[node name="DeathClock" type="Node2D" parent="."]
+position = Vector2(56, 84)
+script = ExtResource("6_bnbk2")
+one_shot = true
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_syxu5")]
