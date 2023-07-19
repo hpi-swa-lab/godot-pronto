@@ -782,21 +782,19 @@ placeholder_size = Vector2(16, 96)
 sprite_texture = ExtResource("2_tmqiu")
 
 [node name="PlaceholderBehavior15" type="Node2D" parent="Building" groups=["future_boards"]]
-position = Vector2(896, 252)
+position = Vector2(897, 254.5)
 rotation = 0.523598
 script = ExtResource("1_gyrcr")
 color = Color(0.392157, 0.313726, 0.14902, 1)
 placeholder_size = Vector2(16, 96)
-use_sprite = true
 sprite_texture = ExtResource("2_tmqiu")
 
 [node name="PlaceholderBehavior16" type="Node2D" parent="Building" groups=["future_boards"]]
-position = Vector2(960, 252)
+position = Vector2(959, 254.5)
 rotation = -0.523598
 script = ExtResource("1_gyrcr")
 color = Color(0.392157, 0.313726, 0.14902, 1)
 placeholder_size = Vector2(16, 96)
-use_sprite = true
 sprite_texture = ExtResource("2_tmqiu")
 
 [node name="PlaceholderBehavior7" type="Node2D" parent="Building" groups=["future_boards"]]
@@ -886,7 +884,7 @@ position = Vector2(928, 500)
 position = Vector2(928, 388)
 
 [node name="Pig5" parent="." instance=ExtResource("16_qprfn")]
-position = Vector2(924, 276)
+position = Vector2(928, 276)
 
 [node name="Pig2" parent="." instance=ExtResource("16_qprfn")]
 position = Vector2(744, 612)

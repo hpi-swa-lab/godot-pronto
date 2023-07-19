@@ -225,7 +225,7 @@ only_if = SubResource("Resource_o60jj")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_wj1km"]
+[sub_resource type="GDScript" id="GDScript_4me0o"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
@@ -233,20 +233,20 @@ func run(from: Node2D, to: Node2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_gpmc7"]
+[sub_resource type="Resource" id="Resource_y5pp1"]
 script = ExtResource("6_yqc71")
-nested_script = SubResource("GDScript_wj1km")
+nested_script = SubResource("GDScript_4me0o")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_pyhcv"]
+[sub_resource type="Resource" id="Resource_acwqu"]
 script = ExtResource("7_vjssu")
 signal_name = "node_ready"
-to = NodePath("ThreeTImes")
+to = NodePath("ThreeTimes")
 more_references = []
 invoke = "reset_and_start"
 arguments = []
-only_if = SubResource("Resource_gpmc7")
+only_if = SubResource("Resource_y5pp1")
 deferred = false
 enabled = true
 
@@ -254,7 +254,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
+func run(from, to):
 	return 0
 "
 
@@ -268,7 +268,7 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
+func run(from, to):
 	return false
 "
 
@@ -310,7 +310,7 @@ absorbent = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
+func run(other, direction, from, to):
 	var board = to.get_parent() as RigidBody2D
 	if other.is_in_group(\"boundary\"):
 		return board.linear_velocity.length() * G.at(\"BoundaryDamage\")
@@ -566,9 +566,9 @@ keep_in_origin = false
 sprite_texture = ExtResource("2_5a507")
 
 [node name="PlaceholderBehavior2" type="Node2D" parent="Boundary"]
-position = Vector2(-295, 322)
+position = Vector2(-296, 324)
 script = ExtResource("1_oe11t")
-placeholder_size = Vector2(1163, 11)
+placeholder_size = Vector2(1163, 16)
 keep_in_origin = false
 sprite_texture = ExtResource("2_5a507")
 
@@ -583,6 +583,13 @@ sprite_texture = ExtResource("2_5a507")
 position = Vector2(-854, 3)
 script = ExtResource("1_oe11t")
 placeholder_size = Vector2(7, 656)
+keep_in_origin = false
+sprite_texture = ExtResource("2_5a507")
+
+[node name="PlaceholderBehavior5" type="Node2D" parent="Boundary"]
+position = Vector2(-684, 520)
+script = ExtResource("1_oe11t")
+placeholder_size = Vector2(670, 380)
 keep_in_origin = false
 sprite_texture = ExtResource("2_5a507")
 
@@ -636,14 +643,14 @@ position = Vector2(166, 162)
 script = ExtResource("9_4jww6")
 float_from = 0.0
 float_to = 2.0
-float_value = 0.2
+float_value = 1.0
 float_step_size = 0.01
 
 [node name="ImpactDamage" type="Node2D" parent="PanelContainer/PrototypingUIBehavior"]
 script = ExtResource("9_4jww6")
 float_from = 0.0
 float_to = 2.0
-float_value = 0.2
+float_value = 0.4
 float_step_size = 0.01
 
 [node name="BoundaryDamage" type="Node2D" parent="PanelContainer/PrototypingUIBehavior"]
@@ -705,16 +712,15 @@ metadata/pronto_connections = [SubResource("Resource_skcrj")]
 [node name="SpawnBirds" type="Node2D" parent="."]
 position = Vector2(97, 523)
 script = ExtResource("12_j4kw5")
-metadata/pronto_connections = [SubResource("Resource_pyhcv")]
+metadata/pronto_connections = [SubResource("Resource_acwqu")]
 
-[node name="ThreeTImes" type="Node2D" parent="SpawnBirds"]
+[node name="ThreeTimes" type="Node2D" parent="SpawnBirds"]
 position = Vector2(53, 47)
 script = ExtResource("13_olwqe")
 one_shot = true
-duration_seconds = 2.0
 paused = true
 trigger_every_x_seconds = true
-trigger_interval_in_seconds = 0.667
+trigger_interval_in_seconds = 0.333
 metadata/pronto_connections = [SubResource("Resource_l6w7v")]
 
 [node name="BoardSpawner" type="Node2D" parent="."]
