@@ -122,7 +122,7 @@ func set_health(value):
 		current = value
 
 func die():
-	set_health(0)
+	current = 0
 
 func show_icon():
 	return false
