@@ -1,4 +1,4 @@
-[gd_scene load_steps=156 format=3 uid="uid://cljw2c047x3a6"]
+[gd_scene load_steps=206 format=3 uid="uid://cljw2c047x3a6"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="1_1ktuq"]
 [ext_resource type="Texture2D" uid="uid://onopyq1oinpg" path="res://prototypes/i6w1-fishing/Ocean.png" id="2_wcbe2"]
@@ -10,12 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://dnv1lkmwgvofo" path="res://prototypes/i6w1-fishing/fishing_game_assets/1 Fisherman/Fisherman_fish.png" id="5_jojbm"]
 [ext_resource type="Texture2D" uid="uid://d08qy8h016wx5" path="res://prototypes/i6w1-fishing/fishing_game_assets/1 Fisherman/Fisherman_hook.png" id="6_efjlq"]
 [ext_resource type="Texture2D" uid="uid://2knkpyfequ30" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Boat.png" id="6_uk8ag"]
+[ext_resource type="Texture2D" uid="uid://dewmeepae6n7n" path="res://prototypes/i6w1-fishing/custom_assets/WoodPlank.png" id="9_ep2as"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StateBehavior.gd" id="9_g4jyv"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="10_0cugf"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="11_5t5d2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="13_yjnbd"]
 [ext_resource type="Script" path="res://prototypes/i6w1-fishing/custom_cam.gd" id="14_hcfxl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="15_o0esm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="15_u3j8l"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="16_y66kb"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="17_rxvo2"]
 [ext_resource type="Script" path="res://prototypes/i6w1-fishing/start_button.gd" id="18_bmya0"]
@@ -25,6 +27,11 @@
 [ext_resource type="Texture2D" uid="uid://b05n81e5lmw6r" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/2.png" id="22_xayr0"]
 [ext_resource type="Texture2D" uid="uid://yd82tj6grecw" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/7.png" id="24_8womo"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="25_ipxi6"]
+[ext_resource type="Script" path="res://prototypes/i6w1-fishing/restart_button.gd" id="27_1enhc"]
+[ext_resource type="Texture2D" uid="uid://bt1hyrtc7umpr" path="res://prototypes/i6w1-fishing/custom_assets/StartButton.png" id="28_a8oi4"]
+[ext_resource type="Texture2D" uid="uid://dey46hue2lsut" path="res://prototypes/i6w1-fishing/custom_assets/CurrentScore.png" id="29_8uxa7"]
+[ext_resource type="Texture2D" uid="uid://b8hswushy00tc" path="res://prototypes/i6w1-fishing/custom_assets/MenuButton.png" id="31_hcopy"]
+[ext_resource type="Script" path="res://prototypes/i6w1-fishing/draw_line.gd" id="32_bf4xt"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3rx47"]
 gradient = ExtResource("3_5yco7")
@@ -418,6 +425,75 @@ only_if = SubResource("Resource_pn4jd")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_hcxol"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_55li2"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_hcxol")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_t8q1t"]
+script = ExtResource("11_5t5d2")
+signal_name = "exited"
+to = NodePath("../CodeBehavior")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_55li2")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ps6q2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	for node in G.get_parent().find_child(\"game\", true, false).find_children(\"*fish_*\",\"Area2D\",false,false):
+		# print(\"Freeing \" + str(node.name))
+		node.queue_free()
+	put(\"fish_value\", 0)
+	closest(\"spawn_poly\").position = Vector2(0,620)
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_q7lh1"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_ps6q2")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dyu3a"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_f5wv1"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_dyu3a")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_o6d86"]
+script = ExtResource("11_5t5d2")
+signal_name = "after"
+to = NodePath("../menu")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_f5wv1")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_lo1fx"]
 script/source = "@tool
 extends U
@@ -432,11 +508,43 @@ nested_script = SubResource("GDScript_lo1fx")
 argument_names = []
 return_value = true
 
+[sub_resource type="GDScript" id="GDScript_den36"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return closest(\"down\").active or closest(\"up\").active
+"
+
+[sub_resource type="Resource" id="Resource_flwlp"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_den36")
+argument_names = []
+return_value = true
+
+[sub_resource type="SystemFont" id="SystemFont_1rqgh"]
+font_names = PackedStringArray("Britannic")
+font_weight = 800
+
+[sub_resource type="GDScript" id="GDScript_4y080"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return str(at(\"fish_value\")) + \"$\"
+"
+
+[sub_resource type="Resource" id="Resource_0tcm5"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_4y080")
+argument_names = []
+return_value = true
+
 [sub_resource type="GDScript" id="GDScript_5hxtp"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Area2D):
+func run(delta, from, to):
 	return to.position + Vector2(0, at(\"drop_speed\"))
 "
 
@@ -469,7 +577,7 @@ invoke = "set_position"
 arguments = [SubResource("Resource_idcmm")]
 only_if = SubResource("Resource_b7svf")
 deferred = false
-enabled = true
+enabled = false
 
 [sub_resource type="GDScript" id="GDScript_cyssu"]
 script/source = "@tool
@@ -508,19 +616,97 @@ invoke = "set_position"
 arguments = [SubResource("Resource_44gk1")]
 only_if = SubResource("Resource_hpvh3")
 deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_t1iqj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return to.position + Vector2(0, at(\"drop_speed\"))
+"
+
+[sub_resource type="Resource" id="Resource_ugn3i"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_t1iqj")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ag8sk"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return closest(\"down\").active
+"
+
+[sub_resource type="Resource" id="Resource_hj6s1"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_ag8sk")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a2mpi"]
+script = ExtResource("11_5t5d2")
+signal_name = "physiscs_always"
+to = NodePath("../hooka2d")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_ugn3i")]
+only_if = SubResource("Resource_hj6s1")
+deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_5bwvq"]
+[sub_resource type="GDScript" id="GDScript_yp51l"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return to.position - Vector2(0, at(\"up_speed\"))
+"
+
+[sub_resource type="Resource" id="Resource_l1gps"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_yp51l")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jqkr5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return closest(\"up\").active
+"
+
+[sub_resource type="Resource" id="Resource_u0nm5"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_jqkr5")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_punva"]
+script = ExtResource("11_5t5d2")
+signal_name = "physiscs_always"
+to = NodePath("../hooka2d")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_l1gps")]
+only_if = SubResource("Resource_u0nm5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_3y5c0"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return G.get_parent().find_child(\"menu\",true,false).active
+	return closest(\"menu\").active
 "
 
-[sub_resource type="Resource" id="Resource_5amnd"]
+[sub_resource type="Resource" id="Resource_qxli8"]
 script = ExtResource("10_0cugf")
-nested_script = SubResource("GDScript_5bwvq")
+nested_script = SubResource("GDScript_3y5c0")
 argument_names = []
 return_value = true
 
@@ -624,7 +810,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(dir, from: Node2D, to: Area2D):
+func run(dir, from, to):
 	return to.position + (dir * at(\"horizontal_speed_multiplier\"))
 "
 
@@ -659,7 +845,7 @@ only_if = SubResource("Resource_1ydlc")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_u4v07"]
+[sub_resource type="Image" id="Image_fy784"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -669,7 +855,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_j8ov4"]
-image = SubResource("Image_u4v07")
+image = SubResource("Image_fy784")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_odsr1"]
 atlas = ExtResource("22_xayr0")
@@ -739,6 +925,52 @@ more_references = []
 invoke = "set_position"
 arguments = [SubResource("Resource_w7di6")]
 only_if = SubResource("Resource_qomrj")
+deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_nrf13"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	var anim_sprite: AnimatedSprite2D = to.find_child(\"*fish_*\", false, false)
+	if anim_sprite.rotation != 0:
+		return G.get_parent().find_child(\"hooka2d\",true,false).position + Vector2(0,30)
+	else:	
+		if anim_sprite.flip_h:
+			return to.position - Vector2(at(\"fish0_speed\"),0)
+		else:
+			return to.position + Vector2(at(\"fish0_speed\"),0)
+"
+
+[sub_resource type="Resource" id="Resource_wp5il"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_nrf13")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_owvs7"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_wfim5"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_owvs7")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ilw68"]
+script = ExtResource("11_5t5d2")
+signal_name = "physiscs_always"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_wp5il")]
+only_if = SubResource("Resource_wfim5")
 deferred = false
 enabled = true
 
@@ -812,6 +1044,52 @@ invoke = "set_position"
 arguments = [SubResource("Resource_kkxue")]
 only_if = SubResource("Resource_56map")
 deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_j4edo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	var anim_sprite: AnimatedSprite2D = to.find_child(\"*fish_*\", false, false)
+	if anim_sprite.rotation != 0:
+		return G.get_parent().find_child(\"hooka2d\",true,false).position + Vector2(0,30)
+	else:	
+		if anim_sprite.flip_h:
+			return to.position - Vector2(at(\"fish1_speed\"),0)
+		else:
+			return to.position + Vector2(at(\"fish1_speed\"),0)
+"
+
+[sub_resource type="Resource" id="Resource_o7ocs"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_j4edo")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_or0nb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_r8a61"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_or0nb")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_yvakp"]
+script = ExtResource("11_5t5d2")
+signal_name = "physiscs_always"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_o7ocs")]
+only_if = SubResource("Resource_r8a61")
+deferred = false
 enabled = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cdiwd"]
@@ -843,7 +1121,7 @@ radius = 6.50479
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Area2D):
+func run(delta, from, to):
 	var anim_sprite: AnimatedSprite2D = to.find_child(\"*fish_*\", false, false)
 	if anim_sprite.rotation != 0:
 		return G.get_parent().find_child(\"hooka2d\",true,false).position + Vector2(0,30)
@@ -882,6 +1160,52 @@ more_references = []
 invoke = "set_position"
 arguments = [SubResource("Resource_05fft")]
 only_if = SubResource("Resource_8puip")
+deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_06f54"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	var anim_sprite: AnimatedSprite2D = to.find_child(\"*fish_*\", false, false)
+	if anim_sprite.rotation != 0:
+		return G.get_parent().find_child(\"hooka2d\",true,false).position + Vector2(0,30)
+	else:	
+		if anim_sprite.flip_h:
+			return to.position - Vector2(at(\"fish2_speed\"),0)
+		else:
+			return to.position + Vector2(at(\"fish2_speed\"),0)
+"
+
+[sub_resource type="Resource" id="Resource_xars8"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_06f54")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ryfbg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_dgcer"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_ryfbg")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_watmb"]
+script = ExtResource("11_5t5d2")
+signal_name = "physiscs_always"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_xars8")]
+only_if = SubResource("Resource_dgcer")
 deferred = false
 enabled = true
 
@@ -954,6 +1278,7 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(other, direction, from):
 	closest(\"up\").exit(\"\")
+	at(\"highscores\").append(at(\"fish_value\"))
 "
 
 [sub_resource type="Resource" id="Resource_ngdp0"]
@@ -992,7 +1317,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D):
+func run(delta, from):
 	closest(\"spawn_poly\").position = closest(\"spawn_poly\").position + Vector2(0, at(\"drop_speed\"))
 "
 
@@ -1026,19 +1351,64 @@ arguments = []
 only_if = SubResource("Resource_8wveu")
 expression = SubResource("Resource_0fuoi")
 deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_vw6tm"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	closest(\"spawn_poly\").position = closest(\"spawn_poly\").position + Vector2(0, at(\"drop_speed\"))
+"
+
+[sub_resource type="Resource" id="Resource_7fars"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_vw6tm")
+argument_names = ["delta", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_73mx1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	return closest(\"down\").active
+"
+
+[sub_resource type="Resource" id="Resource_bj66h"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_73mx1")
+argument_names = ["delta", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_yvtqq"]
+script = ExtResource("11_5t5d2")
+signal_name = "physiscs_always"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_bj66h")
+expression = SubResource("Resource_7fars")
+deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_hulky"]
+[sub_resource type="GDScript" id="GDScript_cr16g"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	return \"You caught fish with a value of \" + str(at(\"fish_value\")) + \"$$$\"
+	var scores = \"\"
+	var counter = 1
+	for score in at(\"highscores\"):
+		scores += str(counter) + \". \" + str(score) + \"$\\n\"
+		counter += 1	
+	return scores
 "
 
-[sub_resource type="Resource" id="Resource_eiltw"]
+[sub_resource type="Resource" id="Resource_d04xb"]
 script = ExtResource("10_0cugf")
-nested_script = SubResource("GDScript_hulky")
+nested_script = SubResource("GDScript_cr16g")
 argument_names = []
 return_value = true
 
@@ -1074,7 +1444,7 @@ position = Vector2(214, 2713)
 texture = SubResource("GradientTexture2D_h0d0l")
 
 [node name="seafloora2d" type="Area2D" parent="BACKGROUND"]
-position = Vector2(210, 5243)
+position = Vector2(210, 5914)
 
 [node name="CollisionBehavior" type="Node2D" parent="BACKGROUND/seafloora2d"]
 position = Vector2(367, -117)
@@ -1085,10 +1455,11 @@ metadata/pronto_connections = [SubResource("Resource_x4ikd")]
 script = ExtResource("13_yjnbd")
 label = "    SEA FLOOR"
 color = Color(0.278431, 0.160784, 0.0235294, 1)
-placeholder_size = Vector2(546, 67)
+placeholder_size = Vector2(507, 1429)
 sprite_texture = ExtResource("5_cml4c")
 
 [node name="left_wall" type="Area2D" parent="BACKGROUND"]
+position = Vector2(38, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BACKGROUND/left_wall"]
 position = Vector2(-46, 2610)
@@ -1100,7 +1471,7 @@ script = ExtResource("4_hafn3")
 metadata/pronto_connections = [SubResource("Resource_cueyw")]
 
 [node name="right_wall" type="Area2D" parent="BACKGROUND"]
-position = Vector2(471, 3)
+position = Vector2(431, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BACKGROUND/right_wall"]
 position = Vector2(5, 2614)
@@ -1110,16 +1481,11 @@ shape = SubResource("RectangleShape2D_c7vat")
 script = ExtResource("4_hafn3")
 metadata/pronto_connections = [SubResource("Resource_olgyy")]
 
-[node name="ClockBehavior" type="Node2D" parent="."]
-position = Vector2(596, 55)
-script = ExtResource("1_1ktuq")
-trigger_interval_in_seconds = 1.0
-
 [node name="Player" type="AnimatedSprite2D" parent="."]
 position = Vector2(175, 111)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_rjy1o")
-animation = &"hook"
+animation = &"fishing"
 autoplay = "idle"
 speed_scale = 2.0
 
@@ -1155,6 +1521,13 @@ metadata/pronto_connections = [SubResource("Resource_td4ho")]
 [node name="score" type="Node2D" parent="STATE"]
 position = Vector2(0, 49)
 script = ExtResource("9_g4jyv")
+metadata/pronto_connections = [SubResource("Resource_t8q1t")]
+
+[node name="CodeBehavior" type="Node2D" parent="STATE"]
+position = Vector2(-49, 27)
+script = ExtResource("15_u3j8l")
+evaluate = SubResource("Resource_q7lh1")
+metadata/pronto_connections = [SubResource("Resource_o6d86")]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target_to_follow")]
 position = Vector2(213, 162)
@@ -1163,14 +1536,43 @@ script = ExtResource("14_hcfxl")
 target_to_follow = NodePath("../hooka2d")
 
 [node name="Label" type="Label" parent="Camera2D"]
-offset_left = 60.5
-offset_top = -217.5
-offset_right = 100.5
-offset_bottom = -195.167
+offset_left = -103.0
+offset_top = -223.0
+offset_right = -63.0
+offset_bottom = -200.667
+theme_override_font_sizes/font_size = 10
 
 [node name="BindBehavior" type="Node2D" parent="Camera2D/Label"]
 script = ExtResource("18_uibmu")
 evaluate = SubResource("Resource_fppgv")
+to_prop = "text"
+
+[node name="CurrentScore" type="Sprite2D" parent="Camera2D"]
+position = Vector2(63, -192.5)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("29_8uxa7")
+
+[node name="BindBehavior" type="Node2D" parent="Camera2D/CurrentScore"]
+position = Vector2(-37.6912, 37.6912)
+script = ExtResource("18_uibmu")
+evaluate = SubResource("Resource_flwlp")
+to_prop = "visible"
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="Camera2D/CurrentScore"]
+offset_left = -43.0
+offset_top = -11.0
+offset_right = 46.0
+offset_bottom = 12.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/normal_font = SubResource("SystemFont_1rqgh")
+theme_override_font_sizes/normal_font_size = 20
+text = "100000$"
+scroll_active = false
+
+[node name="BindBehavior" type="Node2D" parent="Camera2D/CurrentScore/RichTextLabel5"]
+script = ExtResource("18_uibmu")
+evaluate = SubResource("Resource_0tcm5")
 to_prop = "text"
 
 [node name="ControlsBehavior" type="Node2D" parent="."]
@@ -1229,30 +1631,63 @@ float_step_size = 0.1
 [node name="AlwaysBehavior" type="Node2D" parent="."]
 position = Vector2(485, 73)
 script = ExtResource("17_rxvo2")
-metadata/pronto_connections = [SubResource("Resource_u5phs"), SubResource("Resource_4puol")]
+metadata/pronto_connections = [SubResource("Resource_u5phs"), SubResource("Resource_4puol"), SubResource("Resource_a2mpi"), SubResource("Resource_punva")]
 
 [node name="menu_ui" type="Node2D" parent="."]
 
-[node name="Label" type="Label" parent="menu_ui"]
-offset_left = 138.0
-offset_top = -234.0
-offset_right = 297.0
-offset_bottom = -208.0
-text = "Press 'START' to fish!"
+[node name="WoodPlank" type="Sprite2D" parent="menu_ui"]
+position = Vector2(219, -205)
+scale = Vector2(1.48214, 1.48214)
+texture = ExtResource("9_ep2as")
 
 [node name="Button" type="Button" parent="menu_ui"]
-offset_left = 185.0
-offset_top = -203.0
-offset_right = 241.0
-offset_bottom = -172.0
-text = "START"
+offset_left = 163.0
+offset_top = -158.0
+offset_right = 240.0
+offset_bottom = -144.0
+scale = Vector2(1.5, 1.5)
+flat = true
 script = ExtResource("18_bmya0")
 
+[node name="StartButton" type="Sprite2D" parent="menu_ui/Button"]
+position = Vector2(39, 7)
+texture = ExtResource("28_a8oi4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="menu_ui"]
+offset_left = 101.0
+offset_top = -276.0
+offset_right = 355.0
+offset_bottom = -209.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/normal_font = SubResource("SystemFont_1rqgh")
+theme_override_font_sizes/normal_font_size = 60
+text = "Absurd"
+scroll_active = false
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="menu_ui"]
+offset_left = 126.0
+offset_top = -227.0
+offset_right = 380.0
+offset_bottom = -160.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/normal_font = SubResource("SystemFont_1rqgh")
+theme_override_font_sizes/normal_font_size = 60
+text = " Angling"
+scroll_active = false
+
 [node name="BindBehavior" type="Node2D" parent="menu_ui"]
-position = Vector2(-68, -31)
 script = ExtResource("18_uibmu")
-evaluate = SubResource("Resource_5amnd")
+evaluate = SubResource("Resource_qxli8")
 to_prop = "visible"
+
+[node name="rod_tip" type="Node2D" parent="."]
+position = Vector2(212, 145)
+script = ExtResource("32_bf4xt")
+
+[node name="water_point" type="Node2D" parent="."]
+position = Vector2(212, 190)
 
 [node name="hooka2d" type="Area2D" parent="."]
 position = Vector2(212, 165)
@@ -1302,7 +1737,7 @@ shape = SubResource("CapsuleShape2D_1u2ls")
 [node name="AlwaysBehavior" type="Node2D" parent="hooka2d/hook/SpawnerBehavior/fish_0_parent"]
 position = Vector2(28.4399, 23.4771)
 script = ExtResource("17_rxvo2")
-metadata/pronto_connections = [SubResource("Resource_q6fx6")]
+metadata/pronto_connections = [SubResource("Resource_q6fx6"), SubResource("Resource_ilw68")]
 
 [node name="fish_1_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior"]
 scale = Vector2(2, 2)
@@ -1321,7 +1756,7 @@ position = Vector2(21.5686, -11.6236)
 rotation = 0.00587131
 scale = Vector2(0.25, 0.25)
 script = ExtResource("17_rxvo2")
-metadata/pronto_connections = [SubResource("Resource_kd54e")]
+metadata/pronto_connections = [SubResource("Resource_kd54e"), SubResource("Resource_yvakp")]
 
 [node name="fish_2_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior"]
 scale = Vector2(3, 3)
@@ -1338,14 +1773,14 @@ shape = SubResource("CapsuleShape2D_j3p7d")
 [node name="AlwaysBehavior3" type="Node2D" parent="hooka2d/hook/SpawnerBehavior/fish_2_parent"]
 position = Vector2(-22.6532, 26.0341)
 script = ExtResource("17_rxvo2")
-metadata/pronto_connections = [SubResource("Resource_b68a2")]
+metadata/pronto_connections = [SubResource("Resource_b68a2"), SubResource("Resource_watmb")]
 
 [node name="ClockBehavior" type="Node2D" parent="hooka2d/hook"]
 position = Vector2(143.5, 203)
 script = ExtResource("1_1ktuq")
-duration_seconds = 120.0
+duration_seconds = 999.0
 trigger_every_x_seconds = true
-trigger_interval_in_seconds = 0.5
+trigger_interval_in_seconds = 0.25
 metadata/pronto_connections = [SubResource("Resource_t00iy")]
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -1373,33 +1808,70 @@ metadata/pronto_connections = [SubResource("Resource_j76f5")]
 
 [node name="spawn_poly" type="Polygon2D" parent="spawn_area"]
 visible = false
-position = Vector2(0, 621)
+position = Vector2(0, 620)
 polygon = PackedVector2Array(-2, -2, 425, -1, 423, 204, -5, 198)
 
 [node name="AlwaysBehavior" type="Node2D" parent="spawn_area"]
 position = Vector2(755, 673)
 script = ExtResource("17_rxvo2")
-metadata/pronto_connections = [SubResource("Resource_a8q4j")]
+metadata/pronto_connections = [SubResource("Resource_a8q4j"), SubResource("Resource_yvtqq")]
 
 [node name="StoreBehavior" type="Node2D" parent="."]
 position = Vector2(-121, 65)
 script = ExtResource("25_ipxi6")
 metadata/fish_value = 0
+metadata/highscores = []
 
 [node name="scoreui" type="Node2D" parent="."]
 
-[node name="Label" type="Label" parent="scoreui"]
-offset_left = 88.0
-offset_top = -127.0
-offset_right = 128.0
-offset_bottom = -104.667
+[node name="WoodPlank2" type="Sprite2D" parent="scoreui"]
+position = Vector2(219, -205)
+scale = Vector2(1.48214, 1.48214)
+texture = ExtResource("9_ep2as")
 
-[node name="BindBehavior" type="Node2D" parent="scoreui/Label"]
+[node name="RichTextLabel3" type="RichTextLabel" parent="scoreui"]
+offset_left = 99.0
+offset_top = -281.0
+offset_right = 359.0
+offset_bottom = -217.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/normal_font = SubResource("SystemFont_1rqgh")
+theme_override_font_sizes/normal_font_size = 50
+text = "Top scores"
+scroll_active = false
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="scoreui"]
+offset_left = 106.0
+offset_top = -228.0
+offset_right = 336.0
+offset_bottom = -136.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/normal_font = SubResource("SystemFont_1rqgh")
+theme_override_font_sizes/normal_font_size = 20
+text = "*scores*"
+scroll_active = false
+
+[node name="BindBehavior" type="Node2D" parent="scoreui/RichTextLabel4"]
 script = ExtResource("18_uibmu")
-evaluate = SubResource("Resource_eiltw")
+evaluate = SubResource("Resource_d04xb")
 to_prop = "text"
 
 [node name="BindBehavior" type="Node2D" parent="scoreui"]
 script = ExtResource("18_uibmu")
 evaluate = SubResource("Resource_6bywb")
 to_prop = "visible"
+
+[node name="Button" type="Button" parent="scoreui"]
+offset_left = 172.0
+offset_top = -79.0
+offset_right = 237.0
+offset_bottom = -60.0
+scale = Vector2(1.5, 1.5)
+flat = true
+script = ExtResource("27_1enhc")
+
+[node name="MenuButton" type="Sprite2D" parent="scoreui/Button"]
+position = Vector2(32, 9)
+texture = ExtResource("31_hcopy")

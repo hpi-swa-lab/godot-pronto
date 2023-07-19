@@ -7,6 +7,7 @@ func _ready():
 	
 	
 func _start():
+	G.get_parent().find_child("Player", true, false).play("fishing")
 	G.get_parent().find_child("menu", true, false).exit("")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
