@@ -112,6 +112,9 @@ func heal_full():
 func set_health(value):
 	current = value
 
+func die():
+	set_health(0)
+
 func show_icon():
 	return false
 	
