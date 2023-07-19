@@ -1,8 +1,9 @@
-[gd_scene load_steps=163 format=3 uid="uid://7yv7h4ilqmgg"]
+[gd_scene load_steps=174 format=3 uid="uid://7yv7h4ilqmgg"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_oe11t"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_5a507"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderShapeBehavior.gd" id="3_6wpat"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/VisualLineBehavior.gd" id="3_xnso2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="4_phcpe"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/DragBehavior.gd" id="5_2b2xo"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_yqc71"]
@@ -199,6 +200,86 @@ more_references = []
 invoke = "reset_and_start"
 arguments = []
 only_if = SubResource("Resource_pxlhq")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_u68pl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, last_position, from: Node2D, to: Node2D, x):
+	to.to = from.get_parent()
+"
+
+[sub_resource type="Resource" id="Resource_ih1ni"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_u68pl")
+argument_names = ["position", "start_position", "last_position", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_l6vlp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, last_position, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8pr61"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_l6vlp")
+argument_names = ["position", "start_position", "last_position", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_y3g1b"]
+script = ExtResource("7_vjssu")
+signal_name = "dragged"
+to = NodePath("../../../Catapult/CatapultLine")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_8pr61")
+expression = SubResource("Resource_ih1ni")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ugllf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, from: Node2D, to: Node2D, x):
+	to.to = null
+"
+
+[sub_resource type="Resource" id="Resource_2d40r"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_ugllf")
+argument_names = ["position", "start_position", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_huro3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_e4vaf"]
+script = ExtResource("6_yqc71")
+nested_script = SubResource("GDScript_huro3")
+argument_names = ["position", "start_position", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_l4kwm"]
+script = ExtResource("7_vjssu")
+signal_name = "dropped"
+to = NodePath("../../../Catapult/CatapultLine")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_e4vaf")
+expression = SubResource("Resource_2d40r")
 deferred = false
 enabled = true
 
@@ -1234,6 +1315,21 @@ sprite_texture = ExtResource("2_5a507")
 unique_name_in_owner = true
 position = Vector2(0, -64)
 
+[node name="RigidBody2D" type="RigidBody2D" parent="Catapult"]
+position = Vector2(0, 24)
+freeze = true
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Catapult/RigidBody2D"]
+visible = false
+script = ExtResource("1_oe11t")
+placeholder_size = Vector2(12, 84)
+sprite_texture = ExtResource("2_5a507")
+
+[node name="CatapultLine" type="Node2D" parent="Catapult" node_paths=PackedStringArray("from")]
+script = ExtResource("3_xnso2")
+from = NodePath("../CatapultMarker")
+line_color = Color(0, 0, 1, 1)
+
 [node name="PrototypingUIPanel" type="PanelContainer" parent="."]
 offset_left = 48.0
 offset_top = 20.0
@@ -1306,7 +1402,7 @@ circle_radius = 23.0877
 [node name="DragBehavior" type="Node2D" parent="SpawnerBehavior/Bird"]
 position = Vector2(96, 32)
 script = ExtResource("5_2b2xo")
-metadata/pronto_connections = [SubResource("Resource_ct1tn"), SubResource("Resource_3chew"), SubResource("Resource_fp88k")]
+metadata/pronto_connections = [SubResource("Resource_ct1tn"), SubResource("Resource_3chew"), SubResource("Resource_fp88k"), SubResource("Resource_y3g1b"), SubResource("Resource_l4kwm")]
 
 [node name="Panel" type="Panel" parent="SpawnerBehavior/Bird"]
 visible = false
