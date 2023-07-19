@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://cljw2c047x3a6"]
+[gd_scene load_steps=156 format=3 uid="uid://cljw2c047x3a6"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="1_1ktuq"]
 [ext_resource type="Texture2D" uid="uid://onopyq1oinpg" path="res://prototypes/i6w1-fishing/Ocean.png" id="2_wcbe2"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://cyc4bt8i31fuy" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/1.png" id="22_0ol37"]
 [ext_resource type="Texture2D" uid="uid://b05n81e5lmw6r" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/2.png" id="22_xayr0"]
 [ext_resource type="Texture2D" uid="uid://yd82tj6grecw" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/7.png" id="24_8womo"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="25_ipxi6"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3rx47"]
 gradient = ExtResource("3_5yco7")
@@ -73,6 +74,92 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_u8chx")
 expression = SubResource("Resource_jsf3s")
+deferred = false
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tpa5h"]
+size = Vector2(20, 5228)
+
+[sub_resource type="GDScript" id="GDScript_nc768"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.find_child(\"*fish_*\", false, false).set_flip_h(false)
+"
+
+[sub_resource type="Resource" id="Resource_ecrb7"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_nc768")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_02n2f"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other.name.contains(\"fish_\")
+"
+
+[sub_resource type="Resource" id="Resource_f1hkb"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_02n2f")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_cueyw"]
+script = ExtResource("11_5t5d2")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_f1hkb")
+expression = SubResource("Resource_ecrb7")
+deferred = false
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c7vat"]
+size = Vector2(30, 5248)
+
+[sub_resource type="GDScript" id="GDScript_ru3w6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.find_child(\"*fish_*\", false, false).set_flip_h(true)
+"
+
+[sub_resource type="Resource" id="Resource_3tv6q"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_ru3w6")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_bernh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other.name.contains(\"fish_\")
+"
+
+[sub_resource type="Resource" id="Resource_kvgpy"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_bernh")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_olgyy"]
+script = ExtResource("11_5t5d2")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_kvgpy")
+expression = SubResource("Resource_3tv6q")
 deferred = false
 enabled = true
 
@@ -331,6 +418,20 @@ only_if = SubResource("Resource_pn4jd")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_lo1fx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return Engine.get_frames_per_second()
+"
+
+[sub_resource type="Resource" id="Resource_fppgv"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_lo1fx")
+argument_names = []
+return_value = true
+
 [sub_resource type="GDScript" id="GDScript_5hxtp"]
 script/source = "@tool
 extends U
@@ -374,7 +475,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Area2D):
+func run(delta, from, to):
 	return to.position - Vector2(0, at(\"up_speed\"))
 "
 
@@ -423,7 +524,142 @@ nested_script = SubResource("GDScript_5bwvq")
 argument_names = []
 return_value = true
 
-[sub_resource type="Image" id="Image_tn3s5"]
+[sub_resource type="GDScript" id="GDScript_n2ske"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	
+	put(\"fish_value\",at(\"fish_value\")+_get_fish_value(other))
+	var rng = RandomNumberGenerator.new()
+	if other.find_child(\"fish_*\",false,false).flip_h:
+		other.find_child(\"fish_*\",false,false).rotation_degrees = 90 + rng.randi_range(-20, 20)
+	else:
+		other.find_child(\"fish_*\",false,false).rotation_degrees = 270 + rng.randi_range(-20, 20)
+
+
+func _get_fish_value(other):
+	if other.name.contains(\"fish_0\"):
+		return 100
+	elif other.name.contains(\"fish_1\"):
+		return 300
+	else:
+		return 500
+				
+"
+
+[sub_resource type="Resource" id="Resource_bopkf"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_n2ske")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_gql14"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other.name.contains(\"fish\")
+"
+
+[sub_resource type="Resource" id="Resource_11m01"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_gql14")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_cv50a"]
+script = ExtResource("11_5t5d2")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_11m01")
+expression = SubResource("Resource_bopkf")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_vd462"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	closest(\"down\").exit(\"\")
+"
+
+[sub_resource type="Resource" id="Resource_b52sr"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_vd462")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_5hcxh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return closest(\"down\").active and other.name.contains(\"fish\")
+"
+
+[sub_resource type="Resource" id="Resource_fqgt2"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_5hcxh")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_yp8uk"]
+script = ExtResource("11_5t5d2")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_fqgt2")
+expression = SubResource("Resource_b52sr")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ach2e"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(dir, from: Node2D, to: Area2D):
+	return to.position + (dir * at(\"horizontal_speed_multiplier\"))
+"
+
+[sub_resource type="Resource" id="Resource_4l48x"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_ach2e")
+argument_names = ["dir", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_88hfc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(dir, from: Node2D, to: Area2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_1ydlc"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_88hfc")
+argument_names = ["dir", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gq76o"]
+script = ExtResource("11_5t5d2")
+signal_name = "horizontal_direction"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_4l48x")]
+only_if = SubResource("Resource_1ydlc")
+deferred = false
+enabled = true
+
+[sub_resource type="Image" id="Image_u4v07"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -433,13 +669,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_j8ov4"]
-image = SubResource("Image_tn3s5")
-
-[sub_resource type="Curve2D" id="Curve2D_57b6f"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0.00293732, -0.5, 0, 0, 0, 0, 103.492, 1.60767, 0, 0, 0, 0, -106.998, -0.628235, 0, 0, 0, 0, 0.0117416, -1.99997)
-}
-point_count = 4
+image = SubResource("Image_u4v07")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_odsr1"]
 atlas = ExtResource("22_xayr0")
@@ -466,44 +696,49 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1u2ls"]
 height = 34.0
 
-[sub_resource type="GDScript" id="GDScript_ra7ns"]
+[sub_resource type="GDScript" id="GDScript_vt4j1"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: PathFollow2D):
-	print(to.get_progress_ratio())
-	print(at(\"fish0_speed\"))
-	return to.get_progress_ratio() + 0.001
+func run(delta, from, to):
+	var anim_sprite: AnimatedSprite2D = to.find_child(\"*fish_*\", false, false)
+	if anim_sprite.rotation != 0:
+		return G.get_parent().find_child(\"hooka2d\",true,false).position + Vector2(0,30)
+	else:	
+		if anim_sprite.flip_h:
+			return to.position - Vector2(at(\"fish0_speed\"),0)
+		else:
+			return to.position + Vector2(at(\"fish0_speed\"),0)
 "
 
-[sub_resource type="Resource" id="Resource_asvoq"]
+[sub_resource type="Resource" id="Resource_w7di6"]
 script = ExtResource("10_0cugf")
-nested_script = SubResource("GDScript_ra7ns")
+nested_script = SubResource("GDScript_vt4j1")
 argument_names = ["delta", "from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_0ypf1"]
+[sub_resource type="GDScript" id="GDScript_qbmfw"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: PathFollow2D):
+func run(delta, from: Node2D, to: Area2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_yq86o"]
+[sub_resource type="Resource" id="Resource_qomrj"]
 script = ExtResource("10_0cugf")
-nested_script = SubResource("GDScript_0ypf1")
+nested_script = SubResource("GDScript_qbmfw")
 argument_names = ["delta", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_78dif"]
+[sub_resource type="Resource" id="Resource_q6fx6"]
 script = ExtResource("11_5t5d2")
 signal_name = "always"
 to = NodePath("..")
 more_references = []
-invoke = "set_progress_ratio"
-arguments = [SubResource("Resource_asvoq")]
-only_if = SubResource("Resource_yq86o")
+invoke = "set_position"
+arguments = [SubResource("Resource_w7di6")]
+only_if = SubResource("Resource_qomrj")
 deferred = false
 enabled = true
 
@@ -533,6 +768,52 @@ animations = [{
 radius = 3.00003
 height = 11.0057
 
+[sub_resource type="GDScript" id="GDScript_ykfq6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	var anim_sprite: AnimatedSprite2D = to.find_child(\"*fish_*\", false, false)
+	if anim_sprite.rotation != 0:
+		return G.get_parent().find_child(\"hooka2d\",true,false).position + Vector2(0,30)
+	else:	
+		if anim_sprite.flip_h:
+			return to.position - Vector2(at(\"fish1_speed\"),0)
+		else:
+			return to.position + Vector2(at(\"fish1_speed\"),0)
+"
+
+[sub_resource type="Resource" id="Resource_kkxue"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_ykfq6")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_smpk3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_56map"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_smpk3")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_kd54e"]
+script = ExtResource("11_5t5d2")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_kkxue")]
+only_if = SubResource("Resource_56map")
+deferred = false
+enabled = true
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_cdiwd"]
 atlas = ExtResource("24_8womo")
 region = Rect2(0, 0, 30, 12)
@@ -558,11 +839,67 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j3p7d"]
 radius = 6.50479
 
+[sub_resource type="GDScript" id="GDScript_sk516"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	var anim_sprite: AnimatedSprite2D = to.find_child(\"*fish_*\", false, false)
+	if anim_sprite.rotation != 0:
+		return G.get_parent().find_child(\"hooka2d\",true,false).position + Vector2(0,30)
+	else:	
+		if anim_sprite.flip_h:
+			return to.position - Vector2(at(\"fish2_speed\"),0)
+		else:
+			return to.position + Vector2(at(\"fish2_speed\"),0)
+"
+
+[sub_resource type="Resource" id="Resource_05fft"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_sk516")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_gqre8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Area2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8puip"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_gqre8")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_b68a2"]
+script = ExtResource("11_5t5d2")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_05fft")]
+only_if = SubResource("Resource_8puip")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_uccfa"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
+func run(from, to):
+	var rng = RandomNumberGenerator.new()
+	var my_random_number = rng.randi_range(0, 100)
+	var spawn_chances = [60, 30, 10]
+	var idx = 0
+	var sum = 0
+	for chance in spawn_chances:
+		sum += chance
+		if sum >= my_random_number:
+			return idx
+		idx = idx + 1
 	return 0
 "
 
@@ -577,7 +914,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Node2D, to: Node2D):
-	return true
+	return closest(\"down\").active
 "
 
 [sub_resource type="Resource" id="Resource_fdwnw"]
@@ -615,7 +952,7 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D):
+func run(other, direction, from):
 	closest(\"up\").exit(\"\")
 "
 
@@ -670,7 +1007,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(delta, from: Node2D):
-	return true
+	return closest(\"down\").active
 "
 
 [sub_resource type="Resource" id="Resource_8wveu"]
@@ -690,6 +1027,34 @@ only_if = SubResource("Resource_8wveu")
 expression = SubResource("Resource_0fuoi")
 deferred = false
 enabled = true
+
+[sub_resource type="GDScript" id="GDScript_hulky"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return \"You caught fish with a value of \" + str(at(\"fish_value\")) + \"$$$\"
+"
+
+[sub_resource type="Resource" id="Resource_eiltw"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_hulky")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_o4vgr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return closest(\"score\").active 
+"
+
+[sub_resource type="Resource" id="Resource_6bywb"]
+script = ExtResource("10_0cugf")
+nested_script = SubResource("GDScript_o4vgr")
+argument_names = []
+return_value = true
 
 [node name="game" type="Node2D"]
 
@@ -722,6 +1087,28 @@ label = "    SEA FLOOR"
 color = Color(0.278431, 0.160784, 0.0235294, 1)
 placeholder_size = Vector2(546, 67)
 sprite_texture = ExtResource("5_cml4c")
+
+[node name="left_wall" type="Area2D" parent="BACKGROUND"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BACKGROUND/left_wall"]
+position = Vector2(-46, 2610)
+shape = SubResource("RectangleShape2D_tpa5h")
+
+[node name="CollisionBehavior" type="Node2D" parent="BACKGROUND/left_wall"]
+position = Vector2(-88, 21)
+script = ExtResource("4_hafn3")
+metadata/pronto_connections = [SubResource("Resource_cueyw")]
+
+[node name="right_wall" type="Area2D" parent="BACKGROUND"]
+position = Vector2(471, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BACKGROUND/right_wall"]
+position = Vector2(5, 2614)
+shape = SubResource("RectangleShape2D_c7vat")
+
+[node name="CollisionBehavior" type="Node2D" parent="BACKGROUND/right_wall"]
+script = ExtResource("4_hafn3")
+metadata/pronto_connections = [SubResource("Resource_olgyy")]
 
 [node name="ClockBehavior" type="Node2D" parent="."]
 position = Vector2(596, 55)
@@ -775,6 +1162,17 @@ scale = Vector2(2, 2)
 script = ExtResource("14_hcfxl")
 target_to_follow = NodePath("../hooka2d")
 
+[node name="Label" type="Label" parent="Camera2D"]
+offset_left = 60.5
+offset_top = -217.5
+offset_right = 100.5
+offset_bottom = -195.167
+
+[node name="BindBehavior" type="Node2D" parent="Camera2D/Label"]
+script = ExtResource("18_uibmu")
+evaluate = SubResource("Resource_fppgv")
+to_prop = "text"
+
 [node name="ControlsBehavior" type="Node2D" parent="."]
 position = Vector2(303, 119)
 script = ExtResource("15_o0esm")
@@ -795,7 +1193,7 @@ position = Vector2(-2, 31)
 script = ExtResource("16_y66kb")
 float_from = 0.0
 float_to = 100.0
-float_value = 5.0
+float_value = 2.5
 float_step_size = 0.1
 
 [node name="up_speed" type="Node2D" parent="Values"]
@@ -803,15 +1201,30 @@ position = Vector2(-4, 65)
 script = ExtResource("16_y66kb")
 float_from = 0.0
 float_to = 100.0
-float_value = 5.0
+float_value = 3.0
 float_step_size = 0.1
 
 [node name="fish0_speed" type="Node2D" parent="Values"]
+position = Vector2(-5, 90)
 script = ExtResource("16_y66kb")
 float_from = 0.0
-float_to = 1.0
-float_value = 0.01
-float_step_size = 0.01
+float_to = 100.0
+float_value = 1.0
+float_step_size = 1.0
+
+[node name="fish1_speed" type="Node2D" parent="Values"]
+script = ExtResource("16_y66kb")
+float_from = 0.0
+float_to = 100.0
+float_value = 1.5
+float_step_size = 0.1
+
+[node name="fish2_speed" type="Node2D" parent="Values"]
+script = ExtResource("16_y66kb")
+float_from = 0.0
+float_to = 100.0
+float_value = 0.5
+float_step_size = 0.1
 
 [node name="AlwaysBehavior" type="Node2D" parent="."]
 position = Vector2(485, 73)
@@ -844,6 +1257,18 @@ to_prop = "visible"
 [node name="hooka2d" type="Area2D" parent="."]
 position = Vector2(212, 165)
 
+[node name="CollisionBehavior" type="Node2D" parent="hooka2d"]
+position = Vector2(28, 11)
+scale = Vector2(2, 2)
+script = ExtResource("4_hafn3")
+metadata/pronto_connections = [SubResource("Resource_cv50a"), SubResource("Resource_yp8uk")]
+
+[node name="ControlsBehavior" type="Node2D" parent="hooka2d"]
+position = Vector2(93, 9)
+scale = Vector2(2, 2)
+script = ExtResource("15_o0esm")
+metadata/pronto_connections = [SubResource("Resource_gq76o")]
+
 [node name="hook" type="Node2D" parent="hooka2d"]
 scale = Vector2(2, 2)
 script = ExtResource("13_yjnbd")
@@ -859,39 +1284,30 @@ container = NodePath("../../..")
 shape_type = "Polygon"
 spawn_shape_polygon = NodePath("../../../spawn_area/spawn_poly")
 
-[node name="fishy0" type="Path2D" parent="hooka2d/hook/SpawnerBehavior"]
-curve = SubResource("Curve2D_57b6f")
+[node name="fish_0_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior"]
+position = Vector2(-7.62939e-06, 3.05176e-05)
+rotation = 0.0244008
 
-[node name="PathFollow2D" type="PathFollow2D" parent="hooka2d/hook/SpawnerBehavior/fishy0"]
-position = Vector2(0.00293732, -0.5)
-rotation = 0.0203632
-rotates = false
-
-[node name="fish_0_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior/fishy0/PathFollow2D"]
-position = Vector2(0.0072403, 0.499969)
-rotation = 0.00403765
-scale = Vector2(1, 1)
-
-[node name="fish_0" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fishy0/PathFollow2D/fish_0_parent"]
+[node name="fish_0" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fish_0_parent"]
+position = Vector2(-0.499908, 0.00921631)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_rk1v0")
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hooka2d/hook/SpawnerBehavior/fishy0/PathFollow2D/fish_0_parent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hooka2d/hook/SpawnerBehavior/fish_0_parent"]
 position = Vector2(-0.5, 4.5)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_1u2ls")
 
-[node name="AlwaysBehavior" type="Node2D" parent="hooka2d/hook/SpawnerBehavior/fishy0/PathFollow2D"]
-position = Vector2(-50.6541, 24.2366)
+[node name="AlwaysBehavior" type="Node2D" parent="hooka2d/hook/SpawnerBehavior/fish_0_parent"]
+position = Vector2(28.4399, 23.4771)
 script = ExtResource("17_rxvo2")
-metadata/pronto_connections = [SubResource("Resource_78dif")]
+metadata/pronto_connections = [SubResource("Resource_q6fx6")]
 
 [node name="fish_1_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior"]
-visible = false
 scale = Vector2(2, 2)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fish_1_parent"]
+[node name="fish_1" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fish_1_parent"]
 sprite_frames = SubResource("SpriteFrames_clq08")
 autoplay = "default"
 
@@ -900,11 +1316,17 @@ position = Vector2(-0.50293, 0.497009)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_tyrja")
 
+[node name="AlwaysBehavior2" type="Node2D" parent="hooka2d/hook/SpawnerBehavior/fish_1_parent"]
+position = Vector2(21.5686, -11.6236)
+rotation = 0.00587131
+scale = Vector2(0.25, 0.25)
+script = ExtResource("17_rxvo2")
+metadata/pronto_connections = [SubResource("Resource_kd54e")]
+
 [node name="fish_2_parent" type="Area2D" parent="hooka2d/hook/SpawnerBehavior"]
-visible = false
 scale = Vector2(3, 3)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fish_2_parent"]
+[node name="fish_2" type="AnimatedSprite2D" parent="hooka2d/hook/SpawnerBehavior/fish_2_parent"]
 sprite_frames = SubResource("SpriteFrames_5l86j")
 autoplay = "default"
 
@@ -912,6 +1334,11 @@ autoplay = "default"
 position = Vector2(-0.499008, -0.169601)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_j3p7d")
+
+[node name="AlwaysBehavior3" type="Node2D" parent="hooka2d/hook/SpawnerBehavior/fish_2_parent"]
+position = Vector2(-22.6532, 26.0341)
+script = ExtResource("17_rxvo2")
+metadata/pronto_connections = [SubResource("Resource_b68a2")]
 
 [node name="ClockBehavior" type="Node2D" parent="hooka2d/hook"]
 position = Vector2(143.5, 203)
@@ -953,3 +1380,26 @@ polygon = PackedVector2Array(-2, -2, 425, -1, 423, 204, -5, 198)
 position = Vector2(755, 673)
 script = ExtResource("17_rxvo2")
 metadata/pronto_connections = [SubResource("Resource_a8q4j")]
+
+[node name="StoreBehavior" type="Node2D" parent="."]
+position = Vector2(-121, 65)
+script = ExtResource("25_ipxi6")
+metadata/fish_value = 0
+
+[node name="scoreui" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="scoreui"]
+offset_left = 88.0
+offset_top = -127.0
+offset_right = 128.0
+offset_bottom = -104.667
+
+[node name="BindBehavior" type="Node2D" parent="scoreui/Label"]
+script = ExtResource("18_uibmu")
+evaluate = SubResource("Resource_eiltw")
+to_prop = "text"
+
+[node name="BindBehavior" type="Node2D" parent="scoreui"]
+script = ExtResource("18_uibmu")
+evaluate = SubResource("Resource_6bywb")
+to_prop = "visible"
