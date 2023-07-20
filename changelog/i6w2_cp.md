@@ -48,6 +48,6 @@
 
 ## Future Work
 
-- **Query shapes:** Allow to specify a custom shape for the query, e.g., a rectangle or a polygon. Users could either add shapeful child nodes to a query behavior or specify shapes through its handles or its inspector.
+- **Query shapes:** Allow to specify a custom shape for the query, e.g., a rectangle or a polygon. Users could either add shapeful child nodes to a query behavior or specify shapes through its handles or its inspector. At the same time, the query behavior should also honor the exact shape of the found nodes.
 
   We already sketched the framework for this but did not implement it yet because we identified some technical depth related to behavior-managed shapes. At the moment, placeholders and spawners already support custom shapes and we didn't want to duplicate their logic for maintaing these shapes and configuring through the inspector or editor handles a third time. Maybe we can extract this before, e.g., to `Behavior`, a new `HandleProvider`, or a new `ShapeInspectorPlugin`? Furthermore, configuring generic shapes in the spawner seemed currently broken for us (changes to their geometry are not accepted and the console keeps spitting out DNUs).
