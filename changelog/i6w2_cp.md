@@ -58,7 +58,8 @@
 
 ## Miscellaneous
 
-- Added an icon for the `State` behavior.
+- Slightly revised the arrangement of properties in the inspector of the `InspectBehavior`.
+- Added an icon for the `StateBehavior`.
 
 ## API Changes
 
