@@ -39,6 +39,8 @@ var proximity = null:  # Optional[StringName] # null, 'radius', or 'shapes'
 		proximity = v
 		if proximity != 'radius':
 			self.radius = null
+		elif radius == null:
+			self.radius = 100
 		notify_property_list_changed()  # influences presence of radius/shapes
 ## Only search for nodes within this radius of the reference node. Optional.
 var radius = null:  # Optional[float]
@@ -172,7 +174,7 @@ func _get_property_list():
 		property_list.append({
 			'name': 'radius',
 			'type': TYPE_FLOAT,
-			'default': 10,
+			'default': 100,
 			'usage': PROPERTY_USAGE_DEFAULT,
 			'hint': PROPERTY_HINT_RANGE,
 			'hint_string': '0,%s,or_greater' % Utils.get_game_size().length()
@@ -405,12 +407,14 @@ func _draw():
 func _node_added(node):
 	if Engine.is_editor_hint():
 		if shapes:
-			proximity = 'shapes'
+			#proximity = 'shapes'
+			pass
 
 func _node_removed(node):
 	if Engine.is_editor_hint():
-		if not shapes:
-			proximity = null
+		if proximity == 'shapes' and not shapes:
+			#proximity = null
+			pass
 
 func selected():
 	super.selected()
