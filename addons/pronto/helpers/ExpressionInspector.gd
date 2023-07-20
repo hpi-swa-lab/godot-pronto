@@ -2,15 +2,11 @@ extends EditorInspectorPlugin
 class_name ExpressionInspector
 
 func _can_handle(object):
-	return (object is BindBehavior
-		or object is CodeBehavior
-		or object is WatchBehavior
+	return ('wants_expression_inspector' in object
 		or object is Node and object.get_child_count() > 0 and object.get_child(0) is BindBehavior)
 
 func _parse_property(object, type, name, hint_type, hint_string, usage_flags, wide):
-	if (object is BindBehavior and name == "evaluate"
-	or object is CodeBehavior and name == "evaluate"
-	or object is WatchBehavior and name == "evaluate"):
+	if ('wants_expression_inspector' in object and object.wants_expression_inspector(name)):
 		add_property_editor(name, ExpressionProperty.new())
 		return true
 	if object is Node and object.get_child_count() > 0 and object.get_child(0) is BindBehavior and object.get_child(0).to_prop == name:
@@ -31,6 +27,10 @@ class ExpressionProperty extends EditorProperty:
 	
 	func _update_property():
 		var val = get_edited_object()[get_edited_property()]
+		if val == null:
+			val = ConnectionScript.new()
+			if 'initialize_connection_script' in get_edited_object():
+				get_edited_object().initialize_connection_script(get_edited_property(), val)
 		editor.edit_script = val
 
 class BoundProperty extends EditorProperty:

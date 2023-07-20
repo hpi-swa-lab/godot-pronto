@@ -192,7 +192,7 @@ func _draw_debug_circle():
 	debug_color.a = 1
 	draw_circle(Vector2(0,0),circle_radius,debug_color)
 	
-func _draw_debug_capsule():	
+func _draw_debug_capsule():
 	var debug_color = Color.LIGHT_BLUE
 	debug_color.a = 0.5
 	draw_circle(Vector2(0,-(capsule_height/2)+capsule_radius),capsule_radius, debug_color)

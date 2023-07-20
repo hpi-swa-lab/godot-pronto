@@ -15,7 +15,7 @@ static func map_row_col(s: Resource, row: int, col: int, do: Callable):
 
 @export var nested_script: GDScript
 @export var argument_names: Array
-var argument_types = null:  # optional Array for type hints
+var argument_types = null:  # optional Array of StringNames for type hints
 	get:
 		return argument_types
 	set(v):
