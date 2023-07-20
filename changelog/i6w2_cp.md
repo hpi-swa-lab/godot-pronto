@@ -63,7 +63,8 @@
 
 ## API Changes
 
-- New `Behavior.selected()` is called when the user selects the behavior in the editor.
+- *There should be no breaking changes.*
+- New `Behavior.selected()` is called when the user selects the behavior in the editor. Behavior can check the current selection using `Behavior.is_being_edited()`.
 - Behaviors can request an `ExpressionEditor` for a property (to edit a script in the inspector) by overriding `Behavior.wants_expression_inspector()` instead of hard-coding them. They can also provide a custom default script through `Behavior.initialize_connection_script()`.
 
 ## Documentation
