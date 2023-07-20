@@ -56,9 +56,19 @@
 
     We already sketched the framework for this but did not implement it yet because we identified some technical depth related to behavior-managed shapes. At the moment, placeholders and spawners already support custom shapes and we didn't want to duplicate their logic for maintaing these shapes and configuring through the inspector or editor handles a third time. Maybe we can extract this before, e.g., to `Behavior`, a new `HandleProvider`, or a new `ShapeInspectorPlugin`? Furthermore, configuring generic shapes in the spawner seemed currently broken for us (changes to their geometry are not accepted and the console keeps spitting out DNUs).
 
+## Bugfixes
+
+- `DragBehavior` no longer emits drop signal before actually dropping and unfreezing parent ([#125](https://github.com/hpi-swa-lab/godot-pronto/issues/125)).
+- Some bugfixes for **nested spawners:** 
+  - They no longer trigger an error when duplicated by the outer spawner. (https://github.com/hpi-swa-lab/godot-pronto/pull/142/files#diff-ea7eb23cf70ccf23fd4a10ddaf859c7444cccd70e306785d61c2a2c58afe1c0bR26-R28)
+  - They work again when setting a `scene_path` on the inner spawner.
+  - However, the underlying issue [#143](https://github.com/hpi-swa-lab/godot-pronto/issues/143) remains unsolved.
+- `Utils.global_rect_of()` (and thus `DragBehavior` et al.) no longer fails on non-2D `Node`s (as used by the spawner's internal `path_corrector`).
+
 ## Miscellaneous
 
 - Slightly revised the arrangement of properties in the inspector of the `InspectBehavior`.
+- Placeholders now reuse translucency of color for their labels as well, if any.
 - Added an icon for the `StateBehavior`.
 
 ## API Changes
