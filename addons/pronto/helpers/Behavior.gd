@@ -42,7 +42,7 @@ func is_being_edited() -> bool:
 		return false
 	return get_editor_plugin().edited_object == self
 
-func get_editor_plugin() -> EditorPlugin:
+func get_editor_plugin():
 	return G.at("_pronto_editor_plugin")
 
 func show_icon():
@@ -63,7 +63,7 @@ func _process(delta):
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	_handles._forward_canvas_draw_over_viewport(self, viewport_control)
 
-func _forward_canvas_gui_input(event: InputEvent, undo_redo: EditorUndoRedoManager):
+func _forward_canvas_gui_input(event: InputEvent, undo_redo):
 	return _handles._forward_canvas_gui_input(self, event, undo_redo)
 
 func selected():

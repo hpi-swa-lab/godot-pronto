@@ -1098,7 +1098,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from, to):
+func run(node, token, priority, selection_arg, from, to):
 	var new_board = to.spawn_at(node.global_position,0)[0] as Node2D
 	new_board.global_transform = node.global_transform
 	
@@ -1114,21 +1114,21 @@ func run(node, selection_arg, token, from, to):
 [sub_resource type="Resource" id="Resource_fe5q1"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_cusu5")
-argument_names = ["node", "selection_arg", "token", "from", "to"]
+argument_names = ["node", "token", "priority", "selection_arg", "from", "to"]
 return_value = false
 
 [sub_resource type="GDScript" id="GDScript_rlfl5"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from: Node2D, to: Node2D):
+func run(node, token, priority, selection_arg, from: Node2D, to: Node2D):
 	return true
 "
 
 [sub_resource type="Resource" id="Resource_oaeut"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_rlfl5")
-argument_names = ["node", "selection_arg", "token", "from", "to"]
+argument_names = ["node", "token", "priority", "selection_arg", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_r2jw4"]
@@ -1147,7 +1147,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from: Node2D, to: Node2D):
+func run(node, token, priority, selection_arg, from, to):
 	var new_pig = to.spawn_at(node.global_position,0)[0] as Node2D
 	new_pig.global_transform = node.global_transform
 	
@@ -1163,21 +1163,21 @@ func run(node, selection_arg, token, from: Node2D, to: Node2D):
 [sub_resource type="Resource" id="Resource_1bxoe"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_orjnf")
-argument_names = ["node", "selection_arg", "token", "from", "to"]
+argument_names = ["node", "token", "priority", "selection_arg", "from", "to"]
 return_value = false
 
 [sub_resource type="GDScript" id="GDScript_0qns2"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from: Node2D, to: Node2D):
+func run(node, token, priority, selection_arg, from: Node2D, to: Node2D):
 	return true
 "
 
 [sub_resource type="Resource" id="Resource_qxid7"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_0qns2")
-argument_names = ["node", "selection_arg", "token", "from", "to"]
+argument_names = ["node", "token", "priority", "selection_arg", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_0u6ax"]
@@ -1196,7 +1196,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from, to):
+func run(node, token, priority, selection_arg, from, to):
 	var new_bird = to.spawn_at(node.global_position,0)[0] as Node2D
 	new_bird.global_transform = node.global_transform
 	node.visible = false
@@ -1210,21 +1210,21 @@ func run(node, selection_arg, token, from, to):
 [sub_resource type="Resource" id="Resource_8lanh"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_hrwwm")
-argument_names = ["node", "selection_arg", "token", "from", "to"]
+argument_names = ["node", "token", "priority", "selection_arg", "from", "to"]
 return_value = false
 
 [sub_resource type="GDScript" id="GDScript_jtoo7"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from: Node2D, to: Node2D):
+func run(node, token, priority, selection_arg, from: Node2D, to: Node2D):
 	return true
 "
 
 [sub_resource type="Resource" id="Resource_lp8wv"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_jtoo7")
-argument_names = ["node", "selection_arg", "token", "from", "to"]
+argument_names = ["node", "token", "priority", "selection_arg", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_f3nh8"]
@@ -1243,42 +1243,42 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(nodes, selection_args, token, from: Node2D, to: Node2D):
+func run(nodes, token, priorities, selection_args, from, to):
 	return nodes.is_empty()
 "
 
 [sub_resource type="Resource" id="Resource_jm26e"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_yix0x")
-argument_names = ["nodes", "selection_args", "token", "from", "to"]
+argument_names = ["nodes", "token", "priorities", "selection_args", "from", "to"]
 return_value = true
 
 [sub_resource type="GDScript" id="GDScript_5sc2p"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(nodes, selection_args, token, from: Node2D, to: Node2D):
+func run(nodes, token, priorities, selection_args, from, to):
 	return null
 "
 
 [sub_resource type="Resource" id="Resource_175xb"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_5sc2p")
-argument_names = ["nodes", "selection_args", "token", "from", "to"]
+argument_names = ["nodes", "token", "priorities", "selection_args", "from", "to"]
 return_value = true
 
 [sub_resource type="GDScript" id="GDScript_2n8jo"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(nodes, selection_args, token, from: Node2D, to: Node2D):
+func run(nodes, token, priorities, selection_args, from: Node2D, to: Node2D):
 	return true
 "
 
 [sub_resource type="Resource" id="Resource_dy7lo"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_2n8jo")
-argument_names = ["nodes", "selection_args", "token", "from", "to"]
+argument_names = ["nodes", "token", "priorities", "selection_args", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_5rifb"]
@@ -1296,42 +1296,42 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(nodes, selection_args, token, from: Node2D, to: Node2D):
+func run(nodes, token, priorities, selection_args, from, to):
 	return token
 "
 
 [sub_resource type="Resource" id="Resource_f17os"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_grdxh")
-argument_names = ["nodes", "selection_args", "token", "from", "to"]
+argument_names = ["nodes", "token", "priorities", "selection_args", "from", "to"]
 return_value = true
 
 [sub_resource type="GDScript" id="GDScript_w6f7h"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(nodes, selection_args, token, from: Node2D, to: Node2D):
+func run(nodes, token, priorities, selection_args, from, to):
 	return nodes.is_empty()
 "
 
 [sub_resource type="Resource" id="Resource_bm1kn"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_w6f7h")
-argument_names = ["nodes", "selection_args", "token", "from", "to"]
+argument_names = ["nodes", "token", "priorities", "selection_args", "from", "to"]
 return_value = true
 
 [sub_resource type="GDScript" id="GDScript_lgkwg"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(nodes, selection_args, token, from: Node2D, to: Node2D):
+func run(nodes, token, priorities, selection_args, from: Node2D, to: Node2D):
 	return true
 "
 
 [sub_resource type="Resource" id="Resource_d6iot"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_lgkwg")
-argument_names = ["nodes", "selection_args", "token", "from", "to"]
+argument_names = ["nodes", "token", "priorities", "selection_args", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_j2ejd"]
@@ -1558,28 +1558,28 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from: Node2D):
+func run(node, token, priority, selection_arg, from):
 	node.queue_free()
 "
 
 [sub_resource type="Resource" id="Resource_pw7d7"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_qc748")
-argument_names = ["node", "selection_arg", "token", "from"]
+argument_names = ["node", "token", "priority", "selection_arg", "from"]
 return_value = false
 
 [sub_resource type="GDScript" id="GDScript_gm4n6"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(node, selection_arg, token, from: Node2D):
+func run(node, token, priority, selection_arg, from: Node2D):
 	return true
 "
 
 [sub_resource type="Resource" id="Resource_o5r54"]
 script = ExtResource("6_yqc71")
 nested_script = SubResource("GDScript_gm4n6")
-argument_names = ["node", "selection_arg", "token", "from"]
+argument_names = ["node", "token", "priority", "selection_arg", "from"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_6psaf"]
@@ -1797,7 +1797,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+func run(arg0, arg1, arg2, arg3, from, to):
 	return null
 "
 
@@ -1811,7 +1811,7 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+func run(arg0, arg1, arg2, arg3, from, to):
 	return {'only_below': arg0}
 "
 
@@ -1850,7 +1850,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+func run(arg0, arg1, arg2, arg3, from, to):
 	return null
 "
 
@@ -1864,7 +1864,7 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+func run(arg0, arg1, arg2, arg3, from, to):
 	return {'only_below': arg0}
 "
 
@@ -1983,6 +1983,7 @@ offset_right = 452.0
 offset_bottom = 254.0
 
 [node name="PrototypingUIBehavior" type="Node2D" parent="PrototypingUIPanel"]
+position = Vector2(141.421, -141.421)
 script = ExtResource("8_epnhk")
 
 [node name="CatapultStrength" type="Node2D" parent="PrototypingUIPanel/PrototypingUIBehavior"]
@@ -2186,8 +2187,9 @@ script = ExtResource("15_nalm8")
 only_below = null
 group = &"future_boards"
 clazz = null
-predicate_for_node = null
+predicate = null
 proximity = null
+priority_strategy = "distance"
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_r2jw4")]
 
@@ -2197,8 +2199,9 @@ script = ExtResource("15_nalm8")
 only_below = null
 group = &"future_pigs"
 clazz = null
-predicate_for_node = null
+predicate = null
 proximity = null
+priority_strategy = "distance"
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_0u6ax")]
 
@@ -2208,8 +2211,9 @@ script = ExtResource("15_nalm8")
 only_below = null
 group = &"future_birds"
 clazz = null
-predicate_for_node = null
+predicate = null
 proximity = null
+priority_strategy = "distance"
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_f3nh8")]
 
@@ -2219,8 +2223,9 @@ script = ExtResource("15_nalm8")
 only_below = null
 group = &"birds"
 clazz = null
-predicate_for_node = null
+predicate = null
 proximity = null
+priority_strategy = "distance"
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_5rifb")]
 
@@ -2230,8 +2235,9 @@ script = ExtResource("15_nalm8")
 only_below = null
 group = &"pigs"
 clazz = null
-predicate_for_node = null
+predicate = null
 proximity = null
+priority_strategy = "distance"
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_j2ejd")]
 
@@ -2279,8 +2285,9 @@ script = ExtResource("15_nalm8")
 only_below = null
 group = &"enemies"
 clazz = null
-predicate_for_node = null
+predicate = null
 proximity = null
+priority_strategy = "distance"
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_6psaf")]
 
@@ -2290,8 +2297,9 @@ script = ExtResource("15_nalm8")
 only_below = null
 group = &"birds"
 clazz = null
-predicate_for_node = null
+predicate = null
 proximity = null
+priority_strategy = "distance"
 max_results = null
 metadata/pronto_connections = [SubResource("Resource_6psaf")]
 

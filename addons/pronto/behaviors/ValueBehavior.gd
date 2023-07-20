@@ -178,7 +178,7 @@ func _init():
 			print(info)			
 
 class DropPropertyPrompt extends ColorRect:
-	var editor_interface: EditorInterface
+	var editor_interface#: EditorInterface (does not work in export)
 	
 	func _init(editor_interface):
 		for info in get_property_list():
