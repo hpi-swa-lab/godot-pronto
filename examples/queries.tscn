@@ -1,0 +1,384 @@
+[gd_scene load_steps=46 format=3 uid="uid://hsxqv0cbxysd"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/QueryBehavior.gd" id="1_hqyk0"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_127gt"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_tx4cr"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="4_iqhpg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="5_o3jgh"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="6_gsepr"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="7_236uf"]
+
+[sub_resource type="GDScript" id="GDScript_sb3do"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node: Node2D):
+	return node.z_index
+"
+
+[sub_resource type="Resource" id="Resource_soy5y"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_sb3do")
+argument_names = ["node"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ep2s6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node, token, priority, selection_arg, from):
+	print(\"found\", node, token, priority, selection_arg)
+"
+
+[sub_resource type="Resource" id="Resource_dfvrp"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_ep2s6")
+argument_names = ["node", "token", "priority", "selection_arg", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_f0a25"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node, token, priority, selection_arg, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_mwxbu"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_f0a25")
+argument_names = ["node", "token", "priority", "selection_arg", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ptrkj"]
+script = ExtResource("3_tx4cr")
+signal_name = "found"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_mwxbu")
+expression = SubResource("Resource_dfvrp")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_cscym"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(nodes, token, priorities, selection_args, from):
+	print(\"found all\", nodes, token, priorities, selection_args)
+"
+
+[sub_resource type="Resource" id="Resource_vsimj"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_cscym")
+argument_names = ["nodes", "token", "priorities", "selection_args", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_5fkxd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(nodes, token, priorities, selection_args, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_df4h1"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_5fkxd")
+argument_names = ["nodes", "token", "priorities", "selection_args", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jlb0q"]
+script = ExtResource("3_tx4cr")
+signal_name = "found_all"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_df4h1")
+expression = SubResource("Resource_vsimj")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_61he5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node, token, priority, selection_arg, from):
+	node.get_node('PlaceholderBehavior').flash(Color.RED.lerp(Color.WHITE, 1 - (selection_arg if selection_arg != null else 1)))
+"
+
+[sub_resource type="Resource" id="Resource_be0lk"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_61he5")
+argument_names = ["node", "token", "priority", "selection_arg", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_1mpt3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(node, token, priority, selection_arg, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2vyh6"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_1mpt3")
+argument_names = ["node", "token", "priority", "selection_arg", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3ins5"]
+script = ExtResource("3_tx4cr")
+signal_name = "found"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_2vyh6")
+expression = SubResource("Resource_be0lk")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_gf485"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(token, from: Node2D):
+	print(\"found none!\", token)
+"
+
+[sub_resource type="Resource" id="Resource_coy65"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_gf485")
+argument_names = ["token", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_3c6k0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(token, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_b4gfg"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_3c6k0")
+argument_names = ["token", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_o20qn"]
+script = ExtResource("3_tx4cr")
+signal_name = "found_none"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_b4gfg")
+expression = SubResource("Resource_coy65")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_hnnpx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return \"token\"
+"
+
+[sub_resource type="Resource" id="Resource_36mnj"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_hnnpx")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_yevu5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_j10xr"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_yevu5")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_emdta"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_y6pp6"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_emdta")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ibvx1"]
+script = ExtResource("3_tx4cr")
+signal_name = "just_down"
+to = NodePath("../QueryBehavior")
+more_references = []
+invoke = "query"
+arguments = [SubResource("Resource_36mnj"), SubResource("Resource_j10xr")]
+only_if = SubResource("Resource_y6pp6")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_2gs7m"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return \"b\"
+"
+
+[sub_resource type="Resource" id="Resource_puwf8"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_2gs7m")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_uc4l1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return {\"max_results\": 1}
+"
+
+[sub_resource type="Resource" id="Resource_pkypf"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_uc4l1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_o8g1v"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_5cnxj"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_o8g1v")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_5mecr"]
+script = ExtResource("3_tx4cr")
+signal_name = "just_down"
+to = NodePath("../QueryBehavior")
+more_references = []
+invoke = "query"
+arguments = [SubResource("Resource_puwf8"), SubResource("Resource_pkypf")]
+only_if = SubResource("Resource_5cnxj")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_elmt4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_4jqtb"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_elmt4")
+argument_names = []
+return_value = true
+
+[node name="test" type="Node2D"]
+
+[node name="QueryBehavior" type="Node2D" parent="."]
+position = Vector2(329, 162)
+script = ExtResource("1_hqyk0")
+only_below = null
+group = &"odd"
+clazz = &"CharacterBody2D"
+predicate = null
+proximity = &"radius"
+radius = 504.468
+priority_strategy = &"custom"
+priority_script = SubResource("Resource_soy5y")
+max_results = 2
+selection_strategy = &"random"
+random_weight_strategy = &"inverse_distance"
+metadata/pronto_connections = [SubResource("Resource_ptrkj"), SubResource("Resource_jlb0q"), SubResource("Resource_3ins5"), SubResource("Resource_o20qn")]
+
+[node name="KeyBehavior" type="Node2D" parent="."]
+position = Vector2(244, 60)
+script = ExtResource("4_iqhpg")
+key = "A"
+metadata/pronto_connections = [SubResource("Resource_ibvx1")]
+
+[node name="KeyBehavior2" type="Node2D" parent="."]
+position = Vector2(474, 50)
+script = ExtResource("4_iqhpg")
+key = "B"
+metadata/pronto_connections = [SubResource("Resource_5mecr")]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["odd"]]
+position = Vector2(423, 546)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("5_o3jgh")
+label = "1"
+placeholder_size = Vector2(40, 40)
+sprite_texture = ExtResource("6_gsepr")
+
+[node name="CharacterBody2D2" type="CharacterBody2D" parent="." groups=["even"]]
+position = Vector2(171, 360)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="CharacterBody2D2"]
+script = ExtResource("5_o3jgh")
+label = "2"
+placeholder_size = Vector2(40, 40)
+sprite_texture = ExtResource("6_gsepr")
+
+[node name="CharacterBody2D3" type="CharacterBody2D" parent="." groups=["odd"]]
+position = Vector2(255, 165)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="CharacterBody2D3"]
+script = ExtResource("5_o3jgh")
+label = "3"
+placeholder_size = Vector2(40, 40)
+sprite_texture = ExtResource("6_gsepr")
+
+[node name="CharacterBody2D4" type="CharacterBody2D" parent="." groups=["even"]]
+position = Vector2(1019, 564)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="CharacterBody2D4"]
+script = ExtResource("5_o3jgh")
+label = "4"
+placeholder_size = Vector2(40, 40)
+sprite_texture = ExtResource("6_gsepr")
+
+[node name="CharacterBody2D5" type="CharacterBody2D" parent="." groups=["odd"]]
+z_index = -1
+position = Vector2(666, 271)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="CharacterBody2D5"]
+script = ExtResource("5_o3jgh")
+label = "5"
+placeholder_size = Vector2(40, 40)
+sprite_texture = ExtResource("6_gsepr")
+
+[node name="CodeBehavior" type="Node2D" parent="."]
+position = Vector2(105, 489)
+script = ExtResource("7_236uf")
+evaluate = SubResource("Resource_4jqtb")
