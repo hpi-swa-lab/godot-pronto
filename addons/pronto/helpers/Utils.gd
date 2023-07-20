@@ -249,7 +249,9 @@ static func all_used_groups(from, root = null, include_internal = false):
 	groups = remove_duplicates(groups)
 	if not include_internal:
 		groups = groups.filter(func (group): return not group.begins_with('_'))
-	groups.sort()
+	# cannot sort StringNames (https://github.com/godotengine/godot/issues/58878)
+	#groups.sort()
+	groups.sort_custom(func (a, b): return String(a) < String(b))
 	return groups
 
 static func fix_minimum_size(n: Control):
