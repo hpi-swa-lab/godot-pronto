@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://hsxqv0cbxysd"]
+[gd_scene load_steps=59 format=3 uid="uid://hsxqv0cbxysd"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/QueryBehavior.gd" id="1_hqyk0"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_127gt"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="5_o3jgh"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="6_gsepr"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="7_236uf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SignalBehavior.gd" id="8_qruor"]
 
 [sub_resource type="GDScript" id="GDScript_sb3do"]
 script/source = "@tool
@@ -288,6 +289,59 @@ only_if = SubResource("Resource_5cnxj")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_11m7w"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return from
+"
+
+[sub_resource type="Resource" id="Resource_n7jkf"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_11m7w")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_uepxs"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 42
+"
+
+[sub_resource type="Resource" id="Resource_3f08y"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_uepxs")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_nntfj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_edr2q"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_nntfj")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rv8dx"]
+script = ExtResource("3_tx4cr")
+signal_name = "just_down"
+to = NodePath("../SignalBehavior")
+more_references = []
+invoke = "trigger2"
+arguments = [SubResource("Resource_n7jkf"), SubResource("Resource_3f08y")]
+only_if = SubResource("Resource_edr2q")
+deferred = false
+enabled = true
+
 [sub_resource type="GDScript" id="GDScript_elmt4"]
 script/source = "@tool
 extends U
@@ -301,6 +355,46 @@ script = ExtResource("2_127gt")
 nested_script = SubResource("GDScript_elmt4")
 argument_names = []
 return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hk3jx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D):
+	print(\"triggered\", arg0, arg1)
+"
+
+[sub_resource type="Resource" id="Resource_23ok3"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_hk3jx")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_e4jrr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_kbpcy"]
+script = ExtResource("2_127gt")
+nested_script = SubResource("GDScript_e4jrr")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7qiiy"]
+script = ExtResource("3_tx4cr")
+signal_name = "triggered"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_kbpcy")
+expression = SubResource("Resource_23ok3")
+deferred = false
+enabled = true
 
 [node name="test" type="Node2D"]
 
@@ -330,7 +424,7 @@ metadata/pronto_connections = [SubResource("Resource_ibvx1")]
 position = Vector2(474, 50)
 script = ExtResource("4_iqhpg")
 key = "B"
-metadata/pronto_connections = [SubResource("Resource_5mecr")]
+metadata/pronto_connections = [SubResource("Resource_5mecr"), SubResource("Resource_rv8dx")]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["odd"]]
 position = Vector2(423, 546)
@@ -382,3 +476,8 @@ sprite_texture = ExtResource("6_gsepr")
 position = Vector2(105, 489)
 script = ExtResource("7_236uf")
 evaluate = SubResource("Resource_4jqtb")
+
+[node name="SignalBehavior" type="Node2D" parent="."]
+position = Vector2(830, 92)
+script = ExtResource("8_qruor")
+metadata/pronto_connections = [SubResource("Resource_7qiiy")]

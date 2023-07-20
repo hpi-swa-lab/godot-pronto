@@ -2,6 +2,10 @@
 #thumb("Search")
 extends Behavior
 class_name QueryBehavior
+## Searches for nodes in the scene and emits signals for results.
+## Properties allow to filter, sort, and limit results.
+## All properties can be overridden through the [code]parameters[/code] argument of the [code]query()[/code] method.
+## Can be used for tasks such as destroying all enemies in a certain radius, infecting a random player, or finding the nearest health pack.
 
 
 ## Emitted for each node found, ordered according to the priority strategy.
@@ -64,7 +68,7 @@ var shapes_info:
 ## Optional script to filter nodes. Has access to a [code]node[/code] argument and must return a boolean.
 var predicate = null  # Optional[ConnectionScript]
 
-## Strategy for ordering found nodes. Optional.
+## Strategy for ordering found nodes (ascending). Optional.
 var priority_strategy = 'distance':  # Optional[Union['distance', 'custom']]
 	set(v):
 		if priority_strategy == v:
@@ -423,9 +427,3 @@ func selected():
 func deselected():
 	super.deselected()
 	queue_redraw()
-
-
-# TODOS
-# - create example
-# - comment signals + document new behaviors in readme
-# - changelog + video

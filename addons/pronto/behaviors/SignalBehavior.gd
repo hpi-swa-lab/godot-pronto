@@ -2,8 +2,11 @@
 #thumb("Signals")
 extends Behavior
 class_name SignalBehavior
+## Forwards signals when triggered, optionally with arguments.
+## Might be useful for abstraction/encapsulation of lower-level signals, signal renaming, or logical OR-gating of signals.
 
 
+## If enabled, the signal will be forwarded when triggered.
 @export var enabled = true
 
 signal triggered(arg0, arg1, arg2, arg3)
