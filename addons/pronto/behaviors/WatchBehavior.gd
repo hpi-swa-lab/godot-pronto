@@ -22,7 +22,7 @@ func _process(delta):
 	if not Engine.is_editor_hint():
 		var val = str(evaluate.run([], self))
 		if _last != val:
-			EngineDebugger.send_message("pronto:watch_put", [get_path(), val])
+			if EngineDebugger.is_active(): EngineDebugger.send_message("pronto:watch_put", [get_path(), val])
 			_last = val
 
 func _report_game_value(val):

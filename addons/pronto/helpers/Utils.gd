@@ -176,7 +176,8 @@ static func build_class_row(c: StringName, ref: Node):
 	row.add_child(label)
 	return row
 
-static func commit_undoable(undo_redo: EditorUndoRedoManager, title: String, object: Object, props: Dictionary, action = null):
+# undo_redo: EditorUndoRedoManager (cant annotate or it will crash during export)
+static func commit_undoable(undo_redo, title: String, object: Object, props: Dictionary, action = null):
 	if not props.keys().any(func (prop): return props[prop] != object.get(prop)):
 		return
 	undo_redo.create_action(title)

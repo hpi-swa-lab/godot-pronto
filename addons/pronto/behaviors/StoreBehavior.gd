@@ -31,7 +31,7 @@ func put(prop: String, value: Variant):
 	if global:
 		G._put(prop, value)
 	changed.emit(prop, value)
-	EngineDebugger.send_message("pronto:store_put", [get_path(), prop, value])
+	if EngineDebugger.is_active(): EngineDebugger.send_message("pronto:store_put", [get_path(), prop, value])
 
 func at(prop: String, default = null):
 	return get_meta(prop, default)
