@@ -45,9 +45,26 @@
   - `found_none(token)`: Emitted if no results were found.
   
   Trigger the query through `query([token, [parameters]])`. Through `parameters`, any property of the query can be overridden dynamically. For example, you can change the search radius based on the player's current health.
+  
+  ### Known Limitations
+  
+  - Cannot filter for custom Pronto classes (i.e., behaviors) because they are not registered in the ClassDB. See also `Utils.get_specific_class_name()` for a similar issue.
+  
+  ### Future Work
+  
+  - **Query shapes:** Allow to specify a custom shape for the query, e.g., a rectangle or a polygon. Users could either add shapeful child nodes to a query behavior or specify shapes through its handles or its inspector. At the same time, the query behavior should also honor the exact shape of the found nodes.
 
-## Future Work
+    We already sketched the framework for this but did not implement it yet because we identified some technical depth related to behavior-managed shapes. At the moment, placeholders and spawners already support custom shapes and we didn't want to duplicate their logic for maintaing these shapes and configuring through the inspector or editor handles a third time. Maybe we can extract this before, e.g., to `Behavior`, a new `HandleProvider`, or a new `ShapeInspectorPlugin`? Furthermore, configuring generic shapes in the spawner seemed currently broken for us (changes to their geometry are not accepted and the console keeps spitting out DNUs).
 
-- **Query shapes:** Allow to specify a custom shape for the query, e.g., a rectangle or a polygon. Users could either add shapeful child nodes to a query behavior or specify shapes through its handles or its inspector. At the same time, the query behavior should also honor the exact shape of the found nodes.
+## Miscellaneous
 
-  We already sketched the framework for this but did not implement it yet because we identified some technical depth related to behavior-managed shapes. At the moment, placeholders and spawners already support custom shapes and we didn't want to duplicate their logic for maintaing these shapes and configuring through the inspector or editor handles a third time. Maybe we can extract this before, e.g., to `Behavior`, a new `HandleProvider`, or a new `ShapeInspectorPlugin`? Furthermore, configuring generic shapes in the spawner seemed currently broken for us (changes to their geometry are not accepted and the console keeps spitting out DNUs).
+- Added an icon for the `State` behavior.
+
+## API Changes
+
+- New `Behavior.selected()` is called when the user selects the behavior in the editor.
+- Behaviors can request an `ExpressionEditor` for a property (to edit a script in the inspector) by overriding `Behavior.wants_expression_inspector()` instead of hard-coding them. They can also provide a custom default script through `Behavior.initialize_connection_script()`.
+
+## Documentation
+
+- Wrote an example "pronto patterns" as a proposal for a better documentation format of behaviors ([#141](https://github.com/hpi-swa-lab/godot-pronto/issues/141)).
