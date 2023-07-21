@@ -1,15 +1,13 @@
-[gd_scene load_steps=36 format=3 uid="uid://dbhx1tsbjadw3"]
+[gd_scene load_steps=34 format=3 uid="uid://dbhx1tsbjadw3"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_1p2uu"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_rtpdu"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="3_x22k0"]
-[ext_resource type="Texture2D" uid="uid://bxu6dcteoqqjd" path="res://examples/homer.png" id="4_pe1do"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/DragBehavior.gd" id="5_c3ke6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="6_luk5r"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="7_rn45d"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="8_uj4bn"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="9_mm2io"]
-[ext_resource type="AudioStream" uid="uid://de838quoi6u77" path="res://examples/doh.mp3" id="10_0fhna"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="11_6wl7d"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="12_cpbqy"]
 
@@ -73,7 +71,7 @@ enabled = false
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D):
+func run(other, direction, from):
 	var source := from.get_parent() as RigidBody2D
 	var copy1 := source.duplicate()
 	var copy2 := source.duplicate()
@@ -262,7 +260,7 @@ script = ExtResource("1_1p2uu")
 color = Color(1, 1, 1, 0)
 placeholder_size = Vector2(100, 130)
 use_sprite = true
-sprite_texture = ExtResource("4_pe1do")
+sprite_texture = ExtResource("2_rtpdu")
 
 [node name="DragBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
 position = Vector2(-723, 130)
@@ -283,7 +281,6 @@ script = ExtResource("3_x22k0")
 
 [node name="Player" type="AudioStreamPlayer2D" parent="PlayerSpawner"]
 unique_name_in_owner = true
-stream = ExtResource("10_0fhna")
 
 [node name="ClockBehavior" type="Node2D" parent="PlayerSpawner/Player"]
 script = ExtResource("11_6wl7d")

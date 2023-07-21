@@ -24,8 +24,8 @@ signal exited(target_state_name: String)
 		active = value
 		reload_icon()
 
-var _active_texture: ImageTexture = ImageTexture.create_from_image(Image.load_from_file("res://addons/pronto/icons/StateActive.svg"))
-var _inactive_texture: ImageTexture  = ImageTexture.create_from_image(Image.load_from_file("res://addons/pronto/icons/StateInactive.svg"))
+var _active_texture = load("res://addons/pronto/icons/StateActive.svg")
+var _inactive_texture = load("res://addons/pronto/icons/StateInactive.svg")
 
 ## Function that tells the state to become active. Works only if the state is not active yet.
 func enter():
