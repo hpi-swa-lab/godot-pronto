@@ -2,7 +2,7 @@ extends EditorInspectorPlugin
 class_name ExpressionInspector
 
 func _can_handle(object):
-	return ('wants_expression_inspector' in object
+	return (object is Node and 'wants_expression_inspector' in object
 		or object is Node and object.get_child_count() > 0 and object.get_child(0) is BindBehavior)
 
 func _parse_property(object, type, name, hint_type, hint_string, usage_flags, wide):
