@@ -82,6 +82,25 @@ var _default_progress_gradient = Gradient.new()
 		progress_gradient.changed.connect(queue_redraw)
 		queue_redraw()
 
+@export_category("Invulnerability")
+
+## If invulnerable the player cannot take damage via the [code]damage()[/code] method. [br]
+## However, [code]set_health()[/code] will still work!
+@export var invulnerable = false:
+	set(v):
+		invulnerable = v
+		queue_redraw()
+
+## If [i]false[/i], the player will not heal with [code]heal()[/code] or [code]heal_full()[/code] when invulnerable. [br]
+## If [i]true[/i], the player will heal as usual even when he is invulnerable.
+@export var allow_healing_when_invulnerable = false
+
+
+@export var invulnerability_color = Color.GOLDENROD:
+	set(color):
+		invulnerability_color = color
+		queue_redraw()
+
 ## The height and width of the health bar
 var size: Vector2:
 	get:
@@ -98,14 +117,17 @@ func _init():
 
 ## Reduces the current health value by the given [code]amount[/code].
 func damage(amount):
+	if (invulnerable): return
 	set_health(current - amount)
 
 ## Increases the current health value by the given [code]amount[/code].
 func heal(amount):
+	if (invulnerable and not allow_healing_when_invulnerable): return
 	set_health(current + amount)
 
 ## Sets the current health value to max.
 func heal_full():
+	if (invulnerable and not allow_healing_when_invulnerable): return
 	set_health(max)
 
 ## Sets the current health value to the given [code]value[/code].
@@ -132,6 +154,8 @@ func _get_color():
 func _draw():
 	super._draw()
 	
+	if (invulnerable):
+		draw_rect(Rect2((healthbar_size + Vector2(1, 1)) / -2, healthbar_size + Vector2(1, 1)), invulnerability_color, false, 0.5)
 	draw_rect(Rect2(healthbar_size / -2, healthbar_size), background_color, true)
 	var inner_size = healthbar_size - Vector2(2, 2)
 	draw_rect(Rect2(inner_size / -2, inner_size * Vector2(current/float(max), 1)), _get_color(), true)
