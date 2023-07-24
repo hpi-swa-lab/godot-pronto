@@ -106,12 +106,14 @@ func _ready():
 	super._ready()
 	if use_sprite:
 		_init_sprite()
-		self.add_child(sprite, false, INTERNAL_MODE_FRONT)
+		if sprite.get_parent() != self:
+			self.add_child(sprite, false, INTERNAL_MODE_FRONT)
 		
 func _editor_reload():
 	if Engine.is_editor_hint() and is_active_scene():
-		if sprite.get_parent():
-			remove_child(sprite)
+		for child in get_children(true):
+			if child is Sprite2D && child != sprite:
+				child.queue_free()
 		_ready()
 	queue_redraw()
 
