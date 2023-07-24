@@ -56,6 +56,7 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 ## Search through a library of textures to choose your sprite.
 @export var sprite_library: Texture2D:
 	set(v):
+		if v == null: return
 		sprite_texture = v
 		use_sprite = true
 
