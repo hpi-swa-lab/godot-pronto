@@ -77,10 +77,18 @@ class Line:
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, lines: Lines):
 		var text = text_fn.call(flipped)
 		var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
+		var text_position = Vector2(-size.x - 24, 0) if flipped else Vector2(0, 0)
+		
+		c.draw_multiline_string_outline(font,
+			text_position,
+			text,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, 1, Color.BLACK)
+			
 		c.draw_multiline_string(font,
-			Vector2(-size.x - 24, 0) if flipped else Vector2(0, 0),
+			text_position,
 			text,
 			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, current_color(lines))
+		
 	
 	func draw_line(c: CanvasItem, begin: Vector2, end: Vector2, color: Color, width: float):
 		c.draw_line(begin, end, color, width, true)
@@ -133,8 +141,15 @@ class CombinedLine extends Line:
 			var text = line.text_fn.call(flipped)
 			var color = line.current_color(_lines)
 			var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
+			var text_position = Vector2(-size.x - 24, y) if flipped else Vector2(0, y)
+
+			c.draw_multiline_string_outline(font,
+				text_position,
+				text,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, 1, Color.BLACK)
+
 			c.draw_multiline_string(font,
-				Vector2(-size.x - 24, y) if flipped else Vector2(0, y),
+				text_position,
 				text,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color)
 			y += size.y
@@ -146,7 +161,14 @@ class BottomText extends Line:
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, lines: Lines):
 		var text = text_fn.call(flipped)
 		var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
+		var text_position = Vector2(-size.x/2, 0)
+
+		c.draw_multiline_string_outline(font,
+			text_position,
+			text,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, 1, Color.BLACK)
+
 		c.draw_multiline_string(font,
-			Vector2(-size.x/2, 0),
+			text_position,
 			text,
 			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, current_color(lines))
