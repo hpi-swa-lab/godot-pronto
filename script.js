@@ -7,51 +7,65 @@ requestGames();
 /**
  * Requests the branch where the games are deployed in order to display the games that are present.
  */
-function requestGames() {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState !== 4) return;
-    if (this.status == 200) {
-      const response = JSON.parse(this.responseText);
-      const files = response.tree;
-      files.filter(file => file.type == "tree").forEach(file => loadGameData(file.path));
+async function requestGames() {
+  try {
+    const response = await fetch(`https://api.github.com/repos/${USERNAME}/${REPOSITORY}/git/trees/${BRANCH}`);
+    if (response.ok) {
+      const json = await response.json();
+      const files = json.tree;
+      const promises = files.filter(file => file.type === "tree").map(file => loadGameData(file.path));
+      const gameDataArray = await Promise.all(promises);
+      createGames(gameDataArray);
     } else {
-      console.error("ERROR: Cannot receive the list of games. Error message:", this.responseText);
+      console.error("ERROR: Cannot receive the list of games. Error message:", response.statusText);
     }
-  };
-  xmlhttp.open("GET", `https://api.github.com/repos/${USERNAME}/${REPOSITORY}/git/trees/${BRANCH}`, true);
-  xmlhttp.send();
+  } catch (error) {
+    console.error("ERROR: An error occurred while fetching the games list.", error);
+  }
 }
 
 /**
- * Loads the game_info.json file for the game and creates a container for the game.
- * If no game_info.json is provided, it will still list the game while also printing a warning in the console.
+ * Loads the game_info.json file for the game and returns the game data.
+ * If no game_info.json is provided, it will return an object with title and playLink.
  */
-function loadGameData(gamePath) {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState !== 4) return;
-    let gameInfo = {
-      title: gamePath,
-      playLink: gamePath
-    }
-    if (this.status == 200) {
-      const json = JSON.parse(this.responseText);
-      if (json.title) { // Check if the json contains the attribute title. Otherwise it cannot be valid
-        gameInfo = json;
-      } else {
-        console.warn(`JSON for game ${gamePath} is not valid because it does not contain a title:`, json);
+async function loadGameData(gamePath) {
+  try {
+    const response = await fetch(`https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/${gamePath}/game_info.json`);
+    if (response.ok) {
+      const gameInfo = await response.json();
+      if (!gameInfo.title) {
+        console.warn(`JSON for game ${gamePath} is not valid because it does not contain a title:`, gameInfo);
+        return {
+          title: gamePath,
+          playLink: gamePath,
+        };
       }
+      if (!gameInfo.playLink) {
+        gameInfo.playLink = gamePath;
+      }
+      return gameInfo;
     } else {
-      console.warn(`No game info found for ${gamePath}. Please check if you have provided a "game_info.json" file.`)
+      console.warn(`No game info found for ${gamePath}. Please check if you have provided a "game_info.json" file.`);
+      return {
+        title: gamePath,
+        playLink: gamePath,
+      };
     }
-    if (!gameInfo.playLink) { // Make sure playLink is set.
-      gameInfo.playLink = gamePath;
-    }
-    createGame(gameInfo);
-  };
-  xmlhttp.open("GET", `https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/${gamePath}/game_info.json`, true);
-  xmlhttp.send();
+  } catch (error) {
+    console.error(`ERROR: An error occurred while fetching game data for ${gamePath}.`, error);
+    return {
+      title: gamePath,
+      playLink: gamePath,
+    };
+  }
+}
+
+/**
+ * Displays games based on the provided array of game data, sorted by title.
+ */
+function createGames(games) {
+  const sortedGames = games.sort((a, b) => a.title.localeCompare(b.title));
+  sortedGames.forEach(gameInfo => createGame(gameInfo));
 }
 
 /**
@@ -68,7 +82,7 @@ function createGame(gameInfo) {
   const gameElement = document.createElement('div');
   gameElement.className = 'game';
 
-  if(gameInfo.thumbnailType) {
+  if (gameInfo.thumbnailType) {
     const thumbnail = document.createElement('img');
     thumbnail.src = `https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/i6w1-jf-geometry-dash/thumbnail.${gameInfo.thumbnailType}`;
     thumbnail.alt = gameInfo.title;

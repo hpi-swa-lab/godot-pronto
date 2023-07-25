@@ -25,6 +25,13 @@ h1 {
   padding: 10px;
   text-align: center;
   background-color: #f9f9f9;
+  transition: 0.3s ease;
+  box-shadow: 3px 5px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game:hover {
+  transform: translateY(-5px);
+  box-shadow: 3px 7px 8px rgba(0, 0, 0, 0.2);
 }
 
 .game img {
