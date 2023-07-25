@@ -6,14 +6,14 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="4_hafn3"]
 [ext_resource type="Gradient" uid="uid://db12fs3w440bn" path="res://prototypes/i6w1-fishing/sea_grad.tres" id="4_rci6e"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="5_cml4c"]
-[ext_resource type="Texture2D" uid="uid://yl2qr2fivwmi" path="res://prototypes/i6w1-fishing/fishing_game_assets/1 Fisherman/Fisherman_idle.png" id="5_di3y5"]
-[ext_resource type="Texture2D" uid="uid://dnv1lkmwgvofo" path="res://prototypes/i6w1-fishing/fishing_game_assets/1 Fisherman/Fisherman_fish.png" id="5_jojbm"]
-[ext_resource type="Texture2D" uid="uid://d08qy8h016wx5" path="res://prototypes/i6w1-fishing/fishing_game_assets/1 Fisherman/Fisherman_hook.png" id="6_efjlq"]
-[ext_resource type="Texture2D" uid="uid://2knkpyfequ30" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Boat.png" id="6_uk8ag"]
 [ext_resource type="Texture2D" uid="uid://dewmeepae6n7n" path="res://prototypes/i6w1-fishing/custom_assets/WoodPlank.png" id="9_ep2as"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StateBehavior.gd" id="9_g4jyv"]
+[ext_resource type="Texture2D" uid="uid://dnv1lkmwgvofo" path="res://prototypes/i6w1-fishing/fishing_game_assets/1_Fisherman/Fisherman_fish.png" id="9_wh6nq"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="10_0cugf"]
+[ext_resource type="Texture2D" uid="uid://d08qy8h016wx5" path="res://prototypes/i6w1-fishing/fishing_game_assets/1_Fisherman/Fisherman_hook.png" id="10_ktpi4"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="11_5t5d2"]
+[ext_resource type="Texture2D" uid="uid://yl2qr2fivwmi" path="res://prototypes/i6w1-fishing/fishing_game_assets/1_Fisherman/Fisherman_idle.png" id="11_de4sb"]
+[ext_resource type="Texture2D" uid="uid://2knkpyfequ30" path="res://prototypes/i6w1-fishing/fishing_game_assets/3_Objects/Boat.png" id="12_engru"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="13_yjnbd"]
 [ext_resource type="Script" path="res://prototypes/i6w1-fishing/custom_cam.gd" id="14_hcfxl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="15_o0esm"]
@@ -23,11 +23,11 @@
 [ext_resource type="Script" path="res://prototypes/i6w1-fishing/start_button.gd" id="18_bmya0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="18_uibmu"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="21_xr5y2"]
-[ext_resource type="Texture2D" uid="uid://cyc4bt8i31fuy" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/1.png" id="22_0ol37"]
-[ext_resource type="Texture2D" uid="uid://b05n81e5lmw6r" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/2.png" id="22_xayr0"]
-[ext_resource type="Texture2D" uid="uid://yd82tj6grecw" path="res://prototypes/i6w1-fishing/fishing_game_assets/3 Objects/Catch/7.png" id="24_8womo"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="25_ipxi6"]
+[ext_resource type="Texture2D" uid="uid://b05n81e5lmw6r" path="res://prototypes/i6w1-fishing/fishing_game_assets/3_Objects/Catch/2.png" id="26_b738d"]
 [ext_resource type="Script" path="res://prototypes/i6w1-fishing/restart_button.gd" id="27_1enhc"]
+[ext_resource type="Texture2D" uid="uid://cyc4bt8i31fuy" path="res://prototypes/i6w1-fishing/fishing_game_assets/3_Objects/Catch/1.png" id="27_qunxy"]
+[ext_resource type="Texture2D" uid="uid://yd82tj6grecw" path="res://prototypes/i6w1-fishing/fishing_game_assets/3_Objects/Catch/7.png" id="28_38ra3"]
 [ext_resource type="Texture2D" uid="uid://bt1hyrtc7umpr" path="res://prototypes/i6w1-fishing/custom_assets/StartButton.png" id="28_a8oi4"]
 [ext_resource type="Texture2D" uid="uid://dey46hue2lsut" path="res://prototypes/i6w1-fishing/custom_assets/CurrentScore.png" id="29_8uxa7"]
 [ext_resource type="Texture2D" uid="uid://b8hswushy00tc" path="res://prototypes/i6w1-fishing/custom_assets/MenuButton.png" id="31_hcopy"]
@@ -171,59 +171,59 @@ deferred = false
 enabled = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c5bqv"]
-atlas = ExtResource("5_jojbm")
+atlas = ExtResource("9_wh6nq")
 region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hsupk"]
-atlas = ExtResource("5_jojbm")
+atlas = ExtResource("9_wh6nq")
 region = Rect2(48, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0d1jo"]
-atlas = ExtResource("5_jojbm")
+atlas = ExtResource("9_wh6nq")
 region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ts7cy"]
-atlas = ExtResource("5_jojbm")
+atlas = ExtResource("9_wh6nq")
 region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l3h8s"]
-atlas = ExtResource("6_efjlq")
+atlas = ExtResource("10_ktpi4")
 region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ck3g"]
-atlas = ExtResource("6_efjlq")
+atlas = ExtResource("10_ktpi4")
 region = Rect2(48, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uyscs"]
-atlas = ExtResource("6_efjlq")
+atlas = ExtResource("10_ktpi4")
 region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vxerj"]
-atlas = ExtResource("6_efjlq")
+atlas = ExtResource("10_ktpi4")
 region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ymyy"]
-atlas = ExtResource("6_efjlq")
+atlas = ExtResource("10_ktpi4")
 region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rsvhx"]
-atlas = ExtResource("6_efjlq")
+atlas = ExtResource("10_ktpi4")
 region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1hptk"]
-atlas = ExtResource("5_di3y5")
+atlas = ExtResource("11_de4sb")
 region = Rect2(48, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkb27"]
-atlas = ExtResource("5_di3y5")
+atlas = ExtResource("11_de4sb")
 region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h6nc"]
-atlas = ExtResource("5_di3y5")
+atlas = ExtResource("11_de4sb")
 region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_senss"]
-atlas = ExtResource("5_di3y5")
+atlas = ExtResource("11_de4sb")
 region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rjy1o"]
@@ -845,7 +845,7 @@ only_if = SubResource("Resource_1ydlc")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_flqxs"]
+[sub_resource type="Image" id="Image_0vhsn"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -855,14 +855,14 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_j8ov4"]
-image = SubResource("Image_flqxs")
+image = SubResource("Image_0vhsn")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_odsr1"]
-atlas = ExtResource("22_xayr0")
+atlas = ExtResource("26_b738d")
 region = Rect2(0, 0, 16, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l7x2e"]
-atlas = ExtResource("22_xayr0")
+atlas = ExtResource("26_b738d")
 region = Rect2(16, 0, 16, 12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rk1v0"]
@@ -975,11 +975,11 @@ deferred = false
 enabled = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tick6"]
-atlas = ExtResource("22_0ol37")
+atlas = ExtResource("27_qunxy")
 region = Rect2(0, 0, 12, 6)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_djito"]
-atlas = ExtResource("22_0ol37")
+atlas = ExtResource("27_qunxy")
 region = Rect2(12, 0, 12, 6)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_clq08"]
@@ -1093,11 +1093,11 @@ deferred = false
 enabled = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cdiwd"]
-atlas = ExtResource("24_8womo")
+atlas = ExtResource("28_38ra3")
 region = Rect2(0, 0, 30, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kevno"]
-atlas = ExtResource("24_8womo")
+atlas = ExtResource("28_38ra3")
 region = Rect2(30, 0, 30, 12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5l86j"]
@@ -1492,7 +1492,7 @@ speed_scale = 2.0
 [node name="Boat" type="Sprite2D" parent="."]
 position = Vector2(164, 151)
 scale = Vector2(2, 2)
-texture = ExtResource("6_uk8ag")
+texture = ExtResource("12_engru")
 
 [node name="STATE" type="Node2D" parent="."]
 position = Vector2(577, -77)
