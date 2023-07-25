@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://basvwkb2w2dy6"]
+[gd_scene load_steps=49 format=3 uid="uid://basvwkb2w2dy6"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_0yj3d"]
 [ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="1_grqfj"]
@@ -6,6 +6,123 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/DragBehavior.gd" id="3_qphj5"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_vxwt7"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_y8kh1"]
+
+[sub_resource type="GDScript" id="GDScript_pxjpg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, from: Node2D, to: Node2D):
+	return position
+"
+
+[sub_resource type="Resource" id="Resource_537bc"]
+script = ExtResource("5_vxwt7")
+nested_script = SubResource("GDScript_pxjpg")
+argument_names = ["position", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_47bko"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2g0nb"]
+script = ExtResource("5_vxwt7")
+nested_script = SubResource("GDScript_47bko")
+argument_names = ["position", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_m1an8"]
+script = ExtResource("6_y8kh1")
+signal_name = "picked"
+to = NodePath("../../Start")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_537bc")]
+only_if = SubResource("Resource_2g0nb")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ay75s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, from: Node2D, to: Node2D):
+	return position
+"
+
+[sub_resource type="Resource" id="Resource_snijt"]
+script = ExtResource("5_vxwt7")
+nested_script = SubResource("GDScript_ay75s")
+argument_names = ["position", "start_position", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_m15wp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_5tkyk"]
+script = ExtResource("5_vxwt7")
+nested_script = SubResource("GDScript_m15wp")
+argument_names = ["position", "start_position", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3vl3h"]
+script = ExtResource("6_y8kh1")
+signal_name = "dropped"
+to = NodePath("../../Stop")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_snijt")]
+only_if = SubResource("Resource_5tkyk")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_upkbd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, last_position, from: Node2D, to: Node2D):
+	return position
+"
+
+[sub_resource type="Resource" id="Resource_26wyh"]
+script = ExtResource("5_vxwt7")
+nested_script = SubResource("GDScript_upkbd")
+argument_names = ["position", "start_position", "last_position", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3pudl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, start_position, last_position, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_22bvv"]
+script = ExtResource("5_vxwt7")
+nested_script = SubResource("GDScript_3pudl")
+argument_names = ["position", "start_position", "last_position", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7j8ic"]
+script = ExtResource("6_y8kh1")
+signal_name = "dragged"
+to = NodePath("../../Drag")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_26wyh")]
+only_if = SubResource("Resource_22bvv")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_014sn"]
 script/source = "@tool
@@ -202,7 +319,7 @@ only_if = SubResource("Resource_1iqhn")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_cf4hm"]
+[sub_resource type="Image" id="Image_cqd5h"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -212,7 +329,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_7l04b"]
-image = SubResource("Image_cf4hm")
+image = SubResource("Image_cqd5h")
 
 [node name="Node2D" type="Node2D"]
 
@@ -226,15 +343,41 @@ texture = ExtResource("1_grqfj")
 [node name="DragBehavior" type="Node2D" parent="TextureRect"]
 position = Vector2(92, 177)
 script = ExtResource("3_qphj5")
+emit_mouse_position = null
 metadata/pronto_connections = []
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.2, 1, 0, 1)
 position = Vector2(181, 373)
 texture = ExtResource("1_grqfj")
 
 [node name="DragBehavior" type="Node2D" parent="Sprite2D"]
 position = Vector2(-64, 64)
 script = ExtResource("3_qphj5")
+metadata/pronto_connections = [SubResource("Resource_m1an8"), SubResource("Resource_3vl3h"), SubResource("Resource_7j8ic")]
+
+[node name="Drag" type="Node2D" parent="."]
+position = Vector2(395, 404)
+script = ExtResource("1_0yj3d")
+label = "Drag"
+placeholder_size = Vector2(16, 8)
+sprite_texture = ExtResource("2_sbvm2")
+
+[node name="Stop" type="Node2D" parent="."]
+position = Vector2(209, 515)
+script = ExtResource("1_0yj3d")
+label = "Stop"
+color = Color(1, 0.278431, 0.278431, 1)
+placeholder_size = Vector2(18, 16)
+sprite_texture = ExtResource("2_sbvm2")
+
+[node name="Start" type="Node2D" parent="."]
+position = Vector2(304, 518)
+script = ExtResource("1_0yj3d")
+label = "Start"
+color = Color(0.290196, 1, 0.278431, 1)
+placeholder_size = Vector2(18, 16)
+sprite_texture = ExtResource("2_sbvm2")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(442, 147)
@@ -252,11 +395,11 @@ script = ExtResource("1_0yj3d")
 label = "Placeholder"
 placeholder_size = Vector2(83, 70)
 keep_in_origin = false
-use_sprite = true
 sprite_texture = ExtResource("2_sbvm2")
 
 [node name="DragBehavior" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("3_qphj5")
+emit_mouse_position = null
 
 [node name="PlaceholderBehavior" type="Node2D" parent="."]
 position = Vector2(646, 408)
@@ -269,6 +412,7 @@ sprite_modulate = Color(0.835294, 0, 0.835294, 1)
 [node name="DragBehavior" type="Node2D" parent="PlaceholderBehavior"]
 position = Vector2(183, 136)
 script = ExtResource("3_qphj5")
+emit_mouse_position = null
 metadata/pronto_connections = [SubResource("Resource_luwbr"), SubResource("Resource_skgpo"), SubResource("Resource_g4yhs"), SubResource("Resource_8hx4v"), SubResource("Resource_1xagy")]
 
 [node name="PlaceholderBehavior2" type="Node2D" parent="."]
@@ -282,6 +426,7 @@ sprite_texture = SubResource("ImageTexture_7l04b")
 [node name="DragBehavior" type="Node2D" parent="PlaceholderBehavior2"]
 position = Vector2(183, 136)
 script = ExtResource("3_qphj5")
+emit_mouse_position = null
 metadata/pronto_connections = [SubResource("Resource_luwbr"), SubResource("Resource_skgpo"), SubResource("Resource_g4yhs"), SubResource("Resource_8hx4v"), SubResource("Resource_1xagy")]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
