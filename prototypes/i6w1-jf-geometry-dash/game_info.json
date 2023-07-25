@@ -1,5 +1,6 @@
 {
   "title": "Geometry Dash",
   "authors": ["Julian", "Finn"],
-  "description": "Remake of Geometry Dash in Pronto."
+  "description": "Remake of Geometry Dash in Pronto.",
+  "thumbnailType": "png"
 }
