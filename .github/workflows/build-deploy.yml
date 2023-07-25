@@ -34,7 +34,7 @@ jobs:
           godot --headless --export-release Web build/web/index.html
       - name: Godot Web Build
         run: |
-          ./scripts/export.sh ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}
+          ./export.sh ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
