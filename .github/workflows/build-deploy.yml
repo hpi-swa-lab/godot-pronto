@@ -34,7 +34,7 @@ jobs:
           godot --headless --export-release Web build/web/index.html
       - name: Godot Web Build
         run: |
-          ./export.sh ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}
+          ./scripts/export.sh ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
@@ -45,7 +45,7 @@ jobs:
           apt-get update && apt-get install -y rsync
       - name: Patch for Cross Origin Isolation and SharedArrayBuffer
         run: |
-          mv enable-threads.js build/web/enable-threads.js
+          mv scripts/enable-threads.js build/web/enable-threads.js
           cd build/web/
           sed -i 's|headers.set("Cross-Origin-Embedder-Policy", "credentialless")|headers.set("Cross-Origin-Embedder-Policy", "require-corp")|g'  enable-threads.js
           sed -i 's|<script src="index.js"></script>|<script src="enable-threads.js"></script><script src="index.js"></script>|g' index.html
