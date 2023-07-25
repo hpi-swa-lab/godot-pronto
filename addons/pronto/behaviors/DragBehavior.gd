@@ -39,9 +39,15 @@ signal dropped(position: Vector2, start_position: Vector2)
 ## of the parent started
 signal dragged(position: Vector2, start_position: Vector2, last_position: Vector2)
 
+
+## Mouse button mask for pick/drop. Only selected buttons can pick up the parent node.
 @export_flags("Left", "Right", "Middle") var button_mask := 1
 
-## Offset of parent node from mouse position
+## If true, picked, dropped and dragged events emit the mouse position instead of
+## the parent node's position.
+@export var emit_mouse_position = false;
+
+## Offset of parent node from mouse position.
 var _offset
 
 var last_position : Vector2
@@ -76,8 +82,8 @@ func _unhandled_input(event: InputEvent):
 			_offset = parent_position - event_position
 			_pick(event_position)
 		elif _offset != null:
-			_offset = null
 			_drop(event_position)
+			_offset = null
 		else:
 			return
 	else:
@@ -97,21 +103,27 @@ func _mouse_exit(position: Vector2):
 	mouse_exited.emit(position)
 
 func _pick(position: Vector2):
-	picked.emit(position)
-	start_position = position
-	last_position = position
+	start_position = event_position(position)
+	last_position = start_position
+	picked.emit(start_position)
 
 	if get_parent() is RigidBody2D:
 		get_parent().freeze = true
 	
 func _drag(position: Vector2):
+	var event_position = event_position(position)
 	get_parent().global_position = position + _offset
-	dragged.emit(position, start_position, last_position)
-	last_position = position
+	dragged.emit(event_position, start_position, last_position)
+	last_position = event_position
 	
 func _drop(position: Vector2):
-	dropped.emit(position, start_position)
-
 	if get_parent() is RigidBody2D:
 		get_parent().freeze = false
 		get_parent().apply_central_impulse(Input.get_last_mouse_velocity())
+	
+	dropped.emit(event_position(position), start_position)
+
+
+## Choose position based on emit_mouse_position
+func event_position(position: Vector2) -> Vector2:
+	return position if emit_mouse_position else position + _offset

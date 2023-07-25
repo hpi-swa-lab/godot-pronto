@@ -2,3 +2,4 @@
 .godot/
 script-instances
 log
+build/

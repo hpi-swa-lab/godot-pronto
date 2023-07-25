@@ -127,6 +127,7 @@ func _get_property_list():
 func _draw():
 	super._draw()
 	var default_font = ThemeDB.fallback_font
+	var text_color = Color(Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK, color.a)
 	if shape_type == "Rect":
 		var height = placeholder_size.y
 		var text_size = min(height, placeholder_size.x / label.length() * 1.8)
@@ -137,7 +138,7 @@ func _draw():
 			HORIZONTAL_ALIGNMENT_CENTER,
 			-1,
 			text_size,
-			Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
+			text_color)
 		
 		if get_tree().debug_collisions_hint:
 			var debug_color = Color.LIGHT_BLUE
@@ -150,7 +151,7 @@ func _draw():
 		# feel free to improve text size calculation
 		var text_size = min(circle_radius*1.5, circle_radius*2.1 / label.length() * 1.8)
 		draw_circle(Vector2(0,0),circle_radius,color)
-		draw_string(default_font, Vector2(-circle_radius,+text_size/4),label,HORIZONTAL_ALIGNMENT_CENTER,-1,text_size,Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
+		draw_string(default_font, Vector2(-circle_radius,+text_size/4),label,HORIZONTAL_ALIGNMENT_CENTER,-1,text_size,text_color)
 		if get_tree().debug_collisions_hint:
 			_draw_debug_circle()
 		
@@ -160,7 +161,7 @@ func _draw():
 		draw_circle(Vector2(0,-(capsule_height/2)+capsule_radius),capsule_radius, color)
 		draw_circle(Vector2(0,+(capsule_height/2)-capsule_radius),capsule_radius, color)
 		draw_rect(Rect2(-(capsule_radius),-(capsule_height/2)+capsule_radius,2*capsule_radius,capsule_height-(capsule_radius*2)), color, true)
-		draw_string(default_font, Vector2(-capsule_radius,+text_size/4),label,HORIZONTAL_ALIGNMENT_CENTER,-1,text_size,Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
+		draw_string(default_font, Vector2(-capsule_radius,+text_size/4),label,HORIZONTAL_ALIGNMENT_CENTER,-1,text_size,text_color)
 		if get_tree().debug_collisions_hint:
 			_draw_debug_capsule()
 	else:
@@ -192,7 +193,7 @@ func _draw_debug_circle():
 	debug_color.a = 1
 	draw_circle(Vector2(0,0),circle_radius,debug_color)
 	
-func _draw_debug_capsule():	
+func _draw_debug_capsule():
 	var debug_color = Color.LIGHT_BLUE
 	debug_color.a = 0.5
 	draw_circle(Vector2(0,-(capsule_height/2)+capsule_radius),capsule_radius, debug_color)

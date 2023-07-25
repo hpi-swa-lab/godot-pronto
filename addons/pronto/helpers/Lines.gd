@@ -74,13 +74,31 @@ class Line:
 				final += color.lerp(flash_colors[type], flash)
 		return final if final != Color.BLACK else color
 	
+	func draw_outlined_text(c: CanvasItem, font: Font, text_size: int, text_position: Vector2, text: String, color: Color):
+		c.draw_multiline_string_outline(font,
+			text_position,
+			text,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, text_size / 2, Color.BLACK)
+			
+		c.draw_multiline_string(font,
+			text_position,
+			text,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color)
+		
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, lines: Lines):
 		var text = text_fn.call(flipped)
 		var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
-		c.draw_multiline_string(font,
-			Vector2(-size.x - 24, 0) if flipped else Vector2(0, 0),
-			text,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, current_color(lines))
+
+		draw_outlined_text(
+			c, 
+			font, 
+			text_size, 
+			Vector2(-size.x - 24, 0) if flipped else Vector2(0, 0), 
+			text, 
+			current_color(lines)
+		)
+	
+		
 	
 	func draw_line(c: CanvasItem, begin: Vector2, end: Vector2, color: Color, width: float):
 		c.draw_line(begin, end, color, width, true)
@@ -133,10 +151,15 @@ class CombinedLine extends Line:
 			var text = line.text_fn.call(flipped)
 			var color = line.current_color(_lines)
 			var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
-			c.draw_multiline_string(font,
+	
+			draw_outlined_text(
+				c, 
+				font, 
+				text_size, 
 				Vector2(-size.x - 24, y) if flipped else Vector2(0, y),
 				text,
-				HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color)
+				color
+			)
 			y += size.y
 
 class BottomText extends Line:
@@ -146,7 +169,12 @@ class BottomText extends Line:
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, lines: Lines):
 		var text = text_fn.call(flipped)
 		var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
-		c.draw_multiline_string(font,
-			Vector2(-size.x/2, 0),
-			text,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, current_color(lines))
+		
+		draw_outlined_text(
+			c, 
+			font, 
+			text_size, 
+			Vector2(-size.x/2, 0), 
+			text, 
+			current_color(lines)
+		)
