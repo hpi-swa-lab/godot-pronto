@@ -1,6 +1,31 @@
 extends Node
 class_name Utils
 
+static func as_code_string(arg) -> String:
+	match typeof(arg):
+		TYPE_NIL: return ""
+		TYPE_BOOL: return str(arg)
+		TYPE_INT: return str(arg)
+		TYPE_FLOAT: return str(arg)
+		TYPE_STRING: return '"' + arg + '"'
+		TYPE_VECTOR2: return "Vector2" + str(arg)
+		TYPE_RECT2: return "Rect2" + str(arg)
+		TYPE_VECTOR3: return "Vector3" + str(arg)
+		TYPE_TRANSFORM2D: return "Transform2D" + str(arg)
+		TYPE_PLANE: return "Plane" + str(arg)
+		TYPE_QUATERNION: return "Quat" + str(arg)
+		TYPE_AABB: return "AABB" + str(arg)
+		TYPE_BASIS: return "Basis" + str(arg)
+		TYPE_TRANSFORM3D: return "Transform3D" + str(arg)
+		TYPE_COLOR: return "Color" + str(arg)
+		TYPE_NODE_PATH: return str(arg)
+		TYPE_RID: return str(arg)
+		TYPE_OBJECT: return str(arg)
+		TYPE_ARRAY: return str(arg)
+		_:
+			push_warning("Trying to stringify unknown type: " + str(typeof(arg)))
+	return str(arg)
+
 static func with(o, do: Callable):
 	return do.call(o)
 
