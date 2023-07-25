@@ -10,7 +10,8 @@ requestGames();
 function requestGames() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
+    if (this.readyState !== 4) return;
+    if (this.status == 200) {
       const response = JSON.parse(this.responseText);
       const files = response.tree;
       files.filter(file => file.type == "tree").forEach(file => loadGameData(file.path));
@@ -69,7 +70,7 @@ function createGame(gameInfo) {
 
   if(gameInfo.thumbnailType) {
     const thumbnail = document.createElement('img');
-    thumbnail.src = `https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/i6w1-jf-geometry-dash/thumbnail.${thumbnailType}`;
+    thumbnail.src = `https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/i6w1-jf-geometry-dash/thumbnail.${gameInfo.thumbnailType}`;
     thumbnail.alt = gameInfo.title;
     gameElement.appendChild(thumbnail);
   }
