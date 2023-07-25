@@ -37,9 +37,9 @@ jobs:
           ./scripts/export.sh ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}
       - name: Move game_info.json and thumbnail
         run: |
-          mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/game_info.json build/web/game_info.json
-          mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.png build/web/thumbnail.png
-          mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.jpg build/web/thumbnail.jpg
+          [ -f old ] && mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/game_info.json build/web/game_info.json
+          [ -f old ] && mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.png build/web/thumbnail.png
+          [ -f old ] && mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.jpg build/web/thumbnail.jpg
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
