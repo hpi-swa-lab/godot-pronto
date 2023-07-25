@@ -14,6 +14,8 @@ function requestGames() {
       const response = JSON.parse(this.responseText);
       const files = response.tree;
       files.filter(file => file.type == "tree").forEach(file => loadGameData(file.path));
+    } else {
+      console.error("ERROR: Cannot receive the list of games. Error message:", this.responseText);
     }
   };
   xmlhttp.open("GET", `https://api.github.com/repos/${USERNAME}/${REPOSITORY}/git/trees/${BRANCH}`, true);
@@ -28,9 +30,9 @@ function loadGameData(gamePath) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState !== 4) return;
-    const gameInfo = {
+    let gameInfo = {
       title: gamePath,
-      // playLink: gamePath
+      playLink: gamePath
     }
     if (this.status == 200) {
       const json = JSON.parse(this.responseText);
