@@ -1,0 +1,57 @@
+name: "Build & Deploy Game"
+on:
+  workflow_dispatch:
+    inputs:
+      scene_folder:
+        description: 'Name of the Godot game scene to export (e.g. my_game).'
+        required: true
+      path_prefix:
+        description: 'Prefix path of scene_folder.'
+        required: false
+        default: "prototypes/"
+
+env:
+  GODOT_VERSION: 4.1
+  
+jobs:
+  export-web:
+    name: Build Web Export & Deploy
+    runs-on: ubuntu-20.04
+    container:
+      image: barichello/godot-ci:4.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      - name: Setup Environment
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mkdir -v -p build/web
+      - name: Godot Import Phase
+        run: |
+          godot --headless --export-release Web build/web/index.html
+      - name: Godot Web Build
+        run: |
+          ./export.sh ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: web
+          path: build/web
+      - name: Install rsync 📚
+        run: |
+          apt-get update && apt-get install -y rsync
+      - name: Patch for Cross Origin Isolation and SharedArrayBuffer
+        run: |
+          mv enable-threads.js build/web/enable-threads.js
+          cd build/web/
+          sed -i 's|headers.set("Cross-Origin-Embedder-Policy", "credentialless")|headers.set("Cross-Origin-Embedder-Policy", "require-corp")|g'  enable-threads.js
+          sed -i 's|<script src="index.js"></script>|<script src="enable-threads.js"></script><script src="index.js"></script>|g' index.html
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          branch: gh-pages # The branch where all the games are stored
+          target-folder: ${{ github.event.inputs.scene_folder }}
+          folder: build/web

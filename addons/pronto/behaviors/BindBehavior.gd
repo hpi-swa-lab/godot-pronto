@@ -39,3 +39,7 @@ func _process(delta):
 
 func lines():
 	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (flip): return Utils.ellipsize(evaluate.source_code, 20), "value")]
+
+func wants_expression_inspector(property_name):
+	return property_name == 'evaluate'
+	

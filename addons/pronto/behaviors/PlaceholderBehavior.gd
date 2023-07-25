@@ -56,6 +56,7 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 ## Search through a library of textures to choose your sprite.
 @export var sprite_library: Texture2D:
 	set(v):
+		if v == null: return
 		sprite_texture = v
 		use_sprite = true
 
@@ -132,12 +133,14 @@ func _ready():
 	bird_texture = load("res://prototypes/i6w1-jf-geometry-dash/assets/bird.png")
 	if use_sprite:
 		_init_sprite()
-		self.add_child(sprite, false, INTERNAL_MODE_FRONT)
+		if sprite.get_parent() != self:
+			self.add_child(sprite, false, INTERNAL_MODE_FRONT)
 		
 func _editor_reload():
 	if Engine.is_editor_hint() and is_active_scene():
-		if sprite.get_parent():
-			remove_child(sprite)
+		for child in get_children(true):
+			if child is Sprite2D && child != sprite:
+				child.queue_free()
 		_ready()
 	queue_redraw()
 
@@ -234,6 +237,7 @@ func _draw():
 	var default_font = ThemeDB.fallback_font
 	var height = placeholder_size.y
 	var text_size = min(height, placeholder_size.x / label.length() * 1.8)
+	var text_color = Color(Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK, color.a)
 	
 	if not use_sprite:
 		draw_rect(Rect2(placeholder_size / -2, placeholder_size), color, true)
@@ -243,7 +247,7 @@ func _draw():
 			HORIZONTAL_ALIGNMENT_CENTER,
 			-1,
 			text_size,
-			Color.WHITE if color.get_luminance() < 0.6 else Color.BLACK)
+			text_color)
 		
 		if outline_visible:
 			draw_rect(Rect2(placeholder_size / -2, placeholder_size), outline_color, false, outline_width)

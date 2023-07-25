@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3 uid="uid://chvawkvo3v4nx"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_nypoi"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="2_y634i"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_g61bo"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="4_7xxub"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="4_nd28o"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_mbmsi"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_yxrkv"]
@@ -43,10 +44,12 @@ return_value = true
 script = ExtResource("6_yxrkv")
 signal_name = "up"
 to = NodePath("../Spawner")
+more_references = []
 invoke = "spawn_at"
 arguments = [SubResource("Resource_x7kej")]
 only_if = SubResource("Resource_2xvc1")
 deferred = false
+enabled = true
 
 [node name="spawn_at" type="Node2D"]
 
@@ -61,6 +64,7 @@ script = ExtResource("2_y634i")
 [node name="Placeholder" type="Node2D" parent="Spawner"]
 script = ExtResource("3_g61bo")
 color = Color(0.737255, 0, 0.780392, 1)
+sprite_texture = ExtResource("4_7xxub")
 
 [node name="Key" type="Node2D" parent="."]
 position = Vector2(435, 317)

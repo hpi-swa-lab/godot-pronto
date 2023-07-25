@@ -23,8 +23,9 @@ class_name SpawnerBehavior
 @export var spawn_shape_polygon: Polygon2D = null:
 	set(v):
 		spawn_shape_polygon = v
-		spawn_shape_polygon.color = Color('0099b36b')
-		spawn_shape_polygon.set_visible(false)
+		if spawn_shape_polygon:
+			spawn_shape_polygon.color = Color('0099b36b')
+			spawn_shape_polygon.set_visible(false)
 		queue_redraw()
 
 ## Shape used by [method SpawnerBehavior.spawn_in_shape] method. 
@@ -123,9 +124,9 @@ func spawn(index: int = -1, relative: bool = false):
 	var instances = []
 	if index < 0:
 		for i in range(scenes.size()):
-			instances.append([_spawn(i), scene_offsets[i]])
+			instances.append([_spawn(i), scene_offsets[i] if scene_offsets else null])
 	else:
-		instances = [[_spawn(index), scene_offsets[index]]]
+		instances = [[_spawn(index), scene_offsets[index] if scene_offsets else null]]
 	
 	for instance_pair in instances:
 		instance_pair[0].global_position = global_position
