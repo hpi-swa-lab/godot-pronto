@@ -14,7 +14,7 @@ h1 {
 
 .game-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   margin-top: 30px;
 }
