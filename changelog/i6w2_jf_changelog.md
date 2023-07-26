@@ -39,8 +39,6 @@ We first tried to directly deploy to [itch.io](https://itch.io). This can be ach
 
 With Github Pages we can deploy completely automated (once you have entered the inputs like `project_folder`). We have an `index.html` file which automatically looks for all games deployed and displays them accordingly. With this solution we are not bound at any restrictions like the number of games. We also have full control on how to display the individual games. For instance a title, description and thumbnail can be provided.
 
-
-
 ### Pitfalls/Issues
 
 When I created the `export.sh` the workflow was unable to execute it. This was caused by Windows, because it doesn't set the correct permissions. Luckily I found this: [GitHub Actions: Fixing the 'Permission Denied' error for shell scripts](https://dev.to/aileenr/github-actions-fixing-the-permission-denied-error-for-shell-scripts-4gbl).
