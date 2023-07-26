@@ -33,6 +33,14 @@ You can now open [https://hpi-swa-lab.github.io/godot-pronto/](https://hpi-swa-l
 
 ![GH Pages](i6w2_jf_gh_pages.png)
 
+### Github Pages vs ITCH.IO
+
+We first tried to directly deploy to [itch.io](https://itch.io). This can be achieved through using [butler](https://itch.io/docs/butler/) in our workflow. The problem we encountered is that `butler` is only able to upload game files to existing projects and is not able to create new projects itself. Because each itch project can only hold one game, it requires the manual process of first creating the project yourself if you don't want each game export to overwrite the previous. Also the `SharedArrayBuffer` option needs to be set manually. One other point is that `itch.io` only supports 20 projects for the normal free tier.
+
+With Github Pages we can deploy completely automated (once you have entered the inputs like `project_folder`). We have an `index.html` file which automatically looks for all games deployed and displays them accordingly. With this solution we are not bound at any restrictions like the number of games. We also have full control on how to display the individual games. For instance a title, description and thumbnail can be provided.
+
+
+
 ### Pitfalls/Issues
 
 When I created the `export.sh` the workflow was unable to execute it. This was caused by Windows, because it doesn't set the correct permissions. Luckily I found this: [GitHub Actions: Fixing the 'Permission Denied' error for shell scripts](https://dev.to/aileenr/github-actions-fixing-the-permission-denied-error-for-shell-scripts-4gbl).
