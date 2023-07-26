@@ -49,7 +49,7 @@ The following list of behaviors primarily cause effects when triggered.
 | QueryBehavior	| Searches for nodes in the scene and emits signals for results. Properties allow to filter, sort, and limit results. Can be used for tasks such as destroying all enemies in a certain radius, infecting a random player, or finding the nearest health pack.	|
 | SceneRootBehavior | Provides access to the `SceneTree` from Godot. It offers the signals `node_added(node: Node)`, `node_remove(node: Node)` and `tree_changed()` from the `SceneTree`. Additionally, it implements three methods for executing lambda functions on all or a specific subset of nodes in a given `group`. |
 | SignalBehavior	| Forwards signals when triggered, optionally with arguments. Useful for abstraction/encapsulation of lower-level signals, signal renaming, or logical OR-gating of signals.	|
-| SpawnerBehavior | When triggered, spawns whatever its child nodes are at its current location in the scene. Single children nodes can be spawned by modifying the optional index argument in each spawning method to just the respective child node. Use -1 as index to spawn all children. Can use spawn_in_shape to randomly spawn children in the given shape or polygon. When using a Polygon2D dont use it as a child of the spawner. |
+| SpawnerBehavior | When triggered, spawns whatever its child nodes are at its current location in the scene. Single children nodes can be spawned by modifying the optional index argument in each spawning method to just the respective child node. Use -1 as index to spawn all children. Set use_spawn_shape to true to randomly spawn children in the given shape or polygon. When using a Polygon2D dont use it as a child of the spawner. |
 | StopwatchBehavior | Starts counting up time when triggered. Can be reset. |
 
 The following list of behaviors manage state or communicate visual properties.
@@ -75,6 +75,13 @@ The following list of behaviors manage state or communicate visual properties.
 * Try to cram everything for your prototype in a single Godot scene so that changing any aspect is possible without having to switch scenes. Make use of the Spawner and Instance Behaviors to facilitate this.
 
 * You can use the `set` function to modify any properties when a connection triggers.
+
+### Juice
+The following list of nodes dont add new functionality, their purpose is to add a bit of juice to your prototypes. They may not make your prototypes good, but they can add to them.
+
+| Juice | Function |
+| -------- | -------- |
+| SparkleJuice | Make your scene sparkle! |
 
 ### Connections
 
