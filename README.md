@@ -197,3 +197,48 @@ In `ConnectionDebug.gd` you can communicate values from the game back to the eng
 ### Hints on Designing new Behaviors
 
 * Don't bundle too much: give each concern its own behavior, e.g. appearance, movement, shooting. Design behaviors such that they are easy to connect to one another instead of pre-packaging them with lots of concerns.
+
+## Phase 3: Deploying your prototype/game
+
+To deploy your game to [hpi-swa-lab.github.io/godot-pronto/](https://hpi-swa-lab.github.io/godot-pronto/) you can use the [Build & Deploy Game](https://github.com/hpi-swa-lab/godot-pronto/actions/workflows/build-deploy.yml) Action.
+
+### Preparation
+
+Before you can deploy your game check the following:
+
+1. Make your game the main scene of the godot project.
+2. Make sure that all assets you use are inside your projects folder (e.g. `prototypes/myPrototype`).
+3. Make sure that no filenames or folders have a `space` character in them.
+
+#### game_info.json and thumbnail
+
+In order to display detailed information of your game make sure to create a `game_info.json` file inside your projects folder. Your file could look like this:
+
+```json
+{
+  "title": "My Game",
+  "description": "The description of my game that is displayed in the overview.",
+  "authors": ["Developer 1", "Developer 2"],
+  "thumbnailType": "png"
+}
+```
+
+Also make sure to have a thumbnail in your folder that matches the `thumbnailType` you provide (currently supported are `png` and `jpg`).
+
+For more details on the supported structure checkout the [documentation of gh-pages](https://github.com/hpi-swa-lab/godot-pronto/tree/gh-pages#readme).
+
+### Workflow
+
+You have to run the [Build & Deploy Game](https://github.com/hpi-swa-lab/godot-pronto/actions/workflows/build-deploy.yml) Action manually. As the branch to "use the workflow from" you select your branch that you developed on and that you prepared in the step above.
+
+In the next line you have to provide the name of the folder that your project is in (e.g. `myPrototype`). In the second line you can specify another path to this folder in case you didn't create your project inside the `prototypes` folder.
+
+Check if the workflow runs with any issues. If everything went well it should push your game to the `gh-pages` branch. This automatically triggers another workflow to rebuild the page. Wait until this workflow has completed before going to the next step.
+
+### Testing
+
+After the workflow executed you can head over to [hpi-swa-lab.github.io/godot-pronto/](https://hpi-swa-lab.github.io/godot-pronto/). You should see your game appear in the list of games. Click on the "Play Now" button and check if everything is working.
+
+### Troubleshooting
+
+If you accidently trigger the workflow with an incorrect folder name it may execute without generating any errors but will create a new game in the [gh-pages branch](https://github.com/hpi-swa-lab/godot-pronto/tree/gh-pages). This will automatically be rendered into the list of games. In order to delete it, you have to manually remove it from the gh-pages branch. Please be carefull when doing so and do not delete any other files other than the projects folder you want to delete.
