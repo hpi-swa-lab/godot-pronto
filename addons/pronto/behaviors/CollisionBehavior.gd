@@ -45,7 +45,9 @@ func _physics_process(delta):
 			on_collision(collision.get_collider())
 
 	if not Engine.is_editor_hint() and (get_parent() is RigidBody2D or get_parent() is CharacterBody2D or get_parent() is Area2D): 
-		if get_viewport_rect().has_point(get_parent().position):
+		var x = get_viewport().get_camera_2d().global_position.x - (get_viewport_rect().size.x /2)
+		var y = get_viewport().get_camera_2d().global_position.y - (get_viewport_rect().size.y /2)
+		if Rect2(Vector2(x,y) , get_viewport_rect().size).has_point(get_parent().position):
 			if not screen_entered_emitted:
 				screen_entered_emitted = true
 				screen_entered.emit()
