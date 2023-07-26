@@ -6,6 +6,10 @@ Add invulnerability to HealthBar with an additional option to enable/disable hea
 
 ![HealthBar with invulnerability enabled](i6w2_Healthbar_invulnerable.png)
 
+## Placeholder fixed
+
+We implemented a fix for the Placeholder Behavior in regard of copying and spawning them. They should now work as intended.
+
 ## Deployment to Github Pages
 
 We wanted to create an easy way of deploying the created games and prototypes.
