@@ -26,7 +26,7 @@ signal picked(position: Vector2)
 ## [param position] is the global position of the parent node.
 ##
 ## [param  start_position] is the parent's global position at the start of dragging 
-signal dropped(position: Vector2, start_position: Vector2)
+signal dropped(position: Vector2, start: Vector2)
 
 ## Emitted during dragging
 ##
@@ -37,7 +37,7 @@ signal dropped(position: Vector2, start_position: Vector2)
 ##
 ## [param last_position] is the global position where the last movement
 ## of the parent started
-signal dragged(position: Vector2, start_position: Vector2, last_position: Vector2)
+signal dragged(position: Vector2, start: Vector2, last: Vector2)
 
 
 ## Mouse button mask for pick/drop. Only selected buttons can pick up the parent node.
