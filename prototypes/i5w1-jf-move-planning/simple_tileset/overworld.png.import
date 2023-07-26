@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyxmapqlakkal"
-path="res://.godot/imported/idle_blue.png-3e60358195ba61acafac4f1b5c34f0b5.ctex"
+uid="uid://c4x2fpke7b6ym"
+path="res://.godot/imported/overworld.png-e27066eb2459e395962fa4a40cc91957.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/idle_blue.png"
-dest_files=["res://.godot/imported/idle_blue.png-3e60358195ba61acafac4f1b5c34f0b5.ctex"]
+source_file="res://prototypes/i5w1-jf-move-planning/simple_tileset/overworld.png"
+dest_files=["res://.godot/imported/overworld.png-e27066eb2459e395962fa4a40cc91957.ctex"]
 
 [params]
 

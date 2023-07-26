@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cu3poyas45glr"
-path="res://.godot/imported/scifitiles-sheet.png-d9f1a13ddd7f8b64fdc481ffdbb889a2.ctex"
+uid="uid://dyxmapqlakkal"
+path="res://.godot/imported/idle_blue.png-e7bba6b60a169d22e04a6166f2c6f846.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/simple_tileset/scifitiles-sheet.png"
-dest_files=["res://.godot/imported/scifitiles-sheet.png-d9f1a13ddd7f8b64fdc481ffdbb889a2.ctex"]
+source_file="res://prototypes/i5w1-jf-move-planning/idle_blue.png"
+dest_files=["res://.godot/imported/idle_blue.png-e7bba6b60a169d22e04a6166f2c6f846.ctex"]
 
 [params]
 

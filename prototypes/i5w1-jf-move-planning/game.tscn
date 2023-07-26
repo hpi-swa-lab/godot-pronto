@@ -1,8 +1,8 @@
 [gd_scene load_steps=230 format=3 uid="uid://bgxt4wcv8r1mj"]
 
-[ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://assets/simple_tileset/overworld.png" id="1_il3if"]
-[ext_resource type="Texture2D" uid="uid://cu3poyas45glr" path="res://assets/simple_tileset/scifitiles-sheet.png" id="1_krj8n"]
+[ext_resource type="Texture2D" uid="uid://cu3poyas45glr" path="res://prototypes/i5w1-jf-move-planning/simple_tileset/scifitiles-sheet.png" id="1_n26la"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="2_ip00t"]
+[ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://prototypes/i5w1-jf-move-planning/simple_tileset/overworld.png" id="2_l7mv4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="3_8sldm"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_nqh52"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_4hiwy"]
@@ -11,10 +11,10 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="6_bmd4l"]
 [ext_resource type="Script" path="res://prototypes/i5w1-jf-move-planning/Player.gd" id="7_2akbo"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="8_0hls7"]
-[ext_resource type="Texture2D" uid="uid://dyxmapqlakkal" path="res://assets/idle_blue.png" id="10_xll7j"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="11_8luff"]
-[ext_resource type="Texture2D" uid="uid://ct4atgu3rikoe" path="res://assets/idle_red.png" id="11_g4c7b"]
+[ext_resource type="Texture2D" uid="uid://dyxmapqlakkal" path="res://prototypes/i5w1-jf-move-planning/idle_blue.png" id="11_i3she"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="12_g46kd"]
+[ext_resource type="Texture2D" uid="uid://ct4atgu3rikoe" path="res://prototypes/i5w1-jf-move-planning/idle_red.png" id="13_5x5sy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="13_bk01k"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="14_i77nb"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="16_bfvjy"]
@@ -26,7 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://bse68sslqtedq" path="res://prototypes/i5w1-jf-move-planning/poison.png" id="23_hkt14"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_44gr1"]
-texture = ExtResource("1_krj8n")
+texture = ExtResource("1_n26la")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -343,7 +343,7 @@ texture = ExtResource("1_krj8n")
 23:11/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j0jqh"]
-texture = ExtResource("1_il3if")
+texture = ExtResource("2_l7mv4")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -2343,7 +2343,7 @@ current_field = Vector2(0, 7)
 script = ExtResource("3_nqh52")
 placeholder_size = Vector2(40, 50)
 use_sprite = true
-sprite_texture = ExtResource("10_xll7j")
+sprite_texture = ExtResource("11_i3she")
 
 [node name="Collision" type="Node2D" parent="Player1"]
 position = Vector2(57, -1)
@@ -2367,7 +2367,7 @@ player = 1
 script = ExtResource("3_nqh52")
 placeholder_size = Vector2(40, 50)
 use_sprite = true
-sprite_texture = ExtResource("11_g4c7b")
+sprite_texture = ExtResource("13_5x5sy")
 
 [node name="Collision" type="Node2D" parent="Player2"]
 position = Vector2(-32.0156, -1.39945e-06)
