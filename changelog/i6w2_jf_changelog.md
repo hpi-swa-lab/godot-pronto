@@ -17,7 +17,8 @@ To start the workflow you first have to run a new workflow after pushing your ga
 ![Input Workflow](i6w2_jf_input_workflow.png)
 
 If you want Github Pages to show more information about your game you can place a `game_info.json` file into your game folder ([Documentation](https://github.com/hpi-swa-lab/godot-pronto/blob/gh-pages/README.md)):
-```[json]
+
+```json
 {
   "title": "My Game",
   "description": "The description of my game that is displayed in the overview.",
