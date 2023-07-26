@@ -198,7 +198,7 @@ In `ConnectionDebug.gd` you can communicate values from the game back to the eng
 
 * Don't bundle too much: give each concern its own behavior, e.g. appearance, movement, shooting. Design behaviors such that they are easy to connect to one another instead of pre-packaging them with lots of concerns.
 
-## Phase 3: Deploying your prototype/game
+## Phase 3: Deploying your Prototype/Game
 
 To deploy your game to [hpi-swa-lab.github.io/godot-pronto/](https://hpi-swa-lab.github.io/godot-pronto/) you can use the [Build & Deploy Game](https://github.com/hpi-swa-lab/godot-pronto/actions/workflows/build-deploy.yml) Action.
 
