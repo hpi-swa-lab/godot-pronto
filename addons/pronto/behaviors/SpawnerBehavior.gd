@@ -179,6 +179,21 @@ func spawn_at(pos: Vector2, index: int = -1):
 	
 	return instances
 
+func spawn_at_with_damage(pos: Vector2, damage = 30, index: int = -1):
+	var instances = []
+	if index < 0:
+		for i in range(scenes.size()):
+			instances.append(_spawn(i, true))
+	else:
+		instances = [_spawn(index, true)]
+		
+	for instance in instances:
+		instance.global_position = pos
+		instance.damage = damage
+		spawned.emit(instance)
+	
+	return instances
+
 ## Spawns the selected blueprint(s) at a random position within the
 ## shape determined by [member SpawnerBehavior.shape_type], 
 ## [member SpawnerBehavior.spawn_shape_polygon] and [member SpawnerBehavior.spawn_shape_generic]

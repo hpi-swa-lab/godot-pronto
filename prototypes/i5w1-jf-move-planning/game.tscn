@@ -1,26 +1,26 @@
-[gd_scene load_steps=226 format=3 uid="uid://bgxt4wcv8r1mj"]
+[gd_scene load_steps=230 format=3 uid="uid://bgxt4wcv8r1mj"]
 
 [ext_resource type="Texture2D" uid="uid://c4x2fpke7b6ym" path="res://assets/simple_tileset/overworld.png" id="1_il3if"]
 [ext_resource type="Texture2D" uid="uid://cu3poyas45glr" path="res://assets/simple_tileset/scifitiles-sheet.png" id="1_krj8n"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBar.gd" id="2_ip00t"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Code.gd" id="3_8sldm"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="3_nqh52"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="2_ip00t"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="3_8sldm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_nqh52"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_4hiwy"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_pwq2o"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="6_0t503"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Store.gd" id="6_bmd4l"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="6_0t503"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="6_bmd4l"]
 [ext_resource type="Script" path="res://prototypes/i5w1-jf-move-planning/Player.gd" id="7_2akbo"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Bind.gd" id="8_0hls7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="8_0hls7"]
 [ext_resource type="Texture2D" uid="uid://dyxmapqlakkal" path="res://assets/idle_blue.png" id="10_xll7j"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Always.gd" id="11_8luff"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="11_8luff"]
 [ext_resource type="Texture2D" uid="uid://ct4atgu3rikoe" path="res://assets/idle_red.png" id="11_g4c7b"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Clock.gd" id="12_g46kd"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUI.gd" id="13_bk01k"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Value.gd" id="14_i77nb"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Spawner.gd" id="16_bfvjy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="12_g46kd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="13_bk01k"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="14_i77nb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="16_bfvjy"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="17_y0ke2"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Collision.gd" id="18_18wwb"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRoot.gd" id="18_m8w01"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="18_18wwb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRootBehavior.gd" id="18_m8w01"]
 [ext_resource type="Script" path="res://prototypes/i5w1-jf-move-planning/DamageField.gd" id="19_pl3ob"]
 [ext_resource type="Texture2D" uid="uid://clp50jj8va5ku" path="res://prototypes/i5w1-jf-move-planning/heal.png" id="22_rbagc"]
 [ext_resource type="Texture2D" uid="uid://bse68sslqtedq" path="res://prototypes/i5w1-jf-move-planning/poison.png" id="23_hkt14"]
@@ -523,6 +523,10 @@ texture = ExtResource("1_il3if")
 sources/3 = SubResource("TileSetAtlasSource_j0jqh")
 sources/0 = SubResource("TileSetAtlasSource_44gr1")
 
+[sub_resource type="Gradient" id="Gradient_adyq0"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
 [sub_resource type="GDScript" id="GDScript_jkjhy"]
 script/source = "@tool
 extends U
@@ -563,6 +567,10 @@ only_if = SubResource("Resource_uu7oa")
 expression = SubResource("Resource_pc03s")
 deferred = false
 enabled = true
+
+[sub_resource type="Gradient" id="Gradient_voim3"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [sub_resource type="GDScript" id="GDScript_42adc"]
 script/source = "@tool
@@ -891,6 +899,10 @@ nested_script = SubResource("GDScript_ff1y2")
 argument_names = []
 return_value = true
 
+[sub_resource type="Gradient" id="Gradient_k0nor"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
 [sub_resource type="GDScript" id="GDScript_42bur"]
 script/source = "@tool
 extends U
@@ -931,6 +943,10 @@ only_if = SubResource("Resource_a0mre")
 expression = SubResource("Resource_ivels")
 deferred = false
 enabled = true
+
+[sub_resource type="Gradient" id="Gradient_k4fbr"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
 
 [sub_resource type="GDScript" id="GDScript_jsh51"]
 script/source = "@tool
@@ -2154,23 +2170,22 @@ layer_0/tile_data = PackedInt32Array(65533, 851968, 2, 131069, 851968, 3, 196605
 position = Vector2(155, 520)
 script = ExtResource("2_ip00t")
 healthbar_size = Vector2(275, 40)
-progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+progress_gradient = SubResource("Gradient_adyq0")
 metadata/pronto_connections = [SubResource("Resource_3pjhv")]
 
 [node name="ProgressBar1" type="Node2D" parent="HealthBar1"]
 position = Vector2(-37, 50)
 script = ExtResource("2_ip00t")
-current = 0
 max = 3
+current = 0
 healthbar_size = Vector2(200, 40)
 label = 2
 background_color = Color(0, 0, 0, 0.501961)
-progress_colors = PackedColorArray(0.713726, 0.490196, 0.847059, 1)
+progress_gradient = SubResource("Gradient_voim3")
 
 [node name="HandleInput" type="Node2D" parent="HealthBar1/ProgressBar1"]
 position = Vector2(3, -185)
 script = ExtResource("3_8sldm")
-label = "HandleInput"
 arguments = PackedStringArray("action")
 evaluate = SubResource("Resource_miac8")
 metadata/pronto_connections = [SubResource("Resource_o1in6")]
@@ -2239,18 +2254,18 @@ to_prop = "text"
 position = Vector2(985, 520)
 script = ExtResource("2_ip00t")
 healthbar_size = Vector2(275, 40)
-progress_colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1, 0.196078, 0.803922, 0.196078, 1)
+progress_gradient = SubResource("Gradient_k0nor")
 metadata/pronto_connections = [SubResource("Resource_y82qp")]
 
 [node name="ProgressBar2" type="Node2D" parent="HealthBar2"]
 position = Vector2(38, 49)
 script = ExtResource("2_ip00t")
-current = 0
 max = 3
+current = 0
 healthbar_size = Vector2(200, 40)
 label = 2
 background_color = Color(0, 0, 0, 0.501961)
-progress_colors = PackedColorArray(0.713726, 0.490196, 0.847059, 1)
+progress_gradient = SubResource("Gradient_k4fbr")
 
 [node name="HandleInput" type="Node2D" parent="HealthBar2/ProgressBar2"]
 position = Vector2(-12, -81)
@@ -2376,7 +2391,6 @@ metadata/queue = true
 [node name="TurnExecutor" type="Node2D" parent="."]
 position = Vector2(868, 122)
 script = ExtResource("3_8sldm")
-label = "TurnExectuor"
 evaluate = SubResource("Resource_upyne")
 metadata/pronto_connections = [SubResource("Resource_ka677"), SubResource("Resource_a1y07")]
 
@@ -2409,7 +2423,6 @@ script = ExtResource("13_bk01k")
 [node name="Reset" type="Node2D" parent="PanelContainer/Settings"]
 position = Vector2(-10, 38)
 script = ExtResource("3_8sldm")
-label = "Reset"
 evaluate = SubResource("Resource_jox52")
 metadata/pronto_connections = [SubResource("Resource_lkm08")]
 
@@ -2572,7 +2585,6 @@ horizontal_alignment = 2
 [node name="HealPlacer" type="Node2D" parent="."]
 position = Vector2(885, 208)
 script = ExtResource("3_8sldm")
-label = "Heal Placer"
 evaluate = SubResource("Resource_q8j8e")
 metadata/pronto_connections = [SubResource("Resource_aom7c")]
 
@@ -2595,7 +2607,6 @@ outline_width = 20.0
 [node name="MinePlacer" type="Node2D" parent="."]
 position = Vector2(1048, 209)
 script = ExtResource("3_8sldm")
-label = "Poison Placer"
 evaluate = SubResource("Resource_ynsek")
 metadata/pronto_connections = [SubResource("Resource_tvr2c")]
 
