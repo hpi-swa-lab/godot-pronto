@@ -22,6 +22,8 @@ h1 {
 .game {
   border: 1px solid #ddd;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
   padding: 10px;
   text-align: left;
   background-color: #f9f9f9;
@@ -34,9 +36,15 @@ h1 {
   box-shadow: 3px 7px 8px rgba(0, 0, 0, 0.2);
 }
 
-.game img {
+.game .thumbnail-container {
+  text-align: center;
   max-width: 100%;
-  height: auto;
+  max-height: 400px;
+}
+
+.game .thumbnail-container img {
+  max-width: inherit;
+  max-height: inherit;
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -53,6 +61,7 @@ h1 {
 }
 
 .game .footer {
+  margin-top: auto;
   text-align: right;
 }
 

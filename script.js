@@ -26,7 +26,7 @@ async function requestGames() {
 
 /**
  * Loads the game_info.json file for the game and returns the game data.
- * If no game_info.json is provided, it will return an object with title and playLink.
+ * If no game_info.json is provided, it will return an object with title and path.
  */
 async function loadGameData(gamePath) {
   try {
@@ -37,25 +37,25 @@ async function loadGameData(gamePath) {
         console.warn(`JSON for game ${gamePath} is not valid because it does not contain a title:`, gameInfo);
         return {
           title: gamePath,
-          playLink: gamePath,
+          path: gamePath,
         };
       }
-      if (!gameInfo.playLink) {
-        gameInfo.playLink = gamePath;
+      if (!gameInfo.path) {
+        gameInfo.path = gamePath;
       }
       return gameInfo;
     } else {
       console.warn(`No game info found for ${gamePath}. Please check if you have provided a "game_info.json" file.`);
       return {
         title: gamePath,
-        playLink: gamePath,
+        path: gamePath,
       };
     }
   } catch (error) {
     console.error(`ERROR: An error occurred while fetching game data for ${gamePath}.`, error);
     return {
       title: gamePath,
-      playLink: gamePath,
+      path: gamePath,
     };
   }
 }
@@ -71,7 +71,7 @@ function createGames(games) {
 /**
  * Displays a game based on the provided gameInfo JSON. Following keys are supported:
  * - title - The title of the game that is displayed
- * - playLink - The parent folder of the index.html of the game.
+ * - path - The parent folder of the index.html of the game.
  * - description (optional) - A description of the game
  * - authors (optional) - The authors of the game.
  * - thumbnailType (optional) - Path to the image that represents the game
@@ -83,10 +83,13 @@ function createGame(gameInfo) {
   gameElement.className = 'game';
 
   if (gameInfo.thumbnailType) {
+    const thumbnailContainer = document.createElement('div');
+    thumbnailContainer.className = 'thumbnail-container';
+    gameElement.appendChild(thumbnailContainer);
     const thumbnail = document.createElement('img');
-    thumbnail.src = `https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/i6w1-jf-geometry-dash/thumbnail.${gameInfo.thumbnailType}`;
+    thumbnail.src = `https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/${gameInfo.path}/thumbnail.${gameInfo.thumbnailType}`;
     thumbnail.alt = gameInfo.title;
-    gameElement.appendChild(thumbnail);
+    thumbnailContainer.appendChild(thumbnail);
   }
 
   const header = document.createElement('div');
@@ -121,7 +124,7 @@ function createGame(gameInfo) {
   footer.className = 'footer';
   gameElement.appendChild(footer);
   const playLink = document.createElement('a');
-  playLink.href = gameInfo.playLink;
+  playLink.href = gameInfo.path;
   playLink.textContent = 'Play Now';
   footer.appendChild(playLink);
 
