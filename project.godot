@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="pronto"
-config/features=PackedStringArray("4.0", "Forward Plus")
+run/main_scene="res://prototypes/i5w1-jf-move-planning/game.tscn"
+config/features=PackedStringArray("4.1", "Forward Plus")
 run/low_processor_mode=true
 config/icon="res://icon.svg"
 
