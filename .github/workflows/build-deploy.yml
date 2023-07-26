@@ -40,6 +40,12 @@ jobs:
           if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/game_info.json ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/game_info.json build/web/game_info.json; fi
           if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.png ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.png build/web/thumbnail.png; fi
           if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.jpg ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.jpg build/web/thumbnail.jpg; fi
+      - name: Patch for Cross Origin Isolation and SharedArrayBuffer
+        run: |
+          mv scripts/enable-threads.js build/web/enable-threads.js
+          cd build/web/
+          sed -i 's|headers.set("Cross-Origin-Embedder-Policy", "credentialless")|headers.set("Cross-Origin-Embedder-Policy", "require-corp")|g'  enable-threads.js
+          sed -i 's|<script src="index.js"></script>|<script src="enable-threads.js"></script><script src="index.js"></script>|g' index.html
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
@@ -48,12 +54,6 @@ jobs:
       - name: Install rsync 📚
         run: |
           apt-get update && apt-get install -y rsync
-      - name: Patch for Cross Origin Isolation and SharedArrayBuffer
-        run: |
-          mv scripts/enable-threads.js build/web/enable-threads.js
-          cd build/web/
-          sed -i 's|headers.set("Cross-Origin-Embedder-Policy", "credentialless")|headers.set("Cross-Origin-Embedder-Policy", "require-corp")|g'  enable-threads.js
-          sed -i 's|<script src="index.js"></script>|<script src="enable-threads.js"></script><script src="index.js"></script>|g' index.html
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
