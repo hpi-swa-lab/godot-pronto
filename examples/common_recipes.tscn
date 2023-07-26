@@ -1,0 +1,101 @@
+[gd_scene load_steps=13 format=3 uid="uid://6gvslyge0ssy"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/GroupBehavior.gd" id="1_7pofs"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_3p4fo"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_ycxkx"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_d628k"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="5_qidej"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_03hit"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_rou6c"]
+
+[sub_resource type="GDScript" id="GDScript_4047h"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return Vector2(-1, 1)
+"
+
+[sub_resource type="Resource" id="Resource_01l0e"]
+script = ExtResource("6_03hit")
+nested_script = SubResource("GDScript_4047h")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_a1nee"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ej2t0"]
+script = ExtResource("6_03hit")
+nested_script = SubResource("GDScript_a1nee")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a7vk8"]
+script = ExtResource("7_rou6c")
+signal_name = "always"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_direction"
+arguments = [SubResource("Resource_01l0e")]
+only_if = SubResource("Resource_ej2t0")
+deferred = false
+enabled = true
+
+[node name="common_recipes" type="Node2D"]
+
+[node name="Automatic Movement in One Direction" type="Node2D" parent="."]
+position = Vector2(279, 54)
+script = ExtResource("1_7pofs")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Automatic Movement in One Direction"]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Automatic Movement in One Direction/CharacterBody2D"]
+script = ExtResource("2_3p4fo")
+sprite_texture = ExtResource("3_ycxkx")
+
+[node name="MoveBehavior" type="Node2D" parent="Automatic Movement in One Direction/CharacterBody2D"]
+position = Vector2(1, 67)
+script = ExtResource("4_d628k")
+
+[node name="AlwaysBehavior" type="Node2D" parent="Automatic Movement in One Direction/CharacterBody2D"]
+position = Vector2(-97, 67)
+script = ExtResource("5_qidej")
+metadata/pronto_connections = [SubResource("Resource_a7vk8")]
+
+[node name="Automatic Movement On a Path" type="Node2D" parent="."]
+position = Vector2(893, 79)
+script = ExtResource("1_7pofs")
+
+[node name="Platformer Character" type="Node2D" parent="."]
+position = Vector2(-313, -276)
+script = ExtResource("1_7pofs")
+
+[node name="Platformer Character with Area Influences" type="Node2D" parent="."]
+position = Vector2(-313, -276)
+script = ExtResource("1_7pofs")
+
+[node name="Platformer Character with Health Bar and Lives" type="Node2D" parent="."]
+position = Vector2(-313, -276)
+script = ExtResource("1_7pofs")
+
+[node name="Shooting" type="Node2D" parent="."]
+position = Vector2(-313, -276)
+script = ExtResource("1_7pofs")
+
+[node name="State Machine with Current State Displayed" type="Node2D" parent="."]
+position = Vector2(-313, -276)
+script = ExtResource("1_7pofs")
+
+[node name="Top Down Character" type="Node2D" parent="."]
+position = Vector2(-313, -276)
+script = ExtResource("1_7pofs")
+
+[node name="Values with Bind" type="Node2D" parent="."]
+position = Vector2(-313, -276)
+script = ExtResource("1_7pofs")
