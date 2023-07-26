@@ -2,6 +2,7 @@
 extends VBoxContainer
 
 signal text_changed()
+signal save_requested()
 signal blur()
 
 ## Set to direct that this editor should override the argument_names of the
@@ -25,6 +26,15 @@ var control_argument_names = true
 			return argument_names
 		else:
 			return edit_script.argument_names
+var argument_types: Variant = []:
+	set(v):
+		if edit_script != null and "argument_types" in edit_script:
+			edit_script.argument_types = v
+	get:
+		if "argument_types" in edit_script:
+			return edit_script.argument_types
+		else:
+			return null
 @export var placeholder_text: String:
 	get: return %Expression.placeholder_text
 	set(v):
@@ -39,6 +49,7 @@ var control_argument_names = true
 		edit_script = v
 		if control_argument_names:
 			edit_script.argument_names = argument_names
+			edit_script.argument_types = argument_types
 		# https://github.com/godotengine/godot-proposals/issues/325#issuecomment-845668412
 		if not is_inside_tree(): await ready
 		%Expression.text = edit_script.source_code
@@ -120,8 +131,8 @@ func fake_a_godot_highlighter():
 	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
 	var h = CodeHighlighter.new()
 	h.color_regions = {
-		"\"": s.get("text_editor/theme/highlighting/string_color"),
-		"'": s.get("text_editor/theme/highlighting/string_color")
+		"\" \"": s.get("text_editor/theme/highlighting/string_color"),
+		"' '": s.get("text_editor/theme/highlighting/string_color")
 	}
 	h.number_color = s.get("text_editor/theme/highlighting/number_color")
 	h.symbol_color = s.get("text_editor/theme/highlighting/symbol_color")
@@ -190,6 +201,7 @@ func get_a_godot_highlighter():
 		%Expression.syntax_highlighter = s
 
 func open_file():
+	save_requested.emit()
 	var interface = G.at("_pronto_editor_plugin").get_editor_interface()
 	interface.edit_script(edit_script.nested_script)
 	interface.set_main_screen_editor("Script")

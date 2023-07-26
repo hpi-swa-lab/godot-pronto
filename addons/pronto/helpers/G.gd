@@ -18,6 +18,13 @@ func at(name: String, default = null):
 		return values[name]
 	else:
 		return default
+		
+func at_and_remove(name: String, default = null):
+	var val = at(name,default)
+	if(name in values):
+		values.erase(name)
+	return val
+		
 
 func default(name: String, call: Callable):
 	if not name in values:
@@ -31,6 +38,6 @@ func inc(prop: String, amount = 1):
 func _put(name: String, value: Variant):
 	values[name] = value
 
-func _register_store(store: Store, prop: String):
+func _register_store(store: StoreBehavior, prop: String):
 	assert(not prop in _store_update, "Property {0} has already been registered by a store node. Are you spawning the same Store mutliple times?".format([prop]))
 	_store_update[prop] = store

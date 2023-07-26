@@ -39,6 +39,28 @@ func on_text_changed():
 		request_code_completion()
 
 func _request_code_completion(force):
+	ConnectionScript.map_row_col(edited_script, get_caret_line(), get_caret_column(), func(row, col):
+		# at(" / put("
+		var txt: String = %Expression.text
+		var at_regex = RegEx.new()
+		at_regex.compile("at\\(")
+		var at_and_erase_regex = RegEx.new()
+		at_and_erase_regex.compile("at_and_remove\\(")
+		var put_regex = RegEx.new()
+		put_regex.compile("put\\(")
+		txt = txt.substr(max(0,col-15), min(15, txt.length()))
+		var contains_quotes = txt.contains("(\"\"")
+		if at_regex.search(txt) or put_regex.search(txt) or at_and_erase_regex.search(txt):
+			var store_list = Utils.all_nodes_that(G.get_parent(), func(node): return is_instance_of(node, StoreBehavior))
+			for store in store_list:
+				for store_entry in store.get_meta_list():
+					add_code_completion_option(CodeEdit.KIND_MEMBER, store_entry, _get_proper_insertion_value(store_entry,!contains_quotes))
+			for key in G.values.keys():
+				if key != "_pronto_behaviors" and key != "_pronto_editor_plugin":
+					add_code_completion_option(CodeEdit.KIND_MEMBER, key, _get_proper_insertion_value(key,!contains_quotes))
+			update_code_completion_options(true)	
+	)
+	
 	ConnectionScript.map_row_col(edited_script, get_caret_line(), get_caret_column(), func (row, col):
 		LanguageClient.completion(edited_script, row, col, func (entries):
 			for entry in entries:
@@ -47,6 +69,12 @@ func _request_code_completion(force):
 				add_code_completion_option(CodeEdit.KIND_MEMBER, Utils.ellipsize(entry["label"]), insert)
 			update_code_completion_options(true)
 		))
+
+func _get_proper_insertion_value(value, add_quotes):
+	if add_quotes:
+		value = value.replace("\"", "") 
+		value = "\"" + value + "\"" 
+	return value
 
 func _enter_tree():
 	if not _opened and edited_script != null:

@@ -24,7 +24,7 @@ class Handle:
 	func begin():
 		pass
 	
-	func end(undo_redo: EditorUndoRedoManager):
+	func end(undo_redo):
 		pass
 
 class SetPropHandle extends Handle:
@@ -48,7 +48,7 @@ class SetPropHandle extends Handle:
 	func begin():
 		_initial = object.get(property)
 	
-	func end(undo_redo: EditorUndoRedoManager):
+	func end(undo_redo):
 		undo_redo.create_action("Set {0}".format([property]))
 		undo_redo.add_do_property(object, property, object.get(property))
 		undo_redo.add_undo_property(object, property, _initial)
@@ -58,10 +58,11 @@ func deselected():
 	_dragging = null
 
 func _forward_canvas_draw_over_viewport(node: Behavior, viewport_control: Control):
-	for handle in node.handles():
-		viewport_control.draw_texture(handle.icon, handle.rect_in(node).position)
+	if node.handles():
+		for handle in node.handles():
+			viewport_control.draw_texture(handle.icon, handle.rect_in(node).position)
 
-func _forward_canvas_gui_input(node: Behavior, event: InputEvent, undo_redo: EditorUndoRedoManager):
+func _forward_canvas_gui_input(node: Behavior, event: InputEvent, undo_redo):
 	if event is InputEventMouse:
 		if _dragging != null:
 			if event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -75,9 +76,10 @@ func _forward_canvas_gui_input(node: Behavior, event: InputEvent, undo_redo: Edi
 					_dragging.apply.call(event.position - node.get_viewport_transform() * node.global_position)
 				return true
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			for handle in node.handles():
-				if handle.rect_in(node).has_point(event.position):
-					_dragging = handle
-					_dragging.begin()
-					return true
+			if node.handles():
+				for handle in node.handles():
+					if handle.rect_in(node).has_point(event.position):
+						_dragging = handle
+						_dragging.begin()
+						return true
 	return false

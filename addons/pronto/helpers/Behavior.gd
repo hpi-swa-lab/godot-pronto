@@ -2,15 +2,21 @@
 extends Node2D
 class_name Behavior
 
-var _icon
+var _icon := TextureRect.new()
 var _handles := Handles.new()
 var _lines := Lines.new()
 
+func reload_icon():
+	_icon.texture = icon_texture()
+	_icon.queue_redraw()
+
+func icon_texture():
+	var name = get_script().resource_path.get_file().split('.')[0]
+	return Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
+
 func _ready():
 	if Engine.is_editor_hint() and show_icon() and is_active_scene():
-		_icon = TextureRect.new()
-		var name = get_script().resource_path.get_file().split('.')[0]
-		_icon.texture = Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
+		_icon.texture = icon_texture()
 		_icon.position = _icon.texture.get_size() / -2
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
 		
@@ -26,12 +32,17 @@ func _ready():
 			var radius = (parent_full_rect.size.length() + Utils.global_rect_of(self).size.length()) / 2
 			radius = clamp(radius, 10, 200)
 			position = Vector2(0, radius).rotated(get_parent().get_child_count() * PI / 4)
-			global_position = clamp(global_position, parent_rect.global_position, parent_rect.global_position + parent_rect.size)
+			global_position = clamp(global_position, parent_rect.position, parent_rect.position + parent_rect.size)
 
 func is_active_scene() -> bool:
 	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
 
-func get_editor_plugin() -> EditorPlugin:
+func is_being_edited() -> bool:
+	if not Engine.is_editor_hint():
+		return false
+	return get_editor_plugin().edited_object == self
+
+func get_editor_plugin():
 	return G.at("_pronto_editor_plugin")
 
 func show_icon():
@@ -39,6 +50,9 @@ func show_icon():
 
 func connect_ui():
 	return null
+
+func show_background_around_children():
+	return false
 
 func _process(delta):
 	if Engine.is_editor_hint():
@@ -49,8 +63,11 @@ func _process(delta):
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	_handles._forward_canvas_draw_over_viewport(self, viewport_control)
 
-func _forward_canvas_gui_input(event: InputEvent, undo_redo: EditorUndoRedoManager):
+func _forward_canvas_gui_input(event: InputEvent, undo_redo):
 	return _handles._forward_canvas_gui_input(self, event, undo_redo)
+
+func selected():
+	pass
 
 func deselected():
 	_handles.deselected()
@@ -92,6 +109,9 @@ func flash_line(value: float, key: Variant, type: String):
 	_lines.flash_line(key, type, value)
 	queue_redraw()
 
+func line_text_function(connection: Connection) -> Callable:
+	return func(flipped): return connection.print(flipped)
+
 func lines() -> Array:
 	return Connection.get_connections(self).map(func (connection):
 		var other = self if not connection.is_target() else get_node_or_null(connection.to)
@@ -99,12 +119,13 @@ func lines() -> Array:
 			return null
 		return Lines.Line.new(self,
 			other,
-			func (flipped): return connection.print(flipped),
+			line_text_function(connection),
 			connection,
 			Color.WHITE if connection.enabled else Color.WHITE.lerp(Color.BLACK, 0.5))
 	).filter(func (connection): return connection != null)
 
 func _draw():
-	if not Engine.is_editor_hint() or not _icon or not is_inside_tree():
+	if not Engine.is_editor_hint() or not is_inside_tree():
 		return
 	_lines._draw_lines(self, lines())
+	draw_set_transform(Vector2.ZERO) # Reset transform after it has been changed when drawing lines

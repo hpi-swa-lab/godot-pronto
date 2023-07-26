@@ -1,0 +1,82 @@
+[gd_scene load_steps=4 format=3 uid="uid://ct5llbk6b3pgx"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_3ql0p"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_fb1hc"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="3_cvgxx"]
+
+[node name="jumpnrun" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(563, 624)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D"]
+position = Vector2(1, 16)
+script = ExtResource("1_3ql0p")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(2000, 40)
+sprite_texture = ExtResource("2_fb1hc")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(683, 443)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D2"]
+position = Vector2(1, 16)
+script = ExtResource("1_3ql0p")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+sprite_texture = ExtResource("2_fb1hc")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(899, 528)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D3"]
+position = Vector2(1, 16)
+script = ExtResource("1_3ql0p")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+sprite_texture = ExtResource("2_fb1hc")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(763, 590)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D4"]
+position = Vector2(1, 16)
+script = ExtResource("1_3ql0p")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+sprite_texture = ExtResource("2_fb1hc")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(575, 558)
+
+[node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("1_3ql0p")
+label = "guy"
+placeholder_size = Vector2(20, 60)
+sprite_texture = ExtResource("2_fb1hc")
+
+[node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(45, -12)
+script = ExtResource("3_cvgxx")
+show_trail = true
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(389, 306)
+rotation = 0.476859
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D5"]
+position = Vector2(1, 16)
+script = ExtResource("1_3ql0p")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(457, 36)
+sprite_texture = ExtResource("2_fb1hc")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2(978, 594)
+
+[node name="Placeholder" type="Node2D" parent="StaticBody2D6"]
+position = Vector2(1, 16)
+script = ExtResource("1_3ql0p")
+color = Color(0.0313726, 0.658824, 0, 1)
+placeholder_size = Vector2(88, 71)
+sprite_texture = ExtResource("2_fb1hc")

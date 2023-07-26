@@ -1,10 +1,14 @@
 extends Object
 class_name U
 
-# Collection of utilities for use in Expressions.
+## Collection of utilities for use in Expressions.
 
 ## For functions that act relative to a node, this sets the node.
 var ref: Node
+
+
+## Caches resolved nodes for looking up values from Stores or Values
+var _at_cache = {}
 
 func _init(ref: Node = null):
 	self.ref = ref
@@ -64,7 +68,10 @@ static func mouse_position() -> Vector2:
 	return Engine.get_main_loop().root.get_mouse_position()
 
 func next_store(name: String):
-	var s = closest_that(func (n): return n is Store and n.has_meta(name))
+	if name in _at_cache: return _at_cache[name]
+	var s = closest_that(func (n): return n is StoreBehavior and n.has_meta(name))
+	_at_cache[name] = G if s == null else s
+
 	if s == null:
 		return G
 	else:

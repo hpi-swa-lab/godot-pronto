@@ -2,6 +2,7 @@
 shader_type canvas_item;
 
 uniform vec4 color : source_color = vec4(1.0);
+uniform vec4 tint_color : source_color  = vec4(1.0);
 uniform float width : hint_range(0, 10) = 1.0;
 uniform int pattern : hint_range(0, 2) = 0; // circle, diamond, square
 uniform bool inside = false;
@@ -54,6 +55,10 @@ void fragment() {
 		}
 	} else {
 		COLOR = texture(TEXTURE, uv);
+	}
+	
+	if (!AT_LIGHT_PASS) {
+		COLOR = COLOR * tint_color;
 	}
 	
 	if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, TEXTURE)) {

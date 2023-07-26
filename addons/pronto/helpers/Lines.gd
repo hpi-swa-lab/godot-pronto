@@ -38,8 +38,9 @@ func _draw_lines(c: CanvasItem, lines: Array):
 	for to in groups:
 		var group = groups[to]
 		var combined = group[0].as_combined(group)
-		if to == group[0].from:
-			c.draw_set_transform(Vector2(0, c._icon.get_size().y / 2 + text_size))
+		if to == group[0].from: # draw connection to itself
+			var y = 0 if not c._icon else c._icon.get_size().y / 2 # for behaviors without displayed icon use y = 0
+			c.draw_set_transform(Vector2(0, y + text_size))
 			combined.draw_text(c, font, text_size, false, self)
 		else:
 			combined._draw(c, font, text_size, self)
@@ -73,13 +74,31 @@ class Line:
 				final += color.lerp(flash_colors[type], flash)
 		return final if final != Color.BLACK else color
 	
+	func draw_outlined_text(c: CanvasItem, font: Font, text_size: int, text_position: Vector2, text: String, color: Color):
+		c.draw_multiline_string_outline(font,
+			text_position,
+			text,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, text_size / 2, Color.BLACK)
+			
+		c.draw_multiline_string(font,
+			text_position,
+			text,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color)
+		
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, lines: Lines):
 		var text = text_fn.call(flipped)
 		var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
-		c.draw_multiline_string(font,
-			Vector2(-size.x - 24, 0) if flipped else Vector2(0, 0),
-			text,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, current_color(lines))
+
+		draw_outlined_text(
+			c, 
+			font, 
+			text_size, 
+			Vector2(-size.x - 24, 0) if flipped else Vector2(0, 0), 
+			text, 
+			current_color(lines)
+		)
+	
+		
 	
 	func draw_line(c: CanvasItem, begin: Vector2, end: Vector2, color: Color, width: float):
 		c.draw_line(begin, end, color, width, true)
@@ -90,7 +109,10 @@ class Line:
 		
 		var col := current_color(lines)
 		
-		c.draw_set_transform(Vector2.ZERO)
+		# Used for displaying everything correctly if Behavior is rotated
+		var c_rotation = c.get_transform().get_rotation()
+		
+		c.draw_set_transform(Vector2.ZERO, -c_rotation)
 		
 		var begin = Vector2.ZERO
 		var end = Utils.global_rect_of(to).get_center() - from.global_position
@@ -108,7 +130,8 @@ class Line:
 		arrow = arrow.map(func (p): return (p * arrow_size).rotated(angle) + end)
 		c.draw_polygon(arrow, [col, col, col])
 		
-		var flip = Utils.between(angle, PI / 2, PI) or Utils.between(angle, -PI, -PI / 2)
+		var flip = abs(angle) > PI / 2
+		angle -= c_rotation # Apply correction for drawing the text if Behavior is rotated
 		c.draw_set_transform_matrix(Transform2D(angle + PI if flip else angle, Vector2.ZERO) * Transform2D(0.0, Vector2(12, -2)))
 		draw_text(c, font, text_size, flip, lines)
 
@@ -128,10 +151,15 @@ class CombinedLine extends Line:
 			var text = line.text_fn.call(flipped)
 			var color = line.current_color(_lines)
 			var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
-			c.draw_multiline_string(font,
+	
+			draw_outlined_text(
+				c, 
+				font, 
+				text_size, 
 				Vector2(-size.x - 24, y) if flipped else Vector2(0, y),
 				text,
-				HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, color)
+				color
+			)
 			y += size.y
 
 class BottomText extends Line:
@@ -141,7 +169,12 @@ class BottomText extends Line:
 	func draw_text(c: CanvasItem, font: Font, text_size: int, flipped: bool, lines: Lines):
 		var text = text_fn.call(flipped)
 		var size = font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, text_size)
-		c.draw_multiline_string(font,
-			Vector2(-size.x/2, 0),
-			text,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, text_size, -1, current_color(lines))
+		
+		draw_outlined_text(
+			c, 
+			font, 
+			text_size, 
+			Vector2(-size.x/2, 0), 
+			text, 
+			current_color(lines)
+		)

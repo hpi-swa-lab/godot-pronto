@@ -1,241 +1,245 @@
-[gd_scene load_steps=33 format=3 uid="uid://djwtj60chgdsh"]
+[gd_scene load_steps=33 format=3 uid="uid://cpdmehmxb8mio"]
 
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StateBehavior.gd" id="1_ouj63"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_4y7ja"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/State.gd" id="2_tbn87"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_73m08"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Key.gd" id="5_ejoys"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/Placeholder.gd" id="6_ftwda"]
-[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="7_0ahkn"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="4_dyu68"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="5_p6hy4"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="6_aynaj"]
 
-[sub_resource type="GDScript" id="GDScript_dfra2"]
+[sub_resource type="GDScript" id="GDScript_he2pe"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return \"Active State: A\"
-"
-
-[sub_resource type="Resource" id="Resource_h6ijk"]
-script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_dfra2")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_mg34c"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from, to):
+func run(target_state_name, from: Node2D, to: Node2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_xbl86"]
+[sub_resource type="Resource" id="Resource_jfive"]
 script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_mg34c")
-argument_names = ["from", "to"]
+nested_script = SubResource("GDScript_he2pe")
+argument_names = ["target_state_name", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_mm6vb"]
-script = ExtResource("3_73m08")
-signal_name = "entered"
-to = NodePath("../Placeholder")
-invoke = "@label_setter"
-arguments = [SubResource("Resource_h6ijk")]
-only_if = SubResource("Resource_xbl86")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_mjq3q"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(transition_id, from, to):
-	return transition_id == 1
-"
-
-[sub_resource type="Resource" id="Resource_ysvhh"]
-script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_mjq3q")
-argument_names = ["transition_id", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_ruju7"]
+[sub_resource type="Resource" id="Resource_kcvfd"]
 script = ExtResource("3_73m08")
 signal_name = "exited"
-to = NodePath("../B")
+to = NodePath("../State 2")
+more_references = []
 invoke = "enter"
 arguments = []
-only_if = SubResource("Resource_ysvhh")
+only_if = SubResource("Resource_jfive")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_lbfaa"]
+[sub_resource type="GDScript" id="GDScript_3w8k2"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return \"Active State: B\"
+func run(from: Node2D, to: Node2D):
+	return \"Active State: 1\"
 "
 
-[sub_resource type="Resource" id="Resource_hisl0"]
+[sub_resource type="Resource" id="Resource_jvivn"]
 script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_lbfaa")
+nested_script = SubResource("GDScript_3w8k2")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_2lo1m"]
+[sub_resource type="GDScript" id="GDScript_sj786"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from, to):
+func run(from: Node2D, to: Node2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_b3gou"]
+[sub_resource type="Resource" id="Resource_4uv58"]
 script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_2lo1m")
+nested_script = SubResource("GDScript_sj786")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_q4cs6"]
+[sub_resource type="Resource" id="Resource_wj4yl"]
 script = ExtResource("3_73m08")
 signal_name = "entered"
-to = NodePath("../Placeholder")
+to = NodePath("../PlaceholderBehavior")
+more_references = []
 invoke = "@label_setter"
-arguments = [SubResource("Resource_hisl0")]
-only_if = SubResource("Resource_b3gou")
+arguments = [SubResource("Resource_jvivn")]
+only_if = SubResource("Resource_4uv58")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_krn3b"]
+[sub_resource type="GDScript" id="GDScript_7gyoj"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(transition_id, from, to):
-	return transition_id == 1
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
 "
 
-[sub_resource type="Resource" id="Resource_tr8jg"]
+[sub_resource type="Resource" id="Resource_e1ydm"]
 script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_krn3b")
-argument_names = ["transition_id", "from", "to"]
+nested_script = SubResource("GDScript_7gyoj")
+argument_names = ["target_state_name", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_0ye8h"]
+[sub_resource type="Resource" id="Resource_3fbx2"]
 script = ExtResource("3_73m08")
 signal_name = "exited"
-to = NodePath("../A")
+to = NodePath("../State 1")
+more_references = []
 invoke = "enter"
 arguments = []
-only_if = SubResource("Resource_tr8jg")
+only_if = SubResource("Resource_e1ydm")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_fmvf7"]
+[sub_resource type="GDScript" id="GDScript_eo1g1"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return 1
+func run(from: Node2D, to: Node2D):
+	return \"Active State: 2\"
 "
 
-[sub_resource type="Resource" id="Resource_urnpo"]
+[sub_resource type="Resource" id="Resource_12rtc"]
 script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_fmvf7")
+nested_script = SubResource("GDScript_eo1g1")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_eoiei"]
+[sub_resource type="GDScript" id="GDScript_53526"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from, to):
+func run(from: Node2D, to: Node2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_n5gln"]
+[sub_resource type="Resource" id="Resource_vfjr1"]
 script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_eoiei")
+nested_script = SubResource("GDScript_53526")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_jm6fj"]
+[sub_resource type="Resource" id="Resource_4lqv5"]
 script = ExtResource("3_73m08")
-signal_name = "up"
-to = NodePath("../A")
-invoke = "exit"
-arguments = [SubResource("Resource_urnpo")]
-only_if = SubResource("Resource_n5gln")
+signal_name = "entered"
+to = NodePath("../PlaceholderBehavior")
+more_references = []
+invoke = "@label_setter"
+arguments = [SubResource("Resource_12rtc")]
+only_if = SubResource("Resource_vfjr1")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_ssr1l"]
+[sub_resource type="GDScript" id="GDScript_d4ge1"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from, to):
-	return 1
+func run(from: Node2D, to: Node2D):
+	return \"\"
 "
 
-[sub_resource type="Resource" id="Resource_11ukd"]
+[sub_resource type="Resource" id="Resource_6jrb7"]
 script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_ssr1l")
+nested_script = SubResource("GDScript_d4ge1")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="GDScript" id="GDScript_dqfn2"]
+[sub_resource type="GDScript" id="GDScript_obkn3"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from, to):
+func run(from: Node2D, to: Node2D):
 	return true
 "
 
-[sub_resource type="Resource" id="Resource_qnbcl"]
+[sub_resource type="Resource" id="Resource_yob2n"]
 script = ExtResource("2_4y7ja")
-nested_script = SubResource("GDScript_dqfn2")
+nested_script = SubResource("GDScript_obkn3")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_pkb1j"]
+[sub_resource type="Resource" id="Resource_gh0yj"]
 script = ExtResource("3_73m08")
 signal_name = "up"
-to = NodePath("../B")
+to = NodePath("../State 1")
+more_references = []
 invoke = "exit"
-arguments = [SubResource("Resource_11ukd")]
-only_if = SubResource("Resource_qnbcl")
+arguments = [SubResource("Resource_6jrb7")]
+only_if = SubResource("Resource_yob2n")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_f0bgy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"\"
+"
+
+[sub_resource type="Resource" id="Resource_knnk7"]
+script = ExtResource("2_4y7ja")
+nested_script = SubResource("GDScript_f0bgy")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_iw8di"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_wlfen"]
+script = ExtResource("2_4y7ja")
+nested_script = SubResource("GDScript_iw8di")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rw5bd"]
+script = ExtResource("3_73m08")
+signal_name = "up"
+to = NodePath("../State 2")
+more_references = []
+invoke = "exit"
+arguments = [SubResource("Resource_knnk7")]
+only_if = SubResource("Resource_wlfen")
 deferred = false
 enabled = true
 
 [node name="state_machine" type="Node2D"]
 
-[node name="A" type="Node2D" parent="."]
-position = Vector2(301, 226)
-script = ExtResource("2_tbn87")
+[node name="State 1" type="Node2D" parent="."]
+position = Vector2(56, 93)
+script = ExtResource("1_ouj63")
 active = true
-metadata/pronto_connections = [SubResource("Resource_mm6vb"), SubResource("Resource_ruju7")]
+metadata/pronto_connections = [SubResource("Resource_kcvfd"), SubResource("Resource_wj4yl")]
 
-[node name="B" type="Node2D" parent="."]
-position = Vector2(480, 226)
-script = ExtResource("2_tbn87")
-metadata/pronto_connections = [SubResource("Resource_q4cs6"), SubResource("Resource_0ye8h")]
+[node name="State 2" type="Node2D" parent="."]
+position = Vector2(201, 94)
+script = ExtResource("1_ouj63")
+metadata/pronto_connections = [SubResource("Resource_3fbx2"), SubResource("Resource_4lqv5")]
 
-[node name="Key B" type="Node2D" parent="."]
-position = Vector2(302, 295)
-script = ExtResource("5_ejoys")
-key = "B"
-metadata/pronto_connections = [SubResource("Resource_jm6fj")]
-
-[node name="Placeholder" type="Node2D" parent="."]
-position = Vector2(390, 65)
-script = ExtResource("6_ftwda")
-label = "Active State:"
-placeholder_size = Vector2(287, 57)
-keep_in_origin = false
-sprite_texture = ExtResource("7_0ahkn")
-
-[node name="Key A" type="Node2D" parent="."]
-position = Vector2(480, 300)
-script = ExtResource("5_ejoys")
+[node name="KeyBehavior" type="Node2D" parent="."]
+position = Vector2(56, 179)
+script = ExtResource("4_dyu68")
 key = "A"
-metadata/pronto_connections = [SubResource("Resource_pkb1j")]
+metadata/pronto_connections = [SubResource("Resource_gh0yj")]
+
+[node name="KeyBehavior2" type="Node2D" parent="."]
+position = Vector2(198, 176)
+script = ExtResource("4_dyu68")
+key = "S"
+metadata/pronto_connections = [SubResource("Resource_rw5bd")]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="."]
+position = Vector2(129, 32)
+script = ExtResource("5_p6hy4")
+placeholder_size = Vector2(216, 43)
+sprite_texture = ExtResource("6_aynaj")

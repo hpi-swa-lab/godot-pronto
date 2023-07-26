@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://co3kc6g87njiy"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/GroupDrawer.gd" id="1_tubqq"]
+
+[node name="GroupDrawer" type="Node2D"]
+script = ExtResource("1_tubqq")

@@ -42,7 +42,10 @@ func open(receiver: Node):
 	return self
 
 func has_same_connection(other: NodeToNodeConfigurator):
-	return other.from == from and other.selected_signal == selected_signal
+	return other.from == from \
+		and other.selected_signal == selected_signal \
+		and other.receiver == receiver \
+		and other.existing_connection == existing_connection
 
 var undo_redo: EditorUndoRedoManager
 
@@ -103,9 +106,14 @@ func default_focus():
 
 func update_argument_names():
 	var names = argument_names()
+	var types = argument_types()
 	%Expression.argument_names = names
+	%Expression.argument_types = types
 	%Condition.argument_names = names
-	for c in %Args.get_children(): c.argument_names = names
+	%Condition.argument_types = types
+	for c in %Args.get_children():
+		c.argument_names = names
+		c.argument_types = types
 	
 	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
 	
@@ -159,7 +167,9 @@ func update_argument_names():
 	
 	# add deffered call to update size - HACKED
 	(func():
-		await get_tree().process_frame
+		var tree = get_tree()
+		if tree == null: return
+		await tree.process_frame
 		self.size = Vector2.ZERO
 	).call_deferred()
 
@@ -251,15 +261,21 @@ func _on_function_selected(name: String):
 	var ExpressionEdit = preload("res://addons/pronto/signal_connecting/expression_edit.tscn")
 	
 	var arguments = []
-	if receiver is Code and name == "execute":
+	if receiver is CodeBehavior and name == "execute":
 		arguments = Array(receiver.arguments).map(func (argument_name): return {"name": argument_name})
-	elif receiver is SceneRoot and name.begins_with("apply"):
+	elif receiver is SceneRootBehavior and name.begins_with("apply"):
 		# remove "from" argument so it does not appear in the connection window, 
 		# which is automatically set later in Connection.gd::_trigger.
 		arguments = method["args"]
 		arguments.pop_back()
 	else:
 		arguments = method["args"]
+		var index = method["args"].size() - method["default_args"].size()
+		var default_arg_index = 0
+		while index < method["args"].size():
+			arguments[index]["default_value"] = method["default_args"][default_arg_index]
+			default_arg_index+=1
+			index+=1
 	
 	for arg in arguments:
 		var arg_ui = ExpressionEdit.instantiate()
@@ -272,38 +288,47 @@ func _on_function_selected(name: String):
 			else:
 				arg_ui.edit_script = empty_script("func(from, node): null", true)
 		else:
-			arg_ui.edit_script = empty_script("null", true)
+			if arg.has("default_value"):
+				arg_ui.edit_script = empty_script(Utils.as_code_string(arg["default_value"]), true)
+			else:
+				arg_ui.edit_script = empty_script("return " + arg["name"], true)
 		%Args.add_child(arg_ui)
 		arg_ui.text_changed.connect(func(): mark_changed())
+		arg_ui.save_requested.connect(func(): save())
 	update_argument_names()
 
 func empty_script(expr: String, return_value: bool):
 	var script := ConnectionScript.new(argument_names(), return_value, expr)
-	script.argument_types = []
-	for i in len(selected_signal["args"]):
-		script.argument_types.append(null)
-		# TODO: use reflection to get type of signal arguments?
-	script.argument_types.append(Utils.get_specific_class_name(from))
-	if receiver != null:
-		script.argument_types.append(Utils.get_specific_class_name(receiver))
-	for ref in more_references:
-		var node := from.get_node(ref)
-		script.argument_types.append(Utils.get_specific_class_name(node))
+	script.argument_types = argument_types()
 	return script
 
 func argument_names():
-	return selected_signal["args"].map(func (a): return a["name"]) \
-		+ basic_argument_names()
+	return argument_names_and_types().map(func (a): return a[0])
+
+func argument_types():
+	return argument_names_and_types().map(func (a): return a[1])
+
+func argument_names_and_types():
+	return selected_signal["args"].map(func (a):
+		# TODO: use reflection to get type of signal arguments?
+		return [a["name"], null]) \
+		+ basic_argument_names_and_types()
 
 func basic_argument_names():
-	var names = []
-	names += ["from"]
-	if %Receiver.visible:
-		names += ["to"]
-	names += range(len(more_references)).map(func (i): return "ref{0}".format([i]))
-	return names
+	return basic_argument_names_and_types().map(func (a): return a[0])
 
-func _on_done_pressed():
+func basic_argument_names_and_types():
+	var names_and_types = []
+	names_and_types.append(["from", Utils.get_specific_class_name(from)])
+	if %Receiver.visible:
+		names_and_types.append(["to", Utils.get_specific_class_name(receiver)])
+	names_and_types += range(len(more_references)).map(func (i):
+		var ref = more_references[i]
+		var node = from.get_node(ref)
+		return ["ref{0}".format([i]), Utils.get_specific_class_name(node)])
+	return names_and_types
+
+func save():
 	%FunctionName.accept_selected()
 	
 	if not %Expression.visible:
@@ -321,7 +346,13 @@ func _on_done_pressed():
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
 				existing_connection,
-				{"expression": null, "invoke": invoke, "signal_name": %Signal.text, "arguments": args.map(func (a): return a.edit_script)})
+				{
+					"expression": null,
+					"invoke": invoke,
+					"signal_name": %Signal.text,
+					"more_references": more_references,
+					"arguments": args.map(func (a): return a.edit_script)
+				})
 		else:
 			existing_connection = Connection.connect_target(
 				from,
@@ -341,11 +372,15 @@ func _on_done_pressed():
 					{"source_code": %Expression.text}, "reload")
 			else:
 				Utils.commit_undoable(undo_redo,
-					"Set connection expression",
-					existing_connection, {"expression": %Expression.updated_script(from, selected_signal["name"])})
+				"Set connection expression",
+				existing_connection, {"expression": %Expression.updated_script(from, selected_signal["name"])})
 			Utils.commit_undoable(undo_redo,
 				"Update connection {0}".format([selected_signal["name"]]),
-				existing_connection, {"signal_name": %Signal.text, "more_references": more_references})
+				existing_connection,
+				{
+					"signal_name": %Signal.text,
+					"more_references": more_references
+				})
 		else:
 			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
 			existing_connection = Connection.connect_expr(from, selected_signal["name"], to_path,
@@ -357,6 +392,9 @@ func _on_done_pressed():
 	# FIXME doesn't respect undo
 	ConnectionsList.emit_connections_changed()
 	mark_changed(false)
+
+func _on_done_pressed():
+	save()
 	if not pinned:
 		queue_free()
 

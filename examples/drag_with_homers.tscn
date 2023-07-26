@@ -1,0 +1,297 @@
+[gd_scene load_steps=34 format=3 uid="uid://dbhx1tsbjadw3"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_1p2uu"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_rtpdu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="3_x22k0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/DragBehavior.gd" id="5_c3ke6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="6_luk5r"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="7_rn45d"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="8_uj4bn"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="9_mm2io"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="11_6wl7d"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="12_cpbqy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_g4yk5"]
+bounce = 0.3
+
+[sub_resource type="GDScript" id="GDScript_ssx55"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return Color.GREEN
+"
+
+[sub_resource type="Resource" id="Resource_xx3cn"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_ssx55")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_h6b7j"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from, to):
+	return 0.2
+"
+
+[sub_resource type="Resource" id="Resource_yhc4f"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_h6b7j")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_5qc07"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jkyc0"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_5qc07")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0cef5"]
+script = ExtResource("8_uj4bn")
+signal_name = "collided"
+to = NodePath("../PlaceholderBehavior")
+more_references = []
+invoke = "flash"
+arguments = [SubResource("Resource_xx3cn"), SubResource("Resource_yhc4f")]
+only_if = SubResource("Resource_jkyc0")
+deferred = false
+enabled = false
+
+[sub_resource type="GDScript" id="GDScript_iw61t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	var source := from.get_parent() as RigidBody2D
+	var copy1 := source.duplicate()
+	var copy2 := source.duplicate()
+	var ph1 := copy1.get_node(\"PlaceholderBehavior\") as PlaceholderBehavior
+	var ph2 := copy1.get_node(\"PlaceholderBehavior\") as PlaceholderBehavior
+	ph1.global_position = ph1.global_position - Vector2(0, ph1.size.y / 2)
+	#ph1.placeholder_size = ph1.placeholder_size * Vector2(1, 0.8)
+	ph1.scale *= .8
+	ph2.global_position = ph2.global_position + Vector2(0, ph2.size.y / 2)
+	#ph2.placeholder_size = ph2.placeholder_size * Vector2(1, 0.8)
+	ph2.scale *= .8
+	source.get_parent().add_child(copy1)
+	source.get_parent().add_child(copy2)
+	source.queue_free()
+	
+	var player = (from.get_node(\"/root/Node2D/PlayerSpawner\")).spawn()[0][0]
+	player.volume_db = log(ph1.scale.x) * 5
+	
+	#var shake = from.get_node(\"/root/Node2D/Camera2D/Shake\") as CameraShakeBehavior
+	#shake.add_trauma(log(ph1.scale.x) * 1)
+"
+
+[sub_resource type="Resource" id="Resource_wqado"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_iw61t")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_hdmst"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	if not (other is RigidBody2D): return false
+	#print(other.angular_velocity)
+	var n = len(Utils.all_nodes_that(
+		from.get_node(\"/root/Node2D\"),
+		func (n: Node): return n.is_in_group(\"bodies\")
+	))
+	return abs(other.angular_velocity) > 1.5 and randf() <= (1.0 / n)
+"
+
+[sub_resource type="Resource" id="Resource_ksmnj"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_hdmst")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_lwkoh"]
+script = ExtResource("8_uj4bn")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_ksmnj")
+expression = SubResource("Resource_wqado")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_txfqc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	for i in 5:
+		to.spawn()
+"
+
+[sub_resource type="Resource" id="Resource_x0ick"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_txfqc")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_d4u6j"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_d828c"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_d4u6j")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_x47vs"]
+script = ExtResource("8_uj4bn")
+signal_name = "node_ready"
+to = NodePath("../SpawnerBehavior")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_d828c")
+expression = SubResource("Resource_x0ick")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_gvfu1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: AudioStreamPlayer2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_7c6tt"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_gvfu1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_gqvr5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: AudioStreamPlayer2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ea5iu"]
+script = ExtResource("7_rn45d")
+nested_script = SubResource("GDScript_gqvr5")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_mj1mp"]
+script = ExtResource("8_uj4bn")
+signal_name = "elapsed"
+to = NodePath("..")
+more_references = []
+invoke = "play"
+arguments = [SubResource("Resource_7c6tt")]
+only_if = SubResource("Resource_ea5iu")
+deferred = false
+enabled = true
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(562, 642)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="StaticBody2D"]
+position = Vector2(108, 1142)
+script = ExtResource("1_1p2uu")
+placeholder_size = Vector2(4417, 2303)
+keep_in_origin = false
+sprite_texture = ExtResource("2_rtpdu")
+
+[node name="PlaceholderBehavior4" type="Node2D" parent="StaticBody2D"]
+position = Vector2(8, -1618)
+script = ExtResource("1_1p2uu")
+placeholder_size = Vector2(4210, 1990)
+keep_in_origin = false
+sprite_texture = ExtResource("2_rtpdu")
+
+[node name="PlaceholderBehavior2" type="Node2D" parent="StaticBody2D"]
+position = Vector2(1980, -313)
+script = ExtResource("1_1p2uu")
+placeholder_size = Vector2(2800, 1190)
+keep_in_origin = false
+sprite_texture = ExtResource("2_rtpdu")
+
+[node name="PlaceholderBehavior3" type="Node2D" parent="StaticBody2D"]
+position = Vector2(-1955, -299)
+script = ExtResource("1_1p2uu")
+placeholder_size = Vector2(2820, 1037)
+keep_in_origin = false
+sprite_texture = ExtResource("2_rtpdu")
+
+[node name="SpawnerBehavior" type="Node2D" parent="."]
+position = Vector2(736, 81)
+rotation = 0.23911
+script = ExtResource("3_x22k0")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="SpawnerBehavior" groups=["bodies"]]
+position = Vector2(137, 334)
+physics_material_override = SubResource("PhysicsMaterial_g4yk5")
+can_sleep = false
+
+[node name="PlaceholderBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
+script = ExtResource("1_1p2uu")
+color = Color(1, 1, 1, 0)
+placeholder_size = Vector2(100, 130)
+use_sprite = true
+sprite_texture = ExtResource("2_rtpdu")
+
+[node name="DragBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
+position = Vector2(-723, 130)
+script = ExtResource("5_c3ke6")
+
+[node name="CollisionBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
+position = Vector2(160, 69)
+script = ExtResource("6_luk5r")
+metadata/pronto_connections = [SubResource("Resource_0cef5"), SubResource("Resource_lwkoh")]
+
+[node name="NodeReadyBehavior" type="Node2D" parent="."]
+position = Vector2(90, 231)
+script = ExtResource("9_mm2io")
+metadata/pronto_connections = [SubResource("Resource_x47vs")]
+
+[node name="PlayerSpawner" type="Node2D" parent="."]
+script = ExtResource("3_x22k0")
+
+[node name="Player" type="AudioStreamPlayer2D" parent="PlayerSpawner"]
+unique_name_in_owner = true
+
+[node name="ClockBehavior" type="Node2D" parent="PlayerSpawner/Player"]
+script = ExtResource("11_6wl7d")
+one_shot = true
+duration_seconds = 0.0001
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_mj1mp")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(585, 331)
+
+[node name="Shake" type="Node2D" parent="Camera2D"]
+unique_name_in_owner = true
+script = ExtResource("12_cpbqy")
