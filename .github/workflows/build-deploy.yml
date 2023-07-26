@@ -2,11 +2,11 @@ name: "Build & Deploy Game"
 on:
   workflow_dispatch:
     inputs:
-      scene_folder:
-        description: 'Name of the Godot game scene to export (e.g. my_game).'
+      project_folder:
+        description: 'Name of the Godot project folder to export (e.g. my_game):'
         required: true
       path_prefix:
-        description: 'Prefix path of scene_folder.'
+        description: 'Prefix path of project folder:'
         required: false
         default: "prototypes/"
 
@@ -34,12 +34,12 @@ jobs:
           godot --headless --export-release Web build/web/index.html
       - name: Godot Web Build
         run: |
-          ./scripts/export.sh ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}
+          ./scripts/export.sh ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.project_folder }}
       - name: Move game_info.json and thumbnail
         run: |
-          if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/game_info.json ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/game_info.json build/web/game_info.json; fi
-          if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.png ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.png build/web/thumbnail.png; fi
-          if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.jpg ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.scene_folder }}/thumbnail.jpg build/web/thumbnail.jpg; fi
+          if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.project_folder }}/game_info.json ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.project_folder }}/game_info.json build/web/game_info.json; fi
+          if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.project_folder }}/thumbnail.png ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.project_folder }}/thumbnail.png build/web/thumbnail.png; fi
+          if [ -f ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.project_folder }}/thumbnail.jpg ]; then mv ${{ github.event.inputs.path_prefix }}${{ github.event.inputs.project_folder }}/thumbnail.jpg build/web/thumbnail.jpg; fi
       - name: Patch for Cross Origin Isolation and SharedArrayBuffer
         run: |
           mv scripts/enable-threads.js build/web/enable-threads.js
@@ -58,5 +58,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages # The branch where all the games are stored
-          target-folder: ${{ github.event.inputs.scene_folder }}
+          target-folder: ${{ github.event.inputs.project_folder }}
           folder: build/web
