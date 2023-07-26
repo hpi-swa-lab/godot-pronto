@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://dgnebvotxjqfu"]
+[gd_scene load_steps=71 format=3 uid="uid://dgnebvotxjqfu"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/GroupBehavior.gd" id="1_7pofs"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_3p4fo"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="8_kaquo"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="9_jhpgo"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="10_6y7b0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="11_0fue6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="12_gxy4x"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="13_fobu2"]
 
 [sub_resource type="GDScript" id="GDScript_4047h"]
 script/source = "@tool
@@ -411,6 +414,20 @@ data = {
 [sub_resource type="ImageTexture" id="ImageTexture_5gklc"]
 image = SubResource("Image_fevwf")
 
+[sub_resource type="GDScript" id="GDScript_0mwjh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return Vector2(at(\"width\"), at(\"height\"))
+"
+
+[sub_resource type="Resource" id="Resource_7bi34"]
+script = ExtResource("6_03hit")
+nested_script = SubResource("GDScript_0mwjh")
+argument_names = []
+return_value = true
+
 [node name="common_recipes" type="Node2D"]
 
 [node name="Automatic Movement in One Direction" type="Node2D" parent="."]
@@ -552,6 +569,41 @@ script = ExtResource("1_7pofs")
 position = Vector2(1687, 2346)
 script = ExtResource("1_7pofs")
 
-[node name="Values with Bind" type="Node2D" parent="."]
-position = Vector2(1693, 2600)
+[node name="Values with Bind and Prototyping Interface" type="Node2D" parent="."]
+position = Vector2(1800, 2635)
 script = ExtResource("1_7pofs")
+
+[node name="PanelContainer" type="PanelContainer" parent="Values with Bind and Prototyping Interface"]
+offset_left = -369.0
+offset_right = -78.0
+offset_bottom = 161.0
+
+[node name="PrototypingUIBehavior" type="Node2D" parent="Values with Bind and Prototyping Interface/PanelContainer"]
+script = ExtResource("11_0fue6")
+
+[node name="width" type="Node2D" parent="Values with Bind and Prototyping Interface/PanelContainer/PrototypingUIBehavior"]
+position = Vector2(345, 4)
+script = ExtResource("12_gxy4x")
+float_from = 5.0
+float_to = 300.0
+float_value = 20.0
+float_step_size = 5.0
+
+[node name="height" type="Node2D" parent="Values with Bind and Prototyping Interface/PanelContainer/PrototypingUIBehavior"]
+position = Vector2(345, 67)
+script = ExtResource("12_gxy4x")
+float_from = 5.0
+float_to = 300.0
+float_value = 20.0
+float_step_size = 5.0
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Values with Bind and Prototyping Interface"]
+position = Vector2(105, 0)
+script = ExtResource("2_3p4fo")
+sprite_texture = ExtResource("3_ycxkx")
+
+[node name="BindBehavior" type="Node2D" parent="Values with Bind and Prototyping Interface/PlaceholderBehavior"]
+position = Vector2(-1, -53)
+script = ExtResource("13_fobu2")
+evaluate = SubResource("Resource_7bi34")
+to_prop = "placeholder_size"
