@@ -24,12 +24,12 @@ var _trigger_inteval: float = 1.0
 
 var _time_since_last_trigger: float = 0
 
-## If set to [code]true[/code] the signal [signal ClockBehavior.elapsed]
-## will only be emitted once.
-@export var one_shot: bool:
-	get: return _timer.one_shot
-	set(value): _timer.one_shot = value
-	
+var _trigger_count := 0
+
+## How often the signal [signal ClockBehavor.elapsed] will be emitted.
+## A value of [code]-1[/code] means no limit.
+@export var cycle_count : int = -1
+
 ## Timer duration in seconds
 @export var duration_seconds: float = 1.0:
 	get: return _timer.wait_time
@@ -82,6 +82,7 @@ var _timer: Timer:
 
 func reset_and_start():
 	self.paused = false
+	_trigger_count = 0
 	_timer.start(duration_seconds)
 
 func _process(delta):
@@ -100,5 +101,15 @@ func _ready():
 	super._ready()
 	if not Engine.is_editor_hint():
 		_timer.autostart = true
-		_timer.timeout.connect(func(): elapsed.emit())
+		_timer.timeout.connect(func(): _on_timer_elapsed())
 		add_child(_timer)
+
+
+func _on_timer_elapsed():
+	if cycle_count < 0:
+		elapsed.emit()
+	elif _trigger_count < cycle_count:
+		elapsed.emit()
+		_trigger_count += 1
+	else:
+		_timer.stop()
