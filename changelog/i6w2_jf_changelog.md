@@ -31,6 +31,8 @@ The workflow will no run a godot docker container. Using the script `scripts/exp
 
 You can now open [https://hpi-swa-lab.github.io/godot-pronto/](https://hpi-swa-lab.github.io/godot-pronto/). Your game should be displayed with some basic information as well as a play button for starting the game.
 
+![GH Pages](i6w2_jf_gh_pages.png)
+
 ### Pitfalls/Issues
 
 When I created the `export.sh` the workflow was unable to execute it. This was caused by Windows, because it doesn't set the correct permissions. Luckily I found this: [GitHub Actions: Fixing the 'Permission Denied' error for shell scripts](https://dev.to/aileenr/github-actions-fixing-the-permission-denied-error-for-shell-scripts-4gbl).
