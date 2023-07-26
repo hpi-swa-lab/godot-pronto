@@ -82,6 +82,7 @@ function createGame(gameInfo) {
   const gameElement = document.createElement('div');
   gameElement.className = 'game';
 
+  // Create the thumbnail image
   if (gameInfo.thumbnailType) {
     const thumbnailContainer = document.createElement('div');
     thumbnailContainer.className = 'thumbnail-container';
@@ -92,6 +93,7 @@ function createGame(gameInfo) {
     thumbnailContainer.appendChild(thumbnail);
   }
 
+  // create the header
   const header = document.createElement('div');
   header.className = 'header';
   gameElement.appendChild(header);
@@ -99,6 +101,7 @@ function createGame(gameInfo) {
   title.textContent = gameInfo.title;
   header.appendChild(title);
 
+  // Create the author tags if they exist in the provided data
   if (gameInfo.authors && gameInfo.authors.length > 0) {
     const authorsContainer = document.createElement('div');
     authorsContainer.className = 'authors-container';
@@ -107,25 +110,32 @@ function createGame(gameInfo) {
       const authorTag = document.createElement('span');
       authorTag.className = 'author-tag';
       authorTag.textContent = author;
-      authorTag.title = 'This person is an author of this game.'
+      authorTag.title = 'This person is an author of this game'
       authorsContainer.appendChild(authorTag);
     });
 
     header.appendChild(authorsContainer);
   }
 
+  // Create the description of the game
   if (gameInfo.description) {
     const description = document.createElement('p');
     description.textContent = gameInfo.description;
     gameElement.appendChild(description);
   }
 
+  // Create the footer with the play button
   const footer = document.createElement('div');
   footer.className = 'footer';
   gameElement.appendChild(footer);
   const playLink = document.createElement('a');
   playLink.href = gameInfo.path;
-  playLink.textContent = 'Play Now';
+  const playIcon = document.createElement('i');
+  playIcon.className = 'fa fa-play';
+  playLink.appendChild(playIcon);
+  const buttonText = document.createElement('span');
+  buttonText.innerText = "Play Now";
+  playLink.appendChild(buttonText);
   footer.appendChild(playLink);
 
   gamesContainer.appendChild(gameElement);

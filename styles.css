@@ -12,6 +12,14 @@ h1 {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+#GitHubReference {
+  position: absolute;
+  right: 15px;
+  color: white;
+  font-size: 36px;
+  cursor: pointer;
+}
+
 .game-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -73,6 +81,12 @@ h1 {
   text-decoration: none;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.game a i {
+  margin-right: 1rem;
 }
 
 .game a:hover {
@@ -82,7 +96,7 @@ h1 {
 .game .author-tag {
   display: inline-block;
   padding: 4px 8px;
-  background-color: #007bff;
+  background-color: #e4485c;
   color: #fff;
   border-radius: 5px;
   margin: 4px;
