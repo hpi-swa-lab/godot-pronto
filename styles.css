@@ -23,7 +23,7 @@ h1 {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
-  text-align: center;
+  text-align: left;
   background-color: #f9f9f9;
   transition: 0.3s ease;
   box-shadow: 3px 5px 4px rgba(0, 0, 0, 0.1);
@@ -41,6 +41,21 @@ h1 {
   margin-bottom: 10px;
 }
 
+.game h2 {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.game .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.game .footer {
+  text-align: right;
+}
+
 .game a {
   display: inline-block;
   padding: 10px 20px;
@@ -53,4 +68,13 @@ h1 {
 
 .game a:hover {
   background-color: #0056b3;
+}
+
+.game .author-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  margin: 4px;
 }

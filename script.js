@@ -89,9 +89,27 @@ function createGame(gameInfo) {
     gameElement.appendChild(thumbnail);
   }
 
+  const header = document.createElement('div');
+  header.className = 'header';
+  gameElement.appendChild(header);
   const title = document.createElement('h2');
   title.textContent = gameInfo.title;
-  gameElement.appendChild(title);
+  header.appendChild(title);
+
+  if (gameInfo.authors && gameInfo.authors.length > 0) {
+    const authorsContainer = document.createElement('div');
+    authorsContainer.className = 'authors-container';
+
+    gameInfo.authors.forEach(author => {
+      const authorTag = document.createElement('span');
+      authorTag.className = 'author-tag';
+      authorTag.textContent = author;
+      authorTag.title = 'This person is an author of this game.'
+      authorsContainer.appendChild(authorTag);
+    });
+
+    header.appendChild(authorsContainer);
+  }
 
   if (gameInfo.description) {
     const description = document.createElement('p');
@@ -99,10 +117,13 @@ function createGame(gameInfo) {
     gameElement.appendChild(description);
   }
 
+  const footer = document.createElement('div');
+  footer.className = 'footer';
+  gameElement.appendChild(footer);
   const playLink = document.createElement('a');
   playLink.href = gameInfo.playLink;
   playLink.textContent = 'Play Now';
-  gameElement.appendChild(playLink);
+  footer.appendChild(playLink);
 
   gamesContainer.appendChild(gameElement);
 }
