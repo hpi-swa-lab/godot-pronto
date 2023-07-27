@@ -1,8 +1,8 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b5akcj0c3kh4w"]
 
-[ext_resource type="Shader" path="res://addons/pronto/shader/outline.gdshader" id="1_4t66u"]
+[ext_resource type="Shader" path="res://addons/pronto/shader/icon_outline.gdshader" id="1_4fyki"]
 
 [resource]
-shader = ExtResource("1_4t66u")
+shader = ExtResource("1_4fyki")
 shader_parameter/line_color = Color(0, 0, 0, 1)
 shader_parameter/line_thickness = 1.0
