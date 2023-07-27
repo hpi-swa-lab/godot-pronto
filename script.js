@@ -74,7 +74,6 @@ function createGames(games) {
  * - path - The parent folder of the index.html of the game.
  * - description (optional) - A description of the game
  * - authors (optional) - The authors of the game.
- * - thumbnailType (optional) - Path to the image that represents the game
  */
 function createGame(gameInfo) {
   const gamesContainer = document.getElementById('gamesContainer');
@@ -83,15 +82,13 @@ function createGame(gameInfo) {
   gameElement.className = 'game';
 
   // Create the thumbnail image
-  if (gameInfo.thumbnailType) {
-    const thumbnailContainer = document.createElement('div');
-    thumbnailContainer.className = 'thumbnail-container';
-    gameElement.appendChild(thumbnailContainer);
-    const thumbnail = document.createElement('img');
-    thumbnail.src = `https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/${gameInfo.path}/thumbnail.${gameInfo.thumbnailType}`;
-    thumbnail.alt = gameInfo.title;
-    thumbnailContainer.appendChild(thumbnail);
-  }
+  const thumbnailContainer = document.createElement('div');
+  thumbnailContainer.className = 'thumbnail-container';
+  gameElement.appendChild(thumbnailContainer);
+  const thumbnail = document.createElement('img');
+  thumbnail.src = `https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/${gameInfo.path}/thumbnail.png`;
+  thumbnail.alt = gameInfo.title;
+  thumbnailContainer.appendChild(thumbnail);
 
   // create the header
   const header = document.createElement('div');

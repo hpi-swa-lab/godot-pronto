@@ -13,10 +13,9 @@ The `index.html` renders our Prototype-Library which is an overview of all the a
 - `title` - The display title of the game in the Library
 - `description` - The description of the game that is displayed.
 - `authors` - An array of the names of the authors that worked on this game.
-- `thumbnailType` - The file ending of the thumbnail file. Supported are `png` and `jpg`.
 - `path` (don't change this unless you know what you are doing) - The relative path to the game's `index.html`. By default this is the folder name where the game is in.
 
-If you want your game to show a thumbnail you need to provide an image called `thumbnail.png` (or `.jpg`) in the folder of your game. This will automatically be copied to the build of your game in the workflow.
+Every game also has a thumbnail that needs to be provided as an image called `thumbnail.png` in the folder of your game. This will automatically be copied to the build of your game in the workflow.
 
 A template for your `game_info.json` may look like this:
 
@@ -24,7 +23,8 @@ A template for your `game_info.json` may look like this:
 {
   "title": "My Game",
   "description": "The description of my game that is displayed in the overview.",
-  "authors": ["Developer 1", "Developer 2"],
-  "thumbnailType": "png"
+  "authors": ["Developer 1", "Developer 2"]
 }
 ```
+
+These files we be automatically created when you use the `ExportBehavior`.
