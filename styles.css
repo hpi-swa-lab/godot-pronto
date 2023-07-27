@@ -70,12 +70,13 @@ h1 {
 
 .game .footer {
   margin-top: auto;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
 }
 
 .game a {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px;
   background-color: #007bff;
   color: #fff;
   text-decoration: none;
@@ -83,9 +84,14 @@ h1 {
   transition: background-color 0.3s ease;
   display: inline-flex;
   align-items: center;
+  cursor: pointer;
 }
 
-.game a i {
+.game a.btn-play {
+  padding: 10px 20px;
+}
+
+.game a.btn-play i {
   margin-right: 1rem;
 }
 

@@ -128,8 +128,18 @@ function createGame(gameInfo) {
   const footer = document.createElement('div');
   footer.className = 'footer';
   gameElement.appendChild(footer);
+
+  const shareLink = document.createElement('a');
+  footer.appendChild(shareLink);
+  shareLink.addEventListener("click", () => copyShareLink(gameInfo.path));
+  shareLink.title = "Copy link to this game";
+  const shareIcon = document.createElement('i');
+  shareIcon.className = 'fa fa-share-alt';
+  shareLink.appendChild(shareIcon);
+
   const playLink = document.createElement('a');
   playLink.href = gameInfo.path;
+  playLink.className = 'btn-play';
   const playIcon = document.createElement('i');
   playIcon.className = 'fa fa-play';
   playLink.appendChild(playIcon);
@@ -139,4 +149,12 @@ function createGame(gameInfo) {
   footer.appendChild(playLink);
 
   gamesContainer.appendChild(gameElement);
+}
+
+function copyShareLink(link) {
+  const copyText = `${window.location.href}${link}`;
+  navigator.clipboard.writeText(copyText);
+  if (navigator.share) {
+    navigator.share({ url: copyText});
+  }
 }
