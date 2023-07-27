@@ -1,27 +1,46 @@
 name: "Build & Deploy Game"
-on: push
+on:
+  push:
+    branches-ignore:
+    - 'master'
 
 env:
   GODOT_VERSION: 4.1
-  GAME_DIR: "undefined"
   
 jobs:
-  check-if-export-needed:
+  find_export_game:
     name: Check For ExportBehavior
     runs-on: ubuntu-latest
+    outputs:
+      GAME_DIR: ${{steps.output_step.outputs.GAME_DIR}}
+      GAME_NAME: ${{steps.output_step.outputs.GAME_NAME}}
     steps:
     - uses: actions/checkout@v3
-    - name: Set env
-      run: echo "GAME_DIR=$(./scripts/check_for_export.sh)" >> $GITHUB_ENV
-    - name: Test GAME_DIR
-      run: echo $GAME_DIR
+    - name: Check for ExportBehavior in scenes
+      id: output_step
+      run: |
+        GAME_DIR=$(./scripts/check_for_export.sh)
+        GAME_NAME=$(echo "$GAME_DIR" | sed 's|.*/||')
+        echo "GAME_DIR is '$GAME_DIR', GAME_NAME is '$GAME_NAME'."
+        echo "GAME_DIR=$GAME_DIR" >> $GITHUB_ENV
+        echo "GAME_DIR=$GAME_DIR" >> $GITHUB_OUTPUT
+        echo "GAME_NAME=$GAME_NAME" >> $GITHUB_OUTPUT
+    - name: Exit Check
+      run: if [[ $GAME_DIR = Error:* ]]; then exit 1; fi
 
   export-web:
+    needs: find_export_game
     name: Build Web Export & Deploy
     runs-on: ubuntu-20.04
+    env:  # Set the environment variable using the output parameter value
+      GAME_DIR: ${{ needs.find_export_game.outputs.GAME_DIR }}
+      GAME_NAME: ${{ needs.find_export_game.outputs.GAME_NAME }}
     container:
       image: barichello/godot-ci:4.1
     steps:
+      - name: Debugging Output
+        run: |
+          echo "Running export for game with name '$GAME_NAME' in directory '$GAME_DIR'."
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -60,5 +79,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages # The branch where all the games are stored
-          target-folder: ${{ github.event.inputs.project_folder }}
+          target-folder: ${{ needs.find_export_game.outputs.GAME_NAME }}
           folder: build/web
