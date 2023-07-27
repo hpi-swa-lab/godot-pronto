@@ -217,30 +217,11 @@ Before you can deploy your game check the following:
 2. Make sure that all assets you use are inside your projects folder (e.g. `prototypes/myPrototype`).
 3. Make sure that no filenames or folders have a `space` character in them.
 
-#### game_info.json and thumbnail
+#### ExportBehavior
 
-In order to display detailed information of your game make sure to create a `game_info.json` file inside your projects folder. Your file could look like this:
+To automatically export your game you have to add an `ExportBehavior` (do not rename this node!) anywhere in your game. There you can configure settings such as `title`, `description` and `authors` of the game, as well as how the `thumbnail.png` gets generated.
 
-```json
-{
-  "title": "My Game",
-  "description": "The description of my game that is displayed in the overview.",
-  "authors": ["Developer 1", "Developer 2"],
-  "thumbnailType": "png"
-}
-```
-
-Also make sure to have a thumbnail in your folder that matches the `thumbnailType` you provide (currently supported are `png` and `jpg`).
-
-For more details on the supported structure checkout the [documentation of gh-pages](https://github.com/hpi-swa-lab/godot-pronto/tree/gh-pages#readme).
-
-### Workflow
-
-You have to run the [Build & Deploy Game](https://github.com/hpi-swa-lab/godot-pronto/actions/workflows/build-deploy.yml) Action manually. As the branch to "use the workflow from" you select your branch that you developed on and that you prepared in the step above.
-
-In the next line you have to provide the name of the folder that your project is in (e.g. `myPrototype`). In the second line you can specify another path to this folder in case you didn't create your project inside the `prototypes` folder.
-
-Check if the workflow runs with any issues. If everything went well it should push your game to the `gh-pages` branch. This automatically triggers another workflow to rebuild the page. Wait until this workflow has completed before going to the next step.
+If you then commit your game it will automatically trigger the workflow and deploy your game. If everything went well it should push your game to the `gh-pages` branch. This automatically triggers another workflow to rebuild the page. Wait until this workflow has completed before going to the next step.
 
 ### Testing
 
