@@ -3,6 +3,7 @@ extends EditorPlugin
 class_name Pronto
 
 var edited_object
+var _previous_edited_object
 var popup
 var behaviors = {}
 var debugger: ConnectionDebug
@@ -73,13 +74,17 @@ func _handles(object):
 	return !pronto_should_ignore(object)
 
 func _edit(object):
-	if _is_editing_behavior():
-		edited_object.deselected()
+	if _is_editing_behavior(_previous_edited_object):
+		if _previous_edited_object == null:
+			_previous_edited_object = edited_object
+		_previous_edited_object.deselected()
 	
 	# get_editor_interface().edit_script(load("res://examples/platformer.tscn::GDScript_tb7ap"))
 	
 	edited_object = object
+	_previous_edited_object = edited_object
 	if _is_editing_behavior() and edited_object is Node:
+		edited_object.selected()
 		show_signals(edited_object)
 	else:
 		close()
@@ -105,16 +110,18 @@ func _forward_canvas_draw_over_viewport(viewport_control):#
 	if _is_editing_behavior():
 		return edited_object._forward_canvas_draw_over_viewport(viewport_control)
 
-func _is_editing_behavior():
-	if not is_instance_valid(edited_object):
-		# edited_object might be freed after inspecting an object from a prior debugging session
+func _is_editing_behavior(object = null):
+	if not object:
+		object = edited_object
+	if not is_instance_valid(object):
+		# object might be freed after inspecting an object from a prior debugging session
 		return false
-	if not edited_object.has_method('_forward_canvas_draw_over_viewport'):
-		# edited_object is EditorDebuggerRemoteObject, which we can only use to retrieve state
+	if not object.has_method('_forward_canvas_draw_over_viewport'):
+		# object is EditorDebuggerRemoteObject, which we can only use to retrieve state
 		# but not to interact with
 		# https://github.com/hpi-swa-lab/godot-pronto/pull/22
 		return false
-	return edited_object is Behavior
+	return object is Behavior
 
 func show_signals(node: Node):
 	if popup:

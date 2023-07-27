@@ -1,6 +1,31 @@
 extends Node
 class_name Utils
 
+static func as_code_string(arg) -> String:
+	match typeof(arg):
+		TYPE_NIL: return ""
+		TYPE_BOOL: return str(arg)
+		TYPE_INT: return str(arg)
+		TYPE_FLOAT: return str(arg)
+		TYPE_STRING: return '"' + arg + '"'
+		TYPE_VECTOR2: return "Vector2" + str(arg)
+		TYPE_RECT2: return "Rect2" + str(arg)
+		TYPE_VECTOR3: return "Vector3" + str(arg)
+		TYPE_TRANSFORM2D: return "Transform2D" + str(arg)
+		TYPE_PLANE: return "Plane" + str(arg)
+		TYPE_QUATERNION: return "Quat" + str(arg)
+		TYPE_AABB: return "AABB" + str(arg)
+		TYPE_BASIS: return "Basis" + str(arg)
+		TYPE_TRANSFORM3D: return "Transform3D" + str(arg)
+		TYPE_COLOR: return "Color" + str(arg)
+		TYPE_NODE_PATH: return str(arg)
+		TYPE_RID: return str(arg)
+		TYPE_OBJECT: return str(arg)
+		TYPE_ARRAY: return str(arg)
+		_:
+			push_warning("Trying to stringify unknown type: " + str(typeof(arg)))
+	return str(arg)
+
 static func with(o, do: Callable):
 	return do.call(o)
 
@@ -46,6 +71,25 @@ static func sum(list: Array):
 
 static func max(list: Array):
 	return list.reduce(func (accum, i): return max(accum, i), list[0])
+
+static func random_sample(list: Array, n: int, weight_func: Callable) -> Array:
+	var sample = []
+	var weights = {}
+	for ea in list:
+		weights[ea] = weight_func.call(ea)
+	for i in n:
+		var total = sum(weights.values())
+		if total <= 0:
+			break
+		var random = randf() * total
+		var accum = 0
+		for ea in list:
+			accum += weights[ea]
+			if accum >= random:
+				sample.append(ea)
+				weights[ea] = 0
+				break
+	return sample
 
 static func remove_duplicates(list: Array):
 	var out = []
@@ -170,7 +214,7 @@ static func commit_undoable(undo_redo, title: String, object: Object, props: Dic
 		undo_redo.add_undo_method(object, action)
 	undo_redo.commit_action()
 
-static func get_game_size():
+static func get_game_size() -> Vector2:
 	return Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"), ProjectSettings.get_setting("display/window/size/viewport_height"))
 
 static func random_point_on_screen():
@@ -205,9 +249,35 @@ static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> 
 		return rect
 	
 	return node.get_children() \
-		.filter(func(child): return child not in excluded) \
+		.filter(func(child): return child not in excluded and child is Node2D) \
 		.map(func(child): return global_rect_of(child, depth - 1, excluded)) \
 		.reduce(func(a, b): return a.merge(b), rect)
+
+static func all_node_classes():
+	var classes = ClassDB.get_inheriters_from_class('Node')
+	# could include these, but no usable for Node.is_class() anyway
+	# classes.append_array(ProjectSettings.get_global_class_list().map(func (c): return c['class']))
+	classes.sort()
+	return classes
+
+static func all_used_groups(from, root = null, include_internal = false):
+	if root == null:
+		if Engine.is_editor_hint():
+			root = G.at('_pronto_editor_plugin').get_tree().get_edited_scene_root()
+		else:
+			if not from.get_tree(): return []
+			root = from.get_tree().current_scene
+	var groups := []
+	all_nodes_do(root, func (node):
+		if node != root:
+			groups.append_array(node.get_groups()))
+	groups = remove_duplicates(groups)
+	if not include_internal:
+		groups = groups.filter(func (group): return not group.begins_with('_'))
+	# cannot sort StringNames (https://github.com/godotengine/godot/issues/58878)
+	#groups.sort()
+	groups.sort_custom(func (a, b): return String(a) < String(b))
+	return groups
 
 static func fix_minimum_size(n: Control):
 	if G.at("_pronto_editor_plugin") == null:

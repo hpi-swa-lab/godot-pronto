@@ -223,7 +223,7 @@ func _get_property_list():
 	property_list.append({
 		'name': "Appearance",
 		'type': TYPE_NIL,
-		'usage': PROPERTY_USAGE_CATEGORY
+		'usage': PROPERTY_USAGE_GROUP
 	})
 	property_list.append({
 		'name': 'font_size',
@@ -250,6 +250,7 @@ func _get_property_list():
 		'type': TYPE_VECTOR2,
 		'usage': PROPERTY_USAGE_DEFAULT
 	})
+	# TODO: Merge using PROPERTY_USAGE_CHECKABLE
 	property_list.append({
 		'name': 'sticky',
 		'type': TYPE_BOOL,

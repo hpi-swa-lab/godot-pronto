@@ -270,6 +270,12 @@ func _on_function_selected(name: String):
 		arguments.pop_back()
 	else:
 		arguments = method["args"]
+		var index = method["args"].size() - method["default_args"].size()
+		var default_arg_index = 0
+		while index < method["args"].size():
+			arguments[index]["default_value"] = method["default_args"][default_arg_index]
+			default_arg_index+=1
+			index+=1
 	
 	for arg in arguments:
 		var arg_ui = ExpressionEdit.instantiate()
@@ -282,7 +288,10 @@ func _on_function_selected(name: String):
 			else:
 				arg_ui.edit_script = empty_script("func(from, node): null", true)
 		else:
-			arg_ui.edit_script = empty_script("null", true)
+			if arg.has("default_value"):
+				arg_ui.edit_script = empty_script(Utils.as_code_string(arg["default_value"]), true)
+			else:
+				arg_ui.edit_script = empty_script("return " + arg["name"], true)
 		%Args.add_child(arg_ui)
 		arg_ui.text_changed.connect(func(): mark_changed())
 		arg_ui.save_requested.connect(func(): save())

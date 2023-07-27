@@ -30,3 +30,6 @@ func _report_game_value(val):
 
 func lines():
 	return super.lines() + [Lines.BottomText.new(self, Utils.ellipsize(evaluate.source_code, 12) + "=" + _value)]
+
+func wants_expression_inspector(property_name):
+	return property_name == 'evaluate'
