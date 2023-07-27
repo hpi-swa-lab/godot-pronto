@@ -246,6 +246,10 @@ Check if the workflow runs with any issues. If everything went well it should pu
 
 After the workflow executed you can head over to [hpi-swa-lab.github.io/godot-pronto/](https://hpi-swa-lab.github.io/godot-pronto/). You should see your game appear in the list of games. Click on the "Play Now" button and check if everything is working.
 
+### Deploying Changes
+
+If you have made any changes to your game and want to deploy a new version, you can just repeat this process. Any existing version of your game will be overwritten.
+
 ### Troubleshooting
 
 If you accidently trigger the workflow with an incorrect folder name it may execute without generating any errors but will create a new game in the [gh-pages branch](https://github.com/hpi-swa-lab/godot-pronto/tree/gh-pages). This will automatically be rendered into the list of games. In order to delete it, you have to manually remove it from the gh-pages branch. Please be carefull when doing so and do not delete any other files other than the projects folder you want to delete.
