@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=3 uid="uid://dgtvy2gh8t7ox"]
+[gd_scene load_steps=140 format=3 uid="uid://dgtvy2gh8t7ox"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_k1a43"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="1_l4f51"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://dljsmxh5c8f4e" path="res://prototypes/i6w1-jf-geometry-dash/flag.webp" id="31_beccf"]
 [ext_resource type="Texture2D" uid="uid://dc2jdack2pfjd" path="res://prototypes/i6w1-jf-geometry-dash/assets/green-pipe-tileset.png" id="32_juxy7"]
 [ext_resource type="Texture2D" uid="uid://2rl6ebjsk8xj" path="res://prototypes/i6w1-jf-geometry-dash/assets/base_ufo.png" id="33_oewmy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="34_la0q0"]
 
 [sub_resource type="GDScript" id="GDScript_nqhmh"]
 script/source = "@tool
@@ -1379,5 +1380,12 @@ position = Vector2(21803, -143)
 
 [node name="Node2D" parent="." instance=ExtResource("21_wcc3c")]
 position = Vector2(23640, -128)
+
+[node name="ExportBehavior" type="Node2D" parent="."]
+script = ExtResource("34_la0q0")
+title = "Geometry Dash"
+authors = PackedStringArray("Finn", "Julian")
+description = "A Geometry Dash clone made in Godot/Pronot."
+wait_seconds = 15
 
 [connection signal="pressed" from="Camera2D/StartButton" to="Camera2D/LevelComplete" method="_on_start_button_pressed"]
