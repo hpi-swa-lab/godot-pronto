@@ -1,9 +1,9 @@
 {
 	"authors": [
-		"Finn",
-		"Julian"
+		"Julian",
+		"Finn"
 	],
-	"description": "A Geometry Dash clone made in Godot/Pronot.",
+	"description": "A Geometry Dash clone made in Godot/Pronto.",
 	"thumbnailType": "png",
 	"title": "Geometry Dash"
 }
