@@ -8,7 +8,11 @@ static func as_code_string(arg) -> String:
 		TYPE_INT: return str(arg)
 		TYPE_FLOAT: return str(arg)
 		TYPE_STRING: return '"' + arg + '"'
-		TYPE_VECTOR2: return "Vector2" + str(arg)
+		TYPE_VECTOR2:
+			if str(arg) != "(inf, inf)":
+				return "Vector2" + str(arg)
+			else:
+				return "Vector2(INF,INF)"
 		TYPE_RECT2: return "Rect2" + str(arg)
 		TYPE_VECTOR3: return "Vector3" + str(arg)
 		TYPE_TRANSFORM2D: return "Transform2D" + str(arg)

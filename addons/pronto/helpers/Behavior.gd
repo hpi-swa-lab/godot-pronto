@@ -18,6 +18,7 @@ func _ready():
 	if Engine.is_editor_hint() and show_icon() and is_active_scene():
 		_icon.texture = icon_texture()
 		_icon.position = _icon.texture.get_size() / -2
+		_icon.material = load("res://addons/pronto/icons/icon_outline_material.tres")
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
 		
 		# spawn slightly offset from parent
