@@ -3,6 +3,7 @@
 extends Behavior
 class_name ExportBehavior
 
+@export var enable: bool = true
 @export_category("Game Info")
 @export var title: String = "<Title>"
 @export var authors: PackedStringArray = ["<Author>"]
@@ -16,6 +17,7 @@ var timer: Timer
 
 func _ready():
 	super._ready()
+	if not enable: return;
 	# start export timer
 	timer = Timer.new()
 	timer.connect("timeout", _export) 
