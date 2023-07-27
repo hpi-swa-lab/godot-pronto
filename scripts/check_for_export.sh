@@ -9,5 +9,5 @@ if [ $COUNT -eq 1 ]
 then
     echo $GAME_FOLDER
 else
-    echo "undefined"
+    echo "Error: Found ${COUNT} scenes with ExportBehavior."
 fi
