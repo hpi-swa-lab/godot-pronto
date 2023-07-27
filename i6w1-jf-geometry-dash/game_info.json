@@ -1,6 +1,9 @@
 {
-  "title": "Geometry Dash",
-  "authors": ["Julian", "Finn"],
-  "description": "Remake of Geometry Dash in Pronto.",
-  "thumbnailType": "png"
+	"authors": [
+		"Finn",
+		"Julian"
+	],
+	"description": "A Geometry Dash clone made in Godot/Pronot.",
+	"thumbnailType": "png",
+	"title": "Geometry Dash"
 }
