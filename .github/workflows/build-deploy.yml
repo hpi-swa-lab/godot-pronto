@@ -7,7 +7,7 @@ env:
   
 jobs:
   check-if-export-needed:
-    name: Build Web Export & Deploy
+    name: Check For ExportBehavior
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -15,7 +15,6 @@ jobs:
       run: echo "GAME_DIR=$(./scripts/check_for_export.sh)" >> $GITHUB_ENV
 
   export-web:
-    if: GAME_DIR != 'undefined'
     name: Build Web Export & Deploy
     runs-on: ubuntu-20.04
     container:
