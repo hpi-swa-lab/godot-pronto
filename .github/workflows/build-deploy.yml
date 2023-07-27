@@ -13,6 +13,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Set env
       run: echo "GAME_DIR=$(./scripts/check_for_export.sh)" >> $GITHUB_ENV
+    - name: Test GAME_DIR
+      run: echo $GAME_DIR
 
   export-web:
     name: Build Web Export & Deploy
