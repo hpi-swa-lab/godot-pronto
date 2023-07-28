@@ -52,13 +52,9 @@ func _take_screenshot():
 	print("screenshot taken")
 	
 func _create_game_json():
-	var time_dict = Time.get_datetime_dict_from_system()
-	var time = str(time_dict["day"], ".",time_dict["month"],".",time_dict["year"],
-	 " ", time_dict["hour"],":",time_dict["minute"])
-	
 	var game_dict = {
 		"title": title,
-		"time": time
+		"time": Time.get_date_string_from_system()
 	}
 	if not authors.is_empty():
 		game_dict["authors"] = authors
