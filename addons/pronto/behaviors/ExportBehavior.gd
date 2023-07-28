@@ -34,6 +34,7 @@ func _ready():
 
 	_create_game_json()
 
+	if not take_screenshot: return
 	# start thumbnail timer
 	timer = Timer.new()
 	timer.connect("timeout", _take_screenshot) 
@@ -43,15 +44,19 @@ func _ready():
 	timer.start()
 	
 func _take_screenshot():
-	if not take_screenshot: return
 	var vpt = get_viewport()
 	var tex = vpt.get_texture()
 	tex.get_image().save_png(export_path + "thumbnail.png")
 	print("screenshot taken")
 	
 func _create_game_json():
+	var time_dict = Time.get_datetime_dict_from_system()
+	var time = str(time_dict["day"], ".",time_dict["month"],".",time_dict["year"],
+	 " ", time_dict["hour"],":",time_dict["minute"])
+	
 	var game_dict = {
-		"title": title
+		"title": title,
+		"time": time
 	}
 	if not authors.is_empty():
 		game_dict["authors"] = authors
