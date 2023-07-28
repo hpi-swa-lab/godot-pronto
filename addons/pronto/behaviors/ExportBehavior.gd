@@ -26,6 +26,8 @@ var export_path
 
 func _ready():
 	super._ready()
+	
+	if OS.has_feature("release"): return
 
 	var scene_path = get_tree().current_scene.scene_file_path
 	var tmp = scene_path.split("/")
