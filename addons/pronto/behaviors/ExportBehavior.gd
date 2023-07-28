@@ -26,6 +26,8 @@ var export_path
 
 func _ready():
 	super._ready()
+	
+	if OS.has_feature("release"): return
 
 	var scene_path = get_tree().current_scene.scene_file_path
 	var tmp = scene_path.split("/")
@@ -34,6 +36,7 @@ func _ready():
 
 	_create_game_json()
 
+	if not take_screenshot: return
 	# start thumbnail timer
 	timer = Timer.new()
 	timer.connect("timeout", _take_screenshot) 
@@ -43,7 +46,6 @@ func _ready():
 	timer.start()
 	
 func _take_screenshot():
-	if not take_screenshot: return
 	var vpt = get_viewport()
 	var tex = vpt.get_texture()
 	tex.get_image().save_png(export_path + "thumbnail.png")
@@ -51,7 +53,8 @@ func _take_screenshot():
 	
 func _create_game_json():
 	var game_dict = {
-		"title": title
+		"title": title,
+		"time": Time.get_date_string_from_system()
 	}
 	if not authors.is_empty():
 		game_dict["authors"] = authors
