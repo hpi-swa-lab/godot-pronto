@@ -1386,6 +1386,6 @@ script = ExtResource("34_la0q0")
 title = "Geometry Dash"
 authors = PackedStringArray("Julian", "Finn")
 description = "A Geometry Dash clone made in Godot/Pronto."
-wait_seconds = 10
+wait_seconds = 5
 
 [connection signal="pressed" from="Camera2D/StartButton" to="Camera2D/LevelComplete" method="_on_start_button_pressed"]
