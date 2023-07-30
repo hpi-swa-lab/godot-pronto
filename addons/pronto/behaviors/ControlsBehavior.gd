@@ -150,6 +150,8 @@ func _process(delta):
 		vertical_direction.emit(Vector2.DOWN)
 
 func _input(event):
+	if not can_process():
+		return
 	if event is InputEventMouseButton:
 		if (event.button_index == MOUSE_BUTTON_LEFT):
 			enable_drag = event.pressed

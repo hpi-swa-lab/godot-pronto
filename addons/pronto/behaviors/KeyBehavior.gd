@@ -52,7 +52,7 @@ func lines():
 	return super.lines() + [Lines.BottomText.new(self, str(key))]
 
 func _input(event):
-	if event is InputEventKey and event.as_text_keycode() == key and not event.echo:
+	if event is InputEventKey and event.as_text_keycode() == key and not event.echo and can_process():
 		if event.pressed and !is_pressed:
 			pressed_since = Time.get_ticks_msec()
 			just_down.emit()
