@@ -47,7 +47,8 @@ func _ready():
 		%list.visible = false)
 	focus_entered.connect(func ():
 		await get_tree().process_frame
-		build_list(""))
+		if text.is_empty():
+			build_list(""))
 
 func build_list(filter: String):
 	assert(anchor != null)
