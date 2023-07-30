@@ -157,7 +157,7 @@ var _restore_color : Color
 ## Flashes this Placeholder a certain color for a duration.
 ## It will take on the desired color immediately and return to its original
 ## color over the given duration.
-func flash(color: Color, duration: float = 0.2):
+func flash(color: Color, duration: float = 0.3):
 	if _flash_tween:
 		if _flash_tween.is_running():
 			self.color = _restore_color
