@@ -291,7 +291,7 @@ func _on_function_selected(name: String):
 			if arg.has("default_value"):
 				arg_ui.edit_script = empty_script(Utils.as_code_string(arg["default_value"]), true)
 			else:
-				arg_ui.edit_script = empty_script("return " + arg["name"], true)
+				arg_ui.edit_script = empty_script(arg["name"], true)
 		%Args.add_child(arg_ui)
 		arg_ui.text_changed.connect(func(): mark_changed())
 		arg_ui.save_requested.connect(func(): save())
