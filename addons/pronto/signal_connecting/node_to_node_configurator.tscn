@@ -172,7 +172,7 @@ caret_blink_interval = 0.5
 layout_mode = 2
 text = "("
 
-[node name="Args" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Receiver"]
+[node name="Args" type="BoxContainer" parent="MarginContainer/VBoxContainer/Receiver"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -188,7 +188,7 @@ sync_handles_x = true
 
 [node name="Expression" parent="MarginContainer/VBoxContainer/ResizableContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 34.6666)
+custom_minimum_size = Vector2(0, 34.767)
 layout_mode = 2
 size_flags_horizontal = 1
 expression_label = ""
@@ -211,7 +211,7 @@ sync_handles_x = true
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 34.4781)
+custom_minimum_size = Vector2(0, 34.271)
 layout_mode = 2
 expression_label = ""
 default_text = "true"

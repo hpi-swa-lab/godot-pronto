@@ -104,6 +104,9 @@ func default_focus():
 	else:
 		%FunctionName.grab_focus()
 
+func use_vertical_arguments():
+	return argument_names().size() > 2
+
 func update_argument_names():
 	var names = argument_names()
 	var types = argument_types()
@@ -114,6 +117,7 @@ func update_argument_names():
 	for c in %Args.get_children():
 		c.argument_names = names
 		c.argument_types = types
+	%Args.vertical = use_vertical_arguments()
 	
 	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
 	
@@ -281,7 +285,7 @@ func _on_function_selected(name: String):
 		var arg_ui = ExpressionEdit.instantiate()
 		arg_ui.expression_label = arg["name"] + ": " + Utils.get_type_name_from_arg(arg)
 		Utils.fix_minimum_size(arg_ui)
-		arg_ui.placeholder_text = "return " + arg["name"]
+		arg_ui.placeholder_text = arg["name"]
 		if name.begins_with("apply") && arg["type"] == 25:
 			if arg["name"] == "filter_func":
 				arg_ui.edit_script = empty_script("func(from, node): return true", true)
@@ -293,6 +297,8 @@ func _on_function_selected(name: String):
 			else:
 				arg_ui.edit_script = empty_script(arg["name"], true)
 		%Args.add_child(arg_ui)
+		if use_vertical_arguments():
+			%Args.custom_minimum_size = Vector2(300, 0)
 		arg_ui.text_changed.connect(func(): mark_changed())
 		arg_ui.save_requested.connect(func(): save())
 	update_argument_names()
