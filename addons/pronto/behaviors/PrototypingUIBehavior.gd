@@ -3,6 +3,8 @@
 extends Behavior
 class_name PrototypingUIBehavior
 
+## Add to your scene to edit properties while in-game.
+
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
 var minimized: bool = false

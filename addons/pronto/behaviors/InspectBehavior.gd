@@ -3,6 +3,8 @@
 extends Behavior
 class_name InspectBehavior
 
+## Add the InspectBehavior as a child of a node to inspect its properties inside the game.
+
 var default_property = 'position'
 var default_expression = 'return self.%s' % default_property
 

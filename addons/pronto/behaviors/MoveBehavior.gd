@@ -3,21 +3,36 @@
 extends Behavior
 class_name MoveBehavior
 
+## Move the parent node.
+## You tell the MoveBehavior in what direction and it does the rest, as per its configuration.
+## If you want to move at different speeds, use multiple MoveBehaviors.
+## To enable side-scrolling falling behavior, set a value for gravity above zero.
+
+## Only available for [class CharacterBody2D] parents: the character touched the floor.
 signal touched_floor(velocity: float)
 
 @export_category("Ground")
+## Maximum velocity the parent will reach while on the ground
 @export var max_velocity = 500.0
+## Acceleration added to the velocity while being asked to move while on the ground
 @export var acceleration = 100.0
+## Friction applied to velocity while on the ground
 @export var friction = 20.0
 
 @export_category("Air")
+## Gravity applied to parent. Set to zero to disable falling.
 @export var gravity = 0.0
+## Friction applied to velocity while in the air
 @export var friction_air = 0.0
+## Acceleration added to the velocity while being asked to move while in the air
 @export var acceleration_air = 0.0
 
 @export_category("Rotation")
+## Whether the velocity is applied according to the parent's local rotation or in global coordinates.
 @export var rotated = false
+## Speed at which the parent rotates when asked to.
 @export var rotation_speed = 0.0
+## Whether to also rotate the velocity vector when the character is rotated. Feels like the parent can drift when disabled.
 @export var rotate_velocity = true
 
 var velocity = Vector2.ZERO
