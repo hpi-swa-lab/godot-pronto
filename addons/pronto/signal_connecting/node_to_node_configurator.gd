@@ -105,7 +105,7 @@ func default_focus():
 		%FunctionName.grab_focus()
 
 func use_vertical_arguments():
-	return argument_names().size() > 2
+	return %Args.get_child_count() > 2
 
 func update_argument_names():
 	var names = argument_names()

@@ -115,7 +115,7 @@ func _spawn(index: int, top_level: bool = false):
 ##
 ## [param indices]: selects the blueprints to spawn. Specify the elements you want to spawn in an integer array.
 ## Pass an empty array to spawn every child.
-## Default: [code][][/code
+## Default: [code][][/code]
 ##
 ## [param pos]: The position to spawn the new instance(s) at.
 ## Overwrites other rules like [code]use_shape[/code] if specified
