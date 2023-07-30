@@ -15,6 +15,9 @@ const OUTLINE_SHADER = "res://addons/pronto/shader/outline.gdshader"
 @export var color = Color.WHITE:
 	set(v):
 		color = v
+		if sprite and sprite.material:
+			sprite.self_modulate = v
+			sprite.material.set_shader_parameter("tint_color", v)
 		queue_redraw()
 
 
@@ -59,13 +62,6 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 		if v == null: return
 		sprite_texture = v
 		use_sprite = true
-
-## Modulate the color of the sprite.
-@export var sprite_modulate: Color = Color.WHITE:
-	set(v):
-		sprite_modulate = v
-		sprite.self_modulate = sprite_modulate
-		_editor_reload()
 
 ## Settings for configuring the outline.
 @export_category("Outline")
@@ -124,7 +120,7 @@ func _init_sprite():
 	# to hide the shader we set its width to 0 if outline_visible is false
 	shader_mat.set_shader_parameter("width", outline_width if outline_visible else 0)
 	shader_mat.set_shader_parameter("color", outline_color)
-	shader_mat.set_shader_parameter("tint_color", sprite_modulate)
+	shader_mat.set_shader_parameter("tint_color", color)
 	shader_mat.set_shader_parameter("pattern", outline_pattern)
 	sprite.material = shader_mat
 	sprite.scale = placeholder_size / sprite.texture.get_size()
