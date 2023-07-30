@@ -293,7 +293,13 @@ func _on_function_selected(name: String):
 				arg_ui.edit_script = empty_script("func(from, node): null", true)
 		else:
 			if arg.has("default_value"):
-				arg_ui.edit_script = empty_script(Utils.as_code_string(arg["default_value"]), true)
+				var default_expr
+				# Arrays and dictionaries are not stored in the Godot default args value lists
+				match arg["type"]:
+					TYPE_ARRAY: default_expr = "[]"
+					TYPE_DICTIONARY: default_expr = "{}"
+					_: default_expr = Utils.as_code_string(arg["default_value"])
+				arg_ui.edit_script = empty_script(default_expr, true)
 			else:
 				arg_ui.edit_script = empty_script(arg["name"], true)
 		%Args.add_child(arg_ui)
