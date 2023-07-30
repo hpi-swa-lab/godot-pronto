@@ -1116,85 +1116,19 @@ editable = false
 caret_blink = true
 caret_blink_interval = 0.5
 
-[node name="icons" type="HSplitContainer" parent="body"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-dragger_visibility = 1
-
-[node name="previews" type="ScrollContainer" parent="body/icons"]
+[node name="scroll" type="ScrollContainer" parent="body"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="container" type="GridContainer" parent="body/icons/previews"]
+[node name="container" type="GridContainer" parent="body/scroll"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 2
-
-[node name="info" type="PanelContainer" parent="body/icons"]
-self_modulate = Color(0.615686, 0.615686, 0.615686, 1)
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="icon" type="VBoxContainer" parent="body/icons/info"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.25
-
-[node name="label" type="Label" parent="body/icons/info/icon"]
-layout_mode = 2
-text = "Select any tile."
-
-[node name="preview" type="TextureRect" parent="body/icons/info/icon"]
-texture_filter = 1
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-size_flags_stretch_ratio = 0.25
-expand_mode = 1
-stretch_mode = 5
-
-[node name="size" type="Label" parent="body/icons/info/icon"]
-layout_mode = 2
-
-[node name="Export" type="HBoxContainer" parent="body/icons/info/icon"]
-layout_mode = 2
-alignment = 1
-
-[node name="Button" type="Button" parent="body/icons/info/icon/Export"]
-layout_mode = 2
-text = "    Apply    "
-
-[node name="space" type="Control" parent="body/icons/info/icon"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="params" type="VBoxContainer" parent="body/icons/info/icon"]
-layout_mode = 2
-
-[node name="icon" type="Label" parent="body/icons/info/icon/params"]
-layout_mode = 2
-text = "Icons preview size"
-
-[node name="size" type="HBoxContainer" parent="body/icons/info/icon/params"]
-layout_mode = 2
-
-[node name="range" type="HSlider" parent="body/icons/info/icon/params/size"]
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-min_value = 16.0
-max_value = 128.0
-value = 16.0
-
-[node name="pixels" type="Label" parent="body/icons/info/icon/params/size"]
-layout_mode = 2
-text = "16 px"
+columns = 3
 
 [node name="TileMap" type="TileMap" parent="."]
 visible = false
@@ -1204,6 +1138,4 @@ format = 2
 [connection signal="resized" from="." to="." method="_on_window_resized"]
 [connection signal="visibility_changed" from="." to="." method="_on_window_visibility_changed"]
 [connection signal="text_changed" from="body/search/box" to="." method="_on_search_text_changed"]
-[connection signal="mouse_exited" from="body/icons/previews/container" to="." method="_on_container_mouse_exited"]
-[connection signal="pressed" from="body/icons/info/icon/Export/Button" to="." method="_on_button_pressed"]
-[connection signal="value_changed" from="body/icons/info/icon/params/size/range" to="." method="_on_size_changed"]
+[connection signal="mouse_exited" from="body/scroll/container" to="." method="_on_container_mouse_exited"]
