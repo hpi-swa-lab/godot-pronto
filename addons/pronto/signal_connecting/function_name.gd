@@ -63,11 +63,13 @@ func build_list(filter: String):
 	if filter.is_empty():
 		%list.add_item("<statement(s)>")
 	
+	var hidden_behavior_methods = preload("res://addons/pronto/helpers/Behavior.gd").new().get_script().get_script_method_list().map(func (m): return m["name"])
+	
 	if node.get_script():
 		var show = []
 		for s in node.get_script().get_script_method_list():
 			do_apply = do_apply or s["name"] == filter
-			if fuzzy_match(s["name"], filter) and s["name"][0] != "_": show.append(s["name"])
+			if not s["name"] in hidden_behavior_methods and s["name"][0] != "@" and fuzzy_match(s["name"], filter) and s["name"][0] != "_": show.append(s["name"])
 		if not show.is_empty():
 			add_class_item(node.get_script().resource_path.get_file().split('.')[0])
 			for s in show: %list.add_item(s)
