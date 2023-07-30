@@ -30,7 +30,7 @@ func lines():
 ## Executes the code provided in [member CodeBehavior.evaluate] and emits the [signal CodeBehavior.after] signal afterwards.
 func execute(args: Array):
 	assert(args.size() == arguments.size(), "Argument names and values for eval need to have the same size.")
-	var result = evaluate.run(args, self)
+	var result = await evaluate.run(args, self)
 	after.emit(result)
 
 func wants_expression_inspector(property_name):

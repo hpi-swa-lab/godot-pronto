@@ -61,7 +61,7 @@ func run(arguments: Array, ref = null):
 		_dummy_object = U.new(ref)
 		_dummy_object.set_script(nested_script)
 	_dummy_object.ref = ref
-	return _dummy_object.callv("run", arguments)
+	return await _dummy_object.callv("run", arguments)
 
 func reload():
 	var err = nested_script.reload()

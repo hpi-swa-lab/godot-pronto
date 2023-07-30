@@ -227,7 +227,7 @@ func has_condition():
 	return only_if.source_code != "true"
 
 func should_trigger(names, values, from):
-	return not has_condition() or _run_script(from, only_if, values)
+	return not has_condition() or await _run_script(from, only_if, values)
 
 func make_unique(from: Node, undo_redo):
 	var old = _ensure_connections(from)
@@ -247,7 +247,7 @@ func make_unique(from: Node, undo_redo):
 	return new_connection
 
 func _run_script(from: Node, s: ConnectionScript, arguments: Array):
-	return s.run(arguments, from)
+	return await s.run(arguments, from)
 
 func is_valid(from: Node):
 	return not is_target() or from.get_node_or_null(to) != null

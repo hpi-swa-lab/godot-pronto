@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bwi63oqp83l0b"]
+[gd_scene load_steps=49 format=3 uid="uid://bwi63oqp83l0b"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_2qxg3"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_fjkj2"]
@@ -179,59 +179,6 @@ only_if = SubResource("Resource_c5edj")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_7xof8"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return 0
-"
-
-[sub_resource type="Resource" id="Resource_4gbmo"]
-script = ExtResource("5_gukvn")
-nested_script = SubResource("GDScript_7xof8")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_x2iq2"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_tkluh"]
-script = ExtResource("5_gukvn")
-nested_script = SubResource("GDScript_x2iq2")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_t0srn"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_dsmaq"]
-script = ExtResource("5_gukvn")
-nested_script = SubResource("GDScript_t0srn")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_el0mt"]
-script = ExtResource("6_032ba")
-signal_name = "elapsed"
-to = NodePath("../SpawnerBehavior")
-more_references = []
-invoke = "spawn"
-arguments = [SubResource("Resource_4gbmo"), SubResource("Resource_tkluh")]
-only_if = SubResource("Resource_dsmaq")
-deferred = false
-enabled = true
-
 [sub_resource type="GDScript" id="GDScript_8ej78"]
 script/source = "@tool
 extends U
@@ -268,6 +215,87 @@ more_references = []
 invoke = "set_position"
 arguments = [SubResource("Resource_hspxi")]
 only_if = SubResource("Resource_bye08")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ae3uv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return []
+"
+
+[sub_resource type="Resource" id="Resource_o6opn"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_ae3uv")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_cdlej"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_sdjaj"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_cdlej")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3t2e1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_ay6ji"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_3t2e1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_pcmx3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_chglh"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_pcmx3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_r0yv2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_s54xh"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_r0yv2")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xbuvl"]
+script = ExtResource("6_032ba")
+signal_name = "elapsed"
+to = NodePath("../SpawnerBehavior")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_o6opn"), SubResource("Resource_sdjaj"), SubResource("Resource_ay6ji"), SubResource("Resource_chglh")]
+only_if = SubResource("Resource_s54xh")
 deferred = false
 enabled = true
 
@@ -331,4 +359,4 @@ position = Vector2(164, 104)
 script = ExtResource("11_2m5nj")
 duration_seconds = 0.5
 trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_el0mt"), SubResource("Resource_2ypcs")]
+metadata/pronto_connections = [SubResource("Resource_2ypcs"), SubResource("Resource_xbuvl")]
