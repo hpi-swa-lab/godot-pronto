@@ -32,7 +32,7 @@ func _ready():
 	for childNode in self.get_children():
 		if is_instance_of(childNode, CodeBehavior):
 			vbox.add_child(create_ui_for_code(childNode))
-		elif is_instance_of(childNode,ValueBehavior):
+		elif is_instance_of(childNode, ValueBehavior):
 			vbox.add_child(create_ui_for_value(childNode))
 	
 	scrollContainer.add_child(vbox)
@@ -54,6 +54,7 @@ func _ready():
 	
 	
 func create_ui_for_value(value: ValueBehavior):
+	if not value.visible: return # Hide values that are hidden in the Editor
 	if value.selectType == "Float":
 		return create_ui_slider_for_value_float(value)
 	elif value.selectType == "Enum":
@@ -144,7 +145,6 @@ func create_ui_for_code(code: CodeBehavior):
 	
 func create_ui_slider_for_value_float(value: ValueBehavior):
 	var name = value.name
-	#print("Adding slider for " + name)
 	
 	var hbox = HBoxContainer.new()
 	var middle_vbox = VBoxContainer.new()
