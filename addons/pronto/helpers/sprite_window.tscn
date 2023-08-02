@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://irpeeca7ehxs"]
 
 [ext_resource type="Script" path="res://addons/pronto/helpers/sprite_window.gd" id="1_fqma4"]
-[ext_resource type="Texture2D" uid="uid://7m05bcuv3nvx" path="res://addons/pronto/icons/monochrome-transparent_packed.png" id="2_dyjbd"]
+[ext_resource type="Texture2D" uid="uid://7m05bcuv3nvx" path="res://addons/pronto/assets/monochrome-transparent_packed.png" id="2_dyjbd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0pt01"]
 texture = ExtResource("2_dyjbd")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7m05bcuv3nvx"
-path="res://.godot/imported/monochrome-transparent_packed.png-888c4ab65fd2e39279df098ca50ac52b.ctex"
+uid="uid://bt8mq02w33hjr"
+path="res://.godot/imported/spritesheetScribblePlatformer.png-755d68824cb388b6994fc1803663a3eb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/pronto/icons/monochrome-transparent_packed.png"
-dest_files=["res://.godot/imported/monochrome-transparent_packed.png-888c4ab65fd2e39279df098ca50ac52b.ctex"]
+source_file="res://addons/pronto/assets/spritesheetScribblePlatformer.png"
+dest_files=["res://.godot/imported/spritesheetScribblePlatformer.png-755d68824cb388b6994fc1803663a3eb.ctex"]
 
 [params]
 

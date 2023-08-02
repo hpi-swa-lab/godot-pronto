@@ -117,6 +117,14 @@ Pronto scatters code throughout the scene to be as close to the place where it i
 | `at(name: String)` | Find the "closest" `State` that has a field called `name`. If none is found, checks global state in `G`. | `at("score")` |
 | `put(name: String, val: Variant)` | Find the "closest" `State` that has a field called `name` and store the given value. If none is found, checks global state in `G`. | `put("score", 0)` |
 
+### Assets
+
+When creating your game/prototype in Pronto, you might want to use some assets to polish the look of your game. Those things are called assets and we already prepared some for you to use.
+
+#### TileMap
+
+If you want to create a large level you should take a look at the `TileMap` (default Godot). We already have a TileSet prepared that you can simply load into your TileMap inside the `asset` folder.
+
 ### Common Pitfalls
 
 * PhysicsBody2D
