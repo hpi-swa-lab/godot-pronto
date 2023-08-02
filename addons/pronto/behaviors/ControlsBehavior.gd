@@ -8,9 +8,9 @@ class_name ControlsBehavior
 
 ## Defines the available players
 enum Player {
-	Player_1 = 0, ## Selecting this makes the controls react to the arrow keys
-	Player_2 = 1, ## Selecting this makes the controls react to WASD
-	Player_3 = 2  ## Selecting this makes the controls react to IJKL
+	Player_1 = 0, ## Arrow keys
+	Player_2 = 1, ## WASD
+	Player_3 = 2  ## IJKL
 }
 
 ## Determines which player these controls are for. This determines the keys
@@ -33,21 +33,20 @@ signal down
 
 ## Emitted when any of the player's movement keys is pressed.
 ##
-## [param dir] gives the direction as 
-## [constant Vector2.UP], [constant Vector2.DOWN], [constant Vector2.LEFT] or [constant Vector2.RIGHT]
-signal direction(dir: Vector2)
+## [param direction] gives the direction as a normalized Vector2 depending on the keys that are pressed
+signal direction(direction: Vector2)
 
 ## Emitted when any of the player's horizontal movement keys is pressed
 ##
-## [param dir] gives the direction as
-## [constant Vector2.LEFT] or [constant Vector2.RIGHT]
-signal horizontal_direction(dir: Vector2)
+## [param direction] gives the direction as
+## [constant Vector2.LEFT] or [constant Vector2.RIGHT] or [constant Vector2.ZERO]
+signal horizontal_direction(direction: Vector2)
 
 ## Emitted when any of the player's vertival movement keys is pressed
 ##
-## [param dir] gives the direction as
-## [constant Vector2.UP] or [constant Vector2.DOWN]
-signal vertical_direction(dir: Vector2)
+## [param direction] gives the direction as
+## [constant Vector2.UP] or [constant Vector2.DOWN] or [constant Vector2.ZERO]
+signal vertical_direction(direction: Vector2)
 
 ## Emitted when a mouse button was pressed.
 ##
@@ -132,22 +131,24 @@ func _is_key_pressed(direction):
 
 func _process(delta):
 	super._process(delta)
+	var input_direction = Vector2.ZERO # Used to allow vertical movement
 	if _is_key_pressed("left"):
 		left.emit()
-		direction.emit(Vector2.LEFT)
-		horizontal_direction.emit(Vector2.LEFT)
+		input_direction += Vector2.LEFT
 	if _is_key_pressed("right"):
 		right.emit()
-		direction.emit(Vector2.RIGHT)
-		horizontal_direction.emit(Vector2.RIGHT)
+		input_direction += Vector2.RIGHT
 	if _is_key_pressed("up"):
 		up.emit()
-		direction.emit(Vector2.UP)
-		vertical_direction.emit(Vector2.UP)
+		input_direction += Vector2.UP
 	if _is_key_pressed("down"):
 		down.emit()
-		direction.emit(Vector2.DOWN)
-		vertical_direction.emit(Vector2.DOWN)
+		input_direction += Vector2.DOWN
+	# Emit signals
+	vertical_direction.emit(Vector2(0, input_direction.y))
+	horizontal_direction.emit(Vector2(input_direction.x, 0))
+	input_direction = input_direction.normalized() # normalize vector after the vertical and horizontal signals
+	direction.emit(input_direction)
 
 func _input(event):
 	if not can_process():
