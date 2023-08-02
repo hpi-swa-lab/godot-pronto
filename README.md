@@ -17,6 +17,7 @@ Build a tiny Godot game but focus on a single mechanic. Do not focus on visuals.
 When choosing a mechanic, ask yourself first: Would it be better/faster to build a paper prototype? (If so, consider another mechanic.) What is the minimal feature set I need to implement to see if the mechanic is good? Try and pick a mechanic that is not necessarily the core of the genre but adds an interesting aspect to it and only implement that.
 
 To get started, create a branch with the following pattern:
+
 ```
 week-[week number]-[mechanic name]
 
@@ -46,9 +47,9 @@ The following list of behaviors primarily cause effects when triggered.
 | CodeBehavior | It holds an `execute()` function with both user-definable arguments and a function body, which allows for arbitrary code execution. After `execute()` is called an `after` signal is emitted that carries the execution result, which can be used for chaining. |
 | MoveBehavior | When triggered, moves its parent. Can be set to move along global or local axes. Supports handling of gravity. |
 | PlatformerControllerBehavior | Makes the parent behave like a platformer character, meaning that it can jump, move horizontally, and is affected by gravity. Must be a child of a [CharacterBody2D](https://docs.godotengine.org/en/stable/classes/class_characterbody2d.html). |
-| QueryBehavior	| Searches for nodes in the scene and emits signals for results. Properties allow to filter, sort, and limit results. Can be used for tasks such as destroying all enemies in a certain radius, infecting a random player, or finding the nearest health pack.	|
+| QueryBehavior | Searches for nodes in the scene and emits signals for results. Properties allow to filter, sort, and limit results. Can be used for tasks such as destroying all enemies in a certain radius, infecting a random player, or finding the nearest health pack. |
 | SceneRootBehavior | Provides access to the `SceneTree` from Godot. It offers the signals `node_added(node: Node)`, `node_remove(node: Node)` and `tree_changed()` from the `SceneTree`. Additionally, it implements three methods for executing lambda functions on all or a specific subset of nodes in a given `group`. |
-| SignalBehavior	| Forwards signals when triggered, optionally with arguments. Useful for abstraction/encapsulation of lower-level signals, signal renaming, or logical OR-gating of signals.	|
+| SignalBehavior | Forwards signals when triggered, optionally with arguments. Useful for abstraction/encapsulation of lower-level signals, signal renaming, or logical OR-gating of signals. |
 | SpawnerBehavior | When triggered, spawns whatever its child nodes are at its current location in the scene. Single children nodes can be spawned by modifying the optional index argument in each spawning method to just the respective child node. Use -1 as index to spawn all children. Set use_spawn_shape to true to randomly spawn children in the given shape or polygon. When using a Polygon2D dont use it as a child of the spawner. |
 | StopwatchBehavior | Starts counting up time when triggered. Can be reset. |
 
@@ -77,6 +78,7 @@ The following list of behaviors manage state or communicate visual properties.
 * You can use the `set` function to modify any properties when a connection triggers.
 
 ### Juice
+
 The following list of nodes dont add new functionality, their purpose is to add a bit of juice to your prototypes. They may not make your prototypes good, but they can add to them.
 
 | Juice | Function |
@@ -88,20 +90,20 @@ The following list of nodes dont add new functionality, their purpose is to add 
 Connections are an extension of Godot signals to be more flexible. Connections can be dragged from any behavior to any arbitrary node in a scene. They are the primary means to assemble your game by wiring Behaviors together.
 
 * Creating
-	* Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
-	* The type "target" is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `to`.
-	* The type "expression" allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
+  * Connections are created by hovering the "+" that appears below selected nodes. There are two types of connections.
+  * The type "target" is created by dragging a signal from the list onto its receiver. From the list in the dialog, you can either choose any method to invoke or choose `<statement(s)>` to execute arbitrary code. In the expressions for the arguments or the arbitrary code, you can write Godot expression that can access `from` and `to`.
+  * The type "expression" allows to execute arbitrary Godot code without a receiver node. Create an `expression` connection by double-clicking a signal in the list. You can access `from` in the code.
 * Editing
-	* You can define a condition for the connection to trigger by entering a Godot expression in condition field. You may refer to `from` and `to` in the expression.
-	* You can use the <kbd>+</kbd> icon in the header of the connection editor to add references to further nodes by specifying a node path relative to the `from` node. You can use these nodes in any statement, argument, or condition expression using `ref0`, `ref1`, etc. You can right-click these variables in the connection header to edit their path or remove them.
-	* You can disable a connection by unticking the checkbox in the top-right or in its context menu.
-	* You can also pin a connection editor so that it remains in the scene after saving them. You can click and drag editors in the scene as well. You can drag the handles at the bottom right of each text field to resize the editor.
-	* You can press the "open script" button next to any code expression to edit it in a full-screen Godot tab which provides you better syntax highlighting and autocompletion.
+  * You can define a condition for the connection to trigger by entering a Godot expression in condition field. You may refer to `from` and `to` in the expression.
+  * You can use the <kbd>+</kbd> icon in the header of the connection editor to add references to further nodes by specifying a node path relative to the `from` node. You can use these nodes in any statement, argument, or condition expression using `ref0`, `ref1`, etc. You can right-click these variables in the connection header to edit their path or remove them.
+  * You can disable a connection by unticking the checkbox in the top-right or in its context menu.
+  * You can also pin a connection editor so that it remains in the scene after saving them. You can click and drag editors in the scene as well. You can drag the handles at the bottom right of each text field to resize the editor.
+  * You can press the "open script" button next to any code expression to edit it in a full-screen Godot tab which provides you better syntax highlighting and autocompletion.
 * Reordering
-	* From the context menu of a connection, choose "Move to top".
+  * From the context menu of a connection, choose "Move to top".
 * Deleting
-	* Open the connection, then click on the trash icon in the top-right.
-	* Alternatively, right-click the connection and choose "Delete".
+  * Open the connection, then click on the trash icon in the top-right.
+  * Alternatively, right-click the connection and choose "Delete".
 
 ### Expressions
 
@@ -116,17 +118,18 @@ Pronto scatters code throughout the scene to be as close to the place where it i
 | `put(name: String, val: Variant)` | Find the "closest" `State` that has a field called `name` and store the given value. If none is found, checks global state in `G`. | `put("score", 0)` |
 
 ### Common Pitfalls
+
 * PhysicsBody2D
-	* Collisions only work when contact monitor is on and the max contacts is at least 1.
-	* PhysicsBody2D does not report collisions with Area2D. Instead, listen for collisions with the PhysicsBody on the Area.
+  * Collisions only work when contact monitor is on and the max contacts is at least 1.
+  * PhysicsBody2D does not report collisions with Area2D. Instead, listen for collisions with the PhysicsBody on the Area.
 * StaticBody
-	* Does not support reporting collisions at all in Godot. You can instead listen for collisions on the other collision partner.
+  * Does not support reporting collisions at all in Godot. You can instead listen for collisions on the other collision partner.
 * Connections
-	* The `$` shorthand of GDScript does not work. Use get_node() instead.
-	* `self` is sadly not defined in connections. Use `from` and `to` instead, or make use of any of `U`'s helpers (which are relative to `from`).
-	* Moving nodes around will break connections.
+  * The `$` shorthand of GDScript does not work. Use get_node() instead.
+  * `self` is sadly not defined in connections. Use `from` and `to` instead, or make use of any of `U`'s helpers (which are relative to `from`).
+  * Moving nodes around will break connections.
 * Instance
-	* Be careful if you used the "Editable Children" option to modify nodes in an instanced subtree and then move the corresponding nodes in the template. Your modifications will be lost.
+  * Be careful if you used the "Editable Children" option to modify nodes in an instanced subtree and then move the corresponding nodes in the template. Your modifications will be lost.
 
 ### Video Changelog
 
@@ -141,11 +144,13 @@ Pronto scatters code throughout the scene to be as close to the place where it i
 1. Choose an icon to use as thumbnail from [the Godot source](https://github.com/godotengine/godot/tree/master/editor/icons) (it is recommended to download the source as ZIP for easily browsing the list).
 2. Create a {Name}.gd file in `addons/pronto/behaviors`.
 3. As a header for the file, use:
+
 ```python
 @tool
 #thumb("IconName")
 extends Behavior
 ```
+
 4. Proceed to write a Godot Node class as regular, e.g. by using @export and signals.
 
 > ⚠️ make sure to call super implementations of all overriden methods, e.g. `super._ready()` and `super._process()`.
@@ -153,15 +158,15 @@ extends Behavior
 ### When do I have to reload what?
 
 * Re-enable the plugin (go to Project>Settings>Plugins and toggle Pronto off and on)
-	* When creating a completely new `Behavior` file.
+  * When creating a completely new `Behavior` file.
 * Re-open the scene to update existing Behaviors
-	* When changing a `_ready` function.
-	* When creating a new `_process` function.
+  * When changing a `_ready` function.
+  * When creating a new `_process` function.
 * Switch scenes back and forth
-	* When updating a `_draw` function if no one calls `queue_redraw`.
+  * When updating a `_draw` function if no one calls `queue_redraw`.
 * If everything goes wrong :-)
-	* Reload the project from the main menu > Project > Reload Current Project
-	* TODO: reproduce in which cases this is necessary
+  * Reload the project from the main menu > Project > Reload Current Project
+  * TODO: reproduce in which cases this is necessary
 
 #### Helpers
 
