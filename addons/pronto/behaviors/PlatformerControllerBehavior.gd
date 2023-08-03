@@ -44,7 +44,7 @@ func _update_jump():
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
 		
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("input_jump"): # input_jump is defined in the InputMap
 		_last_jump_input = now
 
 func _can_jump():
@@ -85,7 +85,8 @@ func _physics_process(delta):
 		_parent.velocity.y += gravity.y * delta
 	
 	# horizontal
-	_parent.velocity.x = Input.get_axis("ui_left", "ui_right") * horizontal_velocity
+	# input_left and input_right are defined in the InputMap
+	_parent.velocity.x = Input.get_axis("input_left", "input_right") * horizontal_velocity
 	_parent.velocity.x += gravity.x * delta
 	
 	# move

@@ -8,8 +8,8 @@ class_name ControlsBehavior
 
 ## Defines the available players
 enum Player {
-	Player_1 = 0, ## Arrow keys
-	Player_2 = 1, ## WASD
+	Player_1 = 0, ## WASD
+	Player_2 = 1, ## Arrow keys
 	Player_3 = 2  ## IJKL
 }
 
@@ -104,18 +104,18 @@ var enable_drag = false
 var held_mouse_buttons = {}
 
 var key_map = [{
-	"function": Input.is_action_pressed,
-	"left": "ui_left",
-	"right": "ui_right",
-	"up": "ui_up",
-	"down": "ui_down"
-},
-{
 	"function": Input.is_physical_key_pressed,
 	"left": KEY_A,
 	"right": KEY_D,
 	"up": KEY_W,
 	"down": KEY_S
+},
+{
+	"function": Input.is_action_pressed,
+	"left": "ui_left",
+	"right": "ui_right",
+	"up": "ui_up",
+	"down": "ui_down"
 },
 {
 	"function": Input.is_physical_key_pressed,
