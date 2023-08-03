@@ -31,7 +31,7 @@ The following list of behaviors act primarily as triggers of events.
 | Behavior | Function |
 | -------- | -------- |
 | AlwaysBehavior | Triggers every frame. Analog to Godot's `_process` function. Can be paused. |
-| ClockBehavior | Triggers after or for a set time. Can be set to paused and to only trigger once. When looking to trigger for a specific duration the `Trigger Every Frame` property of `Unil Elapsed` needs to be enabled. This will trigger every frame until the timer is elapsed. If you wish to trigger e.g. every second (instead of every frame) you can activate `Trigger Every X Seconds` and set the `Trigger Interval In Seconds` to `1`. Hint: Intervall should not be smaller than typical time between frames (delta). |
+| ClockBehavior | Triggers after or for a set time. Can be set to paused and to only trigger once. When looking to trigger for a specific duration the `Trigger Every Frame` property of `Until Elapsed` needs to be enabled. This will trigger every frame until the timer is elapsed. If you wish to trigger e.g. every second (instead of every frame) you can activate `Trigger Every X Seconds` and set the `Trigger Interval In Seconds` to `1`. Hint: Interval should not be smaller than typical time between frames (delta). |
 | CollisionBehavior | Triggers when something collides with its parent. The `collided` signal also provides the `direction` of the collision pointing in the direction from the parent to the node it collided with. NOTE: only works for Area2D, RigidBody2D and CharacterBody2D as of now. |
 | ControlsBehavior | Triggers for mouse interactions and offers a convenient set of triggers for keyboard movement. Exact keybindings are chosen via the `Player` property which allows for up to 3 different controls (Player 1: `WASD`, Player 2: `Arrow keys`, Player 3: `IJKL`). The `direction` signal can be used for moving a character in combination with a `MoveBehavior`. |
 | DragBehavior | Allows users to drag and drop the parent node using the mouse. Offers signals for hovering/unhovering, dragging/dropping, and moving the node. Supports different types of nodes, including character bodies, rigid bodies, static bodies, sprites, placeholders, and controls. |
@@ -50,7 +50,7 @@ The following list of behaviors primarily cause effects when triggered.
 | QueryBehavior | Searches for nodes in the scene and emits signals for results. Properties allow to filter, sort, and limit results. Can be used for tasks such as destroying all enemies in a certain radius, infecting a random player, or finding the nearest health pack. |
 | SceneRootBehavior | Provides access to the `SceneTree` from Godot. It offers the signals `node_added(node: Node)`, `node_remove(node: Node)` and `tree_changed()` from the `SceneTree`. Additionally, it implements three methods for executing lambda functions on all or a specific subset of nodes in a given `group`. |
 | SignalBehavior | Forwards signals when triggered, optionally with arguments. Useful for abstraction/encapsulation of lower-level signals, signal renaming, or logical OR-gating of signals. |
-| SpawnerBehavior | When triggered, spawns whatever its child nodes are at its current location in the scene. Single children nodes can be spawned by modifying the optional index argument in each spawning method to just the respective child node. Use -1 as index to spawn all children. Set use_spawn_shape to true to randomly spawn children in the given shape or polygon. When using a Polygon2D dont use it as a child of the spawner. |
+| SpawnerBehavior | When triggered, spawns whatever its child nodes are at its current location in the scene. Single children nodes can be spawned by modifying the optional index argument in each spawning method to just the respective child node. Use -1 as index to spawn all children. Set use_spawn_shape to true to randomly spawn children in the given shape or polygon. When using a Polygon2D do not use it as a child of the spawner. |
 | StopwatchBehavior | Starts counting up time when triggered. Can be reset. |
 
 The following list of behaviors manage state or communicate visual properties.
@@ -62,7 +62,7 @@ The following list of behaviors manage state or communicate visual properties.
 | GroupBehavior | Draws a shape around its children to group them visually. Only visible in the editor. |
 | HealthBarBehavior | Show a rectangular health bar. Offers methods to manipulate the current health and emits a signal when health drops to zero. |
 | InspectBehavior | Add as a child of a node to inspect its properties inside the game. |
-| InstanceBehavior | Allows you to define a template subtree of Nodes that you want to repeat multiple times without copy-pasting. Add your template as a child of the Instance node, then hover the connection dialog and click the "Instance" button. Note: internally, this creates a "hidden" scene that you need to commit as well. You can thus use **"Editable children"** in Godot by right-clicking the instance and tweaking properties while inherting the rest. |
+| InstanceBehavior | Allows you to define a template subtree of Nodes that you want to repeat multiple times without copy-pasting. Add your template as a child of the Instance node, then hover the connection dialog and click the "Instance" button. Note: internally, this creates a "hidden" scene that you need to commit as well. You can thus use **"Editable children"** in Godot by right-clicking the instance and tweaking properties while inheriting the rest. |
 | PlaceholderBehavior | Show a colored rectangle with a label. Useful as a quick means to communicate a game object's function. Functions as a collision shape, so you don't need to add another. Instead of a rectangle a placeholder can also display a sprite instead (use the Sprite Library in the Inspector to choose an existing texture or load your own). Can be `flash()`ed in a different color. |
 | StoreBehavior | Use the Godot meta properties to store state. You can configure it to store values in the global dictionary `G` and access it via `G.at(prop)`. |
 | ValueBehavior | Show a constant you can use in expression visually as a slider. Note that these are shared globally, so create new names if you need to use different values. |
@@ -79,7 +79,7 @@ The following list of behaviors manage state or communicate visual properties.
 
 ### Juice
 
-The following list of nodes dont add new functionality, their purpose is to add a bit of juice to your prototypes. They may not make your prototypes good, but they can add to them.
+The following list of nodes don't add new functionality, their purpose is to add a bit of juice to your prototypes. They may not make your prototypes good, but they can add to them.
 
 | Juice | Function |
 | -------- | -------- |
@@ -96,7 +96,7 @@ Connections are an extension of Godot signals to be more flexible. Connections c
 * Editing
   * You can define a condition for the connection to trigger by entering a Godot expression in condition field. You may refer to `from` and `to` in the expression.
   * You can use the <kbd>+</kbd> icon in the header of the connection editor to add references to further nodes by specifying a node path relative to the `from` node. You can use these nodes in any statement, argument, or condition expression using `ref0`, `ref1`, etc. You can right-click these variables in the connection header to edit their path or remove them.
-  * You can disable a connection by unticking the checkbox in the top-right or in its context menu.
+  * You can disable a connection by unchecking the checkbox in the top-right or in its context menu.
   * You can also pin a connection editor so that it remains in the scene after saving them. You can click and drag editors in the scene as well. You can drag the handles at the bottom right of each text field to resize the editor.
   * You can press the "open script" button next to any code expression to edit it in a full-screen Godot tab which provides you better syntax highlighting and autocompletion.
 * Reordering
@@ -112,7 +112,7 @@ Pronto scatters code throughout the scene to be as close to the place where it i
 | Name | Function | Example |
 | -------- | -------- | ------- |
 | `u(node: Node)` | Wrap the given Node to expose the utility functions for it. | `u(other).at("score")` |
-| `closest_that(cond: Callable)` | Find the closest node that matches the given criterium. First checks children, then children of parents in a breadth-first search. | `closest_that(func (n): return n is Node)` |
+| `closest_that(cond: Callable)` | Find the closest node that matches the given criteria. First checks children, then children of parents in a breadth-first search. | `closest_that(func (n): return n is Node)` |
 | `group(name: String)` `group_do(name: String, c: Callable)` | Get all nodes in the given group. | `group_do("enemy", func (e): e.queue_free())` |
 | `at(name: String)` | Find the "closest" `State` that has a field called `name`. If none is found, checks global state in `G`. | `at("score")` |
 | `put(name: String, val: Variant)` | Find the "closest" `State` that has a field called `name` and store the given value. If none is found, checks global state in `G`. | `put("score", 0)` |
@@ -161,7 +161,7 @@ extends Behavior
 
 4. Proceed to write a Godot Node class as regular, e.g. by using @export and signals.
 
-> ⚠️ make sure to call super implementations of all overriden methods, e.g. `super._ready()` and `super._process()`.
+> ⚠️ make sure to call super implementations of all overwritten methods, e.g. `super._ready()` and `super._process()`.
 
 ### When do I have to reload what?
 
@@ -246,4 +246,4 @@ If you have made any changes to your game and want to deploy a new version, you 
 
 ### Troubleshooting
 
-If you accidently trigger the workflow with an incorrect folder name it may execute without generating any errors but will create a new game in the [gh-pages branch](https://github.com/hpi-swa-lab/godot-pronto/tree/gh-pages). This will automatically be rendered into the list of games. In order to delete it, you have to manually remove it from the gh-pages branch. Please be carefull when doing so and do not delete any other files other than the projects folder you want to delete.
+If you accidentally trigger the workflow with an incorrect folder name it may execute without generating any errors but will create a new game in the [gh-pages branch](https://github.com/hpi-swa-lab/godot-pronto/tree/gh-pages). This will automatically be rendered into the list of games. In order to delete it, you have to manually remove it from the gh-pages branch. Please be careful when doing so and do not delete any other files other than the projects folder you want to delete.
