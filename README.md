@@ -4,6 +4,7 @@
 
 Pronto is a framework for [Godot](http://godotengine.org) to make prototyping game mechanics faster. It is *not* a framework aimed at helping to create entire games faster. The resulting prototypes are a means to quickly explore ideas, throw away the prototype, and only properly implement ideas that turned out well.
 
+Play prototypes created in pronto [here](https://hpi-swa-lab.github.io/godot-pronto/).
 ## Function
 
 The main idea of Pronto is to make behavior visible. Our hypothesis is that it will be easier to create and tweak game mechanics. For example, instead of defining numbers in code for the distance a platform moves, we use handles in the game world to visually direct it.
