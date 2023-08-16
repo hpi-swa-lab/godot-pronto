@@ -4,6 +4,18 @@ extends Behavior
 class_name PlatformerControllerBehavior
 
 @export_category("Gameplay")
+## Defines the available controls
+enum Player {
+	Player_1 = 0, ## A - D, Jump: Space
+	Player_2 = 1, ## Arrow keys
+	Player_3 = 2  ## J - L, Jump: I
+}
+
+## Determines which player these controls are for. This determines the keys
+## that the controls react to. Which keys that are is defined in [member PlatformControllerBehavior.key_map]
+##
+## See [enum PlatformControllerBehavior.Player] for possible values
+@export var player: Player = Player.Player_1
 ## The speed with which the character jumps.
 @export var jump_velocity: float = 400
 ## The speed with which the character moves sideways.
@@ -33,6 +45,25 @@ var _last_positions = []
 
 signal collided(last_collision: KinematicCollision2D)
 
+var key_map = [{
+	"function": Input.is_physical_key_pressed,
+	"left": KEY_A,
+	"right": KEY_D,
+	"jump": [KEY_SPACE, KEY_W]
+},
+{
+	"function": Input.is_action_pressed,
+	"left": "ui_left",
+	"right": "ui_right",
+	"jump": "ui_up"
+},
+{
+	"function": Input.is_physical_key_pressed,
+	"left": KEY_J,
+	"right": KEY_L,
+	"jump": KEY_I
+}]
+
 func _enter_tree():
 	if not get_parent() is CharacterBody2D:
 		push_error("PlatformerController must be a child of a CharacterBody2D")
@@ -44,7 +75,7 @@ func _update_jump():
 		_last_on_floor = now
 		_last_floor_height = _parent.position.y
 		
-	if Input.is_action_just_pressed("input_jump"): # input_jump is defined in the InputMap
+	if _is_key_pressed("jump"):
 		_last_jump_input = now
 
 func _can_jump():
@@ -66,6 +97,13 @@ func _draw():
 	for pos in _last_positions:
 		draw_circle(pos, 3, Color.RED)
 
+func _is_key_pressed(direction):
+	var keys = key_map[player]
+	if (typeof(keys[direction]) == TYPE_ARRAY):
+		return keys[direction].any(func(key): return keys["function"].call(key))
+	else:
+		return keys["function"].call(keys[direction])
+
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
@@ -85,8 +123,12 @@ func _physics_process(delta):
 		_parent.velocity.y += gravity.y * delta
 	
 	# horizontal
-	# input_left and input_right are defined in the InputMap
-	_parent.velocity.x = Input.get_axis("input_left", "input_right") * horizontal_velocity
+	var input_direction_x = 0
+	if _is_key_pressed("left"):
+		input_direction_x += -1
+	if _is_key_pressed("right"):
+		input_direction_x += 1
+	_parent.velocity.x = input_direction_x * horizontal_velocity
 	_parent.velocity.x += gravity.x * delta
 	
 	# move
