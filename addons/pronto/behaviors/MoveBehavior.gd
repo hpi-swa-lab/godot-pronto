@@ -29,9 +29,9 @@ signal touched_floor(velocity: float)
 
 @export_category("Rotation")
 ## Whether the velocity is applied according to the parent's local rotation or in global coordinates.
-@export var rotated = false
+@export var rotated = true
 ## Speed at which the parent rotates when asked to.
-@export var rotation_speed = 0.0
+@export var rotation_speed = 300.0
 ## Whether to also rotate the velocity vector when the character is rotated. Feels like the parent can drift when disabled.
 @export var rotate_velocity = true
 
