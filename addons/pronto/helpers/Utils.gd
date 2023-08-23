@@ -237,7 +237,7 @@ static func global_size_of_yourself(node: Node):
 	return Rect2(node.global_position, Vector2.ZERO)
 
 static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> Rect2:
-	if not node is Node2D:
+	if not node is CanvasItem:
 		return Rect2(0, 0, 0, 0)
 	
 	var rect = Rect2(node.global_position, Vector2.ZERO)

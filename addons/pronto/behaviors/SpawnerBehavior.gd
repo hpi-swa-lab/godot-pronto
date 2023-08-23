@@ -217,9 +217,6 @@ func _process(delta):
 	super._process(delta)
 	
 	if shape_type == "Generic" and spawn_shape_generic:
-		if spawn_shape_generic is RectangleShape2D and spawn_shape_generic.size != shape_size:
-			spawn_shape_generic.size = shape_size
-		
 		if spawn_shape_generic is CircleShape2D and spawn_shape_generic.radius != shape_radius:
 			spawn_shape_generic.radius = shape_radius
 		
@@ -236,7 +233,7 @@ func _process(delta):
 			last_spawn_shape_size_circle = spawn_shape_generic.radius
 			queue_redraw()
 			
-		if spawn_shape_generic is CapsuleShape2D and spawn_shape_generic.height != last_spawn_shape_size_capsule or spawn_shape_generic.radius != last_spawn_shape_size_circle:
+		if spawn_shape_generic is CapsuleShape2D and (spawn_shape_generic.height != last_spawn_shape_size_capsule or spawn_shape_generic.radius != last_spawn_shape_size_circle):
 			last_spawn_shape_size_circle = spawn_shape_generic.radius
 			last_spawn_shape_size_capsule = spawn_shape_generic.height
 			queue_redraw()

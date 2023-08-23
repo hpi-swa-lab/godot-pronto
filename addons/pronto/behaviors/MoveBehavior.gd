@@ -128,6 +128,12 @@ func rotate_right():
 	if rotate_velocity:
 		velocity = velocity.rotated(deg_to_rad(s))
 
+func rotate_direction(direction):
+	if direction > 0:
+		rotate_right()
+	elif direction < 0:
+		rotate_left()
+
 func _notification(what):
 	if what == NOTIFICATION_PARENTED:
 		update_configuration_warnings()
