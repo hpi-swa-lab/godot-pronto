@@ -312,8 +312,6 @@ sprite_texture = ExtResource("2_fjkj2")
 position = Vector2(61, 47)
 script = ExtResource("3_e4ih0")
 friction = 2.0
-rotated = true
-rotation_speed = 300.0
 
 [node name="ControlsBehavior" type="Node2D" parent="car"]
 position = Vector2(143, 10)

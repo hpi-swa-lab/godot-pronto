@@ -30,10 +30,7 @@ func _ready():
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
 	for childNode in self.get_children():
-		if is_instance_of(childNode, CodeBehavior):
-			vbox.add_child(create_ui_for_code(childNode))
-		elif is_instance_of(childNode, ValueBehavior):
-			vbox.add_child(create_ui_for_value(childNode))
+		maybe_add_config(childNode)
 	
 	scrollContainer.add_child(vbox)
 	scrollContainer.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -52,7 +49,15 @@ func _ready():
 	panel.add_child.call_deferred(outerVbox)
 	# print("Prototype UI generated successfully")
 	
-	
+func maybe_add_config(node: Node):
+	if is_instance_of(node, CodeBehavior):
+		vbox.add_child(create_ui_for_code(node))
+		return true
+	elif is_instance_of(node, ValueBehavior):
+		vbox.add_child(create_ui_for_value(node))
+		return true
+	return false
+
 func create_ui_for_value(value: ValueBehavior):
 	if not value.visible: return # Hide values that are hidden in the Editor
 	if value.selectType == "Float":
