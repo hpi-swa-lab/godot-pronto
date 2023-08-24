@@ -1,12 +1,12 @@
 [gd_scene load_steps=52 format=3 uid="uid://bqq5g7es1pen6"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_womwi"]
-[ext_resource type="Texture2D" uid="uid://dskpupjep4vt2" path="res://convoluted-knock/kanelbulle.png" id="3_ff0eh"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="3_i3rql"]
+[ext_resource type="Texture2D" uid="uid://dskpupjep4vt2" path="res://prototypes/kormorant-kar/kanelbulle.png" id="3_n3ve6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="4_xpnqg"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_hkopa"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_s1k5k"]
-[ext_resource type="Texture2D" uid="uid://d2dj37oim0t6x" path="res://convoluted-knock/komorant.png" id="7_48wyw"]
+[ext_resource type="Texture2D" uid="uid://d2dj37oim0t6x" path="res://prototypes/kormorant-kar/komorant.png" id="7_27a5v"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="8_p1l7t"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="9_fj146"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="9_qinxo"]
@@ -320,7 +320,7 @@ position = Vector2(61, 1)
 script = ExtResource("1_womwi")
 placeholder_size = Vector2(71, 63)
 use_sprite = true
-sprite_texture = ExtResource("3_ff0eh")
+sprite_texture = ExtResource("3_n3ve6")
 
 [node name="CollisionBehavior" type="Node2D" parent="SpawnerBehavior/Area2D"]
 position = Vector2(58, 2)
@@ -334,7 +334,7 @@ position = Vector2(562, 501)
 script = ExtResource("1_womwi")
 placeholder_size = Vector2(74, 128)
 use_sprite = true
-sprite_texture = ExtResource("7_48wyw")
+sprite_texture = ExtResource("7_27a5v")
 
 [node name="MoveBehavior" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(-121, 40)

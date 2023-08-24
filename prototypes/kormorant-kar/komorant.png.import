@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dskpupjep4vt2"
-path="res://.godot/imported/kanelbulle.png-3d9a9f387bda3c2fa83466e21d51b57b.ctex"
+uid="uid://d2dj37oim0t6x"
+path="res://.godot/imported/komorant.png-231e2999159c8aa43938bf279e1c1756.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://convoluted-knock/kanelbulle.png"
-dest_files=["res://.godot/imported/kanelbulle.png-3d9a9f387bda3c2fa83466e21d51b57b.ctex"]
+source_file="res://prototypes/kormorant-kar/komorant.png"
+dest_files=["res://.godot/imported/komorant.png-231e2999159c8aa43938bf279e1c1756.ctex"]
 
 [params]
 
