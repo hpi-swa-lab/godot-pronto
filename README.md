@@ -233,9 +233,20 @@ Before you can deploy your game check the following:
 
 #### ExportBehavior
 
-To automatically export your game you have to add an `ExportBehavior` (do not rename this node!) anywhere in your game. There you can configure settings such as `title`, `description` and `authors` of the game, as well as how the `thumbnail.png` gets generated.
+To automatically export your game do the following:
+1. create a new branch for your project
+2. make sure that your game scene is in its own subfolder, not in the root
+3. add an `ExportBehavior` (do not rename this node!) anywhere in your game
+4. on the `ExportBehavior`, you can configure settings such as `title`, `description` and `authors` of the game, as well as how the `thumbnail.png` gets generated
+5. set your game scene as the main godot scene
+6. run your game once, it will generate a thumbnail
+7. make sure to `git add` the generated `thumbnail.png` and `game_info.json`, commit and push!
 
-If you then commit your game it will automatically trigger the workflow and deploy your game. If everything went well it should push your game to the `gh-pages` branch. This automatically triggers another workflow to rebuild the page. Wait until this workflow has completed before going to the next step.
+Once pushed, the system will automatically trigger a CI workflow to deploy your game.
+If everything went well the system will push your game to the `gh-pages` branch.
+This automatically triggers another workflow to rebuild the page.
+Wait until this workflow has completed before going to the next step.
+All in all, the game should be live within 3-5 minutes.
 
 ### Testing
 
