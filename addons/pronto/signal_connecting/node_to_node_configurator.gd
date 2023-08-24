@@ -52,7 +52,8 @@ var undo_redo: EditorUndoRedoManager
 var anchor: Node:
 	set(n):
 		anchor = n
-		reset_size()
+#		reset_size()
+		size = custom_minimum_size
 		%FunctionName.anchor = n
 var from: Node
 var existing_connection = null

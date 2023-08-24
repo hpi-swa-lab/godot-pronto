@@ -166,7 +166,7 @@ func _draw():
 		var font := ThemeDB.fallback_font
 		var text_size = 4
 		draw_string(font,
-			Vector2(font.get_string_size(str, HORIZONTAL_ALIGNMENT_CENTER, -1, text_size).x / -2, 12),
+			Vector2(font.get_string_size(str, HORIZONTAL_ALIGNMENT_CENTER, -1, text_size).x / -2, 22),
 			str,
 			HORIZONTAL_ALIGNMENT_CENTER,
 			-1,
@@ -197,23 +197,29 @@ class DropPropertyPrompt extends ColorRect:
 		# the prompt is only displayed if we have a drag operation with a valid object
 		return true
 	
+	func empty_script(a: Array, expr: String, return_value: bool):
+		var script := ConnectionScript.new(a, return_value, expr)
+		return script
+	
 	func _drop_data(at_position, data):
 		var root = editor_interface.get_edited_scene_root()
 		var current = data["object"].get(data["property"])
 		
 		var v = ValueBehavior.new()
-		v.from = min(0.0, current)
-		v.to = max(1.0, current)
-		v.value = current
+		v.float_from = min(0.0, current)
+		v.float_to = max(1.0, current)
+		v.float_value = current
 		v.name = data["property"]
 		v.position = Vector2(50, 50)
 		data["object"].add_child(v)
 		v.owner = root
 		
-		var b = BindBehavior.new()
-		b.to_prop = data["property"]
-		b.name = "bind_" + b.to_prop
-		b.position = Vector2(100, 50)
-		b.convert = "G.at('{0}')".format([data["property"]])
-		data["object"].add_child(b)
-		b.owner = root
+		Connection.connect_target(v, "value_changed", "..", "set", [empty_script(["value"], "\"%s\"" % [data["property"]], true), empty_script(["value"], "value", true)], [], empty_script(["value"], "true", true))
+		
+#		var b = BindBehavior.new()
+#		b.to_prop = data["property"]
+#		b.name = "bind_" + b.to_prop
+#		b.position = Vector2(100, 50)
+#		b.convert = "G.at('{0}')".format([data["property"]])
+#		data["object"].add_child(b)
+#		b.owner = root

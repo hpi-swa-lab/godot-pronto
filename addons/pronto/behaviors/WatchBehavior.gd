@@ -20,7 +20,7 @@ func _ready():
 func _process(delta):
 	super._process(delta)
 	if not Engine.is_editor_hint():
-		var val = str(evaluate.run([], self))
+		var val = str(await evaluate.run([], self))
 		if _last != val:
 			if EngineDebugger.is_active(): EngineDebugger.send_message("pronto:watch_put", [get_path(), val])
 			_last = val

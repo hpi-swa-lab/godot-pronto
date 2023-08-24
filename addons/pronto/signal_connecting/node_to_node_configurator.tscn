@@ -37,8 +37,9 @@ script = ExtResource("2_2ll7t")
 name = "Remove"
 
 [node name="Node To Node Configurator" type="PanelContainer"]
-offset_right = 364.0
-offset_bottom = 200.0
+custom_minimum_size = Vector2(2000, 2.08165e-12)
+offset_right = 2000.0
+offset_bottom = 363.0
 scale = Vector2(1, 1.00268)
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -122,13 +123,14 @@ size_flags_horizontal = 3
 text = " "
 
 [node name="AddReferenceButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_direction = 2
 layout_mode = 2
 tooltip_text = "Add reference"
 icon = SubResource("Texture2D_i0w25")
 
 [node name="VSeparator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 2.08165e-12)
 layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="ChangesNotifier" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -175,6 +177,7 @@ text = "("
 [node name="Args" type="BoxContainer" parent="MarginContainer/VBoxContainer/Receiver"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="RightParen" type="Label" parent="MarginContainer/VBoxContainer/Receiver"]
 layout_mode = 2
@@ -188,7 +191,7 @@ sync_handles_x = true
 
 [node name="Expression" parent="MarginContainer/VBoxContainer/ResizableContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 34.1782)
+custom_minimum_size = Vector2(0, 102.28)
 layout_mode = 2
 size_flags_horizontal = 1
 return_value = false
@@ -210,7 +213,7 @@ sync_handles_x = true
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 34.8133)
+custom_minimum_size = Vector2(0, 104.186)
 layout_mode = 2
 default_text = "true"
 max_width = 500

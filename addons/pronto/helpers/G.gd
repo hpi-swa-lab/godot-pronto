@@ -51,7 +51,7 @@ func maybe_add_value_user_interface():
 		return
 	
 	var panel = PanelContainer.new()
-	panel.size = Vector2(200, 200)
+	panel.size = Vector2(300, 200)
 	var ui = PrototypingUIBehavior.new()
 	ui.name = 'Config'
 	panel.add_child(ui)
