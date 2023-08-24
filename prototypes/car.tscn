@@ -362,6 +362,7 @@ metadata/pronto_connections = [SubResource("Resource_nf2tp")]
 [node name="ControlsBehavior" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(-105, -61)
 script = ExtResource("4_xpnqg")
+player = 1
 metadata/pronto_connections = [SubResource("Resource_247tl"), SubResource("Resource_wg2ox")]
 
 [node name="ClockBehavior" type="Node2D" parent="."]
