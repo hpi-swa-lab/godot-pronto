@@ -66,3 +66,9 @@ func _create_game_json():
 
 	file.store_string(JSON.stringify(game_dict, "\t"))
 	file = null
+
+func _get_configuration_warnings():
+	var message = []
+	if not self.name == "ExportBehavior":
+		message.append("ExportBehavior should not be renamed!")	
+	return message	
