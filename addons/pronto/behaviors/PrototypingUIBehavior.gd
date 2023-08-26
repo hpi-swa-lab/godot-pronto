@@ -5,6 +5,13 @@ class_name PrototypingUIBehavior
 
 ## Add to your scene to edit properties while in-game.
 
+## If true, the PrototypingUI will be visible in the export
+@export var show_in_export = true
+
+## If [code]true[/code], all values in the scene are added to the menu (if they are visible) [br]
+## If [code]false[/code], only children ValueBehaviors are added to the menu (if they are visible)
+@export var include_all_values = false
+
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
 var minimized: bool = false
@@ -16,6 +23,8 @@ var expanded_size = Vector2(0,0)
 func _ready():
 	super._ready()
 	
+	if OS.has_feature("release") and not show_in_export: return
+	
 	#if not is_instance_of(self.get_parent(), PanelContainer):
 	#	push_error("Prototyping UI needs to be the child of a PanelContainer.")
 	#	return
@@ -23,13 +32,18 @@ func _ready():
 	expanded_size = panel.size
 	
 	var scrollContainer = ScrollContainer.new()
-	#var vbox = VBoxContainer.new()
 	
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	#vbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
-	for childNode in self.get_children():
+	var nodes_to_add = []
+	
+	if include_all_values:
+		nodes_to_add = _get_valid_children()
+	else:
+		nodes_to_add = _get_valid_children(self)
+	
+	for childNode in nodes_to_add:
 		maybe_add_config(childNode)
 	
 	scrollContainer.add_child(vbox)
@@ -50,6 +64,7 @@ func _ready():
 	# print("Prototype UI generated successfully")
 	
 func maybe_add_config(node: Node):
+	if not node.visible: return # Hide values that are hidden in the Editor
 	if is_instance_of(node, CodeBehavior):
 		vbox.add_child(create_ui_for_code(node))
 		return true
@@ -58,8 +73,18 @@ func maybe_add_config(node: Node):
 		return true
 	return false
 
+func _node_is_valid(node):
+	return is_instance_of(node, CodeBehavior) or is_instance_of(node, ValueBehavior)
+
+func _get_valid_children(node = get_tree().root):
+	var child_nodes = []
+	for child in node.get_children():
+		if _node_is_valid(child):
+			child_nodes.push_back(child)
+		child_nodes.append_array(_get_valid_children(child))
+	return child_nodes
+
 func create_ui_for_value(value: ValueBehavior):
-	if not value.visible: return # Hide values that are hidden in the Editor
 	if value.selectType == "Float":
 		return create_ui_slider_for_value_float(value)
 	elif value.selectType == "Enum":
