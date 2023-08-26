@@ -64,11 +64,12 @@ func _ready():
 	# print("Prototype UI generated successfully")
 	
 func maybe_add_config(node: Node):
-	if not node.visible: return # Hide values that are hidden in the Editor
 	if is_instance_of(node, CodeBehavior):
+		if not node.visible: return # Hide values that are hidden in the Editor
 		vbox.add_child(create_ui_for_code(node))
 		return true
 	elif is_instance_of(node, ValueBehavior):
+		if not node.visible: return # Hide values that are hidden in the Editor
 		vbox.add_child(create_ui_for_value(node))
 		return true
 	return false
