@@ -66,7 +66,7 @@ func _about_to_popup():
 		i.ctrl_pressed = true
 		i.shift_pressed = true
 		i.keycode = KEY_V
-		current_edit_menu.add_item("Promote to Value", PROMOTE_IDX, i.get_keycode_with_modifiers())
+		current_edit_menu.add_item("Promote to Value [Pronto]", PROMOTE_IDX, i.get_keycode_with_modifiers())
 		if not current_edit_menu.id_pressed.is_connected(_on_item_pressed):
 			current_edit_menu.id_pressed.connect(_on_item_pressed)
 
