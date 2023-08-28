@@ -133,7 +133,7 @@ func _get_property_list():
 			"name": "bool_value",
 			"type": TYPE_STRING,
 			'hint': PROPERTY_HINT_ENUM,
-			'hint_string': "TRUE, FALSE"
+			'hint_string': "TRUE,FALSE"
 		})
 	else:
 		push_error("Invalid Type (" + selectType + ") selected for AdvancedValue " + str(self.name))			

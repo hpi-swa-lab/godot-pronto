@@ -9,9 +9,21 @@ var behaviors = {}
 var debugger: ConnectionDebug
 var inspectors = [ExpressionInspector.new(), SpriteInspector.new()]
 
+var tab_container: TabContainer
+const PROMOTE_IDX = 100
+var value_regex: RegEx
+
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		return
+		
+	value_regex = RegEx.new()
+	value_regex.compile("^\\s*(([+-]?([0-9]*[.])?[0-9]+|true|false)(:([a-zA-Z0-9_]+))?)\\s*$")
+	
+	tab_container = get_editor_interface().get_script_editor().find_child(
+		"*TabContainer*", true, false)
+	if tab_container:
+		tab_container.tab_changed.connect(_tab_changed)
 	
 	var regex = RegEx.new()
 	regex.compile("#thumb\\(\"(.+)\"\\)")
@@ -36,6 +48,70 @@ func _enter_tree():
 	for i in inspectors: add_inspector_plugin(i)
 	
 	get_undo_redo().history_changed.connect(history_changed)
+	
+func _tab_changed(tab: int):
+	var popup_menu = tab_container.get_tab_control(tab).find_child("*PopupMenu*", true, false)
+	if popup_menu and popup_menu is PopupMenu:
+		if not popup_menu.about_to_popup.is_connected(_about_to_popup):
+			popup_menu.about_to_popup.connect(_about_to_popup)
+
+func _about_to_popup():
+	var current_tab = tab_container.get_current_tab_control()
+	var code_edit = current_tab.get_base_editor()
+	var current_edit_menu = current_tab.find_child("*PopupMenu*", true, false)
+	var selection: String = code_edit.get_selected_text()
+	var regex_match = value_regex.search(selection)
+	if current_edit_menu and not selection.is_empty() and regex_match:
+		var i := InputEventKey.new()
+		i.ctrl_pressed = true
+		i.shift_pressed = true
+		i.keycode = KEY_V
+		current_edit_menu.add_item("Promote to Value", PROMOTE_IDX, i.get_keycode_with_modifiers())
+		if not current_edit_menu.id_pressed.is_connected(_on_item_pressed):
+			current_edit_menu.id_pressed.connect(_on_item_pressed)
+
+func _on_item_pressed(id):
+	var code_edit = tab_container.get_current_tab_control().get_base_editor()
+	if id == PROMOTE_IDX:
+		var selection: String = code_edit.get_selected_text()
+		if Engine.is_editor_hint():
+			var value_ref = _promote_selection_to_value(selection)
+			code_edit.insert_text_at_caret(value_ref)
+		
+func _promote_selection_to_value(selection: String):
+	var regex_groups: PackedStringArray = value_regex.search(selection).strings
+	
+	var timestamp = str(floor(Time.get_unix_time_from_system() * 100))
+	var value_name = regex_groups[5] if not regex_groups[5].is_empty() \
+		else "Value#" + timestamp
+	
+	var root = get_tree().get_edited_scene_root()
+	var protoTypingUI = root.find_child("*PrototypingUIBehavior*", true, true)
+	var insert_node = protoTypingUI if protoTypingUI else root
+	
+	var value = ValueBehavior.new()
+	value.name = value_name
+	
+	var selected_value = regex_groups[2] # float number or bool
+	
+	if selected_value in ["true", "false"]:
+		# Create Bool ValueBehavior.
+		value.selectType = "Bool"
+		value.bool_value = selected_value.to_upper()
+	elif selected_value.is_valid_float():
+		# Create Float ValueBehavior.
+		var offset = 100
+		var val = selected_value.to_float()
+		value.selectType = "Float"
+		value.float_from = floor(val - offset)
+		value.float_to = ceil(val + offset)
+		value.float_value = val
+		
+	insert_node.add_child(value, true)
+	value.set_owner(root)
+	
+	var value_ref = selection.replace(regex_groups[1], "G.at(\"" + value_name + "\")")
+	return value_ref
 
 func history_changed():
 	if _is_editing_behavior() and edited_object is PlaceholderBehavior and edited_object.should_keep_in_origin():
