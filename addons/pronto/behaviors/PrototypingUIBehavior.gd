@@ -12,9 +12,11 @@ class_name PrototypingUIBehavior
 ## If [code]false[/code], only children ValueBehaviors are added to the menu (if they are visible)
 @export var include_all_values = false
 
+## If [code]true[/code] the PrototypingUI starts minimized.
+@export var minimized: bool = false
+
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
-var minimized: bool = false
 var vbox = VBoxContainer.new()
 var header = HBoxContainer.new()
 var expanded_size = Vector2(0,0)
@@ -258,6 +260,8 @@ func create_minimizing_button():
 	var button = Button.new()
 	button.text = "−"
 	button.pressed.connect(handle_size_button_click.bind(button))
+	if minimized:
+		handle_size_button_click(button, true)
 	return button
 	
 
@@ -270,8 +274,8 @@ func create_header():
 	hbox.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	return hbox
 
-func handle_size_button_click(button: Button):
-	minimized = !minimized
+func handle_size_button_click(button: Button, initial: bool = false):
+	if not initial: minimized = !minimized
 	vbox.visible = !minimized
 	if minimized:
 		panel.size = header.size + Vector2(10,0)
@@ -279,8 +283,6 @@ func handle_size_button_click(button: Button):
 	else:
 		panel.size = expanded_size
 		button.text = "-"
-
-
 
 func handle_value_bool_change(index: int, value: ValueBehavior, optionButton : OptionButton):
 	optionButton.select(index)
