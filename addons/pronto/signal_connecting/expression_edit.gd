@@ -121,9 +121,34 @@ func _process(d):
 
 func _ready():
 	if owner != self:
+		_add_promote_to_valu_option()
 		fake_a_godot_highlighter()
 		resize()
 		%Expression.code_completion_prefixes = [".", ",", "(", "=", "$", "@", "\"", "\'"]
+		
+func _add_promote_to_valu_option():
+	var menu = %Expression.get_menu()
+	var i := InputEventKey.new()
+	i.ctrl_pressed = true
+	i.shift_pressed = true
+	i.keycode = KEY_V
+	menu.add_item("Promote to Value [Pronto]", G.PROMOTE_IDX, i.get_keycode_with_modifiers())
+	menu.about_to_popup.connect(_about_to_popup)
+	menu.id_pressed.connect(_on_item_pressed)
+
+func _on_item_pressed(id):
+	if id == G.PROMOTE_IDX:
+		var selection: String = %Expression.get_selected_text()
+		if Engine.is_editor_hint():
+			var value_ref = G._promote_selection_to_value(selection)
+			%Expression.insert_text_at_caret(value_ref)
+
+func _about_to_popup():
+	var menu = %Expression.get_menu()
+	var selection = %Expression.get_selected_text()
+	var regex_match = G.value_regex.search(selection)
+	var should_be_enabled: bool = not selection.is_empty() and regex_match
+	menu.set_item_disabled(-1, !should_be_enabled)
 
 func fake_a_godot_highlighter():
 	if G.at("_pronto_editor_plugin") == null:
