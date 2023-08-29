@@ -11,6 +11,10 @@ var MENU_PROMOTE_VALUE = 100
 ## The regex used for matching the text selection
 var value_regex = RegEx.new()
 
+## The tooltip used for the menu item
+func _tool_tip():
+	return "Selection has to match <Float|Bool>[:Name]?"
+
 ## Checks if the selection can be promoted to a ValueBehavior
 func is_valid_selection(selection: String):
 	return value_regex.search(selection) != null
