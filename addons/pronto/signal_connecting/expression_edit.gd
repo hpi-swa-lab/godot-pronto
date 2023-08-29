@@ -132,22 +132,22 @@ func _add_promote_to_valu_option():
 	i.ctrl_pressed = true
 	i.shift_pressed = true
 	i.keycode = KEY_V
-	menu.add_item("Promote to Value [Pronto]", G.PROMOTE_IDX, i.get_keycode_with_modifiers())
+	menu.add_item("Promote to Value [Pronto]", PromoteUtil.MENU_PROMOTE_VALUE, i.get_keycode_with_modifiers())
 	menu.about_to_popup.connect(_about_to_popup)
 	menu.id_pressed.connect(_on_item_pressed)
 
 func _on_item_pressed(id):
-	if id == G.PROMOTE_IDX:
+	if id == PromoteUtil.MENU_PROMOTE_VALUE:
 		var selection: String = %Expression.get_selected_text()
 		if Engine.is_editor_hint():
-			var value_ref = G._promote_selection_to_value(selection)
+			var value_ref = PromoteUtil._promote_selection_to_value(selection)
 			%Expression.insert_text_at_caret(value_ref)
 
 func _about_to_popup():
 	var menu = %Expression.get_menu()
 	var selection = %Expression.get_selected_text()
-	var regex_match = G.value_regex.search(selection)
-	var should_be_enabled: bool = not selection.is_empty() and regex_match
+	var valid = PromoteUtil.is_valid_selection(selection)
+	var should_be_enabled: bool = not selection.is_empty() and valid
 	menu.set_item_disabled(-1, !should_be_enabled)
 
 func fake_a_godot_highlighter():

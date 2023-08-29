@@ -54,18 +54,19 @@ func _about_to_popup():
 	var current_tab = tab_container.get_current_tab_control()
 	var code_edit = current_tab.get_base_editor()
 	var current_edit_menu = current_tab.find_child("*PopupMenu*", true, false)
-	var selection: String = code_edit.get_selected_text()
-	var regex_match = G.value_regex.search(selection)
 	if not current_edit_menu: 
 		return
+		
+	var selection: String = code_edit.get_selected_text()
+	var valid = PromoteUtil.is_valid_selection(selection)
 	
 	var i := InputEventKey.new()
 	i.ctrl_pressed = true
 	i.shift_pressed = true
 	i.keycode = KEY_V
-	current_edit_menu.add_item("Promote to Value [Pronto]", G.PROMOTE_IDX, i.get_keycode_with_modifiers())
+	current_edit_menu.add_item("Promote to Value [Pronto]", PromoteUtil.MENU_PROMOTE_VALUE, i.get_keycode_with_modifiers())
 		
-	if not selection.is_empty() and regex_match:
+	if not selection.is_empty() and valid:
 		if not current_edit_menu.id_pressed.is_connected(_on_item_pressed):
 			current_edit_menu.id_pressed.connect(_on_item_pressed)
 	else:
@@ -74,10 +75,10 @@ func _about_to_popup():
 
 func _on_item_pressed(id):
 	var code_edit = tab_container.get_current_tab_control().get_base_editor()
-	if id == G.PROMOTE_IDX:
+	if id == PromoteUtil.MENU_PROMOTE_VALUE:
 		var selection: String = code_edit.get_selected_text()
 		if Engine.is_editor_hint():
-			var value_ref = G._promote_selection_to_value(selection)
+			var value_ref = PromoteUtil._promote_selection_to_value(selection)
 			code_edit.insert_text_at_caret(value_ref)
   
 func history_changed():
