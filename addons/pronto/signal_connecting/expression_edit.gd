@@ -128,8 +128,7 @@ func _ready():
 		
 func _add_promote_to_valu_option():
 	var menu = %Expression.get_menu()
-	menu.add_item("Promote to Value [Pronto]", PromoteUtil.MENU_PROMOTE_VALUE,
-		KEY_V | KEY_MASK_CTRL | KEY_MASK_SHIFT)
+	menu.add_item("Promote to Value [Pronto]", PromoteUtil.MENU_PROMOTE_VALUE)
 	menu.set_item_tooltip(-1, PromoteUtil._tool_tip())
 	menu.about_to_popup.connect(_about_to_popup)
 	menu.id_pressed.connect(_on_item_pressed)

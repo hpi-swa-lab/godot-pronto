@@ -60,9 +60,8 @@ func _about_to_popup():
 		
 	var selection: String = code_edit.get_selected_text()
 	var valid = PromoteUtil.is_valid_selection(selection)
-	
-	current_edit_menu.add_item("Promote to Value [Pronto]", PromoteUtil.MENU_PROMOTE_VALUE,
-		KEY_MASK_CTRL | KEY_MASK_SHIFT | KEY_V)
+
+	current_edit_menu.add_item("Promote to Value [Pronto]", PromoteUtil.MENU_PROMOTE_VALUE)
 	current_edit_menu.set_item_tooltip(-1, PromoteUtil._tool_tip())
 	
 	if not selection.is_empty() and valid:
@@ -79,7 +78,7 @@ func _on_item_pressed(id):
 		if Engine.is_editor_hint():
 			var value_ref = PromoteUtil._promote_selection_to_value(selection)
 			code_edit.insert_text_at_caret(value_ref)
- 
+
 func history_changed():
 	if _is_editing_behavior() and edited_object is PlaceholderBehavior and edited_object.should_keep_in_origin():
 		var u = get_undo_redo().get_history_undo_redo(get_undo_redo().get_object_history_id(edited_object))
