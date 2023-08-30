@@ -4,35 +4,60 @@ extends Behavior
 class_name PrototypingUIBehavior
 
 ## Add to your scene to edit properties while in-game.
+## If you have any ValueBehaviors within your game and do not add a PrototypingUI,
+## one will automatically be created with these default values
 
 ## If true, the PrototypingUI will be visible in the export
 @export var show_in_export = true
 
 ## If [code]true[/code], all values in the scene are added to the menu (if they are visible) [br]
 ## If [code]false[/code], only children ValueBehaviors are added to the menu (if they are visible)
-@export var include_all_values = false
+@export var include_all_values = true
 
 ## If [code]true[/code] the PrototypingUI starts minimized.
 @export var minimized: bool = false
 
+@export var panel_size: Vector2 = Vector2(300, 200):
+	set(v):
+		panel_size = v
+		if panel:
+			panel.size = panel_size
+			_build_panel()
+			queue_redraw()
+
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
-var vbox = VBoxContainer.new()
-var header = HBoxContainer.new()
+var vbox: VBoxContainer = VBoxContainer.new()
+var header: HBoxContainer = HBoxContainer.new()
 var expanded_size = Vector2(0,0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready()
-	
 	if OS.has_feature("release") and not show_in_export: return
+	if not get_tree(): return
 	
-	#if not is_instance_of(self.get_parent(), PanelContainer):
-	#	push_error("Prototyping UI needs to be the child of a PanelContainer.")
-	#	return
-	panel = self.get_parent()
+	panel = PanelContainer.new()
+	panel.size = panel_size
 	expanded_size = panel.size
 	
+	self.add_child(panel)
+	_build_panel()
+	
+	# Automatically rebuild the panel when nodes have changed
+#	if Engine.is_editor_hint():
+#		var tree = get_tree()
+#		tree.node_added.connect(_tree_changed)
+#		tree.node_removed.connect(_tree_changed)
+#		tree.node_renamed.connect(_tree_changed)
+#		tree.node_configuration_warning_changed.connect(_tree_changed)
+
+func _build_panel():
+	if not get_tree(): # This happens on godot startup
+		return
+	_clear_panel()
+	vbox = VBoxContainer.new()
+	header = HBoxContainer.new()
 	var scrollContainer = ScrollContainer.new()
 	
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -41,12 +66,17 @@ func _ready():
 	var nodes_to_add = []
 	
 	if include_all_values:
-		nodes_to_add = _get_valid_children()
+		nodes_to_add = _get_valid_children(get_tree().root)
 	else:
 		nodes_to_add = _get_valid_children(self)
 	
+	var added_any_nodes = false
 	for childNode in nodes_to_add:
-		maybe_add_config(childNode)
+		added_any_nodes = maybe_add_config(childNode) or added_any_nodes
+
+	if not added_any_nodes and not Engine.is_editor_hint(): # Hide the panel during the game if no Values are found
+		self.visible = false
+		return
 	
 	scrollContainer.add_child(vbox)
 	scrollContainer.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -59,12 +89,17 @@ func _ready():
 	outerVbox.add_child(header)
 	outerVbox.add_child(scrollContainer)
 	
-	# adding through deferred call as it might fail otherwise
-	#outerVbox.size = Vector2(max(vbox.size.x,header.size.x), vbox.size.y + header.size.y+100)
-	
 	panel.add_child.call_deferred(outerVbox)
-	# print("Prototype UI generated successfully")
-	
+
+func _tree_changed(node):
+	if not self.is_inside_tree(): return
+	if _node_is_valid(node):
+		_build_panel()
+
+func _clear_panel():
+	for child in panel.get_children():
+		child.queue_free()
+
 func maybe_add_config(node: Node):
 	if is_instance_of(node, CodeBehavior):
 		if not node.visible: return # Hide values that are hidden in the Editor
@@ -79,7 +114,7 @@ func maybe_add_config(node: Node):
 func _node_is_valid(node):
 	return is_instance_of(node, CodeBehavior) or is_instance_of(node, ValueBehavior)
 
-func _get_valid_children(node = get_tree().root):
+func _get_valid_children(node):
 	var child_nodes = []
 	for child in node.get_children():
 		if _node_is_valid(child):
@@ -142,15 +177,12 @@ func create_ui_for_value_bool(value: ValueBehavior):
 	
 	optionButton.add_item("FALSE", 0)
 	optionButton.add_item("TRUE", 1)
-	
-	#print("Bool Value String: " + value.bool_value)
-	#print("Bool Value Bool: " + str(value._bool_value))
+
 	if(value.bool_value == "TRUE"):
 		optionButton.select(1)
 	else:
 		optionButton.select(0)
 	
-	#hslider.value_changed.connect(handle_update_value_float_change.bind(value))
 	optionButton.item_selected.connect(handle_value_bool_change.bind(value, optionButton))
 	
 	var reset_button = Button.new()
@@ -303,17 +335,11 @@ func _handle_slider_drag_start(hbox: HBoxContainer):
 func _handle_slider_drag_end(value_changed: bool, hbox: HBoxContainer):
 	hbox.visible = false
 
-func _get_configuration_warnings():
-	var message = []
-	if not is_instance_of(self.get_parent(), PanelContainer):
-		message.append("Prototyping UI needs to be the child of a PanelContainer.")
-	if not _at_least_one_valid_child():
-		message.append("Prototyping UI needs to have Value children if you want to display them.")	
-	return message	
-
-func _at_least_one_valid_child():
-	for childNode in self.get_children():
-		if is_instance_of(childNode, CodeBehavior) or is_instance_of(childNode, ValueBehavior):
-			return true
-	return false
-	
+func handles():
+	return [
+		Handles.SetPropHandle.new(panel_size,
+			Utils.icon_from_theme("EditorHandle", self),
+			self,
+			"panel_size",
+			func (coord): return floor(coord).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+	]
