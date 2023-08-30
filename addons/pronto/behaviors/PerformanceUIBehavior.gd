@@ -1,7 +1,7 @@
 @tool
 #thumb("AnimationTrackList")
 extends Behavior
-class_name PerformanceBehavior
+class_name PerformanceUIBehavior
 
 # This code is still unoptimized, feel free to improve it
 
