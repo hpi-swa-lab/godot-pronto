@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://d0rrj0rnb3tdo"]
+[gd_scene load_steps=7 format=3 uid="uid://d0rrj0rnb3tdo"]
 
-[ext_resource type="FontFile" uid="uid://bl8e15dtp0unf" path="res://addons/prompto/fonts/ComicNeue-Bold.ttf" id="3_mkwpy"]
+[ext_resource type="FontFile" uid="uid://bl8e15dtp0unf" path="res://addons/prompto/fonts/ComicNeue-Bold.ttf" id="1_b76ta"]
+[ext_resource type="Script" path="res://addons/prompto/chat/chat.gd" id="1_r4llr"]
 
 [sub_resource type="GDScript" id="GDScript_vhn8d"]
 script/source = "@tool
@@ -35,7 +36,7 @@ func _pressed():
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_wm857"]
-font = ExtResource("3_mkwpy")
+font = ExtResource("1_b76ta")
 font_size = 38
 font_color = Color(0.843137, 0.843137, 0.843137, 1)
 
@@ -45,7 +46,6 @@ extends TextEdit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(\"Hello\")
 	pass # Replace with function body.
 
 func _gui_input(event):
@@ -57,7 +57,15 @@ func _gui_input(event):
 			
 		if event.keycode == KEY_ENTER:
 			var prompto_manager = get_node(\"/root/PromptoManager\")
-			prompto_manager.chat(self.text)
+			var prompt = self.text.strip_edges()
+			
+			var message = MessageEntry.new(MessageEntry.MessageRole.USER, prompt)
+			self.owner.add_message(message)
+			var response = await prompto_manager.chat(prompt)
+			print(response)
+			var response_message = MessageEntry.new(MessageEntry.MessageRole.ASSISTANT, response[\"data\"][\"text\"])
+			self.owner.add_message(response_message)
+			
 			self.text = \"\"
 			self.accept_event()
 			
@@ -66,34 +74,39 @@ func _process(delta):
 	pass
 "
 
-[node name="Prompto" type="MarginContainer"]
+[node name="Prompto Chat" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_r4llr")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Header" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_constants/margin_bottom = 20
 
-[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Header"]
 layout_mode = 2
 size_flags_horizontal = 8
+theme_override_constants/separation = 10
 
-[node name="UserLabel" type="Label" parent="MarginContainer/VBoxContainer/Header"]
+[node name="UserLabel" type="Label" parent="VBoxContainer/Header/HBoxContainer"]
 layout_mode = 2
+text = "lukas.boehme"
 vertical_alignment = 1
 script = SubResource("GDScript_vhn8d")
 
-[node name="Logout" type="Button" parent="MarginContainer/VBoxContainer/Header"]
+[node name="Logout" type="Button" parent="VBoxContainer/Header/HBoxContainer"]
 layout_mode = 2
 text = "Logout"
 script = SubResource("GDScript_vl5el")
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="PromptoLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(2.08165e-12, 180)
 layout_mode = 2
 text = "Prompto"
@@ -101,27 +114,22 @@ label_settings = SubResource("LabelSettings_wm857")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VScrollBar" type="VScrollBar" parent="MarginContainer/VBoxContainer"]
-visible = false
+[node name="ScrollableMessageContainer" type="ScrollContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_vertical = 3
+follow_focus = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VScrollBar"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
+[node name="MessageContainer" type="VBoxContainer" parent="VBoxContainer/ScrollableMessageContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme_override_constants/separation = 10
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VScrollBar/VBoxContainer"]
-layout_mode = 2
-text = "Hi, My name is prompto."
-
-[node name="InputField" type="TextEdit" parent="MarginContainer/VBoxContainer"]
+[node name="InputField" type="TextEdit" parent="VBoxContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 256)
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 8
 placeholder_text = "Send a message to Prompto"
 script = SubResource("GDScript_rtwmb")

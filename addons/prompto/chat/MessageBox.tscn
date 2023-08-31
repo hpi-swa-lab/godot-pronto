@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqejq4kiap3ey"]
+
+[ext_resource type="FontFile" uid="uid://mtvmjpt25i7v" path="res://addons/prompto/fonts/ComicNeue-Regular.ttf" id="1_1rbt6"]
+[ext_resource type="Script" path="res://addons/prompto/chat/MessageBox.gd" id="2_0kjv6"]
+
+[sub_resource type="Theme" id="Theme_djkh7"]
+default_font = ExtResource("1_1rbt6")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_js3c0"]
+resource_local_to_scene = true
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.219608, 0.219608, 0.219608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="MarginContainer" type="MarginContainer"]
+offset_right = 401.0
+offset_bottom = 39.0
+script = ExtResource("2_0kjv6")
+
+[node name="Content" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+clip_contents = false
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+layout_mode = 2
+theme = SubResource("Theme_djkh7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_js3c0")
+text = "This is an example content"
+fit_content = true
+scroll_following = true
+autowrap_mode = 2

@@ -14,6 +14,7 @@ var prompto_client: PromptoClient:
 const SAVE_DIR = 'user://'
 const SAVEFILE_PATH = SAVE_DIR + 'prompto_session.dat'
 var SAVEFILE_SECRET = OS.get_unique_id()
+var settings: EditorSettings
 
 # Called when the node enters the scene tree for the first time.
 func _enter_tree():
@@ -61,9 +62,7 @@ func _delete_stored_session() -> void:
 		DirAccess.remove_absolute(SAVEFILE_PATH)
 	
 func attempt_login():
-	var login_handler = LoginHandler.new()
-	add_child(login_handler)
-	login_handler.listen()
+	var login_handler = self._get_login_handler()
 	self.prompto_client.login(login_handler)
 	
 	var prompto_id = await login_handler.token_received
@@ -77,7 +76,18 @@ func attempt_login():
 	if session_information:
 		self.session_store.set_session(prompto_id, session_information.data.username, session_information.data.expires) #TODO
 		_save_session()
-		
+
+func _get_login_handler():
+	if self.has_node("LoginHandler"):
+		return self.get_node("LoginHandler")
+	
+	var login_handler = LoginHandler.new()
+	login_handler.name = "LoginHandler"
+	add_child(login_handler)
+	login_handler.listen()
+	
+	return login_handler
+
 func attempt_logout():
 	assert(self.session_store.logged_in())
 	await self.prompto_client.logout()
@@ -88,6 +98,17 @@ func attempt_logout():
 func chat(text: String):
 	assert(self.session_store.logged_in())
 	
-	self.prompto_client.chat(text)
+	return await self.prompto_client.chat(text)
 
+func setup_editor_settings(s: EditorSettings):
+	self.settings = s
+	if not self.settings.has_setting("prompto/chat_margin"):
+		self.settings.set("prompto/message_margin", 60)
 
+func get_settings():
+	return self.settings
+
+func get_message_margin():
+	return self.settings.get("prompto/message_margin")
+
+	

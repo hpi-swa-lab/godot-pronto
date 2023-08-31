@@ -7,8 +7,14 @@ func _enter_tree():
 	add_autoload_singleton("PromptoManager", "res://addons/prompto/prompto_manager.gd")
 	call_deferred('register_panel')
 
+func _ready():
+	get_pompto_manager().setup_editor_settings(get_editor_interface().get_editor_settings())
+
+func get_pompto_manager():
+	return get_node("/root/PromptoManager")
+
 func register_panel():
-	var prompto_manager = get_node("/root/PromptoManager")
+	var prompto_manager = get_pompto_manager()
 
 	# Initialization of the plugin goes here
 	# First load the dock scene and instance it:
@@ -17,13 +23,15 @@ func register_panel():
 	
 # Triggerd if session state changed
 func _set_scene(logged_in):
+	print("Scene changed.")
+	
 	if dock:
 		#remove_control_from_container(EditorPlugin.CONTAINER_PROJECT_SETTING_TAB_RIGHT, dock)
 		remove_control_from_docks(dock)
 		dock.free()
 		
 	if logged_in:
-		dock = preload("res://addons/prompto/chat.tscn").instantiate() 
+		dock = preload("res://addons/prompto/chat/chat.tscn").instantiate() 
 	else:
 		dock = preload("res://addons/prompto/login.tscn").instantiate()
 	
