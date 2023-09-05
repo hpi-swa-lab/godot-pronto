@@ -214,13 +214,17 @@ func create_ui_for_code(code: CodeBehavior):
 func create_ui_slider_for_value_float(value: ValueBehavior):
 	var name = value.name
 	
+	var container = VBoxContainer.new()
+	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	container.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	
 	var hbox = HBoxContainer.new()
 	var middle_vbox = VBoxContainer.new()
+	var edit_hbox = HBoxContainer.new()
 	var lower_hbox = HBoxContainer.new()
 	var name_vbox = VBoxContainer.new()
 	name_vbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-
-
+	
 	# value name label
 	var label = Label.new()
 	label.text = name + ":"
@@ -278,18 +282,148 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	reset_button.focus_mode = 0
 	reset_button.button_down.connect(handle_update_value_float_change.bind(value.float_default,value,label_current,hslider))
 	
+	var edit_button = Button.new()
+	edit_button.focus_mode = 0
+	edit_button.text = "✎"
+	edit_button.pressed.connect(_toggle_edit_view.bind(edit_hbox))
+	
 	middle_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	middle_vbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	middle_vbox.add_child(hslider)
 	middle_vbox.add_child(lower_hbox)
-	
-	
+
 	# adding to node tree
 	hbox.add_child(name_vbox)
 	hbox.add_child(middle_vbox)
 	hbox.add_child(current_vbox)
+	hbox.add_child(edit_button)
 	hbox.add_child(reset_button)
-	return hbox
+	
+	_build_edit_menu(edit_hbox, value, hslider, label_min, label_max)
+	
+	container.add_child(hbox)
+	container.add_child(edit_hbox)
+	return container
+	
+func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
+	slider: HSlider, label_min: Label, label_max: Label):
+	## Value vbox
+	var value_box = VBoxContainer.new()
+	value_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	value_box.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	
+	var value_label = Label.new()
+	value_label.text = "Value:"
+	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	value_label.add_theme_color_override("font_color",muted_gray)
+	
+	var value_input = SpinBox.new()
+	value_input.step = value.float_step_size
+	value_input.min_value = value.float_from
+	value_input.max_value = value.float_to
+	value_input.value = value.float_value
+	value_input.value_changed.connect(_value_changed.bind(value, slider))
+	
+	slider.value_changed.connect(_slider_changed.bind(value_input))
+	
+	value_box.add_child(value_label)
+	value_box.add_child(value_input)
+	
+	## From vbox
+	var from_box = VBoxContainer.new()
+	from_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	from_box.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	
+	var from_label = Label.new()
+	from_label.text = "From:"
+	from_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	from_label.add_theme_color_override("font_color",muted_gray)
+	
+	var from_input = SpinBox.new()
+	from_input.allow_greater = true
+	from_input.allow_lesser = true
+	from_input.step = value.float_step_size
+	from_input.value = value.float_from
+	from_input.value_changed.connect(_from_changed.bind(value, value_input, slider, label_min))
+	
+	from_box.add_child(from_label)
+	from_box.add_child(from_input)
+	
+	## To vbox
+	var to_box = VBoxContainer.new()
+	to_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	to_box.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	
+	var to_label = Label.new()
+	to_label.text = "To:"
+	to_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	to_label.add_theme_color_override("font_color",muted_gray)
+	
+	var to_input = SpinBox.new()
+	to_input.allow_greater = true
+	to_input.allow_lesser = true
+	to_input.step = value.float_step_size
+	to_input.value = value.float_to
+	to_input.value_changed.connect(_to_changed.bind(value, value_input, slider, label_max))
+	
+	to_box.add_child(to_label)
+	to_box.add_child(to_input)
+	
+	## Step vbox
+	var step_box = VBoxContainer.new()
+	step_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	step_box.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	
+	var step_label = Label.new()
+	step_label.text = "Step:"
+	step_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	step_label.add_theme_color_override("font_color",muted_gray)
+	
+	var step_input = SpinBox.new()
+	step_input.step = 0.00000001
+	step_input.value = value.float_step_size
+	step_input.value_changed.connect(_step_changed.bind(value, value_input, from_input, to_input, slider))
+	
+	step_box.add_child(step_label)
+	step_box.add_child(step_input)
+	
+	edit_hbox.add_child(value_box)
+	edit_hbox.add_child(step_box)
+	edit_hbox.add_child(from_box)
+	edit_hbox.add_child(to_box)
+	
+	edit_hbox.visible = false
+	
+func _slider_changed(new_value, value_input):
+	value_input.value = new_value
+	
+func _step_changed(new_value: float, value: ValueBehavior, value_input: SpinBox, from_input: SpinBox,
+	to_input: SpinBox, slider: HSlider):
+	value.float_step_size = new_value
+	value_input.step = new_value
+	from_input.step = new_value
+	to_input.step = new_value
+	slider.step = new_value
+	
+func _from_changed(new_value: float, value: ValueBehavior, \
+	value_input: SpinBox, slider: HSlider, label: Label):
+	value.float_from = new_value
+	value_input.min_value = new_value
+	slider.min_value = new_value
+	label.text = str(new_value)
+
+func _to_changed(new_value: float, value: ValueBehavior, \
+	value_input: SpinBox, slider: HSlider, label: Label):
+	value.float_to = new_value
+	value_input.max_value = new_value
+	slider.max_value = new_value
+	label.text = str(new_value)
+	
+func _value_changed(new_value: float, value: ValueBehavior, slider: HSlider):
+	slider.value = new_value
+
+func _toggle_edit_view(container: HBoxContainer):
+	container.visible = not container.visible
 
 func create_minimizing_button():
 	var button = Button.new()

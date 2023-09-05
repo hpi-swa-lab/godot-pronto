@@ -52,7 +52,7 @@ class ButtonProperty extends EditorProperty:
 			var path = "res://addons/pronto/value_resources/" + value_obj.name + ".res"
 			var file = FileAccess.open(path,
 				FileAccess.READ)
-			if not file: return
+			if not file: continue
 			var r = ResourceLoader.load(path)
 			if r is ValueResource:
 				var val_res = (r as ValueResource)
