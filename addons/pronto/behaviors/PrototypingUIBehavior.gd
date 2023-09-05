@@ -25,6 +25,9 @@ class_name PrototypingUIBehavior
 			_build_panel()
 			queue_redraw()
 
+## Pressing this button applies all value changes made during the last runtime.
+@export var runtime_values: int
+
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
 var vbox: VBoxContainer = VBoxContainer.new()
@@ -299,12 +302,29 @@ func create_minimizing_button():
 
 func create_header():
 	var hbox = HBoxContainer.new()
+	hbox.add_child(create_minimizing_button())
+	hbox.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	var text = Label.new()
 	text.text = self.name
-	hbox.add_child(create_minimizing_button())
 	hbox.add_child(text)
-	hbox.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	return hbox
+
+func _serialize_values():
+	var value_nodes = _get_valid_children(get_tree().root)
+	for value_obj in value_nodes:
+		if not value_obj is ValueBehavior:
+			continue
+		var dir_path = "res://addons/pronto/value_resources"
+		if not DirAccess.dir_exists_absolute(dir_path):
+			DirAccess.make_dir_absolute(dir_path)
+		var path = dir_path + "/" + value_obj.name + ".res"
+		var file = FileAccess.open(path,
+			FileAccess.WRITE)
+		if file:
+			var r = ValueResource.new()
+			r._set_from_value(value_obj)
+			ResourceSaver.save(r, path)
+			file.close()
 
 func handle_size_button_click(button: Button, initial: bool = false):
 	if not initial: minimized = !minimized
@@ -319,15 +339,18 @@ func handle_size_button_click(button: Button, initial: bool = false):
 func handle_value_bool_change(index: int, value: ValueBehavior, optionButton : OptionButton):
 	optionButton.select(index)
 	value.bool_value = optionButton.get_item_text(index)
+	_serialize_values()
 	
 func handle_value_enum_change(index: int, value: ValueBehavior, optionButton: OptionButton):
 	optionButton.select(index)
 	value.enum_value = value.enum_choices[index]
+	_serialize_values()
 	
 func handle_update_value_float_change(new_value: float, value: ValueBehavior, label_current: Label, slider :HSlider):
 	value.float_value = new_value
 	slider.value = new_value
 	label_current.text = str(new_value)
+	_serialize_values()
 	
 func _handle_slider_drag_start(hbox: HBoxContainer):
 	hbox.visible = true
