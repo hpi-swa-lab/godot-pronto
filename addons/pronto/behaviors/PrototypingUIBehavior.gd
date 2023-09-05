@@ -32,7 +32,18 @@ var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
 var vbox: VBoxContainer = VBoxContainer.new()
 var header: HBoxContainer = HBoxContainer.new()
-var expanded_size = Vector2(0,0)
+
+# Variables for moving and resizing UI container.
+var start: Vector2
+var init_position: Vector2
+var is_moving: bool
+var is_resizing: bool
+var resize_x: bool
+var resize_y: bool
+var initial_size: Vector2
+
+var grab_threshold:= 30
+var resize_threshold:= 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,10 +53,11 @@ func _ready():
 	
 	panel = PanelContainer.new()
 	panel.size = panel_size
-	expanded_size = panel.size
 	
 	self.add_child(panel)
 	_build_panel()
+	
+#	panel.panel.content_margin_bottom = 100
 	
 	# Automatically rebuild the panel when nodes have changed
 #	if Engine.is_editor_hint():
@@ -54,6 +66,77 @@ func _ready():
 #		tree.node_removed.connect(_tree_changed)
 #		tree.node_renamed.connect(_tree_changed)
 #		tree.node_configuration_warning_changed.connect(_tree_changed)
+
+func _draw():
+	super._draw()
+	draw_rect(Rect2(Vector2(0, 0), Vector2(panel_size.x, 30)), Color.BLACK, true)
+
+func _input(event):
+	if Input.is_action_just_pressed("input_left_mouse"):
+		var rect = panel.get_global_rect()
+		var localMousePos = event.position - get_global_position()
+		if localMousePos.y < grab_threshold:
+			start = event.position
+			init_position = get_global_position()
+			is_moving = true
+		else:
+			if abs(localMousePos.x - rect.size.x) < resize_threshold:
+				start.x = event.position.x
+				initial_size.x = panel_size.x
+				resize_x = true
+				is_resizing = true
+
+			if abs(localMousePos.y - rect.size.y) < resize_threshold:
+				start.y = event.position.y
+				initial_size.y = panel_size.y
+				resize_y = true
+				is_resizing = true
+
+			if localMousePos.x < resize_threshold &&  localMousePos.x > -resize_threshold:
+				start.x = event.position.x
+				init_position.x = get_global_position().x
+				initial_size.x = panel_size.x
+				is_resizing = true
+				resize_x = true
+
+			if localMousePos.y < resize_threshold &&  localMousePos.y > -resize_threshold:
+				start.y = event.position.y
+				init_position.y = get_global_position().y
+				initial_size.y = panel_size.y
+				is_resizing = true
+				resize_y = true
+
+	if Input.is_action_pressed("input_left_mouse"):
+		if is_moving:
+			set_position(init_position + (event.position - start))
+
+		if is_resizing:
+			var newWidith = panel_size.x
+			var newHeight = panel_size.y
+
+			if resize_x:
+				newWidith = initial_size.x - (start.x - event.position.x)
+			if resize_y:
+				newHeight = initial_size.y - (start.y - event.position.y)
+
+			if init_position.x != 0:
+				newWidith = initial_size.x + (start.x - event.position.x)
+				set_position(Vector2(init_position.x - (newWidith - initial_size.x), get_position().y))
+
+			if init_position.y != 0:
+				newHeight = initial_size.y + (start.y - event.position.y)
+				set_position(Vector2(get_position().x, init_position.y - (newHeight - initial_size.y)))
+
+			var min_x = panel.get_minimum_size().x
+			var min_y = panel.get_minimum_size().y
+			panel_size = Vector2(max(newWidith, min_x), max(newHeight, min_y))
+
+	if Input.is_action_just_released("input_left_mouse"):
+		is_moving = false
+		init_position = Vector2(0,0)
+		resize_x = false
+		resize_y = false
+		is_resizing = false
 
 func _build_panel():
 	if not get_tree(): # This happens on godot startup
@@ -93,6 +176,11 @@ func _build_panel():
 	outerVbox.add_child(scrollContainer)
 	
 	panel.add_child.call_deferred(outerVbox)
+	
+func _create_spacer():
+	var spacer = VBoxContainer.new()
+	spacer.custom_minimum_size = Vector2(10,0)
+	return spacer
 
 func _tree_changed(node):
 	if not self.is_inside_tree(): return
@@ -126,6 +214,7 @@ func _get_valid_children(node):
 	return child_nodes
 
 func create_ui_for_value(value: ValueBehavior):
+	print("create")
 	if value.selectType == "Float":
 		return create_ui_slider_for_value_float(value)
 	elif value.selectType == "Enum":
@@ -159,6 +248,7 @@ func create_ui_for_value_enum(value: ValueBehavior):
 	reset_button.focus_mode = 0
 	reset_button.button_down.connect(handle_value_enum_change.bind(value.enum_default_index, value, optionButton))
 	
+	hbox.add_child(_create_spacer())
 	hbox.add_child(label)
 	hbox.add_child(optionButton)
 	hbox.add_child(reset_button)
@@ -198,6 +288,7 @@ func create_ui_for_value_bool(value: ValueBehavior):
 		reset_index = 0
 	reset_button.button_down.connect(handle_value_bool_change.bind(reset_index, value, optionButton))
 	
+	hbox.add_child(_create_spacer())
 	hbox.add_child(label)
 	hbox.add_child(optionButton)
 	hbox.add_child(reset_button)
@@ -293,11 +384,13 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	middle_vbox.add_child(lower_hbox)
 
 	# adding to node tree
+	hbox.add_child(_create_spacer())
 	hbox.add_child(name_vbox)
 	hbox.add_child(middle_vbox)
 	hbox.add_child(current_vbox)
 	hbox.add_child(edit_button)
 	hbox.add_child(reset_button)
+	hbox.add_child(_create_spacer())
 	
 	_build_edit_menu(edit_hbox, value, hslider, label_min, label_max)
 	
@@ -323,6 +416,7 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	value_input.max_value = value.float_to
 	value_input.value = value.float_value
 	value_input.value_changed.connect(_value_changed.bind(value, slider))
+	value_input.changed.connect(_value_changed_other.bind(value, value_input, slider))
 	
 	slider.value_changed.connect(_slider_changed.bind(value_input))
 	
@@ -387,10 +481,12 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	step_box.add_child(step_label)
 	step_box.add_child(step_input)
 	
+	edit_hbox.add_child(_create_spacer())
 	edit_hbox.add_child(value_box)
 	edit_hbox.add_child(step_box)
 	edit_hbox.add_child(from_box)
 	edit_hbox.add_child(to_box)
+	edit_hbox.add_child(_create_spacer())
 	
 	edit_hbox.visible = false
 	
@@ -421,6 +517,9 @@ func _to_changed(new_value: float, value: ValueBehavior, \
 	
 func _value_changed(new_value: float, value: ValueBehavior, slider: HSlider):
 	slider.value = new_value
+	
+func _value_changed_other(value: ValueBehavior, value_input: SpinBox, slider: HSlider):
+	_value_changed(value_input.value, value, slider)
 
 func _toggle_edit_view(container: HBoxContainer):
 	container.visible = not container.visible
@@ -437,7 +536,7 @@ func create_minimizing_button():
 func create_header():
 	var hbox = HBoxContainer.new()
 	hbox.add_child(create_minimizing_button())
-	hbox.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var text = Label.new()
 	text.text = self.name
 	hbox.add_child(text)
@@ -460,10 +559,10 @@ func handle_size_button_click(button: Button, initial: bool = false):
 	if not initial: minimized = !minimized
 	vbox.visible = !minimized
 	if minimized:
-		panel.size = header.size + Vector2(10,0)
+		panel.size = header.size
 		button.text = "+"
 	else:
-		panel.size = expanded_size
+		panel.size = panel_size
 		button.text = "-"
 
 func handle_value_bool_change(index: int, value: ValueBehavior, optionButton : OptionButton):
@@ -481,7 +580,8 @@ func handle_update_value_float_change(new_value: float, value: ValueBehavior, la
 	slider.value = new_value
 	label_current.text = str(new_value)
 	_serialize_value(value)
-	
+	pass
+
 func _handle_slider_drag_start(hbox: HBoxContainer):
 	hbox.visible = true
 	
