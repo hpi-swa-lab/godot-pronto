@@ -142,14 +142,12 @@ var size: Vector2:
 func _ready():
 	super._ready()
 	for child in get_children(true):
-			if child is Sprite2D:
-				child.queue_free()
+		if child is Sprite2D:
+			child.queue_free()
 	if use_sprite:
 		_init_sprite()
 		if sprite.get_parent() != self:
 			add_child(sprite, false, INTERNAL_MODE_FRONT)
-	elif sprite.get_parent() == self:
-		remove_child(sprite)
 
 func _editor_reload():
 	if Engine.is_editor_hint() and is_active_scene():
