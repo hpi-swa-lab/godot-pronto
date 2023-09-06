@@ -132,7 +132,7 @@ var circle_radius: float = 10:
 		
 
 # The [class Sprite2D] used as a child in the Placeholder.
-var sprite: Sprite2D = Sprite2D.new()
+var sprite: Sprite2D
 
 # The size of the Placeholder, overridden by the [member PlaceholderBehavior.placeholder_size].
 var size: Vector2:
@@ -141,13 +141,16 @@ var size: Vector2:
 		
 func _ready():
 	super._ready()
+	for child in get_children(true):
+			if child is Sprite2D:
+				child.queue_free()
 	if use_sprite:
 		_init_sprite()
 		if sprite.get_parent() != self:
 			add_child(sprite, false, INTERNAL_MODE_FRONT)
 	elif sprite.get_parent() == self:
 		remove_child(sprite)
-		
+
 func _editor_reload():
 	if Engine.is_editor_hint() and is_active_scene():
 		for child in get_children(true):
@@ -163,6 +166,7 @@ func _shape_boundary():
 		return placeholder_size
 
 func _init_sprite():
+	sprite = Sprite2D.new()
 	sprite.texture = sprite_texture
 	var shader_mat = ShaderMaterial.new()
 	shader_mat.shader = load(OUTLINE_SHADER)
