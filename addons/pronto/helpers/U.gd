@@ -6,7 +6,6 @@ class_name U
 ## For functions that act relative to a node, this sets the node.
 var ref: Node
 
-
 ## Caches resolved nodes for looking up values from Stores or Values
 var _at_cache = {}
 
@@ -68,10 +67,11 @@ static func mouse_position() -> Vector2:
 	return Engine.get_main_loop().root.get_mouse_position()
 
 func next_store(name: String):
-	if name in _at_cache: return _at_cache[name]
+	var key = (str(ref.get_path()) if ref else "") + ":" + name
+	if key in _at_cache: return _at_cache[key]
 	var s = closest_that(func (n): return n is StoreBehavior and n.has_meta(name))
-	_at_cache[name] = G if s == null else s
-
+	_at_cache[key] = G if s == null else s
+	
 	if s == null:
 		return G
 	else:
