@@ -25,9 +25,6 @@ class_name PrototypingUIBehavior
 			_build_panel()
 			queue_redraw()
 
-## Pressing this button applies all value changes made during the last runtime.
-@export var runtime_values: int
-
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
 var vbox: VBoxContainer = VBoxContainer.new()
@@ -214,7 +211,6 @@ func _get_valid_children(node):
 	return child_nodes
 
 func create_ui_for_value(value: ValueBehavior):
-	print("create")
 	if value.selectType == "Float":
 		return create_ui_slider_for_value_float(value)
 	elif value.selectType == "Enum":
@@ -222,9 +218,7 @@ func create_ui_for_value(value: ValueBehavior):
 	elif value.selectType == "Bool":
 		return create_ui_for_value_bool(value)
 	return
-	
-	
-	
+
 func create_ui_for_value_enum(value: ValueBehavior):
 	var name = value.name
 	var label = Label.new()
@@ -542,18 +536,20 @@ func create_header():
 	hbox.add_child(text)
 	return hbox
 
-func _serialize_value(value: ValueBehavior):
-	var dir_path = "res://addons/pronto/value_resources"
-	if not DirAccess.dir_exists_absolute(dir_path):
-		DirAccess.make_dir_absolute(dir_path)
-	var path = dir_path + "/" + value.name + ".res"
-	var file = FileAccess.open(path,
-		FileAccess.WRITE)
-	if file:
-		var r = ValueResource.new()
-		r._set_from_value(value)
-		ResourceSaver.save(r, path)
-		file.close()
+func _sync_editor_value(value: ValueBehavior):
+	var data = [value.name, value.selectType]
+	match value.selectType:
+		"Float":
+			data.append(value.float_step_size)
+			data.append(value.float_from)
+			data.append(value.float_to)
+			data.append(value.float_value)
+		"Enum":
+			data.append(value.enum_value)
+		"Bool":
+			data.append(value.bool_value)
+	if EngineDebugger.is_active():
+		EngineDebugger.send_message("pronto:value_set", data)
 
 func handle_size_button_click(button: Button, initial: bool = false):
 	if not initial: minimized = !minimized
@@ -568,18 +564,18 @@ func handle_size_button_click(button: Button, initial: bool = false):
 func handle_value_bool_change(index: int, value: ValueBehavior, optionButton : OptionButton):
 	optionButton.select(index)
 	value.bool_value = optionButton.get_item_text(index)
-	_serialize_value(value)
+	_sync_editor_value(value)
 	
 func handle_value_enum_change(index: int, value: ValueBehavior, optionButton: OptionButton):
 	optionButton.select(index)
 	value.enum_value = value.enum_choices[index]
-	_serialize_value(value)
+	_sync_editor_value(value)
 	
 func handle_update_value_float_change(new_value: float, value: ValueBehavior, label_current: Label, slider :HSlider):
 	value.float_value = new_value
 	slider.value = new_value
 	label_current.text = str(new_value)
-	_serialize_value(value)
+	_sync_editor_value(value)
 	pass
 
 func _handle_slider_drag_start(hbox: HBoxContainer):
