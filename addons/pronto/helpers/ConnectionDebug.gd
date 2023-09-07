@@ -51,8 +51,8 @@ func _sync_value_change(info: Array):
 		match info[1]:
 			"Float":
 				value.float_step_size = info[2]
-				value.float_from = info[3]
-				value.float_to = info[4]
+				value.float_min = info[3]
+				value.float_max = info[4]
 				value.float_value = info[5]
 			"Enum":
 				value.enum_value = info[2]

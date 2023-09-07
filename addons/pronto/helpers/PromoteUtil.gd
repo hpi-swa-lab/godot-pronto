@@ -45,8 +45,8 @@ func _promote_selection_to_value(selection: String):
 		var offset = 100
 		var val = selected_value.to_float()
 		value.selectType = "Float"
-		value.float_from = floor(val - offset)
-		value.float_to = ceil(val + offset)
+		value.float_min = floor(val - offset)
+		value.float_max = ceil(val + offset)
 		value.float_value = val
 		
 	insert_node.add_child(value, true)

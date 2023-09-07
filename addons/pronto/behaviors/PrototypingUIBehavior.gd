@@ -3,6 +3,10 @@
 extends Behavior
 class_name PrototypingUIBehavior
 
+## Since we want to allow values to be set outside their given bounds we need
+## to provide a pseudo min and max value.
+const MAX_INPUT_VALUE = 100000000
+
 ## Add to your scene to edit properties while in-game.
 ## If you have any ValueBehaviors within your game and do not add a PrototypingUI,
 ## one will automatically be created with these default values
@@ -318,13 +322,13 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	
 	# value min label
 	var label_min = Label.new()
-	label_min.text = str(value.float_from)
+	label_min.text = str(value.float_min)
 	label_min.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label_min.add_theme_color_override("font_color",muted_gray)
 	
 	# value max label
 	var label_max = Label.new()
-	label_max.text = str(value.float_to)
+	label_max.text = str(value.float_max)
 	label_max.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label_max.add_theme_color_override("font_color",muted_gray)
 	
@@ -344,8 +348,8 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	
 	# slider 
 	var hslider = HSlider.new()
-	hslider.min_value = value.float_from
-	hslider.max_value = value.float_to
+	hslider.min_value = value.float_min
+	hslider.max_value = value.float_max
 	hslider.step = value.float_step_size
 	#print("Float Value at init: " + str(value.float_value))
 	hslider.value = value.float_value
@@ -406,8 +410,8 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	
 	var value_input = SpinBox.new()
 	value_input.step = value.float_step_size
-	value_input.min_value = value.float_from
-	value_input.max_value = value.float_to
+	value_input.min_value = -MAX_INPUT_VALUE
+	value_input.max_value = MAX_INPUT_VALUE
 	value_input.value = value.float_value
 	value_input.value_changed.connect(_value_changed.bind(value, slider))
 	value_input.changed.connect(_value_changed_other.bind(value, value_input, slider))
@@ -431,7 +435,7 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	from_input.allow_greater = true
 	from_input.allow_lesser = true
 	from_input.step = value.float_step_size
-	from_input.value = value.float_from
+	from_input.value = value.float_min
 	from_input.value_changed.connect(_from_changed.bind(value, value_input, slider, label_min))
 	
 	from_box.add_child(from_label)
@@ -451,7 +455,7 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	to_input.allow_greater = true
 	to_input.allow_lesser = true
 	to_input.step = value.float_step_size
-	to_input.value = value.float_to
+	to_input.value = value.float_max
 	to_input.value_changed.connect(_to_changed.bind(value, value_input, slider, label_max))
 	
 	to_box.add_child(to_label)
@@ -497,14 +501,14 @@ func _step_changed(new_value: float, value: ValueBehavior, value_input: SpinBox,
 	
 func _from_changed(new_value: float, value: ValueBehavior, \
 	value_input: SpinBox, slider: HSlider, label: Label):
-	value.float_from = new_value
+	value.float_min = new_value
 	value_input.min_value = new_value
 	slider.min_value = new_value
 	label.text = str(new_value)
 
 func _to_changed(new_value: float, value: ValueBehavior, \
 	value_input: SpinBox, slider: HSlider, label: Label):
-	value.float_to = new_value
+	value.float_max = new_value
 	value_input.max_value = new_value
 	slider.max_value = new_value
 	label.text = str(new_value)
@@ -541,8 +545,8 @@ func _sync_editor_value(value: ValueBehavior):
 	match value.selectType:
 		"Float":
 			data.append(value.float_step_size)
-			data.append(value.float_from)
-			data.append(value.float_to)
+			data.append(value.float_min)
+			data.append(value.float_max)
 			data.append(value.float_value)
 		"Enum":
 			data.append(value.enum_value)

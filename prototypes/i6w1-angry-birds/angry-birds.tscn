@@ -1988,38 +1988,38 @@ script = ExtResource("8_epnhk")
 
 [node name="CatapultStrength" type="Node2D" parent="PrototypingUIPanel/PrototypingUIBehavior"]
 script = ExtResource("9_4jww6")
-float_from = 0.1
-float_to = 50.0
+float_min = 0.1
+float_max = 50.0
 float_value = 12.0
 float_step_size = 0.1
 
 [node name="CatapultRadius" type="Node2D" parent="PrototypingUIPanel/PrototypingUIBehavior"]
 position = Vector2(146, 97)
 script = ExtResource("9_4jww6")
-float_from = 20.0
-float_to = 200.0
+float_min = 20.0
+float_max = 200.0
 float_value = 100.0
 float_step_size = 0.1
 
 [node name="BirdDamage" type="Node2D" parent="PrototypingUIPanel/PrototypingUIBehavior"]
 position = Vector2(166, 162)
 script = ExtResource("9_4jww6")
-float_from = 0.0
-float_to = 2.0
+float_min = 0.0
+float_max = 2.0
 float_value = 1.0
 float_step_size = 0.01
 
 [node name="ImpactDamage" type="Node2D" parent="PrototypingUIPanel/PrototypingUIBehavior"]
 script = ExtResource("9_4jww6")
-float_from = 0.0
-float_to = 2.0
+float_min = 0.0
+float_max = 2.0
 float_value = 0.4
 float_step_size = 0.01
 
 [node name="BoundaryDamage" type="Node2D" parent="PrototypingUIPanel/PrototypingUIBehavior"]
 script = ExtResource("9_4jww6")
-float_from = 0.0
-float_to = 2.0
+float_min = 0.0
+float_max = 2.0
 float_value = 0.1
 float_step_size = 0.01
 
