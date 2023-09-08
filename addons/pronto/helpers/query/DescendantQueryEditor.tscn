@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://l6qjplesqvyw"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/query/DescendantQueryEditor.gd" id="1_js2u7"]
+
+[node name="DescendantQueryEditor" type="VBoxContainer"]
+offset_left = 183.0
+offset_right = 183.0
+offset_bottom = 31.0
+script = ExtResource("1_js2u7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "is a descendant of"
+
+[node name="ChangePathButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "xxx"
+
+[node name="NodeSelectionDialog" type="ConfirmationDialog" parent="HBoxContainer"]
+unique_name_in_owner = true
+title = "Choose a node..."
+initial_position = 4
+size = Vector2i(500, 500)
+
+[node name="Label" type="Label" parent="HBoxContainer/NodeSelectionDialog"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "test"
+
+[node name="NodeTree" type="Tree" parent="HBoxContainer/NodeSelectionDialog"]
+unique_name_in_owner = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+
+[node name="PathLabel" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/ChangePathButton" to="." method="_on_change_path_button_pressed"]
+[connection signal="confirmed" from="HBoxContainer/NodeSelectionDialog" to="." method="_on_node_selection_dialog_confirmed"]
+[connection signal="item_activated" from="HBoxContainer/NodeSelectionDialog/NodeTree" to="." method="_on_node_tree_item_activated"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkplohrttvtpx"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/query/PredicateQueryEditor.gd" id="1_6juam"]
+[ext_resource type="PackedScene" uid="uid://d1jujxfamsekk" path="res://addons/pronto/signal_connecting/expression_edit.tscn" id="2_dpxfq"]
+
+[node name="PredicateQueryEditor" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1000.0
+script = ExtResource("1_6juam")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "fulfills the statement"
+
+[node name="expression_edit" parent="." instance=ExtResource("2_dpxfq")]
+custom_minimum_size = Vector2(0, 69.5026)
+layout_mode = 2
+argument_names = ["node"]
+
+[connection signal="blur" from="expression_edit" to="." method="_change"]

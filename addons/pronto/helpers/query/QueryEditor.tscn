@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjid6ry7lsklo"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/query/QueryEditor.gd" id="1_vw0nf"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_dpqjx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7hh3"]
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+bg_color = Color(0.147, 0.168, 0.203, 1)
+border_color = Color(0.1155, 0.132, 0.1595, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 5
+anti_aliasing = false
+
+[sub_resource type="Texture2D" id="Texture2D_w02fi"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_dpqjx")
+name = "Add"
+
+[node name="QueryEditor" type="VBoxContainer"]
+script = ExtResource("1_vw0nf")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Choose every node that"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_right = 8
+
+[node name="QueryContainer" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AddQueryButton" type="MenuButton" parent="."]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_p7hh3")
+text = "Add a criterion"
+icon = SubResource("Texture2D_w02fi")
+flat = false
+
+[connection signal="pressed" from="AddQueryButton" to="." method="_test"]

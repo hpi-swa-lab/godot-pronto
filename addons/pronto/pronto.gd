@@ -7,7 +7,7 @@ var _previous_edited_object
 var popup
 var behaviors = {}
 var debugger: ConnectionDebug
-var inspectors = [ExpressionInspector.new(), SpriteInspector.new(), ValueSyncInspector.new()]
+var inspectors = [ExpressionInspector.new(), SpriteInspector.new(), ValueSyncInspector.new(), QueryInspector.new()]
 
 var tab_container: TabContainer
 

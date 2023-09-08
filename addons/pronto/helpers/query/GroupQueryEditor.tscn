@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://w4hxi0h14n67"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/query/GroupQueryEditor.gd" id="1_jw14e"]
+
+[node name="GroupQueryEditor" type="HBoxContainer"]
+offset_right = 138.0
+offset_bottom = 31.0
+script = ExtResource("1_jw14e")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "is in group"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+
+[connection signal="item_selected" from="OptionButton" to="." method="_change"]

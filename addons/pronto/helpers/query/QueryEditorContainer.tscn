@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx8smtqvprugh"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/query/QueryEditorContainer.gd" id="1_gb2gu"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="2_mv0rq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fe6k5"]
+
+[sub_resource type="Texture2D" id="Texture2D_ju2bq"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("2_mv0rq")
+name = "Remove"
+
+[node name="HBoxContainer" type="HBoxContainer"]
+script = ExtResource("1_gb2gu")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_fe6k5")
+
+[node name="ActiveCheckBox" type="CheckBox" parent="."]
+layout_mode = 2
+
+[node name="RemoveButton" type="Button" parent="."]
+layout_mode = 2
+icon = SubResource("Texture2D_ju2bq")
+
+[connection signal="toggled" from="ActiveCheckBox" to="." method="_on_active_check_box_toggled"]
+[connection signal="pressed" from="RemoveButton" to="." method="_on_remove_button_pressed"]

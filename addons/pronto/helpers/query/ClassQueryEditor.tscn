@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2hkemxj1yjpy"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/query/ClassQueryEditor.gd" id="1_u64dc"]
+
+[node name="ClassQueryEditor" type="HBoxContainer"]
+script = ExtResource("1_u64dc")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "is a"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "AbstractPolygon2DEditor"
+popup/item_0/id = 0
+popup/item_1/text = "AbstractPolygon2DEditor"
+popup/item_1/id = 1
+popup/item_2/text = "AbstractPolygon2DEditor"
+popup/item_2/id = 2
+
+[connection signal="item_selected" from="OptionButton" to="." method="_change"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhqfxgv481uy0"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/query/ProximityQueryEditor.gd" id="1_83qdf"]
+
+[node name="ProximityQueryEditor" type="HBoxContainer"]
+offset_right = 190.0
+offset_bottom = 31.0
+script = ExtResource("1_83qdf")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "is closer than"
+
+[node name="SpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+allow_greater = true
+allow_lesser = true
+
+[connection signal="value_changed" from="SpinBox" to="." method="_change"]

@@ -64,6 +64,10 @@ static func all_nodes(node: Node, include_internal = false):
 	all_nodes_do(node, func (c): list.append(c), include_internal)
 	return list
 
+static func remove_children(node: Node):
+	for child in node.get_children():
+		node.remove_child(child)
+
 static func print_signal(data: Dictionary):
 	return data["name"] + "(" + print_args(data) + ")"
 
