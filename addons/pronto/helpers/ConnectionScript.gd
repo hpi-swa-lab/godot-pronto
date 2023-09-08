@@ -42,7 +42,7 @@ func run({1}):
 var has_error = false
 
 func needs_return(body: String):
-	return return_value and body.count("\n") == 0
+	return return_value and body.count("\n") == 0 and not body.begins_with("print(")
 
 func get_full_source_code(body: String):
 	return TEMPLATE.format([
