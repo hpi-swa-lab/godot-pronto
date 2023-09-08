@@ -3,10 +3,6 @@
 extends Behavior
 class_name PrototypingUIBehavior
 
-## Since we want to allow values to be set outside their given bounds we need
-## to provide a pseudo min and max value.
-const MAX_INPUT_VALUE = 100000000
-
 ## Add to your scene to edit properties while in-game.
 ## If you have any ValueBehaviors within your game and do not add a PrototypingUI,
 ## one will automatically be created with these default values
@@ -410,8 +406,8 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	
 	var value_input = SpinBox.new()
 	value_input.step = value.float_step_size
-	value_input.min_value = -MAX_INPUT_VALUE
-	value_input.max_value = MAX_INPUT_VALUE
+	value_input.allow_greater = true
+	value_input.allow_lesser = true
 	value_input.value = value.float_value
 	value_input.value_changed.connect(_value_changed.bind(value, slider))
 	value_input.changed.connect(_value_changed_other.bind(value, value_input, slider))
@@ -514,6 +510,9 @@ func _to_changed(new_value: float, value: ValueBehavior, \
 	label.text = str(new_value)
 	
 func _value_changed(new_value: float, value: ValueBehavior, slider: HSlider):
+	value.float_value = new_value
+	slider.min_value = value.float_min
+	slider.max_value = value.float_max
 	slider.value = new_value
 	
 func _value_changed_other(value: ValueBehavior, value_input: SpinBox, slider: HSlider):
