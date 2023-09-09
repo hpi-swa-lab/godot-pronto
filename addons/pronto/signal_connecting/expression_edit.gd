@@ -260,11 +260,14 @@ func resize():
 		const spacing = 11
 		custom_minimum_size.y = clamp(text_size.y + spacing, line_height, line_height * max_lines) \
 			+ randf() # yeah, seriously. if the height does not change, the width collapses.
+		
 	else:
 		custom_minimum_size.x = max(custom_minimum_size.x, \
 			320)  # what's the original minimum width (not the custom one)?
 	Utils.fix_minimum_size(self)
-	reset_size()
+#   This reset_size() call seems to be the culprit for https://github.com/hpi-swa-lab/godot-pronto/issues/159
+#   Maybe this is needed for some resize magic? For now we'll leave it commented out to make the ExpressionEdits usable again. 
+#	reset_size()
 	var nodeToNodeConfigurator = Utils.parent_that(self, func(n): return n is NodeToNodeConfigurator)
 	if nodeToNodeConfigurator != null:
 		nodeToNodeConfigurator.reset_size()
