@@ -164,7 +164,6 @@ func _build_panel():
 	scrollContainer.add_child(vbox)
 	scrollContainer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
-	
 	var outerVbox = VBoxContainer.new()
 	outerVbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	outerVbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -189,6 +188,8 @@ func _clear_panel():
 		child.queue_free()
 
 func maybe_add_config(node: Node):
+	if _proccessed_duplicate_node(node): 
+		return false
 	if is_instance_of(node, CodeBehavior):
 		if not node.visible: return # Hide values that are hidden in the Editor
 		vbox.add_child(create_ui_for_code(node))
@@ -307,14 +308,14 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	var middle_vbox = VBoxContainer.new()
 	var edit_hbox = HBoxContainer.new()
 	var lower_hbox = HBoxContainer.new()
-	var name_vbox = VBoxContainer.new()
-	name_vbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	var name_hbox = HBoxContainer.new()
+	name_hbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	
 	# value name label
 	var label = Label.new()
 	label.text = name + ":"
 	label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	name_vbox.add_child(label)
+	name_hbox.add_child(label)
 	
 	# value min label
 	var label_min = Label.new()
@@ -379,7 +380,7 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 
 	# adding to node tree
 	hbox.add_child(_create_spacer())
-	hbox.add_child(name_vbox)
+	hbox.add_child(name_hbox)
 	hbox.add_child(middle_vbox)
 	hbox.add_child(current_vbox)
 	hbox.add_child(edit_button)
@@ -392,6 +393,65 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	container.add_child(edit_hbox)
 	return container
 	
+func _proccessed_duplicate_node(node):
+	var name = node.name
+	for entry in vbox.get_children():
+		var value_label
+		# layout is different based on value type
+		# vbox = float ValueBehavior
+		if is_instance_of(entry, VBoxContainer):
+			value_label = entry.get_child(0).get_child(1).get_child(0)
+			if name == value_label.text.substr(0,value_label.text.length()-1):
+				_update_duplicate_counter(entry)
+				return true
+		# hbox = bool/enum ValueBehavior
+		if is_instance_of(entry, HBoxContainer):
+			value_label = entry.get_child(1)
+			if name == value_label.text.substr(0,value_label.text.length()-1):
+				_update_duplicate_counter(entry)
+				return true
+		if is_instance_of(entry, Button):
+			value_label = entry
+			if name == value_label.text:
+				return true
+	return false
+
+func _update_duplicate_counter(entry):
+	if is_instance_of(entry, VBoxContainer):
+		# check if it already has a duplicate-counter label
+		if entry.get_child(0).get_child(1).get_child_count() == 1:
+			var counter_label = _prepare_counter_label()
+			entry.get_child(0).get_child(1).add_child(counter_label)
+		else:	
+			var counter_label = entry.get_child(0).get_child(1).get_child(1)
+			counter_label.text = "+" + str(int(counter_label.text.substr(1,counter_label.text.length())) + 1)
+	if is_instance_of(entry, HBoxContainer):
+		# check if it already has a duplicate-counter label
+		if not is_instance_of(entry.get_child(2), Label):
+			var counter_label = _prepare_counter_label()
+			entry.add_child(counter_label)
+			entry.move_child(counter_label, 2)
+		else:
+			var counter_label = entry.get_child(2)
+			counter_label.text = "+" + str(int(counter_label.text.substr(1,counter_label.text.length())) + 1)
+	if is_instance_of(entry, CodeEdit):
+		# todo: figure out if we want to do anything for multiple CodeEdits
+		pass
+			
+func _prepare_counter_label():
+	var counter_label = Label.new()
+	counter_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	counter_label.size_flags_vertical = Control.SIZE_FILL
+	counter_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	counter_label.text = "+1"
+	# tooltip doesn't get displayed, feel free to fix
+	counter_label.tooltip_text = "This value exists multiple times in the scene"
+	
+	var label_settings = LabelSettings.new()
+	label_settings.font_size = 8
+	counter_label.label_settings = label_settings
+	return counter_label
+			
 func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	slider: HSlider, label_min: Label, label_max: Label):
 	## Value vbox
@@ -529,7 +589,6 @@ func create_minimizing_button():
 		handle_size_button_click(button, true)
 	return button
 	
-
 func create_header():
 	var hbox = HBoxContainer.new()
 	hbox.add_child(create_minimizing_button())
@@ -595,3 +654,4 @@ func handles():
 			"panel_size",
 			func (coord): return floor(coord).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
+
