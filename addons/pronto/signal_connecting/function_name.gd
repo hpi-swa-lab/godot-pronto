@@ -59,10 +59,7 @@ func build_list(filter: String):
 	
 	var do_apply = false
 	%list.clear()
-	
-	if not %list.visible:
-		%list.visible = true
-		%list.global_position = global_position + Vector2(0, get_rect().size.y)
+	%list.visible = true
 	
 	if filter.is_empty():
 		%list.add_item("<statement(s)>")
@@ -90,6 +87,10 @@ func build_list(filter: String):
 	
 	if do_apply:
 		method_selected.emit(filter)
+	
+	# we always want to be underneath the text input, so wait for it to layout
+	await get_tree().process_frame
+	%list.global_position = global_position + Vector2(0, get_rect().size.y)
 
 func fuzzy_match(name: String, search: String):
 	if search.length() == 0:
