@@ -272,7 +272,7 @@ static func all_used_groups(from, root = null, include_internal = false):
 		if Engine.is_editor_hint():
 			root = G.at('_pronto_editor_plugin').get_tree().get_edited_scene_root()
 		else:
-			if not from.get_tree(): return []
+			if not from.is_inside_tree(): return []
 			root = from.get_tree().current_scene
 	var groups := []
 	all_nodes_do(root, func (node):
