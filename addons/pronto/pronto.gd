@@ -43,7 +43,7 @@ func _handles(object):
 ## Otherwise, we create a Behavior as a hidden child that will now
 ## perform tasks such as drawing connections for that non-Behavior node.
 static func get_behavior(object):
-	if not object is Node: return null
+	if not is_instance_valid(object) or not object is Node: return null
 	if object is Behavior: return object
 	for child in object.get_children(true):
 		if child is Behavior and child.hidden_child: return child
@@ -130,13 +130,10 @@ func pronto_should_ignore(object):
 		else:
 			return false
 
-func valid_instance(object):
-	return is_instance_valid(object)
-
 ## Convenience that allows moving a placeholder (which has keep_in_origin set)
 ## but instead moves the parent, which is typically what you actually meant.
 func _history_changed():
-	if valid_instance(edited_object) and edited_object is PlaceholderBehavior and edited_object.should_keep_in_origin():
+	if is_instance_valid(edited_object) and edited_object is PlaceholderBehavior and edited_object.should_keep_in_origin():
 		var u = get_undo_redo().get_history_undo_redo(get_undo_redo().get_object_history_id(edited_object))
 		if edited_object.position != Vector2.ZERO:
 			var p = edited_object.get_parent()

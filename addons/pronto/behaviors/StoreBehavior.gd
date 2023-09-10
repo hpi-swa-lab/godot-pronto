@@ -39,6 +39,10 @@ func put(prop: String, value: Variant):
 	sync.emit(prop, value, str(value))
 	if EngineDebugger.is_active(): EngineDebugger.send_message("pronto:store_put", [get_path(), prop, value])
 
+func update(prop: String, call: Callable):
+	put(prop, call.call(at(prop)))
+	return at(prop)
+
 func at(prop: String, default = null):
 	return data.get(prop, default)
 

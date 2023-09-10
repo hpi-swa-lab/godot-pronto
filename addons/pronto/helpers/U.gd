@@ -89,3 +89,4 @@ func put(name: String, value: Variant) -> void: next_store(name).put(name, value
 
 func inc(name: String, amount = 1): next_store(name).inc(name, amount)
 func dec(name: String, amount = 1): next_store(name).dec(name, amount)
+func update(name: String, call: Callable): return next_store(name).update(name, call)
