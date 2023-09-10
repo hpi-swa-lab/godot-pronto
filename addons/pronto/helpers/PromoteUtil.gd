@@ -70,6 +70,9 @@ func install_menu_item(editor_interface):
 	if tab_container:
 		tab_container.tab_changed.connect(_tab_changed)
 
+func uninstall():
+	tab_container.tab_changed.disconnect(_tab_changed)
+
 var tab_container: TabContainer
 
 func _tab_changed(tab: int):

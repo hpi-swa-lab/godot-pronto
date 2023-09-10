@@ -56,7 +56,7 @@ func get_full_source_code(body: String):
 		"return " if needs_return(body) else ""])
 
 var _dummy_object = null
-func run(arguments: Array, ref = null):
+func run(arguments: Array = [], ref = null):
 	if _dummy_object == null:
 		_dummy_object = U.new(ref)
 		_dummy_object.set_script(nested_script)

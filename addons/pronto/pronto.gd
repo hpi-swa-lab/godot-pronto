@@ -7,7 +7,7 @@ var edited_object
 var popup
 var behaviors = {}
 var debugger: ConnectionDebug
-var inspectors = [ExpressionInspector.new(), SpriteInspector.new()]
+var inspectors = [ExpressionInspector.new(), SpriteInspector.new(), StoreInspector.new()]
 
 func _enter_tree():
 	if not Engine.is_editor_hint():
@@ -34,6 +34,7 @@ func _exit_tree():
 	for i in inspectors: remove_inspector_plugin(i)
 	get_undo_redo().history_changed.disconnect(_history_changed)
 	scene_changed.disconnect(_initialize_scene)
+	PromoteUtil.uninstall()
 
 func _handles(object):
 	return !pronto_should_ignore(object)
