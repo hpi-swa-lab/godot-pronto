@@ -257,7 +257,7 @@ func resize():
 		var text_size := get_theme_default_font().get_multiline_string_size(%Expression.text + pseudo_cursor)
 		const max_lines = 8
 		const line_height = 32
-		const spacing = 11
+		const spacing = 20
 		custom_minimum_size.y = clamp(text_size.y + spacing, line_height, line_height * max_lines) \
 			+ randf() # yeah, seriously. if the height does not change, the width collapses.
 		
