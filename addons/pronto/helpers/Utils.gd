@@ -317,3 +317,17 @@ const TYPE_NAMES = ['nil', 'bool', 'int', 'float', 'String', 'Vector2', 'Vector2
 static func get_type_name_from_arg(arg: Dictionary) -> String:
 	if arg["type"] == 24: return arg["class_name"]
 	else: return TYPE_NAMES[arg["type"]]
+
+
+## If the passed object is a Behavior, return it.
+## Otherwise, we create a Behavior as a hidden child that will now
+## perform tasks such as drawing connections for that non-Behavior node.
+static func get_behavior(object):
+	if not is_instance_valid(object) or not object is Node: return null
+	if object is Behavior: return object
+	for child in object.get_children(true):
+		if child is Behavior and child.hidden_child: return child
+	var b = Behavior.new()
+	b.hidden_child = true
+	object.add_child(b, false, INTERNAL_MODE_FRONT)
+	return b

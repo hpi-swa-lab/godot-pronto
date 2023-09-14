@@ -207,7 +207,7 @@ func _process(delta):
 	var is_hovered = hovered_nodes.size() > 0 and hovered_nodes[-1] == self
 	if is_hovered:
 		if self.existing_connection:
-			Pronto.get_behavior(from).highlight_activated(self.existing_connection)
+			Utils.get_behavior(from).highlight_activated(self.existing_connection)
 
 func mark_changed(value: bool = true):
 	%ChangesNotifier.visible = value

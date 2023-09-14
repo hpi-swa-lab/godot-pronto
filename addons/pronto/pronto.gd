@@ -41,27 +41,14 @@ func _exit_tree():
 func _handles(object):
 	return !pronto_should_ignore(object)
 
-## If the passed object is a Behavior, return it.
-## Otherwise, we create a Behavior as a hidden child that will now
-## perform tasks such as drawing connections for that non-Behavior node.
-static func get_behavior(object):
-	if not is_instance_valid(object) or not object is Node: return null
-	if object is Behavior: return object
-	for child in object.get_children(true):
-		if child is Behavior and child.hidden_child: return child
-	var b = Behavior.new()
-	b.hidden_child = true
-	object.add_child(b, false, INTERNAL_MODE_FRONT)
-	return b
-
 func _edit(object):
 	if object != edited_object:
-		var old = get_behavior(edited_object)
+		var old = Utils.get_behavior(edited_object)
 		if old: old.deselected()
 
 	edited_object = object
 
-	var new = get_behavior(edited_object)
+	var new = Utils.get_behavior(edited_object)
 	if new:
 		new.selected()
 		show_signals(edited_object)
@@ -75,14 +62,14 @@ func _make_visible(visible):
 		_edit(null)
 
 func _forward_canvas_gui_input(event):
-	var behavior = get_behavior(edited_object)
+	var behavior = Utils.get_behavior(edited_object)
 	if not behavior: return false
 	var ret = behavior._forward_canvas_gui_input(event, get_undo_redo())
 	if ret: update_overlays()
 	return ret
 
 func _forward_canvas_draw_over_viewport(viewport_control):
-	var behavior = get_behavior(edited_object)
+	var behavior = Utils.get_behavior(edited_object)
 	if behavior: behavior._forward_canvas_draw_over_viewport(viewport_control)
 
 func show_signals(node: Node):
@@ -171,5 +158,5 @@ func find_behavior_classes():
 func _initialize_scene(scene):
 	if not scene: return
 	for node in scene.get_children():
-		get_behavior(node)
+		Utils.get_behavior(node)
 		_initialize_scene(node)

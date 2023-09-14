@@ -64,7 +64,7 @@ func _process(delta):
 		var conn = Utils.find(Connection.get_connections(node),
 			func (c: Connection): return c.print(false, false, true) == name)
 		if conn:
-			Pronto.get_behavior(node).highlight_activated(conn)
+			Utils.get_behavior(node).highlight_activated(conn)
 
 func _on_add_mouse_entered():
 	build_signal_list()
