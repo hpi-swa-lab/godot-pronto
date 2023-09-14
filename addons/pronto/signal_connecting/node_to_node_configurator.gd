@@ -52,8 +52,7 @@ var undo_redo: EditorUndoRedoManager
 var anchor: Node:
 	set(n):
 		anchor = n
-#		reset_size()
-		size = custom_minimum_size
+		reset_size()
 		%FunctionName.anchor = n
 var from: Node
 var existing_connection = null
@@ -106,7 +105,7 @@ func default_focus():
 		%FunctionName.grab_focus()
 
 func use_vertical_arguments():
-	return %Args.get_child_count() > 2
+	return %Args.get_child_count() > 1
 
 func update_argument_names():
 	var names = argument_names()
@@ -208,7 +207,7 @@ func _process(delta):
 	var is_hovered = hovered_nodes.size() > 0 and hovered_nodes[-1] == self
 	if is_hovered:
 		if self.existing_connection:
-			from.highlight_activated(self.existing_connection)
+			Pronto.get_behavior(from).highlight_activated(self.existing_connection)
 
 func mark_changed(value: bool = true):
 	%ChangesNotifier.visible = value
@@ -305,7 +304,7 @@ func _on_function_selected(name: String):
 				arg_ui.edit_script = empty_script(arg["name"], true)
 		%Args.add_child(arg_ui)
 		if use_vertical_arguments():
-			%Args.custom_minimum_size = Vector2(300, 0)
+			%Args.custom_minimum_size = Vector2(400, 0) * Utils.hidpi_scale()
 		arg_ui.text_changed.connect(func(): mark_changed())
 		arg_ui.save_requested.connect(func(): save())
 	update_argument_names()

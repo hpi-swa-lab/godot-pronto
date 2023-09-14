@@ -28,7 +28,7 @@ func lines():
 	return super.lines() + [Lines.BottomText.new(self, self.name)]
 
 ## Executes the code provided in [member CodeBehavior.evaluate] and emits the [signal CodeBehavior.after] signal afterwards.
-func execute(args: Array):
+func execute(args: Array = []):
 	assert(args.size() == arguments.size(), "Argument names and values for eval need to have the same size.")
 	var result = await evaluate.run(args, self)
 	after.emit(result)

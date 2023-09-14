@@ -276,7 +276,7 @@ static func all_used_groups(from, root = null, include_internal = false):
 		if Engine.is_editor_hint():
 			root = G.at('_pronto_editor_plugin').get_tree().get_edited_scene_root()
 		else:
-			if not from.get_tree(): return []
+			if not from.is_inside_tree(): return []
 			root = from.get_tree().current_scene
 	var groups := []
 	all_nodes_do(root, func (node):
@@ -293,7 +293,10 @@ static func all_used_groups(from, root = null, include_internal = false):
 static func fix_minimum_size(n: Control):
 	if G.at("_pronto_editor_plugin") == null:
 		return
-	n.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
+	n.custom_minimum_size *= hidpi_scale()
+
+static func hidpi_scale():
+	return G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
 
 static func log(s):
 	var a = FileAccess.open("res://log", FileAccess.READ_WRITE if FileAccess.file_exists("res://log") else FileAccess.WRITE_READ)

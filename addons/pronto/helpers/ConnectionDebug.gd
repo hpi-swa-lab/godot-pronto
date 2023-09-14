@@ -38,7 +38,26 @@ func _capture(message, data, session_id):
 		if store != null and store is StoreBehavior:
 			store._report_game_value(data[1])
 		return true
+	if message == "pronto:value_set":
+		_sync_value_change(data)
+		return true
 	return true
+	
+func _sync_value_change(info: Array):
+	# info array [name, selectType, ... (depending on selectType)]
+	var node = editor_interface.get_edited_scene_root().find_child(info[0], true, false)
+	if node and node is ValueBehavior:
+		var value = node as ValueBehavior
+		match info[1]:
+			"Float":
+				value.float_step_size = info[2]
+				value.float_min = info[3]
+				value.float_max = info[4]
+				value.float_value = info[5]
+			"Enum":
+				value.enum_value = info[2]
+			"Bool":
+				value.bool_value = info[2]
 
 func add_to_list(session_id, from, connection, args_string):
 	var list: ItemList = debug_lists.get(session_id)

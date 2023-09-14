@@ -6,16 +6,19 @@ var anchor
 
 signal method_selected(name: String)
 
+var _gui_input_keycode
+
 func add_class_item(name):
 	var behaviors = G.at("_pronto_behaviors")
 	%list.add_item(name, Utils.icon_from_theme(behaviors[name], anchor) if name in behaviors else Utils.icon_for_class(name, anchor), false)
 
 func _gui_input(event):
 	if event is InputEventKey and event.pressed:
+		_gui_input_keycode = event.keycode
 		match event.keycode:
 			KEY_DOWN: move_focus(1)
 			KEY_UP: move_focus(-1)
-			KEY_ENTER, KEY_KP_ENTER:
+			KEY_ENTER, KEY_KP_ENTER, KEY_TAB:
 				accept_selected()
 
 func accept_selected():
@@ -31,7 +34,8 @@ func selected(index: int):
 	%list.visible = false
 	text = %list.get_item_text(index)
 	method_selected.emit(text)
-	find_next_valid_focus().grab_focus()
+	if _gui_input_keycode != KEY_TAB:
+		find_next_valid_focus().grab_focus()
 
 func move_focus(dir: int):
 	var current = get_focused_index() + dir
@@ -55,10 +59,7 @@ func build_list(filter: String):
 	
 	var do_apply = false
 	%list.clear()
-	
-	if not %list.visible:
-		%list.visible = true
-		%list.global_position = global_position + Vector2(0, get_rect().size.y)
+	%list.visible = true
 	
 	if filter.is_empty():
 		%list.add_item("<statement(s)>")
@@ -86,6 +87,10 @@ func build_list(filter: String):
 	
 	if do_apply:
 		method_selected.emit(filter)
+	
+	# we always want to be underneath the text input, so wait for it to layout
+	await get_tree().process_frame
+	%list.global_position = global_position + Vector2(0, get_rect().size.y)
 
 func fuzzy_match(name: String, search: String):
 	if search.length() == 0:

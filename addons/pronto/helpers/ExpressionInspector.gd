@@ -6,7 +6,7 @@ func _can_handle(object):
 		or object is Node and object.get_child_count() > 0 and object.get_child(0) is BindBehavior)
 
 func _parse_property(object, type, name, hint_type, hint_string, usage_flags, wide):
-	if (object != null and 'wants_expression_inspector' in object and object.wants_expression_inspector(name)):
+	if object and 'wants_expression_inspector' in object and object.wants_expression_inspector(name):
 		add_property_editor(name, ExpressionProperty.new())
 		return true
 	if object is Node and object.get_child_count() > 0 and object.get_child(0) is BindBehavior and object.get_child(0).to_prop == name:

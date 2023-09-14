@@ -25,9 +25,6 @@ class_name PrototypingUIBehavior
 			_build_panel()
 			queue_redraw()
 
-## Pressing this button applies all value changes made during the last runtime.
-@export var runtime_values: int
-
 var panel: PanelContainer
 var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
 var vbox: VBoxContainer = VBoxContainer.new()
@@ -167,7 +164,6 @@ func _build_panel():
 	scrollContainer.add_child(vbox)
 	scrollContainer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
-	
 	var outerVbox = VBoxContainer.new()
 	outerVbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	outerVbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -192,6 +188,8 @@ func _clear_panel():
 		child.queue_free()
 
 func maybe_add_config(node: Node):
+	if _proccessed_duplicate_node(node): 
+		return false
 	if is_instance_of(node, CodeBehavior):
 		if not node.visible: return # Hide values that are hidden in the Editor
 		vbox.add_child(create_ui_for_code(node))
@@ -214,7 +212,6 @@ func _get_valid_children(node):
 	return child_nodes
 
 func create_ui_for_value(value: ValueBehavior):
-	print("create")
 	if value.selectType == "Float":
 		return create_ui_slider_for_value_float(value)
 	elif value.selectType == "Enum":
@@ -222,9 +219,7 @@ func create_ui_for_value(value: ValueBehavior):
 	elif value.selectType == "Bool":
 		return create_ui_for_value_bool(value)
 	return
-	
-	
-	
+
 func create_ui_for_value_enum(value: ValueBehavior):
 	var name = value.name
 	var label = Label.new()
@@ -313,24 +308,24 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	var middle_vbox = VBoxContainer.new()
 	var edit_hbox = HBoxContainer.new()
 	var lower_hbox = HBoxContainer.new()
-	var name_vbox = VBoxContainer.new()
-	name_vbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	var name_hbox = HBoxContainer.new()
+	name_hbox.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	
 	# value name label
 	var label = Label.new()
 	label.text = name + ":"
 	label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	name_vbox.add_child(label)
+	name_hbox.add_child(label)
 	
 	# value min label
 	var label_min = Label.new()
-	label_min.text = str(value.float_from)
+	label_min.text = str(value.float_min)
 	label_min.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label_min.add_theme_color_override("font_color",muted_gray)
 	
 	# value max label
 	var label_max = Label.new()
-	label_max.text = str(value.float_to)
+	label_max.text = str(value.float_max)
 	label_max.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label_max.add_theme_color_override("font_color",muted_gray)
 	
@@ -350,8 +345,8 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	
 	# slider 
 	var hslider = HSlider.new()
-	hslider.min_value = value.float_from
-	hslider.max_value = value.float_to
+	hslider.min_value = value.float_min
+	hslider.max_value = value.float_max
 	hslider.step = value.float_step_size
 	#print("Float Value at init: " + str(value.float_value))
 	hslider.value = value.float_value
@@ -385,7 +380,7 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 
 	# adding to node tree
 	hbox.add_child(_create_spacer())
-	hbox.add_child(name_vbox)
+	hbox.add_child(name_hbox)
 	hbox.add_child(middle_vbox)
 	hbox.add_child(current_vbox)
 	hbox.add_child(edit_button)
@@ -398,6 +393,65 @@ func create_ui_slider_for_value_float(value: ValueBehavior):
 	container.add_child(edit_hbox)
 	return container
 	
+func _proccessed_duplicate_node(node):
+	var name = node.name
+	for entry in vbox.get_children():
+		var value_label
+		# layout is different based on value type
+		# vbox = float ValueBehavior
+		if is_instance_of(entry, VBoxContainer):
+			value_label = entry.get_child(0).get_child(1).get_child(0)
+			if name == value_label.text.substr(0,value_label.text.length()-1):
+				_update_duplicate_counter(entry)
+				return true
+		# hbox = bool/enum ValueBehavior
+		if is_instance_of(entry, HBoxContainer):
+			value_label = entry.get_child(1)
+			if name == value_label.text.substr(0,value_label.text.length()-1):
+				_update_duplicate_counter(entry)
+				return true
+		if is_instance_of(entry, Button):
+			value_label = entry
+			if name == value_label.text:
+				return true
+	return false
+
+func _update_duplicate_counter(entry):
+	if is_instance_of(entry, VBoxContainer):
+		# check if it already has a duplicate-counter label
+		if entry.get_child(0).get_child(1).get_child_count() == 1:
+			var counter_label = _prepare_counter_label()
+			entry.get_child(0).get_child(1).add_child(counter_label)
+		else:	
+			var counter_label = entry.get_child(0).get_child(1).get_child(1)
+			counter_label.text = "+" + str(int(counter_label.text.substr(1,counter_label.text.length())) + 1)
+	if is_instance_of(entry, HBoxContainer):
+		# check if it already has a duplicate-counter label
+		if not is_instance_of(entry.get_child(2), Label):
+			var counter_label = _prepare_counter_label()
+			entry.add_child(counter_label)
+			entry.move_child(counter_label, 2)
+		else:
+			var counter_label = entry.get_child(2)
+			counter_label.text = "+" + str(int(counter_label.text.substr(1,counter_label.text.length())) + 1)
+	if is_instance_of(entry, CodeEdit):
+		# todo: figure out if we want to do anything for multiple CodeEdits
+		pass
+			
+func _prepare_counter_label():
+	var counter_label = Label.new()
+	counter_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	counter_label.size_flags_vertical = Control.SIZE_FILL
+	counter_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	counter_label.text = "+1"
+	# tooltip doesn't get displayed, feel free to fix
+	counter_label.tooltip_text = "This value exists multiple times in the scene"
+	
+	var label_settings = LabelSettings.new()
+	label_settings.font_size = 8
+	counter_label.label_settings = label_settings
+	return counter_label
+			
 func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	slider: HSlider, label_min: Label, label_max: Label):
 	## Value vbox
@@ -412,8 +466,8 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	
 	var value_input = SpinBox.new()
 	value_input.step = value.float_step_size
-	value_input.min_value = value.float_from
-	value_input.max_value = value.float_to
+	value_input.allow_greater = true
+	value_input.allow_lesser = true
 	value_input.value = value.float_value
 	value_input.value_changed.connect(_value_changed.bind(value, slider))
 	value_input.changed.connect(_value_changed_other.bind(value, value_input, slider))
@@ -437,7 +491,7 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	from_input.allow_greater = true
 	from_input.allow_lesser = true
 	from_input.step = value.float_step_size
-	from_input.value = value.float_from
+	from_input.value = value.float_min
 	from_input.value_changed.connect(_from_changed.bind(value, value_input, slider, label_min))
 	
 	from_box.add_child(from_label)
@@ -457,7 +511,7 @@ func _build_edit_menu(edit_hbox: HBoxContainer, value: ValueBehavior, \
 	to_input.allow_greater = true
 	to_input.allow_lesser = true
 	to_input.step = value.float_step_size
-	to_input.value = value.float_to
+	to_input.value = value.float_max
 	to_input.value_changed.connect(_to_changed.bind(value, value_input, slider, label_max))
 	
 	to_box.add_child(to_label)
@@ -503,19 +557,22 @@ func _step_changed(new_value: float, value: ValueBehavior, value_input: SpinBox,
 	
 func _from_changed(new_value: float, value: ValueBehavior, \
 	value_input: SpinBox, slider: HSlider, label: Label):
-	value.float_from = new_value
+	value.float_min = new_value
 	value_input.min_value = new_value
 	slider.min_value = new_value
 	label.text = str(new_value)
 
 func _to_changed(new_value: float, value: ValueBehavior, \
 	value_input: SpinBox, slider: HSlider, label: Label):
-	value.float_to = new_value
+	value.float_max = new_value
 	value_input.max_value = new_value
 	slider.max_value = new_value
 	label.text = str(new_value)
 	
 func _value_changed(new_value: float, value: ValueBehavior, slider: HSlider):
+	value.float_value = new_value
+	slider.min_value = value.float_min
+	slider.max_value = value.float_max
 	slider.value = new_value
 	
 func _value_changed_other(value: ValueBehavior, value_input: SpinBox, slider: HSlider):
@@ -532,7 +589,6 @@ func create_minimizing_button():
 		handle_size_button_click(button, true)
 	return button
 	
-
 func create_header():
 	var hbox = HBoxContainer.new()
 	hbox.add_child(create_minimizing_button())
@@ -542,18 +598,20 @@ func create_header():
 	hbox.add_child(text)
 	return hbox
 
-func _serialize_value(value: ValueBehavior):
-	var dir_path = "res://addons/pronto/value_resources"
-	if not DirAccess.dir_exists_absolute(dir_path):
-		DirAccess.make_dir_absolute(dir_path)
-	var path = dir_path + "/" + value.name + ".res"
-	var file = FileAccess.open(path,
-		FileAccess.WRITE)
-	if file:
-		var r = ValueResource.new()
-		r._set_from_value(value)
-		ResourceSaver.save(r, path)
-		file.close()
+func _sync_editor_value(value: ValueBehavior):
+	var data = [value.name, value.selectType]
+	match value.selectType:
+		"Float":
+			data.append(value.float_step_size)
+			data.append(value.float_min)
+			data.append(value.float_max)
+			data.append(value.float_value)
+		"Enum":
+			data.append(value.enum_value)
+		"Bool":
+			data.append(value.bool_value)
+	if EngineDebugger.is_active():
+		EngineDebugger.send_message("pronto:value_set", data)
 
 func handle_size_button_click(button: Button, initial: bool = false):
 	if not initial: minimized = !minimized
@@ -568,18 +626,18 @@ func handle_size_button_click(button: Button, initial: bool = false):
 func handle_value_bool_change(index: int, value: ValueBehavior, optionButton : OptionButton):
 	optionButton.select(index)
 	value.bool_value = optionButton.get_item_text(index)
-	_serialize_value(value)
+	_sync_editor_value(value)
 	
 func handle_value_enum_change(index: int, value: ValueBehavior, optionButton: OptionButton):
 	optionButton.select(index)
 	value.enum_value = value.enum_choices[index]
-	_serialize_value(value)
+	_sync_editor_value(value)
 	
 func handle_update_value_float_change(new_value: float, value: ValueBehavior, label_current: Label, slider :HSlider):
 	value.float_value = new_value
 	slider.value = new_value
 	label_current.text = str(new_value)
-	_serialize_value(value)
+	_sync_editor_value(value)
 	pass
 
 func _handle_slider_drag_start(hbox: HBoxContainer):
@@ -596,3 +654,4 @@ func handles():
 			"panel_size",
 			func (coord): return floor(coord).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
+

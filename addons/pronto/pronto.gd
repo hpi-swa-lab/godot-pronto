@@ -3,11 +3,11 @@ extends EditorPlugin
 class_name Pronto
 
 var edited_object
-var _previous_edited_object
+
 var popup
 var behaviors = {}
 var debugger: ConnectionDebug
-var inspectors = [ExpressionInspector.new(), SpriteInspector.new(), ValueSyncInspector.new(), QueryInspector.new()]
+var inspectors = [ExpressionInspector.new(), SpriteInspector.new(), StoreInspector.new(), QueryInspector.new()]
 
 var tab_container: TabContainer
 
@@ -15,26 +15,9 @@ func _enter_tree():
 	if not Engine.is_editor_hint():
 		return
 	
-	tab_container = get_editor_interface().get_script_editor().find_child(
-		"*TabContainer*", true, false)
-	if tab_container:
-		tab_container.tab_changed.connect(_tab_changed)
+	PromoteUtil.install_menu_item(get_editor_interface())
+	find_behavior_classes()
 	
-	var regex = RegEx.new()
-	regex.compile("#thumb\\(\"(.+)\"\\)")
-	var base = get_editor_interface().get_base_control()
-	
-	for file in DirAccess.get_files_at("res://addons/pronto/behaviors"):
-		var name = file.get_basename()
-		var icon = ""
-		var script = load("res://addons/pronto/behaviors/" + file)
-		var result = regex.search(script.source_code)
-		if result:
-			icon = result.strings[1]
-		else:
-			push_error("Behavior {0} is missing #thumb(\"...\") annotation".format([name]))
-		add_custom_type(name, "Node2D", script,	base.get_theme_icon(icon, &"EditorIcons"))
-		behaviors[name] = icon
 	G.put("_pronto_behaviors", behaviors)
 	G.put("_pronto_editor_plugin", self)
 	
@@ -42,56 +25,8 @@ func _enter_tree():
 	add_debugger_plugin(debugger)
 	for i in inspectors: add_inspector_plugin(i)
 	
-	get_undo_redo().history_changed.connect(history_changed)
-	
-func _tab_changed(tab: int):
-	var popup_menu = tab_container.get_tab_control(tab).find_child("*PopupMenu*", true, false)
-	if popup_menu and popup_menu is PopupMenu:
-		if not popup_menu.about_to_popup.is_connected(_about_to_popup):
-			popup_menu.about_to_popup.connect(_about_to_popup)
-
-func _about_to_popup():
-	var current_tab = tab_container.get_current_tab_control()
-	var code_edit = current_tab.get_base_editor()
-	var current_edit_menu = current_tab.find_child("*PopupMenu*", true, false)
-	
-	if not current_edit_menu: 
-		return
-		
-	var selection: String = code_edit.get_selected_text()
-	var valid = PromoteUtil.is_valid_selection(selection)
-
-	current_edit_menu.add_item("Promote to Value [Pronto]", PromoteUtil.MENU_PROMOTE_VALUE)
-	current_edit_menu.set_item_tooltip(-1, PromoteUtil._tool_tip())
-	
-	if not selection.is_empty() and valid:
-		if not current_edit_menu.id_pressed.is_connected(_on_item_pressed):
-			current_edit_menu.id_pressed.connect(_on_item_pressed)
-	else:
-		# Disaple Promote to Value options
-		current_edit_menu.set_item_disabled(-1, true)
-
-func _on_item_pressed(id):
-	var code_edit = tab_container.get_current_tab_control().get_base_editor()
-	if id == PromoteUtil.MENU_PROMOTE_VALUE:
-		var selection: String = code_edit.get_selected_text()
-		if Engine.is_editor_hint():
-			var value_ref = PromoteUtil._promote_selection_to_value(selection)
-			code_edit.insert_text_at_caret(value_ref)
-
-func history_changed():
-	if _is_editing_behavior() and edited_object is PlaceholderBehavior and edited_object.should_keep_in_origin():
-		var u = get_undo_redo().get_history_undo_redo(get_undo_redo().get_object_history_id(edited_object))
-		if edited_object.position != Vector2.ZERO:
-			var p = edited_object.get_parent()
-			var t = edited_object.global_transform
-			# undo the Placeholder's move and instead move the parent
-			u.undo()
-			u.create_action("Move parent of Placeholder")
-			u.add_undo_property(p, "global_transform", p.global_transform)
-			u.add_do_property(edited_object.get_parent(), "global_transform", t)
-			u.commit_action()
-			edited_object.position = Vector2.ZERO
+	get_undo_redo().history_changed.connect(_history_changed)
+	scene_changed.connect(_initialize_scene)
 
 func _exit_tree():
 	for key in behaviors:
@@ -99,71 +34,56 @@ func _exit_tree():
 	behaviors.clear()
 	remove_debugger_plugin(debugger)
 	for i in inspectors: remove_inspector_plugin(i)
-
-func pronto_should_ignore(object):
-	if not object is Node:
-		return false
-	
-	if object.has_meta("pronto_ignore"):
-		return object.get_meta("pronto_ignore")
-	else:
-		if object.has_method("get_parent") and object.get_parent():
-			return pronto_should_ignore(object.get_parent())
-		else:
-			return false
+	get_undo_redo().history_changed.disconnect(_history_changed)
+	scene_changed.disconnect(_initialize_scene)
+	PromoteUtil.uninstall()
 
 func _handles(object):
 	return !pronto_should_ignore(object)
 
+## If the passed object is a Behavior, return it.
+## Otherwise, we create a Behavior as a hidden child that will now
+## perform tasks such as drawing connections for that non-Behavior node.
+static func get_behavior(object):
+	if not is_instance_valid(object) or not object is Node: return null
+	if object is Behavior: return object
+	for child in object.get_children(true):
+		if child is Behavior and child.hidden_child: return child
+	var b = Behavior.new()
+	b.hidden_child = true
+	object.add_child(b, false, INTERNAL_MODE_FRONT)
+	return b
+
 func _edit(object):
-	if _is_editing_behavior(_previous_edited_object):
-		if _previous_edited_object == null:
-			_previous_edited_object = edited_object
-		_previous_edited_object.deselected()
-	
-	# get_editor_interface().edit_script(load("res://examples/platformer.tscn::GDScript_tb7ap"))
-	
+	if object != edited_object:
+		var old = get_behavior(edited_object)
+		if old: old.deselected()
+
 	edited_object = object
-	_previous_edited_object = edited_object
-	if _is_editing_behavior() and edited_object is Node:
-		edited_object.selected()
+
+	var new = get_behavior(edited_object)
+	if new:
+		new.selected()
 		show_signals(edited_object)
 	else:
 		close()
 
-func close():
-	if popup and is_instance_valid(popup): popup.queue_free()
-	popup = null
-
 func _make_visible(visible):
-	if not visible:
-		close()
-	edited_object = null
+	if visible:
+		_edit(edited_object)
+	else:
+		_edit(null)
 
 func _forward_canvas_gui_input(event):
-	if not _is_editing_behavior():
-		return false
-	var ret = edited_object._forward_canvas_gui_input(event, get_undo_redo())
-	if ret:
-		update_overlays()
+	var behavior = get_behavior(edited_object)
+	if not behavior: return false
+	var ret = behavior._forward_canvas_gui_input(event, get_undo_redo())
+	if ret: update_overlays()
 	return ret
 
-func _forward_canvas_draw_over_viewport(viewport_control):#
-	if _is_editing_behavior():
-		return edited_object._forward_canvas_draw_over_viewport(viewport_control)
-
-func _is_editing_behavior(object = null):
-	if not object:
-		object = edited_object
-	if not is_instance_valid(object):
-		# object might be freed after inspecting an object from a prior debugging session
-		return false
-	if not object.has_method('_forward_canvas_draw_over_viewport'):
-		# object is EditorDebuggerRemoteObject, which we can only use to retrieve state
-		# but not to interact with
-		# https://github.com/hpi-swa-lab/godot-pronto/pull/22
-		return false
-	return object is Behavior
+func _forward_canvas_draw_over_viewport(viewport_control):
+	var behavior = get_behavior(edited_object)
+	if behavior: behavior._forward_canvas_draw_over_viewport(viewport_control)
 
 func show_signals(node: Node):
 	if popup:
@@ -195,3 +115,61 @@ func _notification(what):
 	if what == NOTIFICATION_DRAG_END and _drop_popup:
 		_drop_popup.queue_free()
 		_drop_popup = null
+
+func close():
+	if popup and is_instance_valid(popup): popup.queue_free()
+	popup = null
+
+func pronto_should_ignore(object):
+	if not object is Node:
+		return false
+	
+	if object.has_meta("pronto_ignore"):
+		return object.get_meta("pronto_ignore")
+	else:
+		if object.has_method("get_parent") and object.get_parent():
+			return pronto_should_ignore(object.get_parent())
+		else:
+			return false
+
+## Convenience that allows moving a placeholder (which has keep_in_origin set)
+## but instead moves the parent, which is typically what you actually meant.
+func _history_changed():
+	if is_instance_valid(edited_object) and edited_object is PlaceholderBehavior and edited_object.should_keep_in_origin():
+		var u = get_undo_redo().get_history_undo_redo(get_undo_redo().get_object_history_id(edited_object))
+		if edited_object.position != Vector2.ZERO:
+			var p = edited_object.get_parent()
+			var t = edited_object.global_transform
+			# undo the Placeholder's move and instead move the parent
+			u.undo()
+			u.create_action("Move parent of Placeholder")
+			u.add_undo_property(p, "global_transform", p.global_transform)
+			u.add_do_property(edited_object.get_parent(), "global_transform", t)
+			u.commit_action()
+			edited_object.position = Vector2.ZERO
+
+## List all behaviors in their folder and install as custom types
+func find_behavior_classes():
+	var regex = RegEx.new()
+	regex.compile("#thumb\\(\"(.+)\"\\)")
+	var base = get_editor_interface().get_base_control()
+	
+	for file in DirAccess.get_files_at("res://addons/pronto/behaviors"):
+		var name = file.get_basename()
+		var icon = ""
+		var script = load("res://addons/pronto/behaviors/" + file)
+		var result = regex.search(script.source_code)
+		if result:
+			icon = result.strings[1]
+		else:
+			push_error("Behavior {0} is missing #thumb(\"...\") annotation".format([name]))
+		add_custom_type(name, "Node2D", script,	base.get_theme_icon(icon, &"EditorIcons"))
+		behaviors[name] = icon
+
+## Ensure that we create hidden_child Behaviors for all nodes in a newly
+## opened scene.
+func _initialize_scene(scene):
+	if not scene: return
+	for node in scene.get_children():
+		get_behavior(node)
+		_initialize_scene(node)

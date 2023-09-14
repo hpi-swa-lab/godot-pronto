@@ -6,6 +6,10 @@ var _icon := TextureRect.new()
 var _handles := Handles.new()
 var _lines := Lines.new()
 
+## Whether this Behavior node has been added as a hidden child to
+## a non-Behavior subclass. See pronto.gd:get_behavor() for more context.
+var hidden_child = false
+
 func reload_icon():
 	_icon.texture = icon_texture()
 	_icon.queue_redraw()
@@ -15,7 +19,7 @@ func icon_texture():
 	return Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
 
 func _ready():
-	if Engine.is_editor_hint() and show_icon() and is_active_scene():
+	if Engine.is_editor_hint() and show_icon() and is_active_scene() and not hidden_child:
 		_icon.texture = icon_texture()
 		_icon.position = _icon.texture.get_size() / -2
 		_icon.material = load("res://addons/pronto/icons/icon_outline_material.tres")
@@ -40,10 +44,15 @@ func _ready():
 func is_active_scene() -> bool:
 	return owner == null or get_editor_plugin().get_editor_interface().get_edited_scene_root() == owner
 
+func get_target_node():
+	if hidden_child:
+		return get_parent()
+	return self
+
 func is_being_edited() -> bool:
 	if not Engine.is_editor_hint():
 		return false
-	return get_editor_plugin().edited_object == self
+	return get_editor_plugin().edited_object == get_target_node()
 
 func get_editor_plugin():
 	return G.at("_pronto_editor_plugin")
@@ -116,8 +125,9 @@ func line_text_function(connection: Connection) -> Callable:
 	return func(flipped): return connection.print(flipped)
 
 func lines() -> Array:
-	return Connection.get_connections(self).map(func (connection):
-		var other = self if not connection.is_target() else get_node_or_null(connection.to)
+	var target = get_target_node()
+	return Connection.get_connections(target).map(func (connection):
+		var other = self if not connection.is_target() else target.get_node_or_null(connection.to)
 		if other == null:
 			return null
 		return Lines.Line.new(self,
