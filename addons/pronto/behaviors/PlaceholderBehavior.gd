@@ -148,6 +148,8 @@ func _ready():
 		_init_sprite()
 		if sprite.get_parent() != self:
 			add_child(sprite, false, INTERNAL_MODE_FRONT)
+		sprite.position = sprite.position - find_non_transparent_rect().get_center()
+	_update_shape()
 
 func _editor_reload():
 	if Engine.is_editor_hint() and is_active_scene():
@@ -230,6 +232,9 @@ func _update_shape():
 		_parent.shape_owner_set_transform(_owner_id, transform)
 		if shape_type == "Rect":
 			_parent.shape_owner_get_shape(_owner_id, 0).size = placeholder_size
+			if use_sprite and sprite:
+				_parent.shape_owner_get_shape(_owner_id, 0).size = find_non_transparent_rect().size
+				print("update shape")
 		elif shape_type == "Circle":
 			_parent.shape_owner_get_shape(_owner_id, 0).radius = circle_radius
 		elif shape_type == "Capsule":
@@ -349,6 +354,9 @@ func _draw():
 			var debug_color = Color.LIGHT_BLUE
 			debug_color.a = 0.5
 			var r = Rect2(placeholder_size / -2, placeholder_size)
+			if use_sprite:
+				r = find_non_transparent_rect()
+				r.position = r.position - r.get_center()
 			draw_rect(r, debug_color, true)
 			debug_color.a = 1
 			draw_rect(r, debug_color, false)
@@ -364,6 +372,27 @@ func _draw():
 			draw_rect(r, debug_color, true)
 			debug_color.a = 1
 			draw_rect(r, debug_color, false)
+
+func find_non_transparent_rect():
+	if not sprite_texture: return null
+	var w = sprite_texture.get_width()
+	var h = sprite_texture.get_height()
+	var minX = w
+	var minY = h
+	var maxX = 0
+	var maxY = 0
+	for y in range(h):
+		for x in range(w):
+			var pixel = sprite_texture.get_image().get_pixel(x,y)
+			if pixel.a > 0:
+				minX = min(minX, x)
+				minY = min(minY, y)
+				maxX = max(maxX, x)
+				maxY = max(maxY, y)
+
+	var scale = placeholder_size / 16
+	var size = Vector2(maxX - minX + 1, maxY - minY + 1) * scale
+	return Rect2(-Vector2(w/2-minX,h/2-minY) * scale, size)
 
 func _re_add_shape():
 	_parent = get_parent() as CollisionObject2D
