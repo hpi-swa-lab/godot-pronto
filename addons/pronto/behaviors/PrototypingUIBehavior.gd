@@ -615,6 +615,7 @@ func _sync_editor_value(value: ValueBehavior):
 
 func handle_size_button_click(button: Button, initial: bool = false):
 	if not initial: minimized = !minimized
+	button.release_focus()
 	vbox.visible = !minimized
 	if minimized:
 		panel.size = header.size
