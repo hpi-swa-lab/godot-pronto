@@ -86,6 +86,8 @@ var DEFAULT_TEXTURE = load("res://addons/pronto/icons/MissingTexture.svg")
 		
 ## Settings for Shape (Collision and Display)
 @export_category("Shape")
+
+## This will define the shape of the placeholder as well as the shape of the hitbox.
 @export_enum("Rect", "Circle", "Capsule") var shape_type: String = "Rect":
 	set(v):
 		shape_type = v

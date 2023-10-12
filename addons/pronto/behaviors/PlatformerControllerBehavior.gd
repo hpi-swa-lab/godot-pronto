@@ -5,17 +5,17 @@ class_name PlatformerControllerBehavior
 
 @export_category("Gameplay")
 ## Defines the available controls
-enum Player {
-	Player_1 = 0, ## A - D, Jump: Space
-	Player_2 = 1, ## Arrow keys
-	Player_3 = 2  ## J - L, Jump: I
+enum Controls {
+	WASD = 0, ## A - D, Jump: Space
+	Arrow_Keys = 1, ## Arrow keys
+	IJKL = 2  ## J - L, Jump: I
 }
 
-## Determines which player these controls are for. This determines the keys
-## that the controls react to. Which keys that are is defined in [member PlatformControllerBehavior.key_map]
+## Determines which controls (keys) are used. 
+## Which keys that are is defined in [member PlatformControllerBehavior.key_map]
 ##
-## See [enum PlatformControllerBehavior.Player] for possible values
-@export var player: Player = Player.Player_1
+## See [enum PlatformControllerBehavior.Controls] for possible values
+@export var controls: Controls = Controls.WASD
 ## The speed with which the character jumps.
 @export var jump_velocity: float = 400
 ## The speed with which the character moves sideways.
@@ -45,6 +45,7 @@ var _last_positions = []
 
 signal collided(last_collision: KinematicCollision2D)
 
+# Make sure that these keys are identical to the comments from the enum "Controls" above when changing them.
 var key_map = [{
 	"function": Input.is_physical_key_pressed,
 	"left": KEY_A,
@@ -98,7 +99,7 @@ func _draw():
 		draw_circle(pos, 3, Color.RED)
 
 func _is_key_pressed(direction):
-	var keys = key_map[player]
+	var keys = key_map[controls]
 	if (typeof(keys[direction]) == TYPE_ARRAY):
 		return keys[direction].any(func(key): return keys["function"].call(key))
 	else:
