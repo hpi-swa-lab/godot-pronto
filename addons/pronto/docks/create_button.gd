@@ -81,7 +81,9 @@ func clicked():
 		editor_interface.play_custom_scene(scene_path)
 		# wait for scene to be closed after taking screenshot
 		while editor_interface.is_playing_scene():
-			OS.delay_msec(200)
+			print("... Waiting for scene to be terminated", "red")
+			await get_tree().create_timer(0.5).timeout
+	
 	# Stage newly created prototype folder.
 	stage_initial_changes(name)
-
+	colored_print("Staged all initial changes!")
