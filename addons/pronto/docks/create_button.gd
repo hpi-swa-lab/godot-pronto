@@ -45,7 +45,7 @@ func create_scene(name, create_export):
 
 func stage_initial_changes(name):
 	var output = []
-	OS.execute("git", ["add", "prototypes/" + name], output, true)
+	OS.execute("git", ["add", "."], output, true)
 	colored_print(output[0])
 
 func clicked():
@@ -74,6 +74,7 @@ func clicked():
 
 	# Set scene as main scene
 	ProjectSettings.set_setting("application/run/main_scene", scene_path)
+	ProjectSettings.save()
 	
 	# Start game so a screenshot can be made.
 	if create_export:
