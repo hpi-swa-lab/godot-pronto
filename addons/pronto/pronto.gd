@@ -11,9 +11,14 @@ var inspectors = [ExpressionInspector.new(), SpriteInspector.new(), StoreInspect
 
 var tab_container: TabContainer
 
+var prototype_dock
+
 func _enter_tree():
 	if not Engine.is_editor_hint():
 		return
+		
+	prototype_dock = preload("res://addons/pronto/docks/prototype_menu.tscn").instantiate()
+	add_control_to_dock(DOCK_SLOT_LEFT_BR, prototype_dock)
 	
 	PromoteUtil.install_menu_item(get_editor_interface())
 	find_behavior_classes()
@@ -37,6 +42,9 @@ func _exit_tree():
 	get_undo_redo().history_changed.disconnect(_history_changed)
 	scene_changed.disconnect(_initialize_scene)
 	PromoteUtil.uninstall()
+	
+	remove_control_from_docks(prototype_dock)
+	prototype_dock.free()
 
 func _handles(object):
 	return !pronto_should_ignore(object)
