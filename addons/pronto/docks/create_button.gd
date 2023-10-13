@@ -79,7 +79,9 @@ func clicked():
 	# Start game so a screenshot can be made.
 	if create_export:
 		editor_interface.play_custom_scene(scene_path)
-		OS.delay_msec(1500) # wait for screenshot to be completed
+		# wait for scene to be closed after taking screenshot
+		while editor_interface.is_playing_scene():
+			OS.delay_msec(200)
 	# Stage newly created prototype folder.
 	stage_initial_changes(name)
 
