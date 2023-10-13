@@ -51,26 +51,29 @@ func stage_initial_changes(name):
 func clicked():
 	var name_input = get_parent().find_child("Name", true) as TextEdit
 	var check_box = get_parent().find_child("CheckBox", true) as CheckBox
-	
+
 	var name = name_input.text
 	var create_export = check_box.button_pressed
-	
+
 	if name.is_empty():
 		push_warning("Please chose a name for your prototype!")
 		return
-	
+
 	var dir = DirAccess.open("res://prototypes")
 	if dir.dir_exists(name):
 		push_warning("A prototype with the same name already exists!")
 		return
-		
+
 	create_new_branch(name)
 	create_scene(name, create_export)
-	
+
 	# Open the newly created scene in editor.
 	var editor_interface = G.at("_pronto_editor_plugin").get_editor_interface() as EditorInterface
 	var scene_path = "res://prototypes/" + name + "/" + name + ".tscn"
 	editor_interface.open_scene_from_path(scene_path)
+
+	# Set scene as main scene
+	ProjectSettings.set_setting("application/run/main_scene", scene_path)
 	
 	# Start game so a screenshot can be made.
 	if create_export:
