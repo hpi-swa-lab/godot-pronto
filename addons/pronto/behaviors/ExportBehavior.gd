@@ -3,14 +3,26 @@
 extends Behavior
 class_name ExportBehavior
 
+const DEFAULT_TITLE = "<Title>"
+const DEFAULT_AUTHOR = "<Author>"
+
 ## The display title of the game
-@export var title: String = "<Title>"
+@export var title: String = DEFAULT_TITLE:
+	set(value):
+		title = value
+		update_configuration_warnings()
 
 ## All authors of the game
-@export var authors: PackedStringArray = ["<Author>"]
+@export var authors: PackedStringArray = [DEFAULT_AUTHOR]:
+	set(value):
+		authors = value
+		update_configuration_warnings()
 
 ## The description of the game
-@export_multiline var description = ""
+@export_multiline var description = "":
+	set(value):
+		description = value
+		update_configuration_warnings()
 
 ## Settings for the Thumbnail
 @export_category("Thumbnail")
@@ -70,5 +82,11 @@ func _create_game_json():
 func _get_configuration_warnings():
 	var message = []
 	if not self.name == "ExportBehavior":
-		message.append("ExportBehavior should not be renamed!")	
+		message.append("ExportBehavior should not be renamed!")
+	if title == DEFAULT_TITLE:
+		message.append("Please enter the title of your game.")
+	if authors.size() == 0 or authors[0] == DEFAULT_AUTHOR:
+		message.append("Please enter the authors of your game.")
+	if description == "":
+		message.append("Please enter a description for your game.")
 	return message	
