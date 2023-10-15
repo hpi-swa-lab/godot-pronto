@@ -28,10 +28,13 @@ func _recover_session_store_or_new() -> SessionStore:
 	assert(self.prompto_client)
 	
 	var loaded_session = self._load_session()
-	if loaded_session && loaded_session.is_valid():
-		return loaded_session
-	
+	if loaded_session:
+		if loaded_session.is_valid():
+			return loaded_session
+		
+		print("Session expired.")
 	print("Session could not be recovered.")
+	
 	return SessionStore.new()
 		
 func _save_session() -> void: # TODO return error if failed
@@ -74,7 +77,7 @@ func attempt_login():
 	# get user_information related to prompto_id
 	var session_information = await self.prompto_client.whoami(prompto_id)
 	if session_information:
-		self.session_store.set_session(prompto_id, session_information.data.username, session_information.data.expires) #TODO
+		self.session_store.set_session(prompto_id, session_information.username, session_information.expires) #TODO
 		_save_session()
 
 func _get_login_handler():
@@ -95,10 +98,9 @@ func attempt_logout():
 	self.session_store.reset()
 	self._delete_stored_session()
 
-func chat(text: String):
+func create_chat(message: String):
 	assert(self.session_store.logged_in())
-	
-	return await self.prompto_client.chat(text)
+	return await self.prompto_client.create_chat(message)
 
 func setup_editor_settings(s: EditorSettings):
 	self.settings = s

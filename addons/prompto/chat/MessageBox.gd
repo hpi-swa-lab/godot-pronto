@@ -30,7 +30,6 @@ func _ready():
 func _on_settings_changed():
 	message_entry = message_entry # trigger setter
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

@@ -20,7 +20,7 @@ func _prepare_request(
 	add_child(http_request)
 
 	var headers = PackedStringArray([
-		"Cookie: prompto_id=%s; Domain=127.0.0.1" % prompto_id,
+		"Cookie: prompto_id=%s; domain=prompto.overfitting.org" % prompto_id,
 		"User-Agent: Godot %s" %Engine.get_version_info(),
 		"Content-Type: application/json",
 	])
@@ -55,8 +55,14 @@ func logout() -> Dictionary:
 	var body = await _prepare_request(BACKEND_API.LOGOUT_URL, HTTPClient.METHOD_POST)
 	return body
 
-func chat(text):
+func create_chat(text):
 	assert(self.session_store.logged_in())
 	
-	var body = await _prepare_request(BACKEND_API.CHAT_URL, HTTPClient.METHOD_POST, {"text": text})
+	var body = await _prepare_request(BACKEND_API.CREATE_CHAT_URL, HTTPClient.METHOD_POST, {"message": text})
+	return body
+
+func continue_chat(history_id, text):
+	assert(self.session_store.logged_in())
+	
+	var body = await _prepare_request(BACKEND_API.CREATE_CHAT_URL, HTTPClient.METHOD_POST, {"message": text})
 	return body

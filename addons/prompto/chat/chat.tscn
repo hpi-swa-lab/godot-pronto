@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0rrj0rnb3tdo"]
+[gd_scene load_steps=8 format=3 uid="uid://d0rrj0rnb3tdo"]
 
 [ext_resource type="FontFile" uid="uid://bl8e15dtp0unf" path="res://addons/prompto/fonts/ComicNeue-Bold.ttf" id="1_b76ta"]
 [ext_resource type="Script" path="res://addons/prompto/chat/chat.gd" id="1_r4llr"]
+[ext_resource type="PackedScene" uid="uid://y16c466rq77f" path="res://addons/prompto/health_indicator.tscn" id="2_omo0d"]
 
 [sub_resource type="GDScript" id="GDScript_vhn8d"]
 script/source = "@tool
@@ -59,11 +60,16 @@ func _gui_input(event):
 			var prompto_manager = get_node(\"/root/PromptoManager\")
 			var prompt = self.text.strip_edges()
 			
-			var message = MessageEntry.new(MessageEntry.MessageRole.USER, prompt)
 			self.owner.add_message(message)
-			var response = await prompto_manager.chat(prompt)
-			print(response)
-			var response_message = MessageEntry.new(MessageEntry.MessageRole.ASSISTANT, response[\"data\"][\"text\"])
+			var response = await prompto_manager.create_chat(prompt)
+			
+			
+			var rq_message = response['messages'][-2]
+			var rq_message_entry = MessageEntry.new(req_msg['id'], MessageEntry.MessageRole.USER, req_msg['content'])
+			
+			
+			var res_msg = response['messages'][-1]
+			var response_message = MessageEntry.new(response_message_str['id'], MessageEntry.MessageRole.ASSISTANT, response_message_str['content'])
 			self.owner.add_message(response_message)
 			
 			self.text = \"\"
@@ -93,6 +99,16 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/separation = 10
+
+[node name="HealthIndicator" parent="VBoxContainer/Header/HBoxContainer" instance=ExtResource("2_omo0d")]
+layout_mode = 2
+init_status = true
+status_changed = Signal()
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/Header/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset"
 
 [node name="UserLabel" type="Label" parent="VBoxContainer/Header/HBoxContainer"]
 layout_mode = 2
@@ -133,3 +149,5 @@ layout_mode = 2
 size_flags_vertical = 8
 placeholder_text = "Send a message to Prompto"
 script = SubResource("GDScript_rtwmb")
+
+[connection signal="pressed" from="VBoxContainer/Header/HBoxContainer/ResetButton" to="." method="reset"]

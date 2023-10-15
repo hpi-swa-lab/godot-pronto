@@ -7,7 +7,7 @@ enum MessageRole {ASSISTANT, FUNCTION, USER}
 var content: String
 var role: MessageRole
 
-func _init(role: MessageRole, content: String):
+func _init(uuid: String, role: MessageRole, content: String):
+	self.uuid = uuid
 	self.role = role
 	self.content = content
-

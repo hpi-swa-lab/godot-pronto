@@ -4,7 +4,6 @@ class_name LoginHandler
 
 var PORT := 39714
 var BINDING := "127.0.0.1"
-const BACKEND_LOGIN_URL = "http://localhost:42000/login"
 
 
 var redirect_server = TCPServer.new()
@@ -34,27 +33,29 @@ func _process(_delta):
 			set_process(false)
 			
 			var request_params_str = request.split("\n")
-			var headers_str = request_params_str.slice(1, request_params_str.size() - 1)
-				
-			var headers = {}
-			for header_str in headers_str:
-				var split = header_str.split(": ")
-				#assert(split.size() == 2, header_str)
-				if (split.size() == 2):
-					var key = split[0]
-					var value = split[1]
-					headers[key] = value
-				
-				
-			var cookies = parse_string_to_dict(headers["Cookie"], ";", "=")
-			var prompto_id = cookies["prompto_id"]
+			var query = request_params_str[0]
+			
+			# TODO Quick and dirty parsing
+			assert('?' in query)
+			var prompto_id = query.split('=')[1].split(' ')[0]
+			print(prompto_id)
+			# TODO Headers are not used.
+			# var headers_str = request_params_str.slice(1, request_params_str.size() - 1)
+			# var headers = {}
+			# for header_str in headers_str:
+			#	var split = header_str.split(": ")
+			#	
+			#	if (split.size() == 2):
+			#		var key = split[0]
+			#		var value = split[1]
+			#		headers[key] = value
 			
 			# Set new session id
 			token_received.emit(prompto_id)
 			
 			# Return success HTML Page
-			connection.put_data(("HTTP/1.1 %d\r\n" % 200).to_utf8_buffer())
-			connection.put_data(load_HTML("res://addons/prompto/auth/redirect_page.html").to_utf8_buffer())
+			connection.put_data(("HTTP/1.1 %d Temporary Redirect\r\n" % 307).to_utf8_buffer())
+			connection.put_data("Location: http://prompto.overfitting.org/auth/success".to_utf8_buffer())
 			redirect_server.stop()
 
 
