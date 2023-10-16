@@ -7,7 +7,8 @@ var session_store: SessionStore:
 		return session_store
 	set(new_store):
 		session_store = new_store
-	
+
+const DOMAIN = preload("res://addons/prompto/config.gd").BACKEND_DOMAIN
 const BACKEND_API = preload("res://addons/prompto/config.gd").BACKEND_API
 
 func _prepare_request(
@@ -20,7 +21,7 @@ func _prepare_request(
 	add_child(http_request)
 
 	var headers = PackedStringArray([
-		"Cookie: prompto_id=%s; domain=prompto.overfitting.org" % prompto_id,
+		"Cookie: prompto_id=%s; domain=%s" % [prompto_id, DOMAIN],
 		"User-Agent: Godot %s" %Engine.get_version_info(),
 		"Content-Type: application/json",
 	])

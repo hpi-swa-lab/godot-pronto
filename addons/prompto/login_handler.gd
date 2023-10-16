@@ -2,9 +2,9 @@
 extends Node
 class_name LoginHandler
 
-var PORT := 39714
-var BINDING := "127.0.0.1"
-
+const PORT := preload("res://addons/prompto/config.gd").REDIRECT_CLIENT_PORT
+const BINDING := preload("res://addons/prompto/config.gd").REDIRECT_CLIENT_BINDING
+const BACKEND_API = preload("res://addons/prompto/config.gd").BACKEND_API
 
 var redirect_server = TCPServer.new()
 
@@ -28,10 +28,13 @@ func listen():
 func _process(_delta):
 	if redirect_server.is_connection_available():
 		var connection = redirect_server.take_connection()
+		#while connection.get_status() != STATUS_CONNECTED: continue
 		var request = connection.get_string(connection.get_available_bytes())
+		#print("Got request")
 		if request:
+			print(request)
 			set_process(false)
-			
+			#rint("Got request")
 			var request_params_str = request.split("\n")
 			var query = request_params_str[0]
 			
@@ -53,10 +56,17 @@ func _process(_delta):
 			# Set new session id
 			token_received.emit(prompto_id)
 			
-			# Return success HTML Page
+			print("Connected.")
+			
+			# Return redirect to sucess page
 			connection.put_data(("HTTP/1.1 %d Temporary Redirect\r\n" % 307).to_utf8_buffer())
-			connection.put_data("Location: http://prompto.overfitting.org/auth/success".to_utf8_buffer())
+			connection.put_data(("Location: %s\r\n" % BACKEND_API.LOGIN_SUCCESS_URL).to_utf8_buffer())
+			connection.put_data("Connection: close/\r\n\r\n".to_utf8_buffer())
+			connection.disconnect_from_host()
+			
 			redirect_server.stop()
+		else:
+			print("fghjk")
 
 
 func parse_string_to_dict(string, item_delimiter, key_value_delimiter):
