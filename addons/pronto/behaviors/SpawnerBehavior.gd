@@ -182,10 +182,10 @@ func spawn(indices: Array = [], pos: Vector2 = Vector2.INF, toward: Vector2 = Ve
 			while(is_out_of_radius or is_out_of_height):
 				var true_rect = spawn_shape_generic.height/2 - spawn_shape_generic.radius
 				
-				if (global_position + Vector2(0,true_rect)).distance_to(spawning_position) < spawn_shape_generic.radius or (global_position - Vector2(0,true_rect)).distance_to(pos) < spawn_shape_generic.radius:
+				if ((global_position + Vector2(0,true_rect)).distance_to(spawning_position) < spawn_shape_generic.radius) or (global_position - Vector2(0,true_rect)).distance_to(spawning_position) < spawn_shape_generic.radius:
 					break
-				spawning_position.x += global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
-				spawning_position.y += global_position.y +  randf_range(-true_rect, true_rect)
+				spawning_position.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+				spawning_position.y = global_position.y +  randf_range(-true_rect, true_rect)
 				
 				is_out_of_radius = global_position.distance_to(Vector2(spawning_position.x,global_position.y)) > spawn_shape_generic.radius
 				is_out_of_height = global_position.distance_to(Vector2(global_position.x,spawning_position.y)) > true_rect
