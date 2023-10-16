@@ -3,6 +3,7 @@
 [ext_resource type="FontFile" uid="uid://bl8e15dtp0unf" path="res://addons/prompto/fonts/ComicNeue-Bold.ttf" id="1_b76ta"]
 [ext_resource type="Script" path="res://addons/prompto/chat/chat.gd" id="1_r4llr"]
 [ext_resource type="PackedScene" uid="uid://y16c466rq77f" path="res://addons/prompto/health_indicator.tscn" id="2_omo0d"]
+[ext_resource type="Script" path="res://addons/prompto/chat/InputField.gd" id="4_ndlp7"]
 
 [sub_resource type="GDScript" id="GDScript_vhn8d"]
 script/source = "@tool
@@ -40,45 +41,6 @@ func _pressed():
 font = ExtResource("1_b76ta")
 font_size = 38
 font_color = Color(0.843137, 0.843137, 0.843137, 1)
-
-[sub_resource type="GDScript" id="GDScript_rtwmb"]
-script/source = "@tool
-extends TextEdit 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-func _gui_input(event):
-	if self.has_focus() and event is InputEventKey and event.pressed:
-		
-		if Input.is_key_pressed(KEY_SHIFT) and event.keycode == KEY_ENTER:
-			self.insert_text_at_caret(\"\\n\")
-			return
-			
-		if event.keycode == KEY_ENTER:
-			var prompto_manager = get_node(\"/root/PromptoManager\")
-			var prompt = self.text.strip_edges()
-			
-			self.owner.add_message(message)
-			var response = await prompto_manager.create_chat(prompt)
-			
-			
-			var rq_message = response['messages'][-2]
-			var rq_message_entry = MessageEntry.new(req_msg['id'], MessageEntry.MessageRole.USER, req_msg['content'])
-			
-			
-			var res_msg = response['messages'][-1]
-			var response_message = MessageEntry.new(response_message_str['id'], MessageEntry.MessageRole.ASSISTANT, response_message_str['content'])
-			self.owner.add_message(response_message)
-			
-			self.text = \"\"
-			self.accept_event()
-			
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
 
 [node name="Prompto Chat" type="MarginContainer"]
 anchors_preset = 15
@@ -148,6 +110,6 @@ custom_minimum_size = Vector2(2.08165e-12, 256)
 layout_mode = 2
 size_flags_vertical = 8
 placeholder_text = "Send a message to Prompto"
-script = SubResource("GDScript_rtwmb")
+script = ExtResource("4_ndlp7")
 
 [connection signal="pressed" from="VBoxContainer/Header/HBoxContainer/ResetButton" to="." method="reset"]

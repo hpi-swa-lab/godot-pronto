@@ -4,6 +4,8 @@ class_name MessageEntry
 
 enum MessageRole {ASSISTANT, FUNCTION, USER}
 
+
+var uuid: String
 var content: String
 var role: MessageRole
 
