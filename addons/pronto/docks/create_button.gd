@@ -102,10 +102,14 @@ func clicked():
 	# Start game so a screenshot can be made.
 	if create_export:
 		editor_interface.play_custom_scene(scene_path)
-		# wait for scene to be closed after taking screenshot
-		while editor_interface.is_playing_scene():
-			print("... Waiting for scene to be terminated")
+		# wait for screenshot to be taken
+		while true:
+			var prototypeDir = DirAccess.open("res://prototypes/" + name)
+			if prototypeDir.file_exists("thumbnail.png"):
+				break
 			await get_tree().create_timer(0.5).timeout
+		# close playing scene
+		editor_interface.stop_playing_scene()
 
 	if stage_box.button_pressed:
 		# Stage newly created prototype folder.
