@@ -7,7 +7,7 @@ const REDIRECT_CLIENT_BINDING = "127.0.0.1"
 
 # Remote settings
 const BACKEND_SCHEME = "https"
-const BACKEND_DOMAIN = "prompto.overfitting.org"
+const BACKEND_DOMAIN = "www.hpi.uni-potsdam.de/hirschfeld/prompto"
 
 const BACKEND_BASE_URL = BACKEND_SCHEME + "://" + BACKEND_DOMAIN
 
