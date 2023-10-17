@@ -15,6 +15,8 @@ var message_entry:
 			MessageEntry.MessageRole.USER:
 				set("theme_override_constants/margin_left", get_message_margin())
 				%Content.get("theme_override_styles/normal").bg_color = get_prompto_manager().get_settings().get_setting("interface/theme/accent_color").darkened(.5)
+				# Hide Feedback buttons for own messages
+				self.find_child("FeedbackButtons").visible = false
 			_:
 				assert(false, "Unhandled message role. :-(") 
 
