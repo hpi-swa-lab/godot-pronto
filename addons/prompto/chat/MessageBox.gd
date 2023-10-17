@@ -3,7 +3,7 @@ extends MarginContainer
 
 var MESSAGE_REF = preload("res://addons/prompto/chat/message.gd")
 
-var message_entry: 
+var message_entry: MessageEntry: 
 	set(value):
 		message_entry = value
 		%Content.text = message_entry.content
@@ -32,9 +32,27 @@ func get_message_margin():
 
 func _ready():
 	get_prompto_manager().get_settings().settings_changed.connect(_on_settings_changed)
+	%LikeButton.button_down.connect(_like_message)
+	%DislikeButton.button_down.connect(_dislike_message)
 
 func _on_settings_changed():
 	message_entry = message_entry # trigger setter
+
+# Give positive feedback for the given response
+func _like_message():
+	_send_feedback("positive")
+
+# Give negative feedback for the given response
+func _dislike_message():
+	_send_feedback("negative")
+
+func _send_feedback(category: String):
+	var prompto_manager = get_node("/root/PromptoManager")
+	var history_id = message_entry.history_id
+	var uuid = message_entry.uuid
+	print("Sending ", category, " feedback for message with id: ", uuid, " from history: ", history_id)
+	
+#	TODO: SEND FEEDBACK: var response = await prompto_manager
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

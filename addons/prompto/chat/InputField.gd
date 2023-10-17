@@ -20,11 +20,11 @@ func _gui_input(event):
 			var response = await prompto_manager.create_chat(prompt)
 			
 			var rq_message = response['messages'][-2]
-			var rq_message_entry = MessageEntry.new(rq_message['id'], MessageEntry.MessageRole.USER, rq_message['content'])
+			var rq_message_entry = MessageEntry.new(rq_message['id'], response['history_id'], MessageEntry.MessageRole.USER, rq_message['content'])
 			self.owner.add_message(rq_message_entry)
 			
 			var res_msg = response['messages'][-1]
-			var response_message = MessageEntry.new(res_msg['id'], MessageEntry.MessageRole.ASSISTANT, res_msg['content'])
+			var response_message = MessageEntry.new(res_msg['id'], response['history_id'], MessageEntry.MessageRole.ASSISTANT, res_msg['content'])
 			self.owner.add_message(response_message)
 			
 			self.text = ""

@@ -46,11 +46,13 @@ layout_mode = 2
 alignment = 2
 
 [node name="LikeButton" type="Button" parent="VBoxContainer/FeedbackButtons"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "This answer was helpful"
 icon = ExtResource("3_uv5l2")
 
 [node name="DislikeButton" type="Button" parent="VBoxContainer/FeedbackButtons"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "This answer was not helpful"
 icon = ExtResource("4_besp7")
