@@ -25,7 +25,11 @@ offset_right = 401.0
 offset_bottom = 39.0
 script = ExtResource("2_0kjv6")
 
-[node name="Content" type="RichTextLabel" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="Content" type="RichTextLabel" parent="VBoxContainer"]
 unique_name_in_owner = true
 clip_contents = false
 custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
@@ -37,16 +41,16 @@ fit_content = true
 scroll_following = true
 autowrap_mode = 2
 
-[node name="FeedbackButtons" type="HBoxContainer" parent="."]
+[node name="FeedbackButtons" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 alignment = 2
 
-[node name="LikeButton" type="Button" parent="FeedbackButtons"]
+[node name="LikeButton" type="Button" parent="VBoxContainer/FeedbackButtons"]
 layout_mode = 2
-tooltip_text = "This answer was helpful."
+tooltip_text = "This answer was helpful"
 icon = ExtResource("3_uv5l2")
 
-[node name="DislikeButton" type="Button" parent="FeedbackButtons"]
+[node name="DislikeButton" type="Button" parent="VBoxContainer/FeedbackButtons"]
 layout_mode = 2
-tooltip_text = "This answer was not helpful."
+tooltip_text = "This answer was not helpful"
 icon = ExtResource("4_besp7")

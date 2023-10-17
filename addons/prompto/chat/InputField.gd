@@ -11,8 +11,6 @@ func _gui_input(event):
 		if Input.is_key_pressed(KEY_SHIFT) and event.keycode == KEY_ENTER:
 			self.insert_text_at_caret("\n")
 			return
-			
-		print("Hello")
 		
 		if event.keycode == KEY_ENTER:
 			var prompto_manager = get_node("/root/PromptoManager")
