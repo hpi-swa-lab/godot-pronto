@@ -17,9 +17,13 @@ enum Controls {
 ## See [enum PlatformControllerBehavior.Controls] for possible values
 @export var controls: Controls = Controls.WASD
 ## The speed with which the character jumps.
-@export var jump_velocity: float = 400
+@export var jump_velocity: float = 400:
+	set(v):
+		jump_velocity = v
 ## The speed with which the character moves sideways.
-@export var horizontal_velocity: float = 400
+@export var horizontal_velocity: float = 400:
+	set(v):
+		horizontal_velocity = v
 ## The amount of time after falling off a platform where the character can still jump, in seconds.
 @export_range(0.0, 1.0) var coyote_time = 0.1
 ## The amount of time a jump input will trigger a jump if the character is not touching the floor, in seconds.
