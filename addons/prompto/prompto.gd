@@ -8,6 +8,8 @@ func _enter_tree():
 	call_deferred('register_panel')
 
 func _ready():
+	# workaround: settings are not initialized on editor startup at this point
+	await get_tree().process_frame
 	get_pompto_manager().setup_editor_settings(get_editor_interface().get_editor_settings())
 
 func get_pompto_manager():
