@@ -1,8 +1,8 @@
 name: "Build & Deploy Game"
 on:
   push:
-    branches-ignore:
-    - 'master'
+    branches:
+    - 'game-*'
 
 env:
   GODOT_VERSION: 4.1
