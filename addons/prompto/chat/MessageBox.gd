@@ -40,11 +40,18 @@ func _on_settings_changed():
 
 # Give positive feedback for the given response
 func _like_message():
-	_send_feedback("positive")
+	var success = await _send_feedback("positive")
+	print("SUCEESS:", success)
+	if not success: return
+	%DislikeButton.visible = false
+	%LikeButton.disabled = true
 
 # Give negative feedback for the given response
 func _dislike_message():
-	_send_feedback("negative")
+	var success = await _send_feedback("negative")
+	if not success: return
+	%LikeButton.visible = false
+	%DislikeButton.disabled = true
 
 func _send_feedback(feedback_type: String):
 	var prompto_manager = get_node("/root/PromptoManager")
@@ -53,7 +60,8 @@ func _send_feedback(feedback_type: String):
 	
 	var response = await prompto_manager.send_feedback(history_id, uuid, feedback_type)
 	print("Feedback Response: ", response)
-#	TODO: SEND FEEDBACK: var response = await prompto_manager
+	# Todo: Check if response is successfull
+	return response
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
