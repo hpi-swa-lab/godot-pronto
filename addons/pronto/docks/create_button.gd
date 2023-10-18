@@ -76,7 +76,7 @@ func clicked():
 	var stage_box = get_parent().find_child("StageBox", true) as CheckBox
 
 	if name_input.text.is_empty():
-		push_warning("Please chose a name for your prototype!")
+		push_warning("Please choose a name for your prototype!")
 		return
 
 	var name = "game-" + name_input.text
