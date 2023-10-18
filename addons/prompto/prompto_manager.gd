@@ -75,8 +75,9 @@ func attempt_login():
 	remove_child(login_handler)
 	
 	# get user_information related to prompto_id
-	var session_information = await self.prompto_client.whoami(prompto_id)
-	if session_information:
+	var response = await self.prompto_client.whoami(prompto_id)
+	if response.status == 200:
+		var session_information = response.body
 		self.session_store.set_session(prompto_id, session_information.username, session_information.expires) #TODO
 		_save_session()
 

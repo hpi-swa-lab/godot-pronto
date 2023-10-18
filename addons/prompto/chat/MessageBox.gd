@@ -40,16 +40,15 @@ func _on_settings_changed():
 
 # Give positive feedback for the given response
 func _like_message():
-	var success = await _send_feedback("positive")
-	print("SUCEESS:", success)
-	if not success: return
+	var response = await _send_feedback("positive")
+	if not response.status == 200: return
 	%DislikeButton.visible = false
 	%LikeButton.disabled = true
 
 # Give negative feedback for the given response
 func _dislike_message():
-	var success = await _send_feedback("negative")
-	if not success: return
+	var response = await _send_feedback("negative")
+	if not response.status == 200: return
 	%LikeButton.visible = false
 	%DislikeButton.disabled = true
 

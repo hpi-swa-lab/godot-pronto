@@ -15,16 +15,24 @@ func _gui_input(event):
 		if event.keycode == KEY_ENTER:
 			var prompto_manager = get_node("/root/PromptoManager")
 			var prompt = self.text.strip_edges()
-			print("IN")
+			print("Sending request to server...")
 			
 			var response = await prompto_manager.create_chat(prompt)
+			print("Response from Server: ", response)
 			
-			var rq_message = response['messages'][-2]
-			var rq_message_entry = MessageEntry.new(rq_message['id'], response['history_id'], MessageEntry.MessageRole.USER, rq_message['content'])
+			# Check if response was successful
+			if (response.status != 200):
+				print("Error: Invalid response from server with status code " + str(response.status))
+				return
+			
+			var body = response.body
+			
+			var rq_message = body['messages'][-2]
+			var rq_message_entry = MessageEntry.new(rq_message['id'], body['history_id'], MessageEntry.MessageRole.USER, rq_message['content'])
 			self.owner.add_message(rq_message_entry)
 			
-			var res_msg = response['messages'][-1]
-			var response_message = MessageEntry.new(res_msg['id'], response['history_id'], MessageEntry.MessageRole.ASSISTANT, res_msg['content'])
+			var res_msg = body['messages'][-1]
+			var response_message = MessageEntry.new(res_msg['id'], body['history_id'], MessageEntry.MessageRole.ASSISTANT, res_msg['content'])
 			self.owner.add_message(response_message)
 			
 			self.text = ""
