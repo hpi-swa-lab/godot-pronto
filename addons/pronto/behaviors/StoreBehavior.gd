@@ -52,6 +52,9 @@ func at_and_remove(prop: String, default = null):
 		data.erase(prop)
 	return val
 
+func has(key: String):
+	return data.has(key)
+
 func _report_game_value(prop: String, value: Variant):
 	_last_reported_game_values[prop] = value
 

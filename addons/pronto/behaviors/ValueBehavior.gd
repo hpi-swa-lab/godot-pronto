@@ -159,6 +159,7 @@ func _ready():
 	super._ready()
 	renamed.connect(queue_redraw)
 	G.put(name, float_value)
+	value_changed.emit(G.at(name))
 
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	var center = get_viewport_transform() * get_canvas_transform() * global_position

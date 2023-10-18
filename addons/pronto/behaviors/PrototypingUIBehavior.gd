@@ -69,7 +69,7 @@ func _draw():
 	draw_rect(Rect2(Vector2(0, 0), Vector2(panel_size.x, 30)), Color.BLACK, true)
 
 func _input(event):
-	if Input.is_action_just_pressed("input_left_mouse"):
+	if Input.is_action_just_pressed("input_left_mouse") and event is InputEventMouse:
 		var rect = panel.get_global_rect()
 		var localMousePos = event.position - get_global_position()
 		if localMousePos.y < grab_threshold:
