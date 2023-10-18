@@ -102,6 +102,10 @@ func create_chat(message: String):
 	assert(self.session_store.logged_in())
 	return await self.prompto_client.create_chat(message)
 
+func send_feedback(history_id: String, message_id: String, feedback_type: String):
+	assert(self.session_store.logged_in())
+	return await self.prompto_client.send_feedback(history_id, message_id, feedback_type)
+
 func setup_editor_settings(s: EditorSettings):
 	self.settings = s
 	if not self.settings.has_setting("prompto/chat_margin"):

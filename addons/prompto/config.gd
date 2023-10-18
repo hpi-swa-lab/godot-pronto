@@ -18,4 +18,5 @@ const BACKEND_API = {
 	WHOAMI_URL = BACKEND_BASE_URL + "/auth/whoami",
 	CREATE_CHAT_URL = BACKEND_BASE_URL + "/chat/create",
 	CONTINUE_CHAT_URL = BACKEND_BASE_URL + "/chat/continue",
+	FEEDBACK_URL = BACKEND_BASE_URL + "/chat/feedback"
 }

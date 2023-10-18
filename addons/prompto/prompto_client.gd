@@ -34,7 +34,7 @@ func _prepare_request(
 	var response = await http_request.request_completed
 	remove_child(http_request)
 	# result, status code, response headers, and body are now in indices 0, 1, 2, and 3 of response
-	print(response[3].get_string_from_utf8())
+	print("RESPONSE PLAIN: ", response[3].get_string_from_utf8())
 	if (response[3]):
 		return JSON.parse_string(response[3].get_string_from_utf8())
 	
@@ -66,4 +66,16 @@ func continue_chat(history_id, text):
 	assert(self.session_store.logged_in())
 	
 	var body = await _prepare_request(BACKEND_API.CREATE_CHAT_URL, HTTPClient.METHOD_POST, {"message": text})
+	return body
+
+func send_feedback(history_id: String, message_id: String, feedback_type: String):
+	assert(self.session_store.logged_in())
+	
+	var request_body = {
+		"history_id": history_id,
+		"message_id": message_id,
+		"feedback_type": feedback_type
+	}
+	
+	var body = await _prepare_request(BACKEND_API.FEEDBACK_URL, HTTPClient.METHOD_POST, request_body)
 	return body

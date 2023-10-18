@@ -46,12 +46,13 @@ func _like_message():
 func _dislike_message():
 	_send_feedback("negative")
 
-func _send_feedback(category: String):
+func _send_feedback(feedback_type: String):
 	var prompto_manager = get_node("/root/PromptoManager")
 	var history_id = message_entry.history_id
 	var uuid = message_entry.uuid
-	print("Sending ", category, " feedback for message with id: ", uuid, " from history: ", history_id)
 	
+	var response = await prompto_manager.send_feedback(history_id, uuid, feedback_type)
+	print("Feedback Response: ", response)
 #	TODO: SEND FEEDBACK: var response = await prompto_manager
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
