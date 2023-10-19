@@ -8,6 +8,7 @@ const MessageBox = preload("res://addons/prompto/chat/MessageBox.tscn")
 func get_messages():
 	return %MessageContainer.get_children()
 
+## Add the given message to the chat. Returns the message box.
 func add_message(message: MessageEntry):
 	%PromptoLabel.hide()
 	var message_box = MessageBox.instantiate()
@@ -23,7 +24,7 @@ func add_message(message: MessageEntry):
 func _process(delta):
 	pass
 
-
+## Reset the chat to its initial state by removing all messages.
 func reset():
 	%PromptoLabel.show()
 	

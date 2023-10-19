@@ -8,6 +8,7 @@ var message_entry: MessageEntry:
 		message_entry = value
 		%Content.text = message_entry.content
 		
+		# Hide Feedback buttons for own messages
 		match (message_entry.role):
 			MessageEntry.MessageRole.ASSISTANT:
 				set("theme_override_constants/margin_right", get_message_margin())
@@ -52,21 +53,15 @@ func _dislike_message():
 	%LikeButton.visible = false
 	%DislikeButton.disabled = true
 
+# Send feedback to the server for the given response
 func _send_feedback(feedback_type: String):
 	var prompto_manager = get_node("/root/PromptoManager")
 	var history_id = message_entry.history_id
 	var uuid = message_entry.uuid
 	
 	var response = await prompto_manager.send_feedback(history_id, uuid, feedback_type)
-	print("Feedback Response: ", response)
-	# Todo: Check if response is successfull
 	return response
 
 func display_warning(message):
 	%Warning.visible = true
-	%Warning.tooltip_text = message
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	
+	%Warning.tooltip_text = message	

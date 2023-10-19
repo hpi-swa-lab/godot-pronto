@@ -73,6 +73,7 @@ func continue_chat(history_id, text):
 	var response = await _prepare_request(BACKEND_API.CREATE_CHAT_URL, HTTPClient.METHOD_POST, {"message": text})
 	return response
 
+## Sends feedback to the backend
 func send_feedback(history_id: String, message_id: String, feedback_type: String):
 	assert(self.session_store.logged_in())
 	
