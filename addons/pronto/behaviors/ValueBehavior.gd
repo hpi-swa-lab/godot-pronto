@@ -231,7 +231,7 @@ class DropPropertyPrompt extends ColorRect:
 		data["object"].add_child(v)
 		v.owner = root
 		
-		Connection.connect_target(v, "value_changed", "..", "set", [empty_script(["value"], "\"%s\"" % [data["property"]], true), empty_script(["value"], "value", true)], [], empty_script(["value"], "true", true))
+		Connection.connect_target(v, "value_changed", "..", "set", [empty_script(["value", "from", "to"], "\"%s\"" % [data["property"]], true), empty_script(["value", "from", "to"], "value", true)], [], empty_script(["value", "from", "to"], "true", true))
 		
 #		var b = BindBehavior.new()
 #		b.to_prop = data["property"]
