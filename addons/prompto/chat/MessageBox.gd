@@ -62,6 +62,10 @@ func _send_feedback(feedback_type: String):
 	# Todo: Check if response is successfull
 	return response
 
+func display_warning(message):
+	%Warning.visible = true
+	%Warning.tooltip_text = message
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

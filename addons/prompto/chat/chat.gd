@@ -17,6 +17,7 @@ func add_message(message: MessageEntry):
 	# Scroll to end
 	await get_tree().process_frame
 	%ScrollableMessageContainer.scroll_vertical = %ScrollableMessageContainer.get_v_scroll_bar().max_value
+	return message_box
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

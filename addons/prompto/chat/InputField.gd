@@ -17,26 +17,27 @@ func _gui_input(event):
 			var prompt = self.text.strip_edges()
 			print("Sending request to server...")
 			
-			var response = await prompto_manager.create_chat(prompt)
-			print("Response from Server: ", response)
+			var rq_message_entry = MessageEntry.new("", "", MessageEntry.MessageRole.USER, prompt)
+			var request_message_box = await self.owner.add_message(rq_message_entry)
+			self.text = ""
+			self.accept_event()
 			
-			# Check if response was successful
+			var response = await prompto_manager.create_chat(prompt)
+			print("Server respondet")
+			
+			# Check if response was successful. If it wasn't, we display the Warning next to the sent message
 			if (response.status != 200):
-				print("Error: Invalid response from server with status code " + str(response.status))
+				request_message_box.display_warning("Error: Server responded with status code \"" +
+					str(response.status) +"\". See Output for more details")
+				printerr("Prompto-Chat Error! Got ressponse with status " + 
+					str(response.status) + " and body: " + str(response.body))
 				return
 			
 			var body = response.body
 			
-			var rq_message = body['messages'][-2]
-			var rq_message_entry = MessageEntry.new(rq_message['id'], body['history_id'], MessageEntry.MessageRole.USER, rq_message['content'])
-			self.owner.add_message(rq_message_entry)
-			
 			var res_msg = body['messages'][-1]
 			var response_message = MessageEntry.new(res_msg['id'], body['history_id'], MessageEntry.MessageRole.ASSISTANT, res_msg['content'])
 			self.owner.add_message(response_message)
-			
-			self.text = ""
-			self.accept_event()
 			
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
