@@ -28,6 +28,9 @@ func _gui_input(event):
 			var response = await prompto_manager.create_chat(prompt)
 			print("Server respondet")
 			
+			# Hide the loading animation after the response was received
+			request_message_box.hide_loading()
+			
 			# Check if response was successful. If it wasn't, we display the Warning next to the sent message
 			if (response.status != 200):
 				request_message_box.display_warning("Error: Server responded with status code \"" +

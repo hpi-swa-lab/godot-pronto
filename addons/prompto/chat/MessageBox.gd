@@ -20,6 +20,8 @@ var message_entry: MessageEntry:
 				%Content.get("theme_override_styles/normal").bg_color = get_prompto_manager().get_settings().get_setting("interface/theme/accent_color").darkened(.5)
 				# Hide Feedback buttons for own messages
 				self.find_child("FeedbackButtons").visible = false
+				# Display the loading icon for own messages
+				%Loading.visible = true
 				# Add tooltip to your own message
 				%Content.tooltip_text = "This is your message"
 			_:
@@ -62,6 +64,11 @@ func _send_feedback(feedback_type: String):
 	var response = await prompto_manager.send_feedback(history_id, uuid, feedback_type)
 	return response
 
+## Display a warning message below the message
 func display_warning(message):
 	%Warning.visible = true
-	%Warning.tooltip_text = message	
+	%Warning.tooltip_text = message
+
+## Hide the loading icon
+func hide_loading():
+	%Loading.visible = false
