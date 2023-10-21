@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="pronto"
-run/main_scene="res://addons/prompto/login.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 run/low_processor_mode=true
 config/icon="res://icon.svg"
@@ -31,7 +30,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/prompto/plugin.cfg")
+enabled=PackedStringArray("res://addons/prompto/plugin.cfg", "res://addons/pronto/plugin.cfg")
 
 [filesystem]
 

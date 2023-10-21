@@ -32,7 +32,7 @@ func _process(_delta):
 		var request = connection.get_string(connection.get_available_bytes())
 		#print("Got request")
 		if request:
-			print(request)
+			print("PROMPTO: ", request)
 			set_process(false)
 			#rint("Got request")
 			var request_params_str = request.split("\n")
@@ -41,7 +41,7 @@ func _process(_delta):
 			# TODO Quick and dirty parsing
 			assert('?' in query)
 			var prompto_id = query.split('=')[1].split(' ')[0]
-			print(prompto_id)
+			print("PROMPTO: ", prompto_id)
 			# TODO Headers are not used.
 			# var headers_str = request_params_str.slice(1, request_params_str.size() - 1)
 			# var headers = {}
@@ -56,7 +56,7 @@ func _process(_delta):
 			# Set new session id
 			token_received.emit(prompto_id)
 			
-			print("Connected.")
+			print("PROMPTO: ", "Connected.")
 			
 			# Return redirect to sucess page
 			connection.put_data(("HTTP/1.1 %d Temporary Redirect\r\n" % 307).to_utf8_buffer())
@@ -66,7 +66,7 @@ func _process(_delta):
 			
 			redirect_server.stop()
 		else:
-			print("fghjk")
+			printerr("PROMPTO: ", "Something went wrong. Try reloading your browser window.")
 
 
 func parse_string_to_dict(string, item_delimiter, key_value_delimiter):

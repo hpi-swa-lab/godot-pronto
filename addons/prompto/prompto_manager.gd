@@ -32,8 +32,8 @@ func _recover_session_store_or_new() -> SessionStore:
 		if loaded_session.is_valid():
 			return loaded_session
 		
-		print("Session expired.")
-	print("Session could not be recovered.")
+		print("PROMPTO: Session expired.")
+	print("PROMPTO: Session could not be recovered.")
 	
 	return SessionStore.new()
 		
@@ -43,11 +43,11 @@ func _save_session() -> void: # TODO return error if failed
 		dir.make_dir_recursive(SAVE_DIR)
 	
 	var file = FileAccess.open_encrypted_with_pass(SAVEFILE_PATH, FileAccess.WRITE, SAVEFILE_SECRET)
-	print(file.get_open_error())
+	print("PROMPTO: ", file.get_open_error())
 	if file:
 		file.store_var(self.session_store.to_json())
 		file.close()
-		print("Session saved to disk.")
+		print("PROMPTO: Session saved to disk.")
 
 func _load_session() -> SessionStore:
 	if FileAccess.file_exists(SAVEFILE_PATH):

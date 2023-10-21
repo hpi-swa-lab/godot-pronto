@@ -34,8 +34,8 @@ func _prepare_request(
 	var response = await http_request.request_completed
 	remove_child(http_request)
 	# result, status code, response headers, and body are now in indices 0, 1, 2, and 3 of response
-	print("RESPONSE STATUS: ", response[1])
-	print("RESPONSE PLAIN: ", response[3].get_string_from_utf8())
+	print("PROMPTO: RESPONSE STATUS: ", response[1])
+	print("PROMPTO: RESPONSE PLAIN: ", response[3].get_string_from_utf8())
 	if (response[3]):
 		return {
 			"status": response[1],

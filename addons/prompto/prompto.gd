@@ -25,7 +25,7 @@ func register_panel():
 	
 # Triggerd if session state changed
 func _set_scene(logged_in):
-	print("Scene changed.")
+	print("PROMPTO: Scene changed.")
 	
 	if dock:
 		#remove_control_from_container(EditorPlugin.CONTAINER_PROJECT_SETTING_TAB_RIGHT, dock)

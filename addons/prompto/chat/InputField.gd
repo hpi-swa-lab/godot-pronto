@@ -17,7 +17,7 @@ func _gui_input(event):
 		if event.keycode == KEY_ENTER:
 			var prompto_manager = get_node("/root/PromptoManager")
 			var prompt = self.text.strip_edges()
-			print("Sending request to server...")
+			print("PROMPTO: Sending request to server...")
 			
 			# We add the sent message to the chat window directly
 			var rq_message_entry = MessageEntry.new("", "", MessageEntry.MessageRole.USER, prompt)
@@ -26,7 +26,7 @@ func _gui_input(event):
 			self.accept_event()
 			
 			var response = await prompto_manager.create_chat(prompt)
-			print("Server respondet")
+			print("PROMPTO: Server respondet")
 			
 			# Hide the loading animation after the response was received
 			request_message_box.hide_loading()
@@ -35,7 +35,7 @@ func _gui_input(event):
 			if (response.status != 200):
 				request_message_box.display_warning("Error: Server responded with status code \"" +
 					str(response.status) +"\". See Output for more details")
-				printerr("Prompto-Chat Error! Got ressponse with status " + 
+				printerr("PROMPTO: Chat Error! Got ressponse with status " + 
 					str(response.status) + " and body: " + str(response.body))
 				return
 			
