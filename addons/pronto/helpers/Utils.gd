@@ -1,6 +1,35 @@
 extends Node
 class_name Utils
 
+static func as_code_string(arg) -> String:
+	match typeof(arg):
+		TYPE_NIL: return ""
+		TYPE_BOOL: return str(arg)
+		TYPE_INT: return str(arg)
+		TYPE_FLOAT: return str(arg)
+		TYPE_STRING: return '"' + arg + '"'
+		TYPE_VECTOR2:
+			if str(arg) != "(inf, inf)":
+				return "Vector2" + str(arg)
+			else:
+				return "Vector2(INF,INF)"
+		TYPE_RECT2: return "Rect2" + str(arg)
+		TYPE_VECTOR3: return "Vector3" + str(arg)
+		TYPE_TRANSFORM2D: return "Transform2D" + str(arg)
+		TYPE_PLANE: return "Plane" + str(arg)
+		TYPE_QUATERNION: return "Quat" + str(arg)
+		TYPE_AABB: return "AABB" + str(arg)
+		TYPE_BASIS: return "Basis" + str(arg)
+		TYPE_TRANSFORM3D: return "Transform3D" + str(arg)
+		TYPE_COLOR: return "Color" + str(arg)
+		TYPE_NODE_PATH: return str(arg)
+		TYPE_RID: return str(arg)
+		TYPE_OBJECT: return str(arg)
+		TYPE_ARRAY: return str(arg)
+		_:
+			push_warning("Trying to stringify unknown type: " + str(typeof(arg)))
+	return str(arg)
+
 static func with(o, do: Callable):
 	return do.call(o)
 
@@ -34,6 +63,10 @@ static func all_nodes(node: Node, include_internal = false):
 	var list = []
 	all_nodes_do(node, func (c): list.append(c), include_internal)
 	return list
+
+static func remove_children(node: Node):
+	for child in node.get_children():
+		node.remove_child(child)
 
 static func print_signal(data: Dictionary):
 	return data["name"] + "(" + print_args(data) + ")"
@@ -208,6 +241,9 @@ static func global_size_of_yourself(node: Node):
 	return Rect2(node.global_position, Vector2.ZERO)
 
 static func global_rect_of(node: Node, depth: int = 0, excluded: Array = []) -> Rect2:
+	if not node is CanvasItem:
+		return Rect2(0, 0, 0, 0)
+	
 	var rect = Rect2(node.global_position, Vector2.ZERO)
 	node = Utils.closest_parent_with_position(node)
 	if node is PlaceholderBehavior or node is HealthBarBehavior:
@@ -240,7 +276,7 @@ static func all_used_groups(from, root = null, include_internal = false):
 		if Engine.is_editor_hint():
 			root = G.at('_pronto_editor_plugin').get_tree().get_edited_scene_root()
 		else:
-			if not from.get_tree(): return []
+			if not from.is_inside_tree(): return []
 			root = from.get_tree().current_scene
 	var groups := []
 	all_nodes_do(root, func (node):
@@ -257,7 +293,10 @@ static func all_used_groups(from, root = null, include_internal = false):
 static func fix_minimum_size(n: Control):
 	if G.at("_pronto_editor_plugin") == null:
 		return
-	n.custom_minimum_size *= G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
+	n.custom_minimum_size *= hidpi_scale()
+
+static func hidpi_scale():
+	return G.at("_pronto_editor_plugin").get_editor_interface().get_editor_scale()
 
 static func log(s):
 	var a = FileAccess.open("res://log", FileAccess.READ_WRITE if FileAccess.file_exists("res://log") else FileAccess.WRITE_READ)
@@ -278,3 +317,17 @@ const TYPE_NAMES = ['nil', 'bool', 'int', 'float', 'String', 'Vector2', 'Vector2
 static func get_type_name_from_arg(arg: Dictionary) -> String:
 	if arg["type"] == 24: return arg["class_name"]
 	else: return TYPE_NAMES[arg["type"]]
+
+
+## If the passed object is a Behavior, return it.
+## Otherwise, we create a Behavior as a hidden child that will now
+## perform tasks such as drawing connections for that non-Behavior node.
+static func get_behavior(object):
+	if not is_instance_valid(object) or not object is Node: return null
+	if object is Behavior: return object
+	for child in object.get_children(true):
+		if child is Behavior and child.hidden_child: return child
+	var b = Behavior.new()
+	b.hidden_child = true
+	object.add_child(b, false, INTERNAL_MODE_FRONT)
+	return b

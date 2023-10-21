@@ -121,9 +121,31 @@ func _process(d):
 
 func _ready():
 	if owner != self:
+		_add_promote_to_valu_option()
 		fake_a_godot_highlighter()
 		resize()
 		%Expression.code_completion_prefixes = [".", ",", "(", "=", "$", "@", "\"", "\'"]
+		
+func _add_promote_to_valu_option():
+	var menu = %Expression.get_menu()
+	menu.add_item("Promote to Value [Pronto]", PromoteUtil.MENU_PROMOTE_VALUE)
+	menu.set_item_tooltip(-1, PromoteUtil._tool_tip())
+	menu.about_to_popup.connect(_about_to_popup)
+	menu.id_pressed.connect(_on_item_pressed)
+
+func _on_item_pressed(id):
+	if id == PromoteUtil.MENU_PROMOTE_VALUE:
+		var selection: String = %Expression.get_selected_text()
+		if Engine.is_editor_hint():
+			var value_ref = PromoteUtil._promote_selection_to_value(selection)
+			%Expression.insert_text_at_caret(value_ref)
+
+func _about_to_popup():
+	var menu = %Expression.get_menu()
+	var selection = %Expression.get_selected_text()
+	var valid = PromoteUtil.is_valid_selection(selection)
+	var should_be_enabled: bool = not selection.is_empty() and valid
+	menu.set_item_disabled(-1, !should_be_enabled)
 
 func fake_a_godot_highlighter():
 	if G.at("_pronto_editor_plugin") == null:
@@ -235,14 +257,17 @@ func resize():
 		var text_size := get_theme_default_font().get_multiline_string_size(%Expression.text + pseudo_cursor)
 		const max_lines = 8
 		const line_height = 32
-		const spacing = 11
+		const spacing = 20
 		custom_minimum_size.y = clamp(text_size.y + spacing, line_height, line_height * max_lines) \
 			+ randf() # yeah, seriously. if the height does not change, the width collapses.
+		
 	else:
 		custom_minimum_size.x = max(custom_minimum_size.x, \
 			320)  # what's the original minimum width (not the custom one)?
 	Utils.fix_minimum_size(self)
-	reset_size()
+#   This reset_size() call seems to be the culprit for https://github.com/hpi-swa-lab/godot-pronto/issues/159
+#   Maybe this is needed for some resize magic? For now we'll leave it commented out to make the ExpressionEdits usable again. 
+#	reset_size()
 	var nodeToNodeConfigurator = Utils.parent_that(self, func(n): return n is NodeToNodeConfigurator)
 	if nodeToNodeConfigurator != null:
 		nodeToNodeConfigurator.reset_size()

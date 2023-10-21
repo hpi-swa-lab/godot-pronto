@@ -104,6 +104,9 @@ func default_focus():
 	else:
 		%FunctionName.grab_focus()
 
+func use_vertical_arguments():
+	return %Args.get_child_count() > 1
+
 func update_argument_names():
 	var names = argument_names()
 	var types = argument_types()
@@ -114,6 +117,7 @@ func update_argument_names():
 	for c in %Args.get_children():
 		c.argument_names = names
 		c.argument_types = types
+	%Args.vertical = use_vertical_arguments()
 	
 	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
 	
@@ -203,7 +207,7 @@ func _process(delta):
 	var is_hovered = hovered_nodes.size() > 0 and hovered_nodes[-1] == self
 	if is_hovered:
 		if self.existing_connection:
-			from.highlight_activated(self.existing_connection)
+			Utils.get_behavior(from).highlight_activated(self.existing_connection)
 
 func mark_changed(value: bool = true):
 	%ChangesNotifier.visible = value
@@ -270,20 +274,37 @@ func _on_function_selected(name: String):
 		arguments.pop_back()
 	else:
 		arguments = method["args"]
+		var index = method["args"].size() - method["default_args"].size()
+		var default_arg_index = 0
+		while index < method["args"].size():
+			arguments[index]["default_value"] = method["default_args"][default_arg_index]
+			default_arg_index+=1
+			index+=1
 	
 	for arg in arguments:
 		var arg_ui = ExpressionEdit.instantiate()
 		arg_ui.expression_label = arg["name"] + ": " + Utils.get_type_name_from_arg(arg)
 		Utils.fix_minimum_size(arg_ui)
-		arg_ui.placeholder_text = "return " + arg["name"]
+		arg_ui.placeholder_text = arg["name"]
 		if name.begins_with("apply") && arg["type"] == 25:
 			if arg["name"] == "filter_func":
 				arg_ui.edit_script = empty_script("func(from, node): return true", true)
 			else:
 				arg_ui.edit_script = empty_script("func(from, node): null", true)
 		else:
-			arg_ui.edit_script = empty_script("null", true)
+			if arg.has("default_value"):
+				var default_expr
+				# Arrays and dictionaries are not stored in the Godot default args value lists
+				match arg["type"]:
+					TYPE_ARRAY: default_expr = "[]"
+					TYPE_DICTIONARY: default_expr = "{}"
+					_: default_expr = Utils.as_code_string(arg["default_value"])
+				arg_ui.edit_script = empty_script(default_expr, true)
+			else:
+				arg_ui.edit_script = empty_script(arg["name"], true)
 		%Args.add_child(arg_ui)
+		if use_vertical_arguments():
+			%Args.custom_minimum_size = Vector2(400, 0) * Utils.hidpi_scale()
 		arg_ui.text_changed.connect(func(): mark_changed())
 		arg_ui.save_requested.connect(func(): save())
 	update_argument_names()

@@ -1,0 +1,131 @@
+[gd_scene load_steps=6 format=3 uid="uid://dumlruq6l8avj"]
+
+[ext_resource type="Script" path="res://addons/pronto/docks/add_author.gd" id="1_3iwnj"]
+[ext_resource type="Script" path="res://addons/pronto/docks/reset_authors.gd" id="1_8shoi"]
+[ext_resource type="Script" path="res://addons/pronto/docks/export_option.gd" id="1_ewodg"]
+[ext_resource type="Script" path="res://addons/pronto/docks/create_button.gd" id="1_oosqr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wqs1k"]
+font_color = Color(0.611765, 0.611765, 0.611765, 1)
+
+[node name="Prototype" type="ScrollContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Row" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Row"]
+layout_mode = 2
+text = "Branch Name:"
+
+[node name="Prefix" type="Panel" parent="VBoxContainer/Row"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Row/Prefix"]
+layout_direction = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 26.0
+text = "game-"
+label_settings = SubResource("LabelSettings_wqs1k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProjectName" type="TextEdit" parent="VBoxContainer/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "
+"
+
+[node name="ExportOption" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+button_pressed = true
+text = "Include ExportBehavior"
+script = ExtResource("1_ewodg")
+
+[node name="ExportInfo" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Title" type="HBoxContainer" parent="VBoxContainer/ExportInfo"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ExportInfo/Title"]
+layout_mode = 2
+text = "*Title: "
+
+[node name="TitleInput" type="TextEdit" parent="VBoxContainer/ExportInfo/Title"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AuthorBox" type="HBoxContainer" parent="VBoxContainer/ExportInfo"]
+layout_mode = 2
+
+[node name="Authors" type="VBoxContainer" parent="VBoxContainer/ExportInfo/AuthorBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Author1" type="HBoxContainer" parent="VBoxContainer/ExportInfo/AuthorBox/Authors"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ExportInfo/AuthorBox/Authors/Author1"]
+layout_mode = 2
+text = "*Author : "
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/ExportInfo/AuthorBox/Authors/Author1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ExportInfo/AuthorBox"]
+layout_mode = 2
+
+[node name="Reset" type="Button" parent="VBoxContainer/ExportInfo/AuthorBox/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "↺"
+script = ExtResource("1_8shoi")
+
+[node name="AddAuthor" type="Button" parent="VBoxContainer/ExportInfo/AuthorBox/VBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_vertical = 3
+text = "+"
+script = ExtResource("1_3iwnj")
+
+[node name="Description" type="HBoxContainer" parent="VBoxContainer/ExportInfo"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/ExportInfo/Description"]
+layout_mode = 2
+text = "*Description: "
+
+[node name="DescriptionInput" type="TextEdit" parent="VBoxContainer/ExportInfo/Description"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StageBox" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+text = "Stage Initial Changes (Git)"
+
+[node name="CreateButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Create New Prototype"
+script = ExtResource("1_oosqr")
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "* optional"

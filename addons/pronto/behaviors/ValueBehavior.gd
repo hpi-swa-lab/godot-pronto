@@ -5,15 +5,11 @@ class_name ValueBehavior
 
 ## A ValueBehavior is a [class Behavior] that allows for easier representation of single 
 ## float values while prototyping.
-##
-## [b]PLEASE READ[/b]: 
-## AdvancedValue is the new extended Value logic
-## AdvancedValue will be merged into the current Value logic at the end of the sprint
-## It is only a new behavior for now as the merge will most likely be some sort of breaking change 
 
 signal value_changed(value: float)
 
 const WIDTH = 120
+const BUFFER_PCT = 0.1
 
 var value_init = false
 
@@ -25,25 +21,34 @@ var value_init = false
 		notify_property_list_changed()
 		
 # float variables
-var float_from:float = 0.0
-var float_to:float = 1.0
-var float_default: float = 0
-var float_step_size:float = 0.1:
+## Min value for the float
+var float_min:float = 0.0:
+	set(min):
+		float_min = min
+		float_value = snapped(max(min, float_value), float_step_size)
+
+## Max value for the float
+var float_max:float = 100.0:
+	set(max):
+		float_max = max
+		float_value = snapped(min(max, float_value), float_step_size)
+
+
+var float_default:float = 0
+var float_step_size:float = 1:
 	set(val):
 		if val > 0:
 			float_step_size = val
 			float_value = float_value
 			
 
-var float_value:float = 1:
+var float_value:float = 0:
 	set(val):
-		#print("Updating Value to: " + str(val))
 		if(!value_init):
-			#print("Set float default to: " + str(val))
-			#float_default = clamp(float(round(val/float_step_size)*float_step_size), float_from, float_to)
-			float_default = clamp(snapped(val, float_step_size) , float_from, float_to)
+			float_default = snapped(val, float_step_size)
 			value_init = true
-		float_value = clamp(snapped(val, float_step_size) , float_from, float_to)
+		float_value = snapped(val, float_step_size)
+		_reset_limits()
 		notify_property_list_changed()
 		_handle_update_value(float_value)
 
@@ -85,6 +90,17 @@ var _bool_value: bool
 
 var bool_default: bool
 
+## Resets the min and max if the value is being set as a number
+func _reset_limits():
+	if float_value > float_max:
+		var buffer = BUFFER_PCT * (float_value - float_min)
+		float_max = snapped(float_value + buffer, float_step_size)
+		print("Adapted float_max value")
+	elif float_value < float_min:
+		var buffer = BUFFER_PCT * (float_max - float_value)
+		float_min = snapped(float_value - buffer, float_step_size)
+		print("Adapted float_min value")
+
 func _handle_update_value(value):
 	#print("Updating Value to:" + str(value))
 	if not is_inside_tree(): await ready
@@ -101,11 +117,11 @@ func _get_property_list():
 	var properties = []
 	if selectType == "Float":
 		properties.append({
-			"name": "float_from",
+			"name": "float_min",
 			"type": TYPE_FLOAT,
 		})
 		properties.append({
-			"name": "float_to",
+			"name": "float_max",
 			"type": TYPE_FLOAT,
 		})
 		properties.append({
@@ -133,7 +149,7 @@ func _get_property_list():
 			"name": "bool_value",
 			"type": TYPE_STRING,
 			'hint': PROPERTY_HINT_ENUM,
-			'hint_string': "TRUE, FALSE"
+			'hint_string': "TRUE,FALSE"
 		})
 	else:
 		push_error("Invalid Type (" + selectType + ") selected for AdvancedValue " + str(self.name))			
@@ -143,6 +159,7 @@ func _ready():
 	super._ready()
 	renamed.connect(queue_redraw)
 	G.put(name, float_value)
+	value_changed.emit(G.at(name))
 
 func _forward_canvas_draw_over_viewport(viewport_control: Control):
 	var center = get_viewport_transform() * get_canvas_transform() * global_position
@@ -151,11 +168,11 @@ func _forward_canvas_draw_over_viewport(viewport_control: Control):
 
 func handles():
 	return [Handles.SetPropHandle.new(
-		Vector2(remap(float_value, float_from, float_to, -WIDTH / 2, WIDTH / 2), 0),
+		Vector2(remap(float_value, float_min, float_max, -WIDTH / 2, WIDTH / 2), 0),
 		Utils.icon_from_theme("EditorHandle", self),
 		self,
 		"value",
-		func (val): return remap(val.x, -WIDTH / 2, WIDTH / 2, float_from, float_to),
+		func (val): return remap(val.x, -WIDTH / 2, WIDTH / 2, float_min, float_max),
 		false)]
 
 func _draw():
@@ -166,7 +183,7 @@ func _draw():
 		var font := ThemeDB.fallback_font
 		var text_size = 4
 		draw_string(font,
-			Vector2(font.get_string_size(str, HORIZONTAL_ALIGNMENT_CENTER, -1, text_size).x / -2, 12),
+			Vector2(font.get_string_size(str, HORIZONTAL_ALIGNMENT_CENTER, -1, text_size).x / -2, 22),
 			str,
 			HORIZONTAL_ALIGNMENT_CENTER,
 			-1,
@@ -197,23 +214,29 @@ class DropPropertyPrompt extends ColorRect:
 		# the prompt is only displayed if we have a drag operation with a valid object
 		return true
 	
+	func empty_script(a: Array, expr: String, return_value: bool):
+		var script := ConnectionScript.new(a, return_value, expr)
+		return script
+	
 	func _drop_data(at_position, data):
 		var root = editor_interface.get_edited_scene_root()
 		var current = data["object"].get(data["property"])
 		
 		var v = ValueBehavior.new()
-		v.from = min(0.0, current)
-		v.to = max(1.0, current)
-		v.value = current
+		v.float_min = min(0.0, current)
+		v.float_max = max(1.0, current)
+		v.float_value = current
 		v.name = data["property"]
 		v.position = Vector2(50, 50)
 		data["object"].add_child(v)
 		v.owner = root
 		
-		var b = BindBehavior.new()
-		b.to_prop = data["property"]
-		b.name = "bind_" + b.to_prop
-		b.position = Vector2(100, 50)
-		b.convert = "G.at('{0}')".format([data["property"]])
-		data["object"].add_child(b)
-		b.owner = root
+		Connection.connect_target(v, "value_changed", "..", "set", [empty_script(["value"], "\"%s\"" % [data["property"]], true), empty_script(["value"], "value", true)], [], empty_script(["value"], "true", true))
+		
+#		var b = BindBehavior.new()
+#		b.to_prop = data["property"]
+#		b.name = "bind_" + b.to_prop
+#		b.position = Vector2(100, 50)
+#		b.convert = "G.at('{0}')".format([data["property"]])
+#		data["object"].add_child(b)
+#		b.owner = root

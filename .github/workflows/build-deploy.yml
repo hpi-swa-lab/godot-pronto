@@ -1,0 +1,87 @@
+name: "Build & Deploy Game"
+on:
+  push:
+    branches:
+    - 'game-*'
+
+env:
+  GODOT_VERSION: 4.1
+  
+jobs:
+  find_export_game:
+    name: Check For ExportBehavior
+    runs-on: ubuntu-latest
+    outputs:
+      GAME_DIR: ${{steps.output_step.outputs.GAME_DIR}}
+      GAME_NAME: ${{steps.output_step.outputs.GAME_NAME}}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check for ExportBehavior in scenes
+      id: output_step
+      run: |
+        GAME_DIR=$(./scripts/check_for_export.sh)
+        GAME_NAME=$(echo "$GAME_DIR" | sed 's|.*/||')
+        echo "GAME_DIR is '$GAME_DIR', GAME_NAME is '$GAME_NAME'."
+        echo "GAME_DIR=$GAME_DIR" >> $GITHUB_ENV
+        echo "GAME_DIR=$GAME_DIR" >> $GITHUB_OUTPUT
+        echo "GAME_NAME=$GAME_NAME" >> $GITHUB_OUTPUT
+    - name: Exit Check
+      run: |
+        if [[ $GAME_DIR = Error:* ]]
+        then
+          echo "::error::$GAME_DIR"
+          exit 1;
+        fi
+
+  export-web:
+    needs: find_export_game
+    name: Build Web Export & Deploy
+    runs-on: ubuntu-20.04
+    env:  # Set the environment variable using the output parameter value
+      GAME_DIR: ${{ needs.find_export_game.outputs.GAME_DIR }}
+      GAME_NAME: ${{ needs.find_export_game.outputs.GAME_NAME }}
+    container:
+      image: barichello/godot-ci:4.1
+    steps:
+      - name: Debugging Output
+        run: |
+          echo "Running export for game with name '$GAME_NAME' in directory '$GAME_DIR'."
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      - name: Setup Environment
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mkdir -v -p build/web
+      - name: Godot Import Phase
+        run: |
+          godot --headless --export-release Web build/web/index.html
+      - name: Godot Web Build
+        run: |
+          ./scripts/export.sh $GAME_DIR
+      - name: Move game_info.json and thumbnail.png
+        run: |
+          if [ -f ${GAME_DIR}/game_info.json ]; then mv ${GAME_DIR}/game_info.json build/web/game_info.json; fi
+          if [ -f ${GAME_DIR}/thumbnail.png ]; then mv ${GAME_DIR}/thumbnail.png build/web/thumbnail.png; fi
+      - name: Patch for Cross Origin Isolation and SharedArrayBuffer
+        run: |
+          mv scripts/enable-threads.js build/web/enable-threads.js
+          cd build/web/
+          sed -i 's|headers.set("Cross-Origin-Embedder-Policy", "credentialless")|headers.set("Cross-Origin-Embedder-Policy", "require-corp")|g'  enable-threads.js
+          sed -i 's|<script src="index.js"></script>|<script src="enable-threads.js"></script><script src="index.js"></script>|g' index.html
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: web
+          path: build/web
+      - name: Install rsync 📚
+        run: |
+          apt-get update && apt-get install -y rsync
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          branch: gh-pages # The branch where all the games are stored
+          target-folder: ${{ needs.find_export_game.outputs.GAME_NAME }}
+          folder: build/web

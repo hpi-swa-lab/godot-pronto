@@ -3,3 +3,4 @@
 script-instances
 log
 .DS_Store
+build/

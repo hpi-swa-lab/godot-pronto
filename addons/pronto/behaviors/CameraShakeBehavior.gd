@@ -26,6 +26,9 @@ var noise_y = 0.0
 var noise = FastNoiseLite.new()
 
 func _ready():
+	super._ready()
+	if not get_parent() is Camera2D:
+		push_error("Parent has to be of type Camera2D.")
 	if not Engine.is_editor_hint():
 		noise.frequency = 0.3
 		noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
@@ -45,3 +48,9 @@ func _process(delta):
 
 func n(factor: float):
 	return noise.get_noise_2d(noise.seed * factor, noise_y)
+
+
+func _get_configuration_warnings():
+	if not get_parent() is Camera2D:
+		return ["Parent has to be of type Camera2D."]
+	return ""

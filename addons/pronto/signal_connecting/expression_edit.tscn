@@ -13,7 +13,7 @@ name = "RotateLeft"
 [sub_resource type="SystemFont" id="SystemFont_xd5ge"]
 font_names = PackedStringArray("Monospace")
 
-[sub_resource type="CodeHighlighter" id="CodeHighlighter_we5wh"]
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_1wmad"]
 number_color = Color(0, 0.55, 0.28, 1)
 symbol_color = Color(0, 0, 0.61, 1)
 function_color = Color(0, 0.225, 0.9, 1)
@@ -63,8 +63,8 @@ keyword_colors = {
 "while": Color(0.9, 0.135, 0.51, 1)
 }
 color_regions = {
-"\"": Color(0.6, 0.42, 0, 1),
-"'": Color(0.6, 0.42, 0, 1)
+"\" \"": Color(0.6, 0.42, 0, 1),
+"' '": Color(0.6, 0.42, 0, 1)
 }
 
 [sub_resource type="Texture2D" id="Texture2D_8ynin"]
@@ -80,17 +80,16 @@ script = ExtResource("2_au0w8")
 name = "NodeWarning"
 
 [node name="expression_edit" type="VBoxContainer"]
-custom_minimum_size = Vector2(0, 34.0249)
-offset_right = 180.0
-offset_bottom = 34.0249
+custom_minimum_size = Vector2(0, 36)
+offset_right = 523.0
+offset_bottom = 69.0
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 script = ExtResource("1_lndi8")
-expression_label = null
 placeholder_text = "Expression..."
 
 [node name="row" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(180, 32)
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
@@ -110,9 +109,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_xd5ge")
 placeholder_text = "Expression..."
-wrap_mode = 1
 draw_tabs = true
-syntax_highlighter = SubResource("CodeHighlighter_we5wh")
+syntax_highlighter = SubResource("CodeHighlighter_1wmad")
 code_completion_enabled = true
 code_completion_prefixes = Array[String]([".", ",", "(", "=", "$", "@", "\"", "'"])
 indent_automatic = true
@@ -122,6 +120,7 @@ script = ExtResource("2_7vlfx")
 [node name="OpenFile" type="Button" parent="row"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 8
 size_flags_vertical = 0
 tooltip_text = "Open script"
 icon = SubResource("Texture2D_8ynin")

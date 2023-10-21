@@ -1,9 +1,10 @@
-[gd_scene load_steps=45 format=3 uid="uid://bwi63oqp83l0b"]
+[gd_scene load_steps=52 format=3 uid="uid://bwi63oqp83l0b"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_2qxg3"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_fjkj2"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="3_e4ih0"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="4_sw6ma"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="5_6y8o5"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_gukvn"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_032ba"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="7_4oi8o"]
@@ -11,6 +12,20 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="9_t5o05"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="10_ew6ax"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="11_2m5nj"]
+
+[sub_resource type="GDScript" id="GDScript_8ldn1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return at(\"Speed\")
+"
+
+[sub_resource type="Resource" id="Resource_qm0jp"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_8ldn1")
+argument_names = []
+return_value = true
 
 [sub_resource type="GDScript" id="GDScript_1x8ho"]
 script/source = "@tool
@@ -179,59 +194,6 @@ only_if = SubResource("Resource_c5edj")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_7xof8"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return 0
-"
-
-[sub_resource type="Resource" id="Resource_4gbmo"]
-script = ExtResource("5_gukvn")
-nested_script = SubResource("GDScript_7xof8")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_x2iq2"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_tkluh"]
-script = ExtResource("5_gukvn")
-nested_script = SubResource("GDScript_x2iq2")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_t0srn"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_dsmaq"]
-script = ExtResource("5_gukvn")
-nested_script = SubResource("GDScript_t0srn")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_el0mt"]
-script = ExtResource("6_032ba")
-signal_name = "elapsed"
-to = NodePath("../SpawnerBehavior")
-more_references = []
-invoke = "spawn"
-arguments = [SubResource("Resource_4gbmo"), SubResource("Resource_tkluh")]
-only_if = SubResource("Resource_dsmaq")
-deferred = false
-enabled = true
-
 [sub_resource type="GDScript" id="GDScript_8ej78"]
 script/source = "@tool
 extends U
@@ -271,6 +233,87 @@ only_if = SubResource("Resource_bye08")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_ae3uv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return []
+"
+
+[sub_resource type="Resource" id="Resource_o6opn"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_ae3uv")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_cdlej"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_sdjaj"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_cdlej")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3t2e1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_ay6ji"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_3t2e1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_pcmx3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_chglh"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_pcmx3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_r0yv2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_s54xh"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_r0yv2")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xbuvl"]
+script = ExtResource("6_032ba")
+signal_name = "elapsed"
+to = NodePath("../SpawnerBehavior")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_o6opn"), SubResource("Resource_sdjaj"), SubResource("Resource_ay6ji"), SubResource("Resource_chglh")]
+only_if = SubResource("Resource_s54xh")
+deferred = false
+enabled = true
+
 [node name="car_game" type="Node2D"]
 
 [node name="car" type="CharacterBody2D" parent="."]
@@ -279,18 +322,31 @@ position = Vector2(401, 236)
 [node name="PlaceholderBehavior" type="Node2D" parent="car"]
 script = ExtResource("1_2qxg3")
 sprite_texture = ExtResource("2_fjkj2")
+placeholder_size = Vector2(20, 20)
 
 [node name="MoveBehavior" type="Node2D" parent="car"]
 position = Vector2(61, 47)
 script = ExtResource("3_e4ih0")
 friction = 2.0
-rotated = true
-rotation_speed = 300.0
+
+[node name="BindBehavior" type="Node2D" parent="car/MoveBehavior"]
+position = Vector2(-28.2843, 28.2843)
+script = ExtResource("8_dgmj1")
+evaluate = SubResource("Resource_qm0jp")
+to_prop = "max_velocity"
 
 [node name="ControlsBehavior" type="Node2D" parent="car"]
 position = Vector2(143, 10)
 script = ExtResource("4_sw6ma")
 metadata/pronto_connections = [SubResource("Resource_21elu"), SubResource("Resource_gj3r1"), SubResource("Resource_2b55t")]
+
+[node name="Speed" type="Node2D" parent="car"]
+position = Vector2(4.43146, 103.569)
+script = ExtResource("5_6y8o5")
+float_min = 0.0
+float_max = 1000.0
+float_value = 1000.0
+float_step_size = 10.0
 
 [node name="StoreBehavior" type="Node2D" parent="."]
 position = Vector2(54, 42)
@@ -318,8 +374,8 @@ position = Vector2(-33, -41)
 [node name="PlaceholderBehavior" type="Node2D" parent="SpawnerBehavior/pickup"]
 script = ExtResource("1_2qxg3")
 color = Color(0.917647, 0.682353, 0, 1)
-placeholder_size = Vector2(10, 10)
 sprite_texture = ExtResource("2_fjkj2")
+placeholder_size = Vector2(10, 10)
 
 [node name="CollisionBehavior" type="Node2D" parent="SpawnerBehavior/pickup"]
 position = Vector2(58, -23)
@@ -331,4 +387,4 @@ position = Vector2(164, 104)
 script = ExtResource("11_2m5nj")
 duration_seconds = 0.5
 trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_el0mt"), SubResource("Resource_2ypcs")]
+metadata/pronto_connections = [SubResource("Resource_2ypcs"), SubResource("Resource_xbuvl")]

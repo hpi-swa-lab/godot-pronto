@@ -42,7 +42,7 @@ func run({1}):
 var has_error = false
 
 func needs_return(body: String):
-	return return_value and body.count("\n") == 0
+	return return_value and body.count("\n") == 0 and not body.begins_with("print(") and not body.begins_with("return ")
 
 func get_full_source_code(body: String):
 	return TEMPLATE.format([
@@ -56,12 +56,12 @@ func get_full_source_code(body: String):
 		"return " if needs_return(body) else ""])
 
 var _dummy_object = null
-func run(arguments: Array, ref = null):
+func run(arguments: Array = [], ref = null):
 	if _dummy_object == null:
 		_dummy_object = U.new(ref)
 		_dummy_object.set_script(nested_script)
 	_dummy_object.ref = ref
-	return _dummy_object.callv("run", arguments)
+	return await _dummy_object.callv("run", arguments)
 
 func reload():
 	var err = nested_script.reload()

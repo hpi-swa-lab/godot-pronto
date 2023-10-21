@@ -23,7 +23,7 @@ func _ready():
 		evaluate = ConnectionScript.new([], true)
 
 func update():
-	var value = evaluate.run([], self)
+	var value = await evaluate.run([], self)
 	
 	if _last == value:
 		return

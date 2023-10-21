@@ -41,3 +41,15 @@ func _put(name: String, value: Variant):
 func _register_store(store: StoreBehavior, prop: String):
 	assert(not prop in _store_update, "Property {0} has already been registered by a store node. Are you spawning the same Store mutliple times?".format([prop]))
 	_store_update[prop] = store
+
+func _ready():
+	if not Engine.is_editor_hint():
+		maybe_add_value_user_interface()
+
+func maybe_add_value_user_interface():
+	if not Utils.all_nodes_that(get_tree().root, func (node): return node is PrototypingUIBehavior).is_empty():
+		return
+	
+	var ui = PrototypingUIBehavior.new()
+	ui.name = 'Config'
+	add_child(ui)

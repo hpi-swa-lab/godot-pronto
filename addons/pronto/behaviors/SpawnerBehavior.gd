@@ -113,141 +113,90 @@ func _spawn(index: int, top_level: bool = false):
 
 ## Spawns the selected blueprint(s) as the SpawnerBehavior's sibling node.
 ##
-## [param index]: selects the blueprint to spawn. If set to [code]-1[/code],
-## every blueprint gets spawned.
+## [param indices]: selects the blueprints to spawn. Specify the elements you want to spawn in an integer array.
+## Pass an empty array to spawn every child.
+## Default: [code][][/code]
+##
+## [param pos]: The position to spawn the new instance(s) at.
+## Overwrites other rules like [code]use_shape[/code] if specified
+##
+## [param toward]: The position to rotate the new instance(s) towards
+## Position is in global space.
+##
+## [param use_shape]: Whether to use the with [member SpawnerBehavior.shape_typ] specified type of spawn shape for spawning.
 ##
 ## [param relative]: selects whether the the [member SpawnerBehavior.scene_offsets]
 ## should be used for the spawning. If set to [code]false[/code], the new instance(s)
 ## will be spawned at the spawner's position. If set to [code]true[/code], the 
 ## corresponding offset is applied afterwards.
-func spawn(index: int = -1, relative: bool = false):
+func spawn(indices: Array = [], pos: Vector2 = Vector2.INF, toward: Vector2 = Vector2.INF, use_shape: bool = false):
 	var instances = []
-	if index < 0:
+	if indices.size() < 1:
 		for i in range(scenes.size()):
 			instances.append([_spawn(i), scene_offsets[i] if scene_offsets else null])
 	else:
-		instances = [[_spawn(index), scene_offsets[index] if scene_offsets else null]]
+		for i in indices:
+			if typeof(i) == TYPE_INT:
+				instances.append([_spawn(i), scene_offsets[i] if scene_offsets else null])
+			else:
+				push_warning("Spawner.spawn : indices[]: {0} is not a valid integer".format([i]))
+	
+	var spawning_position = global_position 
+	
+	if pos != Vector2.INF:
+		spawning_position = pos
+		if use_shape:
+			push_warning("Using a spawn-shape with a spawn-position is undefined behavior.")
+	elif use_shape:
+		if shape_type == "Polygon":
+			if spawn_shape_polygon == null:
+				push_warning("No Polygon2D specified.")
+				return null
+			if spawn_shape_polygon_randomizer == null:
+				spawn_shape_polygon_randomizer = PolygonRandomPointGenerator.new(spawn_shape_polygon.polygon)
+			
+			spawning_position += spawn_shape_polygon_randomizer.get_random_point() * spawn_shape_polygon.scale
+			spawning_position += spawn_shape_polygon.position + spawn_shape_polygon.offset
+			
+		elif spawn_shape_generic == null:
+			push_warning("No Shape2D specified.")
+			return null
+		elif spawn_shape_generic is CircleShape2D:
+			spawning_position.x = spawn_shape_generic.radius + 2
+			
+			while(global_position.distance_to(spawning_position) > spawn_shape_generic.radius):
+				spawning_position.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+				spawning_position.y = global_position.y +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+				
+		elif spawn_shape_generic is RectangleShape2D:
+			spawning_position.y = global_position.y + randf_range(-spawn_shape_generic.size.y * 0.5,spawn_shape_generic.size.y * 0.5)
+			spawning_position.x = global_position.x + randf_range(-spawn_shape_generic.size.x * 0.5,spawn_shape_generic.size.x * 0.5)
+			
+		elif spawn_shape_generic is CapsuleShape2D:
+			spawning_position.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+			spawning_position.y = global_position.y +  randf_range(-spawn_shape_generic.height/2, spawn_shape_generic.height/2)
+			var is_out_of_radius
+			var is_out_of_height
+			var is_out_of_radius_height
+			
+			while(is_out_of_radius or is_out_of_height):
+				var true_rect = spawn_shape_generic.height/2 - spawn_shape_generic.radius
+				
+				if ((global_position + Vector2(0,true_rect)).distance_to(spawning_position) < spawn_shape_generic.radius) or (global_position - Vector2(0,true_rect)).distance_to(spawning_position) < spawn_shape_generic.radius:
+					break
+				spawning_position.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
+				spawning_position.y = global_position.y +  randf_range(-true_rect, true_rect)
+				
+				is_out_of_radius = global_position.distance_to(Vector2(spawning_position.x,global_position.y)) > spawn_shape_generic.radius
+				is_out_of_height = global_position.distance_to(Vector2(global_position.x,spawning_position.y)) > true_rect
 	
 	for instance_pair in instances:
-		instance_pair[0].global_position = global_position
-		if relative:
-			instance_pair[0].global_position += instance_pair[1]
+		instance_pair[0].global_position = spawning_position
+		if toward != Vector2.INF:
+			instance_pair[0].rotation = spawning_position.angle_to_point(toward)
 		spawned.emit(instance_pair[0])
 	
 	return instances
-
-## Spawns the selected blueprint(s) as the SpawnerBehavior's sibling node 
-## rotated towars the given position
-##
-## [param pos]: The position to rotate the new instance(s) towards
-##
-## [param index]: selects the blueprint to spawn. If set to [code]-1[/code],
-## every blueprint gets spawned.
-func spawn_toward(pos: Vector2, index: int = -1):
-	var instances = []
-	if index < 0:
-		for i in range(scenes.size()):
-			instances.append(_spawn(i, true))
-	else:
-		instances = [_spawn(index, true)]
-	
-	for instance in instances:
-		instance.global_position = global_position
-		instance.rotation = global_position.angle_to_point(pos)
-		spawned.emit(instance)
-	
-	return instances
-
-## Spawns the selected blueprint(s) as the SpawnerBehavior's sibling node 
-## at a given position
-##
-## [param pos]: The position to spawn the new instance(+) at
-##
-## [param index]: selects the blueprint to spawn. If set to [code]-1[/code],
-## every blueprint gets spawned.
-func spawn_at(pos: Vector2, index: int = -1):
-	var instances = []
-	if index < 0:
-		for i in range(scenes.size()):
-			instances.append(_spawn(i, true))
-	else:
-		instances = [_spawn(index, true)]
-		
-	for instance in instances:
-		instance.global_position = pos
-		spawned.emit(instance)
-	
-	return instances
-
-## Spawns the selected blueprint(s) at a random position within the
-## shape determined by [member SpawnerBehavior.shape_type], 
-## [member SpawnerBehavior.spawn_shape_polygon] and [member SpawnerBehavior.spawn_shape_generic]
-##
-## If [member SpawnerBehavior.shape_type] is set to [code]"Polygon"[/code] it will use the
-## [member SpawnerBehavior.spawn_shape_polygon] to determine the spawn coordinates.
-## Otherwise it will use the shape given in [member SpawnerBehavior.spawn_shape_generic]
-##
-## [param index]: selects the blueprint(s) to spawn. If set to [code]-1[/code],
-## every blueprint gets spawned.
-func spawn_in_shape(index: int = -1):
-	var instances = []
-	if index < 0:
-		for i in range(scenes.size()):
-			instances.append(_spawn(i, true))
-	else:
-		instances = [_spawn(index, true)]
-	
-	var pos = global_position
-	
-	if shape_type == "Polygon":
-		if spawn_shape_polygon == null:
-			push_warning("No Polygon2D specified.")
-			return null
-		if spawn_shape_polygon_randomizer == null:
-			spawn_shape_polygon_randomizer = PolygonRandomPointGenerator.new(spawn_shape_polygon.polygon)
-		
-		# pos = global.position # for positioning when Polygon2D is child of SpawnBehavior
-		pos = spawn_shape_polygon_randomizer.get_random_point() * spawn_shape_polygon.scale
-		pos += spawn_shape_polygon.position + spawn_shape_polygon.offset
-		
-	elif spawn_shape_generic == null:
-		push_warning("No Shape2D specified.")
-		return null
-	elif spawn_shape_generic is CircleShape2D:
-		pos.x += spawn_shape_generic.radius + 2
-		
-		while(global_position.distance_to(pos) > spawn_shape_generic.radius):
-			pos.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
-			pos.y = global_position.y +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
-			
-	elif spawn_shape_generic is RectangleShape2D:
-		pos.y = global_position.y + randf_range(-spawn_shape_generic.size.y * 0.5,spawn_shape_generic.size.y * 0.5)
-		pos.x = global_position.x + randf_range(-spawn_shape_generic.size.x * 0.5,spawn_shape_generic.size.x * 0.5)
-		
-	elif spawn_shape_generic is CapsuleShape2D:
-		pos.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
-		pos.y = global_position.y +  randf_range(-spawn_shape_generic.height/2, spawn_shape_generic.height/2)
-		var is_out_of_radius
-		var is_out_of_height
-		var is_out_of_radius_height
-		
-		while(is_out_of_radius or is_out_of_height):
-			var true_rect = spawn_shape_generic.height/2 - spawn_shape_generic.radius
-			
-			if (global_position + Vector2(0,true_rect)).distance_to(pos) < spawn_shape_generic.radius or (global_position - Vector2(0,true_rect)).distance_to(pos) < spawn_shape_generic.radius:
-				break
-			pos.x = global_position.x +  randf_range(-spawn_shape_generic.radius, spawn_shape_generic.radius)
-			pos.y = global_position.y +  randf_range(-true_rect, true_rect)
-			
-			is_out_of_radius = global_position.distance_to(Vector2(pos.x,global_position.y)) > spawn_shape_generic.radius
-			is_out_of_height = global_position.distance_to(Vector2(global_position.x,pos.y)) > true_rect
-	
-	for instance in instances:
-		instance.global_position = pos
-		spawned.emit(instance)
-	
-	return instances
-
 
 ## Override of [method Behavior.lines] in order to display
 ## dashed lines towards the spawner's blueprints (aka its childs)
@@ -268,9 +217,6 @@ func _process(delta):
 	super._process(delta)
 	
 	if shape_type == "Generic" and spawn_shape_generic:
-		if spawn_shape_generic is RectangleShape2D and spawn_shape_generic.size != shape_size:
-			spawn_shape_generic.size = shape_size
-		
 		if spawn_shape_generic is CircleShape2D and spawn_shape_generic.radius != shape_radius:
 			spawn_shape_generic.radius = shape_radius
 		
@@ -287,7 +233,7 @@ func _process(delta):
 			last_spawn_shape_size_circle = spawn_shape_generic.radius
 			queue_redraw()
 			
-		if spawn_shape_generic is CapsuleShape2D and spawn_shape_generic.height != last_spawn_shape_size_capsule or spawn_shape_generic.radius != last_spawn_shape_size_circle:
+		if spawn_shape_generic is CapsuleShape2D and (spawn_shape_generic.height != last_spawn_shape_size_capsule or spawn_shape_generic.radius != last_spawn_shape_size_circle):
 			last_spawn_shape_size_circle = spawn_shape_generic.radius
 			last_spawn_shape_size_capsule = spawn_shape_generic.height
 			queue_redraw()

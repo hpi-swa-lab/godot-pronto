@@ -1,8 +1,95 @@
-[gd_scene load_steps=4 format=3 uid="uid://ct5llbk6b3pgx"]
+[gd_scene load_steps=19 format=3 uid="uid://ct5llbk6b3pgx"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_3ql0p"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_fb1hc"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="3_bc3ne"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="3_cvgxx"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="4_7lhys"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_yq83a"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_wbj54"]
+
+[sub_resource type="Gradient" id="Gradient_kelp3"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_opyfh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	print(\"DEATH\")
+"
+
+[sub_resource type="Resource" id="Resource_ld2vk"]
+script = ExtResource("5_yq83a")
+nested_script = SubResource("GDScript_opyfh")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_swytw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_57kk4"]
+script = ExtResource("5_yq83a")
+nested_script = SubResource("GDScript_swytw")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_u5ajs"]
+script = ExtResource("6_wbj54")
+signal_name = "death"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_57kk4")
+expression = SubResource("Resource_ld2vk")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_diwc0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(down, from: Node2D, to: Node2D):
+	return 10
+"
+
+[sub_resource type="Resource" id="Resource_82njl"]
+script = ExtResource("5_yq83a")
+nested_script = SubResource("GDScript_diwc0")
+argument_names = ["down", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_fvjsi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(down, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_tgbbq"]
+script = ExtResource("5_yq83a")
+nested_script = SubResource("GDScript_fvjsi")
+argument_names = ["down", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_llrct"]
+script = ExtResource("6_wbj54")
+signal_name = "toggled"
+to = NodePath("..")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_82njl")]
+only_if = SubResource("Resource_tgbbq")
+deferred = false
+enabled = true
 
 [node name="jumpnrun" type="Node2D"]
 
@@ -13,8 +100,8 @@ position = Vector2(563, 624)
 position = Vector2(1, 16)
 script = ExtResource("1_3ql0p")
 color = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(2000, 40)
 sprite_texture = ExtResource("2_fb1hc")
+placeholder_size = Vector2(2000, 40)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2(683, 443)
@@ -23,8 +110,8 @@ position = Vector2(683, 443)
 position = Vector2(1, 16)
 script = ExtResource("1_3ql0p")
 color = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(88, 71)
 sprite_texture = ExtResource("2_fb1hc")
+placeholder_size = Vector2(88, 71)
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
 position = Vector2(899, 528)
@@ -33,8 +120,8 @@ position = Vector2(899, 528)
 position = Vector2(1, 16)
 script = ExtResource("1_3ql0p")
 color = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(88, 71)
 sprite_texture = ExtResource("2_fb1hc")
+placeholder_size = Vector2(88, 71)
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="."]
 position = Vector2(763, 590)
@@ -43,17 +130,30 @@ position = Vector2(763, 590)
 position = Vector2(1, 16)
 script = ExtResource("1_3ql0p")
 color = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(88, 71)
 sprite_texture = ExtResource("2_fb1hc")
+placeholder_size = Vector2(88, 71)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(575, 558)
 
+[node name="HealthBarBehavior" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, -58)
+script = ExtResource("3_bc3ne")
+healthbar_size = Vector2(146, 42)
+progress_gradient = SubResource("Gradient_kelp3")
+metadata/pronto_connections = [SubResource("Resource_u5ajs")]
+
+[node name="KeyBehavior" type="Node2D" parent="CharacterBody2D/HealthBarBehavior"]
+position = Vector2(-115, 45)
+script = ExtResource("4_7lhys")
+key = "U"
+metadata/pronto_connections = [SubResource("Resource_llrct")]
+
 [node name="Placeholder" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_3ql0p")
 label = "guy"
-placeholder_size = Vector2(20, 60)
 sprite_texture = ExtResource("2_fb1hc")
+placeholder_size = Vector2(20, 60)
 
 [node name="PlatformerController" type="Node2D" parent="CharacterBody2D"]
 position = Vector2(45, -12)
@@ -68,8 +168,8 @@ rotation = 0.476859
 position = Vector2(1, 16)
 script = ExtResource("1_3ql0p")
 color = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(457, 36)
 sprite_texture = ExtResource("2_fb1hc")
+placeholder_size = Vector2(457, 36)
 
 [node name="StaticBody2D6" type="StaticBody2D" parent="."]
 position = Vector2(978, 594)
@@ -78,5 +178,5 @@ position = Vector2(978, 594)
 position = Vector2(1, 16)
 script = ExtResource("1_3ql0p")
 color = Color(0.0313726, 0.658824, 0, 1)
-placeholder_size = Vector2(88, 71)
 sprite_texture = ExtResource("2_fb1hc")
+placeholder_size = Vector2(88, 71)

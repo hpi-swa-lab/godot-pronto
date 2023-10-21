@@ -18,6 +18,11 @@ class_name CollisionBehavior
 ## is from the parent node's position
 signal collided(other: Node, direction: Vector2)
 
+signal screen_exited()
+signal screen_entered()
+var screen_entered_emitted = false
+var screen_exited_emitted = false
+
 func _ready():
 	super._ready()
 	if not Engine.is_editor_hint():
@@ -38,6 +43,23 @@ func _physics_process(delta):
 		for collision_index in parent.get_slide_collision_count():
 			var collision = parent.get_slide_collision(collision_index)
 			on_collision(collision.get_collider())
+
+	if not Engine.is_editor_hint() and (get_parent() is RigidBody2D or get_parent() is CharacterBody2D or get_parent() is Area2D): 
+		var current_camera = get_viewport().get_camera_2d()
+		var x = 0 
+		var y = 0
+		if current_camera:
+			x = get_viewport().get_camera_2d().global_position.x - (get_viewport_rect().size.x /2)
+			y = get_viewport().get_camera_2d().global_position.y - (get_viewport_rect().size.y /2)
+		if Rect2(Vector2(x,y) , get_viewport_rect().size).has_point(get_parent().position):
+			if not screen_entered_emitted:
+				screen_entered_emitted = true
+				screen_entered.emit()
+		else:
+			if screen_entered_emitted and not screen_exited_emitted:
+				screen_exited_emitted = true
+				screen_exited.emit()
+
 
 func on_collision(other: Node):
 	if limit_to_group == "" or other.is_in_group(limit_to_group):
