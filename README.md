@@ -225,24 +225,28 @@ In `ConnectionDebug.gd` you can communicate values from the game back to the eng
 
 To deploy your game to [hpi-swa-lab.github.io/godot-pronto/](https://hpi-swa-lab.github.io/godot-pronto/) you can use the [Build & Deploy Game](https://github.com/hpi-swa-lab/godot-pronto/actions/workflows/build-deploy.yml) Action.
 
+This will be done automatically if you created your game via the menu tab `Prototype` (which automatically creates a branch, folder, main scene and ExportBehavior).
+
+However, if you didn't use this method you can follow this checklist to export your game.
+
 ### Preparation
 
 Before you can deploy your game check the following:
 
 1. Make your game the main scene of the godot project.
-2. Make sure that all assets you use are inside your projects folder (e.g. `prototypes/myPrototype`).
-3. Make sure that no filenames or folders have a `space` character in them.
+2. Make sure that your game and all assets you use are inside your prototype folder (e.g. `prototypes/game-myPrototype`).
+3. Make sure that your branch-name starts with `game-` and is named identical to your folder name (e.g. `game-myPrototype`)
+4. Make sure that no filenames or folders have a `space` character in them.
 
 #### ExportBehavior
 
 To automatically export your game do the following:
-1. create a new branch for your project
-2. make sure that your game scene is in its own subfolder, not in the root
-3. add an `ExportBehavior` (do not rename this node!) anywhere in your game
-4. on the `ExportBehavior`, you can configure settings such as `title`, `description` and `authors` of the game, as well as how the `thumbnail.png` gets generated
-5. set your game scene as the main godot scene
-6. run your game once, it will generate a thumbnail
-7. make sure to `git add` the generated `thumbnail.png` and `game_info.json`, commit and push!
+
+1. Add an `ExportBehavior` (do not rename this node!) anywhere in your game
+2. In the `ExportBehavior`, you can configure settings such as `title`, `description` and `authors` of the game, as well as how the `thumbnail.png` gets generated (specified by a delay to automatically take a screenshot)
+3. Set your game scene as the main godot scene
+4. Run your game once so it will generate a thumbnail
+5. make sure to `git add` the generated `thumbnail.png` and `game_info.json`, commit and push!
 
 Once pushed, the system will automatically trigger a CI workflow to deploy your game.
 If everything went well the system will push your game to the `gh-pages` branch.
