@@ -5,6 +5,8 @@ class_name PerformanceUIBehavior
 
 # This code is still unoptimized, feel free to improve it
 
+signal fps_warning(current_fps: int)
+
 # This enum was extracted from [code]Performance[/code] as we can not access
 # the entire list programatically
 enum monitor {
@@ -92,94 +94,48 @@ enum monitor {
 @export var NAVIGATION_EDGE_CONNECTION_COUNT: bool = false
 @export var NAVIGATION_EDGE_FREE_COUNT: bool = false
 
-@export_group("Design")
-@export var shape_size: Vector2:
+## If [code]true[/code] the PerformanceUI starts minimized.
+@export var minimized: bool = false
+
+@export var panel_size: Vector2 = Vector2(300, 200):
 	set(v):
-		shape_size = v
-		shape_rect = Rect2(shape_size / -2, shape_size)
-		queue_redraw()	
-@export var background_color: Color:
-	set(v):
-		background_color = v
-		queue_redraw()
-@export var font_size = 10:
-	set(v):
-		font_size = v
-		for label_entry in label_cache:
-			label_cache[label_entry]["label"].set("theme_override_font_sizes/normal_font_size", v)
-			
-@export var header_font_size = 10		
-@export var font_color: Color = Color.WHITE
+		panel_size = v
+		if panel:
+			panel.size = panel_size
+			_build_panel()
+			queue_redraw()
 
 # The label_cache serves as a dictionary to store all our exisitng labels at run time
 var label_cache = {}
 
-var shape_rect: Rect2
+var panel: PanelContainer
+var muted_gray: Color = Color(0.69, 0.69, 0.69, 1)
+var vbox: VBoxContainer = VBoxContainer.new()
+var header: HBoxContainer = HBoxContainer.new()
 
-var size:
-	get:
-		return shape_size
+# Variables for moving and resizing UI container.
+var start: Vector2
+var init_position: Vector2
+var is_moving: bool
+var is_resizing: bool
+var resize_x: bool
+var resize_y: bool
+var initial_size: Vector2
 
-# class level variables for our controls
-var outer_vbox: VBoxContainer
-var scroll_container: ScrollContainer
-var min_button: Button
-var header_hbox: HBoxContainer
-var expanded_size: Vector2
-var minimized_size: Vector2
+var grab_threshold:= 30
+var resize_threshold:= 10
 
-var expanded = true
-
-signal fps_warning(current_fps: int)
-
-func _init():
-	self.shape_size = Vector2(200, 80)
-
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready()
-	expanded_size = shape_size
+	if not get_tree(): return
 	
-	outer_vbox = VBoxContainer.new()
-	outer_vbox.set_size(shape_size)
-	outer_vbox.set_position(Vector2(-shape_size.x/2, -shape_size.y/2))
+	panel = PanelContainer.new()
+	panel.size = panel_size
 	
-	min_button = Button.new()
-	min_button.text = "—"
-	min_button.pressed.connect(_toggle_visiblity)
+	self.add_child(panel)
+	_build_panel()
 	
-	var header_label = Label.new()
-	header_label.set("theme_override_font_sizes/font_size", header_font_size)
-	header_label.set("theme_override_colors/font_color", font_color)
-	header_label.text = self.name
-	
-	header_hbox = HBoxContainer.new()
-	header_hbox.add_child(header_label)
-	header_hbox.add_spacer(false)
-	header_hbox.add_child(min_button)
-	
-	scroll_container = ScrollContainer.new()
-	scroll_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	
-	var inner_vbox = VBoxContainer.new()
-	inner_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	inner_vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	
-	scroll_container.add_child(inner_vbox)
-	outer_vbox.add_child(header_hbox)
-	outer_vbox.add_child(scroll_container)
-	
-	var counter = 0
-	for current_monitor in monitor.keys():
-		if self.get(current_monitor):
-			var monitor_label = Label.new()
-			monitor_label.set("theme_override_font_sizes/font_size", font_size)
-			monitor_label.set("theme_override_colors/font_color", font_color)
-			label_cache[monitor.keys()[counter]] = {"id": counter, "label": monitor_label}
-			inner_vbox.add_child(monitor_label)
-		counter += 1
-	self.add_child(outer_vbox)
-
 func _process(delta):
 	super._process(delta)
 	if !Engine.is_editor_hint():
@@ -190,33 +146,175 @@ func _process(delta):
 			var value = Performance.get_monitor(label_cache[label_entry]["id"])
 			label_cache[label_entry]["label"].text = _beautify_name(label_entry) + ": " + str(value)
 
-func _toggle_visiblity():
-	expanded = !expanded
-	scroll_container.visible = expanded
-	header_hbox.get_children()[1].visible = expanded
-	if expanded:
-		min_button.text = "—"
-		minimized_size = header_hbox.size
-		self.shape_size = expanded_size
-	else:
-		min_button.text = "+"
-		self.shape_size = header_hbox.size
+func _draw():
+	super._draw()
+	draw_rect(Rect2(Vector2(0, 0), Vector2(panel_size.x, 30)), Color.BLACK, true)
+
+func _input(event):
+	if Input.is_action_just_pressed("input_left_mouse") and event is InputEventMouse:
+		var rect = panel.get_global_rect()
+		var localMousePos = event.position - get_global_position()
+		if localMousePos.y > 0 and localMousePos.y < grab_threshold:
+			if localMousePos.x > 0 and localMousePos.x < rect.size.x:
+				start = event.position
+				init_position = get_global_position()
+				is_moving = true
+		else:
+			if localMousePos.y > 0 and localMousePos.y < rect.size.y:
+				if abs(localMousePos.x - rect.size.x) < resize_threshold:
+					start.x = event.position.x
+					initial_size.x = panel_size.x
+					resize_x = true
+					is_resizing = true
+				
+				if localMousePos.x < resize_threshold &&  localMousePos.x > -resize_threshold:
+					start.x = event.position.x
+					init_position.x = get_global_position().x
+					initial_size.x = panel_size.x
+					is_resizing = true
+					resize_x = true
+			
+			if localMousePos.x > 0 and localMousePos.x < rect.size.x:
+				if abs(localMousePos.y - rect.size.y) < resize_threshold:
+					start.y = event.position.y
+					initial_size.y = panel_size.y
+					resize_y = true
+					is_resizing = true
+				
+				if localMousePos.y < resize_threshold &&  localMousePos.y > -resize_threshold:
+					start.y = event.position.y
+					init_position.y = get_global_position().y
+					initial_size.y = panel_size.y
+					is_resizing = true
+					resize_y = true
+
+	if Input.is_action_pressed("input_left_mouse"):
+		if is_moving:
+			set_position(init_position + (event.position - start))
+
+		if is_resizing:
+			var newWidith = panel_size.x
+			var newHeight = panel_size.y
+
+			if resize_x:
+				newWidith = initial_size.x - (start.x - event.position.x)
+			if resize_y:
+				newHeight = initial_size.y - (start.y - event.position.y)
+
+			if init_position.x != 0:
+				newWidith = initial_size.x + (start.x - event.position.x)
+				set_position(Vector2(init_position.x - (newWidith - initial_size.x), get_position().y))
+
+			if init_position.y != 0:
+				newHeight = initial_size.y + (start.y - event.position.y)
+				set_position(Vector2(get_position().x, init_position.y - (newHeight - initial_size.y)))
+
+			var min_x = panel.get_minimum_size().x
+			var min_y = panel.get_minimum_size().y
+			panel_size = Vector2(max(newWidith, min_x), max(newHeight, min_y))
+
+	if Input.is_action_just_released("input_left_mouse"):
+		is_moving = false
+		init_position = Vector2(0,0)
+		resize_x = false
+		resize_y = false
+		is_resizing = false
+	pass
+
+func _build_panel():
+	if not get_tree(): # This happens on godot startup
+		return
+	_clear_panel()
+	vbox = VBoxContainer.new()
+	header = HBoxContainer.new()
+	var scrollContainer = ScrollContainer.new()
 	
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var counter = 0
+	for current_monitor in monitor.keys():
+		if self.get(current_monitor):
+			var monitor_label = Label.new()
+#			monitor_label.set("theme_override_font_sizes/font_size", font_size)
+#			monitor_label.set("theme_override_colors/font_color", font_color)
+			label_cache[monitor.keys()[counter]] = {"id": counter, "label": monitor_label}
+			vbox.add_child(monitor_label)
+		counter += 1
+	
+#	var nodes_to_add = []
+#
+#	if include_all_values:
+#		nodes_to_add = _get_valid_children(get_tree().root)
+#	else:
+#		nodes_to_add = _get_valid_children(self)
+#
+#	var added_any_nodes = false
+#	for childNode in nodes_to_add:
+#		added_any_nodes = maybe_add_config(childNode) or added_any_nodes
+#
+#	if not added_any_nodes and not Engine.is_editor_hint(): # Hide the panel during the game if no Values are found
+#		self.visible = false
+#		return
+#
+	scrollContainer.add_child(vbox)
+	scrollContainer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var outerVbox = VBoxContainer.new()
+	outerVbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	outerVbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	header = create_header()
+	outerVbox.add_child(header)
+	outerVbox.add_child(scrollContainer)
+	
+	panel.add_child.call_deferred(outerVbox)
+	
+func _clear_panel():
+	for child in panel.get_children():
+		child.queue_free()
+	
+func _create_spacer():
+	var spacer = VBoxContainer.new()
+	spacer.custom_minimum_size = Vector2(10,0)
+	return spacer
+
+func create_minimizing_button():
+	var button = Button.new()
+	button.text = "−"
+	button.pressed.connect(handle_size_button_click.bind(button))
+	if minimized:
+		handle_size_button_click(button, true)
+	return button
+	
+func create_header():
+	var hbox = HBoxContainer.new()
+	hbox.add_child(create_minimizing_button())
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var text = Label.new()
+	text.text = self.name
+	hbox.add_child(text)
+	return hbox
+
+func handle_size_button_click(button: Button, initial: bool = false):
+	if not initial: minimized = !minimized
+	button.release_focus()
+	vbox.visible = !minimized
+	if minimized:
+		panel.size = header.size
+		button.text = "+"
+	else:
+		panel.size = panel_size
+		button.text = "-"
 
 func handles():
 	return [
-		Handles.SetPropHandle.new(shape_size / 2,
+		Handles.SetPropHandle.new(panel_size,
 			Utils.icon_from_theme("EditorHandle", self),
 			self,
-			"shape_size",
-			func (coord): return floor(coord * 2).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+			"panel_size",
+			func (coord): return floor(coord).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
 
-func _draw():
-	super._draw()
-	if shape_rect != null and expanded:
-		draw_rect(shape_rect, background_color, true)
-		
 func _beautify_name(name: String):
 	var output = ""
 	for s in name.split("_"):
@@ -224,6 +322,3 @@ func _beautify_name(name: String):
 		tmp[0] = tmp[0].to_upper()
 		output = output + " " + tmp
 	return output
-
-
-

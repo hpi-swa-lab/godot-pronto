@@ -72,36 +72,39 @@ func _input(event):
 	if Input.is_action_just_pressed("input_left_mouse") and event is InputEventMouse:
 		var rect = panel.get_global_rect()
 		var localMousePos = event.position - get_global_position()
-		if localMousePos.y < grab_threshold:
-			start = event.position
-			init_position = get_global_position()
-			is_moving = true
+		if localMousePos.y > 0 and localMousePos.y < grab_threshold:
+			if localMousePos.x > 0 and localMousePos.x < rect.size.x:
+				start = event.position
+				init_position = get_global_position()
+				is_moving = true
 		else:
-			if abs(localMousePos.x - rect.size.x) < resize_threshold:
-				start.x = event.position.x
-				initial_size.x = panel_size.x
-				resize_x = true
-				is_resizing = true
-
-			if abs(localMousePos.y - rect.size.y) < resize_threshold:
-				start.y = event.position.y
-				initial_size.y = panel_size.y
-				resize_y = true
-				is_resizing = true
-
-			if localMousePos.x < resize_threshold &&  localMousePos.x > -resize_threshold:
-				start.x = event.position.x
-				init_position.x = get_global_position().x
-				initial_size.x = panel_size.x
-				is_resizing = true
-				resize_x = true
-
-			if localMousePos.y < resize_threshold &&  localMousePos.y > -resize_threshold:
-				start.y = event.position.y
-				init_position.y = get_global_position().y
-				initial_size.y = panel_size.y
-				is_resizing = true
-				resize_y = true
+			if localMousePos.y > 0 and localMousePos.y < rect.size.y:
+				if abs(localMousePos.x - rect.size.x) < resize_threshold:
+					start.x = event.position.x
+					initial_size.x = panel_size.x
+					resize_x = true
+					is_resizing = true
+				
+				if localMousePos.x < resize_threshold &&  localMousePos.x > -resize_threshold:
+					start.x = event.position.x
+					init_position.x = get_global_position().x
+					initial_size.x = panel_size.x
+					is_resizing = true
+					resize_x = true
+			
+			if localMousePos.x > 0 and localMousePos.x < rect.size.x:
+				if abs(localMousePos.y - rect.size.y) < resize_threshold:
+					start.y = event.position.y
+					initial_size.y = panel_size.y
+					resize_y = true
+					is_resizing = true
+				
+				if localMousePos.y < resize_threshold &&  localMousePos.y > -resize_threshold:
+					start.y = event.position.y
+					init_position.y = get_global_position().y
+					initial_size.y = panel_size.y
+					is_resizing = true
+					resize_y = true
 
 	if Input.is_action_pressed("input_left_mouse"):
 		if is_moving:
@@ -655,4 +658,5 @@ func handles():
 			"panel_size",
 			func (coord): return floor(coord).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
+
 
