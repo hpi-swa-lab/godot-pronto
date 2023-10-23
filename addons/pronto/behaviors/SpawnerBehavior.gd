@@ -59,7 +59,11 @@ var last_spawn_shape_size_circle: float
 var last_spawn_shape_size_capsule: float
 var shape_radius: float
 var shape_height: float
-var shape_size: Vector2
+var shape_size: Vector2:
+	set(v):
+		shape_size = v
+		spawn_shape_generic.size = shape_size
+		queue_redraw()
 
 var spawn_shape_polygon_randomizer: PolygonRandomPointGenerator
 
