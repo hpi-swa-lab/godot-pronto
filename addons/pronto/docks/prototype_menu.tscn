@@ -24,7 +24,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/Row"]
 layout_mode = 2
-text = "Branch Name:"
+text = "Branch Name*:"
 
 [node name="Prefix" type="Panel" parent="VBoxContainer/Row"]
 custom_minimum_size = Vector2(60, 0)
@@ -62,7 +62,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/ExportInfo/Title"]
 layout_mode = 2
-text = "*Title: "
+text = "Title: "
 
 [node name="TitleInput" type="TextEdit" parent="VBoxContainer/ExportInfo/Title"]
 layout_mode = 2
@@ -80,7 +80,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/ExportInfo/AuthorBox/Authors/Author1"]
 layout_mode = 2
-text = "*Author : "
+text = "Author : "
 
 [node name="TextEdit" type="TextEdit" parent="VBoxContainer/ExportInfo/AuthorBox/Authors/Author1"]
 layout_mode = 2
@@ -109,7 +109,7 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/ExportInfo/Description"]
 layout_mode = 2
-text = "*Description: "
+text = "Description: "
 
 [node name="DescriptionInput" type="TextEdit" parent="VBoxContainer/ExportInfo/Description"]
 clip_contents = true
@@ -119,6 +119,7 @@ size_flags_horizontal = 3
 
 [node name="StageBox" type="CheckBox" parent="VBoxContainer"]
 layout_mode = 2
+button_pressed = true
 text = "Stage Initial Changes (Git)"
 
 [node name="CreateButton" type="Button" parent="VBoxContainer"]
@@ -128,4 +129,4 @@ script = ExtResource("1_oosqr")
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "* optional"
+text = "* required"
