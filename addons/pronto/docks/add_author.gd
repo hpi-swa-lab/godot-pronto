@@ -12,7 +12,7 @@ func _enter_tree():
 func add_author():
 	var row = HBoxContainer.new()
 	var label = Label.new()
-	label.text = "*Author " + str(authors_box.get_child_count() + 1)
+	label.text = "Author" + str(authors_box.get_child_count() + 1) + ": "
 	var name = TextEdit.new()
 	name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(label)
