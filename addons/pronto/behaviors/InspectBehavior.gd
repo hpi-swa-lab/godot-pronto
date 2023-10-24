@@ -270,8 +270,6 @@ func _get_property_list():
 var items : Array[Item]
 
 func _init():
-	super._init()
-	
 	self.shape_size = Vector2(100, 100)
 	self.set_property(0, default_property)
 	
