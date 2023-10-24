@@ -47,7 +47,10 @@ func add_icon(p_icon, p_name):
 	icon.tooltip_text = p_name
 	icon.name = p_name
 	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-
+	
+	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
+	icon.self_modulate = s.get("interface/theme/base_color").inverted()
+	
 	icon.gui_input.connect(Callable(_icon_gui_input).bind(icon))
 	%container.add_child(icon)
 
