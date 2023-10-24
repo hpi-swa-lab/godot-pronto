@@ -171,14 +171,19 @@ func _init_sprite():
 	sprite = Sprite2D.new()
 	sprite.texture = sprite_texture
 	var shader_mat = ShaderMaterial.new()
+	var mat_can = CanvasItemMaterial.new()
+	mat_can.light_mode = CanvasItemMaterial.LIGHT_MODE_LIGHT_ONLY
 	shader_mat.shader = load(OUTLINE_SHADER)
 	# to hide the shader we set its width to 0 if outline_visible is false
 	shader_mat.set_shader_parameter("width", outline_width if outline_visible else 0)
 	shader_mat.set_shader_parameter("color", outline_color)
 	shader_mat.set_shader_parameter("tint_color", color)
 	shader_mat.set_shader_parameter("pattern", outline_pattern)
+	
 	sprite.material = shader_mat
-	sprite.scale = _shape_boundary() / sprite.texture.get_size()
+	sprite.material = mat_can
+	sprite.scale = _shape_boundary() / sprite.texture.get_size(
+	)
 	
 ## Shows an outline around the Placeholder.
 func show_outline():

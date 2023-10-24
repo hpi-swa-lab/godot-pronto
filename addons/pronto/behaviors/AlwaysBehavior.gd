@@ -19,7 +19,7 @@ signal physiscs_always(delta)
 ## If this is set to [code]true[/code] the AlwaysBehavior will stop emitting any
 ## signals. During runtime, do not set this directly. Instead use [method AlwaysBehavior.pause] 
 ## and [method AlwaysBehavior.resume]
-@export var paused = false
+@export var paused = true
 
 func _process(delta):
 	super._process(delta)
@@ -40,3 +40,9 @@ func pause():
 ## Use [method AlwaysBehavior.pause] to stop it again.
 func resume():
 	paused = false
+
+func switch():
+	if paused == true:
+		paused = false
+	if paused == false:
+		paused = true

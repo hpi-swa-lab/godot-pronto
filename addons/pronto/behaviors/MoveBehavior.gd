@@ -19,6 +19,12 @@ signal touched_floor(velocity: float)
 ## Friction applied to velocity while on the ground
 @export var friction = 20.0
 
+@export var right_side = true
+
+@export var side_switcher = 0.0
+var rng = RandomNumberGenerator.new()
+@export var switch_num = 100.0
+
 @export_category("Air")
 ## Gravity applied to parent. Set to zero to disable falling.
 @export var gravity = 0.0
@@ -106,6 +112,21 @@ func move_left():
 
 func move_right():
 	move_direction(Vector2.RIGHT)
+	
+func move_side():
+	if side_switcher >= switch_num:
+		side_switcher = 0.0
+		switch_side()
+	if right_side == true:
+		side_switcher += 1.0
+		move_direction(Vector2.RIGHT)
+	else:
+		side_switcher += 1.0
+		move_direction(Vector2.LEFT)
+
+func switch_side():
+	switch_num = rng.randf_range(10.0, 300.0)
+	right_side = !right_side
 
 func move_down():
 	move_direction(Vector2.DOWN)

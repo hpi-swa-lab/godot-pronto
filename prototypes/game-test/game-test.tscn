@@ -1,6 +1,7 @@
-[gd_scene load_steps=94 format=3 uid="uid://dq5gygwtd7rxb"]
+[gd_scene load_steps=122 format=3 uid="uid://dq5gygwtd7rxb"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
+[ext_resource type="Script" path="res://prototypes/game-test/jumpnrun_template.gd" id="2_dr2ov"]
 [ext_resource type="Texture2D" uid="uid://bt8mq02w33hjr" path="res://addons/pronto/assets/spritesheetScribblePlatformer.png" id="2_k5i18"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_c0q12"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="4_ysmq6"]
@@ -12,10 +13,18 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="10_kfmaw"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="11_sd8pn"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="12_xnjgy"]
+[ext_resource type="AudioStream" uid="uid://nyrajyhein65" path="res://Footsteps solid wood.mp3" id="13_7pl3e"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="13_68vfu"]
+[ext_resource type="Texture2D" uid="uid://dn5t3tyhxxbwl" path="res://prototypes/game-test/test.png" id="13_kxfa8"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="14_jta5q"]
-[ext_resource type="Texture2D" uid="uid://cxco7j8616lid" path="res://1 (1).webp" id="15_sp8wf"]
-[ext_resource type="PackedScene" uid="uid://cb73e8igqgs2i" path="res://BG.tscn" id="16_uom2l"]
+[ext_resource type="AudioStream" uid="uid://2b24rqwx73na" path="res://Frightmare - Jimena Contreras.mp3" id="15_dagm6"]
+[ext_resource type="AudioStream" uid="uid://dh5li7d8eqq0e" path="res://Coins Shuffling.mp3" id="16_41oan"]
+[ext_resource type="PackedScene" uid="uid://defeo7pmswuu0" path="res://BG.tscn" id="16_uom2l"]
+[ext_resource type="AudioStream" uid="uid://b36ny176qbeqe" path="res://Sneaker Sidesteps Concrete.mp3" id="17_b0j4t"]
+[ext_resource type="Texture2D" uid="uid://coiaxftxa6ket" path="res://Light.png" id="17_r8jq7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_chevg"]
+light_mode = 2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rcppa"]
 texture = ExtResource("2_k5i18")
@@ -431,7 +440,7 @@ tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_rcppa")
 
-[sub_resource type="Image" id="Image_rfnhk"]
+[sub_resource type="Image" id="Image_wpyqh"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -441,7 +450,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_c1vcs"]
-image = SubResource("Image_rfnhk")
+image = SubResource("Image_wpyqh")
 
 [sub_resource type="GDScript" id="GDScript_yljtb"]
 script/source = "@tool
@@ -582,7 +591,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
+func run(other, direction, from, to):
 	return 1
 "
 
@@ -670,6 +679,45 @@ only_if = SubResource("Resource_7gd6f")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_5e1l4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return 100
+"
+
+[sub_resource type="Resource" id="Resource_sbw3n"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_5e1l4")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_gsv54"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_62174"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_gsv54")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rpepy"]
+script = ExtResource("7_02ofy")
+signal_name = "collided"
+to = NodePath("../HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_sbw3n")]
+only_if = SubResource("Resource_62174")
+deferred = false
+enabled = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3bwcm"]
 size = Vector2(1075, 47)
 
@@ -743,7 +791,7 @@ return_value = true
 [sub_resource type="Resource" id="Resource_3y1ms"]
 script = ExtResource("7_02ofy")
 signal_name = "collided"
-to = NodePath("../../../ScoreLabel/StoreBehavior")
+to = NodePath("../../../Player/ScoreLabel/StoreBehavior")
 more_references = []
 invoke = "inc"
 arguments = [SubResource("Resource_qe7vq"), SubResource("Resource_q655i")]
@@ -751,17 +799,44 @@ only_if = SubResource("Resource_qamp0")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_go87c"]
-data = {
-"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
+[sub_resource type="GDScript" id="GDScript_nij2q"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: AudioStreamPlayer2D):
+	return 0.0
+"
 
-[sub_resource type="ImageTexture" id="ImageTexture_lnpfb"]
-image = SubResource("Image_go87c")
+[sub_resource type="Resource" id="Resource_atnyi"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_nij2q")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_pnmjh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: AudioStreamPlayer2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_hny5j"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_pnmjh")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_6bey2"]
+script = ExtResource("7_02ofy")
+signal_name = "collided"
+to = NodePath("../../../Player/AudioStreamPlayer2D2")
+more_references = []
+invoke = "play"
+arguments = [SubResource("Resource_atnyi")]
+only_if = SubResource("Resource_hny5j")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_2i1aw"]
 script/source = "@tool
@@ -897,7 +972,13 @@ only_if = SubResource("Resource_fcelx")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_ho3in"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v7nao"]
+light_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xs1gn"]
+light_mode = 2
+
+[sub_resource type="Image" id="Image_x8bkx"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -907,32 +988,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_ryym7"]
-image = SubResource("Image_ho3in")
-
-[sub_resource type="GDScript" id="GDScript_l0da2"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_pakqp"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_l0da2")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_ujhn1"]
-script = ExtResource("7_02ofy")
-signal_name = "always"
-to = NodePath("..")
-more_references = []
-invoke = "move_right"
-arguments = []
-only_if = SubResource("Resource_pakqp")
-deferred = false
-enabled = true
+image = SubResource("Image_x8bkx")
 
 [sub_resource type="GDScript" id="GDScript_57ix1"]
 script/source = "@tool
@@ -987,23 +1043,134 @@ only_if = SubResource("Resource_wwtov")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_038uh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7iwfr"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_038uh")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_hkntj"]
+script = ExtResource("7_02ofy")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "move_side"
+arguments = []
+only_if = SubResource("Resource_7iwfr")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_t3npq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return 100
+"
+
+[sub_resource type="Resource" id="Resource_qlupv"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_t3npq")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_e2qln"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_mxdkg"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_e2qln")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nqtnd"]
+script = ExtResource("7_02ofy")
+signal_name = "collided"
+to = NodePath("../../Player/HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_qlupv")]
+only_if = SubResource("Resource_mxdkg")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_wgqov"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
+	return 100
+"
+
+[sub_resource type="Resource" id="Resource_w3s3f"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_wgqov")
+argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4leyt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_gi0iu"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_4leyt")
+argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3wwl4"]
+script = ExtResource("7_02ofy")
+signal_name = "body_shape_entered"
+to = NodePath("../Player/HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_w3s3f")]
+only_if = SubResource("Resource_gi0iu")
+deferred = false
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iyh7h"]
+size = Vector2(2961, 26)
+
 [node name="Node2D" type="Node2D"]
 
 [node name="ExportBehavior" type="Node2D" parent="."]
-position = Vector2(576, 324)
+light_mask = 2
+position = Vector2(613, 326)
 script = ExtResource("1")
 title = "Test"
 authors = PackedStringArray("Ich")
 description = "This is a test"
 
 [node name="jumpnrun_template" type="Node2D" parent="."]
+position = Vector2(921, 0)
+script = ExtResource("2_dr2ov")
 
 [node name="TileMap" type="TileMap" parent="jumpnrun_template"]
+material = SubResource("CanvasItemMaterial_chevg")
 tile_set = SubResource("TileSet_d183t")
 format = 2
-layer_0/tile_data = PackedInt32Array(655359, 196608, 0, 589824, 196608, 0, 589825, 196608, 0, 589826, 196608, 0, 589827, 196608, 0, 589828, 196608, 0, 589829, 196608, 0, 589830, 196608, 0, 589831, 196608, 0, 589832, 196608, 0, 589833, 196608, 0, 589837, 196608, 0, 589838, 196608, 0, 589839, 196608, 0, 589840, 196608, 0, 589841, 196608, 0, 589842, 196608, 0, 589834, 196608, 0, 589835, 196608, 0, 589836, 196608, 0)
+layer_0/tile_data = PackedInt32Array(589829, 327680, 5, 589830, 327680, 5, 589831, 327680, 5, 589832, 327680, 5, 589833, 327680, 5, 589837, 327680, 5, 589838, 327680, 5, 589839, 327680, 5, 589840, 327680, 5, 589841, 327680, 5, 589842, 327680, 5, 589834, 327680, 5, 589835, 327680, 5, 589836, 327680, 5, 589828, 327680, 5, 524292, 327680, 5, 458756, 327680, 5, 393220, 327680, 5, 327684, 327680, 5, 262148, 327680, 5, 196612, 327680, 5, 131076, 327680, 5, 65540, 327680, 5, 4, 327680, 5, -65532, 327680, 5, 458772, 327680, 5, 524307, 327680, 5, 393237, 327680, 5)
 
 [node name="Player" type="CharacterBody2D" parent="jumpnrun_template" groups=["player"]]
+light_mask = 2
 position = Vector2(779, 537)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/Player"]
@@ -1021,7 +1188,7 @@ position = Vector2(87, 19)
 script = ExtResource("5_cvf4j")
 float_min = 0.0
 float_max = 1000.0
-float_value = 1000.0
+float_value = 500.0
 float_step_size = 1.0
 metadata/pronto_connections = [SubResource("Resource_2fnpj")]
 
@@ -1030,7 +1197,7 @@ position = Vector2(50, 50)
 script = ExtResource("5_cvf4j")
 float_min = 0.0
 float_max = 1000.0
-float_value = 1000.0
+float_value = 250.0
 float_step_size = 1.0
 metadata/pronto_connections = [SubResource("Resource_gdog8")]
 
@@ -1047,22 +1214,46 @@ limit_to_group = "enemy"
 metadata/pronto_connections = [SubResource("Resource_v005q")]
 
 [node name="Camera2D" type="Camera2D" parent="jumpnrun_template/Player"]
-position = Vector2(4, -4)
+position = Vector2(-3, -84)
+zoom = Vector2(1.795, 1.795)
 
-[node name="ScoreLabel" type="Label" parent="jumpnrun_template"]
-offset_left = 558.0
-offset_top = 16.0
-offset_right = 598.0
-offset_bottom = 38.3333
+[node name="PointLight2D" type="PointLight2D" parent="jumpnrun_template/Player"]
+position = Vector2(-1, -12)
+energy = 1.15
+blend_mode = 2
+texture = ExtResource("17_r8jq7")
+texture_scale = 31.53
+
+[node name="ScoreLabel" type="Label" parent="jumpnrun_template/Player"]
+offset_left = -32.0
+offset_top = -257.0
+offset_right = 10.0
+offset_bottom = -234.0
 text = "score"
 
-[node name="StoreBehavior" type="Node2D" parent="jumpnrun_template/ScoreLabel"]
+[node name="StoreBehavior" type="Node2D" parent="jumpnrun_template/Player/ScoreLabel"]
 position = Vector2(-74, 62)
 script = ExtResource("10_kfmaw")
 fields = {
 "score": SubResource("Resource_0mdyf")
 }
 metadata/pronto_connections = [SubResource("Resource_vim1o")]
+
+[node name="CollisionBehavior3" type="Node2D" parent="jumpnrun_template/Player"]
+position = Vector2(83, 42)
+script = ExtResource("9_i1bdh")
+limit_to_group = "oob"
+metadata/pronto_connections = [SubResource("Resource_rpepy")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="jumpnrun_template/Player"]
+stream = ExtResource("13_7pl3e")
+autoplay = true
+max_distance = 710.0
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="jumpnrun_template/Player"]
+position = Vector2(1, 3)
+stream = ExtResource("16_41oan")
+volume_db = 10.651
 
 [node name="CoinSpawner" type="Node2D" parent="jumpnrun_template"]
 position = Vector2(586, 537)
@@ -1071,19 +1262,20 @@ spawn_shape_generic = SubResource("RectangleShape2D_3bwcm")
 spawn_shape_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Coin" type="Area2D" parent="jumpnrun_template/CoinSpawner"]
-position = Vector2(-78, -70)
+position = Vector2(-75, -82)
 
 [node name="Node2D" type="Node2D" parent="jumpnrun_template/CoinSpawner/Coin"]
-position = Vector2(-76, -13)
+position = Vector2(-92, -36)
 script = ExtResource("9_i1bdh")
 limit_to_group = "player"
-metadata/pronto_connections = [SubResource("Resource_mi3wv"), SubResource("Resource_3y1ms")]
+metadata/pronto_connections = [SubResource("Resource_mi3wv"), SubResource("Resource_3y1ms"), SubResource("Resource_6bey2")]
 
 [node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/CoinSpawner/Coin"]
+modulate = Color(1, 1, 0, 1)
 script = ExtResource("3_c0q12")
 color = Color(1, 1, 0, 1)
 use_sprite = true
-sprite_texture = SubResource("ImageTexture_lnpfb")
+sprite_texture = ExtResource("13_kxfa8")
 placeholder_size = Vector2(20, 20)
 
 [node name="ClockBehavior" type="Node2D" parent="jumpnrun_template"]
@@ -1097,14 +1289,16 @@ position = Vector2(50, 50)
 script = ExtResource("5_cvf4j")
 float_min = 0.0
 float_max = 10.0
-float_value = 0.0
+float_value = 3.0
 float_step_size = 0.1
 metadata/pronto_connections = [SubResource("Resource_k20lk")]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="jumpnrun_template" groups=["enemy"]]
+material = SubResource("CanvasItemMaterial_v7nao")
 position = Vector2(572, 501)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/CharacterBody2D"]
+material = SubResource("CanvasItemMaterial_xs1gn")
 script = ExtResource("3_c0q12")
 color = Color(0, 1, 1, 1)
 use_sprite = true
@@ -1116,11 +1310,6 @@ position = Vector2(-104.139, -4.55207e-06)
 script = ExtResource("13_68vfu")
 gravity = 10.0
 
-[node name="AlwaysBehavior" type="Node2D" parent="jumpnrun_template/CharacterBody2D/MoveBehavior"]
-position = Vector2(-28.2843, 28.2843)
-script = ExtResource("14_jta5q")
-metadata/pronto_connections = [SubResource("Resource_ujhn1")]
-
 [node name="max_velocity" type="Node2D" parent="jumpnrun_template/CharacterBody2D/MoveBehavior"]
 position = Vector2(50, 50)
 script = ExtResource("5_cvf4j")
@@ -1130,12 +1319,47 @@ float_value = 142.0
 float_step_size = 1.0
 metadata/pronto_connections = [SubResource("Resource_ltfhd")]
 
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-z_index = -1
-offset_left = -217.0
-offset_right = 2042.0
-offset_bottom = 1014.0
-texture = ExtResource("15_sp8wf")
+[node name="AlwaysBehavior" type="Node2D" parent="jumpnrun_template/CharacterBody2D/MoveBehavior"]
+position = Vector2(-40, -1.74846e-06)
+script = ExtResource("14_jta5q")
+paused = false
+metadata/pronto_connections = [SubResource("Resource_hkntj")]
+
+[node name="CollisionBehavior" type="Node2D" parent="jumpnrun_template/CharacterBody2D"]
+position = Vector2(-82.3962, -82.3962)
+script = ExtResource("9_i1bdh")
+limit_to_group = "player"
+metadata/pronto_connections = [SubResource("Resource_nqtnd")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="jumpnrun_template/CharacterBody2D"]
+stream = ExtResource("17_b0j4t")
+autoplay = true
+max_distance = 710.0
+
+[node name="Area2D" type="Area2D" parent="jumpnrun_template" groups=["oob"]]
+position = Vector2(389, 786)
+metadata/pronto_connections = [SubResource("Resource_3wwl4")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/Area2D" groups=["oob"]]
+position = Vector2(393, -97)
+shape = SubResource("RectangleShape2D_iyh7h")
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("16_uom2l")]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_dagm6")
+volume_db = -28.819
+autoplay = true
+
+[node name="Button" type="Button" parent="."]
+offset_left = 215.0
+offset_top = 201.0
+offset_right = 420.0
+offset_bottom = 276.0
+text = "Restart Game"
+
+[connection signal="pressed" from="Button" to="jumpnrun_template" method="restart_game"]

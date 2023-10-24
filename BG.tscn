@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cb73e8igqgs2i"]
+[gd_scene load_steps=3 format=3 uid="uid://defeo7pmswuu0"]
 
 [ext_resource type="Texture2D" uid="uid://cxco7j8616lid" path="res://1 (1).webp" id="1_xisdx"]
+
+[sub_resource type="CurveTexture" id="CurveTexture_d3tbc"]
+texture_mode = 1
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 
@@ -26,3 +29,12 @@ texture = ExtResource("1_xisdx")
 position = Vector2(1924, 325)
 scale = Vector2(1.14583, 2.56917)
 texture = ExtResource("1_xisdx")
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxLayer"]
+z_index = -1
+offset_left = 1.0
+offset_top = -5180.0
+offset_right = 2201.0
+offset_bottom = 6533.0
+texture = SubResource("CurveTexture_d3tbc")
+metadata/_edit_use_anchors_ = true
