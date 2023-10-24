@@ -243,7 +243,7 @@ func _update_shape():
 			_parent.shape_owner_get_shape(_owner_id, 0).height = capsule_height
 		else:
 			# no shape has been set, should only exist for legacy scenes
-			print(undefined_shape_string)	
+			print(undefined_shape_string)
 			_parent.shape_owner_get_shape(_owner_id, 0).size = placeholder_size
 
 var _owner_id: int = 0
@@ -374,26 +374,38 @@ func _draw():
 			debug_color.a = 1
 			draw_rect(r, debug_color, false)
 
+
 func find_non_transparent_rect():
 	if not sprite_texture: return null
-	var w = sprite_texture.get_width()
-	var h = sprite_texture.get_height()
+	var scale = placeholder_size / 16
+	var r = _opaque_rect(sprite_texture)
+	return Rect2(r.position * scale, r.size * scale)
+
+static var _opaque_rect_cache = {}
+
+func _opaque_rect(texture):
+	if _opaque_rect_cache.has(texture.resource_path):
+		return _opaque_rect_cache[texture.resource_path]
+	var w = texture.get_width()
+	var h = texture.get_height()
 	var minX = w
 	var minY = h
 	var maxX = 0
 	var maxY = 0
 	for y in range(h):
 		for x in range(w):
-			var pixel = sprite_texture.get_image().get_pixel(x,y)
+			var pixel = texture.get_image().get_pixel(x,y)
 			if pixel.a > 0:
 				minX = min(minX, x)
 				minY = min(minY, y)
 				maxX = max(maxX, x)
 				maxY = max(maxY, y)
-
-	var scale = placeholder_size / 16
-	var size = Vector2(maxX - minX + 1, maxY - minY + 1) * scale
-	return Rect2(-Vector2(w/2-minX,h/2-minY) * scale, size)
+	
+	_opaque_rect_cache[texture.resource_path] = Rect2(
+		-Vector2(w/2-minX,h/2-minY),
+		Vector2(maxX - minX + 1, maxY - minY + 1)
+	)
+	return _opaque_rect_cache[texture.resource_path]
 
 func _re_add_shape():
 	_parent = get_parent() as CollisionObject2D

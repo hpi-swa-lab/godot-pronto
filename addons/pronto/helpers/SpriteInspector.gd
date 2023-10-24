@@ -41,7 +41,7 @@ class SpriteProperty extends EditorProperty:
 		icon_window.texture_selected.connect(_on_change)
 		
 		var tile_map = icon_window.get_node("TileMap")
-		var tile_size = tile_map.cell_quadrant_size
+		var tile_size = tile_map.rendering_quadrant_size
 		var tile_source = tile_map.tile_set.get_source(0)
 		var tile_texture = tile_source.texture
 		var img = tile_source.texture.get_image()
