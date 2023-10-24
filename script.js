@@ -2,6 +2,7 @@ const USERNAME = "hpi-swa-lab";
 const REPOSITORY = "godot-pronto";
 const BRANCH = "gh-pages";
 
+// Initializes the game-fetching process
 requestGames();
 
 /**
@@ -29,16 +30,18 @@ async function requestGames() {
  * If no game_info.json is provided, it will return an object with title and path.
  */
 async function loadGameData(gamePath) {
+  const defaultGameInfo = {
+    title: gamePath,
+    path: gamePath,
+    time: "1970-01-01", // Make sure it is listed last
+  };
   try {
     const response = await fetch(`https://raw.githubusercontent.com/${USERNAME}/${REPOSITORY}/${BRANCH}/${gamePath}/game_info.json`);
     if (response.ok) {
       const gameInfo = await response.json();
       if (!gameInfo.title) {
         console.warn(`JSON for game ${gamePath} is not valid because it does not contain a title:`, gameInfo);
-        return {
-          title: gamePath,
-          path: gamePath,
-        };
+        gameInfo.title = gamePath;
       }
       if (!gameInfo.path) {
         gameInfo.path = gamePath;
@@ -46,17 +49,11 @@ async function loadGameData(gamePath) {
       return gameInfo;
     } else {
       console.warn(`No game info found for ${gamePath}. Please check if you have provided a "game_info.json" file.`);
-      return {
-        title: gamePath,
-        path: gamePath,
-      };
+      return defaultGameInfo;
     }
   } catch (error) {
     console.error(`ERROR: An error occurred while fetching game data for ${gamePath}.`, error);
-    return {
-      title: gamePath,
-      path: gamePath,
-    };
+    return defaultGameInfo;
   }
 }
 
@@ -64,8 +61,27 @@ async function loadGameData(gamePath) {
  * Displays games based on the provided array of game data, sorted by title.
  */
 function createGames(games) {
-  const sortedGames = games.sort((a, b) => a.title.localeCompare(b.title));
+  const sortedGames = games.sort(sortGames);
   sortedGames.forEach(gameInfo => createGame(gameInfo));
+}
+
+/**
+ * Compares two games by date (1st) and title (2nd).
+ *
+ * @param {Object} gameA - The first game object to compare.
+ * @param {Object} gameB - The second game object to compare.
+ * @returns {number} - A negative number if gameA should come before gameB,
+ *                      a positive number if gameA should come after gameB,
+ *                      or 0 if they are equal.
+ */
+function sortGames(gameA, gameB) {
+  try { // Put in in a try-catch in case certain games don't have a date
+    const timeComparison = gameB.time.localeCompare(gameA.time);
+    if (timeComparison !== 0) return timeComparison;
+    return gameA.title.localeCompare(gameB.title);
+  } catch (error) {
+    return 0;
+  }
 }
 
 /**
@@ -148,6 +164,10 @@ function createGame(gameInfo) {
   gamesContainer.appendChild(gameElement);
 }
 
+/**
+ * Copies the share link to the clipboard and shares it if possible.
+ * @param {string} link - The link to be shared.
+ */
 function copyShareLink(link) {
   const copyText = `${window.location.href}${link}`;
   navigator.clipboard.writeText(copyText);
