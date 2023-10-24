@@ -6,6 +6,13 @@ static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
 	var i = preload("res://addons/pronto/signal_connecting/node_to_node_configurator.tscn").instantiate()
 	i.anchor = anchor
 	i.undo_redo = undo_redo
+	
+	# FIXME godot 4.2 beta did not assign a background color to the panel
+	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
+	var box = StyleBoxFlat.new()
+	box.bg_color = s.get("interface/theme/base_color")
+	i.add_theme_stylebox_override("panel", box)
+	
 	return i
 
 static func open_existing(undo_redo: EditorUndoRedoManager, from: Node, connection: Connection):
