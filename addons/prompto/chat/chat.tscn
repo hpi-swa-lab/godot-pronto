@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0rrj0rnb3tdo"]
+[gd_scene load_steps=7 format=3 uid="uid://d0rrj0rnb3tdo"]
 
-[ext_resource type="FontFile" uid="uid://bl8e15dtp0unf" path="res://addons/prompto/fonts/ComicNeue-Bold.ttf" id="1_b76ta"]
 [ext_resource type="Script" path="res://addons/prompto/chat/chat.gd" id="1_r4llr"]
 [ext_resource type="PackedScene" uid="uid://y16c466rq77f" path="res://addons/prompto/health_indicator.tscn" id="2_omo0d"]
 [ext_resource type="Script" path="res://addons/prompto/chat/InputField.gd" id="4_ndlp7"]
@@ -37,10 +36,8 @@ func _pressed():
 	
 "
 
-[sub_resource type="LabelSettings" id="LabelSettings_wm857"]
-font = ExtResource("1_b76ta")
+[sub_resource type="LabelSettings" id="LabelSettings_bkfye"]
 font_size = 38
-font_color = Color(0.843137, 0.843137, 0.843137, 1)
 
 [node name="Prompto Chat" type="MarginContainer"]
 anchors_preset = 15
@@ -74,7 +71,7 @@ text = "Reset"
 
 [node name="UserLabel" type="Label" parent="VBoxContainer/Header/HBoxContainer"]
 layout_mode = 2
-text = "lukas.boehme"
+text = "julian.egbert"
 vertical_alignment = 1
 script = SubResource("GDScript_vhn8d")
 
@@ -88,7 +85,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(2.08165e-12, 180)
 layout_mode = 2
 text = "Prompto"
-label_settings = SubResource("LabelSettings_wm857")
+label_settings = SubResource("LabelSettings_bkfye")
 horizontal_alignment = 1
 vertical_alignment = 1
 
