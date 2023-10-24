@@ -112,6 +112,7 @@ function createGame(gameInfo) {
   gameElement.appendChild(header);
   const title = document.createElement('h2');
   title.textContent = gameInfo.title;
+  title.title = `${gameInfo.title} - created ${gameInfo.time}`;
   header.appendChild(title);
 
   // Create the author tags if they exist in the provided data
