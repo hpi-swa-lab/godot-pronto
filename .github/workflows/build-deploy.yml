@@ -2,7 +2,7 @@ name: "Build & Deploy Game"
 on:
   push:
     branches:
-    - 'game-*'
+    - 'game-**'
 
 env:
   GODOT_VERSION: 4.1
