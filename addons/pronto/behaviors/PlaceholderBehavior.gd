@@ -236,7 +236,6 @@ func _update_shape():
 			_parent.shape_owner_get_shape(_owner_id, 0).size = placeholder_size
 			if use_sprite and sprite:
 				_parent.shape_owner_get_shape(_owner_id, 0).size = find_non_transparent_rect().size
-				print("update shape")
 		elif shape_type == "Circle":
 			_parent.shape_owner_get_shape(_owner_id, 0).radius = circle_radius
 		elif shape_type == "Capsule":
