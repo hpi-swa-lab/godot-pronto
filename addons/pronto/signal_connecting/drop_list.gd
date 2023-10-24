@@ -13,6 +13,13 @@ var nodes: Array:
 			for c in all_children_without_position(child):
 				add(c)
 
+func _ready():
+	 # FIXME godot 4.2 beta did not assign a background color to the panel
+	var s = G.at("_pronto_editor_plugin").get_editor_interface().get_editor_settings()
+	var box = StyleBoxFlat.new()
+	box.bg_color = s.get("interface/theme/base_color")
+	add_theme_stylebox_override("panel", box)
+
 func add(node: Node):
 	var row = DropNode.instantiate()
 	row.undo_redo = undo_redo
