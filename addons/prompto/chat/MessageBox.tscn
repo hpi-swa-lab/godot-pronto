@@ -1,6 +1,5 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqejq4kiap3ey"]
+[gd_scene load_steps=8 format=3 uid="uid://bqejq4kiap3ey"]
 
-[ext_resource type="FontFile" uid="uid://mtvmjpt25i7v" path="res://addons/prompto/fonts/ComicNeue-Regular.ttf" id="1_1rbt6"]
 [ext_resource type="Script" path="res://addons/prompto/chat/MessageBox.gd" id="2_0kjv6"]
 [ext_resource type="Texture2D" uid="uid://cnayo6p8r03ws" path="res://addons/prompto/icons/warning.svg" id="3_h1fs0"]
 [ext_resource type="Texture2D" uid="uid://c0284nril2oac" path="res://addons/prompto/icons/like.svg" id="3_uv5l2"]
@@ -8,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cq2shwvaidqhg" path="res://addons/prompto/icons/dislike.svg" id="4_besp7"]
 
 [sub_resource type="Theme" id="Theme_djkh7"]
-default_font = ExtResource("1_1rbt6")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_js3c0"]
 resource_local_to_scene = true
