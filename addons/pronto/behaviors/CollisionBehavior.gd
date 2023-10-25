@@ -62,6 +62,7 @@ func _physics_process(delta):
 
 
 func on_collision(other: Node):
+	if other == null: return
 	if limit_to_group == "" or other.is_in_group(limit_to_group):
 		collided.emit(other, Vector2(other.get_global_position() - get_parent().get_global_position()).normalized())
 

@@ -128,6 +128,14 @@ func switch_side():
 	switch_num = rng.randf_range(10.0, 300.0)
 	right_side = !right_side
 
+func move_when_ready(prop: String, value: Variant):
+	if value == 1:
+		move_up()
+		move_up()
+		move_up()
+		move_up()
+		move_up()
+
 func move_down():
 	move_direction(Vector2.DOWN)
 
