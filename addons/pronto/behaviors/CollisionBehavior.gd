@@ -80,3 +80,10 @@ func _get_configuration_warnings():
 	if not is_valid_parent():
 		return ["Collision only works with Area2D, RigidBody2D and CharacterBody2D"]
 	return ""
+
+
+func _on_area_2d_body_entered(body):
+	var canvasModulate = get_parent().get_parent().get_parent().find_child("CanvasModulate")
+	canvasModulate.hide()
+	var flashLight = get_parent().find_child("Flashlight")
+	flashLight.hide()
