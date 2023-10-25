@@ -91,7 +91,7 @@ func clicked():
 	create_scene(name, create_export)
 
 	# Open the newly created scene in editor.
-	var editor_interface = G.at("_pronto_editor_plugin").get_editor_interface() as EditorInterface
+	var editor_interface = G.at("_pronto_editor_plugin").get_editor_interface()
 	var scene_path = "res://prototypes/" + name + "/" + name + ".tscn"
 	editor_interface.open_scene_from_path(scene_path)
 
