@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8o1txywh2ulr"
-path="res://.godot/imported/thumbnail.png-34acee41b63967746bd2c4351033d602.ctex"
+uid="uid://dm0ui7v8jwxpp"
+path="res://.godot/imported/thumbnail.png-eec2c67d91a3bdffd212ad1567da9e97.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://prototypes/game-test3vonmirundnurmir/thumbnail.png"
-dest_files=["res://.godot/imported/thumbnail.png-34acee41b63967746bd2c4351033d602.ctex"]
+source_file="res://prototypes/game-süssigkeitenbombardement/thumbnail.png"
+dest_files=["res://.godot/imported/thumbnail.png-eec2c67d91a3bdffd212ad1567da9e97.ctex"]
 
 [params]
 
