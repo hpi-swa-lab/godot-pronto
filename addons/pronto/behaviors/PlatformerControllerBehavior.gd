@@ -54,7 +54,7 @@ var key_map = [{
 	"function": Input.is_physical_key_pressed,
 	"left": KEY_A,
 	"right": KEY_D,
-	"jump": [KEY_SPACE, KEY_W]
+	"jump": KEY_W
 },
 {
 	"function": Input.is_action_pressed,
@@ -108,6 +108,7 @@ func _is_key_pressed(direction):
 		return keys[direction].any(func(key): return keys["function"].call(key))
 	else:
 		return keys["function"].call(keys[direction])
+
 
 func _physics_process(delta):
 	if Engine.is_editor_hint():

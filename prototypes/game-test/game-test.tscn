@@ -1,4 +1,4 @@
-[gd_scene load_steps=200 format=3 uid="uid://dq5gygwtd7rxb"]
+[gd_scene load_steps=203 format=3 uid="uid://dq5gygwtd7rxb"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Script" path="res://prototypes/game-test/jumpnrun_template.gd" id="2_dr2ov"]
@@ -24,9 +24,16 @@
 [ext_resource type="PackedScene" uid="uid://defeo7pmswuu0" path="res://BG.tscn" id="16_uom2l"]
 [ext_resource type="AudioStream" uid="uid://b36ny176qbeqe" path="res://Sneaker Sidesteps Concrete.mp3" id="17_b0j4t"]
 [ext_resource type="Texture2D" uid="uid://coiaxftxa6ket" path="res://Light.png" id="17_r8jq7"]
+[ext_resource type="Texture2D" uid="uid://cmwjeobrfg377" path="res://keys.png" id="18_wmxrf"]
+[ext_resource type="Texture2D" uid="uid://dn3x1tqojq5hs" path="res://icon_5090.png" id="19_yv0hh"]
 [ext_resource type="AudioStream" uid="uid://b5lq7qxcm1iwh" path="res://Scream Sound effect (funny).mp3" id="23_6avei"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_chevg"]
+light_mode = 2
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
 [sub_resource type="Image" id="Image_itvuw"]
 data = {
@@ -511,6 +518,9 @@ arguments = [SubResource("Resource_acveq")]
 only_if = SubResource("Resource_kfr15")
 deferred = false
 enabled = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ty26"]
+font_size = 12
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3bwcm"]
 size = Vector2(831, 36)
@@ -1154,6 +1164,7 @@ enabled = true
 light_mode = 2
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_w5p0e"]
+light_mode = 2
 
 [sub_resource type="GDScript" id="GDScript_ns0he"]
 script/source = "@tool
@@ -1452,6 +1463,32 @@ duration_seconds = 10.0
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_0ep25")]
 
+[node name="Sprite2D" type="Sprite2D" parent="jumpnrun_template/Player"]
+position = Vector2(-299.197, -247.046)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("18_wmxrf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="jumpnrun_template/Player"]
+position = Vector2(-299.5, -220.046)
+scale = Vector2(0.0996096, 0.05)
+texture = ExtResource("19_yv0hh")
+
+[node name="Label2" type="Label" parent="jumpnrun_template/Player"]
+offset_left = -272.0
+offset_top = -254.0
+offset_right = -240.0
+offset_bottom = -237.0
+text = "Move"
+label_settings = SubResource("LabelSettings_6ty26")
+
+[node name="Label3" type="Label" parent="jumpnrun_template/Player"]
+offset_left = -272.0
+offset_top = -230.0
+offset_right = -240.0
+offset_bottom = -213.0
+text = "Reset"
+label_settings = SubResource("LabelSettings_6ty26")
+
 [node name="CoinSpawner" type="Node2D" parent="jumpnrun_template"]
 position = Vector2(757, 550)
 script = ExtResource("11_sd8pn")
@@ -1578,12 +1615,12 @@ metadata/pronto_connections = [SubResource("Resource_li3gf")]
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="jumpnrun_template/CharacterBody2D2"]
 stream = ExtResource("23_6avei")
 autoplay = true
-max_distance = 400.0
+max_distance = 200.0
 metadata/pronto_connections = [SubResource("Resource_3pica")]
 
 [node name="TileMap2" type="TileMap" parent="jumpnrun_template"]
 material = SubResource("CanvasItemMaterial_8ji6e")
-position = Vector2(1473, 259)
+position = Vector2(1472, 259)
 tile_set = ExtResource("3_pru7n")
 format = 2
 layer_0/tile_data = PackedInt32Array(65535, 262144, 5, -1, 262144, 5)
