@@ -53,10 +53,11 @@ func _ready():
 	call_deferred("_reparent_and_build")
 
 func _reparent_and_build():
-	var offset = global_position - get_parent().global_position
-	var canvasLayer = CanvasLayer.new()
-	get_parent().add_child(canvasLayer)
-	reparent(canvasLayer)
+	#if (!get_parent() is CanvasLayer):
+		#var canvasLayer = CanvasLayer.new()
+		#var offset = global_position - get_parent().global_position
+		#get_parent().add_child(canvasLayer)
+		#reparent(canvasLayer)
 	self.add_child(panel)
 	_build_panel()
 
