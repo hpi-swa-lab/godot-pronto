@@ -41,6 +41,8 @@ var rng = RandomNumberGenerator.new()
 ## Whether to also rotate the velocity vector when the character is rotated. Feels like the parent can drift when disabled.
 @export var rotate_velocity = true
 
+@export var done = false
+
 var velocity = Vector2.ZERO
 var _did_accelerate = false
 var _was_on_floor = false
@@ -128,16 +130,15 @@ func switch_side():
 	switch_num = rng.randf_range(10.0, 300.0)
 	right_side = !right_side
 
-func move_when_ready(prop: String, value: Variant):
-	if value == 1:
-		move_up()
-		move_up()
-		move_up()
-		move_up()
-		move_up()
-
 func move_down():
 	move_direction(Vector2.DOWN)
+	
+func move_down_a_bit():
+	if done == false:
+		move_direction(Vector2(0.0,0.02))
+		
+func set_done():
+	done = true
 
 func move_up():
 	move_direction(Vector2.UP)
