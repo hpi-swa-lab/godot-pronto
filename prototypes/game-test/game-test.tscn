@@ -1,4 +1,4 @@
-[gd_scene load_steps=203 format=3 uid="uid://dq5gygwtd7rxb"]
+[gd_scene load_steps=204 format=3 uid="uid://dq5gygwtd7rxb"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Script" path="res://prototypes/game-test/jumpnrun_template.gd" id="2_dr2ov"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://cmwjeobrfg377" path="res://keys.png" id="18_wmxrf"]
 [ext_resource type="Texture2D" uid="uid://dn3x1tqojq5hs" path="res://icon_5090.png" id="19_yv0hh"]
 [ext_resource type="AudioStream" uid="uid://b5lq7qxcm1iwh" path="res://Scream Sound effect (funny).mp3" id="23_6avei"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="26_4vtvb"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_chevg"]
 light_mode = 2
@@ -1791,6 +1792,10 @@ color = Color(1, 1, 0, 1)
 use_sprite = true
 sprite_texture = ExtResource("13_kxfa8")
 placeholder_size = Vector2(20, 20)
+
+[node name="PrototypingUIBehavior" type="Node2D" parent="jumpnrun_template"]
+position = Vector2(-1265, -225)
+script = ExtResource("26_4vtvb")
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("16_uom2l")]
 
