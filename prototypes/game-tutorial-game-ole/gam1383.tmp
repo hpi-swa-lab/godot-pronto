@@ -1043,19 +1043,15 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Timer):
-	
 	var canvasModulate = get_parent().find_child(\"CanvasModulate\")
 	canvasModulate.show()
 	var flashLight = get_parent().find_child(\"Flashlight\")
 	flashLight.show()
 	# randomly change lightswitch position within bounds
-	var lightswitchplaceholder = get_parent().find_child(\"SwitchPlaceholderBehavior\") 
-	var lightswitcharea = get_parent().find_child(\"LightSwitch\")
-	var lightswitch_x = randf_range(100, 1200) #all values are 100 away from boundary
-	var lightswitch_y = randf_range(100, 500)
-	lightswitcharea.set_global_position(Vector2(lightswitch_x, lightswitch_y))
-	lightswitchplaceholder.set_global_position(Vector2(lightswitch_x, lightswitch_y))
-	
+	var lightswitch = get_parent().find_child(\"SwitchPlaceholderBehavior\") 
+	var lightswitch_x = randf_range(0, 1300)
+	var lightswitch_y = randf_range(0, 600)
+	lightswitch.set_global_position(Vector2(lightswitch_x, lightswitch_y))
 "
 
 [sub_resource type="Resource" id="Resource_hjhkh"]
