@@ -87,3 +87,5 @@ func _on_area_2d_body_entered(body):
 	canvasModulate.hide()
 	var flashLight = get_parent().find_child("Flashlight")
 	flashLight.hide()
+	var timer = get_parent().get_parent().get_parent().find_child("Timer")
+	timer.start(4)
