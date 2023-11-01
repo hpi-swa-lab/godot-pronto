@@ -5,17 +5,17 @@ class_name PlatformerControllerBehavior
 
 @export_category("Gameplay")
 ## Defines the available controls
-enum Controls {
-	WASD = 0, ## A - D, Jump: Space
-	Arrow_Keys = 1, ## Arrow keys
-	IJKL = 2  ## J - L, Jump: I
+enum Player {
+	Player_1 = 0, ## A - D, W or Space to jump
+	Player_2 = 1, ## Arrow keys, up to jump
+	Player_3 = 2  ## J - L, I to jump
 }
 
 ## Determines which controls (keys) are used. 
 ## Which keys that are is defined in [member PlatformControllerBehavior.key_map]
 ##
 ## See [enum PlatformControllerBehavior.Controls] for possible values
-@export var controls: Controls = Controls.WASD
+@export var player: Player = Player.Player_1
 ## The speed with which the character jumps.
 @export var jump_velocity: float = 400:
 	set(v):
@@ -48,26 +48,6 @@ var _last_positions_max = 30
 var _last_positions = []
 
 signal collided(last_collision: KinematicCollision2D)
-
-# Make sure that these keys are identical to the comments from the enum "Controls" above when changing them.
-var key_map = [{
-	"function": Input.is_physical_key_pressed,
-	"left": KEY_A,
-	"right": KEY_D,
-	"jump": [KEY_SPACE, KEY_W]
-},
-{
-	"function": Input.is_action_pressed,
-	"left": "ui_left",
-	"right": "ui_right",
-	"jump": "ui_up"
-},
-{
-	"function": Input.is_physical_key_pressed,
-	"left": KEY_J,
-	"right": KEY_L,
-	"jump": KEY_I
-}]
 
 func _enter_tree():
 	if not get_parent() is CharacterBody2D:
@@ -102,12 +82,12 @@ func _draw():
 	for pos in _last_positions:
 		draw_circle(pos, 3, Color.RED)
 
+#const valid_directions = ["left", "right", "jump"]
 func _is_key_pressed(direction):
-	var keys = key_map[controls]
-	if (typeof(keys[direction]) == TYPE_ARRAY):
-		return keys[direction].any(func(key): return keys["function"].call(key))
-	else:
-		return keys["function"].call(keys[direction])
+	#if not direction in valid_directions:
+		#push_error("Direction must be one of {0} (got {1})".format(", ".join(valid_directions), direction))
+	var action_string = "player_{0}_{1}".format([str(player), direction])
+	return Input.is_action_pressed(action_string)
 
 func _physics_process(delta):
 	if Engine.is_editor_hint():
