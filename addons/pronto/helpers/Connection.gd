@@ -252,19 +252,21 @@ func _run_script(from: Node, s: ConnectionScript, arguments: Array):
 func is_valid(from: Node):
 	return not is_target() or from.get_node_or_null(to) != null
 
-func print(flip = false, shorten = true, single_line = false):
+func print(flip = false, shorten = true, single_line = false, show_disabled = false):
 	var prefix = "[?] " if has_condition() else ""
+	var suffix = " (disabled)" if show_disabled and !enabled else ""
 	if is_target():
 		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return a.source_code))])
 		var statements_string = expression.source_code.split('\n')[0] if is_expression() else ""
-		return ("{1}{2} ← {0}" if flip else "{1}{0} → {2}").format([
+		return ("{1}{2} ← {0}{3}" if flip else "{1}{0} → {2}{3}").format([
 			signal_name,
 			prefix,
-			Utils.ellipsize(invocation_string if not is_expression() else statements_string, 16 if shorten else -1)
+			Utils.ellipsize(invocation_string if not is_expression() else statements_string, 16 if shorten else -1),
+			suffix
 		]).replace("\n" if single_line else "", "")
 	else:
 		assert(is_expression())
-		return "{2}{0} ↺ {1}".format([signal_name, Utils.ellipsize(expression.source_code.split('\n')[0], 16 if shorten else -1), prefix]).replace("\n" if single_line else "", "")
+		return "{2}{0} ↺ {1}{3}".format([signal_name, Utils.ellipsize(expression.source_code.split('\n')[0], 16 if shorten else -1), prefix, suffix]).replace("\n" if single_line else "", "")
 
 ## Iterate over connections and check whether the target still exists for them.
 ## If not, remove the connection.

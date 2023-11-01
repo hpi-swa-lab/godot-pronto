@@ -25,8 +25,8 @@ func build_connection_list():
 	%connections.clear()
 	_displayed_connections = Connection.get_connections(node).duplicate()
 	for c in _displayed_connections:
-		var added_index = %connections.add_item(c.print(false, false, true), Utils.icon_from_theme("Signals", node))
-		%connections.set_item_disabled(added_index, !c.enabled)
+		var added_index = %connections.add_item(c.print(false, false, true, true), Utils.icon_from_theme("Signals", node))
+		#%connections.set_item_disabled(added_index, !c.enabled)
 	
 	# connecting to signals for slight performance improvement
 	# by avoiding querying mouse position every process call

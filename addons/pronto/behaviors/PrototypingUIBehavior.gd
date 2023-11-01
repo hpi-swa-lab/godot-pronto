@@ -50,19 +50,17 @@ func _ready():
 	
 	panel = PanelContainer.new()
 	panel.size = panel_size
-	
+	call_deferred("_reparent_and_build")
+
+func _reparent_and_build():
+	# If the parent is not a CanvasLayer, create one and reparent the UI to it. Only do this in-game so it can be moved around in the editor.
+	if (!get_parent() is CanvasLayer and not Engine.is_editor_hint()):
+		var canvasLayer = CanvasLayer.new()
+		var offset = global_position - get_parent().global_position
+		get_parent().add_child(canvasLayer)
+		reparent(canvasLayer)
 	self.add_child(panel)
 	_build_panel()
-	
-#	panel.panel.content_margin_bottom = 100
-	
-	# Automatically rebuild the panel when nodes have changed
-#	if Engine.is_editor_hint():
-#		var tree = get_tree()
-#		tree.node_added.connect(_tree_changed)
-#		tree.node_removed.connect(_tree_changed)
-#		tree.node_renamed.connect(_tree_changed)
-#		tree.node_configuration_warning_changed.connect(_tree_changed)
 
 func _draw():
 	super._draw()

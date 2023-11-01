@@ -52,4 +52,7 @@ func maybe_add_value_user_interface():
 	
 	var ui = PrototypingUIBehavior.new()
 	ui.name = 'Config'
-	add_child(ui)
+	# Place the PrototypingUI in its own CanvasLayer
+	var canvasLayer = CanvasLayer.new()
+	canvasLayer.add_child(ui)
+	add_child(canvasLayer)
