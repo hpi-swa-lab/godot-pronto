@@ -739,7 +739,8 @@ extends U
 func run(delta, from: Node2D, to: Camera2D):
 	var player = to.get_node(\"../CharacterBody2D\")
 	var camera_position = to.position
-	return Vector2(camera_position.x, player.position.y - 400)
+	var y_position = min(player.position.y - 200, camera_position.y)
+	return Vector2(camera_position.x, y_position)
 "
 
 [sub_resource type="Resource" id="Resource_i86h4"]
