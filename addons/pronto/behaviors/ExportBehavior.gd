@@ -90,3 +90,4 @@ func _get_configuration_warnings():
 	if description == "":
 		message.append("Please enter a description for your game.")
 	return message	
+

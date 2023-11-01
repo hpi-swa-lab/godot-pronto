@@ -89,4 +89,4 @@ func _on_area_2d_body_entered(body):
 	flashLight.hide()
 	var timer = get_parent().get_parent().get_parent().find_child("Timer")
 	timer.set_one_shot(true)
-	timer.start(4)
+	timer.start(3)
