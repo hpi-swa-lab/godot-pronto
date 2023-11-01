@@ -1724,12 +1724,6 @@ float_value = 200.0
 float_step_size = 1.0
 metadata/pronto_connections = [SubResource("Resource_gdog8")]
 
-[node name="KeyBehavior" type="Node2D" parent="jumpnrun_template/Player/horizontal_velocity"]
-position = Vector2(68, -32)
-script = ExtResource("15_2y73c")
-key = "b"
-metadata/pronto_connections = []
-
 [node name="HealthBarBehavior" type="Node2D" parent="jumpnrun_template/Player"]
 position = Vector2(0, -32)
 script = ExtResource("8_0quas")
@@ -1778,14 +1772,6 @@ cycle_count = 1
 duration_seconds = 5.0
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_l7ild"), SubResource("Resource_lxc5r"), SubResource("Resource_g626d"), SubResource("Resource_3r8jd")]
-
-[node name="ValueBehavior" type="Node2D" parent="jumpnrun_template/Player"]
-position = Vector2(132, -129)
-script = ExtResource("5_4y5dx")
-float_min = 0.0
-float_max = 100.0
-float_value = 0.0
-float_step_size = 1.0
 
 [node name="TileMap" type="TileMap" parent="jumpnrun_template"]
 tile_set = SubResource("TileSet_d183t")
