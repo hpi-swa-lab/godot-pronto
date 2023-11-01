@@ -53,11 +53,12 @@ func _ready():
 	call_deferred("_reparent_and_build")
 
 func _reparent_and_build():
-	#if (!get_parent() is CanvasLayer):
-		#var canvasLayer = CanvasLayer.new()
-		#var offset = global_position - get_parent().global_position
-		#get_parent().add_child(canvasLayer)
-		#reparent(canvasLayer)
+	# If the parent is not a CanvasLayer, create one and reparent the UI to it. Only do this in-game so it can be moved around in the editor.
+	if (!get_parent() is CanvasLayer and not Engine.is_editor_hint()):
+		var canvasLayer = CanvasLayer.new()
+		var offset = global_position - get_parent().global_position
+		get_parent().add_child(canvasLayer)
+		reparent(canvasLayer)
 	self.add_child(panel)
 	_build_panel()
 
