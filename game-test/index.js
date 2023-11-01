@@ -68,7 +68,7 @@ Module["ready"] = new Promise(function(resolve, reject) {
  readyPromiseReject = reject;
 });
 
-[ "_main", "__emscripten_thread_init", "__emscripten_thread_exit", "__emscripten_thread_crashed", "__emscripten_tls_init", "_pthread_self", "executeNotifiedProxyingQueue", "establishStackSpace", "invokeEntryPoint", "PThread", "_emscripten_webgl_commit_frame", "__Z14godot_web_mainiPPc", "_fflush", "__emwebxr_on_input_event", "__emwebxr_on_simple_event", "__emscripten_proxy_execute_task_queue", "onRuntimeInitialized" ].forEach(prop => {
+[ "_main", "__emscripten_thread_init", "__emscripten_thread_exit", "__emscripten_thread_crashed", "__emscripten_tls_init", "_pthread_self", "executeNotifiedProxyingQueue", "establishStackSpace", "invokeEntryPoint", "PThread", "_emscripten_webgl_commit_frame", "__Z14godot_web_mainiPPc", "_fflush", "__emwebxr_on_input_event", "__emwebxr_on_simple_event", "__emscripten_proxy_main", "__emscripten_proxy_execute_task_queue", "onRuntimeInitialized" ].forEach(prop => {
  if (!Object.getOwnPropertyDescriptor(Module["ready"], prop)) {
   Object.defineProperty(Module["ready"], prop, {
    get: () => abort("You are getting " + prop + " on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js"),
@@ -408,18 +408,12 @@ function assert(condition, text) {
  }
 }
 
-var UTF8Decoder = typeof TextDecoder != "undefined" ? new TextDecoder("utf8") : undefined;
-
 function UTF8ArrayToString(heapOrArray, idx, maxBytesToRead) {
  var endIdx = idx + maxBytesToRead;
- var endPtr = idx;
- while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
- if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
-  return UTF8Decoder.decode(heapOrArray.buffer instanceof SharedArrayBuffer ? heapOrArray.slice(idx, endPtr) : heapOrArray.subarray(idx, endPtr));
- }
  var str = "";
- while (idx < endPtr) {
+ while (!(idx >= endIdx)) {
   var u0 = heapOrArray[idx++];
+  if (!u0) return str;
   if (!(u0 & 128)) {
    str += String.fromCharCode(u0);
    continue;
@@ -508,7 +502,7 @@ function lengthBytesUTF8(str) {
  return len;
 }
 
-var HEAP, buffer, HEAP8, HEAPU8, HEAP16, HEAPU16, HEAP32, HEAPU32, HEAPF32, HEAPF64;
+var HEAP, buffer, HEAP8, HEAPU8, HEAP16, HEAPU16, HEAP32, HEAPU32, HEAPF32, HEAP64, HEAPU64, HEAPF64;
 
 if (ENVIRONMENT_IS_PTHREAD) {
  buffer = Module["buffer"];
@@ -524,6 +518,8 @@ function updateGlobalBufferAndViews(buf) {
  Module["HEAPU32"] = HEAPU32 = new Uint32Array(buf);
  Module["HEAPF32"] = HEAPF32 = new Float32Array(buf);
  Module["HEAPF64"] = HEAPF64 = new Float64Array(buf);
+ Module["HEAP64"] = HEAP64 = new BigInt64Array(buf);
+ Module["HEAPU64"] = HEAPU64 = new BigUint64Array(buf);
 }
 
 var TOTAL_STACK = 5242880;
@@ -820,7 +816,7 @@ function createExportWrapper(name, fixedasm) {
 
 var wasmBinaryFile;
 
-wasmBinaryFile = "godot.web.template_release.wasm32.wasm";
+wasmBinaryFile = "godot.web.template_debug.wasm32.wasm";
 
 if (!isDataURI(wasmBinaryFile)) {
  wasmBinaryFile = locateFile(wasmBinaryFile);
@@ -1267,11 +1263,7 @@ function alignMemory(size, alignment) {
 }
 
 function mmapAlloc(size) {
- size = alignMemory(size, 65536);
- var ptr = _emscripten_builtin_memalign(65536, size);
- if (!ptr) return 0;
- zeroMemory(ptr, size);
- return ptr;
+ abort("internal error: mmapAlloc called but `emscripten_builtin_memalign` native symbol not exported");
 }
 
 var MEMFS = {
@@ -3651,24 +3643,16 @@ var SYSCALLS = {
   GROWABLE_HEAP_I32()[buf + 20 >> 2] = stat.uid;
   GROWABLE_HEAP_I32()[buf + 24 >> 2] = stat.gid;
   GROWABLE_HEAP_I32()[buf + 28 >> 2] = stat.rdev;
-  tempI64 = [ stat.size >>> 0, (tempDouble = stat.size, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-  GROWABLE_HEAP_I32()[buf + 40 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf + 44 >> 2] = tempI64[1];
+  HEAP64[buf + 40 >> 3] = BigInt(stat.size);
   GROWABLE_HEAP_I32()[buf + 48 >> 2] = 4096;
   GROWABLE_HEAP_I32()[buf + 52 >> 2] = stat.blocks;
-  tempI64 = [ Math.floor(stat.atime.getTime() / 1e3) >>> 0, (tempDouble = Math.floor(stat.atime.getTime() / 1e3), 
-  +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-  GROWABLE_HEAP_I32()[buf + 56 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf + 60 >> 2] = tempI64[1];
+  HEAP64[buf + 56 >> 3] = BigInt(Math.floor(stat.atime.getTime() / 1e3));
   GROWABLE_HEAP_I32()[buf + 64 >> 2] = 0;
-  tempI64 = [ Math.floor(stat.mtime.getTime() / 1e3) >>> 0, (tempDouble = Math.floor(stat.mtime.getTime() / 1e3), 
-  +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-  GROWABLE_HEAP_I32()[buf + 72 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf + 76 >> 2] = tempI64[1];
+  HEAP64[buf + 72 >> 3] = BigInt(Math.floor(stat.mtime.getTime() / 1e3));
   GROWABLE_HEAP_I32()[buf + 80 >> 2] = 0;
-  tempI64 = [ Math.floor(stat.ctime.getTime() / 1e3) >>> 0, (tempDouble = Math.floor(stat.ctime.getTime() / 1e3), 
-  +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-  GROWABLE_HEAP_I32()[buf + 88 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf + 92 >> 2] = tempI64[1];
+  HEAP64[buf + 88 >> 3] = BigInt(Math.floor(stat.ctime.getTime() / 1e3));
   GROWABLE_HEAP_I32()[buf + 96 >> 2] = 0;
-  tempI64 = [ stat.ino >>> 0, (tempDouble = stat.ino, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-  GROWABLE_HEAP_I32()[buf + 104 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf + 108 >> 2] = tempI64[1];
+  HEAP64[buf + 104 >> 3] = BigInt(stat.ino);
   return 0;
  },
  doMsync: function(addr, stream, len, flags, offset) {
@@ -3858,12 +3842,11 @@ var PThread = {
   });
  },
  allocateUnusedWorker: function() {
-  var pthreadMainJs = locateFile("godot.web.template_release.wasm32.worker.js");
+  var pthreadMainJs = locateFile("godot.web.template_debug.wasm32.worker.js");
   PThread.unusedWorkers.push(new Worker(pthreadMainJs));
  },
  getNewWorker: function() {
   if (PThread.unusedWorkers.length == 0) {
-   err("Tried to spawn a new thread, but the thread pool is exhausted.\n" + "This might result in a deadlock unless some threads eventually exit or the code explicitly breaks out to the event loop.\n" + "If you want to increase the pool size, use setting `-sPTHREAD_POOL_SIZE=...`." + "\nIf you want to throw an explicit error instead of the risk of deadlocking in those cases, use setting `-sPTHREAD_POOL_SIZE_STRICT=2`.");
    PThread.allocateUnusedWorker();
    PThread.loadWasmModuleToWorker(PThread.unusedWorkers[0]);
   }
@@ -3939,7 +3922,7 @@ function getValue(ptr, type = "i8") {
   return GROWABLE_HEAP_I32()[ptr >> 2];
 
  case "i64":
-  return GROWABLE_HEAP_I32()[ptr >> 2];
+  return HEAP64[ptr >> 3];
 
  case "float":
   return GROWABLE_HEAP_F32()[ptr >> 2];
@@ -4019,8 +4002,7 @@ function setValue(ptr, value, type = "i8") {
   break;
 
  case "i64":
-  tempI64 = [ value >>> 0, (tempDouble = value, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-  GROWABLE_HEAP_I32()[ptr >> 2] = tempI64[0], GROWABLE_HEAP_I32()[ptr + 4 >> 2] = tempI64[1];
+  HEAP64[ptr >> 3] = BigInt(value);
   break;
 
  case "float":
@@ -5073,11 +5055,8 @@ function ___syscall_getdents64(fd, dirp, count) {
     type = FS.isChrdev(child.mode) ? 2 : FS.isDir(child.mode) ? 4 : FS.isLink(child.mode) ? 10 : 8;
    }
    assert(id);
-   tempI64 = [ id >>> 0, (tempDouble = id, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-   GROWABLE_HEAP_I32()[dirp + pos >> 2] = tempI64[0], GROWABLE_HEAP_I32()[dirp + pos + 4 >> 2] = tempI64[1];
-   tempI64 = [ (idx + 1) * struct_size >>> 0, (tempDouble = (idx + 1) * struct_size, 
-   +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-   GROWABLE_HEAP_I32()[dirp + pos + 8 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[dirp + pos + 12 >> 2] = tempI64[1];
+   HEAP64[dirp + pos >> 3] = BigInt(id);
+   HEAP64[dirp + pos + 8 >> 3] = BigInt((idx + 1) * struct_size);
    GROWABLE_HEAP_I16()[dirp + pos + 16 >> 1] = 280;
    GROWABLE_HEAP_I8()[dirp + pos + 18 >> 0] = type;
    stringToUTF8(name, dirp + pos + 19, 256);
@@ -5550,37 +5529,6 @@ function __localtime_js(time, tmPtr) {
  GROWABLE_HEAP_I32()[tmPtr + 32 >> 2] = dst;
 }
 
-function __mmap_js(len, prot, flags, fd, off, allocated) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(34, 1, len, prot, flags, fd, off, allocated);
- try {
-  var stream = FS.getStream(fd);
-  if (!stream) return -8;
-  var res = FS.mmap(stream, len, off, prot, flags);
-  var ptr = res.ptr;
-  GROWABLE_HEAP_I32()[allocated >> 2] = res.allocated;
-  return ptr;
- } catch (e) {
-  if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-  return -e.errno;
- }
-}
-
-function __munmap_js(addr, len, prot, flags, fd, offset) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(35, 1, addr, len, prot, flags, fd, offset);
- try {
-  var stream = FS.getStream(fd);
-  if (stream) {
-   if (prot & 2) {
-    SYSCALLS.doMsync(addr, stream, len, flags, offset);
-   }
-   FS.munmap(stream);
-  }
- } catch (e) {
-  if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-  return -e.errno;
- }
-}
-
 function allocateUTF8(str) {
  var size = lengthBytesUTF8(str) + 1;
  var ret = _malloc(size);
@@ -5589,7 +5537,7 @@ function allocateUTF8(str) {
 }
 
 function _tzset_impl(timezone, daylight, tzname) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(36, 1, timezone, daylight, tzname);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(34, 1, timezone, daylight, tzname);
  var currentYear = new Date().getFullYear();
  var winter = new Date(currentYear, 0, 1);
  var summer = new Date(currentYear, 6, 1);
@@ -6362,7 +6310,7 @@ function _emscripten_console_error(str) {
 }
 
 function _emscripten_force_exit(status) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(37, 1, status);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(35, 1, status);
  noExitRuntime = false;
  runtimeKeepaliveCounter = 0;
  _exit(status);
@@ -6482,12 +6430,6 @@ var GL = {
   context.defaultFboForbidBlitFramebuffer = false;
   if (gl.getContextAttributes().antialias) {
    context.defaultFboForbidBlitFramebuffer = true;
-  } else {
-   var firefoxMatch = navigator.userAgent.toLowerCase().match(/firefox\/(\d\d)/);
-   if (firefoxMatch != null) {
-    var firefoxVersion = firefoxMatch[1];
-    context.defaultFboForbidBlitFramebuffer = firefoxVersion < 67;
-   }
   }
   context.defaultColorTarget = gl.createTexture();
   context.defaultDepthTarget = gl.createRenderbuffer();
@@ -7219,8 +7161,8 @@ function _emscripten_glGetFloatv(name_, p) {
  emscriptenWebGLGet(name_, p, 2);
 }
 
-function _emscripten_glGetIntegerv(name_, p) {
- emscriptenWebGLGet(name_, p, 0);
+function _emscripten_glGetInteger64v(name_, p) {
+ emscriptenWebGLGet(name_, p, 1);
 }
 
 function _emscripten_glGetProgramInfoLog(program, maxLength, length, infoLog) {
@@ -7796,6 +7738,10 @@ function _emscripten_glVertexAttribDivisor(index, divisor) {
  GLctx["vertexAttribDivisor"](index, divisor);
 }
 
+function _emscripten_glVertexAttribI4ui(x0, x1, x2, x3, x4) {
+ GLctx["vertexAttribI4ui"](x0, x1, x2, x3, x4);
+}
+
 function _emscripten_glVertexAttribIPointer(index, size, type, stride, ptr) {
  GLctx["vertexAttribIPointer"](index, size, type, stride, ptr);
 }
@@ -7821,12 +7767,18 @@ function _emscripten_proxy_to_main_thread_js(index, sync) {
  var outerArgs = arguments;
  if (numCallArgs > 20 - 1) throw "emscripten_proxy_to_main_thread_js: Too many arguments " + numCallArgs + " to proxied function idx=" + index + ", maximum supported is " + (20 - 1) + "!";
  return withStackSave(function() {
-  var serializedNumCallArgs = numCallArgs;
+  var serializedNumCallArgs = numCallArgs * 2;
   var args = stackAlloc(serializedNumCallArgs * 8);
   var b = args >> 3;
   for (var i = 0; i < numCallArgs; i++) {
    var arg = outerArgs[2 + i];
-   GROWABLE_HEAP_F64()[b + i] = arg;
+   if (typeof arg == "bigint") {
+    HEAP64[b + 2 * i] = 1n;
+    HEAP64[b + 2 * i + 1] = arg;
+   } else {
+    HEAP64[b + 2 * i] = 0n;
+    GROWABLE_HEAP_F64()[b + 2 * i + 1] = arg;
+   }
   }
   return _emscripten_run_in_main_runtime_thread_js(index, serializedNumCallArgs, args, sync);
  });
@@ -7835,10 +7787,15 @@ function _emscripten_proxy_to_main_thread_js(index, sync) {
 var _emscripten_receive_on_main_thread_js_callArgs = [];
 
 function _emscripten_receive_on_main_thread_js(index, numCallArgs, args) {
+ numCallArgs /= 2;
  _emscripten_receive_on_main_thread_js_callArgs.length = numCallArgs;
  var b = args >> 3;
  for (var i = 0; i < numCallArgs; i++) {
-  _emscripten_receive_on_main_thread_js_callArgs[i] = GROWABLE_HEAP_F64()[b + i];
+  if (HEAP64[b + 2 * i]) {
+   _emscripten_receive_on_main_thread_js_callArgs[i] = HEAP64[b + 2 * i + 1];
+  } else {
+   _emscripten_receive_on_main_thread_js_callArgs[i] = GROWABLE_HEAP_F64()[b + 2 * i + 1];
+  }
  }
  var isEmAsmConst = index < 0;
  var func = !isEmAsmConst ? proxiedFunctionTable[index] : ASM_CONSTS[-index - 1];
@@ -7885,42 +7842,8 @@ function _emscripten_resize_heap(requestedSize) {
  return false;
 }
 
-function _emscripten_set_main_loop(func, fps, simulateInfiniteLoop) {
- var browserIterationFunc = getWasmTableEntry(func);
- setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop);
-}
-
-function _emscripten_supports_offscreencanvas() {
- return 0;
-}
-
-function _emscripten_unwind_to_js_event_loop() {
- throw "unwind";
-}
-
-function _emscripten_webgl_destroy_context(contextHandle) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(38, 1, contextHandle);
- if (GL.currentContext == contextHandle) GL.currentContext = 0;
- GL.deleteContext(contextHandle);
-}
-
-function _emscripten_webgl_do_commit_frame() {
- if (!GL.currentContext || !GL.currentContext.GLctx) {
-  return -3;
- }
- if (GL.currentContext.defaultFbo) {
-  GL.blitOffscreenFramebuffer(GL.currentContext);
-  return 0;
- }
- if (!GL.currentContext.attributes.explicitSwapControl) {
-  return -3;
- }
- return 0;
-}
-
-function _emscripten_webgl_create_context_proxied(target, attributes) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(39, 1, target, attributes);
- return _emscripten_webgl_do_create_context(target, attributes);
+function _emscripten_runtime_keepalive_check() {
+ return keepRuntimeAlive();
 }
 
 var JSEvents = {
@@ -8051,8 +7974,6 @@ var JSEvents = {
  }
 };
 
-var __emscripten_webgl_power_preferences = [ "default", "low-power", "high-performance" ];
-
 function maybeCStringToJsString(cString) {
  return cString > 2 ? UTF8ToString(cString) : cString;
 }
@@ -8068,6 +7989,80 @@ function findEventTarget(target) {
 function findCanvasEventTarget(target) {
  return findEventTarget(target);
 }
+
+function _emscripten_set_canvas_element_size_calling_thread(target, width, height) {
+ var canvas = findCanvasEventTarget(target);
+ if (!canvas) return -4;
+ if (!canvas.controlTransferredOffscreen) {
+  var autoResizeViewport = false;
+  if (canvas.GLctxObject && canvas.GLctxObject.GLctx) {
+   var prevViewport = canvas.GLctxObject.GLctx.getParameter(2978);
+   autoResizeViewport = prevViewport[0] === 0 && prevViewport[1] === 0 && prevViewport[2] === canvas.width && prevViewport[3] === canvas.height;
+  }
+  canvas.width = width;
+  canvas.height = height;
+  if (autoResizeViewport) {
+   canvas.GLctxObject.GLctx.viewport(0, 0, width, height);
+  }
+ } else {
+  return -4;
+ }
+ if (canvas.GLctxObject) GL.resizeOffscreenFramebuffer(canvas.GLctxObject);
+ return 0;
+}
+
+function _emscripten_set_canvas_element_size_main_thread(target, width, height) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(36, 1, target, width, height);
+ return _emscripten_set_canvas_element_size_calling_thread(target, width, height);
+}
+
+function _emscripten_set_canvas_element_size(target, width, height) {
+ var canvas = findCanvasEventTarget(target);
+ if (canvas) {
+  return _emscripten_set_canvas_element_size_calling_thread(target, width, height);
+ }
+ return _emscripten_set_canvas_element_size_main_thread(target, width, height);
+}
+
+function _emscripten_set_main_loop(func, fps, simulateInfiniteLoop) {
+ var browserIterationFunc = getWasmTableEntry(func);
+ setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop);
+}
+
+function _emscripten_supports_offscreencanvas() {
+ return 0;
+}
+
+function _emscripten_unwind_to_js_event_loop() {
+ throw "unwind";
+}
+
+function _emscripten_webgl_destroy_context(contextHandle) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(37, 1, contextHandle);
+ if (GL.currentContext == contextHandle) GL.currentContext = 0;
+ GL.deleteContext(contextHandle);
+}
+
+function _emscripten_webgl_do_commit_frame() {
+ if (!GL.currentContext || !GL.currentContext.GLctx) {
+  return -3;
+ }
+ if (GL.currentContext.defaultFbo) {
+  GL.blitOffscreenFramebuffer(GL.currentContext);
+  return 0;
+ }
+ if (!GL.currentContext.attributes.explicitSwapControl) {
+  return -3;
+ }
+ return 0;
+}
+
+function _emscripten_webgl_create_context_proxied(target, attributes) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(38, 1, target, attributes);
+ return _emscripten_webgl_do_create_context(target, attributes);
+}
+
+var __emscripten_webgl_power_preferences = [ "default", "low-power", "high-performance" ];
 
 function _emscripten_webgl_do_create_context(target, attributes) {
  assert(attributes);
@@ -8110,7 +8105,7 @@ function _emscripten_webgl_do_create_context(target, attributes) {
 }
 
 function _emscripten_webgl_enable_extension(contextHandle, extension) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(40, 1, contextHandle, extension);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(39, 1, contextHandle, extension);
  var context = GL.getContext(contextHandle);
  var extString = UTF8ToString(extension);
  if (extString.startsWith("GL_")) extString = extString.substr(3);
@@ -8179,7 +8174,7 @@ function writeAsciiToMemory(str, buffer, dontAddNull) {
 }
 
 function _environ_get(__environ, environ_buf) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(41, 1, __environ, environ_buf);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(40, 1, __environ, environ_buf);
  var bufSize = 0;
  getEnvStrings().forEach(function(string, i) {
   var ptr = environ_buf + bufSize;
@@ -8191,7 +8186,7 @@ function _environ_get(__environ, environ_buf) {
 }
 
 function _environ_sizes_get(penviron_count, penviron_buf_size) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(42, 1, penviron_count, penviron_buf_size);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(41, 1, penviron_count, penviron_buf_size);
  var strings = getEnvStrings();
  GROWABLE_HEAP_U32()[penviron_count >> 2] = strings.length;
  var bufSize = 0;
@@ -8203,7 +8198,7 @@ function _environ_sizes_get(penviron_count, penviron_buf_size) {
 }
 
 function _fd_close(fd) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(43, 1, fd);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(42, 1, fd);
  try {
   var stream = SYSCALLS.getStreamFromFD(fd);
   FS.close(stream);
@@ -8215,7 +8210,7 @@ function _fd_close(fd) {
 }
 
 function _fd_fdstat_get(fd, pbuf) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(44, 1, fd, pbuf);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(43, 1, fd, pbuf);
  try {
   var stream = SYSCALLS.getStreamFromFD(fd);
   var type = stream.tty ? 2 : FS.isDir(stream.mode) ? 3 : FS.isLink(stream.mode) ? 7 : 4;
@@ -8242,7 +8237,7 @@ function doReadv(stream, iov, iovcnt, offset) {
 }
 
 function _fd_read(fd, iov, iovcnt, pnum) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(45, 1, fd, iov, iovcnt, pnum);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(44, 1, fd, iov, iovcnt, pnum);
  try {
   var stream = SYSCALLS.getStreamFromFD(fd);
   var num = doReadv(stream, iov, iovcnt);
@@ -8254,21 +8249,22 @@ function _fd_read(fd, iov, iovcnt, pnum) {
  }
 }
 
-function convertI32PairToI53Checked(lo, hi) {
- assert(lo == lo >>> 0 || lo == (lo | 0));
- assert(hi === (hi | 0));
- return hi + 2097152 >>> 0 < 4194305 - !!lo ? (lo >>> 0) + hi * 4294967296 : NaN;
+var MAX_INT53 = 9007199254740992;
+
+var MIN_INT53 = -9007199254740992;
+
+function bigintToI53Checked(num) {
+ return num < MIN_INT53 || num > MAX_INT53 ? NaN : Number(num);
 }
 
-function _fd_seek(fd, offset_low, offset_high, whence, newOffset) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(46, 1, fd, offset_low, offset_high, whence, newOffset);
+function _fd_seek(fd, offset, whence, newOffset) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(45, 1, fd, offset, whence, newOffset);
  try {
-  var offset = convertI32PairToI53Checked(offset_low, offset_high);
+  offset = bigintToI53Checked(offset);
   if (isNaN(offset)) return 61;
   var stream = SYSCALLS.getStreamFromFD(fd);
   FS.llseek(stream, offset, whence);
-  tempI64 = [ stream.position >>> 0, (tempDouble = stream.position, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0) ], 
-  GROWABLE_HEAP_I32()[newOffset >> 2] = tempI64[0], GROWABLE_HEAP_I32()[newOffset + 4 >> 2] = tempI64[1];
+  HEAP64[newOffset >> 3] = BigInt(stream.position);
   if (stream.getdents && offset === 0 && whence === 0) stream.getdents = null;
   return 0;
  } catch (e) {
@@ -8291,7 +8287,7 @@ function doWritev(stream, iov, iovcnt, offset) {
 }
 
 function _fd_write(fd, iov, iovcnt, pnum) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(47, 1, fd, iov, iovcnt, pnum);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(46, 1, fd, iov, iovcnt, pnum);
  try {
   var stream = SYSCALLS.getStreamFromFD(fd);
   var num = doWritev(stream, iov, iovcnt);
@@ -8308,7 +8304,7 @@ function _getTempRet0() {
 }
 
 function _getaddrinfo(node, service, hint, out) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(48, 1, node, service, hint, out);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(47, 1, node, service, hint, out);
  var addrs = [];
  var canon = null;
  var addr = 0;
@@ -8475,14 +8471,6 @@ function _getnameinfo(sa, salen, node, nodelen, serv, servlen, flags) {
   return -12;
  }
  return 0;
-}
-
-function _glGetBufferSubData(target, offset, size, data) {
- if (!data) {
-  GL.recordError(1281);
-  return;
- }
- size && GLctx["getBufferSubData"](target, offset, GROWABLE_HEAP_U8(), data, size);
 }
 
 var GodotRuntime = {
@@ -8770,7 +8758,7 @@ var GodotAudio = {
     GodotAudio.input = GodotAudio.ctx.createMediaStreamSource(stream);
     callback(GodotAudio.input);
    } catch (e) {
-    GodotRuntime.error("Failed creaating input.", e);
+    GodotRuntime.error("Failed creating input.", e);
    }
   }
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -8828,10 +8816,12 @@ var GodotAudio = {
 };
 
 function _godot_audio_has_worklet() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(48, 1);
  return GodotAudio.ctx && GodotAudio.ctx.audioWorklet ? 1 : 0;
 }
 
 function _godot_audio_init(p_mix_rate, p_latency, p_state_change, p_latency_update) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(49, 1, p_mix_rate, p_latency, p_state_change, p_latency_update);
  const statechange = GodotRuntime.get_func(p_state_change);
  const latencyupdate = GodotRuntime.get_func(p_latency_update);
  const mix_rate = GodotRuntime.getHeapValue(p_mix_rate, "i32");
@@ -8841,14 +8831,14 @@ function _godot_audio_init(p_mix_rate, p_latency, p_state_change, p_latency_upda
 }
 
 function _godot_audio_input_start() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(49, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(50, 1);
  return GodotAudio.create_input(function(input) {
   input.connect(GodotAudio.driver.get_node());
  });
 }
 
 function _godot_audio_input_stop() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(50, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(51, 1);
  if (GodotAudio.input) {
   const tracks = GodotAudio.input["mediaStream"]["getTracks"]();
   for (let i = 0; i < tracks.length; i++) {
@@ -8860,7 +8850,7 @@ function _godot_audio_input_stop() {
 }
 
 function _godot_audio_is_available() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(51, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(52, 1);
  if (!(window.AudioContext || window.webkitAudioContext)) {
   return 0;
  }
@@ -8868,6 +8858,7 @@ function _godot_audio_is_available() {
 }
 
 function _godot_audio_resume() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(53, 1);
  if (GodotAudio.ctx && GodotAudio.ctx.state !== "running") {
   GodotAudio.ctx.resume();
  }
@@ -9008,6 +8999,7 @@ var GodotAudioWorklet = {
 };
 
 function _godot_audio_worklet_create(channels) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(54, 1, channels);
  try {
   GodotAudioWorklet.create(channels);
  } catch (e) {
@@ -9018,6 +9010,7 @@ function _godot_audio_worklet_create(channels) {
 }
 
 function _godot_audio_worklet_start(p_in_buf, p_in_size, p_out_buf, p_out_size, p_state) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(55, 1, p_in_buf, p_in_size, p_out_buf, p_out_size, p_state);
  const out_buffer = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_out_buf, p_out_size);
  const in_buffer = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_in_buf, p_in_size);
  const state = GodotRuntime.heapSub(GROWABLE_HEAP_I32(), p_state, 4);
@@ -9038,10 +9031,12 @@ function _godot_audio_worklet_state_wait(p_state, p_idx, p_expected, p_timeout) 
 }
 
 function _godot_js_config_canvas_id_get(p_ptr, p_ptr_max) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(56, 1, p_ptr, p_ptr_max);
  GodotRuntime.stringToHeap(`#${GodotConfig.canvas.id}`, p_ptr, p_ptr_max);
 }
 
 function _godot_js_config_locale_get(p_ptr, p_ptr_max) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(57, 1, p_ptr, p_ptr_max);
  GodotRuntime.stringToHeap(GodotConfig.locale, p_ptr, p_ptr_max);
 }
 
@@ -9172,11 +9167,11 @@ var GodotDisplayScreen = {
   const isFullscreen = GodotDisplayScreen.isFullscreen();
   const wantsFullWindow = GodotConfig.canvas_resize_policy === 2;
   const noResize = GodotConfig.canvas_resize_policy === 0;
-  const wwidth = GodotDisplayScreen.desired_size[0];
-  const wheight = GodotDisplayScreen.desired_size[1];
+  const dWidth = GodotDisplayScreen.desired_size[0];
+  const dHeight = GodotDisplayScreen.desired_size[1];
   const canvas = GodotConfig.canvas;
-  let width = wwidth;
-  let height = wheight;
+  let width = dWidth;
+  let height = dHeight;
   if (noResize) {
    if (canvas.width !== width || canvas.height !== height) {
     GodotDisplayScreen.desired_size = [ canvas.width, canvas.height ];
@@ -9349,18 +9344,22 @@ var GodotDisplay = {
 };
 
 function _godot_js_display_alert(p_text) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(58, 1, p_text);
  window.alert(GodotRuntime.parseString(p_text));
 }
 
 function _godot_js_display_canvas_focus() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(59, 1);
  GodotConfig.canvas.focus();
 }
 
 function _godot_js_display_canvas_is_focused() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(60, 1);
  return document.activeElement === GodotConfig.canvas;
 }
 
 function _godot_js_display_clipboard_get(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(61, 1, callback);
  const func = GodotRuntime.get_func(callback);
  try {
   navigator.clipboard.readText().then(function(result) {
@@ -9372,25 +9371,29 @@ function _godot_js_display_clipboard_get(callback) {
 }
 
 function _godot_js_display_clipboard_set(p_text) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(62, 1, p_text);
  const text = GodotRuntime.parseString(p_text);
  if (!navigator.clipboard || !navigator.clipboard.writeText) {
   return 1;
  }
  navigator.clipboard.writeText(text).catch(function(e) {
-  GodotRuntime.error("Setting OS clipboard is only possible from an input callback for the Web plafrom. Exception:", e);
+  GodotRuntime.error("Setting OS clipboard is only possible from an input callback for the Web platform. Exception:", e);
  });
  return 0;
 }
 
 function _godot_js_display_cursor_is_hidden() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(63, 1);
  return !GodotDisplayCursor.visible;
 }
 
 function _godot_js_display_cursor_is_locked() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(64, 1);
  return GodotDisplayCursor.isPointerLocked() ? 1 : 0;
 }
 
 function _godot_js_display_cursor_lock_set(p_lock) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(65, 1, p_lock);
  if (p_lock) {
   GodotDisplayCursor.lockPointer();
  } else {
@@ -9399,6 +9402,7 @@ function _godot_js_display_cursor_lock_set(p_lock) {
 }
 
 function _godot_js_display_cursor_set_custom_shape(p_shape, p_ptr, p_len, p_hotspot_x, p_hotspot_y) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(66, 1, p_shape, p_ptr, p_len, p_hotspot_x, p_hotspot_y);
  const shape = GodotRuntime.parseString(p_shape);
  const old_shape = GodotDisplayCursor.cursors[shape];
  if (p_len > 0) {
@@ -9423,10 +9427,12 @@ function _godot_js_display_cursor_set_custom_shape(p_shape, p_ptr, p_len, p_hots
 }
 
 function _godot_js_display_cursor_set_shape(p_string) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(67, 1, p_string);
  GodotDisplayCursor.set_shape(GodotRuntime.parseString(p_string));
 }
 
 function _godot_js_display_cursor_set_visible(p_visible) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(68, 1, p_visible);
  const visible = p_visible !== 0;
  if (visible === GodotDisplayCursor.visible) {
   return;
@@ -9440,11 +9446,13 @@ function _godot_js_display_cursor_set_visible(p_visible) {
 }
 
 function _godot_js_display_desired_size_set(width, height) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(69, 1, width, height);
  GodotDisplayScreen.desired_size = [ width, height ];
  GodotDisplayScreen.updateSize();
 }
 
 function _godot_js_display_fullscreen_cb(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(70, 1, callback);
  const canvas = GodotConfig.canvas;
  const func = GodotRuntime.get_func(callback);
  function change_cb(evt) {
@@ -9458,14 +9466,17 @@ function _godot_js_display_fullscreen_cb(callback) {
 }
 
 function _godot_js_display_fullscreen_exit() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(71, 1);
  return GodotDisplayScreen.exitFullscreen();
 }
 
 function _godot_js_display_fullscreen_request() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(72, 1);
  return GodotDisplayScreen.requestFullscreen();
 }
 
 function _godot_js_display_has_webgl(p_version) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(73, 1, p_version);
  if (p_version !== 1 && p_version !== 2) {
   return false;
  }
@@ -9476,6 +9487,7 @@ function _godot_js_display_has_webgl(p_version) {
 }
 
 function _godot_js_display_is_swap_ok_cancel() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(74, 1);
  const win = [ "Windows", "Win64", "Win32", "WinCE" ];
  const plat = navigator.platform || "";
  if (win.indexOf(plat) !== -1) {
@@ -9485,6 +9497,7 @@ function _godot_js_display_is_swap_ok_cancel() {
 }
 
 function _godot_js_display_notification_cb(callback, p_enter, p_exit, p_in, p_out) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(75, 1, callback, p_enter, p_exit, p_in, p_out);
  const canvas = GodotConfig.canvas;
  const func = GodotRuntime.get_func(callback);
  const notif = [ p_enter, p_exit, p_in, p_out ];
@@ -9496,20 +9509,24 @@ function _godot_js_display_notification_cb(callback, p_enter, p_exit, p_in, p_ou
 }
 
 function _godot_js_display_pixel_ratio_get() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(76, 1);
  return GodotDisplayScreen.getPixelRatio();
 }
 
 function _godot_js_display_screen_dpi_get() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(77, 1);
  return GodotDisplay.getDPI();
 }
 
 function _godot_js_display_screen_size_get(width, height) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(78, 1, width, height);
  const scale = GodotDisplayScreen.getPixelRatio();
  GodotRuntime.setHeapValue(width, window.screen.width * scale, "i32");
  GodotRuntime.setHeapValue(height, window.screen.height * scale, "i32");
 }
 
 function _godot_js_display_setup_canvas(p_width, p_height, p_fullscreen, p_hidpi) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(79, 1, p_width, p_height, p_fullscreen, p_hidpi);
  const canvas = GodotConfig.canvas;
  GodotEventListeners.add(canvas, "contextmenu", function(ev) {
   ev.preventDefault();
@@ -9541,6 +9558,7 @@ function _godot_js_display_setup_canvas(p_width, p_height, p_fullscreen, p_hidpi
 }
 
 function _godot_js_display_size_update() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(80, 1);
  const updated = GodotDisplayScreen.updateSize();
  if (updated) {
   GodotDisplayVK.updateSize();
@@ -9549,18 +9567,22 @@ function _godot_js_display_size_update() {
 }
 
 function _godot_js_display_touchscreen_is_available() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(81, 1);
  return "ontouchstart" in window;
 }
 
 function _godot_js_display_tts_available() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(82, 1);
  return "speechSynthesis" in window;
 }
 
 function _godot_js_display_vk_available() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(83, 1);
  return GodotDisplayVK.available();
 }
 
 function _godot_js_display_vk_cb(p_input_cb) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(84, 1, p_input_cb);
  const input_cb = GodotRuntime.get_func(p_input_cb);
  if (GodotDisplayVK.available()) {
   GodotDisplayVK.init(input_cb);
@@ -9568,10 +9590,12 @@ function _godot_js_display_vk_cb(p_input_cb) {
 }
 
 function _godot_js_display_vk_hide() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(85, 1);
  GodotDisplayVK.hide();
 }
 
 function _godot_js_display_vk_show(p_text, p_type, p_start, p_end) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(86, 1, p_text, p_type, p_start, p_end);
  const text = GodotRuntime.parseString(p_text);
  const start = p_start > 0 ? p_start : 0;
  const end = p_end > 0 ? p_end : start;
@@ -9579,6 +9603,7 @@ function _godot_js_display_vk_show(p_text, p_type, p_start, p_end) {
 }
 
 function _godot_js_display_window_blur_cb(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(87, 1, callback);
  const func = GodotRuntime.get_func(callback);
  GodotEventListeners.add(window, "blur", function() {
   func();
@@ -9586,30 +9611,40 @@ function _godot_js_display_window_blur_cb(callback) {
 }
 
 function _godot_js_display_window_icon_set(p_ptr, p_len) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(88, 1, p_ptr, p_len);
  let link = document.getElementById("-gd-engine-icon");
- if (link === null) {
-  link = document.createElement("link");
-  link.rel = "icon";
-  link.id = "-gd-engine-icon";
-  document.head.appendChild(link);
- }
  const old_icon = GodotDisplay.window_icon;
- const png = new Blob([ GodotRuntime.heapSlice(GROWABLE_HEAP_U8(), p_ptr, p_len) ], {
-  type: "image/png"
- });
- GodotDisplay.window_icon = URL.createObjectURL(png);
- link.href = GodotDisplay.window_icon;
+ if (p_ptr) {
+  if (link === null) {
+   link = document.createElement("link");
+   link.rel = "icon";
+   link.id = "-gd-engine-icon";
+   document.head.appendChild(link);
+  }
+  const png = new Blob([ GodotRuntime.heapSlice(GROWABLE_HEAP_U8(), p_ptr, p_len) ], {
+   type: "image/png"
+  });
+  GodotDisplay.window_icon = URL.createObjectURL(png);
+  link.href = GodotDisplay.window_icon;
+ } else {
+  if (link) {
+   link.remove();
+  }
+  GodotDisplay.window_icon = null;
+ }
  if (old_icon) {
   URL.revokeObjectURL(old_icon);
  }
 }
 
 function _godot_js_display_window_size_get(p_width, p_height) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(89, 1, p_width, p_height);
  GodotRuntime.setHeapValue(p_width, GodotConfig.canvas.width, "i32");
  GodotRuntime.setHeapValue(p_height, GodotConfig.canvas.height, "i32");
 }
 
 function _godot_js_display_window_title_set(p_data) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(90, 1, p_data);
  document.title = GodotRuntime.parseString(p_data);
 }
 
@@ -9652,7 +9687,7 @@ function _godot_js_eval(p_js, p_use_global_ctx, p_union_ptr, p_byte_arr, p_byte_
    const func = GodotRuntime.get_func(p_callback);
    const bytes_ptr = func(p_byte_arr, p_byte_arr_write, eval_ret.length);
    GROWABLE_HEAP_U8().set(eval_ret, bytes_ptr);
-   return 20;
+   return 29;
   }
   break;
  }
@@ -9693,22 +9728,17 @@ var GodotFetch = {
    return;
   }
   let chunked = false;
-  let bodySize = -1;
   response.headers.forEach(function(value, header) {
    const v = value.toLowerCase().trim();
    const h = header.toLowerCase().trim();
    if (h === "transfer-encoding" && v === "chunked") {
     chunked = true;
    }
-   if (h === "content-length") {
-    bodySize = parseInt(v, 10);
-   }
   });
   obj.status = response.status;
   obj.response = response;
   obj.reader = response.body.getReader();
   obj.chunked = chunked;
-  obj.bodySize = bodySize;
  },
  onerror: function(id, err) {
   GodotRuntime.error(err);
@@ -9727,8 +9757,7 @@ var GodotFetch = {
    done: false,
    reading: false,
    status: 0,
-   chunks: [],
-   bodySize: -1
+   chunks: []
   };
   const id = IDHandler.add(obj);
   const init = {
@@ -9769,15 +9798,8 @@ var GodotFetch = {
  }
 };
 
-function _godot_js_fetch_body_length_get(p_id) {
- const obj = IDHandler.get(p_id);
- if (!obj || !obj.response) {
-  return -1;
- }
- return obj.bodySize;
-}
-
 function _godot_js_fetch_create(p_method, p_url, p_headers, p_headers_size, p_body, p_body_size) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(91, 1, p_method, p_url, p_headers, p_headers_size, p_body, p_body_size);
  const method = GodotRuntime.parseString(p_method);
  const url = GodotRuntime.parseString(p_url);
  const headers = GodotRuntime.parseStringArray(p_headers, p_headers_size);
@@ -9794,10 +9816,12 @@ function _godot_js_fetch_create(p_method, p_url, p_headers, p_headers_size, p_bo
 }
 
 function _godot_js_fetch_free(id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(92, 1, id);
  GodotFetch.free(id);
 }
 
 function _godot_js_fetch_http_status_get(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(93, 1, p_id);
  const obj = IDHandler.get(p_id);
  if (!obj || !obj.response) {
   return 0;
@@ -9806,6 +9830,7 @@ function _godot_js_fetch_http_status_get(p_id) {
 }
 
 function _godot_js_fetch_is_chunked(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(94, 1, p_id);
  const obj = IDHandler.get(p_id);
  if (!obj || !obj.response) {
   return -1;
@@ -9814,6 +9839,7 @@ function _godot_js_fetch_is_chunked(p_id) {
 }
 
 function _godot_js_fetch_read_chunk(p_id, p_buf, p_buf_size) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(95, 1, p_id, p_buf, p_buf_size);
  const obj = IDHandler.get(p_id);
  if (!obj || !obj.response) {
   return 0;
@@ -9839,6 +9865,7 @@ function _godot_js_fetch_read_chunk(p_id, p_buf, p_buf_size) {
 }
 
 function _godot_js_fetch_read_headers(p_id, p_parse_cb, p_ref) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(96, 1, p_id, p_parse_cb, p_ref);
  const obj = IDHandler.get(p_id);
  if (!obj || !obj.response) {
   return 1;
@@ -9855,6 +9882,7 @@ function _godot_js_fetch_read_headers(p_id, p_parse_cb, p_ref) {
 }
 
 function _godot_js_fetch_state_get(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(97, 1, p_id);
  const obj = IDHandler.get(p_id);
  if (!obj) {
   return -1;
@@ -10147,6 +10175,7 @@ var GodotInput = {
 };
 
 function _godot_js_input_drop_files_cb(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(98, 1, callback);
  const func = GodotRuntime.get_func(callback);
  const dropFiles = function(files) {
   const args = files || [];
@@ -10166,20 +10195,24 @@ function _godot_js_input_drop_files_cb(callback) {
 }
 
 function _godot_js_input_gamepad_cb(change_cb) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(99, 1, change_cb);
  const onchange = GodotRuntime.get_func(change_cb);
  GodotInputGamepads.init(onchange);
 }
 
 function _godot_js_input_gamepad_sample() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(100, 1);
  GodotInputGamepads.sample();
  return 0;
 }
 
 function _godot_js_input_gamepad_sample_count() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(101, 1);
  return GodotInputGamepads.get_samples().length;
 }
 
 function _godot_js_input_gamepad_sample_get(p_index, r_btns, r_btns_num, r_axes, r_axes_num, r_standard) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(102, 1, p_index, r_btns, r_btns_num, r_axes, r_axes_num, r_standard);
  const sample = GodotInputGamepads.get_sample(p_index);
  if (!sample || !sample.connected) {
   return 1;
@@ -10202,6 +10235,7 @@ function _godot_js_input_gamepad_sample_get(p_index, r_btns, r_btns_num, r_axes,
 }
 
 function _godot_js_input_key_cb(callback, code, key) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(103, 1, callback, code, key);
  const func = GodotRuntime.get_func(callback);
  function key_cb(pressed, evt) {
   const modifiers = GodotInput.getModifiers(evt);
@@ -10215,6 +10249,7 @@ function _godot_js_input_key_cb(callback, code, key) {
 }
 
 function _godot_js_input_mouse_button_cb(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(104, 1, callback);
  const func = GodotRuntime.get_func(callback);
  const canvas = GodotConfig.canvas;
  function button_cb(p_pressed, evt) {
@@ -10233,6 +10268,7 @@ function _godot_js_input_mouse_button_cb(callback) {
 }
 
 function _godot_js_input_mouse_move_cb(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(105, 1, callback);
  const func = GodotRuntime.get_func(callback);
  const canvas = GodotConfig.canvas;
  function move_cb(evt) {
@@ -10249,6 +10285,7 @@ function _godot_js_input_mouse_move_cb(callback) {
 }
 
 function _godot_js_input_mouse_wheel_cb(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(106, 1, callback);
  const func = GodotRuntime.get_func(callback);
  function wheel_cb(evt) {
   if (func(evt["deltaX"] || 0, evt["deltaY"] || 0)) {
@@ -10259,6 +10296,7 @@ function _godot_js_input_mouse_wheel_cb(callback) {
 }
 
 function _godot_js_input_paste_cb(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(107, 1, callback);
  const func = GodotRuntime.get_func(callback);
  GodotEventListeners.add(window, "paste", function(evt) {
   const text = evt.clipboardData.getData("text");
@@ -10269,6 +10307,7 @@ function _godot_js_input_paste_cb(callback) {
 }
 
 function _godot_js_input_touch_cb(callback, ids, coords) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(108, 1, callback, ids, coords);
  const func = GodotRuntime.get_func(callback);
  const canvas = GodotConfig.canvas;
  function touch_cb(type, evt) {
@@ -10296,6 +10335,7 @@ function _godot_js_input_touch_cb(callback, ids, coords) {
 }
 
 function _godot_js_input_vibrate_handheld(p_duration_ms) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(109, 1, p_duration_ms);
  if (typeof navigator.vibrate !== "function") {
   GodotRuntime.print("This browser does not support vibration.");
  } else {
@@ -10304,6 +10344,7 @@ function _godot_js_input_vibrate_handheld(p_duration_ms) {
 }
 
 function _godot_js_os_download_buffer(p_ptr, p_size, p_name, p_mime) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(110, 1, p_ptr, p_size, p_name, p_mime);
  const buf = GodotRuntime.heapSlice(GROWABLE_HEAP_I8(), p_ptr, p_size);
  const name = GodotRuntime.parseString(p_name);
  const mime = GodotRuntime.parseString(p_mime);
@@ -10322,6 +10363,7 @@ function _godot_js_os_download_buffer(p_ptr, p_size, p_name, p_mime) {
 }
 
 function _godot_js_os_execute(p_json) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(111, 1, p_json);
  const json_args = GodotRuntime.parseString(p_json);
  const args = JSON.parse(json_args);
  if (GodotConfig.on_execute) {
@@ -10332,15 +10374,18 @@ function _godot_js_os_execute(p_json) {
 }
 
 function _godot_js_os_finish_async(p_callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(112, 1, p_callback);
  const func = GodotRuntime.get_func(p_callback);
  GodotOS.finish_async(func);
 }
 
 function _godot_js_os_fs_is_persistent() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(113, 1);
  return GodotFS.is_persistent();
 }
 
 function _godot_js_os_fs_sync(callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(114, 1, callback);
  const func = GodotRuntime.get_func(callback);
  GodotOS._fs_sync_promise = GodotFS.sync();
  GodotOS._fs_sync_promise.then(function(err) {
@@ -10349,6 +10394,7 @@ function _godot_js_os_fs_sync(callback) {
 }
 
 function _godot_js_os_has_feature(p_ftr) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(115, 1, p_ftr);
  const ftr = GodotRuntime.parseString(p_ftr);
  const ua = navigator.userAgent;
  if (ftr === "web_macos") {
@@ -10370,15 +10416,18 @@ function _godot_js_os_has_feature(p_ftr) {
 }
 
 function _godot_js_os_hw_concurrency_get() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(116, 1);
  const concurrency = navigator.hardwareConcurrency || 1;
  return concurrency < 2 ? concurrency : 2;
 }
 
 function _godot_js_os_request_quit_cb(p_callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(117, 1, p_callback);
  GodotOS.request_quit = GodotRuntime.get_func(p_callback);
 }
 
 function _godot_js_os_shell_open(p_uri) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(118, 1, p_uri);
  window.open(GodotRuntime.parseString(p_uri), "_blank");
 }
 
@@ -10408,6 +10457,7 @@ var GodotPWA = {
 };
 
 function _godot_js_pwa_cb(p_update_cb) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(119, 1, p_update_cb);
  if ("serviceWorker" in navigator) {
   const cb = GodotRuntime.get_func(p_update_cb);
   navigator.serviceWorker.getRegistration().then(GodotPWA.updateState.bind(null, cb));
@@ -10415,6 +10465,7 @@ function _godot_js_pwa_cb(p_update_cb) {
 }
 
 function _godot_js_pwa_update() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(120, 1);
  if ("serviceWorker" in navigator && GodotPWA.hasUpdate) {
   navigator.serviceWorker.getRegistration().then(function(reg) {
    if (!reg || !reg.waiting) {
@@ -10484,6 +10535,7 @@ var GodotRTCDataChannel = {
 };
 
 function _godot_js_rtc_datachannel_close(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(121, 1, p_id);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return;
@@ -10492,6 +10544,7 @@ function _godot_js_rtc_datachannel_close(p_id) {
 }
 
 function _godot_js_rtc_datachannel_connect(p_id, p_ref, p_on_open, p_on_message, p_on_error, p_on_close) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(122, 1, p_id, p_ref, p_on_open, p_on_message, p_on_error, p_on_close);
  const onopen = GodotRuntime.get_func(p_on_open).bind(null, p_ref);
  const onmessage = GodotRuntime.get_func(p_on_message).bind(null, p_ref);
  const onerror = GodotRuntime.get_func(p_on_error).bind(null, p_ref);
@@ -10500,27 +10553,33 @@ function _godot_js_rtc_datachannel_connect(p_id, p_ref, p_on_open, p_on_message,
 }
 
 function _godot_js_rtc_datachannel_destroy(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(123, 1, p_id);
  GodotRTCDataChannel.close(p_id);
  IDHandler.remove(p_id);
 }
 
 function _godot_js_rtc_datachannel_get_buffered_amount(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(124, 1, p_id);
  return GodotRTCDataChannel.get_prop(p_id, "bufferedAmount", 0);
 }
 
 function _godot_js_rtc_datachannel_id_get(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(125, 1, p_id);
  return GodotRTCDataChannel.get_prop(p_id, "id", 65535);
 }
 
 function _godot_js_rtc_datachannel_is_negotiated(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(126, 1, p_id);
  return GodotRTCDataChannel.get_prop(p_id, "negotiated", 65535);
 }
 
 function _godot_js_rtc_datachannel_is_ordered(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(127, 1, p_id);
  return GodotRTCDataChannel.get_prop(p_id, "ordered", true);
 }
 
 function _godot_js_rtc_datachannel_label_get(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(128, 1, p_id);
  const ref = IDHandler.get(p_id);
  if (!ref || !ref.label) {
   return 0;
@@ -10529,6 +10588,7 @@ function _godot_js_rtc_datachannel_label_get(p_id) {
 }
 
 function _godot_js_rtc_datachannel_max_packet_lifetime_get(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(129, 1, p_id);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return 65535;
@@ -10542,6 +10602,7 @@ function _godot_js_rtc_datachannel_max_packet_lifetime_get(p_id) {
 }
 
 function _godot_js_rtc_datachannel_max_retransmits_get(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(130, 1, p_id);
  return GodotRTCDataChannel.get_prop(p_id, "maxRetransmits", 65535);
 }
 
@@ -10554,6 +10615,7 @@ function _godot_js_rtc_datachannel_protocol_get(p_id) {
 }
 
 function _godot_js_rtc_datachannel_ready_state_get(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(131, 1, p_id);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return 3;
@@ -10575,6 +10637,7 @@ function _godot_js_rtc_datachannel_ready_state_get(p_id) {
 }
 
 function _godot_js_rtc_datachannel_send(p_id, p_buffer, p_length, p_raw) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(132, 1, p_id, p_buffer, p_length, p_raw);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return 1;
@@ -10716,6 +10779,7 @@ var GodotRTCPeerConnection = {
 };
 
 function _godot_js_rtc_pc_close(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(133, 1, p_id);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return;
@@ -10724,6 +10788,7 @@ function _godot_js_rtc_pc_close(p_id) {
 }
 
 function _godot_js_rtc_pc_create(p_config, p_ref, p_on_connection_state_change, p_on_ice_gathering_state_change, p_on_signaling_state_change, p_on_ice_candidate, p_on_datachannel) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(134, 1, p_config, p_ref, p_on_connection_state_change, p_on_ice_gathering_state_change, p_on_signaling_state_change, p_on_ice_candidate, p_on_datachannel);
  const wrap = function(p_func) {
   return GodotRuntime.get_func(p_func).bind(null, p_ref);
  };
@@ -10731,6 +10796,7 @@ function _godot_js_rtc_pc_create(p_config, p_ref, p_on_connection_state_change, 
 }
 
 function _godot_js_rtc_pc_datachannel_create(p_id, p_label, p_config) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(135, 1, p_id, p_label, p_config);
  try {
   const ref = IDHandler.get(p_id);
   if (!ref) {
@@ -10747,10 +10813,12 @@ function _godot_js_rtc_pc_datachannel_create(p_id, p_label, p_config) {
 }
 
 function _godot_js_rtc_pc_destroy(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(136, 1, p_id);
  GodotRTCPeerConnection.destroy(p_id);
 }
 
 function _godot_js_rtc_pc_ice_candidate_add(p_id, p_mid_name, p_mline_idx, p_sdp) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(137, 1, p_id, p_mid_name, p_mline_idx, p_sdp);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return;
@@ -10765,6 +10833,7 @@ function _godot_js_rtc_pc_ice_candidate_add(p_id, p_mid_name, p_mline_idx, p_sdp
 }
 
 function _godot_js_rtc_pc_local_description_set(p_id, p_type, p_sdp, p_obj, p_on_error) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(138, 1, p_id, p_type, p_sdp, p_obj, p_on_error);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return;
@@ -10781,6 +10850,7 @@ function _godot_js_rtc_pc_local_description_set(p_id, p_type, p_sdp, p_obj, p_on
 }
 
 function _godot_js_rtc_pc_offer_create(p_id, p_obj, p_on_session, p_on_error) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(139, 1, p_id, p_obj, p_on_session, p_on_error);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return;
@@ -10795,6 +10865,7 @@ function _godot_js_rtc_pc_offer_create(p_id, p_obj, p_on_session, p_on_error) {
 }
 
 function _godot_js_rtc_pc_remote_description_set(p_id, p_type, p_sdp, p_obj, p_session_created, p_on_error) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(140, 1, p_id, p_type, p_sdp, p_obj, p_session_created, p_on_error);
  const ref = IDHandler.get(p_id);
  if (!ref) {
   return;
@@ -10819,6 +10890,7 @@ function _godot_js_rtc_pc_remote_description_set(p_id, p_type, p_sdp, p_obj, p_s
 }
 
 function _godot_js_tts_get_voices(p_callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(141, 1, p_callback);
  const func = GodotRuntime.get_func(p_callback);
  try {
   const arr = [];
@@ -10833,22 +10905,27 @@ function _godot_js_tts_get_voices(p_callback) {
 }
 
 function _godot_js_tts_is_paused() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(142, 1);
  return window.speechSynthesis.paused;
 }
 
 function _godot_js_tts_is_speaking() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(143, 1);
  return window.speechSynthesis.speaking;
 }
 
 function _godot_js_tts_pause() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(144, 1);
  window.speechSynthesis.pause();
 }
 
 function _godot_js_tts_resume() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(145, 1);
  window.speechSynthesis.resume();
 }
 
 function _godot_js_tts_speak(p_text, p_voice, p_volume, p_pitch, p_rate, p_utterance_id, p_callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(146, 1, p_text, p_voice, p_volume, p_pitch, p_rate, p_utterance_id, p_callback);
  const func = GodotRuntime.get_func(p_callback);
  function listener_end(evt) {
   evt.currentTarget.cb(1, evt.currentTarget.id, 0);
@@ -10885,6 +10962,7 @@ function _godot_js_tts_speak(p_text, p_voice, p_volume, p_pitch, p_rate, p_utter
 }
 
 function _godot_js_tts_stop() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(147, 1);
  window.speechSynthesis.cancel();
  window.speechSynthesis.resume();
 }
@@ -10968,7 +11046,7 @@ var GodotWebSocket = {
   const ref = IDHandler.get(p_id);
   if (ref && ref.readyState < ref.CLOSING) {
    const code = p_code;
-   const reason = GodotRuntime.parseString(p_reason);
+   const reason = p_reason;
    ref.close(code, reason);
   }
  },
@@ -10987,16 +11065,19 @@ var GodotWebSocket = {
 };
 
 function _godot_js_websocket_buffered_amount(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(148, 1, p_id);
  return GodotWebSocket.bufferedAmount(p_id);
 }
 
 function _godot_js_websocket_close(p_id, p_code, p_reason) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(149, 1, p_id, p_code, p_reason);
  const code = p_code;
  const reason = GodotRuntime.parseString(p_reason);
  GodotWebSocket.close(p_id, code, reason);
 }
 
 function _godot_js_websocket_create(p_ref, p_url, p_proto, p_on_open, p_on_message, p_on_error, p_on_close) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(150, 1, p_ref, p_url, p_proto, p_on_open, p_on_message, p_on_error, p_on_close);
  const on_open = GodotRuntime.get_func(p_on_open).bind(null, p_ref);
  const on_message = GodotRuntime.get_func(p_on_message).bind(null, p_ref);
  const on_error = GodotRuntime.get_func(p_on_error).bind(null, p_ref);
@@ -11018,10 +11099,12 @@ function _godot_js_websocket_create(p_ref, p_url, p_proto, p_on_open, p_on_messa
 }
 
 function _godot_js_websocket_destroy(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(151, 1, p_id);
  GodotWebSocket.destroy(p_id);
 }
 
 function _godot_js_websocket_send(p_id, p_buf, p_buf_len, p_raw) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(152, 1, p_id, p_buf, p_buf_len, p_raw);
  const bytes_array = new Uint8Array(p_buf_len);
  let i = 0;
  for (i = 0; i < p_buf_len; i++) {
@@ -11125,6 +11208,7 @@ var GodotJSWrapper = {
 };
 
 function _godot_js_wrapper_create_cb(p_ref, p_func) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(153, 1, p_ref, p_func);
  const func = GodotRuntime.get_func(p_func);
  let id = 0;
  const cb = function() {
@@ -11133,7 +11217,9 @@ function _godot_js_wrapper_create_cb(p_ref, p_func) {
   }
   GodotJSWrapper.cb_ret = null;
   const args = Array.from(arguments);
-  func(p_ref, GodotJSWrapper.get_proxied(args), args.length);
+  const argsProxy = new GodotJSWrapper.MyProxy(args);
+  func(p_ref, argsProxy.get_id(), args.length);
+  argsProxy.unref();
   const ret = GodotJSWrapper.cb_ret;
   GodotJSWrapper.cb_ret = null;
   return ret;
@@ -11143,6 +11229,7 @@ function _godot_js_wrapper_create_cb(p_ref, p_func) {
 }
 
 function _godot_js_wrapper_create_object(p_object, p_args, p_argc, p_convert_callback, p_exchange, p_lock, p_free_lock_callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(154, 1, p_object, p_args, p_argc, p_convert_callback, p_exchange, p_lock, p_free_lock_callback);
  const name = GodotRuntime.parseString(p_object);
  if (typeof window[name] === "undefined") {
   return -1;
@@ -11168,6 +11255,7 @@ function _godot_js_wrapper_create_object(p_object, p_args, p_argc, p_convert_cal
 }
 
 function _godot_js_wrapper_interface_get(p_name) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(155, 1, p_name);
  const name = GodotRuntime.parseString(p_name);
  if (typeof window[name] !== "undefined") {
   return GodotJSWrapper.get_proxied(window[name]);
@@ -11176,6 +11264,7 @@ function _godot_js_wrapper_interface_get(p_name) {
 }
 
 function _godot_js_wrapper_object_call(p_id, p_method, p_args, p_argc, p_convert_callback, p_exchange, p_lock, p_free_lock_callback) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(156, 1, p_id, p_method, p_args, p_argc, p_convert_callback, p_exchange, p_lock, p_free_lock_callback);
  const obj = GodotJSWrapper.get_proxied_value(p_id);
  if (obj === undefined) {
   return -1;
@@ -11202,6 +11291,7 @@ function _godot_js_wrapper_object_call(p_id, p_method, p_args, p_argc, p_convert
 }
 
 function _godot_js_wrapper_object_get(p_id, p_exchange, p_prop) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(157, 1, p_id, p_exchange, p_prop);
  const obj = GodotJSWrapper.get_proxied_value(p_id);
  if (obj === undefined) {
   return 0;
@@ -11219,6 +11309,7 @@ function _godot_js_wrapper_object_get(p_id, p_exchange, p_prop) {
 }
 
 function _godot_js_wrapper_object_getvar(p_id, p_type, p_exchange) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(158, 1, p_id, p_type, p_exchange);
  const obj = GodotJSWrapper.get_proxied_value(p_id);
  if (obj === undefined) {
   return -1;
@@ -11236,6 +11327,7 @@ function _godot_js_wrapper_object_getvar(p_id, p_type, p_exchange) {
 }
 
 function _godot_js_wrapper_object_set(p_id, p_name, p_type, p_exchange) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(159, 1, p_id, p_name, p_type, p_exchange);
  const obj = GodotJSWrapper.get_proxied_value(p_id);
  if (obj === undefined) {
   return;
@@ -11249,10 +11341,12 @@ function _godot_js_wrapper_object_set(p_id, p_name, p_type, p_exchange) {
 }
 
 function _godot_js_wrapper_object_set_cb_ret(p_val_type, p_val_ex) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(160, 1, p_val_type, p_val_ex);
  GodotJSWrapper.cb_ret = GodotJSWrapper.variant2js(p_val_type, p_val_ex);
 }
 
 function _godot_js_wrapper_object_setvar(p_id, p_key_type, p_key_ex, p_val_type, p_val_ex) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(161, 1, p_id, p_key_type, p_key_ex, p_val_type, p_val_ex);
  const obj = GodotJSWrapper.get_proxied_value(p_id);
  if (obj === undefined) {
   return -1;
@@ -11268,6 +11362,7 @@ function _godot_js_wrapper_object_setvar(p_id, p_key_type, p_key_ex, p_val_type,
 }
 
 function _godot_js_wrapper_object_unref(p_id) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(162, 1, p_id);
  const proxy = IDHandler.get(p_id);
  if (proxy !== undefined) {
   proxy.unref();
@@ -11277,18 +11372,27 @@ function _godot_js_wrapper_object_unref(p_id) {
 var GodotWebGL2 = {};
 
 function _godot_webgl2_glFramebufferTextureMultiviewOVR(target, attachment, texture, level, base_view_index, num_views) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(52, 1, target, attachment, texture, level, base_view_index, num_views);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(163, 1, target, attachment, texture, level, base_view_index, num_views);
  const context = GL.currentContext;
  if (typeof context.multiviewExt === "undefined") {
   const ext = context.GLctx.getExtension("OVR_multiview2");
   if (!ext) {
-   console.error("Trying to call glFramebufferTextureMultiviewOVR() without the OVR_multiview2 extension");
+   GodotRuntime.error("Trying to call glFramebufferTextureMultiviewOVR() without the OVR_multiview2 extension");
    return;
   }
   context.multiviewExt = ext;
  }
  const ext = context.multiviewExt;
  ext.framebufferTextureMultiviewOVR(target, attachment, GL.textures[texture], level, base_view_index, num_views);
+}
+
+function _godot_webgl2_glGetBufferSubData(target, offset, size, data) {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(164, 1, target, offset, size, data);
+ const gl_context_handle = _emscripten_webgl_get_current_context();
+ const gl = GL.getContext(gl_context_handle);
+ if (gl) {
+  gl.GLctx["getBufferSubData"](target, offset, GROWABLE_HEAP_U8(), data, size);
+ }
 }
 
 var GodotWebXR = {
@@ -11437,7 +11541,7 @@ var GodotWebXR = {
 };
 
 function _godot_webxr_get_bounds_geometry(r_points) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(53, 1, r_points);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(165, 1, r_points);
  if (!GodotWebXR.space || !GodotWebXR.space.boundsGeometry) {
   return 0;
  }
@@ -11457,7 +11561,7 @@ function _godot_webxr_get_bounds_geometry(r_points) {
 }
 
 function _godot_webxr_get_color_texture() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(54, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(166, 1);
  const subimage = GodotWebXR.getSubImage();
  if (subimage === null) {
   return 0;
@@ -11466,7 +11570,7 @@ function _godot_webxr_get_color_texture() {
 }
 
 function _godot_webxr_get_depth_texture() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(55, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(167, 1);
  const subimage = GodotWebXR.getSubImage();
  if (subimage === null) {
   return 0;
@@ -11478,7 +11582,7 @@ function _godot_webxr_get_depth_texture() {
 }
 
 function _godot_webxr_get_frame_rate() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(56, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(168, 1);
  if (!GodotWebXR.session || GodotWebXR.session.frameRate === undefined) {
   return 0;
  }
@@ -11486,7 +11590,7 @@ function _godot_webxr_get_frame_rate() {
 }
 
 function _godot_webxr_get_projection_for_view(p_view, r_transform) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(57, 1, p_view, r_transform);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(169, 1, p_view, r_transform);
  if (!GodotWebXR.session || !GodotWebXR.pose) {
   return false;
  }
@@ -11498,7 +11602,7 @@ function _godot_webxr_get_projection_for_view(p_view, r_transform) {
 }
 
 function _godot_webxr_get_render_target_size(r_size) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(58, 1, r_size);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(170, 1, r_size);
  const subimage = GodotWebXR.getSubImage();
  if (subimage === null) {
   return false;
@@ -11509,7 +11613,7 @@ function _godot_webxr_get_render_target_size(r_size) {
 }
 
 function _godot_webxr_get_supported_frame_rates(r_frame_rates) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(59, 1, r_frame_rates);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(171, 1, r_frame_rates);
  if (!GodotWebXR.session || GodotWebXR.session.supportedFrameRates === undefined) {
   return 0;
  }
@@ -11526,7 +11630,7 @@ function _godot_webxr_get_supported_frame_rates(r_frame_rates) {
 }
 
 function _godot_webxr_get_transform_for_view(p_view, r_transform) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(60, 1, p_view, r_transform);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(172, 1, p_view, r_transform);
  if (!GodotWebXR.session || !GodotWebXR.pose) {
   return false;
  }
@@ -11544,7 +11648,7 @@ function _godot_webxr_get_transform_for_view(p_view, r_transform) {
 }
 
 function _godot_webxr_get_velocity_texture() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(61, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(173, 1);
  const subimage = GodotWebXR.getSubImage();
  if (subimage === null) {
   return 0;
@@ -11556,7 +11660,7 @@ function _godot_webxr_get_velocity_texture() {
 }
 
 function _godot_webxr_get_view_count() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(62, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(174, 1);
  if (!GodotWebXR.session || !GodotWebXR.pose) {
   return 1;
  }
@@ -11565,7 +11669,7 @@ function _godot_webxr_get_view_count() {
 }
 
 function _godot_webxr_get_visibility_state() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(63, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(175, 1);
  if (!GodotWebXR.session || !GodotWebXR.session.visibilityState) {
   return 0;
  }
@@ -11573,7 +11677,7 @@ function _godot_webxr_get_visibility_state() {
 }
 
 function _godot_webxr_initialize(p_session_mode, p_required_features, p_optional_features, p_requested_reference_spaces, p_on_session_started, p_on_session_ended, p_on_session_failed, p_on_input_event, p_on_simple_event) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(64, 1, p_session_mode, p_required_features, p_optional_features, p_requested_reference_spaces, p_on_session_started, p_on_session_ended, p_on_session_failed, p_on_input_event, p_on_simple_event);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(176, 1, p_session_mode, p_required_features, p_optional_features, p_requested_reference_spaces, p_on_session_started, p_on_session_ended, p_on_session_failed, p_on_input_event, p_on_simple_event);
  GodotWebXR.monkeyPatchRequestAnimationFrame(true);
  const session_mode = GodotRuntime.parseString(p_session_mode);
  const required_features = GodotRuntime.parseString(p_required_features).split(",").map(s => s.trim()).filter(s => s !== "");
@@ -11661,7 +11765,7 @@ function _godot_webxr_initialize(p_session_mode, p_required_features, p_optional
 }
 
 function _godot_webxr_is_session_supported(p_session_mode, p_callback) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(65, 1, p_session_mode, p_callback);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(177, 1, p_session_mode, p_callback);
  const session_mode = GodotRuntime.parseString(p_session_mode);
  const cb = GodotRuntime.get_func(p_callback);
  if (navigator.xr) {
@@ -11678,12 +11782,12 @@ function _godot_webxr_is_session_supported(p_session_mode, p_callback) {
 }
 
 function _godot_webxr_is_supported() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(66, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(178, 1);
  return !!navigator.xr;
 }
 
 function _godot_webxr_uninitialize() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(67, 1);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(179, 1);
  if (GodotWebXR.session) {
   GodotWebXR.session.end().catch(e => {});
  }
@@ -11702,7 +11806,7 @@ function _godot_webxr_uninitialize() {
 }
 
 function _godot_webxr_update_input_source(p_input_source_id, r_target_pose, r_target_ray_mode, r_touch_index, r_has_grip_pose, r_grip_pose, r_has_standard_mapping, r_button_count, r_buttons, r_axes_count, r_axes) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(68, 1, p_input_source_id, r_target_pose, r_target_ray_mode, r_touch_index, r_has_grip_pose, r_grip_pose, r_has_standard_mapping, r_button_count, r_buttons, r_axes_count, r_axes);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(180, 1, p_input_source_id, r_target_pose, r_target_ray_mode, r_touch_index, r_has_grip_pose, r_grip_pose, r_has_standard_mapping, r_button_count, r_buttons, r_axes_count, r_axes);
  if (!GodotWebXR.session || !GodotWebXR.frame) {
   return 0;
  }
@@ -11773,7 +11877,7 @@ function _godot_webxr_update_input_source(p_input_source_id, r_target_pose, r_ta
 }
 
 function _godot_webxr_update_target_frame_rate(p_frame_rate) {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(69, 1, p_frame_rate);
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(181, 1, p_frame_rate);
  if (!GodotWebXR.session || GodotWebXR.session.updateTargetFrameRate === undefined) {
   return;
  }
@@ -12237,26 +12341,15 @@ function stringToAscii(str, outPtr) {
  return writeAsciiToMemory(str, outPtr, false);
 }
 
-var UTF16Decoder = typeof TextDecoder != "undefined" ? new TextDecoder("utf-16le") : undefined;
-
 function UTF16ToString(ptr, maxBytesToRead) {
  assert(ptr % 2 == 0, "Pointer passed to UTF16ToString must be aligned to two bytes!");
- var endPtr = ptr;
- var idx = endPtr >> 1;
- var maxIdx = idx + maxBytesToRead / 2;
- while (!(idx >= maxIdx) && GROWABLE_HEAP_U16()[idx]) ++idx;
- endPtr = idx << 1;
- if (endPtr - ptr > 32 && UTF16Decoder) {
-  return UTF16Decoder.decode(GROWABLE_HEAP_U8().slice(ptr, endPtr));
- } else {
-  var str = "";
-  for (var i = 0; !(i >= maxBytesToRead / 2); ++i) {
-   var codeUnit = GROWABLE_HEAP_I16()[ptr + i * 2 >> 1];
-   if (codeUnit == 0) break;
-   str += String.fromCharCode(codeUnit);
-  }
-  return str;
+ var str = "";
+ for (var i = 0; !(i >= maxBytesToRead / 2); ++i) {
+  var codeUnit = GROWABLE_HEAP_I16()[ptr + i * 2 >> 1];
+  if (codeUnit == 0) break;
+  str += String.fromCharCode(codeUnit);
  }
+ return str;
 }
 
 function stringToUTF16(str, outPtr, maxBytesToWrite) {
@@ -12678,7 +12771,7 @@ GodotOS.atexit(function(resolve, reject) {
 
 GodotJSWrapper.proxies = new Map();
 
-var proxiedFunctionTable = [ null, _proc_exit, exitOnMainThread, pthreadCreateProxied, ___syscall__newselect, ___syscall_accept4, ___syscall_bind, ___syscall_chdir, ___syscall_chmod, ___syscall_connect, ___syscall_faccessat, ___syscall_fchmod, ___syscall_fcntl64, ___syscall_getcwd, ___syscall_getdents64, ___syscall_getsockname, ___syscall_getsockopt, ___syscall_ioctl, ___syscall_listen, ___syscall_lstat64, ___syscall_mkdirat, ___syscall_newfstatat, ___syscall_openat, ___syscall_poll, ___syscall_readlinkat, ___syscall_recvfrom, ___syscall_renameat, ___syscall_rmdir, ___syscall_sendto, ___syscall_socket, ___syscall_stat64, ___syscall_statfs64, ___syscall_symlink, ___syscall_unlinkat, __mmap_js, __munmap_js, _tzset_impl, _emscripten_force_exit, _emscripten_webgl_destroy_context, _emscripten_webgl_create_context_proxied, _emscripten_webgl_enable_extension, _environ_get, _environ_sizes_get, _fd_close, _fd_fdstat_get, _fd_read, _fd_seek, _fd_write, _getaddrinfo, _godot_audio_input_start, _godot_audio_input_stop, _godot_audio_is_available, _godot_webgl2_glFramebufferTextureMultiviewOVR, _godot_webxr_get_bounds_geometry, _godot_webxr_get_color_texture, _godot_webxr_get_depth_texture, _godot_webxr_get_frame_rate, _godot_webxr_get_projection_for_view, _godot_webxr_get_render_target_size, _godot_webxr_get_supported_frame_rates, _godot_webxr_get_transform_for_view, _godot_webxr_get_velocity_texture, _godot_webxr_get_view_count, _godot_webxr_get_visibility_state, _godot_webxr_initialize, _godot_webxr_is_session_supported, _godot_webxr_is_supported, _godot_webxr_uninitialize, _godot_webxr_update_input_source, _godot_webxr_update_target_frame_rate ];
+var proxiedFunctionTable = [ null, _proc_exit, exitOnMainThread, pthreadCreateProxied, ___syscall__newselect, ___syscall_accept4, ___syscall_bind, ___syscall_chdir, ___syscall_chmod, ___syscall_connect, ___syscall_faccessat, ___syscall_fchmod, ___syscall_fcntl64, ___syscall_getcwd, ___syscall_getdents64, ___syscall_getsockname, ___syscall_getsockopt, ___syscall_ioctl, ___syscall_listen, ___syscall_lstat64, ___syscall_mkdirat, ___syscall_newfstatat, ___syscall_openat, ___syscall_poll, ___syscall_readlinkat, ___syscall_recvfrom, ___syscall_renameat, ___syscall_rmdir, ___syscall_sendto, ___syscall_socket, ___syscall_stat64, ___syscall_statfs64, ___syscall_symlink, ___syscall_unlinkat, _tzset_impl, _emscripten_force_exit, _emscripten_set_canvas_element_size_main_thread, _emscripten_webgl_destroy_context, _emscripten_webgl_create_context_proxied, _emscripten_webgl_enable_extension, _environ_get, _environ_sizes_get, _fd_close, _fd_fdstat_get, _fd_read, _fd_seek, _fd_write, _getaddrinfo, _godot_audio_has_worklet, _godot_audio_init, _godot_audio_input_start, _godot_audio_input_stop, _godot_audio_is_available, _godot_audio_resume, _godot_audio_worklet_create, _godot_audio_worklet_start, _godot_js_config_canvas_id_get, _godot_js_config_locale_get, _godot_js_display_alert, _godot_js_display_canvas_focus, _godot_js_display_canvas_is_focused, _godot_js_display_clipboard_get, _godot_js_display_clipboard_set, _godot_js_display_cursor_is_hidden, _godot_js_display_cursor_is_locked, _godot_js_display_cursor_lock_set, _godot_js_display_cursor_set_custom_shape, _godot_js_display_cursor_set_shape, _godot_js_display_cursor_set_visible, _godot_js_display_desired_size_set, _godot_js_display_fullscreen_cb, _godot_js_display_fullscreen_exit, _godot_js_display_fullscreen_request, _godot_js_display_has_webgl, _godot_js_display_is_swap_ok_cancel, _godot_js_display_notification_cb, _godot_js_display_pixel_ratio_get, _godot_js_display_screen_dpi_get, _godot_js_display_screen_size_get, _godot_js_display_setup_canvas, _godot_js_display_size_update, _godot_js_display_touchscreen_is_available, _godot_js_display_tts_available, _godot_js_display_vk_available, _godot_js_display_vk_cb, _godot_js_display_vk_hide, _godot_js_display_vk_show, _godot_js_display_window_blur_cb, _godot_js_display_window_icon_set, _godot_js_display_window_size_get, _godot_js_display_window_title_set, _godot_js_fetch_create, _godot_js_fetch_free, _godot_js_fetch_http_status_get, _godot_js_fetch_is_chunked, _godot_js_fetch_read_chunk, _godot_js_fetch_read_headers, _godot_js_fetch_state_get, _godot_js_input_drop_files_cb, _godot_js_input_gamepad_cb, _godot_js_input_gamepad_sample, _godot_js_input_gamepad_sample_count, _godot_js_input_gamepad_sample_get, _godot_js_input_key_cb, _godot_js_input_mouse_button_cb, _godot_js_input_mouse_move_cb, _godot_js_input_mouse_wheel_cb, _godot_js_input_paste_cb, _godot_js_input_touch_cb, _godot_js_input_vibrate_handheld, _godot_js_os_download_buffer, _godot_js_os_execute, _godot_js_os_finish_async, _godot_js_os_fs_is_persistent, _godot_js_os_fs_sync, _godot_js_os_has_feature, _godot_js_os_hw_concurrency_get, _godot_js_os_request_quit_cb, _godot_js_os_shell_open, _godot_js_pwa_cb, _godot_js_pwa_update, _godot_js_rtc_datachannel_close, _godot_js_rtc_datachannel_connect, _godot_js_rtc_datachannel_destroy, _godot_js_rtc_datachannel_get_buffered_amount, _godot_js_rtc_datachannel_id_get, _godot_js_rtc_datachannel_is_negotiated, _godot_js_rtc_datachannel_is_ordered, _godot_js_rtc_datachannel_label_get, _godot_js_rtc_datachannel_max_packet_lifetime_get, _godot_js_rtc_datachannel_max_retransmits_get, _godot_js_rtc_datachannel_ready_state_get, _godot_js_rtc_datachannel_send, _godot_js_rtc_pc_close, _godot_js_rtc_pc_create, _godot_js_rtc_pc_datachannel_create, _godot_js_rtc_pc_destroy, _godot_js_rtc_pc_ice_candidate_add, _godot_js_rtc_pc_local_description_set, _godot_js_rtc_pc_offer_create, _godot_js_rtc_pc_remote_description_set, _godot_js_tts_get_voices, _godot_js_tts_is_paused, _godot_js_tts_is_speaking, _godot_js_tts_pause, _godot_js_tts_resume, _godot_js_tts_speak, _godot_js_tts_stop, _godot_js_websocket_buffered_amount, _godot_js_websocket_close, _godot_js_websocket_create, _godot_js_websocket_destroy, _godot_js_websocket_send, _godot_js_wrapper_create_cb, _godot_js_wrapper_create_object, _godot_js_wrapper_interface_get, _godot_js_wrapper_object_call, _godot_js_wrapper_object_get, _godot_js_wrapper_object_getvar, _godot_js_wrapper_object_set, _godot_js_wrapper_object_set_cb_ret, _godot_js_wrapper_object_setvar, _godot_js_wrapper_object_unref, _godot_webgl2_glFramebufferTextureMultiviewOVR, _godot_webgl2_glGetBufferSubData, _godot_webxr_get_bounds_geometry, _godot_webxr_get_color_texture, _godot_webxr_get_depth_texture, _godot_webxr_get_frame_rate, _godot_webxr_get_projection_for_view, _godot_webxr_get_render_target_size, _godot_webxr_get_supported_frame_rates, _godot_webxr_get_transform_for_view, _godot_webxr_get_velocity_texture, _godot_webxr_get_view_count, _godot_webxr_get_visibility_state, _godot_webxr_initialize, _godot_webxr_is_session_supported, _godot_webxr_is_supported, _godot_webxr_uninitialize, _godot_webxr_update_input_source, _godot_webxr_update_target_frame_rate ];
 
 var ASSERTIONS = true;
 
@@ -12734,8 +12827,6 @@ var asmLibraryArg = {
  "_emscripten_throw_longjmp": __emscripten_throw_longjmp,
  "_gmtime_js": __gmtime_js,
  "_localtime_js": __localtime_js,
- "_mmap_js": __mmap_js,
- "_munmap_js": __munmap_js,
  "_tzset_js": __tzset_js,
  "abort": _abort,
  "emscripten_cancel_main_loop": _emscripten_cancel_main_loop,
@@ -12806,7 +12897,7 @@ var asmLibraryArg = {
  "emscripten_glGenVertexArrays": _emscripten_glGenVertexArrays,
  "emscripten_glGenerateMipmap": _emscripten_glGenerateMipmap,
  "emscripten_glGetFloatv": _emscripten_glGetFloatv,
- "emscripten_glGetIntegerv": _emscripten_glGetIntegerv,
+ "emscripten_glGetInteger64v": _emscripten_glGetInteger64v,
  "emscripten_glGetProgramInfoLog": _emscripten_glGetProgramInfoLog,
  "emscripten_glGetProgramiv": _emscripten_glGetProgramiv,
  "emscripten_glGetShaderInfoLog": _emscripten_glGetShaderInfoLog,
@@ -12846,6 +12937,7 @@ var asmLibraryArg = {
  "emscripten_glUseProgram": _emscripten_glUseProgram,
  "emscripten_glVertexAttrib4f": _emscripten_glVertexAttrib4f,
  "emscripten_glVertexAttribDivisor": _emscripten_glVertexAttribDivisor,
+ "emscripten_glVertexAttribI4ui": _emscripten_glVertexAttribI4ui,
  "emscripten_glVertexAttribIPointer": _emscripten_glVertexAttribIPointer,
  "emscripten_glVertexAttribPointer": _emscripten_glVertexAttribPointer,
  "emscripten_glViewport": _emscripten_glViewport,
@@ -12853,6 +12945,8 @@ var asmLibraryArg = {
  "emscripten_num_logical_cores": _emscripten_num_logical_cores,
  "emscripten_receive_on_main_thread_js": _emscripten_receive_on_main_thread_js,
  "emscripten_resize_heap": _emscripten_resize_heap,
+ "emscripten_runtime_keepalive_check": _emscripten_runtime_keepalive_check,
+ "emscripten_set_canvas_element_size": _emscripten_set_canvas_element_size,
  "emscripten_set_main_loop": _emscripten_set_main_loop,
  "emscripten_supports_offscreencanvas": _emscripten_supports_offscreencanvas,
  "emscripten_unwind_to_js_event_loop": _emscripten_unwind_to_js_event_loop,
@@ -12873,7 +12967,6 @@ var asmLibraryArg = {
  "getTempRet0": _getTempRet0,
  "getaddrinfo": _getaddrinfo,
  "getnameinfo": _getnameinfo,
- "glGetBufferSubData": _glGetBufferSubData,
  "godot_audio_has_worklet": _godot_audio_has_worklet,
  "godot_audio_init": _godot_audio_init,
  "godot_audio_input_start": _godot_audio_input_start,
@@ -12921,7 +13014,6 @@ var asmLibraryArg = {
  "godot_js_display_window_size_get": _godot_js_display_window_size_get,
  "godot_js_display_window_title_set": _godot_js_display_window_title_set,
  "godot_js_eval": _godot_js_eval,
- "godot_js_fetch_body_length_get": _godot_js_fetch_body_length_get,
  "godot_js_fetch_create": _godot_js_fetch_create,
  "godot_js_fetch_free": _godot_js_fetch_free,
  "godot_js_fetch_http_status_get": _godot_js_fetch_http_status_get,
@@ -12996,6 +13088,7 @@ var asmLibraryArg = {
  "godot_js_wrapper_object_setvar": _godot_js_wrapper_object_setvar,
  "godot_js_wrapper_object_unref": _godot_js_wrapper_object_unref,
  "godot_webgl2_glFramebufferTextureMultiviewOVR": _godot_webgl2_glFramebufferTextureMultiviewOVR,
+ "godot_webgl2_glGetBufferSubData": _godot_webgl2_glGetBufferSubData,
  "godot_webxr_get_bounds_geometry": _godot_webxr_get_bounds_geometry,
  "godot_webxr_get_color_texture": _godot_webxr_get_color_texture,
  "godot_webxr_get_depth_texture": _godot_webxr_get_depth_texture,
@@ -13045,15 +13138,15 @@ var _main = Module["_main"] = createExportWrapper("__main_argc_argv");
 
 var _malloc = Module["_malloc"] = createExportWrapper("malloc");
 
+var ___errno_location = Module["___errno_location"] = createExportWrapper("__errno_location");
+
+var _fflush = Module["_fflush"] = createExportWrapper("fflush");
+
 var _htonl = Module["_htonl"] = createExportWrapper("htonl");
 
 var _htons = Module["_htons"] = createExportWrapper("htons");
 
 var _ntohs = Module["_ntohs"] = createExportWrapper("ntohs");
-
-var ___errno_location = Module["___errno_location"] = createExportWrapper("__errno_location");
-
-var _fflush = Module["_fflush"] = createExportWrapper("fflush");
 
 var __emwebxr_on_input_event = Module["__emwebxr_on_input_event"] = createExportWrapper("_emwebxr_on_input_event");
 
@@ -13063,7 +13156,15 @@ var __emscripten_tls_init = Module["__emscripten_tls_init"] = createExportWrappe
 
 var _pthread_self = Module["_pthread_self"] = createExportWrapper("pthread_self");
 
-var _emscripten_builtin_memalign = Module["_emscripten_builtin_memalign"] = createExportWrapper("emscripten_builtin_memalign");
+var __emscripten_proxy_main = Module["__emscripten_proxy_main"] = createExportWrapper("_emscripten_proxy_main");
+
+var _emscripten_stack_get_base = Module["_emscripten_stack_get_base"] = function() {
+ return (_emscripten_stack_get_base = Module["_emscripten_stack_get_base"] = Module["asm"]["emscripten_stack_get_base"]).apply(null, arguments);
+};
+
+var _emscripten_stack_get_end = Module["_emscripten_stack_get_end"] = function() {
+ return (_emscripten_stack_get_end = Module["_emscripten_stack_get_end"] = Module["asm"]["emscripten_stack_get_end"]).apply(null, arguments);
+};
 
 var _emscripten_webgl_get_current_context = Module["_emscripten_webgl_get_current_context"] = createExportWrapper("emscripten_webgl_get_current_context");
 
@@ -13084,14 +13185,6 @@ var _raise = Module["_raise"] = createExportWrapper("raise");
 var _emscripten_main_browser_thread_id = Module["_emscripten_main_browser_thread_id"] = createExportWrapper("emscripten_main_browser_thread_id");
 
 var _emscripten_run_in_main_runtime_thread_js = Module["_emscripten_run_in_main_runtime_thread_js"] = createExportWrapper("emscripten_run_in_main_runtime_thread_js");
-
-var _emscripten_stack_get_base = Module["_emscripten_stack_get_base"] = function() {
- return (_emscripten_stack_get_base = Module["_emscripten_stack_get_base"] = Module["asm"]["emscripten_stack_get_base"]).apply(null, arguments);
-};
-
-var _emscripten_stack_get_end = Module["_emscripten_stack_get_end"] = function() {
- return (_emscripten_stack_get_end = Module["_emscripten_stack_get_end"] = Module["asm"]["emscripten_stack_get_end"]).apply(null, arguments);
-};
 
 var __emscripten_proxy_execute_task_queue = Module["__emscripten_proxy_execute_task_queue"] = createExportWrapper("_emscripten_proxy_execute_task_queue");
 
@@ -13120,316 +13213,6 @@ var stackSave = Module["stackSave"] = createExportWrapper("stackSave");
 var stackRestore = Module["stackRestore"] = createExportWrapper("stackRestore");
 
 var stackAlloc = Module["stackAlloc"] = createExportWrapper("stackAlloc");
-
-var dynCall_vjiii = Module["dynCall_vjiii"] = createExportWrapper("dynCall_vjiii");
-
-var dynCall_vij = Module["dynCall_vij"] = createExportWrapper("dynCall_vij");
-
-var dynCall_ji = Module["dynCall_ji"] = createExportWrapper("dynCall_ji");
-
-var dynCall_viiij = Module["dynCall_viiij"] = createExportWrapper("dynCall_viiij");
-
-var dynCall_jii = Module["dynCall_jii"] = createExportWrapper("dynCall_jii");
-
-var dynCall_viij = Module["dynCall_viij"] = createExportWrapper("dynCall_viij");
-
-var dynCall_jiji = Module["dynCall_jiji"] = createExportWrapper("dynCall_jiji");
-
-var dynCall_viiiiifiijii = Module["dynCall_viiiiifiijii"] = createExportWrapper("dynCall_viiiiifiijii");
-
-var dynCall_viiiiifiiijjii = Module["dynCall_viiiiifiiijjii"] = createExportWrapper("dynCall_viiiiifiiijjii");
-
-var dynCall_viiiiifiiijii = Module["dynCall_viiiiifiiijii"] = createExportWrapper("dynCall_viiiiifiiijii");
-
-var dynCall_viiiiifiiiijjii = Module["dynCall_viiiiifiiiijjii"] = createExportWrapper("dynCall_viiiiifiiiijjii");
-
-var dynCall_jiifff = Module["dynCall_jiifff"] = createExportWrapper("dynCall_jiifff");
-
-var dynCall_vijf = Module["dynCall_vijf"] = createExportWrapper("dynCall_vijf");
-
-var dynCall_iij = Module["dynCall_iij"] = createExportWrapper("dynCall_iij");
-
-var dynCall_vijiii = Module["dynCall_vijiii"] = createExportWrapper("dynCall_vijiii");
-
-var dynCall_vijiiii = Module["dynCall_vijiiii"] = createExportWrapper("dynCall_vijiiii");
-
-var dynCall_vijii = Module["dynCall_vijii"] = createExportWrapper("dynCall_vijii");
-
-var dynCall_viiiiij = Module["dynCall_viiiiij"] = createExportWrapper("dynCall_viiiiij");
-
-var dynCall_viiiiiji = Module["dynCall_viiiiiji"] = createExportWrapper("dynCall_viiiiiji");
-
-var dynCall_viiijii = Module["dynCall_viiijii"] = createExportWrapper("dynCall_viiijii");
-
-var dynCall_vijiiiiiidddd = Module["dynCall_vijiiiiiidddd"] = createExportWrapper("dynCall_vijiiiiiidddd");
-
-var dynCall_jij = Module["dynCall_jij"] = createExportWrapper("dynCall_jij");
-
-var dynCall_jiiii = Module["dynCall_jiiii"] = createExportWrapper("dynCall_jiiii");
-
-var dynCall_jiij = Module["dynCall_jiij"] = createExportWrapper("dynCall_jiij");
-
-var dynCall_jiijiiii = Module["dynCall_jiijiiii"] = createExportWrapper("dynCall_jiijiiii");
-
-var dynCall_jiii = Module["dynCall_jiii"] = createExportWrapper("dynCall_jiii");
-
-var dynCall_jiiji = Module["dynCall_jiiji"] = createExportWrapper("dynCall_jiiji");
-
-var dynCall_jiiiji = Module["dynCall_jiiiji"] = createExportWrapper("dynCall_jiiiji");
-
-var dynCall_jiijii = Module["dynCall_jiijii"] = createExportWrapper("dynCall_jiijii");
-
-var dynCall_iijiiij = Module["dynCall_iijiiij"] = createExportWrapper("dynCall_iijiiij");
-
-var dynCall_jijjjiiiiijii = Module["dynCall_jijjjiiiiijii"] = createExportWrapper("dynCall_jijjjiiiiijii");
-
-var dynCall_jijiiiiifiii = Module["dynCall_jijiiiiifiii"] = createExportWrapper("dynCall_jijiiiiifiii");
-
-var dynCall_viijiiiiiifiii = Module["dynCall_viijiiiiiifiii"] = createExportWrapper("dynCall_viijiiiiiifiii");
-
-var dynCall_jiiiiiii = Module["dynCall_jiiiiiii"] = createExportWrapper("dynCall_jiiiiiii");
-
-var dynCall_viji = Module["dynCall_viji"] = createExportWrapper("dynCall_viji");
-
-var dynCall_viiji = Module["dynCall_viiji"] = createExportWrapper("dynCall_viiji");
-
-var dynCall_viiiij = Module["dynCall_viiiij"] = createExportWrapper("dynCall_viiiij");
-
-var dynCall_vijj = Module["dynCall_vijj"] = createExportWrapper("dynCall_vijj");
-
-var dynCall_vijji = Module["dynCall_vijji"] = createExportWrapper("dynCall_vijji");
-
-var dynCall_vijjii = Module["dynCall_vijjii"] = createExportWrapper("dynCall_vijjii");
-
-var dynCall_fij = Module["dynCall_fij"] = createExportWrapper("dynCall_fij");
-
-var dynCall_vijiffifff = Module["dynCall_vijiffifff"] = createExportWrapper("dynCall_vijiffifff");
-
-var dynCall_vijff = Module["dynCall_vijff"] = createExportWrapper("dynCall_vijff");
-
-var dynCall_vijiffff = Module["dynCall_vijiffff"] = createExportWrapper("dynCall_vijiffff");
-
-var dynCall_vijjf = Module["dynCall_vijjf"] = createExportWrapper("dynCall_vijjf");
-
-var dynCall_vijij = Module["dynCall_vijij"] = createExportWrapper("dynCall_vijij");
-
-var dynCall_vijif = Module["dynCall_vijif"] = createExportWrapper("dynCall_vijif");
-
-var dynCall_vijiiifi = Module["dynCall_vijiiifi"] = createExportWrapper("dynCall_vijiiifi");
-
-var dynCall_vijiifi = Module["dynCall_vijiifi"] = createExportWrapper("dynCall_vijiifi");
-
-var dynCall_vijiif = Module["dynCall_vijiif"] = createExportWrapper("dynCall_vijiif");
-
-var dynCall_vijifi = Module["dynCall_vijifi"] = createExportWrapper("dynCall_vijifi");
-
-var dynCall_vijijiii = Module["dynCall_vijijiii"] = createExportWrapper("dynCall_vijijiii");
-
-var dynCall_vijijiiii = Module["dynCall_vijijiiii"] = createExportWrapper("dynCall_vijijiiii");
-
-var dynCall_vijijiiiff = Module["dynCall_vijijiiiff"] = createExportWrapper("dynCall_vijijiiiff");
-
-var dynCall_vijijii = Module["dynCall_vijijii"] = createExportWrapper("dynCall_vijijii");
-
-var dynCall_vijiijiiiiii = Module["dynCall_vijiijiiiiii"] = createExportWrapper("dynCall_vijiijiiiiii");
-
-var dynCall_vijiiij = Module["dynCall_vijiiij"] = createExportWrapper("dynCall_vijiiij");
-
-var dynCall_vijiiiiiiji = Module["dynCall_vijiiiiiiji"] = createExportWrapper("dynCall_vijiiiiiiji");
-
-var dynCall_vijjj = Module["dynCall_vijjj"] = createExportWrapper("dynCall_vijjj");
-
-var dynCall_vijdddd = Module["dynCall_vijdddd"] = createExportWrapper("dynCall_vijdddd");
-
-var dynCall_vijififi = Module["dynCall_vijififi"] = createExportWrapper("dynCall_vijififi");
-
-var dynCall_iiiij = Module["dynCall_iiiij"] = createExportWrapper("dynCall_iiiij");
-
-var dynCall_iijji = Module["dynCall_iijji"] = createExportWrapper("dynCall_iijji");
-
-var dynCall_viijj = Module["dynCall_viijj"] = createExportWrapper("dynCall_viijj");
-
-var dynCall_jiiiiii = Module["dynCall_jiiiiii"] = createExportWrapper("dynCall_jiiiiii");
-
-var dynCall_viiiiji = Module["dynCall_viiiiji"] = createExportWrapper("dynCall_viiiiji");
-
-var dynCall_dij = Module["dynCall_dij"] = createExportWrapper("dynCall_dij");
-
-var dynCall_vijd = Module["dynCall_vijd"] = createExportWrapper("dynCall_vijd");
-
-var dynCall_iiij = Module["dynCall_iiij"] = createExportWrapper("dynCall_iiij");
-
-var dynCall_jiiiii = Module["dynCall_jiiiii"] = createExportWrapper("dynCall_jiiiii");
-
-var dynCall_ij = Module["dynCall_ij"] = createExportWrapper("dynCall_ij");
-
-var dynCall_viijiiii = Module["dynCall_viijiiii"] = createExportWrapper("dynCall_viijiiii");
-
-var dynCall_viijiii = Module["dynCall_viijiii"] = createExportWrapper("dynCall_viijiii");
-
-var dynCall_iiji = Module["dynCall_iiji"] = createExportWrapper("dynCall_iiji");
-
-var dynCall_iiiijf = Module["dynCall_iiiijf"] = createExportWrapper("dynCall_iiiijf");
-
-var dynCall_vijiiiii = Module["dynCall_vijiiiii"] = createExportWrapper("dynCall_vijiiiii");
-
-var dynCall_vijjjii = Module["dynCall_vijjjii"] = createExportWrapper("dynCall_vijjjii");
-
-var dynCall_viijd = Module["dynCall_viijd"] = createExportWrapper("dynCall_viijd");
-
-var dynCall_diij = Module["dynCall_diij"] = createExportWrapper("dynCall_diij");
-
-var dynCall_viiiji = Module["dynCall_viiiji"] = createExportWrapper("dynCall_viiiji");
-
-var dynCall_viiijj = Module["dynCall_viiijj"] = createExportWrapper("dynCall_viiijj");
-
-var dynCall_viijji = Module["dynCall_viijji"] = createExportWrapper("dynCall_viijji");
-
-var dynCall_jiiij = Module["dynCall_jiiij"] = createExportWrapper("dynCall_jiiij");
-
-var dynCall_viijii = Module["dynCall_viijii"] = createExportWrapper("dynCall_viijii");
-
-var dynCall_jiijjj = Module["dynCall_jiijjj"] = createExportWrapper("dynCall_jiijjj");
-
-var dynCall_jiijj = Module["dynCall_jiijj"] = createExportWrapper("dynCall_jiijj");
-
-var dynCall_viiijiji = Module["dynCall_viiijiji"] = createExportWrapper("dynCall_viiijiji");
-
-var dynCall_viiijjiji = Module["dynCall_viiijjiji"] = createExportWrapper("dynCall_viiijjiji");
-
-var dynCall_viijiji = Module["dynCall_viijiji"] = createExportWrapper("dynCall_viijiji");
-
-var dynCall_iiiiijiii = Module["dynCall_iiiiijiii"] = createExportWrapper("dynCall_iiiiijiii");
-
-var dynCall_iiiiiijd = Module["dynCall_iiiiiijd"] = createExportWrapper("dynCall_iiiiiijd");
-
-var dynCall_diidj = Module["dynCall_diidj"] = createExportWrapper("dynCall_diidj");
-
-var dynCall_viiiijij = Module["dynCall_viiiijij"] = createExportWrapper("dynCall_viiiijij");
-
-var dynCall_viiidjj = Module["dynCall_viiidjj"] = createExportWrapper("dynCall_viiidjj");
-
-var dynCall_viidj = Module["dynCall_viidj"] = createExportWrapper("dynCall_viidj");
-
-var dynCall_iiijj = Module["dynCall_iiijj"] = createExportWrapper("dynCall_iiijj");
-
-var dynCall_jiid = Module["dynCall_jiid"] = createExportWrapper("dynCall_jiid");
-
-var dynCall_viiiiddji = Module["dynCall_viiiiddji"] = createExportWrapper("dynCall_viiiiddji");
-
-var dynCall_vijiiiiiiiii = Module["dynCall_vijiiiiiiiii"] = createExportWrapper("dynCall_vijiiiiiiiii");
-
-var dynCall_vijiiiffi = Module["dynCall_vijiiiffi"] = createExportWrapper("dynCall_vijiiiffi");
-
-var dynCall_vijiiifii = Module["dynCall_vijiiifii"] = createExportWrapper("dynCall_vijiiifii");
-
-var dynCall_viijfii = Module["dynCall_viijfii"] = createExportWrapper("dynCall_viijfii");
-
-var dynCall_viiiiiiiiiiijjjjjjifiiiiii = Module["dynCall_viiiiiiiiiiijjjjjjifiiiiii"] = createExportWrapper("dynCall_viiiiiiiiiiijjjjjjifiiiiii");
-
-var dynCall_vijifff = Module["dynCall_vijifff"] = createExportWrapper("dynCall_vijifff");
-
-var dynCall_fiji = Module["dynCall_fiji"] = createExportWrapper("dynCall_fiji");
-
-var dynCall_vijiiffifffi = Module["dynCall_vijiiffifffi"] = createExportWrapper("dynCall_vijiiffifffi");
-
-var dynCall_iijj = Module["dynCall_iijj"] = createExportWrapper("dynCall_iijj");
-
-var dynCall_iijjfj = Module["dynCall_iijjfj"] = createExportWrapper("dynCall_iijjfj");
-
-var dynCall_vijiji = Module["dynCall_vijiji"] = createExportWrapper("dynCall_vijiji");
-
-var dynCall_jijii = Module["dynCall_jijii"] = createExportWrapper("dynCall_jijii");
-
-var dynCall_vijid = Module["dynCall_vijid"] = createExportWrapper("dynCall_vijid");
-
-var dynCall_vijiiiffiiiii = Module["dynCall_vijiiiffiiiii"] = createExportWrapper("dynCall_vijiiiffiiiii");
-
-var dynCall_vijiiiiii = Module["dynCall_vijiiiiii"] = createExportWrapper("dynCall_vijiiiiii");
-
-var dynCall_vijiff = Module["dynCall_vijiff"] = createExportWrapper("dynCall_vijiff");
-
-var dynCall_vijjjj = Module["dynCall_vijjjj"] = createExportWrapper("dynCall_vijjjj");
-
-var dynCall_vijiiiiiii = Module["dynCall_vijiiiiiii"] = createExportWrapper("dynCall_vijiiiiiii");
-
-var dynCall_jiiifi = Module["dynCall_jiiifi"] = createExportWrapper("dynCall_jiiifi");
-
-var dynCall_viiiifijii = Module["dynCall_viiiifijii"] = createExportWrapper("dynCall_viiiifijii");
-
-var dynCall_viiiifiijjii = Module["dynCall_viiiifiijjii"] = createExportWrapper("dynCall_viiiifiijjii");
-
-var dynCall_vijiiifiijii = Module["dynCall_vijiiifiijii"] = createExportWrapper("dynCall_vijiiifiijii");
-
-var dynCall_vijiiifiiijjii = Module["dynCall_vijiiifiiijjii"] = createExportWrapper("dynCall_vijiiifiiijjii");
-
-var dynCall_vijiiifiiijii = Module["dynCall_vijiiifiiijii"] = createExportWrapper("dynCall_vijiiifiiijii");
-
-var dynCall_vijiiifiiiijjii = Module["dynCall_vijiiifiiiijjii"] = createExportWrapper("dynCall_vijiiifiiiijjii");
-
-var dynCall_fijiiii = Module["dynCall_fijiiii"] = createExportWrapper("dynCall_fijiiii");
-
-var dynCall_fijiiiii = Module["dynCall_fijiiiii"] = createExportWrapper("dynCall_fijiiiii");
-
-var dynCall_iijii = Module["dynCall_iijii"] = createExportWrapper("dynCall_iijii");
-
-var dynCall_iijiijiiiii = Module["dynCall_iijiijiiiii"] = createExportWrapper("dynCall_iijiijiiiii");
-
-var dynCall_iijijiiiii = Module["dynCall_iijijiiiii"] = createExportWrapper("dynCall_iijijiiiii");
-
-var dynCall_vijijj = Module["dynCall_vijijj"] = createExportWrapper("dynCall_vijijj");
-
-var dynCall_vijiiijj = Module["dynCall_vijiiijj"] = createExportWrapper("dynCall_vijiiijj");
-
-var dynCall_vijiijj = Module["dynCall_vijiijj"] = createExportWrapper("dynCall_vijiijj");
-
-var dynCall_vijjiji = Module["dynCall_vijjiji"] = createExportWrapper("dynCall_vijjiji");
-
-var dynCall_vijjiijii = Module["dynCall_vijjiijii"] = createExportWrapper("dynCall_vijjiijii");
-
-var dynCall_fijii = Module["dynCall_fijii"] = createExportWrapper("dynCall_fijii");
-
-var dynCall_vijiiiij = Module["dynCall_vijiiiij"] = createExportWrapper("dynCall_vijiiiij");
-
-var dynCall_jijj = Module["dynCall_jijj"] = createExportWrapper("dynCall_jijj");
-
-var dynCall_jiiif = Module["dynCall_jiiif"] = createExportWrapper("dynCall_jiiif");
-
-var dynCall_vijfff = Module["dynCall_vijfff"] = createExportWrapper("dynCall_vijfff");
-
-var dynCall_vijfiff = Module["dynCall_vijfiff"] = createExportWrapper("dynCall_vijfiff");
-
-var dynCall_vijfi = Module["dynCall_vijfi"] = createExportWrapper("dynCall_vijfi");
-
-var dynCall_vijffffi = Module["dynCall_vijffffi"] = createExportWrapper("dynCall_vijffffi");
-
-var dynCall_vijiiffi = Module["dynCall_vijiiffi"] = createExportWrapper("dynCall_vijiiffi");
-
-var dynCall_vijiifffffff = Module["dynCall_vijiifffffff"] = createExportWrapper("dynCall_vijiifffffff");
-
-var dynCall_vijifiifffffifff = Module["dynCall_vijifiifffffifff"] = createExportWrapper("dynCall_vijifiifffffifff");
-
-var dynCall_vijiiffffiffffj = Module["dynCall_vijiiffffiffffj"] = createExportWrapper("dynCall_vijiiffffiffffj");
-
-var dynCall_vijiifff = Module["dynCall_vijiifff"] = createExportWrapper("dynCall_vijiifff");
-
-var dynCall_vijiffffffff = Module["dynCall_vijiffffffff"] = createExportWrapper("dynCall_vijiffffffff");
-
-var dynCall_vijiifiififff = Module["dynCall_vijiifiififff"] = createExportWrapper("dynCall_vijiifiififff");
-
-var dynCall_vijifffij = Module["dynCall_vijifffij"] = createExportWrapper("dynCall_vijifffij");
-
-var dynCall_viijjjiifjii = Module["dynCall_viijjjiifjii"] = createExportWrapper("dynCall_viijjjiifjii");
-
-var dynCall_fijj = Module["dynCall_fijj"] = createExportWrapper("dynCall_fijj");
-
-var dynCall_iijjiii = Module["dynCall_iijjiii"] = createExportWrapper("dynCall_iijjiii");
-
-var dynCall_iiiiij = Module["dynCall_iiiiij"] = createExportWrapper("dynCall_iiiiij");
-
-var dynCall_iiiiijj = Module["dynCall_iiiiijj"] = createExportWrapper("dynCall_iiiiijj");
-
-var dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = createExportWrapper("dynCall_iiiiiijj");
 
 function invoke_vii(index, a1, a2) {
  var sp = stackSave();
@@ -13464,17 +13247,6 @@ function invoke_viii(index, a1, a2, a3) {
  }
 }
 
-function invoke_ii(index, a1) {
- var sp = stackSave();
- try {
-  return getWasmTableEntry(index)(a1);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0) throw e;
-  _setThrew(1, 0);
- }
-}
-
 function invoke_viiii(index, a1, a2, a3, a4) {
  var sp = stackSave();
  try {
@@ -13490,6 +13262,17 @@ function invoke_iii(index, a1, a2) {
  var sp = stackSave();
  try {
   return getWasmTableEntry(index)(a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0) throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_ii(index, a1) {
+ var sp = stackSave();
+ try {
+  return getWasmTableEntry(index)(a1);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0) throw e;
@@ -13553,11 +13336,11 @@ Module["ExitStatus"] = ExitStatus;
 
 Module["PThread"] = PThread;
 
-var unexportedRuntimeSymbols = [ "run", "UTF8ArrayToString", "UTF8ToString", "stringToUTF8Array", "stringToUTF8", "lengthBytesUTF8", "addOnPreRun", "addOnInit", "addOnPreMain", "addOnExit", "addOnPostRun", "addRunDependency", "removeRunDependency", "FS_createFolder", "FS_createPath", "FS_createDataFile", "FS_createPreloadedFile", "FS_createLazyFile", "FS_createLink", "FS_createDevice", "FS_unlink", "getLEB", "getFunctionTables", "alignFunctionTables", "registerFunctions", "prettyPrint", "getCompilerSetting", "print", "printErr", "getTempRet0", "setTempRet0", "abort", "stackSave", "stackRestore", "stackAlloc", "GROWABLE_HEAP_I8", "GROWABLE_HEAP_U8", "GROWABLE_HEAP_I16", "GROWABLE_HEAP_U16", "GROWABLE_HEAP_I32", "GROWABLE_HEAP_U32", "GROWABLE_HEAP_F32", "GROWABLE_HEAP_F64", "writeStackCookie", "checkStackCookie", "ptrToString", "zeroMemory", "stringToNewUTF8", "exitJS", "getHeapMax", "emscripten_realloc_buffer", "ENV", "ERRNO_CODES", "ERRNO_MESSAGES", "setErrNo", "inetPton4", "inetNtop4", "inetPton6", "inetNtop6", "readSockaddr", "writeSockaddr", "DNS", "getHostByName", "Protocols", "Sockets", "getRandomDevice", "warnOnce", "traverseStack", "UNWIND_CACHE", "convertPCtoSourceLocation", "readAsmConstArgsArray", "readAsmConstArgs", "mainThreadEM_ASM", "jstoi_q", "jstoi_s", "getExecutableName", "listenOnce", "autoResumeAudioContext", "dynCallLegacy", "getDynCaller", "dynCall", "handleException", "runtimeKeepalivePush", "runtimeKeepalivePop", "callUserCallback", "maybeExit", "safeSetTimeout", "asmjsMangle", "asyncLoad", "alignMemory", "mmapAlloc", "writeI53ToI64", "writeI53ToI64Clamped", "writeI53ToI64Signaling", "writeI53ToU64Clamped", "writeI53ToU64Signaling", "readI53FromI64", "readI53FromU64", "convertI32PairToI53", "convertI32PairToI53Checked", "convertU32PairToI53", "getCFunc", "ccall", "uleb128Encode", "sigToWasmTypes", "convertJsFunctionToWasm", "freeTableIndexes", "functionsInTableMap", "getEmptyTableSlot", "updateTableMap", "addFunction", "removeFunction", "reallyNegative", "unSign", "strLen", "reSign", "formatString", "setValue", "getValue", "PATH", "PATH_FS", "intArrayFromString", "intArrayToString", "AsciiToString", "stringToAscii", "UTF16Decoder", "UTF16ToString", "stringToUTF16", "lengthBytesUTF16", "UTF32ToString", "stringToUTF32", "lengthBytesUTF32", "allocateUTF8", "allocateUTF8OnStack", "writeStringToMemory", "writeArrayToMemory", "writeAsciiToMemory", "SYSCALLS", "getSocketFromFD", "getSocketAddress", "JSEvents", "registerKeyEventCallback", "specialHTMLTargets", "maybeCStringToJsString", "findEventTarget", "findCanvasEventTarget", "getBoundingClientRect", "fillMouseEventData", "registerMouseEventCallback", "registerWheelEventCallback", "registerUiEventCallback", "registerFocusEventCallback", "fillDeviceOrientationEventData", "registerDeviceOrientationEventCallback", "fillDeviceMotionEventData", "registerDeviceMotionEventCallback", "screenOrientation", "fillOrientationChangeEventData", "registerOrientationChangeEventCallback", "fillFullscreenChangeEventData", "registerFullscreenChangeEventCallback", "JSEvents_requestFullscreen", "JSEvents_resizeCanvasForFullscreen", "registerRestoreOldStyle", "hideEverythingExceptGivenElement", "restoreHiddenElements", "setLetterbox", "currentFullscreenStrategy", "restoreOldWindowedStyle", "softFullscreenResizeWebGLRenderTarget", "doRequestFullscreen", "fillPointerlockChangeEventData", "registerPointerlockChangeEventCallback", "registerPointerlockErrorEventCallback", "requestPointerLock", "fillVisibilityChangeEventData", "registerVisibilityChangeEventCallback", "registerTouchEventCallback", "fillGamepadEventData", "registerGamepadEventCallback", "registerBeforeUnloadEventCallback", "fillBatteryEventData", "battery", "registerBatteryEventCallback", "setCanvasElementSize", "getCanvasElementSize", "demangle", "demangleAll", "jsStackTrace", "stackTrace", "getEnvStrings", "checkWasiClock", "doReadv", "doWritev", "dlopenMissingError", "setImmediateWrapped", "clearImmediateWrapped", "polyfillSetImmediate", "uncaughtExceptionCount", "exceptionLast", "exceptionCaught", "ExceptionInfo", "exception_addRef", "exception_decRef", "Browser", "setMainLoop", "wget", "FS", "MEMFS", "TTY", "PIPEFS", "SOCKFS", "_setNetworkCallback", "tempFixedLengthArray", "miniTempWebGLFloatBuffers", "heapObjectForWebGLType", "heapAccessShiftForWebGLHeap", "GL", "emscriptenWebGLGet", "computeUnpackAlignedImageSize", "emscriptenWebGLGetTexPixelData", "emscriptenWebGLGetUniform", "webglGetUniformLocation", "webglPrepareUniformLocationsBeforeFirstUse", "webglGetLeftBracePos", "emscriptenWebGLGetVertexAttrib", "writeGLArray", "AL", "SDL_unicode", "SDL_ttfContext", "SDL_audio", "SDL", "SDL_gfx", "GLUT", "EGL", "GLFW_Window", "GLFW", "GLEW", "IDBStore", "runAndAbortIfError", "emscriptenWebGLGetIndexed", "ALLOC_NORMAL", "ALLOC_STACK", "allocate", "killThread", "cleanupThread", "registerTLSInit", "cancelThread", "spawnThread", "exitOnMainThread", "invokeEntryPoint", "executeNotifiedProxyingQueue", "GodotWebXR", "GodotWebSocket", "GodotRTCDataChannel", "GodotRTCPeerConnection", "GodotAudio", "GodotAudioWorklet", "GodotAudioScript", "GodotDisplayVK", "GodotDisplayCursor", "GodotDisplayScreen", "GodotDisplay", "GodotFetch", "IDHandler", "GodotConfig", "GodotFS", "GodotOS", "GodotEventListeners", "GodotPWA", "GodotRuntime", "GodotInputGamepads", "GodotInputDragDrop", "GodotInput", "GodotWebGL2", "GodotJSWrapper", "IDBFS" ];
+var unexportedRuntimeSymbols = [ "run", "UTF8ArrayToString", "UTF8ToString", "stringToUTF8Array", "stringToUTF8", "lengthBytesUTF8", "addOnPreRun", "addOnInit", "addOnPreMain", "addOnExit", "addOnPostRun", "addRunDependency", "removeRunDependency", "FS_createFolder", "FS_createPath", "FS_createDataFile", "FS_createPreloadedFile", "FS_createLazyFile", "FS_createLink", "FS_createDevice", "FS_unlink", "getLEB", "getFunctionTables", "alignFunctionTables", "registerFunctions", "prettyPrint", "getCompilerSetting", "print", "printErr", "getTempRet0", "setTempRet0", "abort", "stackSave", "stackRestore", "stackAlloc", "GROWABLE_HEAP_I8", "GROWABLE_HEAP_U8", "GROWABLE_HEAP_I16", "GROWABLE_HEAP_U16", "GROWABLE_HEAP_I32", "GROWABLE_HEAP_U32", "GROWABLE_HEAP_F32", "GROWABLE_HEAP_F64", "writeStackCookie", "checkStackCookie", "ptrToString", "zeroMemory", "stringToNewUTF8", "exitJS", "getHeapMax", "emscripten_realloc_buffer", "ENV", "ERRNO_CODES", "ERRNO_MESSAGES", "setErrNo", "inetPton4", "inetNtop4", "inetPton6", "inetNtop6", "readSockaddr", "writeSockaddr", "DNS", "getHostByName", "Protocols", "Sockets", "getRandomDevice", "warnOnce", "traverseStack", "UNWIND_CACHE", "convertPCtoSourceLocation", "readAsmConstArgsArray", "readAsmConstArgs", "mainThreadEM_ASM", "jstoi_q", "jstoi_s", "getExecutableName", "listenOnce", "autoResumeAudioContext", "getDynCaller", "dynCall", "handleException", "runtimeKeepalivePush", "runtimeKeepalivePop", "callUserCallback", "maybeExit", "safeSetTimeout", "asmjsMangle", "asyncLoad", "alignMemory", "mmapAlloc", "writeI53ToI64", "writeI53ToI64Clamped", "writeI53ToI64Signaling", "writeI53ToU64Clamped", "writeI53ToU64Signaling", "readI53FromI64", "readI53FromU64", "convertI32PairToI53", "convertI32PairToI53Checked", "convertU32PairToI53", "MAX_INT53", "MIN_INT53", "bigintToI53Checked", "getCFunc", "ccall", "uleb128Encode", "sigToWasmTypes", "convertJsFunctionToWasm", "freeTableIndexes", "functionsInTableMap", "getEmptyTableSlot", "updateTableMap", "addFunction", "removeFunction", "reallyNegative", "unSign", "strLen", "reSign", "formatString", "setValue", "getValue", "PATH", "PATH_FS", "intArrayFromString", "intArrayToString", "AsciiToString", "stringToAscii", "UTF16ToString", "stringToUTF16", "lengthBytesUTF16", "UTF32ToString", "stringToUTF32", "lengthBytesUTF32", "allocateUTF8", "allocateUTF8OnStack", "writeStringToMemory", "writeArrayToMemory", "writeAsciiToMemory", "SYSCALLS", "getSocketFromFD", "getSocketAddress", "JSEvents", "registerKeyEventCallback", "specialHTMLTargets", "maybeCStringToJsString", "findEventTarget", "findCanvasEventTarget", "getBoundingClientRect", "fillMouseEventData", "registerMouseEventCallback", "registerWheelEventCallback", "registerUiEventCallback", "registerFocusEventCallback", "fillDeviceOrientationEventData", "registerDeviceOrientationEventCallback", "fillDeviceMotionEventData", "registerDeviceMotionEventCallback", "screenOrientation", "fillOrientationChangeEventData", "registerOrientationChangeEventCallback", "fillFullscreenChangeEventData", "registerFullscreenChangeEventCallback", "JSEvents_requestFullscreen", "JSEvents_resizeCanvasForFullscreen", "registerRestoreOldStyle", "hideEverythingExceptGivenElement", "restoreHiddenElements", "setLetterbox", "currentFullscreenStrategy", "restoreOldWindowedStyle", "softFullscreenResizeWebGLRenderTarget", "doRequestFullscreen", "fillPointerlockChangeEventData", "registerPointerlockChangeEventCallback", "registerPointerlockErrorEventCallback", "requestPointerLock", "fillVisibilityChangeEventData", "registerVisibilityChangeEventCallback", "registerTouchEventCallback", "fillGamepadEventData", "registerGamepadEventCallback", "registerBeforeUnloadEventCallback", "fillBatteryEventData", "battery", "registerBatteryEventCallback", "setCanvasElementSize", "getCanvasElementSize", "demangle", "demangleAll", "jsStackTrace", "stackTrace", "getEnvStrings", "checkWasiClock", "doReadv", "doWritev", "dlopenMissingError", "setImmediateWrapped", "clearImmediateWrapped", "polyfillSetImmediate", "uncaughtExceptionCount", "exceptionLast", "exceptionCaught", "ExceptionInfo", "exception_addRef", "exception_decRef", "Browser", "setMainLoop", "wget", "FS", "MEMFS", "TTY", "PIPEFS", "SOCKFS", "_setNetworkCallback", "tempFixedLengthArray", "miniTempWebGLFloatBuffers", "heapObjectForWebGLType", "heapAccessShiftForWebGLHeap", "GL", "emscriptenWebGLGet", "computeUnpackAlignedImageSize", "emscriptenWebGLGetTexPixelData", "emscriptenWebGLGetUniform", "webglGetUniformLocation", "webglPrepareUniformLocationsBeforeFirstUse", "webglGetLeftBracePos", "emscriptenWebGLGetVertexAttrib", "writeGLArray", "AL", "SDL_unicode", "SDL_ttfContext", "SDL_audio", "SDL", "SDL_gfx", "GLUT", "EGL", "GLFW_Window", "GLFW", "GLEW", "IDBStore", "runAndAbortIfError", "emscriptenWebGLGetIndexed", "ALLOC_NORMAL", "ALLOC_STACK", "allocate", "killThread", "cleanupThread", "registerTLSInit", "cancelThread", "spawnThread", "exitOnMainThread", "invokeEntryPoint", "executeNotifiedProxyingQueue", "GodotWebXR", "GodotWebSocket", "GodotRTCDataChannel", "GodotRTCPeerConnection", "GodotAudio", "GodotAudioWorklet", "GodotAudioScript", "GodotDisplayVK", "GodotDisplayCursor", "GodotDisplayScreen", "GodotDisplay", "GodotFetch", "IDHandler", "GodotConfig", "GodotFS", "GodotOS", "GodotEventListeners", "GodotPWA", "GodotRuntime", "GodotInputGamepads", "GodotInputDragDrop", "GodotInput", "IDBFS", "GodotWebGL2", "GodotJSWrapper" ];
 
 unexportedRuntimeSymbols.forEach(unexportedRuntimeSymbol);
 
-var missingLibrarySymbols = [ "getHostByName", "traverseStack", "convertPCtoSourceLocation", "readAsmConstArgs", "mainThreadEM_ASM", "jstoi_s", "listenOnce", "autoResumeAudioContext", "dynCallLegacy", "getDynCaller", "dynCall", "asmjsMangle", "writeI53ToI64Clamped", "writeI53ToI64Signaling", "writeI53ToU64Clamped", "writeI53ToU64Signaling", "convertI32PairToI53", "convertU32PairToI53", "reallyNegative", "unSign", "strLen", "reSign", "formatString", "registerKeyEventCallback", "getBoundingClientRect", "fillMouseEventData", "registerMouseEventCallback", "registerWheelEventCallback", "registerUiEventCallback", "registerFocusEventCallback", "fillDeviceOrientationEventData", "registerDeviceOrientationEventCallback", "fillDeviceMotionEventData", "registerDeviceMotionEventCallback", "screenOrientation", "fillOrientationChangeEventData", "registerOrientationChangeEventCallback", "fillFullscreenChangeEventData", "registerFullscreenChangeEventCallback", "JSEvents_requestFullscreen", "JSEvents_resizeCanvasForFullscreen", "registerRestoreOldStyle", "hideEverythingExceptGivenElement", "restoreHiddenElements", "setLetterbox", "softFullscreenResizeWebGLRenderTarget", "doRequestFullscreen", "fillPointerlockChangeEventData", "registerPointerlockChangeEventCallback", "registerPointerlockErrorEventCallback", "requestPointerLock", "fillVisibilityChangeEventData", "registerVisibilityChangeEventCallback", "registerTouchEventCallback", "fillGamepadEventData", "registerGamepadEventCallback", "registerBeforeUnloadEventCallback", "fillBatteryEventData", "battery", "registerBatteryEventCallback", "setCanvasElementSize", "getCanvasElementSize", "checkWasiClock", "setImmediateWrapped", "clearImmediateWrapped", "polyfillSetImmediate", "ExceptionInfo", "exception_addRef", "exception_decRef", "_setNetworkCallback", "emscriptenWebGLGetUniform", "emscriptenWebGLGetVertexAttrib", "writeGLArray", "SDL_unicode", "SDL_ttfContext", "SDL_audio", "GLFW_Window", "runAndAbortIfError", "emscriptenWebGLGetIndexed" ];
+var missingLibrarySymbols = [ "getHostByName", "traverseStack", "convertPCtoSourceLocation", "readAsmConstArgs", "mainThreadEM_ASM", "jstoi_s", "listenOnce", "autoResumeAudioContext", "getDynCaller", "dynCall", "asmjsMangle", "writeI53ToI64Clamped", "writeI53ToI64Signaling", "writeI53ToU64Clamped", "writeI53ToU64Signaling", "convertI32PairToI53", "convertI32PairToI53Checked", "convertU32PairToI53", "reallyNegative", "unSign", "strLen", "reSign", "formatString", "registerKeyEventCallback", "getBoundingClientRect", "fillMouseEventData", "registerMouseEventCallback", "registerWheelEventCallback", "registerUiEventCallback", "registerFocusEventCallback", "fillDeviceOrientationEventData", "registerDeviceOrientationEventCallback", "fillDeviceMotionEventData", "registerDeviceMotionEventCallback", "screenOrientation", "fillOrientationChangeEventData", "registerOrientationChangeEventCallback", "fillFullscreenChangeEventData", "registerFullscreenChangeEventCallback", "JSEvents_requestFullscreen", "JSEvents_resizeCanvasForFullscreen", "registerRestoreOldStyle", "hideEverythingExceptGivenElement", "restoreHiddenElements", "setLetterbox", "softFullscreenResizeWebGLRenderTarget", "doRequestFullscreen", "fillPointerlockChangeEventData", "registerPointerlockChangeEventCallback", "registerPointerlockErrorEventCallback", "requestPointerLock", "fillVisibilityChangeEventData", "registerVisibilityChangeEventCallback", "registerTouchEventCallback", "fillGamepadEventData", "registerGamepadEventCallback", "registerBeforeUnloadEventCallback", "fillBatteryEventData", "battery", "registerBatteryEventCallback", "setCanvasElementSize", "getCanvasElementSize", "checkWasiClock", "setImmediateWrapped", "clearImmediateWrapped", "polyfillSetImmediate", "ExceptionInfo", "exception_addRef", "exception_decRef", "_setNetworkCallback", "emscriptenWebGLGetUniform", "emscriptenWebGLGetVertexAttrib", "writeGLArray", "SDL_unicode", "SDL_ttfContext", "SDL_audio", "GLFW_Window", "runAndAbortIfError", "emscriptenWebGLGetIndexed" ];
 
 missingLibrarySymbols.forEach(missingLibrarySymbol);
 
@@ -13571,7 +13354,7 @@ dependenciesFulfilled = function runCaller() {
 function callMain(args) {
  assert(runDependencies == 0, 'cannot call main when async dependencies remain! (listen on Module["onRuntimeInitialized"])');
  assert(__ATPRERUN__.length == 0, "cannot call main when preRun functions remain to be called");
- var entryFunction = Module["_main"];
+ var entryFunction = Module["__emscripten_proxy_main"];
  args = args || [];
  args.unshift(thisProgram);
  var argc = args.length;
@@ -13581,13 +13364,8 @@ function callMain(args) {
   GROWABLE_HEAP_I32()[argv_ptr++] = allocateUTF8OnStack(arg);
  });
  GROWABLE_HEAP_I32()[argv_ptr] = 0;
- try {
-  var ret = entryFunction(argc, argv);
-  exitJS(ret, true);
-  return ret;
- } catch (e) {
-  return handleException(e);
- }
+ var ret = entryFunction(argc, argv);
+ assert(ret == 0, "_emscripten_proxy_main failed to start proxy thread: " + ret);
 }
 
 function stackCheckInit() {
@@ -14190,7 +13968,9 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 				return {};
 			},
 			'locateFile': function (path) {
-				if (path.endsWith('.worker.js')) {
+				if (!path.startsWith('godot.')) {
+					return path;
+				} else if (path.endsWith('.worker.js')) {
 					return `${loadPath}.worker.js`;
 				} else if (path.endsWith('.audio.worklet.js')) {
 					return `${loadPath}.audio.worklet.js`;
@@ -14422,6 +14202,10 @@ const Engine = (function () {
 
 					// Preload GDExtension libraries.
 					const libs = [];
+					if (me.config.gdextensionLibs.length > 0 && !me.rtenv['loadDynamicLibrary']) {
+						return Promise.reject(new Error('GDExtension libraries are not supported by this engine version. '
+							+ 'Enable "Extensions Support" for your export preset and/or build your custom template with "dlink_enabled=yes".'));
+					}
 					me.config.gdextensionLibs.forEach(function (lib) {
 						libs.push(me.rtenv['loadDynamicLibrary'](lib, { 'loadAsync': true }));
 					});
