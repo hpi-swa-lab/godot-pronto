@@ -103,34 +103,19 @@ signal mouse_drag_global(pos: Vector2)
 var enable_drag = false
 var held_mouse_buttons = {}
 
-var key_map = [{
-	"function": Input.is_physical_key_pressed,
-	"left": KEY_A,
-	"right": KEY_D,
-	"up": KEY_W,
-	"down": KEY_S
-},
-{
-	"function": Input.is_action_pressed,
-	"left": "ui_left",
-	"right": "ui_right",
-	"up": "ui_up",
-	"down": "ui_down"
-},
-{
-	"function": Input.is_physical_key_pressed,
-	"left": KEY_J,
-	"right": KEY_L,
-	"up": KEY_I,
-	"down": KEY_K
-}]
-
+#const valid_directions = ["left", "right", "up", "down"]
 func _is_key_pressed(direction):
-	var keys = key_map[player]
-	return keys["function"].call(keys[direction])
+	#if not direction in valid_directions:
+		#push_error("Direction must be one of {0} (got {1})".format(", ".join(valid_directions), direction))
+	
+	var action_string = "player_{0}_{1}".format([str(player), direction])
+	return Input.is_action_pressed(action_string)
 
 func _process(delta):
 	super._process(delta)
+	
+	if Engine.is_editor_hint(): return
+	
 	var input_direction = Vector2.ZERO # Used to allow vertical movement
 	if _is_key_pressed("left"):
 		left.emit()
