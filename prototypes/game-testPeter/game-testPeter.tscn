@@ -1884,3 +1884,6 @@ metadata/pronto_connections = [SubResource("Resource_5naah"), SubResource("Resou
 position = Vector2(144.104, 1.71843e-06)
 script = ExtResource("9_so5y3")
 metadata/pronto_connections = [SubResource("Resource_fy65f")]
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(355.401, 42.2337)
