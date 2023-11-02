@@ -978,7 +978,7 @@ func run(from: Node2D, to: Node2D):
 	if player:
 		return (player.position - to.get_parent().position + Vector2(random_x, random_y)).normalized()
 	else:
-		return Vector2(0.0,0.0)
+		return Vector2(0.0,0.0) #base case
 "
 
 [sub_resource type="Resource" id="Resource_ii3dg"]
