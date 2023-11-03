@@ -118,6 +118,10 @@ func _init():
 ## Reduces the current health value by the given [code]amount[/code].
 func damage(amount):
 	if (invulnerable): return
+	var shake_amount = 10.0
+	var camera = get_parent().get_node("Camera2D")
+	camera.set_offset(Vector2(randf_range(-1.0,1.0) * shake_amount, randf_range(-1.0, 1.0) * shake_amount))
+	
 	set_health(current - amount)
 
 ## Increases the current health value by the given [code]amount[/code].

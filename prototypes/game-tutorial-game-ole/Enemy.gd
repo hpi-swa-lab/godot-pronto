@@ -64,7 +64,7 @@ func _on_flicker_timer_timeout():
 #	if rand_amt < 0.50:
 #		light.energy = 1
 ## More calm, but still flashy
-	if rand_amt < 0.50:
+	if rand_amt < 0.25:
 		flashlight.energy = 1
 	elif rand_amt > 0.75:
 		flashlight.energy = 0.75
