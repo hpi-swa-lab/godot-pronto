@@ -137,6 +137,9 @@ func move_down_a_bit():
 	if done == false:
 		move_direction(Vector2(0.0,0.02))
 		
+func move_right_a_bit():
+		move_direction(Vector2(0.35,0.0))
+		
 func set_done():
 	done = true
 

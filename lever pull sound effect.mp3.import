@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://fca47turvu6w"
+path="res://.godot/imported/lever pull sound effect.mp3-05399cd4949da9daabea765b0a28f8af.mp3str"
+
+[deps]
+
+source_file="res://lever pull sound effect.mp3"
+dest_files=["res://.godot/imported/lever pull sound effect.mp3-05399cd4949da9daabea765b0a28f8af.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

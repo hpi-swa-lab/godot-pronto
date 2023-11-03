@@ -1,8 +1,9 @@
 {
 	"authors": [
-		"Tobias Görgens, Pierre Burghardt"
+		"Tobias Görgens",
+		"Pierre Burghardt"
 	],
 	"description": "Can you escape this spooky trap?",
-	"time": "2023-10-27",
+	"time": "2023-11-03",
 	"title": "Temple Sprint"
 }

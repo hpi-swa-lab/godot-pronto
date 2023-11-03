@@ -47,6 +47,8 @@ var _last_jump_input = -10000
 var _last_positions_max = 30
 var _last_positions = []
 
+var movement_enabled: bool = true
+
 signal collided(last_collision: KinematicCollision2D)
 
 # Make sure that these keys are identical to the comments from the enum "Controls" above when changing them.
@@ -118,6 +120,7 @@ func _physics_process(delta):
 	if gravity_paused:
 		gravity = Vector2.ZERO
 	
+
 	# vertical
 	_update_jump()
 	if _can_jump():
@@ -127,28 +130,32 @@ func _physics_process(delta):
 		_parent.velocity.y = -jump_velocity
 	else:
 		_parent.velocity.y += gravity.y * delta
-	
-	# horizontal
-	var input_direction_x = 0
-	if _is_key_pressed("left"):
-		input_direction_x += -1
-	if _is_key_pressed("right"):
-		input_direction_x += 1
-	_parent.velocity.x = input_direction_x * horizontal_velocity
-	_parent.velocity.x += gravity.x * delta
-	
-	# move
-	var did_collide = _parent.move_and_slide()
-	
-	if did_collide:
-		collided.emit(_parent.get_last_slide_collision())
-	
-	# trail
-	_last_positions.append(_parent.position)
-	if _last_positions.size() > _last_positions_max:
-		_last_positions.pop_front()
-	
+		
+	if movement_enabled:
+		# horizontal
+		var input_direction_x = 0
+		if _is_key_pressed("left"):
+			input_direction_x += -1
+		if _is_key_pressed("right"):
+			input_direction_x += 1
+		_parent.velocity.x = input_direction_x * horizontal_velocity
+		_parent.velocity.x += gravity.x * delta
+		
+		# move
+		var did_collide = _parent.move_and_slide()
+		
+		if did_collide:
+			collided.emit(_parent.get_last_slide_collision())
+		
+		# trail
+		_last_positions.append(_parent.position)
+		if _last_positions.size() > _last_positions_max:
+			_last_positions.pop_front()
+		
 	queue_redraw()
 
 func lines():
 	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (f): return "controls", "controls")]
+	
+func set_movement_enabled(boolean: bool):
+	movement_enabled = boolean
