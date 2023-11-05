@@ -136,10 +136,16 @@ func move_down():
 func move_down_a_bit():
 	if done == false:
 		move_direction(Vector2(0.0,0.02))
-		
+
+var spike_speed = 0.35
+
 func move_right_a_bit():
-		move_direction(Vector2(0.35,0.0))
-		
+		move_direction(Vector2(spike_speed,0.0))
+
+func increase_spike_speed(value = 0.04):
+	spike_speed += value
+	pass
+
 func set_done():
 	done = true
 
@@ -178,3 +184,14 @@ func _get_configuration_warnings():
 
 func lines():
 	return super.lines() + ([Lines.DashedLine.new(self, get_parent(), func (f): return "moves", "moves")])
+
+func _on_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	if body.is_in_group("player"):
+		$"../../Alert".play()
+		increase_spike_speed()
+		$"../Camera2D".increase_zoom()
+
+func _on_first_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	if body.is_in_group("player"):
+		$"../../Alert".play()
+		increase_spike_speed(0.075)

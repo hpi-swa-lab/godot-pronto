@@ -18,3 +18,7 @@ func restore_camera_view():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func increase_zoom(value = 0.1):
+	zoom += zoom * value
+	position += Vector2(-60.0, 60.0)

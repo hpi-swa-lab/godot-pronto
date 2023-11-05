@@ -33,3 +33,8 @@ func _on_clock_behavior_trap_trigger_elapsed():
 	$SpikeWallMap/AudioStreamPlayer2DSpikes.play()
 	$Torches/TileMap2.turn_on_lights()
 	$SpikeWallMap/Camera2D.restore_camera_view()
+
+
+func _on_area_2d_11_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	if body.is_in_group("player"):
+		set_spikes_enabled(false)

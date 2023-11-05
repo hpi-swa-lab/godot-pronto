@@ -1023,7 +1023,7 @@ deferred = false
 enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iyh7h"]
-size = Vector2(4543.5, 26)
+size = Vector2(15921.5, 26)
 
 [sub_resource type="Image" id="Image_7laod"]
 data = {
@@ -1342,7 +1342,7 @@ height = 54.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1kv50"]
 size = Vector2(99, 554)
 
-[sub_resource type="GDScript" id="GDScript_xiqiq"]
+[sub_resource type="GDScript" id="GDScript_2cw0g"]
 script/source = "@tool
 #thumb(\"Timer\")
 extends Behavior
@@ -1373,7 +1373,7 @@ var _trigger_count := 0
 
 ## How often the signal [signal ClockBehavor.elapsed] will be emitted.
 ## A value of [code]-1[/code] means no limit.
-@export var cycle_count : int = -1
+@export var cycle_count : int = 1
 
 ## Timer duration in seconds
 @export var duration_seconds: float = 1.0:
@@ -1427,7 +1427,6 @@ var _timer: Timer:
 
 func reset_and_start():
 	self.paused = false
-	_trigger_count = 0
 	_timer.start(duration_seconds)
 
 func _process(delta):
@@ -1485,7 +1484,7 @@ layer_0/tile_data = PackedInt32Array(589829, 327680, 5, 589830, 327680, 5, 58983
 
 [node name="Player" type="CharacterBody2D" parent="jumpnrun_template" groups=["player"]]
 light_mask = 2
-position = Vector2(722, 525)
+position = Vector2(3759, 554)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/Player"]
 script = ExtResource("3_c0q12")
@@ -1707,7 +1706,7 @@ position = Vector2(389, 786)
 metadata/pronto_connections = [SubResource("Resource_3wwl4")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/BottomKillZone" groups=["oob"]]
-position = Vector2(1184.25, -65)
+position = Vector2(6873.25, -65)
 shape = SubResource("RectangleShape2D_iyh7h")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
@@ -1960,8 +1959,9 @@ script = ExtResource("33_ltmpf")
 
 [node name="ClockBehaviorTrapTrigger" type="Node2D" parent="."]
 position = Vector2(5081, -102)
-script = SubResource("GDScript_xiqiq")
-duration_seconds = 3.0
+script = SubResource("GDScript_2cw0g")
+cycle_count = -1
+duration_seconds = 2.0
 paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = []
