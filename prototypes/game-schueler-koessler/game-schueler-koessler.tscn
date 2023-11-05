@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bat6gt17q12mh"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ExportBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1")
+title = "Spooky Castle"
+authors = PackedStringArray("Jakob Schüler", "Nicola Kössler")
+description = "Escape the castle!"
