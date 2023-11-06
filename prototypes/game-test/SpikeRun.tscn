@@ -1,12 +1,12 @@
 [gd_scene load_steps=15 format=3 uid="uid://cduganxeld585"]
 
 [ext_resource type="TileSet" uid="uid://cxkbxfjg6w030" path="res://prototypes/game-test/tiles.tres" id="1_0wfw1"]
-[ext_resource type="Script" path="res://SpikeRun.gd" id="1_mgguh"]
-[ext_resource type="Script" path="res://Camera2D.gd" id="2_7bj6n"]
+[ext_resource type="Script" path="res://prototypes/game-test/SpikeRun.gd" id="1_mgguh"]
+[ext_resource type="Script" path="res://prototypes/game-test/Camera2D.gd" id="2_7bj6n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_3m17m"]
-[ext_resource type="Script" path="res://SpikeWallMap.gd" id="4_m4gou"]
+[ext_resource type="Script" path="res://prototypes/game-test/SpikeWallMap.gd" id="4_m4gou"]
 [ext_resource type="AudioStream" uid="uid://bl1ae8fx2x37n" path="res://prototypes/game-test/resources/audio/Gears Factory Mechanical.mp3" id="6_0pqkv"]
-[ext_resource type="Script" path="res://TileMap2.gd" id="7_pnsrs"]
+[ext_resource type="Script" path="res://prototypes/game-test/TileMap2.gd" id="7_pnsrs"]
 [ext_resource type="Texture2D" uid="uid://coiaxftxa6ket" path="res://prototypes/game-test/resources/images/Light.png" id="7_y1342"]
 [ext_resource type="AudioStream" uid="uid://cyqmtddyrmkl3" path="res://prototypes/game-test/resources/audio/Metal Gear Solid Alert.mp3" id="9_slpt0"]
 
