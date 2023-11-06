@@ -144,6 +144,8 @@ func move_right_a_bit():
 
 func increase_spike_speed(value = 0.04):
 	spike_speed += value
+	$"../AudioStreamPlayer2DSpikes".pitch_scale *= (1.0 + value)
+	$"../AudioStreamPlayer2DSpikes".volume_db *= (1.0 + value)
 	pass
 
 func set_done():

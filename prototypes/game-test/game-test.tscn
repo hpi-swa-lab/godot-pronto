@@ -1,4 +1,4 @@
-[gd_scene load_steps=211 format=3 uid="uid://dq5gygwtd7rxb"]
+[gd_scene load_steps=226 format=3 uid="uid://dq5gygwtd7rxb"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Script" path="res://prototypes/game-test/jumpnrun_template.gd" id="2_dr2ov"]
@@ -29,10 +29,15 @@
 [ext_resource type="Texture2D" uid="uid://dn3x1tqojq5hs" path="res://icon_5090.png" id="19_yv0hh"]
 [ext_resource type="AudioStream" uid="uid://b5lq7qxcm1iwh" path="res://Scream Sound effect (funny).mp3" id="23_6avei"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="26_4vtvb"]
-[ext_resource type="PackedScene" uid="uid://cduganxeld585" path="res://SpikeRun.tscn" id="30_fwl8n"]
+[ext_resource type="Script" path="res://SpikeRun.gd" id="30_36qlf"]
 [ext_resource type="Script" path="res://prototypes/game-test/TrapTrigger.gd" id="31_l7ylb"]
+[ext_resource type="Script" path="res://TileMap2.gd" id="31_w7wul"]
+[ext_resource type="Script" path="res://SpikeWallMap.gd" id="32_if7e5"]
 [ext_resource type="AudioStream" uid="uid://fca47turvu6w" path="res://lever pull sound effect.mp3" id="32_nnw28"]
 [ext_resource type="Script" path="res://prototypes/game-test/AudioStreamPlayerTrapTrigger.gd" id="33_ltmpf"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="33_y5nvw"]
+[ext_resource type="AudioStream" uid="uid://bl1ae8fx2x37n" path="res://Gears Factory Mechanical.mp3" id="34_0qeyf"]
+[ext_resource type="AudioStream" uid="uid://cyqmtddyrmkl3" path="res://Metal Gear Solid Alert.mp3" id="35_pdr0a"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_chevg"]
 particles_animation = true
@@ -40,7 +45,7 @@ particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="Image" id="Image_qei4x"]
+[sub_resource type="Image" id="Image_i8las"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -50,7 +55,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_c1vcs"]
-image = SubResource("Image_qei4x")
+image = SubResource("Image_i8las")
 
 [sub_resource type="GDScript" id="GDScript_yljtb"]
 script/source = "@tool
@@ -829,7 +834,7 @@ light_mode = 2
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xs1gn"]
 light_mode = 2
 
-[sub_resource type="Image" id="Image_brx7j"]
+[sub_resource type="Image" id="Image_5c0lr"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -839,7 +844,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_ryym7"]
-image = SubResource("Image_brx7j")
+image = SubResource("Image_5c0lr")
 
 [sub_resource type="GDScript" id="GDScript_57ix1"]
 script/source = "@tool
@@ -1025,7 +1030,7 @@ enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iyh7h"]
 size = Vector2(15921.5, 26)
 
-[sub_resource type="Image" id="Image_7laod"]
+[sub_resource type="Image" id="Image_111ka"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -1035,7 +1040,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_kcnpj"]
-image = SubResource("Image_7laod")
+image = SubResource("Image_111ka")
 
 [sub_resource type="GDScript" id="GDScript_hj7xd"]
 script/source = "@tool
@@ -1316,7 +1321,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
-	return to.is_in_group(\"player\")
+	return body.is_in_group(\"player\")
 "
 
 [sub_resource type="Resource" id="Resource_db20s"]
@@ -1338,6 +1343,63 @@ enabled = true
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_icpf8"]
 height = 54.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f4ms5"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqfre"]
+size = Vector2(34, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mcybr"]
+size = Vector2(34, 560)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q23d4"]
+size = Vector2(64, 64)
+
+[sub_resource type="GDScript" id="GDScript_rsp5c"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
+	return 100
+"
+
+[sub_resource type="Resource" id="Resource_7xixa"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_rsp5c")
+argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_afgho"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
+	return body.is_in_group(\"player\")
+"
+
+[sub_resource type="Resource" id="Resource_fs8ca"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_afgho")
+argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_2alrx"]
+script = ExtResource("7_02ofy")
+signal_name = "body_shape_entered"
+to = NodePath("../../../jumpnrun_template/Player/HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_7xixa")]
+only_if = SubResource("Resource_fs8ca")
+deferred = false
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4q0av"]
+size = Vector2(58, 578)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1kv50"]
 size = Vector2(99, 554)
@@ -1449,6 +1511,7 @@ func _ready():
 		add_child(_timer)
 
 func _on_timer_elapsed():
+	_timer.stop()
 	if cycle_count < 0:
 		elapsed.emit()
 	elif _trigger_count < cycle_count:
@@ -1941,8 +2004,377 @@ offset_right = 420.0
 offset_bottom = 276.0
 text = "Restart Game"
 
-[node name="SpikeRun" parent="." instance=ExtResource("30_fwl8n")]
+[node name="SpikeRun" type="Node2D" parent="."]
 position = Vector2(5016.79, -0.0238647)
+script = ExtResource("30_36qlf")
+
+[node name="Black" type="ColorRect" parent="SpikeRun"]
+offset_left = -192.0
+offset_right = 1352.0
+offset_bottom = 704.0
+color = Color(0, 0, 0, 1)
+
+[node name="Torches" type="Node2D" parent="SpikeRun"]
+position = Vector2(-128, -344)
+
+[node name="TileMap2" type="TileMap" parent="SpikeRun/Torches"]
+material = SubResource("CanvasItemMaterial_f4ms5")
+tile_set = ExtResource("3_pru7n")
+format = 2
+layer_0/tile_data = PackedInt32Array(458766, 458752, 6, 458772, 458752, 6, 458778, 458752, 6, 458760, 458752, 6, 458754, 458752, 6, 524290, 393216, 5, 524296, 393216, 5, 524302, 393216, 5, 524308, 393216, 5, 524314, 393216, 5, 524320, 393216, 5, 524326, 393216, 5, 524332, 393216, 5, 524338, 393216, 5, 524344, 393216, 5, 524350, 393216, 5, 524356, 393216, 5, 524362, 393216, 5, 524368, 393216, 5, 524374, 393216, 5, 524380, 393216, 5, 524386, 393216, 5, 524392, 393216, 5, 524398, 393216, 5, 524404, 393216, 5, 524410, 393216, 5, 524416, 393216, 5, 524422, 393216, 5, 524428, 393216, 5, 524434, 393216, 5, 458784, 458752, 6, 458790, 458752, 6, 458796, 458752, 6, 458802, 458752, 6, 458808, 458752, 6, 458814, 458752, 6, 458820, 458752, 6, 458826, 458752, 6, 458832, 458752, 6, 458838, 458752, 6, 458844, 458752, 6, 458850, 458752, 6, 458856, 458752, 6, 458862, 458752, 6, 458868, 458752, 6, 458874, 458752, 6, 458880, 458752, 6, 458886, 458752, 6, 458892, 458752, 6, 458898, 458752, 6)
+script = ExtResource("31_w7wul")
+
+[node name="PointLight2D" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(160, 704)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D2" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(544, 704)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D3" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(928, 704)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D4" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(1312, 700)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D5" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(1696, 700)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D6" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(2080, 704)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D7" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(2464, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D8" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(2848, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D9" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(3232, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D10" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(3616, 692)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D11" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(4000, 692)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D12" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(4384, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D13" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(4768, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D14" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(5152, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D15" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(5536, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D16" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(5920, 692)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D17" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(6304, 692)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D18" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(6688, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D19" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(7072, 688)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D20" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(7456, 688)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D21" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(7840, 688)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D22" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(8224, 684)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D23" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(8608, 684)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D24" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(8989.71, 688)
+scale = Vector2(117.692, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLight2D25" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+position = Vector2(9376, 696)
+scale = Vector2(73.8461, 223.59)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="PointLightCeiling" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
+visible = false
+position = Vector2(1132, 334)
+scale = Vector2(646.154, 33.8461)
+color = Color(0.745098, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+texture_scale = 0.3
+
+[node name="TileMap" type="TileMap" parent="SpikeRun"]
+material = SubResource("CanvasItemMaterial_f4ms5")
+tile_set = ExtResource("3_pru7n")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 327680, 5, 1, 327680, 5, 2, 327680, 5, 3, 327680, 5, 4, 327680, 5, 5, 327680, 5, 6, 327680, 5, 7, 327680, 5, 8, 327680, 5, 9, 327680, 5, 10, 327680, 5, 11, 327680, 5, 12, 327680, 5, 13, 327680, 5, 14, 327680, 5, 15, 327680, 5, 655360, 327680, 5, 655361, 327680, 5, 655362, 327680, 5, 655363, 327680, 5, 655364, 327680, 5, 655365, 327680, 5, 655366, 327680, 5, 655367, 327680, 5, 655368, 327680, 5, 655369, 327680, 5, 655370, 327680, 5, 655371, 327680, 5, 655372, 327680, 5, 655373, 327680, 5, 655374, 327680, 5, 655375, 327680, 5, 655376, 327680, 5, 655377, 327680, 5, 655378, 327680, 5, 655379, 327680, 5, 16, 327680, 5, 17, 327680, 5, 18, 327680, 5, 19, 327680, 5, 20, 327680, 5, 21, 327680, 5, 22, 327680, 5, 23, 327680, 5, 24, 327680, 5, 25, 327680, 5, 26, 327680, 5, 27, 327680, 5, 28, 327680, 5, 29, 327680, 5, 30, 327680, 5, 31, 327680, 5, 32, 327680, 5, 33, 327680, 5, 34, 327680, 5, 35, 327680, 5, 36, 327680, 5, 37, 327680, 5, 38, 327680, 5, 39, 327680, 5, 40, 327680, 5, 41, 327680, 5, 42, 327680, 5, 43, 327680, 5, 44, 327680, 5, 45, 327680, 5, 46, 327680, 5, 47, 327680, 5, 48, 327680, 5, 49, 327680, 5, 50, 327680, 5, 51, 327680, 5, 52, 327680, 5, 53, 327680, 5, 54, 327680, 5, 55, 327680, 5, 56, 327680, 5, 57, 327680, 5, 58, 327680, 5, 59, 327680, 5, 60, 327680, 5, 61, 327680, 5, 62, 327680, 5, 63, 327680, 5, 64, 327680, 5, 65, 327680, 5, 66, 327680, 5, 67, 327680, 5, 68, 327680, 5, 69, 327680, 5, 655380, 327680, 5, 655412, 327680, 5, 655413, 327680, 5, 655414, 327680, 5, 655415, 327680, 5, 655416, 327680, 5, 655417, 327680, 5, 655418, 327680, 5, 655419, 327680, 5, 655420, 327680, 5, 655421, 327680, 5, 655422, 327680, 5, 655423, 327680, 5, 655424, 327680, 5, 655425, 327680, 5, 655426, 327680, 5, 655427, 327680, 5, 655428, 327680, 5, 655429, 327680, 5, 70, 327680, 5, 71, 327680, 5, 72, 327680, 5, 73, 327680, 5, 74, 327680, 5, 75, 327680, 5, 76, 327680, 5, 77, 327680, 5, 78, 327680, 5, 79, 327680, 5, 80, 327680, 5, 81, 327680, 5, 82, 327680, 5, 83, 327680, 5, 84, 327680, 5, 85, 327680, 5, 86, 327680, 5, 87, 327680, 5, 88, 327680, 5, 89, 327680, 5, 90, 327680, 5, 91, 327680, 5, 92, 327680, 5, 93, 327680, 5, 94, 327680, 5, 95, 327680, 5, 96, 327680, 5, 97, 327680, 5, 98, 327680, 5, 99, 327680, 5, 100, 327680, 5, 101, 327680, 5, 102, 327680, 5, 103, 327680, 5, 104, 327680, 5, 105, 327680, 5, 106, 327680, 5, 107, 327680, 5, 108, 327680, 5, 109, 327680, 5, 110, 327680, 5, 111, 327680, 5, 112, 327680, 5, 113, 327680, 5, 114, 327680, 5, 115, 327680, 5, 116, 327680, 5, 117, 327680, 5, 118, 327680, 5, 119, 327680, 5, 120, 327680, 5, 121, 327680, 5, 122, 327680, 5, 123, 327680, 5, 124, 327680, 5, 125, 327680, 5, 126, 327680, 5, 127, 327680, 5, 128, 327680, 5, 129, 327680, 5, 130, 327680, 5, 131, 327680, 5, 132, 327680, 5, 133, 327680, 5, 134, 327680, 5, 135, 327680, 5, 136, 327680, 5, 655430, 327680, 5, 655431, 327680, 5, 655432, 327680, 5, 655433, 327680, 5, 655434, 327680, 5, 655435, 327680, 5, 655442, 327680, 5, 655443, 327680, 5, 655444, 327680, 5, 655445, 327680, 5, 655446, 327680, 5, 655447, 327680, 5, 655448, 327680, 5, 655449, 327680, 5, 655450, 327680, 5, 655451, 327680, 5, 655452, 327680, 5, 655453, 327680, 5, 655454, 327680, 5, 655455, 327680, 5, 655456, 327680, 5, 655457, 327680, 5, 655458, 327680, 5, 655459, 327680, 5, 655460, 327680, 5, 655461, 327680, 5, 655462, 327680, 5, 655463, 327680, 5, 655464, 327680, 5, 655465, 327680, 5, 655466, 327680, 5, 655467, 327680, 5, 655468, 327680, 5, 655469, 327680, 5, 655473, 327680, 5, 655474, 327680, 5, 655475, 327680, 5, 655476, 327680, 5, 655477, 327680, 5, 655478, 327680, 5, 655479, 327680, 5, 655483, 327680, 5, 655487, 327680, 5, 655488, 327680, 5, 655489, 327680, 5, 655490, 327680, 5, 655491, 327680, 5, 655492, 327680, 5, 655493, 327680, 5, 655494, 327680, 5, 655495, 327680, 5, 137, 327680, 5, 138, 327680, 5, 139, 327680, 5, 140, 327680, 5, 141, 327680, 5, 142, 327680, 5, 143, 327680, 5, 144, 327680, 5, 145, 327680, 5, 655501, 327680, 5, 655502, 327680, 5, 655503, 327680, 5, 655504, 327680, 5, 655505, 327680, 5, 146, 327680, 5, 655506, 327680, 5, 589847, 327680, 5, 458777, 327680, 5, 327703, 327680, 5, 262170, 327680, 5, 262174, 327680, 5, 65567, 327680, 5, 131103, 327680, 4, 262177, 327680, 5, 327724, 0, 4, 262191, 0, 4, 65569, 196608, 6, 65588, 196608, 6, 589863, 0, 4, 458794, 0, 4, 655396, 0, 4, 655441, 327680, 5, 655440, 327680, 5, 655439, 327680, 5, 655438, 327680, 5, 655437, 327680, 5, 655436, 327680, 5, 65605, 196608, 6, 65623, 196608, 6, 65641, 196608, 6, 655480, 327680, 5, 655481, 327680, 5, 655482, 327680, 5, 655500, 327680, 805306372, 524426, 196608, 9, 589970, 327680, 5, 524434, 327680, 5, 458898, 327680, 5, 393362, 327680, 5, 327826, 327680, 5, 262290, 327680, 5, 196754, 327680, 5, 131218, 327680, 5, 65682, 327680, 5)
+
+[node name="ColorRect" type="ColorRect" parent="SpikeRun/TileMap"]
+offset_left = 2128.0
+offset_top = 80.0
+offset_right = 2160.0
+offset_bottom = 256.0
+color = Color(1, 0, 0, 0.45098)
+
+[node name="PointLight2D" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(2144, 159.024)
+scale = Vector2(3.69232, 22.6154)
+color = Color(1, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+
+[node name="Area2D" type="Area2D" parent="SpikeRun/TileMap"]
+position = Vector2(2120, -72)
+metadata/pronto_connections = []
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D"]
+position = Vector2(23, 240)
+shape = SubResource("RectangleShape2D_yqfre")
+
+[node name="ColorRect2" type="ColorRect" parent="SpikeRun/TileMap"]
+offset_left = 3344.0
+offset_top = 80.0
+offset_right = 3376.0
+offset_bottom = 640.0
+color = Color(1, 0, 0, 0.45098)
+
+[node name="PointLight2D2" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(3360, 355.024)
+scale = Vector2(3.69232, 52.7692)
+color = Color(1, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+
+[node name="Area2D2" type="Area2D" parent="SpikeRun/TileMap"]
+position = Vector2(3336, -72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D2"]
+position = Vector2(23, 431)
+shape = SubResource("RectangleShape2D_mcybr")
+
+[node name="ColorRect3" type="ColorRect" parent="SpikeRun/TileMap"]
+offset_left = 4432.0
+offset_top = 80.0
+offset_right = 4464.0
+offset_bottom = 640.0
+color = Color(1, 0, 0, 0.45098)
+
+[node name="PointLight2D3" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(4448, 354.524)
+scale = Vector2(3.69232, 52.2308)
+color = Color(1, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+
+[node name="Area2D3" type="Area2D" parent="SpikeRun/TileMap"]
+position = Vector2(4424, -72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D3"]
+position = Vector2(23, 431)
+shape = SubResource("RectangleShape2D_mcybr")
+
+[node name="ColorRect4" type="ColorRect" parent="SpikeRun/TileMap"]
+offset_left = 5584.0
+offset_top = 80.0
+offset_right = 5616.0
+offset_bottom = 640.0
+color = Color(1, 0, 0, 0.45098)
+
+[node name="PointLight2D4" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(5600, 351.524)
+scale = Vector2(3.69232, 52.3846)
+color = Color(1, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+
+[node name="Area2D4" type="Area2D" parent="SpikeRun/TileMap"]
+position = Vector2(5576, -72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D4"]
+position = Vector2(23, 431)
+shape = SubResource("RectangleShape2D_mcybr")
+
+[node name="ColorRect5" type="ColorRect" parent="SpikeRun/TileMap"]
+offset_left = 6736.0
+offset_top = 72.0
+offset_right = 6768.0
+offset_bottom = 632.0
+color = Color(1, 0, 0, 0.45098)
+
+[node name="PointLight2D6" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(6752, 351.024)
+scale = Vector2(3.69232, 52)
+color = Color(1, 0, 0, 1)
+texture = ExtResource("17_r8jq7")
+
+[node name="Area2D5" type="Area2D" parent="SpikeRun/TileMap"]
+position = Vector2(6728, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D5"]
+position = Vector2(23, 431)
+shape = SubResource("RectangleShape2D_mcybr")
+
+[node name="Area2D11" type="Area2D" parent="SpikeRun/TileMap"]
+position = Vector2(4992, 104)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D11"]
+position = Vector2(3872, 440)
+shape = SubResource("RectangleShape2D_q23d4")
+
+[node name="PointLight2D5" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(2336.38, 684.375)
+scale = Vector2(2.40381, 3.01922)
+texture = ExtResource("17_r8jq7")
+
+[node name="PointLight2D11" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(2528, 616)
+scale = Vector2(2.40381, 3.01922)
+texture = ExtResource("17_r8jq7")
+
+[node name="PointLight2D12" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(3040, 296)
+scale = Vector2(2.40381, 3.01922)
+texture = ExtResource("17_r8jq7")
+
+[node name="PointLight2D13" type="PointLight2D" parent="SpikeRun/TileMap"]
+position = Vector2(2848, 360)
+scale = Vector2(2.40381, 3.01922)
+texture = ExtResource("17_r8jq7")
+
+[node name="SpikeWallMap" type="TileMap" parent="SpikeRun"]
+material = SubResource("CanvasItemMaterial_f4ms5")
+tile_set = ExtResource("3_pru7n")
+format = 2
+layer_0/tile_data = PackedInt32Array(131069, 327680, 5, 196605, 327680, 5, 262141, 327680, 5, 327677, 327680, 5, 393213, 327680, 5, 458749, 327680, 5, 524285, 327680, 5, 589821, 327680, 5, 655357, 327680, 5, 458750, 196608, 1342177281, 524286, 196608, 1342177281, 589822, 196608, 1342177281, 655358, 196608, 1342177281, 131070, 196608, 1342177281, 196606, 196608, 1342177281, 262142, 196608, 1342177281, 327678, 196608, 1342177281, 393214, 196608, 1342177281)
+script = ExtResource("32_if7e5")
+
+[node name="Area2D" type="Area2D" parent="SpikeRun/SpikeWallMap"]
+metadata/pronto_connections = [SubResource("Resource_2alrx")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/SpikeWallMap/Area2D"]
+position = Vector2(-101, 351)
+shape = SubResource("RectangleShape2D_4q0av")
+
+[node name="MoveBehavior" type="Node2D" parent="SpikeRun/SpikeWallMap"]
+position = Vector2(3.49691e-06, -40)
+script = ExtResource("13_68vfu")
+
+[node name="Camera2D" type="Camera2D" parent="SpikeRun/SpikeWallMap"]
+position = Vector2(440, 376)
+zoom = Vector2(0.915, 0.915)
+limit_left = -192
+limit_top = 0
+limit_bottom = 704
+script = ExtResource("33_y5nvw")
+
+[node name="AudioStreamPlayer2DSpikes" type="AudioStreamPlayer2D" parent="SpikeRun/SpikeWallMap"]
+stream = ExtResource("34_0qeyf")
+volume_db = 3.545
+pitch_scale = 0.85
+
+[node name="Alert" type="AudioStreamPlayer" parent="SpikeRun"]
+stream = ExtResource("35_pdr0a")
+pitch_scale = 0.66
 
 [node name="TrapTrigger" type="Area2D" parent="."]
 position = Vector2(4915, -7)
@@ -1966,7 +2398,14 @@ paused = true
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = []
 
+[connection signal="death" from="jumpnrun_template/Player/HealthBarBehavior" to="jumpnrun_template" method="_on_health_bar_behavior_death"]
 [connection signal="pressed" from="Button" to="jumpnrun_template" method="restart_game"]
+[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_first_area_2d_body_shape_entered" flags=18]
+[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D2" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]
+[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D3" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]
+[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D4" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]
+[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D5" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]
+[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D11" to="SpikeRun" method="_on_area_2d_11_body_shape_entered" flags=18]
 [connection signal="body_shape_entered" from="TrapTrigger" to="jumpnrun_template" method="_on_trap_trigger_body_shape_entered"]
 [connection signal="body_shape_entered" from="TrapTrigger" to="AudioStreamPlayerTrapTrigger" method="_on_trap_trigger_body_shape_entered"]
 [connection signal="finished" from="AudioStreamPlayerTrapTrigger" to="jumpnrun_template" method="_on_audio_stream_player_trap_trigger_finished"]

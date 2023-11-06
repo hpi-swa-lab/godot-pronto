@@ -51,3 +51,8 @@ func _on_trap_trigger_body_shape_entered(body_rid, body, body_shape_index, local
 	print("Area Entered")
 	$Player/PlatformerControllerBehavior.set_movement_enabled(false)
 	$"../TrapTrigger".queue_free()
+
+
+func _on_health_bar_behavior_death():
+	$"../SpikeRun"._on_health_bar_behavior_death()
+	pass # Replace with function body.
