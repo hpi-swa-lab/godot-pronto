@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://da57x6iirohen"
+path="res://.godot/imported/Wood Golf Club Hit Ball.mp3-945188acc397a55f0221365d940d2c1d.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-test/resources/audio/Wood Golf Club Hit Ball.mp3"
+dest_files=["res://.godot/imported/Wood Golf Club Hit Ball.mp3-945188acc397a55f0221365d940d2c1d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deulx2ye8cw5g"
-path="res://.godot/imported/thumbnail.png-3f545d161fd110f6ef4e5b6d4c7c77a7.ctex"
+uid="uid://cxco7j8616lid"
+path="res://.godot/imported/1 (1).webp-4bea350199c4f23eab344b230bdcf808.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://thumbnail.png"
-dest_files=["res://.godot/imported/thumbnail.png-3f545d161fd110f6ef4e5b6d4c7c77a7.ctex"]
+source_file="res://prototypes/game-test/resources/images/1 (1).webp"
+dest_files=["res://.godot/imported/1 (1).webp-4bea350199c4f23eab344b230bdcf808.ctex"]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://defeo7pmswuu0"]
 
-[ext_resource type="Texture2D" uid="uid://cxco7j8616lid" path="res://1 (1).webp" id="1_xisdx"]
+[ext_resource type="Texture2D" uid="uid://cxco7j8616lid" path="res://prototypes/game-test/resources/images/1 (1).webp" id="1_xisdx"]
 
 [sub_resource type="CurveTexture" id="CurveTexture_d3tbc"]
 texture_mode = 1

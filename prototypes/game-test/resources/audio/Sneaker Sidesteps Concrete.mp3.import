@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b36ny176qbeqe"
+path="res://.godot/imported/Sneaker Sidesteps Concrete.mp3-363f7db03ae959f76034c7343e427c12.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-test/resources/audio/Sneaker Sidesteps Concrete.mp3"
+dest_files=["res://.godot/imported/Sneaker Sidesteps Concrete.mp3-363f7db03ae959f76034c7343e427c12.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

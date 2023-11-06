@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://vkq36uncgqho"
+path="res://.godot/imported/Devil's Organ - Jimena Contreras.mp3-06b4d020b8425789b919c561682bace2.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-test/resources/audio/Devil's Organ - Jimena Contreras.mp3"
+dest_files=["res://.godot/imported/Devil's Organ - Jimena Contreras.mp3-06b4d020b8425789b919c561682bace2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

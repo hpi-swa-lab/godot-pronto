@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dh5li7d8eqq0e"
+path="res://.godot/imported/Coins Shuffling.mp3-97ec4c907cc58baf24f22b84016c7acb.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-test/resources/audio/Coins Shuffling.mp3"
+dest_files=["res://.godot/imported/Coins Shuffling.mp3-97ec4c907cc58baf24f22b84016c7acb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

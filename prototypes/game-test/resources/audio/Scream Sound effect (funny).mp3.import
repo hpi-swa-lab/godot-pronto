@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b5lq7qxcm1iwh"
+path="res://.godot/imported/Scream Sound effect (funny).mp3-4c896d3baa6d54ee503674c3f44caa68.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-test/resources/audio/Scream Sound effect (funny).mp3"
+dest_files=["res://.godot/imported/Scream Sound effect (funny).mp3-4c896d3baa6d54ee503674c3f44caa68.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

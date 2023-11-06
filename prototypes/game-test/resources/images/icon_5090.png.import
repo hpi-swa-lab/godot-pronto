@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coiaxftxa6ket"
-path="res://.godot/imported/Light.png-434aab4fe64b7d35096e8d62977f183c.ctex"
+uid="uid://dn3x1tqojq5hs"
+path="res://.godot/imported/icon_5090.png-1654971fa081755774c07c71b68bcb54.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Light.png"
-dest_files=["res://.godot/imported/Light.png-434aab4fe64b7d35096e8d62977f183c.ctex"]
+source_file="res://prototypes/game-test/resources/images/icon_5090.png"
+dest_files=["res://.godot/imported/icon_5090.png-1654971fa081755774c07c71b68bcb54.ctex"]
 
 [params]
 
