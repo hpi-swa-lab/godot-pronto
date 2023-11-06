@@ -1,4 +1,4 @@
-[gd_scene load_steps=280 format=3 uid="uid://d2mbbti3ejoy0"]
+[gd_scene load_steps=347 format=3 uid="uid://d2mbbti3ejoy0"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://bt8mq02w33hjr" path="res://addons/pronto/assets/spritesheetScribblePlatformer.png" id="2_1rg6u"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="11_2r7rm"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/GroupBehavior.gd" id="11_b2q10"]
 [ext_resource type="Texture2D" uid="uid://dso014glv6pnd" path="res://images/boeses_brot_guckt_rechts.png" id="11_c0asb"]
+[ext_resource type="AudioStream" uid="uid://brkwmc657kiip" path="res://images/Other-wordly Buddy ｜ pseudomorph_0z.mp3" id="11_ipu88"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="12_r5q04"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="13_pups5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="14_mfwpd"]
@@ -27,7 +28,10 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CameraShakeBehavior.gd" id="15_yp5ad"]
 [ext_resource type="Texture2D" uid="uid://com8crmv3jduj" path="res://images/blutella.png" id="20_nj2t1"]
 [ext_resource type="Texture2D" uid="uid://bsuaponnqxr4o" path="res://images/sm_bg_edited.png" id="22_m4tvr"]
+[ext_resource type="Texture2D" uid="uid://bf5cklhhdxcil" path="res://images/happy_brot.png" id="24_16qce"]
 [ext_resource type="Texture2D" uid="uid://bnqj888v1qvb0" path="res://images/sm_actionBox.png" id="24_tpp5a"]
+[ext_resource type="Texture2D" uid="uid://cw6sqbi7ussxg" path="res://images/happy_brot_guckt_links.png" id="25_vqhdl"]
+[ext_resource type="Texture2D" uid="uid://qyich3toy3y6" path="res://images/happy_brot_guckt_rechts.png" id="26_sbhbh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rcppa"]
 texture = ExtResource("2_1rg6u")
@@ -460,7 +464,7 @@ return_value = true
 [sub_resource type="Resource" id="Resource_2bqgw"]
 script = ExtResource("7_qfsk3")
 signal_name = "finished"
-to = NodePath("../ClockBehavior")
+to = NodePath("ClockBehavior")
 more_references = []
 invoke = "reset_and_start"
 arguments = []
@@ -499,11 +503,50 @@ return_value = true
 [sub_resource type="Resource" id="Resource_sh5tn"]
 script = ExtResource("7_qfsk3")
 signal_name = "elapsed"
-to = NodePath("../HappyMusic")
+to = NodePath("..")
 more_references = []
 invoke = "play"
 arguments = [SubResource("Resource_7jseo")]
 only_if = SubResource("Resource_i7hw5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_tcoic"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: AudioStreamPlayer2D, to: AudioStreamPlayer2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_mkcmw"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_tcoic")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xdsx4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: AudioStreamPlayer2D, to: AudioStreamPlayer2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_n6ir1"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_xdsx4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_khme3"]
+script = ExtResource("7_qfsk3")
+signal_name = "finished"
+to = NodePath(".")
+more_references = []
+invoke = "play"
+arguments = [SubResource("Resource_mkcmw")]
+only_if = SubResource("Resource_n6ir1")
 deferred = false
 enabled = true
 
@@ -1046,7 +1089,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Node2D, to: Sprite2D):
-	return true
+	return not G.at(\"if_day\")
 "
 
 [sub_resource type="Resource" id="Resource_ojal2"]
@@ -1169,11 +1212,50 @@ only_if = SubResource("Resource_1wdaa")
 deferred = false
 enabled = true
 
-[sub_resource type="GDScript" id="GDScript_aonq6"]
+[sub_resource type="GDScript" id="GDScript_128y4"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(from: Node2D, to: Sprite2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_de32o"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_128y4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_huyjp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return G.at(\"if_day\")
+"
+
+[sub_resource type="Resource" id="Resource_as2w5"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_huyjp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_asgn6"]
+script = ExtResource("7_qfsk3")
+signal_name = "elapsed"
+to = NodePath("../happyFace")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_de32o")]
+only_if = SubResource("Resource_as2w5")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_aonq6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
 	return true
 "
 
@@ -1308,6 +1390,123 @@ more_references = []
 invoke = "reset_and_start"
 arguments = []
 only_if = SubResource("Resource_bhbfs")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_oite3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_xfoip"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_oite3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_u7ldh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return G.at(\"if_day\")
+"
+
+[sub_resource type="Resource" id="Resource_v16gb"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_u7ldh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3trx4"]
+script = ExtResource("7_qfsk3")
+signal_name = "down"
+to = NodePath("../happy links gucken")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_xfoip")]
+only_if = SubResource("Resource_v16gb")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_lejua"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_vytgp"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_lejua")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ds5ic"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return G.at(\"if_day\")
+"
+
+[sub_resource type="Resource" id="Resource_qu5x0"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_ds5ic")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dbp77"]
+script = ExtResource("7_qfsk3")
+signal_name = "down"
+to = NodePath("../happy rechts gucken")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_vytgp")]
+only_if = SubResource("Resource_qu5x0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_2mmhy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_0bm8q"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_2mmhy")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_7f0rh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return G.at(\"if_day\")
+"
+
+[sub_resource type="Resource" id="Resource_pyo2p"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_7f0rh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_smxpf"]
+script = ExtResource("7_qfsk3")
+signal_name = "down"
+to = NodePath("../happyFace")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_0bm8q")]
+only_if = SubResource("Resource_pyo2p")
 deferred = false
 enabled = true
 
@@ -1450,6 +1649,123 @@ more_references = []
 invoke = "reset_and_start"
 arguments = []
 only_if = SubResource("Resource_b5aqo")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_25r4k"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_5hqxf"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_25r4k")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jh2cg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return G.at(\"if_day\")
+"
+
+[sub_resource type="Resource" id="Resource_xttqx"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_jh2cg")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1kilv"]
+script = ExtResource("7_qfsk3")
+signal_name = "down"
+to = NodePath("../happy rechts gucken")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_5hqxf")]
+only_if = SubResource("Resource_xttqx")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_280so"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_ab85u"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_280so")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_vbi2b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return G.at(\"if_day\")
+"
+
+[sub_resource type="Resource" id="Resource_cje3n"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_vbi2b")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_y846u"]
+script = ExtResource("7_qfsk3")
+signal_name = "down"
+to = NodePath("../happy links gucken")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_ab85u")]
+only_if = SubResource("Resource_cje3n")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_t6uyb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_kejhy"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_t6uyb")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_lt32t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Sprite2D):
+	return G.at(\"if_day\")
+"
+
+[sub_resource type="Resource" id="Resource_ftwy0"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_lt32t")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gshgp"]
+script = ExtResource("7_qfsk3")
+signal_name = "down"
+to = NodePath("../happyFace")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_kejhy")]
+only_if = SubResource("Resource_ftwy0")
 deferred = false
 enabled = true
 
@@ -1967,6 +2283,7 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(other, direction, from, to):
 	put(\"if_enemy_visible\", true)
+	put(\"if_day\", false)
 	return true
 "
 
@@ -2058,7 +2375,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: TextureRect):
+func run(other, direction, from, to):
 	return false
 "
 
@@ -2129,6 +2446,187 @@ more_references = []
 invoke = "set_visible"
 arguments = [SubResource("Resource_2hblb")]
 only_if = SubResource("Resource_fmh3f")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_iwddo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: AudioStreamPlayer2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_sywew"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_iwddo")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1fix6"]
+script = ExtResource("7_qfsk3")
+signal_name = "collided"
+to = NodePath("../../../day BG/HappyMusic")
+more_references = []
+invoke = "stop"
+arguments = []
+only_if = SubResource("Resource_sywew")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ae5k8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: AudioStreamPlayer2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_hvnik"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_ae5k8")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_03qrc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: AudioStreamPlayer2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_kxbbt"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_03qrc")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_5fwon"]
+script = ExtResource("7_qfsk3")
+signal_name = "collided"
+to = NodePath("../../../night BG/ScaryMusic")
+more_references = []
+invoke = "play"
+arguments = [SubResource("Resource_hvnik")]
+only_if = SubResource("Resource_kxbbt")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_y36x0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Sprite2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_r5efr"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_y36x0")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_uj3wj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Sprite2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_mo1ri"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_uj3wj")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_h5y8j"]
+script = ExtResource("7_qfsk3")
+signal_name = "collided"
+to = NodePath("../../../PlayerGroup/Player/happyFace")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_r5efr")]
+only_if = SubResource("Resource_mo1ri")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_r6eux"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Sprite2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_pbx8j"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_r6eux")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_kimlf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Sprite2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_1rxjo"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_kimlf")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ia5d0"]
+script = ExtResource("7_qfsk3")
+signal_name = "collided"
+to = NodePath("../../../PlayerGroup/Player/happy links gucken")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_pbx8j")]
+only_if = SubResource("Resource_1rxjo")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_gbts1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Sprite2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_3mhli"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_gbts1")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_gcdew"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Sprite2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2j16q"]
+script = ExtResource("6_ofy77")
+nested_script = SubResource("GDScript_gcdew")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qfqnj"]
+script = ExtResource("7_qfsk3")
+signal_name = "collided"
+to = NodePath("../../../PlayerGroup/Player/happy rechts gucken")
+more_references = []
+invoke = "set_visible"
+arguments = [SubResource("Resource_3mhli")]
+only_if = SubResource("Resource_2j16q")
 deferred = false
 enabled = true
 
@@ -2231,7 +2729,7 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(prop, value, from: Node2D, to: Node2D):
+func run(prop, value, from, to):
 	return \"float_value\"
 "
 
@@ -2245,7 +2743,7 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(prop, value, from: Node2D, to: Node2D):
+func run(prop, value, from, to):
 	return to.float_value + 20
 "
 
@@ -2376,8 +2874,9 @@ scale = Vector2(1.00077, 1)
 stream = ExtResource("3_d4jmw")
 metadata/pronto_connections = [SubResource("Resource_2bqgw")]
 
-[node name="ClockBehavior" type="Node2D" parent="jumpnrun_template/day BG"]
-position = Vector2(143.11, 272)
+[node name="ClockBehavior" type="Node2D" parent="jumpnrun_template/day BG/HappyMusic"]
+position = Vector2(70, 217)
+scale = Vector2(0.999231, 1)
 script = ExtResource("12_r5q04")
 cycle_count = 1
 duration_seconds = 0.0001
@@ -2415,6 +2914,9 @@ scale = Vector2(0.363891, 0.253571)
 texture = ExtResource("6_8eg8g")
 
 [node name="ScaryMusic" type="AudioStreamPlayer2D" parent="jumpnrun_template/night BG"]
+stream = ExtResource("11_ipu88")
+volume_db = 12.0
+metadata/pronto_connections = [SubResource("Resource_khme3")]
 
 [node name="FieldTileMap" type="TileMap" parent="jumpnrun_template"]
 tile_set = SubResource("TileSet_d183t")
@@ -2487,6 +2989,12 @@ position = Vector2(-3, 70)
 collision_layer = 3
 collision_mask = 3
 
+[node name="if_day" type="Node2D" parent="jumpnrun_template/PlayerGroup/Player"]
+position = Vector2(-159, -100)
+script = ExtResource("5_4y5dx")
+selectType = "Bool"
+bool_value = "TRUE"
+
 [node name="PlatformerControllerBehavior" type="Node2D" parent="jumpnrun_template/PlayerGroup/Player"]
 position = Vector2(54, -73)
 scale = Vector2(1.01773, 1)
@@ -2542,9 +3050,27 @@ scale = Vector2(0.154079, 0.162626)
 texture = ExtResource("11_c0asb")
 
 [node name="Sprite geradeaus gucken" type="Sprite2D" parent="jumpnrun_template/PlayerGroup/Player"]
+visible = false
 position = Vector2(0, -4)
 scale = Vector2(0.154079, 0.162626)
 texture = ExtResource("10_vlu6p")
+
+[node name="happyFace" type="Sprite2D" parent="jumpnrun_template/PlayerGroup/Player"]
+position = Vector2(0, -4)
+scale = Vector2(0.154, 0.163)
+texture = ExtResource("24_16qce")
+
+[node name="happy links gucken" type="Sprite2D" parent="jumpnrun_template/PlayerGroup/Player"]
+visible = false
+position = Vector2(0, -4)
+scale = Vector2(0.154, 0.163)
+texture = ExtResource("25_vqhdl")
+
+[node name="happy rechts gucken" type="Sprite2D" parent="jumpnrun_template/PlayerGroup/Player"]
+visible = false
+position = Vector2(0, -4)
+scale = Vector2(0.154, 0.163)
+texture = ExtResource("26_sbhbh")
 
 [node name="ClockBehavior2" type="Node2D" parent="jumpnrun_template/PlayerGroup/Player"]
 position = Vector2(87.9999, -231)
@@ -2553,19 +3079,19 @@ script = ExtResource("12_r5q04")
 cycle_count = 1
 duration_seconds = 5.0
 trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_l7ild"), SubResource("Resource_lxc5r"), SubResource("Resource_g626d"), SubResource("Resource_okom7")]
+metadata/pronto_connections = [SubResource("Resource_l7ild"), SubResource("Resource_lxc5r"), SubResource("Resource_g626d"), SubResource("Resource_okom7"), SubResource("Resource_asgn6")]
 
 [node name="KeyBehavior A" type="Node2D" parent="jumpnrun_template/PlayerGroup/Player"]
 position = Vector2(-169, 1)
 script = ExtResource("15_2y73c")
 key = "a"
-metadata/pronto_connections = [SubResource("Resource_wro8j"), SubResource("Resource_a6vn4"), SubResource("Resource_qun75"), SubResource("Resource_iqsu3")]
+metadata/pronto_connections = [SubResource("Resource_wro8j"), SubResource("Resource_a6vn4"), SubResource("Resource_qun75"), SubResource("Resource_iqsu3"), SubResource("Resource_3trx4"), SubResource("Resource_dbp77"), SubResource("Resource_smxpf")]
 
 [node name="KeyBehavior D" type="Node2D" parent="jumpnrun_template/PlayerGroup/Player"]
 position = Vector2(176, -3.99998)
 script = ExtResource("15_2y73c")
 key = "D"
-metadata/pronto_connections = [SubResource("Resource_ferq8"), SubResource("Resource_g8xji"), SubResource("Resource_6gc37"), SubResource("Resource_aubg0")]
+metadata/pronto_connections = [SubResource("Resource_ferq8"), SubResource("Resource_g8xji"), SubResource("Resource_6gc37"), SubResource("Resource_aubg0"), SubResource("Resource_1kilv"), SubResource("Resource_y846u"), SubResource("Resource_gshgp")]
 
 [node name="KeyBehavior Shift" type="Node2D" parent="jumpnrun_template/PlayerGroup/Player"]
 position = Vector2(204, -225)
@@ -2674,7 +3200,7 @@ placeholder_size = Vector2(70, 67)
 position = Vector2(102, -25)
 script = ExtResource("9_so5y3")
 limit_to_group = "player"
-metadata/pronto_connections = [SubResource("Resource_o8uq1"), SubResource("Resource_wdmnf"), SubResource("Resource_f4x51"), SubResource("Resource_vtx37"), SubResource("Resource_46hvx"), SubResource("Resource_gkhbf"), SubResource("Resource_hmo4k")]
+metadata/pronto_connections = [SubResource("Resource_o8uq1"), SubResource("Resource_wdmnf"), SubResource("Resource_f4x51"), SubResource("Resource_vtx37"), SubResource("Resource_46hvx"), SubResource("Resource_gkhbf"), SubResource("Resource_hmo4k"), SubResource("Resource_1fix6"), SubResource("Resource_5fwon"), SubResource("Resource_h5y8j"), SubResource("Resource_ia5d0"), SubResource("Resource_qfqnj")]
 
 [node name="ClockBehavior2" type="Node2D" parent="jumpnrun_template"]
 position = Vector2(666, 462)
