@@ -1,19 +1,22 @@
-[gd_scene load_steps=77 format=3 uid="uid://dnnoshwitb1yv"]
+[gd_scene load_steps=91 format=3 uid="uid://dp8or6x5jespi"]
 
-[ext_resource type="Texture2D" uid="uid://bt8mq02w33hjr" path="res://addons/pronto/assets/spritesheetScribblePlatformer.png" id="1_3ph12"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_yketu"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="3_7a43m"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="4_5ooda"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_cojfx"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_qytoe"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="7_3uywg"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="8_b50h7"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="9_tr63s"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="10_ge15s"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="11_7a2ib"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bt8mq02w33hjr" path="res://addons/pronto/assets/spritesheetScribblePlatformer.png" id="2_2dc0o"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_g6plw"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="3_lur3g"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="4_0kvl8"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="5_8b6a8"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_isk2y"]
+[ext_resource type="Texture2D" uid="uid://bqvf20q6fgbuj" path="res://images/w2_mousevision.png" id="6_ocexr"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_dj5u4"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="8_b4c3n"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="9_w80x5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="10_232y0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="11_5ftny"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="12_jcqy6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rcppa"]
-texture = ExtResource("1_3ph12")
+texture = ExtResource("2_2dc0o")
 texture_region_size = Vector2i(64, 64)
 2:0/0 = 0
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -426,7 +429,46 @@ tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_rcppa")
 
-[sub_resource type="Image" id="Image_7lgh3"]
+[sub_resource type="GDScript" id="GDScript_qntrw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, from: Node2D, to: Node2D):
+	return pos
+"
+
+[sub_resource type="Resource" id="Resource_rivkv"]
+script = ExtResource("6_isk2y")
+nested_script = SubResource("GDScript_qntrw")
+argument_names = ["pos", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_m4jk4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3ja6q"]
+script = ExtResource("6_isk2y")
+nested_script = SubResource("GDScript_m4jk4")
+argument_names = ["pos", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_6bcqh"]
+script = ExtResource("7_dj5u4")
+signal_name = "mouse_move"
+to = NodePath("../FlashlightHolder")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_rivkv")]
+only_if = SubResource("Resource_3ja6q")
+deferred = false
+enabled = true
+
+[sub_resource type="Image" id="Image_44lct"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -436,7 +478,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_c1vcs"]
-image = SubResource("Image_7lgh3")
+image = SubResource("Image_44lct")
 
 [sub_resource type="GDScript" id="GDScript_yljtb"]
 script/source = "@tool
@@ -447,7 +489,7 @@ func run(value, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_twehu"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_yljtb")
 argument_names = ["value", "from", "to"]
 return_value = true
@@ -461,7 +503,7 @@ func run(value, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_hr2hi"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_nfgav")
 argument_names = ["value", "from", "to"]
 return_value = true
@@ -475,13 +517,13 @@ func run(value, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_fnhn7"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_fvaos")
 argument_names = ["value", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_2fnpj"]
-script = ExtResource("6_qytoe")
+script = ExtResource("7_dj5u4")
 signal_name = "value_changed"
 to = NodePath("..")
 more_references = []
@@ -500,7 +542,7 @@ func run(value, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_spnlt"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_jf3wu")
 argument_names = ["value", "from", "to"]
 return_value = true
@@ -514,7 +556,7 @@ func run(value, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_tfjqb"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_t0cc3")
 argument_names = ["value", "from", "to"]
 return_value = true
@@ -528,19 +570,97 @@ func run(value, from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_m5vro"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_fis5w")
 argument_names = ["value", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_gdog8"]
-script = ExtResource("6_qytoe")
+script = ExtResource("7_dj5u4")
 signal_name = "value_changed"
 to = NodePath("..")
 more_references = []
 invoke = "set"
 arguments = [SubResource("Resource_spnlt"), SubResource("Resource_tfjqb")]
 only_if = SubResource("Resource_m5vro")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_c305u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return 1
+"
+
+[sub_resource type="Resource" id="Resource_xm2pq"]
+script = ExtResource("6_isk2y")
+nested_script = SubResource("GDScript_c305u")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hvclc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_lg1dx"]
+script = ExtResource("6_isk2y")
+nested_script = SubResource("GDScript_hvclc")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_sd4mk"]
+script = ExtResource("7_dj5u4")
+signal_name = "collided"
+to = NodePath("../HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_xm2pq")]
+only_if = SubResource("Resource_lg1dx")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_k17ih"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return amount
+"
+
+[sub_resource type="Resource" id="Resource_kqole"]
+script = ExtResource("6_isk2y")
+nested_script = SubResource("GDScript_k17ih")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bswip"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_33uyh"]
+script = ExtResource("6_isk2y")
+nested_script = SubResource("GDScript_bswip")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_q2yg6"]
+script = ExtResource("7_dj5u4")
+signal_name = "collided"
+to = NodePath("../HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_kqole")]
+only_if = SubResource("Resource_33uyh")
 deferred = false
 enabled = true
 
@@ -557,58 +677,19 @@ func run(from: Node2D, to: CharacterBody2D):
 "
 
 [sub_resource type="Resource" id="Resource_mi62b"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_w68et")
 argument_names = ["from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_6j2re"]
-script = ExtResource("6_qytoe")
+script = ExtResource("7_dj5u4")
 signal_name = "death"
 to = NodePath("..")
 more_references = []
 invoke = "queue_free"
 arguments = []
 only_if = SubResource("Resource_mi62b")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_c305u"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from, to):
-	return 10
-"
-
-[sub_resource type="Resource" id="Resource_xm2pq"]
-script = ExtResource("5_cojfx")
-nested_script = SubResource("GDScript_c305u")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_hvclc"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_lg1dx"]
-script = ExtResource("5_cojfx")
-nested_script = SubResource("GDScript_hvclc")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_sd4mk"]
-script = ExtResource("6_qytoe")
-signal_name = "collided"
-to = NodePath("../HealthBarBehavior")
-more_references = []
-invoke = "damage"
-arguments = [SubResource("Resource_xm2pq")]
-only_if = SubResource("Resource_lg1dx")
 deferred = false
 enabled = true
 
@@ -621,7 +702,7 @@ func run():
 "
 
 [sub_resource type="Resource" id="Resource_0mdyf"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_bergc")
 argument_names = []
 return_value = true
@@ -635,7 +716,7 @@ func run(prop, value, text, from: Node2D, to: Label):
 "
 
 [sub_resource type="Resource" id="Resource_gju0d"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_erflp")
 argument_names = ["prop", "value", "text", "from", "to"]
 return_value = true
@@ -649,13 +730,13 @@ func run(prop, value, text, from: Node2D, to: Label):
 "
 
 [sub_resource type="Resource" id="Resource_7gd6f"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_cucuq")
 argument_names = ["prop", "value", "text", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_vim1o"]
-script = ExtResource("6_qytoe")
+script = ExtResource("7_dj5u4")
 signal_name = "sync"
 to = NodePath("..")
 more_references = []
@@ -666,7 +747,7 @@ deferred = false
 enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3bwcm"]
-size = Vector2(1075, 47)
+size = Vector2(276, 70)
 
 [sub_resource type="GDScript" id="GDScript_mbshj"]
 script/source = "@tool
@@ -677,13 +758,13 @@ func run(other, direction, from: Node2D, to: Area2D):
 "
 
 [sub_resource type="Resource" id="Resource_dx5u7"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_mbshj")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_mi3wv"]
-script = ExtResource("6_qytoe")
+script = ExtResource("7_dj5u4")
 signal_name = "collided"
 to = NodePath("..")
 more_references = []
@@ -702,7 +783,7 @@ func run(other, direction, from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_qe7vq"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_0b6hj")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
@@ -716,7 +797,7 @@ func run(other, direction, from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_q655i"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_xe3nk")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
@@ -730,13 +811,13 @@ func run(other, direction, from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_qamp0"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_1ede8")
 argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_3y1ms"]
-script = ExtResource("6_qytoe")
+script = ExtResource("7_dj5u4")
 signal_name = "collided"
 to = NodePath("../../../ScoreLabel/StoreBehavior")
 more_references = []
@@ -746,7 +827,7 @@ only_if = SubResource("Resource_qamp0")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_p0dg7"]
+[sub_resource type="Image" id="Image_bbst4"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -756,7 +837,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_lnpfb"]
-image = SubResource("Image_p0dg7")
+image = SubResource("Image_bbst4")
 
 [sub_resource type="GDScript" id="GDScript_2i1aw"]
 script/source = "@tool
@@ -767,7 +848,7 @@ func run(from, to):
 "
 
 [sub_resource type="Resource" id="Resource_xqjke"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_2i1aw")
 argument_names = ["from", "to"]
 return_value = true
@@ -781,7 +862,7 @@ func run(from, to):
 "
 
 [sub_resource type="Resource" id="Resource_ppuqc"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_ck6om")
 argument_names = ["from", "to"]
 return_value = true
@@ -795,7 +876,7 @@ func run(from, to):
 "
 
 [sub_resource type="Resource" id="Resource_wx2ci"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_33v54")
 argument_names = ["from", "to"]
 return_value = true
@@ -809,7 +890,7 @@ func run(from, to):
 "
 
 [sub_resource type="Resource" id="Resource_cin1h"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_ior3v")
 argument_names = ["from", "to"]
 return_value = true
@@ -823,13 +904,13 @@ func run(from: Node2D, to: Node2D):
 "
 
 [sub_resource type="Resource" id="Resource_2br76"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_nehw2")
 argument_names = ["from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_gsowi"]
-script = ExtResource("6_qytoe")
+script = ExtResource("7_dj5u4")
 signal_name = "elapsed"
 to = NodePath("../CoinSpawner")
 more_references = []
@@ -848,7 +929,7 @@ func run(value, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_0mjje"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_0oat3")
 argument_names = ["value", "from", "to"]
 return_value = true
@@ -862,7 +943,7 @@ func run(value, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_ei21h"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_tjcf0")
 argument_names = ["value", "from", "to"]
 return_value = true
@@ -876,13 +957,13 @@ func run(value, from, to):
 "
 
 [sub_resource type="Resource" id="Resource_fcelx"]
-script = ExtResource("5_cojfx")
+script = ExtResource("6_isk2y")
 nested_script = SubResource("GDScript_ukf2h")
 argument_names = ["value", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_k20lk"]
-script = ExtResource("6_qytoe")
+script = ExtResource("7_dj5u4")
 signal_name = "value_changed"
 to = NodePath("..")
 more_references = []
@@ -892,104 +973,151 @@ only_if = SubResource("Resource_fcelx")
 deferred = false
 enabled = true
 
-[node name="jumpnrun_template" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmylp"]
+size = Vector2(525, 101)
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="Node2D" type="Node2D"]
+
+[node name="ExportBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1")
+title = "JumpscareTrap"
+authors = PackedStringArray("Jannes")
+
+[node name="jumpnrun_template" type="Node2D" parent="."]
+
+[node name="TileMap" type="TileMap" parent="jumpnrun_template"]
 tile_set = SubResource("TileSet_d183t")
 format = 2
-layer_0/tile_data = PackedInt32Array(655359, 196608, 0, 589824, 196608, 0, 589825, 196608, 0, 589826, 196608, 0, 589827, 196608, 0, 589828, 196608, 0, 589829, 196608, 0, 589830, 196608, 0, 589831, 196608, 0, 589832, 196608, 0, 589833, 196608, 0, 589837, 196608, 0, 589838, 196608, 0, 589839, 196608, 0, 589840, 196608, 0, 589841, 196608, 0, 589842, 196608, 0, 589834, 196608, 0, 589835, 196608, 0, 589836, 196608, 0)
+layer_0/tile_data = PackedInt32Array(655359, 327680, 5, 589824, 327680, 5, 589825, 327680, 5, 589826, 327680, 5, 589827, 327680, 5, 589828, 327680, 5, 589829, 327680, 5, 589830, 327680, 5, 589831, 327680, 5, 589832, 327680, 5, 589833, 327680, 5, 589834, 327680, 5, 589835, 327680, 5, 589836, 327680, 5, 589837, 327680, 5, 589823, 327680, 5, 524287, 327680, 5, 458751, 327680, 5, 393215, 327680, 5, 327679, 327680, 5, 262144, 327680, 5, 196608, 327680, 5, 262143, 327680, 5, 196607, 327680, 5, 131071, 327680, 5, 65536, 327680, 5, 65537, 327680, 5, 65538, 327680, 5, 65539, 327680, 5, 65540, 327680, 5, 65541, 327680, 5, 65542, 327680, 5, 65543, 327680, 5, 65544, 327680, 5, 9, 327680, 5, 6, 327680, 5, 7, 327680, 5, 8, 327680, 5, 10, 327680, 5, 65547, 327680, 5, 65548, 327680, 5, 13, 327680, 5, 14, 327680, 5, 15, 327680, 5, 16, 327680, 5, 17, 327680, 5, 18, 327680, 5, 19, 327680, 5, 20, 327680, 5, 589838, 327680, 5, 589839, 327680, 5, 589840, 327680, 5, 655376, 327680, 5, 720912, 327680, 5, 786448, 327680, 5, 786449, 327680, 5, 786450, 327680, 5, 786451, 327680, 5, 786452, 327680, 5, 786453, 327680, 5, 786454, 327680, 5, 589850, 327680, 5, 589851, 327680, 5, 589852, 327680, 5, 589853, 327680, 5, 589854, 327680, 5, 589855, 327680, 5, 589856, 327680, 5, 589857, 327680, 5, 589841, 327680, 5, 655377, 327680, 5, 720913, 327680, 5, 655375, 327680, 5, 655374, 327680, 5, 655373, 327680, 5, 655372, 327680, 5, 655371, 327680, 5, 655370, 327680, 5, 655369, 327680, 5, 655368, 327680, 5, 655367, 327680, 5, 655386, 327680, 5, 720922, 327680, 5, 786458, 327680, 5, 786457, 327680, 5, 786456, 327680, 5, 786455, 327680, 5, 720914, 131072, 8, 720915, 131072, 8, 720916, 131072, 8, 720917, 131072, 8, 720918, 131072, 8, 720919, 131072, 8, 720920, 131072, 8, 720921, 131072, 8, 11, 327680, 5, 12, 327680, 5, 655366, 327680, 5, 655365, 327680, 5, 655364, 327680, 5, 655363, 327680, 5, 655362, 327680, 5, 655361, 327680, 5, 655360, 327680, 5, 720895, 327680, 5, 786431, 327680, 5, 720896, 327680, 5, 720897, 327680, 5, 720898, 327680, 5, 720899, 327680, 5, 720900, 327680, 5, 720901, 327680, 5, 720902, 327680, 5, 720903, 327680, 5, 720904, 327680, 5, 720905, 327680, 5, 720906, 327680, 5, 720907, 327680, 5, 720908, 327680, 5, 720909, 327680, 5, 720910, 327680, 5, 720911, 327680, 5, 786447, 327680, 5, 786446, 327680, 5, 786445, 327680, 5, 786444, 327680, 5, 786443, 327680, 5, 786442, 327680, 5, 786441, 327680, 5, 786440, 327680, 5, 786439, 327680, 5, 786438, 327680, 5, 786437, 327680, 5, 786436, 327680, 5, 786435, 327680, 5, 786434, 327680, 5, 786433, 327680, 5, 786432, 327680, 5, 851967, 327680, 5, 917503, 327680, 5, 917502, 327680, 5, 851968, 327680, 5, 851969, 327680, 5, 851970, 327680, 5, 851971, 327680, 5, 851972, 327680, 5, 851973, 327680, 5, 851974, 327680, 5, 851975, 327680, 5, 851976, 327680, 5, 851977, 327680, 5, 851978, 327680, 5, 851979, 327680, 5, 851980, 327680, 5, 851981, 327680, 5, 851982, 327680, 5, 851983, 327680, 5, 851984, 327680, 5, 851985, 327680, 5, 851986, 327680, 5, 851987, 327680, 5, 851988, 327680, 5, 851989, 327680, 5, 851990, 327680, 5, 851991, 327680, 5, 851992, 327680, 5, 851993, 327680, 5, 851994, 327680, 5, 851966, 327680, 5, 786430, 327680, 5, 720894, 327680, 5, 655358, 327680, 5, 589822, 327680, 5, 524286, 327680, 5, 458750, 327680, 5, 393214, 327680, 5, 327678, 327680, 5, 262142, 327680, 5, 262141, 327680, 5, 196605, 327680, 5, 196606, 327680, 5, 131070, 327680, 5, 65535, 327680, 5, 65534, 327680, 5, 65533, 327680, 5, 65532, 327680, 5, 131068, 327680, 5, 196604, 327680, 5, 262140, 327680, 5, 327676, 327680, 5, 393212, 327680, 5, 458748, 327680, 5, 524284, 327680, 5, 589820, 327680, 5, 655357, 327680, 5, 720893, 327680, 5, 786429, 327680, 5, 851965, 327680, 5, 917501, 327680, 5, 917500, 327680, 5, 851964, 327680, 5, 786428, 327680, 5, 720892, 327680, 5, 655356, 327680, 5, 458749, 327680, 5, 524285, 327680, 5, 589821, 327680, 5, 393213, 327680, 5, 327677, 327680, 5, 131069, 327680, 5, 5, 327680, 5, 4, 327680, 5, 3, 327680, 5, 2, 327680, 5, 1, 327680, 5, 0, 327680, 5, -4, 327680, 5, -3, 327680, 5, -2, 327680, 5, -1, 327680, 5, -65536, 327680, 5, -65535, 327680, 5, -65534, 327680, 5, -65533, 327680, 5, -65532, 327680, 5, -65531, 327680, 5, -65530, 327680, 5, -65529, 327680, 5, -65528, 327680, 5, -65527, 327680, 5, -65526, 327680, 5, -65525, 327680, 5, -65524, 327680, 5, -65523, 327680, 5, -65522, 327680, 5, -65521, 327680, 5, -65520, 327680, 5, -65519, 327680, 5, -65518, 327680, 5, -65517, 327680, 5, -65516, 327680, 5, -65515, 327680, 5, 21, 327680, 5, 22, 327680, 5, -65514, 327680, 5, -65513, 327680, 5, 23, 327680, 5, 24, 327680, 5, 25, 327680, 5, 26, 327680, 5, -65511, 327680, 5, -65512, 327680, 5, -65510, 327680, 5, 27, 327680, 5, -65509, 327680, 5, -65508, 327680, 5, 28, 327680, 5, 29, 327680, 5, 30, 327680, 5, -65506, 327680, 5, -65507, 327680, 5, -65505, 327680, 5, 31, 327680, 5, 655387, 327680, 5, 720923, 327680, 5, 786459, 327680, 5, 851995, 327680, 5, 851996, 327680, 5, 851997, 327680, 5, 851998, 327680, 5, 851999, 327680, 5, 786463, 327680, 5, 786464, 327680, 5, 786465, 327680, 5, 720929, 327680, 5, 655393, 327680, 5, 720928, 327680, 5, 655392, 327680, 5, 655391, 327680, 5, 655390, 327680, 5, 655389, 327680, 5, 655388, 327680, 5, 720924, 327680, 5, 786460, 327680, 5, 786461, 327680, 5, 720925, 327680, 5, 720926, 327680, 5, 786462, 327680, 5, 720927, 327680, 5, 852000, 327680, 5, 852001, 327680, 5)
 
-[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
-position = Vector2(779, 537)
+[node name="Player" type="CharacterBody2D" parent="jumpnrun_template" groups=["player"]]
+position = Vector2(848, 476)
 
-[node name="PlaceholderBehavior" type="Node2D" parent="Player"]
-script = ExtResource("2_yketu")
+[node name="MouseFlashlight" type="Node2D" parent="jumpnrun_template/Player"]
+script = ExtResource("3_lur3g")
+metadata/pronto_connections = [SubResource("Resource_6bcqh")]
+
+[node name="FlashlightHolder" type="Node2D" parent="jumpnrun_template/Player"]
+visible = false
+
+[node name="W2Mousevision" type="Sprite2D" parent="jumpnrun_template/Player/FlashlightHolder"]
+modulate = Color(0, 0, 0, 1)
+z_index = 75
+position = Vector2(-572, -310)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("6_ocexr")
+
+[node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/Player"]
+script = ExtResource("3_g6plw")
 use_sprite = true
 sprite_texture = SubResource("ImageTexture_c1vcs")
 placeholder_size = Vector2(51, 65)
 
-[node name="PlatformerControllerBehavior" type="Node2D" parent="Player"]
+[node name="PlatformerControllerBehavior" type="Node2D" parent="jumpnrun_template/Player"]
 position = Vector2(54, -84)
-script = ExtResource("3_7a43m")
+script = ExtResource("4_0kvl8")
 
-[node name="jump_velocity" type="Node2D" parent="Player/PlatformerControllerBehavior"]
+[node name="jump_velocity" type="Node2D" parent="jumpnrun_template/Player/PlatformerControllerBehavior"]
 position = Vector2(87, 19)
-script = ExtResource("4_5ooda")
+script = ExtResource("5_8b6a8")
 float_min = 0.0
 float_max = 1000.0
-float_value = 757.0
+float_value = 400.0
 float_step_size = 1.0
 metadata/pronto_connections = [SubResource("Resource_2fnpj")]
 
-[node name="horizontal_velocity" type="Node2D" parent="Player/PlatformerControllerBehavior"]
+[node name="horizontal_velocity" type="Node2D" parent="jumpnrun_template/Player/PlatformerControllerBehavior"]
 position = Vector2(50, 50)
-script = ExtResource("4_5ooda")
+script = ExtResource("5_8b6a8")
 float_min = 0.0
 float_max = 1000.0
-float_value = 1000.0
+float_value = 324.0
 float_step_size = 1.0
 metadata/pronto_connections = [SubResource("Resource_gdog8")]
 
-[node name="HealthBarBehavior" type="Node2D" parent="Player"]
-position = Vector2(0, -32)
-script = ExtResource("7_3uywg")
-progress_gradient = SubResource("Gradient_rcwrg")
-metadata/pronto_connections = [SubResource("Resource_6j2re")]
-
-[node name="CollisionBehavior" type="Node2D" parent="Player"]
+[node name="CollisionBehavior" type="Node2D" parent="jumpnrun_template/Player"]
 position = Vector2(-76, -57)
-script = ExtResource("8_b50h7")
+script = ExtResource("9_w80x5")
 limit_to_group = "enemy"
 metadata/pronto_connections = [SubResource("Resource_sd4mk")]
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="CollisionBehavior-spikes" type="Node2D" parent="jumpnrun_template/Player"]
+position = Vector2(-61, -103)
+script = ExtResource("9_w80x5")
+limit_to_group = "spike"
+metadata/pronto_connections = [SubResource("Resource_q2yg6")]
+
+[node name="HealthBarBehavior" type="Node2D" parent="jumpnrun_template/Player"]
+position = Vector2(0, -32)
+script = ExtResource("8_b4c3n")
+progress_gradient = SubResource("Gradient_rcwrg")
+metadata/pronto_connections = [SubResource("Resource_6j2re")]
+
+[node name="ControlsBehavior" type="Node2D" parent="jumpnrun_template/Player"]
+visible = false
+position = Vector2(61.7173, -61.7174)
+script = ExtResource("3_lur3g")
+
+[node name="Camera2D" type="Camera2D" parent="jumpnrun_template/Player"]
+
+[node name="ScoreLabel" type="Label" parent="jumpnrun_template"]
 offset_left = 558.0
 offset_top = 16.0
 offset_right = 598.0
 offset_bottom = 38.3333
 text = "score"
 
-[node name="StoreBehavior" type="Node2D" parent="ScoreLabel"]
+[node name="StoreBehavior" type="Node2D" parent="jumpnrun_template/ScoreLabel"]
 position = Vector2(-74, 62)
-script = ExtResource("9_tr63s")
+script = ExtResource("10_232y0")
 fields = {
 "score": SubResource("Resource_0mdyf")
 }
 metadata/pronto_connections = [SubResource("Resource_vim1o")]
 
-[node name="CoinSpawner" type="Node2D" parent="."]
+[node name="CoinSpawner" type="Node2D" parent="jumpnrun_template"]
 position = Vector2(586, 537)
-script = ExtResource("10_ge15s")
+script = ExtResource("11_5ftny")
 spawn_shape_generic = SubResource("RectangleShape2D_3bwcm")
 spawn_shape_color = Color(0, 0.6, 0.701961, 0.419608)
 
-[node name="Coin" type="Area2D" parent="CoinSpawner"]
+[node name="Coin" type="Area2D" parent="jumpnrun_template/CoinSpawner"]
 position = Vector2(-78, -70)
 
-[node name="Node2D" type="Node2D" parent="CoinSpawner/Coin"]
+[node name="Node2D" type="Node2D" parent="jumpnrun_template/CoinSpawner/Coin"]
 position = Vector2(-76, -13)
-script = ExtResource("8_b50h7")
+script = ExtResource("9_w80x5")
 limit_to_group = "player"
 metadata/pronto_connections = [SubResource("Resource_mi3wv"), SubResource("Resource_3y1ms")]
 
-[node name="PlaceholderBehavior" type="Node2D" parent="CoinSpawner/Coin"]
-script = ExtResource("2_yketu")
+[node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/CoinSpawner/Coin"]
+script = ExtResource("3_g6plw")
 color = Color(1, 1, 0, 1)
 use_sprite = true
 sprite_texture = SubResource("ImageTexture_lnpfb")
 placeholder_size = Vector2(20, 20)
 
-[node name="ClockBehavior" type="Node2D" parent="."]
+[node name="ClockBehavior" type="Node2D" parent="jumpnrun_template"]
 position = Vector2(513, 584)
-script = ExtResource("11_7a2ib")
+script = ExtResource("12_jcqy6")
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_gsowi")]
 
-[node name="coin time interval" type="Node2D" parent="ClockBehavior"]
+[node name="coin time interval" type="Node2D" parent="jumpnrun_template/ClockBehavior"]
 position = Vector2(50, 50)
-script = ExtResource("4_5ooda")
+script = ExtResource("5_8b6a8")
 float_min = 0.0
 float_max = 10.0
 float_value = 2.0
 float_step_size = 0.1
 metadata/pronto_connections = [SubResource("Resource_k20lk")]
+
+[node name="Killzone" type="Node2D" parent="." groups=["spike"]]
+
+[node name="Area2D" type="Area2D" parent="Killzone" groups=["spike"]]
+position = Vector2(1397, 698)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone/Area2D" groups=["spike"]]
+position = Vector2(11.5, 18.5)
+shape = SubResource("RectangleShape2D_cmylp")
