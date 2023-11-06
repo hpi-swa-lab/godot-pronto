@@ -14,7 +14,7 @@ config/name="pronto"
 run/main_scene="res://prototypes/game-test/game-test.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 run/low_processor_mode=true
-boot_splash/image="res://thumbnail.png"
+boot_splash/image="res://prototypes/game-test/thumbnail.png"
 config/icon="res://icon.svg"
 
 [autoload]
