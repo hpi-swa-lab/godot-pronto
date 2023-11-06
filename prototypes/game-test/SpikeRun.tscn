@@ -5,10 +5,10 @@
 [ext_resource type="Script" path="res://Camera2D.gd" id="2_7bj6n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_3m17m"]
 [ext_resource type="Script" path="res://SpikeWallMap.gd" id="4_m4gou"]
-[ext_resource type="AudioStream" uid="uid://bl1ae8fx2x37n" path="res://Gears Factory Mechanical.mp3" id="6_0pqkv"]
+[ext_resource type="AudioStream" uid="uid://bl1ae8fx2x37n" path="res://prototypes/game-test/resources/audio/Gears Factory Mechanical.mp3" id="6_0pqkv"]
 [ext_resource type="Script" path="res://TileMap2.gd" id="7_pnsrs"]
-[ext_resource type="Texture2D" uid="uid://coiaxftxa6ket" path="res://Light.png" id="7_y1342"]
-[ext_resource type="AudioStream" uid="uid://cyqmtddyrmkl3" path="res://Metal Gear Solid Alert.mp3" id="9_slpt0"]
+[ext_resource type="Texture2D" uid="uid://coiaxftxa6ket" path="res://prototypes/game-test/resources/images/Light.png" id="7_y1342"]
+[ext_resource type="AudioStream" uid="uid://cyqmtddyrmkl3" path="res://prototypes/game-test/resources/audio/Metal Gear Solid Alert.mp3" id="9_slpt0"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f4ms5"]
 particles_animation = true
