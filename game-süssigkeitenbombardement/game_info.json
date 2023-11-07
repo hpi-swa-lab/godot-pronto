@@ -1,7 +1,9 @@
 {
 	"authors": [
-		"Ortlam, Lietze"
+		"Luke",
+		"Max"
 	],
-	"time": "2023-11-01",
-	"title": "Woche 1"
+	"description": "Climb the pile of sweets raining from above. But beware: Getting hit by sweets doesn't benefit your well-being.\nTo get out of sticky situations, press \"k\" to boost surrounding sweets away.",
+	"time": "2023-11-07",
+	"title": "Süssigkeitenbombardement"
 }
