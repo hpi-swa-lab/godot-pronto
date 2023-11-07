@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pnjxdpndbgiy"
-path="res://.godot/imported/8bit_pumpkin.png-6a92cd2edff4113a6153e5a1579891c1.ctex"
+uid="uid://b06i4fm80kjc0"
+path="res://.godot/imported/boeses_brot_guckt_links.png-6f38fa90ab1474ccf585f69d9b4f72e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/8bit_pumpkin.png"
-dest_files=["res://.godot/imported/8bit_pumpkin.png-6a92cd2edff4113a6153e5a1579891c1.ctex"]
+source_file="res://prototypes/game-testPeter/images/boeses_brot_guckt_links.png"
+dest_files=["res://.godot/imported/boeses_brot_guckt_links.png-6f38fa90ab1474ccf585f69d9b4f72e6.ctex"]
 
 [params]
 

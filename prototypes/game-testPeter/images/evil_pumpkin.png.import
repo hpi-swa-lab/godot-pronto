@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsuaponnqxr4o"
-path="res://.godot/imported/sm_bg_edited.png-2df2f954a73443a58e9acdb6be4809b0.ctex"
+uid="uid://02657os0w0y"
+path="res://.godot/imported/evil_pumpkin.png-c9b914959085490ba1639134794dd7c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/sm_bg_edited.png"
-dest_files=["res://.godot/imported/sm_bg_edited.png-2df2f954a73443a58e9acdb6be4809b0.ctex"]
+source_file="res://prototypes/game-testPeter/images/evil_pumpkin.png"
+dest_files=["res://.godot/imported/evil_pumpkin.png-c9b914959085490ba1639134794dd7c7.ctex"]
 
 [params]
 

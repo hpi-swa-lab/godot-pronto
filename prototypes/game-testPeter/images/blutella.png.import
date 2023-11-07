@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cghbbrciewui1"
-path="res://.godot/imported/sm_bg_edited_night.png-5b14348f50568cbf226a24050402c2df.ctex"
+uid="uid://com8crmv3jduj"
+path="res://.godot/imported/blutella.png-38f59071a3c7a1d50fe88ddefc47535e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/sm_bg_edited_night.png"
-dest_files=["res://.godot/imported/sm_bg_edited_night.png-5b14348f50568cbf226a24050402c2df.ctex"]
+source_file="res://prototypes/game-testPeter/images/blutella.png"
+dest_files=["res://.godot/imported/blutella.png-38f59071a3c7a1d50fe88ddefc47535e.ctex"]
 
 [params]
 

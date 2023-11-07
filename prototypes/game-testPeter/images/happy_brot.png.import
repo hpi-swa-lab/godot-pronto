@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dso014glv6pnd"
-path="res://.godot/imported/boeses_brot_guckt_rechts.png-c40e3e80d4341819776d5cb82a5a87c8.ctex"
+uid="uid://bf5cklhhdxcil"
+path="res://.godot/imported/happy_brot.png-14d539e5a8b789d0f1350c879b1bbcb4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/boeses_brot_guckt_rechts.png"
-dest_files=["res://.godot/imported/boeses_brot_guckt_rechts.png-c40e3e80d4341819776d5cb82a5a87c8.ctex"]
+source_file="res://prototypes/game-testPeter/images/happy_brot.png"
+dest_files=["res://.godot/imported/happy_brot.png-14d539e5a8b789d0f1350c879b1bbcb4.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cen077awrap7t"
-path="res://.godot/imported/blood.webp-e7789dd0af663ba6440cafca1578142e.ctex"
+uid="uid://bwkdmyab4ov15"
+path="res://.godot/imported/screenshot.png-ad55e70329e1c696da6db24cd49dcea5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/blood.webp"
-dest_files=["res://.godot/imported/blood.webp-e7789dd0af663ba6440cafca1578142e.ctex"]
+source_file="res://prototypes/game-testPeter/images/screenshot.png"
+dest_files=["res://.godot/imported/screenshot.png-ad55e70329e1c696da6db24cd49dcea5.ctex"]
 
 [params]
 

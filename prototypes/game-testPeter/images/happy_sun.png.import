@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://02657os0w0y"
-path="res://.godot/imported/evil_pumpkin.png-24f48265da0bf52a31bed2ab525c759c.ctex"
+uid="uid://dx7u8uv4ex5j2"
+path="res://.godot/imported/happy_sun.png-58f4d2648940d144d3c5257b49b01109.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/evil_pumpkin.png"
-dest_files=["res://.godot/imported/evil_pumpkin.png-24f48265da0bf52a31bed2ab525c759c.ctex"]
+source_file="res://prototypes/game-testPeter/images/happy_sun.png"
+dest_files=["res://.godot/imported/happy_sun.png-58f4d2648940d144d3c5257b49b01109.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gyfetwqoqmun"
-path="res://.godot/imported/pngtree-scary-pumpkin-head-png-image_1813405.jpg-ef00a5984ad68cb0c99ab97a3d2ebceb.ctex"
+uid="uid://cw6sqbi7ussxg"
+path="res://.godot/imported/happy_brot_guckt_links.png-81f5f4876fe8a9c688c32f7493cd5950.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/pngtree-scary-pumpkin-head-png-image_1813405.jpg"
-dest_files=["res://.godot/imported/pngtree-scary-pumpkin-head-png-image_1813405.jpg-ef00a5984ad68cb0c99ab97a3d2ebceb.ctex"]
+source_file="res://prototypes/game-testPeter/images/happy_brot_guckt_links.png"
+dest_files=["res://.godot/imported/happy_brot_guckt_links.png-81f5f4876fe8a9c688c32f7493cd5950.ctex"]
 
 [params]
 

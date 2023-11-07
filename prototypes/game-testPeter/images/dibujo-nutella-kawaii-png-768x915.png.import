@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwkdmyab4ov15"
-path="res://.godot/imported/screenshot.png-f5f04d7923f0be6c63a85fb44d94751d.ctex"
+uid="uid://bashdfatydwh7"
+path="res://.godot/imported/dibujo-nutella-kawaii-png-768x915.png-8ecda44b7d66d8f230977e2663ab8730.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/screenshot.png"
-dest_files=["res://.godot/imported/screenshot.png-f5f04d7923f0be6c63a85fb44d94751d.ctex"]
+source_file="res://prototypes/game-testPeter/images/dibujo-nutella-kawaii-png-768x915.png"
+dest_files=["res://.godot/imported/dibujo-nutella-kawaii-png-768x915.png-8ecda44b7d66d8f230977e2663ab8730.ctex"]
 
 [params]
 

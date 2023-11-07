@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://brkwmc657kiip"
+path="res://.godot/imported/Other-wordly Buddy ｜ pseudomorph_0z.mp3-c9ef0f89b28b695594b3f7b129fd38c6.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-testPeter/images/Other-wordly Buddy ｜ pseudomorph_0z.mp3"
+dest_files=["res://.godot/imported/Other-wordly Buddy ｜ pseudomorph_0z.mp3-c9ef0f89b28b695594b3f7b129fd38c6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c17r34w4w4oje"
-path="res://.godot/imported/hand-die-messer-auf-gitterhintergrund-haelt_1308-110885.png-d766e0291ab90ed896ef73db1884bc0a.ctex"
+path="res://.godot/imported/hand-die-messer-auf-gitterhintergrund-haelt_1308-110885.png-383a2b34259878374dc6f78a9507d67b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/hand-die-messer-auf-gitterhintergrund-haelt_1308-110885.png"
-dest_files=["res://.godot/imported/hand-die-messer-auf-gitterhintergrund-haelt_1308-110885.png-d766e0291ab90ed896ef73db1884bc0a.ctex"]
+source_file="res://prototypes/game-testPeter/images/hand-die-messer-auf-gitterhintergrund-haelt_1308-110885.png"
+dest_files=["res://.godot/imported/hand-die-messer-auf-gitterhintergrund-haelt_1308-110885.png-383a2b34259878374dc6f78a9507d67b.ctex"]
 
 [params]
 

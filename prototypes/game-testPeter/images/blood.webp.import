@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf5cklhhdxcil"
-path="res://.godot/imported/happy_brot.png-37ba94110aad52b32ff1a03a3db12f00.ctex"
+uid="uid://cen077awrap7t"
+path="res://.godot/imported/blood.webp-383faa335fb2e120a930b9e40aab5d66.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/happy_brot.png"
-dest_files=["res://.godot/imported/happy_brot.png-37ba94110aad52b32ff1a03a3db12f00.ctex"]
+source_file="res://prototypes/game-testPeter/images/blood.webp"
+dest_files=["res://.godot/imported/blood.webp-383faa335fb2e120a930b9e40aab5d66.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkxdx8i3sckfj"
-path="res://.godot/imported/shine.png-54c80ec929ff3e12eed048ecb8c28ea4.ctex"
+uid="uid://cghbbrciewui1"
+path="res://.godot/imported/sm_bg_edited_night.png-f0b0981aa23b3f14f7f86f6a42e75b46.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/shine.png"
-dest_files=["res://.godot/imported/shine.png-54c80ec929ff3e12eed048ecb8c28ea4.ctex"]
+source_file="res://prototypes/game-testPeter/images/sm_bg_edited_night.png"
+dest_files=["res://.godot/imported/sm_bg_edited_night.png-f0b0981aa23b3f14f7f86f6a42e75b46.ctex"]
 
 [params]
 

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dp6f43jku03u5"
+path="res://.godot/imported/happy music.mp3-e94332d227471daa5b26d10b0f4eb15b.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-testPeter/images/happy music.mp3"
+dest_files=["res://.godot/imported/happy music.mp3-e94332d227471daa5b26d10b0f4eb15b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

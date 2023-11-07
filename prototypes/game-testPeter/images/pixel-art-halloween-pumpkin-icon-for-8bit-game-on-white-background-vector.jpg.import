@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dow6bsixxd30h"
-path="res://.godot/imported/blood.png-7841754e2d9d224f7fa973736dc493b3.ctex"
+uid="uid://wuf30ptb5h52"
+path="res://.godot/imported/pixel-art-halloween-pumpkin-icon-for-8bit-game-on-white-background-vector.jpg-6c6b2864cc41033ac30e65c86347bb58.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/blood.png"
-dest_files=["res://.godot/imported/blood.png-7841754e2d9d224f7fa973736dc493b3.ctex"]
+source_file="res://prototypes/game-testPeter/images/pixel-art-halloween-pumpkin-icon-for-8bit-game-on-white-background-vector.jpg"
+dest_files=["res://.godot/imported/pixel-art-halloween-pumpkin-icon-for-8bit-game-on-white-background-vector.jpg-6c6b2864cc41033ac30e65c86347bb58.ctex"]
 
 [params]
 

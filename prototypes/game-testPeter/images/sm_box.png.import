@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw6sqbi7ussxg"
-path="res://.godot/imported/happy_brot_guckt_links.png-89ce50f483546b24d02ca80e5f7f2c74.ctex"
+uid="uid://bjh3hunjq4nxc"
+path="res://.godot/imported/sm_box.png-8dc5dbdd80384f361f2d33bf58c8f2a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/happy_brot_guckt_links.png"
-dest_files=["res://.godot/imported/happy_brot_guckt_links.png-89ce50f483546b24d02ca80e5f7f2c74.ctex"]
+source_file="res://prototypes/game-testPeter/images/sm_box.png"
+dest_files=["res://.godot/imported/sm_box.png-8dc5dbdd80384f361f2d33bf58c8f2a2.ctex"]
 
 [params]
 

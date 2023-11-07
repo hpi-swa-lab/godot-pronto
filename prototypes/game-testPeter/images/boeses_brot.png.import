@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://3voxo0e5w706"
-path="res://.godot/imported/boeses_brot.png-bb2d9bb2f41a3a090da9f6202f0ae54c.ctex"
+path="res://.godot/imported/boeses_brot.png-9d19a2eea96ceca944d6c585c3eb6c4d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/boeses_brot.png"
-dest_files=["res://.godot/imported/boeses_brot.png-bb2d9bb2f41a3a090da9f6202f0ae54c.ctex"]
+source_file="res://prototypes/game-testPeter/images/boeses_brot.png"
+dest_files=["res://.godot/imported/boeses_brot.png-9d19a2eea96ceca944d6c585c3eb6c4d.ctex"]
 
 [params]
 

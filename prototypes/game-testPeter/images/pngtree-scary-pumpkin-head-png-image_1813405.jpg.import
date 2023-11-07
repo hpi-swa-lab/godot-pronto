@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bashdfatydwh7"
-path="res://.godot/imported/dibujo-nutella-kawaii-png-768x915.png-2ee1a5583f6c857f22a8963985c226ca.ctex"
+uid="uid://gyfetwqoqmun"
+path="res://.godot/imported/pngtree-scary-pumpkin-head-png-image_1813405.jpg-0388fcb32b48f82aa58d84e737713037.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/dibujo-nutella-kawaii-png-768x915.png"
-dest_files=["res://.godot/imported/dibujo-nutella-kawaii-png-768x915.png-2ee1a5583f6c857f22a8963985c226ca.ctex"]
+source_file="res://prototypes/game-testPeter/images/pngtree-scary-pumpkin-head-png-image_1813405.jpg"
+dest_files=["res://.godot/imported/pngtree-scary-pumpkin-head-png-image_1813405.jpg-0388fcb32b48f82aa58d84e737713037.ctex"]
 
 [params]
 

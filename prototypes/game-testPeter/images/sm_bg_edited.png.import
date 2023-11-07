@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjh3hunjq4nxc"
-path="res://.godot/imported/sm_box.png-7f0d76d1e91f49a52816506720213a5c.ctex"
+uid="uid://bsuaponnqxr4o"
+path="res://.godot/imported/sm_bg_edited.png-924c45ea08b6c405fe196b912930b2da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/sm_box.png"
-dest_files=["res://.godot/imported/sm_box.png-7f0d76d1e91f49a52816506720213a5c.ctex"]
+source_file="res://prototypes/game-testPeter/images/sm_bg_edited.png"
+dest_files=["res://.godot/imported/sm_bg_edited.png-924c45ea08b6c405fe196b912930b2da.ctex"]
 
 [params]
 

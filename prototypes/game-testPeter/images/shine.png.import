@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://com8crmv3jduj"
-path="res://.godot/imported/blutella.png-d2b1983b0b3b3258ae4adcbd0edf1451.ctex"
+uid="uid://bkxdx8i3sckfj"
+path="res://.godot/imported/shine.png-1494d3b2b23fd0c26588df2915d9d19a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/blutella.png"
-dest_files=["res://.godot/imported/blutella.png-d2b1983b0b3b3258ae4adcbd0edf1451.ctex"]
+source_file="res://prototypes/game-testPeter/images/shine.png"
+dest_files=["res://.godot/imported/shine.png-1494d3b2b23fd0c26588df2915d9d19a.ctex"]
 
 [params]
 
