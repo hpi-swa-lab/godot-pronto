@@ -61,6 +61,8 @@ func _draw():
 	
 	var node_circles = []
 	for node in nodes:
+		if node is not Node2D:
+			continue
 		var pos = to_local(node.global_position)
 		
 		var radius = node._groupDrawerRadius() if node.has_method("_groupDrawerRadius") else default_radius
