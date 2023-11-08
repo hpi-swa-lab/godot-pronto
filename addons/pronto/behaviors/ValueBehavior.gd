@@ -44,7 +44,6 @@ var float_step_size:float = 1:
 
 var float_value:float = 0:
 	set(val):
-		print("Setting", val)
 		if(!value_init):
 			float_default = snapped(val, float_step_size)
 			value_init = true
@@ -159,11 +158,7 @@ func _get_property_list():
 func _ready():
 	super._ready()
 	renamed.connect(queue_redraw)
-	var loaded_value = G.at(name)
-	if (loaded_value):
-		float_value = loaded_value
-	else:
-		G.put(name, float_value)
+	G.put(name, float_value)
 	value_changed.emit(G.at(name))
 
 func _forward_canvas_draw_over_viewport(viewport_control: Control):

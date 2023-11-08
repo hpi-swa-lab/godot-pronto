@@ -7,7 +7,6 @@ extends Node
 
 var values = {}
 var _store_update = {}
-var current_root = null
 
 func put(name: String, value: Variant):
 	_put(name, value)
@@ -46,19 +45,14 @@ func _register_store(store: StoreBehavior, prop: String):
 func _ready():
 	if not Engine.is_editor_hint():
 		maybe_add_value_user_interface()
-		get_tree().tree_changed.connect(maybe_add_value_user_interface)
-		
 
 func maybe_add_value_user_interface():
-	if (current_root and current_root.get_ref()): return
-	current_root = weakref(get_tree().current_scene)
 	if not Utils.all_nodes_that(get_tree().root, func (node): return node is PrototypingUIBehavior).is_empty():
 		return
 	
-	await get_tree().process_frame
 	var ui = PrototypingUIBehavior.new()
 	ui.name = 'Config'
 	# Place the PrototypingUI in its own CanvasLayer
 	var canvasLayer = CanvasLayer.new()
 	canvasLayer.add_child(ui)
-	get_tree().current_scene.add_child(canvasLayer)
+	add_child(canvasLayer)
