@@ -55,5 +55,6 @@ render_target_update_mode = 4
 [node name="ExportBehavior" type="Node2D" parent="."]
 position = Vector2(576, 324)
 script = ExtResource("1")
-title = "esportsreadymario"
-authors = PackedStringArray("Max, Luke")
+title = "Esportsreadymario"
+authors = PackedStringArray("Max", "Luke")
+description = "The two marios have to try and get the (not implemented) flag of the opposing team and cary it home. Player one uses wasd, Player 2 uses the arrow keys."
