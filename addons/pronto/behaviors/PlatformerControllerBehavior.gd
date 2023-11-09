@@ -113,7 +113,8 @@ func _physics_process(delta):
 		input_direction_x += -1
 	if _is_key_pressed("right"):
 		input_direction_x += 1
-	_parent.velocity.x = input_direction_x * horizontal_velocity
+	_parent.velocity.x += (input_direction_x * horizontal_velocity)*0.1
+	_parent.velocity.x *= 0.9
 	_parent.velocity.x += gravity.x * delta
 	
 	# move
