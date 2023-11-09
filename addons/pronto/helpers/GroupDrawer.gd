@@ -61,7 +61,7 @@ func _draw():
 	
 	var node_circles = []
 	for node in nodes:
-		if node is not Node2D:
+		if not node is Node2D:
 			continue
 		var pos = to_local(node.global_position)
 		
