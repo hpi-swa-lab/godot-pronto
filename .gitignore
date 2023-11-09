@@ -3,3 +3,4 @@
 script-instances
 log
 build/
+*.tmp
