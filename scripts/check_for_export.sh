@@ -9,5 +9,11 @@ if [ $COUNT -eq 1 ]
 then
     echo $GAME_FOLDER
 else
-    echo "Error: Found ${COUNT} scenes with ExportBehavior."
+    # IMPORTANT: This message needs to start with "Error:" so that the CI fails
+    echo "Error: Found ${COUNT} scenes with ExportBehavior:"
+    # Print all scenes with ExportBehavior in them:
+    for scene in $EXPORT_SCENES
+    do
+        echo $scene
+    done
 fi
