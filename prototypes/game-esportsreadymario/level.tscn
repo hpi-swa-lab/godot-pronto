@@ -1287,7 +1287,6 @@ script = ExtResource("12_2uwir")
 metadata/pronto_connections = [SubResource("Resource_m1nrh"), SubResource("Resource_btlro")]
 
 [node name="GroupDrawer" parent="Area2D3/SpawnerBehavior" instance=ExtResource("13_cp8el")]
-visible = false
 position = Vector2(1000, 0)
 
 [node name="_Node2D_42797" type="Node2D" parent="Area2D3/SpawnerBehavior/GroupDrawer"]
