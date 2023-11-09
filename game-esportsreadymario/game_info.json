@@ -1,7 +1,9 @@
 {
 	"authors": [
-		"Max, Luke"
+		"Max",
+		"Luke"
 	],
-	"time": "2023-11-08",
-	"title": "esportsreadymario"
+	"description": "The two marios have to try and get the (not implemented) flag of the opposing team and cary it home. Player one uses wasd, Player 2 uses the arrow keys.",
+	"time": "2023-11-09",
+	"title": "Esportsreadymario"
 }
