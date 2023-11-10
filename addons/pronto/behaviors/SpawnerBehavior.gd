@@ -107,9 +107,12 @@ func _spawn(index: int, top_level: bool = false):
 	instance.top_level = top_level
 	
 	if container == null:
-		var path_corrector = Node.new()
+		var proxy_script = preload("res://addons/pronto/helpers/SpawnerProxy.gd")
+		var path_corrector = Node2D.new()
 		path_corrector.add_child(instance)
 		get_parent().add_child(path_corrector)
+		path_corrector.set_script(proxy_script)
+		path_corrector.set("spawner", self)
 	else:
 		container.add_child(instance)
 	
