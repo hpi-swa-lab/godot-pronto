@@ -594,9 +594,20 @@ func create_header():
 	var hbox = HBoxContainer.new()
 	hbox.add_child(create_minimizing_button())
 	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Add the title of the PUI
 	var text = Label.new()
 	text.text = self.name
 	hbox.add_child(text)
+
+	# Quick and dirty solution for restart button
+	var restart_button = Button.new()
+	restart_button.text = "⟳"
+	restart_button.focus_mode = 0
+	restart_button.alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	restart_button.tooltip_text = "Restart the game"
+	restart_button.connect("pressed", func(): get_tree().reload_current_scene())
+	hbox.add_child(restart_button)
+
 	return hbox
 
 func _sync_editor_value(value: ValueBehavior):
