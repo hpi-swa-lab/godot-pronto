@@ -38,6 +38,17 @@ static func connect_expr(from: Node, signal_name: String, to: NodePath, expressi
 	c.only_if = only_if
 	c._store(from, undo_redo)
 	return c
+	
+static func create_transition(from: Node, signal_name: String, to: NodePath, invoke: String, more_references: Array, only_if: ConnectionScript, trigger: String, undo_redo = null):
+	var c = Connection.new()
+	c.signal_name = signal_name
+	c.to = to
+	c.invoke = invoke
+	c.trigger = trigger
+	c.more_references = more_references
+	c.only_if = only_if
+	c._store(from, undo_redo)
+	return c
 
 ## Returns list of all connections from [param node]
 static func get_connections(node: Node) -> Array:
@@ -73,6 +84,8 @@ static func get_connections(node: Node) -> Array:
 		return enabled
 	set(new_value):
 		enabled = new_value
+## Used to trigger state transitions (connections between StateBehaviors)
+@export var trigger: String = ""
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
@@ -193,6 +206,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			target = from.get_node(c.to)
 			names.append("to")
 			values.append(target)
+			
 		
 		if not c.should_trigger(names, values, from):
 			continue
@@ -225,9 +239,16 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 
 func has_condition():
 	return only_if.source_code != "true"
+	
+func state_transition_should_trigger(names: Array, values: Array):
+	if trigger == "":
+		return true
+	var trigger_idx = names.find("trigger")
+	var trigger_value = values[trigger_idx]
+	return trigger == trigger_value
 
-func should_trigger(names, values, from):
-	return not has_condition() or await _run_script(from, only_if, values)
+func should_trigger(names: Array, values: Array, from):
+	return (not has_condition() or await _run_script(from, only_if, values)) and state_transition_should_trigger(names, values)
 
 func make_unique(from: Node, undo_redo):
 	var old = _ensure_connections(from)

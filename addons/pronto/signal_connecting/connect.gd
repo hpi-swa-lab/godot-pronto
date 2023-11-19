@@ -90,7 +90,10 @@ func build_signal_list():
 	%add.visible = false
 
 func _on_connections_item_selected(index):
-	NodeToNodeConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
+	if node is StateBehavior and Connection.get_connections(node)[index]["signal_name"] == "on_trigger_received":
+		StateConnectionConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
+	else:
+		NodeToNodeConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
 
 func _on_connections_item_clicked(index, at_position, mouse_button_index):
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:

@@ -15,17 +15,37 @@ signal entered
 ## Use [param transition_id] to determine in the transitions' condition which transition to trigger.
 signal exited(target_state_name: String)
 
-## Modeles whether the state reacts to transitions at all.
-## The sum of all [code]active[/code] variables is the state of the state machine
+## Signal that gets emitted every frame while the state is active.
+signal in_state(delta: float)
+
+## Signal that gets emitted when the state machine receives a trigger and this
+## is the active state.
+## Use this to tranistion to different states.
+signal on_trigger_received(trigger: String)
+
 ## Use this variable to determine the initial state.
-@export var active: bool = false:
-	get: return active
-	set(value): 
+@export var is_initial_state: bool = false:
+	set(value):
 		active = value
+		is_initial_state = value
+
+## Models whether the state reacts to transitions at all.
+var active: bool = false:
+	get: 
+		if get_parent():
+			return get_parent().active_state == self
+		else:
+			return false
+	set(value): 
+		if get_parent():
+			get_parent().set_active_state(self, value)
 		reload_icon()
 
 var _active_texture = load("res://addons/pronto/icons/StateActive.svg")
 var _inactive_texture = load("res://addons/pronto/icons/StateInactive.svg")
+
+func _get_configuration_warning() -> String:
+	return "A custom node configuration warning!"
 
 ## Function that tells the state to become active. Works only if the state is not active yet.
 func enter():
@@ -33,12 +53,10 @@ func enter():
 		active = true
 		entered.emit()
 
-## Function that tells the state to become inactive. Works only if the state is active.
-## The [param transition_id] is forwarded to the [signal StateBehavior.exited] signal and 
-## can thus be used to determine which transition to trigger.
+## DEPRECATED
 func exit(target_state_name: String):
+	reload_icon()
 	if active:
-		active = false
 		exited.emit(target_state_name)
 
 ## Override of [method Behavior.line_text_function].
@@ -49,6 +67,7 @@ func line_text_function(connection: Connection) -> Callable:
 		addendum = "\ntransition to '%s'" % connection.to.get_name(connection.to.get_name_count() - 1)
 	
 	return func(flipped):
+		# TODO: Custom state transition connections?
 		return connection.print(flipped) + addendum
 
 ## Override of [method Behavior.lines] 
@@ -72,5 +91,13 @@ func icon_texture():
 func _ready():
 	super._ready()
 	
-	if active:
-		entered.emit()
+	if is_initial_state:
+		if get_parent():
+			get_parent().set_active_state(self, true)
+		
+		
+func _process(delta):
+	super._process(delta)
+	
+	if not Engine.is_editor_hint() and active:
+		in_state.emit(delta)

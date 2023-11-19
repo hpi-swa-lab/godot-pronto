@@ -83,12 +83,18 @@ func _input(event):
 	if event is InputEventKey and (event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER) and event.pressed and event.ctrl_pressed:
 		_on_done_pressed()
 
+var _receiver: Object
+
 var receiver: Object:
-	set(value):
-		receiver = value
-		%ReceiverPath.text = "${0} ({1})".format([from.get_path_to(receiver), receiver.name])
-		%FunctionName.anchor = anchor
-		%FunctionName.node = receiver
+	get: return _receiver
+	set(value): _set_receiver(value)
+
+# Use function here to be able to 
+func _set_receiver(value):
+	_receiver = value
+	%ReceiverPath.text = "${0} ({1})".format([from.get_path_to(receiver), receiver.name])
+	%FunctionName.anchor = anchor
+	%FunctionName.node = receiver
 
 var more_references: Array = []
 

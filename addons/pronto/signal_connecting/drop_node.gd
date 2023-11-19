@@ -16,5 +16,7 @@ func _can_drop_data(at_position, data):
 
 func _drop_data(at_position, data):
 	var source_signal = data["signal"]
-	
-	NodeToNodeConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
+	if source_signal["name"] == "on_trigger_received" and node is StateBehavior:
+		StateConnectionConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
+	else:
+		NodeToNodeConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
