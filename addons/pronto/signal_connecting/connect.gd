@@ -91,7 +91,7 @@ func build_signal_list():
 
 func _on_connections_item_selected(index):
 	if node is StateBehavior and Connection.get_connections(node)[index]["signal_name"] == "on_trigger_received":
-		StateConnectionConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
+		StateTransitionConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
 	else:
 		NodeToNodeConfigurator.open_existing(undo_redo, node, Connection.get_connections(node)[index])
 

@@ -1,0 +1,186 @@
+[gd_scene load_steps=10 format=3 uid="uid://b1slw3r7abdiw"]
+
+[ext_resource type="Script" path="res://addons/pronto/signal_connecting/state_transition_configurator.gd" id="1_0y2ep"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/EditorIcon.gd" id="1_whtyl"]
+[ext_resource type="PackedScene" uid="uid://duootchnamvj6" path="res://addons/pronto/helpers/ResizableContainer.tscn" id="2_2i7wm"]
+[ext_resource type="PackedScene" uid="uid://d1jujxfamsekk" path="res://addons/pronto/signal_connecting/expression_edit.tscn" id="3_immw5"]
+
+[sub_resource type="Texture2D" id="Texture2D_fw8b4"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("1_whtyl")
+name = "PinJoint2D"
+
+[sub_resource type="Texture2D" id="Texture2D_346xi"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("1_whtyl")
+name = "Pin"
+
+[sub_resource type="Texture2D" id="Texture2D_ipasb"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("1_whtyl")
+name = "Add"
+
+[sub_resource type="Texture2D" id="Texture2D_p85kq"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("1_whtyl")
+name = "Warning"
+
+[sub_resource type="Texture2D" id="Texture2D_4bvmr"]
+resource_local_to_scene = false
+resource_name = ""
+script = ExtResource("1_whtyl")
+name = "Remove"
+
+[node name="StateTransitionConfigurator" type="PanelContainer"]
+script = ExtResource("1_0y2ep")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_default_cursor_shape = 13
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Pinned" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Pin"
+theme_override_icons/checked = SubResource("Texture2D_fw8b4")
+theme_override_icons/unchecked = SubResource("Texture2D_346xi")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Signal:"
+
+[node name="Signal" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "area_entered"
+alignment = 1
+expand_to_text_length = true
+flat = true
+
+[node name="SignalArgs" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "tooltip_text"
+mouse_filter = 1
+text = "(area)"
+
+[node name="VSeparator3" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="BasicArgs" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="From" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/BasicArgs"]
+layout_mode = 2
+text = "from"
+
+[node name="VSeparator2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " "
+
+[node name="AddReferenceButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_direction = 2
+layout_mode = 2
+tooltip_text = "Add reference"
+icon = SubResource("Texture2D_ipasb")
+
+[node name="VSeparator" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 2.08165e-12)
+layout_mode = 2
+
+[node name="ChangesNotifier" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+tooltip_text = "There are unsaved changes"
+texture = SubResource("Texture2D_p85kq")
+stretch_mode = 5
+
+[node name="Enabled" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Enable"
+button_pressed = true
+
+[node name="remove" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Remove"
+icon = SubResource("Texture2D_4bvmr")
+
+[node name="ReceiverLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "only if: "
+
+[node name="ResizableContainer2" parent="MarginContainer/VBoxContainer/HBoxContainer2" instance=ExtResource("2_2i7wm")]
+layout_mode = 2
+size_flags_horizontal = 3
+sync_handles_parent_path = NodePath("../../../..")
+sync_handles_x = true
+
+[node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("3_immw5")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 43.2268)
+layout_mode = 2
+default_text = "true"
+max_width = 500
+
+[node name="TriggerContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TriggerSelection" type="OptionButton" parent="MarginContainer/VBoxContainer/TriggerContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TriggerCreationContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TriggerContainer"]
+layout_mode = 2
+
+[node name="TriggerEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="create_trigger" type="Button" parent="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer"]
+layout_mode = 2
+text = "Create trigger"
+
+[node name="ButtonList" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="done" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Save"
+
+[node name="cancel" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Cancel"
