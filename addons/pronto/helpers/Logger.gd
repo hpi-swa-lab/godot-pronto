@@ -12,8 +12,9 @@ var file = null
 var logger_name = ""
 
 func _init(filePath, custom_logger_name = ""):
-	file = FileAccess.open(filePath, FileAccess.WRITE)
+	file = FileAccess.open(filePath, FileAccess.READ_WRITE) if FileAccess.file_exists(filePath) else FileAccess.open(filePath, FileAccess.WRITE_READ)
 	print(FileAccess.get_open_error())
+	file.seek_end()
 	logger_name = custom_logger_name
 
 func log(text):

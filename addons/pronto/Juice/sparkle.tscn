@@ -1,7 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://4slp8o834fyy"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5ph2x"]
-load_path = "res://.godot/imported/Unbenanntes_Projekt 13.png-860ed6d02334d2ea0a4a18b9f8558cd3.ctex"
 
 [sub_resource type="Curve" id="Curve_k346h"]
 _data = [Vector2(0, 0.806081), 0.0, 0.0, 0, 0, Vector2(0.0847014, 1), 0.0, 0.0, 0, 0, Vector2(0.421498, 1), 0.0, 0.0, 0, 0, Vector2(0.578502, 0.00661635), 0.0, 0.0, 0, 0]
