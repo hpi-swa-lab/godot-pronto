@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://0dcwrlbjfgql"]
+[gd_scene load_steps=3 format=3 uid="uid://0dcwrlbjfgql"]
 
 [ext_resource type="Script" path="res://addons/pronto/signal_connecting/drop_list.gd" id="1_22cke"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gj683"]
+bg_color = Color(0.21, 0.24, 0.29, 1)
+
 [node name="drop_list" type="PanelContainer"]
 theme_type_variation = &"Panel"
+theme_override_styles/panel = SubResource("StyleBoxFlat_gj683")
 script = ExtResource("1_22cke")
 
 [node name="list" type="VBoxContainer" parent="."]

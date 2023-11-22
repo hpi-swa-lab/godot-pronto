@@ -20,3 +20,22 @@ func _drop_data(at_position, data):
 		StateTransitionConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
 	else:
 		NodeToNodeConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
+	_study_logging("connection_create from " + data["source"].name + " to " + node.name + " of signal type " + _source_signal_print(source_signal))
+	NodeToNodeConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
+
+func _study_logging(text):
+	var _study_tracker = get_node("/root/").find_child("StudyTracker", true, false)
+	if _study_tracker.active:		
+		_study_tracker.logger.log(text)
+
+func _source_signal_print(source_signal):
+	var str_representation = ""
+	var name = source_signal.name
+	str_representation += name
+	var args = source_signal.args
+	if len(args) > 0:
+		str_representation += "("
+		for arg in args:
+			str_representation += arg.name + ", "
+		str_representation += ")"
+	return str_representation	
