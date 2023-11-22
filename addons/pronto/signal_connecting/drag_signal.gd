@@ -18,7 +18,20 @@ func _init(s: Dictionary, from: Node, undo_redo: EditorUndoRedoManager):
 
 func _gui_input(event):
 	if event is InputEventMouseButton and event.double_click:
+		_study_logging("connection_create_self from " + str(from.name) + " of signal type " + _source_signal_print(source_signal))
 		NodeToNodeConfigurator.open_new_expression(undo_redo, from, source_signal)
+		
+func _source_signal_print(source_signal):
+	var str_representation = ""
+	var name = source_signal.name
+	str_representation += name
+	var args = source_signal.args
+	if len(args) > 0:
+		str_representation += "("
+		for arg in args:
+			str_representation += arg.name + ", "
+		str_representation += ")"
+	return str_representation	
 
 func _get_drag_data(at_position):
 	show_drop_destinations()
@@ -57,3 +70,8 @@ func _notification(what):
 	if what == NOTIFICATION_DRAG_END:
 		for d in drop_destinations: d.queue_free()
 		drop_destinations = []
+
+func _study_logging(text):
+	var _study_tracker = get_node("/root/").find_child("StudyTracker", true, false)
+	if _study_tracker.active:		
+		_study_tracker.logger.log(text)

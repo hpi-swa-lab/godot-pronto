@@ -1,14 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://c27x5i58l6g3y"]
+[gd_scene load_steps=2 format=3 uid="uid://c27x5i58l6g3y"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/zzStudyTracker.gd" id="1_2dwtb"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="2_p5teh"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_2dwtb"]
 
 [node name="StudyConcept1" type="Node2D"]
 
-[node name="StudyTrackerBehavior" type="Node2D" parent="."]
+[node name="StudyTracker" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(0, -1)
 script = ExtResource("1_2dwtb")
-
-[node name="AlwaysBehavior" type="Node2D" parent="."]
-position = Vector2(576, 324)
-script = ExtResource("2_p5teh")
+participantId = 1
+studyId = "A5"
+active = true
