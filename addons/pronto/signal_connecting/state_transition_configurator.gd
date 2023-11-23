@@ -174,6 +174,13 @@ func _on_remove_pressed():
 
 func _on_cancel_pressed():
 	queue_free()
+	
+func _on_open_in_connection_editor_pressed():
+	if existing_connection:
+		NodeToNodeConfigurator.open_existing(undo_redo, from, existing_connection)
+	else:
+		NodeToNodeConfigurator.open_new_invoke(undo_redo, from, selected_signal,receiver)
+	queue_free()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -199,3 +206,4 @@ func _process(delta):
 	if is_hovered:
 		if self.existing_connection:
 			Utils.get_behavior(from).highlight_activated(self.existing_connection)
+

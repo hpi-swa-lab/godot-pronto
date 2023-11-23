@@ -146,7 +146,7 @@ sync_handles_x = true
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("3_immw5")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43.8835)
+custom_minimum_size = Vector2(0, 43.1949)
 layout_mode = 2
 default_text = "true"
 max_width = 500
@@ -185,7 +185,13 @@ layout_mode = 2
 size_flags_horizontal = 0
 text = "Cancel"
 
+[node name="open_in_connection_editor" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Open connection editor"
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer/create_trigger" to="." method="_on_add_trigger_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/done" to="." method="_on_done_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/open_in_connection_editor" to="." method="_on_open_in_connection_editor_pressed"]

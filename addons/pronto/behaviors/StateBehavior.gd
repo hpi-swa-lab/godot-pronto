@@ -63,11 +63,10 @@ func exit(target_state_name: String):
 ## Used to display the node name of a target StateBehavior on a line
 func line_text_function(connection: Connection) -> Callable:
 	var addendum = ""
-	if get_node(connection.to) is StateBehavior:
-		addendum = "\ntransition to '%s'" % connection.to.get_name(connection.to.get_name_count() - 1)
+	if connection.trigger != "":
+		addendum = "\ntransition on '%s'" % connection.trigger
 	
 	return func(flipped):
-		# TODO: Custom state transition connections?
 		return connection.print(flipped) + addendum
 
 ## Override of [method Behavior.lines] 

@@ -22,6 +22,11 @@ func _ready():
 	if Engine.is_editor_hint():
 		add_child(preload("res://addons/pronto/helpers/GroupDrawer.tscn").instantiate(), false, INTERNAL_MODE_BACK)
 		add_child(preload("res://addons/pronto/helpers/StateMachineInfo.tscn").instantiate(), false, INTERNAL_MODE_BACK)
+	ConnectionsList.connections_changed.connect(collect_triggers)
+
+func collect_triggers():
+	var connections = Connection.get_connections(self)
+	# TODO Get connections *to* this node to get triggers
 
 func states():
 	return get_children().filter(func (c): c is StateBehavior)
