@@ -8,7 +8,7 @@ class_name StateMachineBehavior
 ## The [class GroupDrawer] is used for this.
 
 var active_state: StateBehavior = null
-var triggers: Array[String] = []
+@export var triggers: Array[String] = []
 
 func set_active_state(state: StateBehavior, is_active: bool):
 	if active_state:
@@ -21,6 +21,7 @@ func _ready():
 	super._ready()
 	if Engine.is_editor_hint():
 		add_child(preload("res://addons/pronto/helpers/GroupDrawer.tscn").instantiate(), false, INTERNAL_MODE_BACK)
+		add_child(preload("res://addons/pronto/helpers/StateMachineInfo.tscn").instantiate(), false, INTERNAL_MODE_BACK)
 
 func states():
 	return get_children().filter(func (c): c is StateBehavior)
