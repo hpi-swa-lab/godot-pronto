@@ -89,7 +89,6 @@ var receiver: Object:
 		%ReceiverPath.text = "${0} ({1})".format([from.get_path_to(receiver), receiver.name])
 		%FunctionName.anchor = anchor
 		%FunctionName.node = receiver
-	
 
 var more_references: Array = []
 

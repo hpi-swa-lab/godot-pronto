@@ -3,7 +3,7 @@ extends PanelContainer
 class_name StateTransitionConfigurator
 
 static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
-	var i: StateTransitionConfigurator = preload("res://addons/pronto/signal_connecting/state_transition_configurator.tscn").instantiate()
+	var i: StateTransitionConfigurator = load("res://addons/pronto/signal_connecting/state_transition_configurator.tscn").instantiate()
 	i.anchor = anchor
 	i.undo_redo = undo_redo
 
@@ -16,22 +16,21 @@ static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
 	return i
 	
 static func open_existing(undo_redo: EditorUndoRedoManager, from: Node, connection: Connection):
-	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
+	var i: StateTransitionConfigurator = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
 	i.set_existing_connection(from, connection)
 	return i.open(from)
 
 static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source_signal: Dictionary, receiver: Node):
-	var i = _open(Utils.parent_that(receiver, func (n): return Utils.has_position(n)), undo_redo)
+	var i: StateTransitionConfigurator = _open(Utils.parent_that(receiver, func (n): return Utils.has_position(n)), undo_redo)
 	i.selected_signal = source_signal
 	i.from = from
 	i.receiver = receiver
-	i.set_mode(false, true)
 	i.init_empty_scripts()
-	#i.reload_triggers()
+	i.reload_triggers()
 
 	return i.open(receiver)
 
-func open(receiver: Node):
+func open(receiver: Node) -> StateTransitionConfigurator:
 	# find existing configurator siblings
 	for configurator in Utils.popup_parent(receiver).get_children(true):
 		if configurator is NodeToNodeConfigurator and configurator.has_same_connection(self):
@@ -48,6 +47,13 @@ var anchor: Node:
 	set(n):
 		anchor = n
 		reset_size()
+var position_offset = Vector2(0, 0)
+		
+var pinned = false:
+	set(value):
+		pinned = value
+		%Pinned.button_pressed = value
+
 var from: Node
 var existing_connection = null
 var more_references: Array = []
@@ -66,7 +72,6 @@ func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
 	existing_connection = connection
 	self.selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
-	#set_mode(connection.is_expression(), connection.is_target())
 	%Condition.edit_script = connection.only_if
 	if connection.is_target():
 		receiver = from.get_node(connection.to)
@@ -81,8 +86,8 @@ func set_existing_connection(from: Node, connection: Connection):
 	Utils.all_nodes_do(ConnectionsList.get_viewport(),
 		func(n):
 			total["total"] += Connection.get_connections(n).count(connection))
-	%SharedLinksNote.visible = total["total"] > 1
-	%SharedLinksCount.text = "This connection is linked to {0} other node{1}.".format([total["total"] - 1, "s" if total["total"] != 2 else ""])
+	#%SharedLinksNote.visible = total["total"] > 1
+	#%SharedLinksCount.text = "This connection is linked to {0} other node{1}.".format([total["total"] - 1, "s" if total["total"] != 2 else ""])
 	reload_triggers()
 	if connection.trigger != "":
 		for i in range(%TriggerSelection.item_count):
@@ -90,10 +95,16 @@ func set_existing_connection(from: Node, connection: Connection):
 				%TriggerSelection.select(i)
 	
 	mark_changed(false)
-	
+
+func empty_script(expr: String, return_value: bool):
+	var script := ConnectionScript.new([], return_value, expr)
+	#script.argument_types = argument_types()
+	return script
+
+func init_empty_scripts():
+	%Condition.edit_script = empty_script("true", true)
 
 func save():
-	%FunctionName.accept_selected()
 	var trigger = %TriggerSelection.get_item_text(%TriggerSelection.get_selected_id())
 
 	if existing_connection:
@@ -145,11 +156,24 @@ func get_state_machine() -> StateMachineBehavior:
 	return null
 
 func _on_add_trigger_pressed():
-	var new_trigger = $MarginContainer/VBoxContainer/TriggerContainer/HBoxContainer/TextEdit.text
+	var new_trigger = %TriggerEdit.text
 	if new_trigger not in get_state_machine().triggers:
 		get_state_machine().triggers.push_back(new_trigger)
 		%TriggerSelection.add_item(new_trigger)
-	$MarginContainer/VBoxContainer/TriggerContainer/HBoxContainer/TextEdit.text = ""
+	%TriggerEdit.text = ""
+
+func _on_done_pressed():
+	save()
+	if not pinned:
+		queue_free()
+
+func _on_remove_pressed():
+	if existing_connection:
+		existing_connection.delete(from, undo_redo)
+	queue_free()
+
+func _on_cancel_pressed():
+	queue_free()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -158,4 +182,20 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if not anchor: return
+	
+	visible = anchor.is_inside_tree()
+	if anchor.is_inside_tree():
+		position = Utils.popup_position(anchor) + position_offset
+		var offscreen_delta = (position + size - get_parent().size).clamp(Vector2(0, 0), Vector2(1000000, 1000000))
+		position -= offscreen_delta
+
+	var _parent = Utils.popup_parent(anchor)
+	if not _parent: return
+	var hovered_nodes = _parent.get_children(true).filter(func (n):
+		if not (n is NodeToNodeConfigurator): return false
+		return n.get_global_rect().has_point(get_viewport().get_mouse_position()))
+	var is_hovered = hovered_nodes.size() > 0 and hovered_nodes[-1] == self
+	if is_hovered:
+		if self.existing_connection:
+			Utils.get_behavior(from).highlight_activated(self.existing_connection)

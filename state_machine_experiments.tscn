@@ -11,7 +11,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="9_c6i35"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="11_4bok1"]
 
-[sub_resource type="Image" id="Image_8hdpl"]
+[sub_resource type="Image" id="Image_1xvn4"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -21,7 +21,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_oxgk5"]
-image = SubResource("Image_8hdpl")
+image = SubResource("Image_1xvn4")
 
 [sub_resource type="GDScript" id="GDScript_4c52m"]
 script/source = "@tool
@@ -183,7 +183,7 @@ deferred = false
 enabled = true
 trigger = ""
 
-[sub_resource type="Image" id="Image_fjnbk"]
+[sub_resource type="Image" id="Image_jwxv4"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -193,7 +193,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_1jm2b"]
-image = SubResource("Image_fjnbk")
+image = SubResource("Image_jwxv4")
 
 [sub_resource type="GDScript" id="GDScript_m3smn"]
 script/source = "@tool
@@ -276,35 +276,6 @@ deferred = false
 enabled = true
 trigger = ""
 
-[sub_resource type="GDScript" id="GDScript_co38d"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(trigger, from: Node2D, to: Node2D):
-	print(\"Handling trigger \", trigger)
-	print(trigger == \"player_seen\")
-	return trigger == \"player_seen\"
-	
-"
-
-[sub_resource type="Resource" id="Resource_ihq7p"]
-script = ExtResource("3_3nuto")
-nested_script = SubResource("GDScript_co38d")
-argument_names = ["trigger", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_gpdsb"]
-script = ExtResource("4_nlt06")
-signal_name = "on_trigger_received"
-to = NodePath("../ChaseState")
-more_references = []
-invoke = "enter"
-arguments = []
-only_if = SubResource("Resource_ihq7p")
-deferred = false
-enabled = true
-trigger = ""
-
 [sub_resource type="GDScript" id="GDScript_niva5"]
 script/source = "@tool
 extends U
@@ -330,6 +301,32 @@ only_if = SubResource("Resource_2nv1i")
 deferred = false
 enabled = true
 trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_kky76"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4rvxu"]
+script = ExtResource("3_3nuto")
+nested_script = SubResource("GDScript_kky76")
+argument_names = []
+return_value = true
+
+[sub_resource type="Resource" id="Resource_kcm32"]
+script = ExtResource("4_nlt06")
+signal_name = "on_trigger_received"
+to = NodePath("../ChaseState")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_4rvxu")
+deferred = false
+enabled = true
+trigger = "player_seen"
 
 [sub_resource type="GDScript" id="GDScript_c73qf"]
 script/source = "@tool
@@ -357,57 +354,57 @@ deferred = false
 enabled = true
 trigger = ""
 
-[sub_resource type="GDScript" id="GDScript_8uhx1"]
+[sub_resource type="GDScript" id="GDScript_aqof0"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(trigger, from: Node2D, to: Node2D):
-	return trigger==\"looked_around\"
+func run():
+	return true
 "
 
-[sub_resource type="Resource" id="Resource_r3lvm"]
+[sub_resource type="Resource" id="Resource_yjkxf"]
 script = ExtResource("3_3nuto")
-nested_script = SubResource("GDScript_8uhx1")
-argument_names = ["trigger", "from", "to"]
+nested_script = SubResource("GDScript_aqof0")
+argument_names = []
 return_value = true
 
-[sub_resource type="Resource" id="Resource_r2e85"]
-script = ExtResource("4_nlt06")
-signal_name = "on_trigger_received"
-to = NodePath("../PatrolState")
-more_references = []
-invoke = "enter"
-arguments = []
-only_if = SubResource("Resource_r3lvm")
-deferred = false
-enabled = true
-trigger = ""
-
-[sub_resource type="GDScript" id="GDScript_akn0u"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(trigger, from: Node2D, to: Node2D):
-	return trigger==\"player_seen\"
-"
-
-[sub_resource type="Resource" id="Resource_33tqh"]
-script = ExtResource("3_3nuto")
-nested_script = SubResource("GDScript_akn0u")
-argument_names = ["trigger", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_wxlxc"]
+[sub_resource type="Resource" id="Resource_fa5e2"]
 script = ExtResource("4_nlt06")
 signal_name = "on_trigger_received"
 to = NodePath("../ChaseState")
 more_references = []
 invoke = "enter"
 arguments = []
-only_if = SubResource("Resource_33tqh")
+only_if = SubResource("Resource_yjkxf")
 deferred = false
 enabled = true
-trigger = ""
+trigger = "player_seen"
+
+[sub_resource type="GDScript" id="GDScript_d51xn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bf7px"]
+script = ExtResource("3_3nuto")
+nested_script = SubResource("GDScript_d51xn")
+argument_names = []
+return_value = true
+
+[sub_resource type="Resource" id="Resource_t8ew6"]
+script = ExtResource("4_nlt06")
+signal_name = "on_trigger_received"
+to = NodePath("../PatrolState")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_bf7px")
+deferred = false
+enabled = true
+trigger = "looked_around"
 
 [sub_resource type="GDScript" id="GDScript_os458"]
 script/source = "@tool
@@ -650,16 +647,12 @@ metadata/pronto_connections = [SubResource("Resource_p7uog")]
 position = Vector2(-46, 43)
 script = ExtResource("7_otgf4")
 is_initial_state = true
-metadata/pronto_connections = [SubResource("Resource_evnsj"), SubResource("Resource_gpdsb"), SubResource("Resource_08gxu")]
+metadata/pronto_connections = [SubResource("Resource_evnsj"), SubResource("Resource_08gxu"), SubResource("Resource_kcm32")]
 
 [node name="LookAroundState" type="Node2D" parent="Enemy/StateMachineBehavior"]
 position = Vector2(121, 100)
 script = ExtResource("7_otgf4")
-metadata/pronto_connections = [SubResource("Resource_anq5g"), SubResource("Resource_r2e85"), SubResource("Resource_wxlxc")]
-
-[node name="TestState" type="Node2D" parent="Enemy/StateMachineBehavior"]
-position = Vector2(15, 168)
-script = ExtResource("7_otgf4")
+metadata/pronto_connections = [SubResource("Resource_anq5g"), SubResource("Resource_fa5e2"), SubResource("Resource_t8ew6")]
 
 [node name="StoreBehavior" type="Node2D" parent="Enemy" groups=["enemyStore"]]
 position = Vector2(89, 8)
