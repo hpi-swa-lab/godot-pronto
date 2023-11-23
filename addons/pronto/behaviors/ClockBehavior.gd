@@ -80,6 +80,9 @@ var _timer: Timer:
 		if not _timer: _timer = Timer.new()
 		return _timer
 
+func pause():
+	self.paused = true
+
 func reset_and_start():
 	self.paused = false
 	_trigger_count = 0

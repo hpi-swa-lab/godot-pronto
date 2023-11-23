@@ -1,0 +1,511 @@
+[gd_scene load_steps=26 format=3 uid="uid://rf10sg2nyg07"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_xnt7v"]
+[ext_resource type="Texture2D" uid="uid://dbbq5g37wq1en" path="res://prototypes/study/demo-assets/driving/spritesheet_tiles.png" id="2_ad2js"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_gjvmx"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="4_j7cvu"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="5_gp1pu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="6_qfu0f"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="7_n6nwg"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="8_057tg"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="9_rc74y"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wym6f"]
+texture = ExtResource("2_ad2js")
+texture_region_size = Vector2i(128, 128)
+0:3/0 = 0
+0:4/0 = 0
+0:5/0 = 0
+1:3/0 = 0
+1:4/0 = 0
+1:5/0 = 0
+2:3/0 = 0
+2:4/0 = 0
+2:5/0 = 0
+3:3/0 = 0
+3:4/0 = 0
+3:5/0 = 0
+4:3/0 = 0
+4:4/0 = 0
+4:5/0 = 0
+5:3/0 = 0
+5:4/0 = 0
+5:5/0 = 0
+6:3/0 = 0
+6:4/0 = 0
+6:5/0 = 0
+7:3/0 = 0
+7:4/0 = 0
+7:5/0 = 0
+8:3/0 = 0
+8:4/0 = 0
+8:5/0 = 0
+9:3/0 = 0
+9:4/0 = 0
+9:5/0 = 0
+10:3/0 = 0
+10:4/0 = 0
+10:5/0 = 0
+11:3/0 = 0
+11:4/0 = 0
+11:5/0 = 0
+12:3/0 = 0
+12:4/0 = 0
+12:5/0 = 0
+13:3/0 = 0
+13:4/0 = 0
+13:5/0 = 0
+14:3/0 = 0
+14:4/0 = 0
+14:5/0 = 0
+15:3/0 = 0
+15:4/0 = 0
+15:5/0 = 0
+16:3/0 = 0
+16:4/0 = 0
+16:5/0 = 0
+17:3/0 = 0
+17:4/0 = 0
+17:5/0 = 0
+0:6/0 = 0
+0:7/0 = 0
+0:8/0 = 0
+0:9/0 = 0
+0:10/0 = 0
+0:11/0 = 0
+0:12/0 = 0
+0:13/0 = 0
+0:14/0 = 0
+0:15/0 = 0
+0:16/0 = 0
+0:17/0 = 0
+1:6/0 = 0
+1:7/0 = 0
+1:8/0 = 0
+1:9/0 = 0
+1:10/0 = 0
+1:11/0 = 0
+1:12/0 = 0
+1:13/0 = 0
+1:14/0 = 0
+1:15/0 = 0
+1:16/0 = 0
+1:17/0 = 0
+2:6/0 = 0
+2:7/0 = 0
+2:8/0 = 0
+2:9/0 = 0
+2:10/0 = 0
+2:11/0 = 0
+2:12/0 = 0
+2:13/0 = 0
+2:14/0 = 0
+2:15/0 = 0
+2:16/0 = 0
+2:17/0 = 0
+3:6/0 = 0
+3:7/0 = 0
+3:8/0 = 0
+3:9/0 = 0
+3:10/0 = 0
+3:11/0 = 0
+3:12/0 = 0
+3:13/0 = 0
+3:14/0 = 0
+3:15/0 = 0
+3:16/0 = 0
+3:17/0 = 0
+4:6/0 = 0
+4:7/0 = 0
+4:8/0 = 0
+4:9/0 = 0
+4:10/0 = 0
+4:11/0 = 0
+4:12/0 = 0
+4:13/0 = 0
+4:14/0 = 0
+4:15/0 = 0
+4:16/0 = 0
+4:17/0 = 0
+5:6/0 = 0
+5:7/0 = 0
+5:8/0 = 0
+5:9/0 = 0
+5:10/0 = 0
+5:11/0 = 0
+5:12/0 = 0
+5:13/0 = 0
+5:14/0 = 0
+5:15/0 = 0
+5:16/0 = 0
+5:17/0 = 0
+6:6/0 = 0
+6:7/0 = 0
+6:8/0 = 0
+6:9/0 = 0
+6:10/0 = 0
+6:11/0 = 0
+6:12/0 = 0
+6:13/0 = 0
+6:14/0 = 0
+6:15/0 = 0
+6:16/0 = 0
+6:17/0 = 0
+7:6/0 = 0
+7:7/0 = 0
+7:8/0 = 0
+7:9/0 = 0
+7:10/0 = 0
+7:11/0 = 0
+7:12/0 = 0
+7:13/0 = 0
+7:14/0 = 0
+7:15/0 = 0
+7:16/0 = 0
+7:17/0 = 0
+8:6/0 = 0
+8:7/0 = 0
+8:8/0 = 0
+8:9/0 = 0
+8:10/0 = 0
+8:11/0 = 0
+8:12/0 = 0
+8:13/0 = 0
+8:14/0 = 0
+8:15/0 = 0
+8:16/0 = 0
+8:17/0 = 0
+9:6/0 = 0
+9:7/0 = 0
+9:8/0 = 0
+9:9/0 = 0
+9:10/0 = 0
+9:11/0 = 0
+9:12/0 = 0
+9:13/0 = 0
+9:14/0 = 0
+9:15/0 = 0
+9:16/0 = 0
+9:17/0 = 0
+10:6/0 = 0
+10:7/0 = 0
+10:8/0 = 0
+10:9/0 = 0
+10:10/0 = 0
+10:11/0 = 0
+10:12/0 = 0
+10:13/0 = 0
+10:14/0 = 0
+10:15/0 = 0
+10:16/0 = 0
+10:17/0 = 0
+11:6/0 = 0
+11:7/0 = 0
+11:8/0 = 0
+11:9/0 = 0
+11:10/0 = 0
+11:11/0 = 0
+11:12/0 = 0
+11:13/0 = 0
+11:14/0 = 0
+11:15/0 = 0
+11:16/0 = 0
+11:17/0 = 0
+12:6/0 = 0
+12:7/0 = 0
+12:8/0 = 0
+12:9/0 = 0
+12:10/0 = 0
+12:11/0 = 0
+12:12/0 = 0
+12:13/0 = 0
+12:14/0 = 0
+12:15/0 = 0
+12:16/0 = 0
+12:17/0 = 0
+13:6/0 = 0
+13:7/0 = 0
+13:8/0 = 0
+13:9/0 = 0
+13:10/0 = 0
+13:11/0 = 0
+13:12/0 = 0
+13:13/0 = 0
+13:14/0 = 0
+13:15/0 = 0
+13:16/0 = 0
+13:17/0 = 0
+14:6/0 = 0
+14:7/0 = 0
+14:8/0 = 0
+14:9/0 = 0
+14:10/0 = 0
+14:11/0 = 0
+14:12/0 = 0
+14:13/0 = 0
+14:14/0 = 0
+14:15/0 = 0
+14:16/0 = 0
+14:17/0 = 0
+15:6/0 = 0
+15:7/0 = 0
+15:8/0 = 0
+15:9/0 = 0
+15:10/0 = 0
+15:11/0 = 0
+15:12/0 = 0
+15:13/0 = 0
+15:14/0 = 0
+15:15/0 = 0
+15:16/0 = 0
+15:17/0 = 0
+16:6/0 = 0
+16:7/0 = 0
+16:8/0 = 0
+16:9/0 = 0
+16:10/0 = 0
+16:11/0 = 0
+16:12/0 = 0
+16:13/0 = 0
+16:14/0 = 0
+16:15/0 = 0
+16:16/0 = 0
+16:17/0 = 0
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+1:0/0 = 0
+1:1/0 = 0
+1:2/0 = 0
+2:0/0 = 0
+2:1/0 = 0
+2:2/0 = 0
+3:0/0 = 0
+3:1/0 = 0
+3:2/0 = 0
+4:0/0 = 0
+4:1/0 = 0
+4:2/0 = 0
+5:0/0 = 0
+5:1/0 = 0
+5:2/0 = 0
+6:0/0 = 0
+6:1/0 = 0
+6:2/0 = 0
+7:0/0 = 0
+7:1/0 = 0
+7:2/0 = 0
+8:0/0 = 0
+8:1/0 = 0
+8:2/0 = 0
+9:0/0 = 0
+9:1/0 = 0
+9:2/0 = 0
+10:0/0 = 0
+10:1/0 = 0
+10:2/0 = 0
+11:0/0 = 0
+11:1/0 = 0
+11:2/0 = 0
+12:0/0 = 0
+12:1/0 = 0
+12:2/0 = 0
+13:0/0 = 0
+13:1/0 = 0
+13:2/0 = 0
+14:0/0 = 0
+14:1/0 = 0
+14:2/0 = 0
+15:0/0 = 0
+15:1/0 = 0
+15:2/0 = 0
+16:0/0 = 0
+16:1/0 = 0
+16:2/0 = 0
+17:0/0 = 0
+17:1/0 = 0
+17:2/0 = 0
+17:6/0 = 0
+17:7/0 = 0
+17:8/0 = 0
+17:9/0 = 0
+17:10/0 = 0
+17:11/0 = 0
+17:12/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_everv"]
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetAtlasSource_wym6f")
+
+[sub_resource type="GDScript" id="GDScript_b81mu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	print(\"Car left track, reset\")
+"
+
+[sub_resource type="Resource" id="Resource_7pf31"]
+script = ExtResource("8_057tg")
+nested_script = SubResource("GDScript_b81mu")
+argument_names = ["delta", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_8ftxh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	var map: TileMap = closest(\"TileMap\")
+	var car_pos = map.local_to_map(closest(\"Car\").position*4)
+	if map.get_cell_source_id(0, car_pos) == -1:
+		return true
+	else:
+		return false
+"
+
+[sub_resource type="Resource" id="Resource_66mpl"]
+script = ExtResource("8_057tg")
+nested_script = SubResource("GDScript_8ftxh")
+argument_names = ["delta", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_k5kka"]
+script = ExtResource("9_rc74y")
+signal_name = "physiscs_always"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_66mpl")
+expression = SubResource("Resource_7pf31")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_vns8h"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_wof1k"]
+script = ExtResource("8_057tg")
+nested_script = SubResource("GDScript_vns8h")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_hsyio"]
+script = ExtResource("9_rc74y")
+signal_name = "left"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "rotate_left"
+arguments = []
+only_if = SubResource("Resource_wof1k")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_qw8tg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ggjit"]
+script = ExtResource("8_057tg")
+nested_script = SubResource("GDScript_qw8tg")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_o84n7"]
+script = ExtResource("9_rc74y")
+signal_name = "right"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "rotate_right"
+arguments = []
+only_if = SubResource("Resource_ggjit")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_00ecp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_i4as5"]
+script = ExtResource("8_057tg")
+nested_script = SubResource("GDScript_00ecp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0bvl4"]
+script = ExtResource("9_rc74y")
+signal_name = "up"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_up"
+arguments = []
+only_if = SubResource("Resource_i4as5")
+deferred = false
+enabled = true
+
+[node name="VisDriving" type="Node2D"]
+
+[node name="StudyTrackerBehavior" type="Node2D" parent="."]
+position = Vector2(1174, -36)
+script = ExtResource("1_xnt7v")
+
+[node name="level" type="Node2D" parent="."]
+
+[node name="TileMap" type="TileMap" parent="level"]
+scale = Vector2(0.25, 0.25)
+tile_set = SubResource("TileSet_everv")
+rendering_quadrant_size = 128
+format = 2
+layer_0/name = "Main"
+layer_0/tile_data = PackedInt32Array(262149, 262144, 805306377, 327685, 262144, 805306377, 393221, 262144, 805306377, 458757, 262144, 805306377, 524293, 196608, 6, 589829, 131072, 6, 262150, 262144, 10, 327686, 262144, 10, 393222, 262144, 10, 458758, 262144, 10, 524294, 262144, 10, 589830, 131072, 5, 262151, 262144, 1610612740, 327687, 262144, 9, 393223, 262144, 9, 458759, 262144, 805306372, 524295, 262144, 10, 589831, 196608, 10, 262152, 196608, 10, 589832, 196608, 10, 262153, 196608, 10, 589833, 196608, 10, 262154, 196608, 10, 589834, 196608, 10, 262155, 196608, 10, 589835, 196608, 10, 262156, 196608, 10, 589836, 196608, 10, 262157, 196608, 10, 589837, 196608, 10, 262158, 196608, 10, 589838, 196608, 10, 262159, 196608, 10, 589839, 196608, 10, 262160, 196608, 10, 589840, 196608, 10, 262161, 0, 15, 589841, 196608, 10, 262162, 196608, 10, 589842, 196608, 10, 262163, 196608, 10, 589843, 196608, 10, 262164, 196608, 10, 589844, 196608, 10, 262165, 196608, 10, 589845, 196608, 10, 262166, 196608, 10, 589846, 196608, 10, 262167, 196608, 10, 589847, 196608, 10, 262168, 196608, 10, 589848, 196608, 10, 262169, 196608, 10, 589849, 196608, 10, 262170, 196608, 10, 589850, 196608, 10, 262171, 262144, 4, 327707, 262144, 805306377, 393243, 262144, 805306377, 458779, 262144, 1342177284, 524315, 262144, 10, 589851, 196608, 10, 262172, 262144, 10, 327708, 262144, 10, 393244, 262144, 10, 458780, 262144, 10, 524316, 262144, 10, 589852, 131072, 4, 262173, 262144, 9, 327709, 262144, 9, 393245, 262144, 9, 458781, 262144, 9, 524317, 196608, 3, 589853, 131072, 3, 131077, 327680, 6, 196613, 262144, 6, 131078, 327680, 5, 196614, 262144, 10, 131079, 327680, 10, 196615, 262144, 10, 131080, 327680, 10, 196616, 262144, 10, 458760, 327680, 10, 524296, 262144, 10, 131081, 327680, 10, 196617, 262144, 10, 458761, 327680, 10, 524297, 262144, 10, 131082, 327680, 10, 196618, 262144, 10, 458762, 327680, 10, 524298, 262144, 10, 131083, 327680, 10, 196619, 262144, 10, 458763, 327680, 10, 524299, 262144, 10, 131084, 327680, 10, 196620, 262144, 10, 458764, 327680, 10, 524300, 262144, 10, 131085, 327680, 10, 196621, 262144, 10, 458765, 327680, 10, 524301, 262144, 10, 131086, 327680, 10, 196622, 262144, 10, 458766, 327680, 10, 524302, 262144, 10, 131087, 327680, 10, 196623, 262144, 10, 458767, 327680, 10, 524303, 262144, 10, 131088, 327680, 10, 196624, 262144, 10, 458768, 327680, 10, 524304, 262144, 10, 131089, 0, 17, 196625, 0, 16, 458769, 327680, 10, 524305, 262144, 10, 131090, 327680, 10, 196626, 262144, 10, 458770, 327680, 10, 524306, 262144, 10, 131091, 327680, 10, 196627, 262144, 10, 458771, 327680, 10, 524307, 262144, 10, 131092, 327680, 10, 196628, 262144, 10, 458772, 327680, 10, 524308, 262144, 10, 131093, 327680, 10, 196629, 262144, 10, 458773, 327680, 10, 524309, 262144, 10, 131094, 327680, 10, 196630, 262144, 10, 458774, 327680, 10, 524310, 262144, 10, 131095, 327680, 10, 196631, 262144, 10, 458775, 327680, 10, 524311, 262144, 10, 131096, 327680, 10, 196632, 262144, 10, 458776, 327680, 10, 524312, 262144, 10, 131097, 327680, 10, 196633, 262144, 10, 458777, 327680, 10, 524313, 262144, 10, 131098, 327680, 10, 196634, 262144, 10, 458778, 327680, 10, 524314, 262144, 10, 131099, 327680, 10, 196635, 262144, 10, 131100, 327680, 4, 196636, 262144, 10, 131101, 327680, 3, 196637, 262144, 3)
+
+[node name="Node2D" type="Node2D" parent="level/TileMap"]
+position = Vector2(2680, 424)
+scale = Vector2(4, 4)
+
+[node name="Label" type="Label" parent="level"]
+offset_left = 5.0
+offset_top = -246.0
+offset_right = 1157.0
+offset_bottom = -8.0
+text = "Task: Prototype a car and driving mechanic to beat the round in X seconds without leaving the track"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AlwaysBehavior" type="Node2D" parent="level"]
+position = Vector2(1013, 23)
+script = ExtResource("4_gjvmx")
+metadata/pronto_connections = [SubResource("Resource_k5kka")]
+
+[node name="Car" type="CharacterBody2D" parent="."]
+position = Vector2(535, 107)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Car"]
+script = ExtResource("4_j7cvu")
+label = "CAR"
+color = Color(0.262745, 0.321569, 0.254902, 1)
+sprite_texture = ExtResource("5_gp1pu")
+placeholder_size = Vector2(15, 36)
+
+[node name="MoveBehavior" type="Node2D" parent="Car"]
+position = Vector2(-1, 76)
+script = ExtResource("6_qfu0f")
+
+[node name="ControlsBehavior" type="Node2D" parent="Car"]
+position = Vector2(28, 77)
+script = ExtResource("7_n6nwg")
+metadata/pronto_connections = [SubResource("Resource_hsyio"), SubResource("Resource_o84n7"), SubResource("Resource_0bvl4")]

@@ -492,6 +492,6 @@ func _request_reference_path(path, callback: Callable):
 	dialog.popup_centered()
 	
 func _study_logging(text):
-	var _study_tracker = get_node("/root/").find_child("StudyTracker", true, false)
+	var _study_tracker = get_node("/root/").find_child("StudyTrackerBehavior", true, false)
 	if _study_tracker.active:
 		_study_tracker.logger.log(text)
