@@ -1,0 +1,1144 @@
+[gd_scene load_steps=114 format=3 uid="uid://ctd1qere17667"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_2igne"]
+[ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="2_62gxm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_tquhp"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="4_60d58"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="5_g4via"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_a5dq5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="6_q3c8a"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_5sj1c"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="9_2vw7e"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="9_3cvpb"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="10_aq52u"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="10_f8d40"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="10_tw2x1"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="15_2cy5y"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="15_wv2cg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="16_otomf"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1flb5"]
+texture = ExtResource("2_62gxm")
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+0:3/0 = 0
+0:4/0 = 0
+0:5/0 = 0
+0:6/0 = 0
+0:7/0 = 0
+0:8/0 = 0
+0:9/0 = 0
+0:10/0 = 0
+1:0/0 = 0
+1:1/0 = 0
+1:2/0 = 0
+1:3/0 = 0
+1:4/0 = 0
+1:5/0 = 0
+1:6/0 = 0
+1:7/0 = 0
+1:8/0 = 0
+1:9/0 = 0
+1:10/0 = 0
+2:0/0 = 0
+2:1/0 = 0
+2:2/0 = 0
+2:3/0 = 0
+2:4/0 = 0
+2:5/0 = 0
+2:6/0 = 0
+2:7/0 = 0
+2:8/0 = 0
+2:9/0 = 0
+2:10/0 = 0
+3:0/0 = 0
+3:1/0 = 0
+3:2/0 = 0
+3:3/0 = 0
+3:4/0 = 0
+3:5/0 = 0
+3:6/0 = 0
+3:7/0 = 0
+3:8/0 = 0
+3:9/0 = 0
+3:10/0 = 0
+4:0/0 = 0
+4:1/0 = 0
+4:2/0 = 0
+4:3/0 = 0
+4:4/0 = 0
+4:5/0 = 0
+4:6/0 = 0
+4:7/0 = 0
+4:8/0 = 0
+4:9/0 = 0
+4:10/0 = 0
+5:0/0 = 0
+5:1/0 = 0
+5:2/0 = 0
+5:3/0 = 0
+5:4/0 = 0
+5:5/0 = 0
+5:6/0 = 0
+5:7/0 = 0
+5:8/0 = 0
+5:9/0 = 0
+5:10/0 = 0
+6:0/0 = 0
+6:1/0 = 0
+6:2/0 = 0
+6:3/0 = 0
+6:4/0 = 0
+6:5/0 = 0
+6:6/0 = 0
+6:7/0 = 0
+6:8/0 = 0
+6:9/0 = 0
+6:10/0 = 0
+7:0/0 = 0
+7:1/0 = 0
+7:2/0 = 0
+7:3/0 = 0
+7:4/0 = 0
+7:5/0 = 0
+7:6/0 = 0
+7:7/0 = 0
+7:8/0 = 0
+7:9/0 = 0
+7:10/0 = 0
+8:0/0 = 0
+8:1/0 = 0
+8:2/0 = 0
+8:3/0 = 0
+8:4/0 = 0
+8:5/0 = 0
+8:6/0 = 0
+8:7/0 = 0
+8:8/0 = 0
+8:9/0 = 0
+8:10/0 = 0
+9:0/0 = 0
+9:1/0 = 0
+9:2/0 = 0
+9:3/0 = 0
+9:4/0 = 0
+9:5/0 = 0
+9:6/0 = 0
+9:7/0 = 0
+9:8/0 = 0
+9:9/0 = 0
+9:10/0 = 0
+10:0/0 = 0
+10:1/0 = 0
+10:2/0 = 0
+10:3/0 = 0
+10:4/0 = 0
+10:5/0 = 0
+10:6/0 = 0
+10:7/0 = 0
+10:8/0 = 0
+10:9/0 = 0
+10:10/0 = 0
+11:0/0 = 0
+11:1/0 = 0
+11:2/0 = 0
+11:3/0 = 0
+11:4/0 = 0
+11:5/0 = 0
+11:6/0 = 0
+11:7/0 = 0
+11:8/0 = 0
+11:9/0 = 0
+11:10/0 = 0
+12:0/0 = 0
+12:1/0 = 0
+12:2/0 = 0
+12:3/0 = 0
+12:4/0 = 0
+12:5/0 = 0
+12:6/0 = 0
+12:7/0 = 0
+12:8/0 = 0
+12:9/0 = 0
+12:10/0 = 0
+13:0/0 = 0
+13:1/0 = 0
+13:2/0 = 0
+13:3/0 = 0
+13:4/0 = 0
+13:5/0 = 0
+13:6/0 = 0
+13:7/0 = 0
+13:8/0 = 0
+13:9/0 = 0
+13:10/0 = 0
+14:0/0 = 0
+14:1/0 = 0
+14:2/0 = 0
+14:3/0 = 0
+14:4/0 = 0
+14:5/0 = 0
+14:6/0 = 0
+14:7/0 = 0
+14:8/0 = 0
+14:9/0 = 0
+14:10/0 = 0
+15:0/0 = 0
+15:1/0 = 0
+15:2/0 = 0
+15:3/0 = 0
+15:4/0 = 0
+15:5/0 = 0
+15:6/0 = 0
+15:7/0 = 0
+15:8/0 = 0
+15:9/0 = 0
+15:10/0 = 0
+16:0/0 = 0
+16:1/0 = 0
+16:2/0 = 0
+16:3/0 = 0
+16:4/0 = 0
+16:5/0 = 0
+16:6/0 = 0
+16:7/0 = 0
+16:8/0 = 0
+16:9/0 = 0
+16:10/0 = 0
+17:0/0 = 0
+17:1/0 = 0
+17:2/0 = 0
+17:3/0 = 0
+17:4/0 = 0
+17:5/0 = 0
+17:6/0 = 0
+17:7/0 = 0
+17:8/0 = 0
+17:9/0 = 0
+17:10/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ieo6w"]
+sources/0 = SubResource("TileSetAtlasSource_1flb5")
+
+[sub_resource type="GDScript" id="GDScript_nh56y"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(direction, from: Node2D, to: Node2D):
+	return direction
+"
+
+[sub_resource type="Resource" id="Resource_wandl"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_nh56y")
+argument_names = ["direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_prii2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_vred2"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_prii2")
+argument_names = ["direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_lk0l6"]
+script = ExtResource("7_5sj1c")
+signal_name = "direction"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_direction"
+arguments = [SubResource("Resource_wandl")]
+only_if = SubResource("Resource_vred2")
+deferred = false
+enabled = true
+
+[sub_resource type="Gradient" id="Gradient_qm0wm"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_5di12"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4u8pp"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_5di12")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_18u2x"]
+script = ExtResource("7_5sj1c")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_4u8pp")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_jqwjl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	G.get_tree().paused = true
+"
+
+[sub_resource type="Resource" id="Resource_051mr"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_jqwjl")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_mjuiv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bdelp"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_mjuiv")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_aiens"]
+script = ExtResource("7_5sj1c")
+signal_name = "death"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_bdelp")
+expression = SubResource("Resource_051mr")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_xujhx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	print(\"Player died\")
+"
+
+[sub_resource type="Resource" id="Resource_037w1"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_xujhx")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_1ms0y"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_burfn"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_1ms0y")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gh6tq"]
+script = ExtResource("7_5sj1c")
+signal_name = "death"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_burfn")
+expression = SubResource("Resource_037w1")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_0un5d"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	var enemy_healthbar: HealthBarBehavior = other.find_child(\"HealthBarBehavior\", true, false)
+	var dmg = enemy_healthbar.current
+	enemy_healthbar.damage(dmg)
+	return dmg
+"
+
+[sub_resource type="Resource" id="Resource_8cpja"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_0un5d")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_gr8ek"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return other.name.contains(\"Enemy\")
+"
+
+[sub_resource type="Resource" id="Resource_kfguk"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_gr8ek")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_tm8hy"]
+script = ExtResource("7_5sj1c")
+signal_name = "collided"
+to = NodePath("../HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_8cpja")]
+only_if = SubResource("Resource_kfguk")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_2lpmn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return closest(\"Player\").position
+"
+
+[sub_resource type="Resource" id="Resource_j1m4h"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_2lpmn")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_oic1t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_34sjy"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_oic1t")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nilhu"]
+script = ExtResource("7_5sj1c")
+signal_name = "physiscs_always"
+to = NodePath("..")
+more_references = []
+invoke = "move_toward"
+arguments = [SubResource("Resource_j1m4h")]
+only_if = SubResource("Resource_34sjy")
+deferred = false
+enabled = true
+
+[sub_resource type="Gradient" id="Gradient_dt7pt"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_hfmui"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_o31x3"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_hfmui")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_2ahgu"]
+script = ExtResource("7_5sj1c")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_o31x3")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fp2xw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return [0]
+"
+
+[sub_resource type="Resource" id="Resource_7l6gb"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_fp2xw")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_8p0t4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_yvuds"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_8p0t4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_1opd3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_xm484"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_1opd3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_20icx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_sjrwb"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_20icx")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4bhj8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_i0pjj"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_4bhj8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1vmur"]
+script = ExtResource("7_5sj1c")
+signal_name = "until_elapsed"
+to = NodePath("../SpawnerBehavior")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_7l6gb"), SubResource("Resource_yvuds"), SubResource("Resource_xm484"), SubResource("Resource_sjrwb")]
+only_if = SubResource("Resource_i0pjj")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_8syo2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from: Node2D, to: Node2D):
+	return \"cooldown\"
+"
+
+[sub_resource type="Resource" id="Resource_7mpjt"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_8syo2")
+argument_names = ["instance", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ejiv0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_w760h"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_ejiv0")
+argument_names = ["instance", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_oywy5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_422ia"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_oywy5")
+argument_names = ["instance", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4f25w"]
+script = ExtResource("7_5sj1c")
+signal_name = "spawned"
+to = NodePath("../StoreBehavior")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_7mpjt"), SubResource("Resource_w760h")]
+only_if = SubResource("Resource_422ia")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_3bioa"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_nqo64"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_3bioa")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_40msk"]
+script = ExtResource("7_5sj1c")
+signal_name = "physiscs_always"
+to = NodePath("..")
+more_references = []
+invoke = "move_right"
+arguments = []
+only_if = SubResource("Resource_nqo64")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_vsswg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Area2D):
+	return other.name.contains(\"Enemy\")
+"
+
+[sub_resource type="Resource" id="Resource_ny003"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_vsswg")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ruj1m"]
+script = ExtResource("7_5sj1c")
+signal_name = "collided"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_ny003")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_v555s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.find_child(\"HealthBarBehavior\", true, false).damage(at(\"BulletDmg\"))
+"
+
+[sub_resource type="Resource" id="Resource_er3a6"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_v555s")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_vyvsx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other.name.contains(\"Enemy\")
+"
+
+[sub_resource type="Resource" id="Resource_ugwm2"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_vyvsx")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_41xdc"]
+script = ExtResource("7_5sj1c")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_ugwm2")
+expression = SubResource("Resource_er3a6")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_4ansv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Area2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_6b7n0"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_4ansv")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nged8"]
+script = ExtResource("7_5sj1c")
+signal_name = "screen_exited"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_6b7n0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ljreu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from, to):
+	return [0]
+"
+
+[sub_resource type="Resource" id="Resource_612vj"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_ljreu")
+argument_names = ["pos", "button", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bo17o"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from, to):
+	return closest(\"Player\").position
+"
+
+[sub_resource type="Resource" id="Resource_saeq1"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_bo17o")
+argument_names = ["pos", "button", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_qe4u0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from, to):
+	return pos
+"
+
+[sub_resource type="Resource" id="Resource_5ek51"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_qe4u0")
+argument_names = ["pos", "button", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_px4gp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from, to):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_phw70"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_px4gp")
+argument_names = ["pos", "button", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_syma2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(pos, button, from: Node2D, to: Node2D):
+	return not at(\"cooldown\")
+"
+
+[sub_resource type="Resource" id="Resource_e8emj"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_syma2")
+argument_names = ["pos", "button", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_10n8f"]
+script = ExtResource("7_5sj1c")
+signal_name = "mouse_down_global"
+to = NodePath("../Gun")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_612vj"), SubResource("Resource_saeq1"), SubResource("Resource_5ek51"), SubResource("Resource_phw70")]
+only_if = SubResource("Resource_e8emj")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_br56d"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(prop, value, from: Node2D, to: Node2D):
+	return prop == \"cooldown\" and value == true
+"
+
+[sub_resource type="Resource" id="Resource_jvr2j"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_br56d")
+argument_names = ["prop", "value", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_lvb2q"]
+script = ExtResource("7_5sj1c")
+signal_name = "changed"
+to = NodePath("../ClockBehavior")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_jvr2j")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_rfpvo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"cooldown\"
+"
+
+[sub_resource type="Resource" id="Resource_ba685"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_rfpvo")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_dl1wo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_32bb1"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_dl1wo")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hrh28"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_q7p3q"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_hrh28")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_scnp0"]
+script = ExtResource("7_5sj1c")
+signal_name = "elapsed"
+to = NodePath("../StoreBehavior")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_ba685"), SubResource("Resource_32bb1")]
+only_if = SubResource("Resource_q7p3q")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_5tsqf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return at(\"CooldownDurationInSeconds\")
+"
+
+[sub_resource type="Resource" id="Resource_jb7t1"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_5tsqf")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_obldx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(value, from: Node2D, to: Node2D):
+	return \"cooldown\"
+"
+
+[sub_resource type="Resource" id="Resource_hvbrt"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_obldx")
+argument_names = ["value", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0scu1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(value, from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_6bojb"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_0scu1")
+argument_names = ["value", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_b2bvp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(value, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ajxlj"]
+script = ExtResource("6_a5dq5")
+nested_script = SubResource("GDScript_b2bvp")
+argument_names = ["value", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ghhgu"]
+script = ExtResource("7_5sj1c")
+signal_name = "value_changed"
+to = NodePath("../StoreBehavior")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_hvbrt"), SubResource("Resource_6bojb")]
+only_if = SubResource("Resource_ajxlj")
+deferred = false
+enabled = true
+
+[node name="visj_surv_p" type="Node2D"]
+
+[node name="StudyTrackerBehavior" type="Node2D" parent="."]
+position = Vector2(1174, -36)
+script = ExtResource("1_2igne")
+
+[node name="level" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="level"]
+offset_left = -1.0
+offset_top = -243.0
+offset_right = 1151.0
+offset_bottom = -5.0
+text = "Task: Analyse and explain the curent implementation for unit targeting and damage calculation.
+Task 2 (unclear): Impelement new unit with unique damage method or make unit's damage values unique to each type and balance the the game to last ~3 minutes"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TileMap" type="TileMap" parent="level"]
+tile_set = SubResource("TileSet_ieo6w")
+format = 2
+layer_0/name = "Floor"
+layer_1/name = "BuildingsAndUnits"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/navigation_enabled = true
+layer_1/tile_data = PackedInt32Array()
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(558, 345)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Player"]
+script = ExtResource("3_tquhp")
+label = "PLAYER"
+sprite_texture = ExtResource("4_60d58")
+placeholder_size = Vector2(15, 45)
+
+[node name="ControlsBehavior" type="Node2D" parent="Player"]
+position = Vector2(-40, -1.74846e-06)
+script = ExtResource("5_g4via")
+metadata/pronto_connections = [SubResource("Resource_lk0l6")]
+
+[node name="MoveBehavior" type="Node2D" parent="Player"]
+position = Vector2(-28.2843, -28.2843)
+script = ExtResource("6_q3c8a")
+
+[node name="EnemySpawnAreaClose" type="Polygon2D" parent="Player"]
+visible = false
+color = Color(0, 0.6, 0.701961, 0.419608)
+polygon = PackedVector2Array(-144, -108, 50, -188, 226, -60, 150, 70, 36, 160, -136, 104, -150, -84, -634, -83, -644, 356, 724, 356, 728, -430, -644, -420, -634, -85, -150, -84)
+
+[node name="EnemySpawnAreaFar" type="Polygon2D" parent="Player"]
+visible = false
+color = Color(0, 0.6, 0.701961, 0.419608)
+polygon = PackedVector2Array(-579, -365, -580, 336, 658, 329, 640, -374, -584, -366, -585, -528, 763, -507, 786, 430, -718, 438, -718, -539, -590, -537, -587, -363)
+
+[node name="HealthBarBehavior" type="Node2D" parent="Player"]
+position = Vector2(1, -29)
+script = ExtResource("9_3cvpb")
+max = 10
+current = 10
+progress_gradient = SubResource("Gradient_qm0wm")
+metadata/pronto_connections = [SubResource("Resource_18u2x"), SubResource("Resource_aiens"), SubResource("Resource_gh6tq")]
+
+[node name="CollisionBehavior" type="Node2D" parent="Player"]
+position = Vector2(-37, 28)
+script = ExtResource("10_f8d40")
+metadata/pronto_connections = [SubResource("Resource_tm8hy")]
+
+[node name="BulletDmg" type="Node2D" parent="Player"]
+position = Vector2(42, 0)
+script = ExtResource("15_2cy5y")
+float_min = 0.0
+float_max = 10.0
+float_value = 5.0
+float_step_size = 1.0
+
+[node name="PointOfReference" type="Node2D" parent="."]
+position = Vector2(673, 294)
+script = ExtResource("3_tquhp")
+color = Color(0.427451, 1, 0.8, 1)
+sprite_texture = ExtResource("4_60d58")
+placeholder_size = Vector2(20, 20)
+
+[node name="SpawnerBehavior" type="Node2D" parent="." node_paths=PackedStringArray("spawn_shape_polygon")]
+position = Vector2(672, 233)
+script = ExtResource("9_2vw7e")
+shape_type = "Polygon"
+spawn_shape_polygon = NodePath("../Player/EnemySpawnAreaFar")
+
+[node name="Enemy" type="CharacterBody2D" parent="SpawnerBehavior"]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="SpawnerBehavior/Enemy"]
+script = ExtResource("3_tquhp")
+color = Color(1, 0.184314, 0.0352941, 1)
+sprite_texture = ExtResource("4_60d58")
+placeholder_size = Vector2(20, 20)
+
+[node name="MoveBehavior" type="Node2D" parent="SpawnerBehavior/Enemy"]
+position = Vector2(47, -1.74846e-06)
+script = ExtResource("6_q3c8a")
+max_velocity = 50.0
+acceleration = 10.0
+
+[node name="AlwaysBehavior" type="Node2D" parent="SpawnerBehavior/Enemy/MoveBehavior"]
+position = Vector2(3.05176e-05, 26)
+script = ExtResource("10_tw2x1")
+metadata/pronto_connections = [SubResource("Resource_nilhu")]
+
+[node name="HealthBarBehavior" type="Node2D" parent="SpawnerBehavior/Enemy"]
+position = Vector2(0, -15)
+script = ExtResource("9_3cvpb")
+max = 5
+current = 5
+progress_gradient = SubResource("Gradient_dt7pt")
+metadata/pronto_connections = [SubResource("Resource_2ahgu")]
+
+[node name="SpawnTimer" type="Node2D" parent="."]
+position = Vector2(579, 230)
+script = ExtResource("10_aq52u")
+trigger_every_x_seconds = true
+trigger_interval_in_seconds = 0.5
+metadata/pronto_connections = [SubResource("Resource_1vmur")]
+
+[node name="PlayerAction" type="Node2D" parent="."]
+position = Vector2(558, 427)
+
+[node name="Gun" type="Node2D" parent="PlayerAction"]
+position = Vector2(3.05176e-05, -1)
+script = ExtResource("9_2vw7e")
+metadata/pronto_connections = [SubResource("Resource_4f25w")]
+
+[node name="Bullet" type="Area2D" parent="PlayerAction/Gun"]
+position = Vector2(32, 0)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="PlayerAction/Gun/Bullet"]
+script = ExtResource("3_tquhp")
+sprite_texture = ExtResource("4_60d58")
+placeholder_size = Vector2(5, 1)
+
+[node name="MoveBehavior" type="Node2D" parent="PlayerAction/Gun/Bullet"]
+position = Vector2(3.05176e-05, 29)
+script = ExtResource("6_q3c8a")
+
+[node name="AlwaysBehavior" type="Node2D" parent="PlayerAction/Gun/Bullet/MoveBehavior"]
+position = Vector2(-21, 0)
+script = ExtResource("10_tw2x1")
+metadata/pronto_connections = [SubResource("Resource_40msk")]
+
+[node name="CollisionBehavior" type="Node2D" parent="PlayerAction/Gun/Bullet"]
+position = Vector2(36, 0)
+script = ExtResource("10_f8d40")
+metadata/pronto_connections = [SubResource("Resource_ruj1m"), SubResource("Resource_41xdc"), SubResource("Resource_nged8")]
+
+[node name="ControlsBehavior" type="Node2D" parent="PlayerAction"]
+position = Vector2(-86, 66)
+script = ExtResource("5_g4via")
+metadata/pronto_connections = [SubResource("Resource_10n8f")]
+
+[node name="StoreBehavior" type="Node2D" parent="PlayerAction"]
+position = Vector2(-72, 1)
+script = ExtResource("15_wv2cg")
+metadata/pronto_connections = [SubResource("Resource_lvb2q")]
+
+[node name="ClockBehavior" type="Node2D" parent="PlayerAction"]
+position = Vector2(-175, 94)
+script = ExtResource("10_aq52u")
+cycle_count = 1
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_scnp0")]
+
+[node name="BindBehavior" type="Node2D" parent="PlayerAction/ClockBehavior"]
+position = Vector2(3, -52)
+script = ExtResource("16_otomf")
+evaluate = SubResource("Resource_jb7t1")
+to_prop = "duration_seconds"
+
+[node name="CooldownDurationInSeconds" type="Node2D" parent="PlayerAction"]
+position = Vector2(-70, -32)
+script = ExtResource("15_2cy5y")
+float_min = 0.0
+float_max = 10.0
+float_value = 0.5
+float_step_size = 0.1
+metadata/pronto_connections = [SubResource("Resource_ghhgu")]

@@ -1,0 +1,666 @@
+[gd_scene load_steps=90 format=3 uid="uid://qeq6hy0ogn5h"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_3hvbt"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="2_v6pru"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="3_fpxxe"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_yq8hm"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BindBehavior.gd" id="5_a68bs"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="6_5p25w"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="7_1b3s1"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="8_xisho"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="9_kod5w"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/DragBehavior.gd" id="10_l3imd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="11_d7nni"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/InspectBehavior.gd" id="12_vq5uq"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="13_31g1l"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="14_x4p7u"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="15_4fj8h"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="16_1y4at"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="17_l50ni"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/QueryBehavior.gd" id="18_2trpe"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="19_dk0qi"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SceneRootBehavior.gd" id="20_06vvf"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SignalBehavior.gd" id="21_1sm52"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StopwatchBehavior.gd" id="22_so7vh"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="23_nlapn"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/WatchBehavior.gd" id="24_s5w6h"]
+
+[sub_resource type="GDScript" id="GDScript_nn27u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jbd4j"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_nn27u")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_pateg"]
+script = ExtResource("4_yq8hm")
+signal_name = "always"
+to = NodePath("../ClockBehavior")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_jbd4j")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_b8c66"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	
+	
+"
+
+[sub_resource type="Resource" id="Resource_gtm2m"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_b8c66")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ww2hl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_yhp5m"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_ww2hl")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qo03y"]
+script = ExtResource("4_yq8hm")
+signal_name = "elapsed"
+to = NodePath("../CodeBehavior")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_yhp5m")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_651ym"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_40lns"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_651ym")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_swq2d"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return other
+"
+
+[sub_resource type="Resource" id="Resource_o68d4"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_swq2d")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_6n4sc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(result, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8w0hd"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_6n4sc")
+argument_names = ["result", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dkjq5"]
+script = ExtResource("4_yq8hm")
+signal_name = "after"
+to = NodePath("../CollisionBehavior")
+more_references = []
+invoke = "on_collision"
+arguments = [SubResource("Resource_o68d4")]
+only_if = SubResource("Resource_8w0hd")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_bl7w2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(direction, from: Node2D, to: Node2D):
+	return position
+"
+
+[sub_resource type="Resource" id="Resource_3ja3o"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_bl7w2")
+argument_names = ["direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_enyre"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_yybym"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_enyre")
+argument_names = ["direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_arwnm"]
+script = ExtResource("4_yq8hm")
+signal_name = "direction"
+to = NodePath("../DragBehavior")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_3ja3o")]
+only_if = SubResource("Resource_yybym")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_cqrm7"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(position, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4gn1o"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_cqrm7")
+argument_names = ["position", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_s1isy"]
+script = ExtResource("4_yq8hm")
+signal_name = "picked"
+to = NodePath("../ExportBehavior")
+more_references = []
+invoke = "get_position"
+arguments = []
+only_if = SubResource("Resource_4gn1o")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_7jlb3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return color
+"
+
+[sub_resource type="Resource" id="Resource_xk0vq"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_7jlb3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_1w03b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 0.3
+"
+
+[sub_resource type="Resource" id="Resource_3tmfd"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_1w03b")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_36puo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_o34y4"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_36puo")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ql5ko"]
+script = ExtResource("4_yq8hm")
+signal_name = "pressed"
+to = NodePath("../PlaceholderBehavior")
+more_references = []
+invoke = "flash"
+arguments = [SubResource("Resource_xk0vq"), SubResource("Resource_3tmfd")]
+only_if = SubResource("Resource_o34y4")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_aecwh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return position
+"
+
+[sub_resource type="Resource" id="Resource_miosc"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_aecwh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3l2m3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_leech"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_3l2m3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_u10df"]
+script = ExtResource("4_yq8hm")
+signal_name = "hidden"
+to = NodePath("../NodeReadyBehavior")
+more_references = []
+invoke = "set_position"
+arguments = [SubResource("Resource_miosc")]
+only_if = SubResource("Resource_leech")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_67wib"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(last_collision, from: Node2D, to: Node2D):
+	return group
+"
+
+[sub_resource type="Resource" id="Resource_8gqut"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_67wib")
+argument_names = ["last_collision", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bd7of"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(last_collision, from: Node2D, to: Node2D):
+	return func(from, node): null
+"
+
+[sub_resource type="Resource" id="Resource_a0tji"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_bd7of")
+argument_names = ["last_collision", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xgsd8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(last_collision, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_335rm"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_xgsd8")
+argument_names = ["last_collision", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ordkk"]
+script = ExtResource("4_yq8hm")
+signal_name = "collided"
+to = NodePath("../../SceneRootBehavior")
+more_references = []
+invoke = "apply"
+arguments = [SubResource("Resource_8gqut"), SubResource("Resource_a0tji")]
+only_if = SubResource("Resource_335rm")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_01184"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(arg0, arg1, arg2, arg3, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7twq8"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_01184")
+argument_names = ["arg0", "arg1", "arg2", "arg3", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_boo24"]
+script = ExtResource("4_yq8hm")
+signal_name = "triggered"
+to = NodePath("../StopwatchBehavior")
+more_references = []
+invoke = "start"
+arguments = []
+only_if = SubResource("Resource_7twq8")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_5aa4l"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(prop, value, from: Node2D, to: Node2D):
+	return property_name
+"
+
+[sub_resource type="Resource" id="Resource_1kb2y"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_5aa4l")
+argument_names = ["prop", "value", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4cd5a"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(prop, value, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7nuxu"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_4cd5a")
+argument_names = ["prop", "value", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1cl10"]
+script = ExtResource("4_yq8hm")
+signal_name = "changed"
+to = NodePath("../WatchBehavior")
+more_references = []
+invoke = "wants_expression_inspector"
+arguments = [SubResource("Resource_1kb2y")]
+only_if = SubResource("Resource_7nuxu")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_rngp0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_mgjue"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_rngp0")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_vnvn6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_kpvvv"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_vnvn6")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7h7t8"]
+script = ExtResource("4_yq8hm")
+signal_name = "draw"
+to = NodePath("../AlwaysBehavior2")
+more_references = []
+invoke = "pause"
+arguments = []
+only_if = SubResource("Resource_kpvvv")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_7durl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_q0ue7"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_7durl")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_a6nw3"]
+script = ExtResource("4_yq8hm")
+signal_name = "always"
+to = NodePath("../ClockBehavior2")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_q0ue7")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_q54bu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return prop
+"
+
+[sub_resource type="Resource" id="Resource_ra356"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_q54bu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ct0y3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 1
+"
+
+[sub_resource type="Resource" id="Resource_ka3bt"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_ct0y3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_a64ir"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7k48c"]
+script = ExtResource("3_fpxxe")
+nested_script = SubResource("GDScript_a64ir")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_78x7b"]
+script = ExtResource("4_yq8hm")
+signal_name = "elapsed"
+to = NodePath("../StoreBehavior")
+more_references = []
+invoke = "inc"
+arguments = [SubResource("Resource_ra356"), SubResource("Resource_ka3bt")]
+only_if = SubResource("Resource_7k48c")
+deferred = false
+enabled = true
+
+[node name="logo" type="Node2D"]
+
+[node name="BackgroundBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1_3hvbt")
+color = Color(0.552941, 0.588235, 0.678431, 1)
+
+[node name="AlwaysBehavior" type="Node2D" parent="."]
+position = Vector2(33, 25)
+script = ExtResource("2_v6pru")
+metadata/pronto_connections = [SubResource("Resource_pateg")]
+
+[node name="BindBehavior" type="Node2D" parent="AlwaysBehavior"]
+position = Vector2(-1, 91)
+script = ExtResource("5_a68bs")
+evaluate = SubResource("Resource_gtm2m")
+
+[node name="ClockBehavior" type="Node2D" parent="."]
+position = Vector2(91, 25)
+script = ExtResource("6_5p25w")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_qo03y")]
+
+[node name="CodeBehavior" type="Node2D" parent="."]
+position = Vector2(91, 67)
+script = ExtResource("7_1b3s1")
+evaluate = SubResource("Resource_40lns")
+metadata/pronto_connections = [SubResource("Resource_dkjq5")]
+
+[node name="CollisionBehavior" type="Node2D" parent="."]
+position = Vector2(33, 67)
+script = ExtResource("8_xisho")
+
+[node name="ControlsBehavior" type="Node2D" parent="."]
+position = Vector2(141, 116)
+script = ExtResource("9_kod5w")
+metadata/pronto_connections = [SubResource("Resource_arwnm")]
+
+[node name="DragBehavior" type="Node2D" parent="."]
+position = Vector2(140, 68)
+script = ExtResource("10_l3imd")
+metadata/pronto_connections = [SubResource("Resource_s1isy")]
+
+[node name="ExportBehavior" type="Node2D" parent="."]
+position = Vector2(194, 68)
+script = ExtResource("11_d7nni")
+authors = PackedStringArray("<Author>")
+
+[node name="InspectBehavior" type="Node2D" parent="."]
+position = Vector2(268, 93)
+script = ExtResource("12_vq5uq")
+property_0 = "position"
+property_1 = "<click to add>"
+font_size = 10
+background_color = Color(0, 0, 0, 0.2)
+color = null
+highlight_color = Color(1, 0, 0, 1)
+shape_size = Vector2(61, 60)
+sticky = false
+
+[node name="KeyBehavior" type="Node2D" parent="."]
+position = Vector2(351, 66)
+script = ExtResource("13_31g1l")
+metadata/pronto_connections = [SubResource("Resource_ql5ko")]
+
+[node name="MoveBehavior" type="Node2D" parent="KeyBehavior"]
+position = Vector2(1, 49)
+script = ExtResource("14_x4p7u")
+
+[node name="NodeReadyBehavior" type="Node2D" parent="."]
+position = Vector2(412, 65)
+script = ExtResource("15_4fj8h")
+
+[node name="PlaceholderBehavior" type="Node2D" parent="."]
+position = Vector2(411, 114)
+script = ExtResource("16_1y4at")
+label = "Placeholder"
+sprite_texture = ExtResource("17_l50ni")
+placeholder_size = Vector2(20, 20)
+metadata/pronto_connections = [SubResource("Resource_u10df")]
+
+[node name="QueryBehavior" type="Node2D" parent="."]
+position = Vector2(475, 26)
+script = ExtResource("18_2trpe")
+only_below = null
+group = null
+clazz = null
+predicate = null
+proximity = null
+priority_strategy = "distance"
+max_results = null
+
+[node name="PlatformerControllerBehavior" type="Node2D" parent="QueryBehavior"]
+position = Vector2(1, 89)
+script = ExtResource("19_dk0qi")
+metadata/pronto_connections = [SubResource("Resource_ordkk")]
+
+[node name="SceneRootBehavior" type="Node2D" parent="."]
+position = Vector2(538, 115)
+script = ExtResource("20_06vvf")
+
+[node name="SignalBehavior" type="Node2D" parent="."]
+position = Vector2(454, 68)
+script = ExtResource("21_1sm52")
+metadata/pronto_connections = [SubResource("Resource_boo24")]
+
+[node name="StopwatchBehavior" type="Node2D" parent="."]
+position = Vector2(498, 68)
+script = ExtResource("22_so7vh")
+
+[node name="StoreBehavior" type="Node2D" parent="."]
+position = Vector2(581, 114)
+script = ExtResource("23_nlapn")
+metadata/pronto_connections = [SubResource("Resource_1cl10")]
+
+[node name="WatchBehavior" type="Node2D" parent="."]
+position = Vector2(580, 68)
+script = ExtResource("24_s5w6h")
+evaluate = SubResource("Resource_mgjue")
+metadata/pronto_connections = [SubResource("Resource_7h7t8")]
+
+[node name="AlwaysBehavior2" type="Node2D" parent="."]
+position = Vector2(635, 68)
+script = ExtResource("2_v6pru")
+metadata/pronto_connections = [SubResource("Resource_a6nw3")]
+
+[node name="ClockBehavior2" type="Node2D" parent="."]
+position = Vector2(635, 113)
+script = ExtResource("6_5p25w")
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_78x7b")]
