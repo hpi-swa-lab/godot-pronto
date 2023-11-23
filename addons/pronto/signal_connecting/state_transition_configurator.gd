@@ -25,17 +25,26 @@ static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source
 	i.selected_signal = source_signal
 	i.from = from
 	i.receiver = receiver
+	i.set_mode()
 	i.init_empty_scripts()
 	i.reload_triggers()
 
 	return i.open(receiver)
+	
+func set_mode():
+	if receiver is StateMachineBehavior:
+		mode = ConfigurationMode.TO_STATE_MACHINE
+	else:
+		mode = ConfigurationMode.TRANSITION
+	redraw_receiver_label()
 
 func open(receiver: Node) -> StateTransitionConfigurator:
 	# find existing configurator siblings
 	for configurator in Utils.popup_parent(receiver).get_children(true):
-		if configurator is NodeToNodeConfigurator and configurator.has_same_connection(self):
+		if configurator is StateTransitionConfigurator and configurator.has_same_connection(self):
 			configurator.default_focus()
 			return configurator
+
 	
 	Utils.spawn_popup_from_canvas(receiver, self)
 	default_focus()
@@ -54,6 +63,9 @@ var pinned = false:
 		pinned = value
 		%Pinned.button_pressed = value
 
+enum ConfigurationMode {TO_STATE_MACHINE, TRANSITION}
+var mode: ConfigurationMode = ConfigurationMode.TRANSITION
+
 var from: Node
 var existing_connection = null
 var more_references: Array = []
@@ -66,6 +78,12 @@ var selected_signal: Dictionary:
 var receiver: Object:
 	set(value):
 		receiver = value
+		redraw_receiver_label()
+
+func redraw_receiver_label():
+	if mode == ConfigurationMode.TO_STATE_MACHINE:
+		%ReceiverLabel.text = "Input in to state machine ${0} ({1})".format([from.get_path_to(receiver), receiver.name])
+	else:
 		%ReceiverLabel.text = "Connecting to state ${0} ({1})".format([from.get_path_to(receiver), receiver.name])
 
 func set_existing_connection(from: Node, connection: Connection):
@@ -75,6 +93,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	%Condition.edit_script = connection.only_if
 	if connection.is_target():
 		receiver = from.get_node(connection.to)
+	set_mode()
 	#for i in connection.more_references:
 	#	more_references.append(i)
 	#update_argument_names()
@@ -110,27 +129,50 @@ func save():
 	if existing_connection:
 		Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
 			{"source_code": %Condition.text}, "reload")
-		Utils.commit_undoable(undo_redo,
-			"Update connection {0}".format([selected_signal["name"]]),
-			existing_connection,
-			{
+		var connection_object
+		if mode == ConfigurationMode.TO_STATE_MACHINE:
+			connection_object = {
+					"expression": null,
+					"invoke": "trigger",
+					"signal_name": %Signal.text,
+					"more_references": more_references,
+					"arguments": [empty_script("func(from, node): return '%s'" % trigger, true)]
+				}
+		else:
+			connection_object =  {
 				"expression": null,
 				"invoke": "enter",
 				"signal_name": %Signal.text,
 				"more_references": more_references,
 				"trigger" : trigger
-			})
+			}
+		Utils.commit_undoable(undo_redo,
+			"Update connection {0}".format([selected_signal["name"]]),
+			existing_connection,
+			connection_object
+			)
 	else:
-		existing_connection = Connection.create_transition(
-			from,
-			selected_signal["name"],
-			from.get_path_to(receiver),
-			"enter",
-			more_references,
-			%Condition.updated_script(from, selected_signal["name"]),
-			trigger,
-			undo_redo
-		)
+		if mode == ConfigurationMode.TO_STATE_MACHINE:
+			existing_connection =Connection.connect_target(
+				from,
+				selected_signal["name"],
+				from.get_path_to(receiver),
+				"trigger",
+				[empty_script("func(from, node): return '%s'" % trigger, true)],
+				more_references,
+				%Condition.updated_script(from, selected_signal["name"]), undo_redo
+			)
+		else:
+			existing_connection = Connection.create_transition(
+				from,
+				selected_signal["name"],
+				from.get_path_to(receiver),
+				"enter",
+				more_references,
+				%Condition.updated_script(from, selected_signal["name"]),
+				trigger,
+				undo_redo
+			)
 	existing_connection.enabled = %Enabled.button_pressed
 	# FIXME doesn't respect undo
 	ConnectionsList.emit_connections_changed()
