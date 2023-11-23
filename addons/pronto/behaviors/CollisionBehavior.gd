@@ -51,7 +51,7 @@ func _physics_process(delta):
 		if current_camera:
 			x = get_viewport().get_camera_2d().global_position.x - (get_viewport_rect().size.x /2)
 			y = get_viewport().get_camera_2d().global_position.y - (get_viewport_rect().size.y /2)
-		if Rect2(Vector2(x,y) , get_viewport_rect().size).has_point(get_parent().position):
+		if Rect2(Vector2(x,y) , get_viewport_rect().size).has_point(get_parent().global_position):
 			if not screen_entered_emitted:
 				screen_entered_emitted = true
 				screen_entered.emit()
