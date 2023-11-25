@@ -181,7 +181,7 @@ func _init_sprite():
 	shader_mat.set_shader_parameter("pattern", outline_pattern)
 	
 	sprite.material = shader_mat
-	sprite.material = mat_can
+	#sprite.material = mat_can
 	sprite.scale = _shape_boundary() / sprite.texture.get_size(
 	)
 	

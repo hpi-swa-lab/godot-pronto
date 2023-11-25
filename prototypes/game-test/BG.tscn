@@ -1,40 +1,46 @@
 [gd_scene load_steps=3 format=3 uid="uid://defeo7pmswuu0"]
 
-[ext_resource type="Texture2D" uid="uid://cxco7j8616lid" path="res://prototypes/game-test/resources/images/1 (1).webp" id="1_xisdx"]
+[ext_resource type="Texture2D" uid="uid://c8mpg4625rxof" path="res://prototypes/game-test/platform.png" id="1_dkukv"]
 
 [sub_resource type="CurveTexture" id="CurveTexture_d3tbc"]
+width = 4096
 texture_mode = 1
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
-motion_mirroring = Vector2(2195, 0)
+motion_mirroring = Vector2(7165, 0)
 
 [node name="Background" type="Sprite2D" parent="ParallaxLayer"]
-position = Vector2(275, 325)
-scale = Vector2(1.14583, 2.56917)
-texture = ExtResource("1_xisdx")
+position = Vector2(896, 325)
+texture = ExtResource("1_dkukv")
 
 [node name="Background2" type="Sprite2D" parent="ParallaxLayer"]
-position = Vector2(1376, 325)
-scale = Vector2(1.15, 2.56917)
-texture = ExtResource("1_xisdx")
+position = Vector2(2688, 325)
+texture = ExtResource("1_dkukv")
 
 [node name="Background3" type="Sprite2D" parent="ParallaxLayer"]
-position = Vector2(825, 325)
-scale = Vector2(1.14583, 2.56917)
-texture = ExtResource("1_xisdx")
+position = Vector2(4480, 325)
+texture = ExtResource("1_dkukv")
 
 [node name="Background4" type="Sprite2D" parent="ParallaxLayer"]
-position = Vector2(1924, 325)
-scale = Vector2(1.14583, 2.56917)
-texture = ExtResource("1_xisdx")
+position = Vector2(6272, 325)
+texture = ExtResource("1_dkukv")
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayer"]
 z_index = -1
 offset_left = 1.0
 offset_top = -5180.0
 offset_right = 2201.0
+offset_bottom = 6533.0
+texture = SubResource("CurveTexture_d3tbc")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect2" type="TextureRect" parent="ParallaxLayer"]
+z_index = -1
+offset_left = 4096.0
+offset_top = -5180.0
+offset_right = 8192.0
 offset_bottom = 6533.0
 texture = SubResource("CurveTexture_d3tbc")
 metadata/_edit_use_anchors_ = true

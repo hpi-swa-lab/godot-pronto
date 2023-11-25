@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyu18uy4wm8fr"]
+
+[ext_resource type="PackedScene" uid="uid://bjd1iy5erlmqy" path="res://Gumdrop.tscn" id="1_rqr28"]
+[ext_resource type="Texture2D" uid="uid://bkhvhv5jka4ek" path="res://sprites/light_test.png" id="2_dweoi"]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_5bsue"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Gumdrop" parent="." instance=ExtResource("1_rqr28")]
+
+[node name="Weapon_BG_Sprite" parent="Gumdrop" index="0"]
+region_rect = Rect2(448, 2240, 64, 64)
+
+[node name="Character_Sprite" parent="Gumdrop" index="1"]
+region_rect = Rect2(448, 2240, 64, 64)
+
+[node name="Weapon_FG_Sprite" parent="Gumdrop" index="2"]
+region_rect = Rect2(448, 2240, 64, 64)
+
+[node name="Flash_Sprite" parent="Gumdrop" index="3"]
+region_rect = Rect2(448, 2240, 64, 64)
+
+[node name="CharacterTree" parent="Gumdrop" index="6"]
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_5bsue")
+
+[node name="Light" type="PointLight2D" parent="Gumdrop"]
+position = Vector2(0, 15)
+texture = ExtResource("2_dweoi")
+texture_scale = 0.5
+
+[node name="Light2" type="PointLight2D" parent="Gumdrop"]
+position = Vector2(21, -20)
+texture = ExtResource("2_dweoi")
+texture_scale = 0.5
+height = 48.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Gumdrop"]
+color = Color(0, 0, 0, 1)
+
+[editable path="Gumdrop"]

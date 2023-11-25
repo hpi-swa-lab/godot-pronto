@@ -8,9 +8,6 @@ var key_map = {
 }
 
 func _ready():
-	$TileMap.material.set_light_mode(2)
-	$TileMap2.material.set_light_mode(2)
-	$MovingSpikeMap.material.set_light_mode(2)
 	pass
 
 func restart_game():

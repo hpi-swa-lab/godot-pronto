@@ -113,3 +113,9 @@ func _on_timer_elapsed():
 		_trigger_count += 1
 	else:
 		_timer.stop()
+		
+func pause_timer():
+	paused = true
+
+func start_timer(value: Variant):
+	reset_and_start()

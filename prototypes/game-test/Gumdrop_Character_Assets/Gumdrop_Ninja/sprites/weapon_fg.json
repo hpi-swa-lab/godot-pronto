@@ -1,0 +1,2370 @@
+{ "frames": {
+   "gumdrop.24.endsga64.Weapon #IdleSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleSouth 3.aseprite": {
+    "frame": { "x": 192, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleSouth 4.aseprite": {
+    "frame": { "x": 256, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleSouth 5.aseprite": {
+    "frame": { "x": 320, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleSouth 6.aseprite": {
+    "frame": { "x": 384, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleSouth 7.aseprite": {
+    "frame": { "x": 448, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleEast 0.aseprite": {
+    "frame": { "x": 0, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleEast 1.aseprite": {
+    "frame": { "x": 64, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleEast 2.aseprite": {
+    "frame": { "x": 128, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleEast 3.aseprite": {
+    "frame": { "x": 192, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleEast 4.aseprite": {
+    "frame": { "x": 256, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleEast 5.aseprite": {
+    "frame": { "x": 320, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleEast 6.aseprite": {
+    "frame": { "x": 384, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleEast 7.aseprite": {
+    "frame": { "x": 448, "y": 64, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleNorth 3.aseprite": {
+    "frame": { "x": 192, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleNorth 4.aseprite": {
+    "frame": { "x": 256, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleNorth 5.aseprite": {
+    "frame": { "x": 320, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleNorth 6.aseprite": {
+    "frame": { "x": 384, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleNorth 7.aseprite": {
+    "frame": { "x": 448, "y": 128, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleWest 0.aseprite": {
+    "frame": { "x": 0, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleWest 1.aseprite": {
+    "frame": { "x": 64, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleWest 2.aseprite": {
+    "frame": { "x": 128, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleWest 3.aseprite": {
+    "frame": { "x": 192, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleWest 4.aseprite": {
+    "frame": { "x": 256, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleWest 5.aseprite": {
+    "frame": { "x": 320, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleWest 6.aseprite": {
+    "frame": { "x": 384, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleWest 7.aseprite": {
+    "frame": { "x": 448, "y": 192, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 256, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 256, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 256, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkSouth 3.aseprite": {
+    "frame": { "x": 192, "y": 256, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkSouth 4.aseprite": {
+    "frame": { "x": 256, "y": 256, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkSouth 5.aseprite": {
+    "frame": { "x": 320, "y": 256, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkSouth 6.aseprite": {
+    "frame": { "x": 384, "y": 256, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkSouth 7.aseprite": {
+    "frame": { "x": 448, "y": 256, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkEast 0.aseprite": {
+    "frame": { "x": 0, "y": 320, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkEast 1.aseprite": {
+    "frame": { "x": 64, "y": 320, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkEast 2.aseprite": {
+    "frame": { "x": 128, "y": 320, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkEast 3.aseprite": {
+    "frame": { "x": 192, "y": 320, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkEast 4.aseprite": {
+    "frame": { "x": 256, "y": 320, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkEast 5.aseprite": {
+    "frame": { "x": 320, "y": 320, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkEast 6.aseprite": {
+    "frame": { "x": 384, "y": 320, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkEast 7.aseprite": {
+    "frame": { "x": 448, "y": 320, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 384, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 384, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 384, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkNorth 3.aseprite": {
+    "frame": { "x": 192, "y": 384, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkNorth 4.aseprite": {
+    "frame": { "x": 256, "y": 384, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkNorth 5.aseprite": {
+    "frame": { "x": 320, "y": 384, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkNorth 6.aseprite": {
+    "frame": { "x": 384, "y": 384, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkNorth 7.aseprite": {
+    "frame": { "x": 448, "y": 384, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkWest 0.aseprite": {
+    "frame": { "x": 0, "y": 448, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkWest 1.aseprite": {
+    "frame": { "x": 64, "y": 448, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkWest 2.aseprite": {
+    "frame": { "x": 128, "y": 448, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkWest 3.aseprite": {
+    "frame": { "x": 192, "y": 448, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkWest 4.aseprite": {
+    "frame": { "x": 256, "y": 448, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkWest 5.aseprite": {
+    "frame": { "x": 320, "y": 448, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkWest 6.aseprite": {
+    "frame": { "x": 384, "y": 448, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkWest 7.aseprite": {
+    "frame": { "x": 448, "y": 448, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 512, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 512, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 512, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunSouth 3.aseprite": {
+    "frame": { "x": 192, "y": 512, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunSouth 4.aseprite": {
+    "frame": { "x": 256, "y": 512, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunSouth 5.aseprite": {
+    "frame": { "x": 320, "y": 512, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunSouth 6.aseprite": {
+    "frame": { "x": 384, "y": 512, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunSouth 7.aseprite": {
+    "frame": { "x": 448, "y": 512, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunEast 0.aseprite": {
+    "frame": { "x": 0, "y": 576, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunEast 1.aseprite": {
+    "frame": { "x": 64, "y": 576, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunEast 2.aseprite": {
+    "frame": { "x": 128, "y": 576, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunEast 3.aseprite": {
+    "frame": { "x": 192, "y": 576, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunEast 4.aseprite": {
+    "frame": { "x": 256, "y": 576, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunEast 5.aseprite": {
+    "frame": { "x": 320, "y": 576, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunEast 6.aseprite": {
+    "frame": { "x": 384, "y": 576, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunEast 7.aseprite": {
+    "frame": { "x": 448, "y": 576, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 640, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 640, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 640, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunNorth 3.aseprite": {
+    "frame": { "x": 192, "y": 640, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunNorth 4.aseprite": {
+    "frame": { "x": 256, "y": 640, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunNorth 5.aseprite": {
+    "frame": { "x": 320, "y": 640, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunNorth 6.aseprite": {
+    "frame": { "x": 384, "y": 640, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunNorth 7.aseprite": {
+    "frame": { "x": 448, "y": 640, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunWest 0.aseprite": {
+    "frame": { "x": 0, "y": 704, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunWest 1.aseprite": {
+    "frame": { "x": 64, "y": 704, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunWest 2.aseprite": {
+    "frame": { "x": 128, "y": 704, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunWest 3.aseprite": {
+    "frame": { "x": 192, "y": 704, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunWest 4.aseprite": {
+    "frame": { "x": 256, "y": 704, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunWest 5.aseprite": {
+    "frame": { "x": 320, "y": 704, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunWest 6.aseprite": {
+    "frame": { "x": 384, "y": 704, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #RunWest 7.aseprite": {
+    "frame": { "x": 448, "y": 704, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackASouth 0.aseprite": {
+    "frame": { "x": 0, "y": 768, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackASouth 1.aseprite": {
+    "frame": { "x": 64, "y": 768, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackASouth 2.aseprite": {
+    "frame": { "x": 128, "y": 768, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackASouth 3.aseprite": {
+    "frame": { "x": 192, "y": 768, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackASouth 4.aseprite": {
+    "frame": { "x": 256, "y": 768, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 23
+   },
+   "gumdrop.24.endsga64.Weapon #AttackASouth 5.aseprite": {
+    "frame": { "x": 320, "y": 768, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAEast 0.aseprite": {
+    "frame": { "x": 0, "y": 832, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAEast 1.aseprite": {
+    "frame": { "x": 64, "y": 832, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAEast 2.aseprite": {
+    "frame": { "x": 128, "y": 832, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAEast 3.aseprite": {
+    "frame": { "x": 192, "y": 832, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAEast 4.aseprite": {
+    "frame": { "x": 256, "y": 832, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 23
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAEast 5.aseprite": {
+    "frame": { "x": 320, "y": 832, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackANorth 0.aseprite": {
+    "frame": { "x": 0, "y": 896, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackANorth 1.aseprite": {
+    "frame": { "x": 64, "y": 896, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackANorth 2.aseprite": {
+    "frame": { "x": 128, "y": 896, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackANorth 3.aseprite": {
+    "frame": { "x": 192, "y": 896, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackANorth 4.aseprite": {
+    "frame": { "x": 256, "y": 896, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 23
+   },
+   "gumdrop.24.endsga64.Weapon #AttackANorth 5.aseprite": {
+    "frame": { "x": 320, "y": 896, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAWest 0.aseprite": {
+    "frame": { "x": 0, "y": 960, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAWest 1.aseprite": {
+    "frame": { "x": 64, "y": 960, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAWest 2.aseprite": {
+    "frame": { "x": 128, "y": 960, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAWest 3.aseprite": {
+    "frame": { "x": 192, "y": 960, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAWest 4.aseprite": {
+    "frame": { "x": 256, "y": 960, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 23
+   },
+   "gumdrop.24.endsga64.Weapon #AttackAWest 5.aseprite": {
+    "frame": { "x": 320, "y": 960, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 1024, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 1024, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 1024, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBSouth 3.aseprite": {
+    "frame": { "x": 192, "y": 1024, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBSouth 4.aseprite": {
+    "frame": { "x": 256, "y": 1024, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBSouth 5.aseprite": {
+    "frame": { "x": 320, "y": 1024, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBEast 0.aseprite": {
+    "frame": { "x": 0, "y": 1088, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBEast 1.aseprite": {
+    "frame": { "x": 64, "y": 1088, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBEast 2.aseprite": {
+    "frame": { "x": 128, "y": 1088, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBEast 3.aseprite": {
+    "frame": { "x": 192, "y": 1088, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBEast 4.aseprite": {
+    "frame": { "x": 256, "y": 1088, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBEast 5.aseprite": {
+    "frame": { "x": 320, "y": 1088, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 1152, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 1152, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 1152, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBNorth 3.aseprite": {
+    "frame": { "x": 192, "y": 1152, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBNorth 4.aseprite": {
+    "frame": { "x": 256, "y": 1152, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBNorth 5.aseprite": {
+    "frame": { "x": 320, "y": 1152, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBWest 0.aseprite": {
+    "frame": { "x": 0, "y": 1216, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBWest 1.aseprite": {
+    "frame": { "x": 64, "y": 1216, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBWest 2.aseprite": {
+    "frame": { "x": 128, "y": 1216, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBWest 3.aseprite": {
+    "frame": { "x": 192, "y": 1216, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBWest 4.aseprite": {
+    "frame": { "x": 256, "y": 1216, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackBWest 5.aseprite": {
+    "frame": { "x": 320, "y": 1216, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 3.aseprite": {
+    "frame": { "x": 192, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 4.aseprite": {
+    "frame": { "x": 256, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 5.aseprite": {
+    "frame": { "x": 320, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 6.aseprite": {
+    "frame": { "x": 384, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 7.aseprite": {
+    "frame": { "x": 448, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 23
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 8.aseprite": {
+    "frame": { "x": 512, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCSouth 9.aseprite": {
+    "frame": { "x": 576, "y": 1280, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 0.aseprite": {
+    "frame": { "x": 0, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 1.aseprite": {
+    "frame": { "x": 64, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 2.aseprite": {
+    "frame": { "x": 128, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 3.aseprite": {
+    "frame": { "x": 192, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 4.aseprite": {
+    "frame": { "x": 256, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 5.aseprite": {
+    "frame": { "x": 320, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 6.aseprite": {
+    "frame": { "x": 384, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 7.aseprite": {
+    "frame": { "x": 448, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 23
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 8.aseprite": {
+    "frame": { "x": 512, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCEast 9.aseprite": {
+    "frame": { "x": 576, "y": 1344, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 3.aseprite": {
+    "frame": { "x": 192, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 4.aseprite": {
+    "frame": { "x": 256, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 5.aseprite": {
+    "frame": { "x": 320, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 6.aseprite": {
+    "frame": { "x": 384, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 7.aseprite": {
+    "frame": { "x": 448, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 23
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 8.aseprite": {
+    "frame": { "x": 512, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCNorth 9.aseprite": {
+    "frame": { "x": 576, "y": 1408, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 0.aseprite": {
+    "frame": { "x": 0, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 1.aseprite": {
+    "frame": { "x": 64, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 2.aseprite": {
+    "frame": { "x": 128, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 3.aseprite": {
+    "frame": { "x": 192, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 4.aseprite": {
+    "frame": { "x": 256, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 5.aseprite": {
+    "frame": { "x": 320, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 6.aseprite": {
+    "frame": { "x": 384, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 7.aseprite": {
+    "frame": { "x": 448, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 23
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 8.aseprite": {
+    "frame": { "x": 512, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 46
+   },
+   "gumdrop.24.endsga64.Weapon #AttackCWest 9.aseprite": {
+    "frame": { "x": 576, "y": 1472, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 96
+   },
+   "gumdrop.24.endsga64.Weapon #HurtSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 1536, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 1536, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 1536, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtEast 0.aseprite": {
+    "frame": { "x": 0, "y": 1600, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtEast 1.aseprite": {
+    "frame": { "x": 64, "y": 1600, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtEast 2.aseprite": {
+    "frame": { "x": 128, "y": 1600, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 1664, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 1664, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 1664, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtWest 0.aseprite": {
+    "frame": { "x": 0, "y": 1728, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtWest 1.aseprite": {
+    "frame": { "x": 64, "y": 1728, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtWest 2.aseprite": {
+    "frame": { "x": 128, "y": 1728, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #DrawSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 1792, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #DrawSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 1792, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #DrawEast 0.aseprite": {
+    "frame": { "x": 0, "y": 1856, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #DrawEast 1.aseprite": {
+    "frame": { "x": 64, "y": 1856, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #DrawNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 1920, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #DrawNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 1920, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #DrawWest 0.aseprite": {
+    "frame": { "x": 0, "y": 1984, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #DrawWest 1.aseprite": {
+    "frame": { "x": 64, "y": 1984, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 2048, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 2048, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 2048, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnSouth 3.aseprite": {
+    "frame": { "x": 192, "y": 2048, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnSouth 4.aseprite": {
+    "frame": { "x": 256, "y": 2048, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnSouth 5.aseprite": {
+    "frame": { "x": 320, "y": 2048, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnSouth 6.aseprite": {
+    "frame": { "x": 384, "y": 2048, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnSouth 7.aseprite": {
+    "frame": { "x": 448, "y": 2048, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnEast 0.aseprite": {
+    "frame": { "x": 0, "y": 2112, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnEast 1.aseprite": {
+    "frame": { "x": 64, "y": 2112, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnEast 2.aseprite": {
+    "frame": { "x": 128, "y": 2112, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnEast 3.aseprite": {
+    "frame": { "x": 192, "y": 2112, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnEast 4.aseprite": {
+    "frame": { "x": 256, "y": 2112, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnEast 5.aseprite": {
+    "frame": { "x": 320, "y": 2112, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnEast 6.aseprite": {
+    "frame": { "x": 384, "y": 2112, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnEast 7.aseprite": {
+    "frame": { "x": 448, "y": 2112, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 2176, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 2176, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 2176, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnNorth 3.aseprite": {
+    "frame": { "x": 192, "y": 2176, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnNorth 4.aseprite": {
+    "frame": { "x": 256, "y": 2176, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnNorth 5.aseprite": {
+    "frame": { "x": 320, "y": 2176, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnNorth 6.aseprite": {
+    "frame": { "x": 384, "y": 2176, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnNorth 7.aseprite": {
+    "frame": { "x": 448, "y": 2176, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnWest 0.aseprite": {
+    "frame": { "x": 0, "y": 2240, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnWest 1.aseprite": {
+    "frame": { "x": 64, "y": 2240, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnWest 2.aseprite": {
+    "frame": { "x": 128, "y": 2240, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnWest 3.aseprite": {
+    "frame": { "x": 192, "y": 2240, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnWest 4.aseprite": {
+    "frame": { "x": 256, "y": 2240, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnWest 5.aseprite": {
+    "frame": { "x": 320, "y": 2240, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnWest 6.aseprite": {
+    "frame": { "x": 384, "y": 2240, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #IdleDrawnWest 7.aseprite": {
+    "frame": { "x": 448, "y": 2240, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 2304, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 2304, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 2304, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnSouth 3.aseprite": {
+    "frame": { "x": 192, "y": 2304, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnSouth 4.aseprite": {
+    "frame": { "x": 256, "y": 2304, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnSouth 5.aseprite": {
+    "frame": { "x": 320, "y": 2304, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnSouth 6.aseprite": {
+    "frame": { "x": 384, "y": 2304, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnSouth 7.aseprite": {
+    "frame": { "x": 448, "y": 2304, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnEast 0.aseprite": {
+    "frame": { "x": 0, "y": 2368, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnEast 1.aseprite": {
+    "frame": { "x": 64, "y": 2368, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnEast 2.aseprite": {
+    "frame": { "x": 128, "y": 2368, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnEast 3.aseprite": {
+    "frame": { "x": 192, "y": 2368, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnEast 4.aseprite": {
+    "frame": { "x": 256, "y": 2368, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnEast 5.aseprite": {
+    "frame": { "x": 320, "y": 2368, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnEast 6.aseprite": {
+    "frame": { "x": 384, "y": 2368, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnEast 7.aseprite": {
+    "frame": { "x": 448, "y": 2368, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 2432, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 2432, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 2432, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnNorth 3.aseprite": {
+    "frame": { "x": 192, "y": 2432, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnNorth 4.aseprite": {
+    "frame": { "x": 256, "y": 2432, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnNorth 5.aseprite": {
+    "frame": { "x": 320, "y": 2432, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnNorth 6.aseprite": {
+    "frame": { "x": 384, "y": 2432, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnNorth 7.aseprite": {
+    "frame": { "x": 448, "y": 2432, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnWest 0.aseprite": {
+    "frame": { "x": 0, "y": 2496, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnWest 1.aseprite": {
+    "frame": { "x": 64, "y": 2496, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnWest 2.aseprite": {
+    "frame": { "x": 128, "y": 2496, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnWest 3.aseprite": {
+    "frame": { "x": 192, "y": 2496, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnWest 4.aseprite": {
+    "frame": { "x": 256, "y": 2496, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnWest 5.aseprite": {
+    "frame": { "x": 320, "y": 2496, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnWest 6.aseprite": {
+    "frame": { "x": 384, "y": 2496, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #WalkDrawnWest 7.aseprite": {
+    "frame": { "x": 448, "y": 2496, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 2560, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 2560, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnSouth 2.aseprite": {
+    "frame": { "x": 128, "y": 2560, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnEast 0.aseprite": {
+    "frame": { "x": 0, "y": 2624, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnEast 1.aseprite": {
+    "frame": { "x": 64, "y": 2624, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnEast 2.aseprite": {
+    "frame": { "x": 128, "y": 2624, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 2688, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 2688, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnNorth 2.aseprite": {
+    "frame": { "x": 128, "y": 2688, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnWest 0.aseprite": {
+    "frame": { "x": 0, "y": 2752, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnWest 1.aseprite": {
+    "frame": { "x": 64, "y": 2752, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #HurtDrawnWest 2.aseprite": {
+    "frame": { "x": 128, "y": 2752, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #SheathSouth 0.aseprite": {
+    "frame": { "x": 0, "y": 2816, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #SheathSouth 1.aseprite": {
+    "frame": { "x": 64, "y": 2816, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #SheathEast 0.aseprite": {
+    "frame": { "x": 0, "y": 2880, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #SheathEast 1.aseprite": {
+    "frame": { "x": 64, "y": 2880, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #SheathNorth 0.aseprite": {
+    "frame": { "x": 0, "y": 2944, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #SheathNorth 1.aseprite": {
+    "frame": { "x": 64, "y": 2944, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #SheathWest 0.aseprite": {
+    "frame": { "x": 0, "y": 3008, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   },
+   "gumdrop.24.endsga64.Weapon #SheathWest 1.aseprite": {
+    "frame": { "x": 64, "y": 3008, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 69
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3-beta16-x64",
+  "image": "Weapon_fg.png",
+  "format": "I8",
+  "size": { "w": 640, "h": 3072 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "IdleSouth", "from": 0, "to": 7, "direction": "forward", "color": "#000000ff" },
+   { "name": "IdleEast", "from": 8, "to": 15, "direction": "forward", "color": "#000000ff" },
+   { "name": "IdleNorth", "from": 16, "to": 23, "direction": "forward", "color": "#000000ff" },
+   { "name": "IdleWest", "from": 24, "to": 31, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkSouth", "from": 32, "to": 39, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkEast", "from": 40, "to": 47, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkNorth", "from": 48, "to": 55, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkWest", "from": 56, "to": 63, "direction": "forward", "color": "#000000ff" },
+   { "name": "RunSouth", "from": 64, "to": 71, "direction": "forward", "color": "#000000ff" },
+   { "name": "RunEast", "from": 72, "to": 79, "direction": "forward", "color": "#000000ff" },
+   { "name": "RunNorth", "from": 80, "to": 87, "direction": "forward", "color": "#000000ff" },
+   { "name": "RunWest", "from": 88, "to": 95, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackASouth", "from": 96, "to": 101, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackAEast", "from": 102, "to": 107, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackANorth", "from": 108, "to": 113, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackAWest", "from": 114, "to": 119, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackBSouth", "from": 120, "to": 125, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackBEast", "from": 126, "to": 131, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackBNorth", "from": 132, "to": 137, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackBWest", "from": 138, "to": 143, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackCSouth", "from": 144, "to": 153, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackCEast", "from": 154, "to": 163, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackCNorth", "from": 164, "to": 173, "direction": "forward", "color": "#000000ff" },
+   { "name": "AttackCWest", "from": 174, "to": 183, "direction": "forward", "color": "#000000ff" },
+   { "name": "HurtSouth", "from": 184, "to": 186, "direction": "forward", "color": "#000000ff" },
+   { "name": "HurtEast", "from": 187, "to": 189, "direction": "forward", "color": "#000000ff" },
+   { "name": "HurtNorth", "from": 190, "to": 192, "direction": "forward", "color": "#000000ff" },
+   { "name": "HurtWest", "from": 193, "to": 195, "direction": "forward", "color": "#000000ff" },
+   { "name": "DrawSouth", "from": 196, "to": 197, "direction": "forward", "color": "#000000ff" },
+   { "name": "DrawEast", "from": 198, "to": 199, "direction": "forward", "color": "#000000ff" },
+   { "name": "DrawNorth", "from": 200, "to": 201, "direction": "forward", "color": "#000000ff" },
+   { "name": "DrawWest", "from": 202, "to": 203, "direction": "forward", "color": "#000000ff" },
+   { "name": "IdleDrawnSouth", "from": 204, "to": 211, "direction": "forward", "color": "#000000ff" },
+   { "name": "IdleDrawnEast", "from": 212, "to": 219, "direction": "forward", "color": "#000000ff" },
+   { "name": "IdleDrawnNorth", "from": 220, "to": 227, "direction": "forward", "color": "#000000ff" },
+   { "name": "IdleDrawnWest", "from": 228, "to": 235, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkDrawnSouth", "from": 236, "to": 243, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkDrawnEast", "from": 244, "to": 251, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkDrawnNorth", "from": 252, "to": 259, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkDrawnWest", "from": 260, "to": 267, "direction": "forward", "color": "#000000ff" },
+   { "name": "HurtDrawnSouth", "from": 268, "to": 270, "direction": "forward", "color": "#000000ff" },
+   { "name": "HurtDrawnEast", "from": 271, "to": 273, "direction": "forward", "color": "#000000ff" },
+   { "name": "HurtDrawnNorth", "from": 274, "to": 276, "direction": "forward", "color": "#000000ff" },
+   { "name": "HurtDrawnWest", "from": 277, "to": 279, "direction": "forward", "color": "#000000ff" },
+   { "name": "SheathSouth", "from": 280, "to": 281, "direction": "forward", "color": "#000000ff" },
+   { "name": "SheathEast", "from": 282, "to": 283, "direction": "forward", "color": "#000000ff" },
+   { "name": "SheathNorth", "from": 284, "to": 285, "direction": "forward", "color": "#000000ff" },
+   { "name": "SheathWest", "from": 286, "to": 287, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "Flattened", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

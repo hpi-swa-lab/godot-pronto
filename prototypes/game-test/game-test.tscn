@@ -1,11 +1,13 @@
-[gd_scene load_steps=226 format=3 uid="uid://dq5gygwtd7rxb"]
+[gd_scene load_steps=213 format=3 uid="uid://dq5gygwtd7rxb"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Script" path="res://prototypes/game-test/jumpnrun_template.gd" id="2_dr2ov"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_c0q12"]
+[ext_resource type="TileSet" uid="uid://bfcd68mnqmjiy" path="res://prototypes/game-test/GrassDirtGenericTileSet.tres" id="3_mg4j3"]
 [ext_resource type="TileSet" uid="uid://cxkbxfjg6w030" path="res://prototypes/game-test/tiles.tres" id="3_pru7n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="4_ysmq6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="5_cvf4j"]
+[ext_resource type="Texture2D" uid="uid://ds4p45mtul1dt" path="res://prototypes/game-test/Player.png" id="5_nssc6"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_sh1cs"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_02ofy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="8_vbh6w"]
@@ -14,48 +16,31 @@
 [ext_resource type="Script" path="res://prototypes/game-test/CameraPlayer.gd" id="11_eisga"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="11_sd8pn"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="12_xnjgy"]
-[ext_resource type="AudioStream" uid="uid://nyrajyhein65" path="res://prototypes/game-test/resources/audio/Footsteps solid wood.mp3" id="13_7pl3e"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="13_68vfu"]
 [ext_resource type="Texture2D" uid="uid://dn5t3tyhxxbwl" path="res://prototypes/game-test/test.png" id="13_kxfa8"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="14_jta5q"]
-[ext_resource type="AudioStream" uid="uid://2b24rqwx73na" path="res://prototypes/game-test/resources/audio/Frightmare - Jimena Contreras.mp3" id="15_dagm6"]
 [ext_resource type="AudioStream" uid="uid://da57x6iirohen" path="res://prototypes/game-test/resources/audio/Wood Golf Club Hit Ball.mp3" id="15_hyrnx"]
 [ext_resource type="AudioStream" uid="uid://dh5li7d8eqq0e" path="res://prototypes/game-test/resources/audio/Coins Shuffling.mp3" id="16_41oan"]
 [ext_resource type="Script" path="res://prototypes/game-test/AudioStreamPlayer2D3.gd" id="16_r1y3c"]
 [ext_resource type="PackedScene" uid="uid://defeo7pmswuu0" path="res://prototypes/game-test/BG.tscn" id="16_uom2l"]
-[ext_resource type="AudioStream" uid="uid://b36ny176qbeqe" path="res://prototypes/game-test/resources/audio/Sneaker Sidesteps Concrete.mp3" id="17_b0j4t"]
 [ext_resource type="Texture2D" uid="uid://coiaxftxa6ket" path="res://prototypes/game-test/resources/images/Light.png" id="17_r8jq7"]
 [ext_resource type="Texture2D" uid="uid://cmwjeobrfg377" path="res://prototypes/game-test/resources/images/keys.png" id="18_wmxrf"]
 [ext_resource type="Texture2D" uid="uid://dn3x1tqojq5hs" path="res://prototypes/game-test/resources/images/icon_5090.png" id="19_yv0hh"]
-[ext_resource type="AudioStream" uid="uid://b5lq7qxcm1iwh" path="res://prototypes/game-test/resources/audio/Scream Sound effect (funny).mp3" id="23_6avei"]
+[ext_resource type="Script" path="res://prototypes/game-test/Label4.gd" id="21_7gvbe"]
+[ext_resource type="Script" path="res://prototypes/game-test/Node.gd" id="22_ras3a"]
+[ext_resource type="AudioStream" uid="uid://rki0cuikc77j" path="res://prototypes/game-test/error.mp3" id="23_nvmr4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="26_4vtvb"]
+[ext_resource type="AudioStream" uid="uid://ctql0mmf4cuxl" path="res://prototypes/game-test/A Flute's Mourning - Aakash Gandhi.mp3" id="27_cgeq0"]
 [ext_resource type="Script" path="res://prototypes/game-test/SpikeRun.gd" id="30_36qlf"]
 [ext_resource type="Script" path="res://prototypes/game-test/TrapTrigger.gd" id="31_l7ylb"]
 [ext_resource type="Script" path="res://prototypes/game-test/TileMap2.gd" id="31_w7wul"]
 [ext_resource type="Script" path="res://prototypes/game-test/SpikeWallMap.gd" id="32_if7e5"]
+[ext_resource type="Script" path="res://prototypes/game-test/Music.gd" id="32_luxyn"]
 [ext_resource type="AudioStream" uid="uid://fca47turvu6w" path="res://prototypes/game-test/resources/audio/lever pull sound effect.mp3" id="32_nnw28"]
 [ext_resource type="Script" path="res://prototypes/game-test/AudioStreamPlayerTrapTrigger.gd" id="33_ltmpf"]
 [ext_resource type="Script" path="res://prototypes/game-test/Camera2D.gd" id="33_y5nvw"]
 [ext_resource type="AudioStream" uid="uid://bl1ae8fx2x37n" path="res://prototypes/game-test/resources/audio/Gears Factory Mechanical.mp3" id="34_0qeyf"]
 [ext_resource type="AudioStream" uid="uid://cyqmtddyrmkl3" path="res://prototypes/game-test/resources/audio/Metal Gear Solid Alert.mp3" id="35_pdr0a"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_chevg"]
-particles_animation = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="Image" id="Image_fr4wd"]
-data = {
-"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_c1vcs"]
-image = SubResource("Image_fr4wd")
 
 [sub_resource type="GDScript" id="GDScript_yljtb"]
 script/source = "@tool
@@ -367,7 +352,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(prop, value, from, to):
-	return Vector2(0.0,-64.0)
+	return Vector2(0.0,-128.0)
 "
 
 [sub_resource type="Resource" id="Resource_p2brb"]
@@ -531,6 +516,221 @@ enabled = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ty26"]
 font_size = 12
+
+[sub_resource type="Image" id="Image_pk3n3"]
+data = {
+"data": PackedByteArray(0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_31a6d"]
+image = SubResource("Image_pk3n3")
+
+[sub_resource type="GDScript" id="GDScript_bsq11"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_b5y84"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_bsq11")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0cdvr"]
+script = ExtResource("7_02ofy")
+signal_name = "until_elapsed"
+to = NodePath("../Node")
+more_references = []
+invoke = "get_new_key"
+arguments = []
+only_if = SubResource("Resource_b5y84")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_cayof"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 25
+"
+
+[sub_resource type="Resource" id="Resource_mq38t"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_cayof")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_7xop3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_p8t3o"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_7xop3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3oyy1"]
+script = ExtResource("7_02ofy")
+signal_name = "elapsed"
+to = NodePath("../HealthBarBehavior")
+more_references = []
+invoke = "damage"
+arguments = [SubResource("Resource_mq38t")]
+only_if = SubResource("Resource_p8t3o")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_k7fvj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Label):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_cpvyj"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_k7fvj")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_qmm6l"]
+script = ExtResource("7_02ofy")
+signal_name = "elapsed"
+to = NodePath("../Label4")
+more_references = []
+invoke = "set_text_key_pressed"
+arguments = []
+only_if = SubResource("Resource_cpvyj")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_qp3oh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_crvd4"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_qp3oh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_bjpl6"]
+script = ExtResource("7_02ofy")
+signal_name = "elapsed"
+to = NodePath(".")
+more_references = []
+invoke = "pause_timer"
+arguments = []
+only_if = SubResource("Resource_crvd4")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_oo0cm"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: AudioStreamPlayer2D):
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_pt6th"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_oo0cm")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_bevcc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: AudioStreamPlayer2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_38ct4"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_bevcc")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_wed85"]
+script = ExtResource("7_02ofy")
+signal_name = "elapsed"
+to = NodePath("../Error")
+more_references = []
+invoke = "play"
+arguments = [SubResource("Resource_pt6th")]
+only_if = SubResource("Resource_38ct4")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_4g3q1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_iiqda"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_4g3q1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_hbppb"]
+script = ExtResource("7_02ofy")
+signal_name = "elapsed"
+to = NodePath("../ClockBehavior3")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_iiqda")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_psxtr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_kxulw"]
+script = ExtResource("6_sh1cs")
+nested_script = SubResource("GDScript_psxtr")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_w5gfl"]
+script = ExtResource("7_02ofy")
+signal_name = "elapsed"
+to = NodePath(".")
+more_references = []
+invoke = "pause_timer"
+arguments = []
+only_if = SubResource("Resource_kxulw")
+deferred = false
+enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3bwcm"]
 size = Vector2(831, 36)
@@ -828,166 +1028,6 @@ only_if = SubResource("Resource_fcelx")
 deferred = false
 enabled = true
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v7nao"]
-light_mode = 2
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xs1gn"]
-light_mode = 2
-
-[sub_resource type="Image" id="Image_cw0t7"]
-data = {
-"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_ryym7"]
-image = SubResource("Image_cw0t7")
-
-[sub_resource type="GDScript" id="GDScript_57ix1"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(value, from, to):
-	return \"max_velocity\"
-"
-
-[sub_resource type="Resource" id="Resource_3kef7"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_57ix1")
-argument_names = ["value", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_3htnw"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(value, from, to):
-	return value
-"
-
-[sub_resource type="Resource" id="Resource_6wgb6"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_3htnw")
-argument_names = ["value", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_jv3xs"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(value, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_wwtov"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_jv3xs")
-argument_names = ["value", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_ltfhd"]
-script = ExtResource("7_02ofy")
-signal_name = "value_changed"
-to = NodePath("..")
-more_references = []
-invoke = "set"
-arguments = [SubResource("Resource_3kef7"), SubResource("Resource_6wgb6")]
-only_if = SubResource("Resource_wwtov")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_038uh"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_7iwfr"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_038uh")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_hkntj"]
-script = ExtResource("7_02ofy")
-signal_name = "always"
-to = NodePath("..")
-more_references = []
-invoke = "move_side"
-arguments = []
-only_if = SubResource("Resource_7iwfr")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_t3npq"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from, to):
-	return 5
-"
-
-[sub_resource type="Resource" id="Resource_qlupv"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_t3npq")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_e2qln"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_mxdkg"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_e2qln")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_nqtnd"]
-script = ExtResource("7_02ofy")
-signal_name = "collided"
-to = NodePath("../../Player/HealthBarBehavior")
-more_references = []
-invoke = "damage"
-arguments = [SubResource("Resource_qlupv")]
-only_if = SubResource("Resource_mxdkg")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_fjyow"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: AudioStreamPlayer2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_31lfy"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_fjyow")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_7ryib"]
-script = ExtResource("7_02ofy")
-signal_name = "collided"
-to = NodePath("../../Player/AudioStreamPlayer2D3")
-more_references = []
-invoke = "play_if_not_playing"
-arguments = []
-only_if = SubResource("Resource_31lfy")
-deferred = false
-enabled = true
-
 [sub_resource type="GDScript" id="GDScript_wgqov"]
 script/source = "@tool
 extends U
@@ -1029,146 +1069,6 @@ enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iyh7h"]
 size = Vector2(15921.5, 26)
-
-[sub_resource type="Image" id="Image_c0k75"]
-data = {
-"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_kcnpj"]
-image = SubResource("Image_c0k75")
-
-[sub_resource type="GDScript" id="GDScript_hj7xd"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from, to):
-	return 5
-"
-
-[sub_resource type="Resource" id="Resource_161jk"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_hj7xd")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_oofcx"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_1l1wv"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_oofcx")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_gx658"]
-script = ExtResource("7_02ofy")
-signal_name = "collided"
-to = NodePath("../../Player/HealthBarBehavior")
-more_references = []
-invoke = "damage"
-arguments = [SubResource("Resource_161jk")]
-only_if = SubResource("Resource_1l1wv")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_uyvmd"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: AudioStreamPlayer2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_ho3xm"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_uyvmd")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_pfb8a"]
-script = ExtResource("7_02ofy")
-signal_name = "collided"
-to = NodePath("../../Player/AudioStreamPlayer2D3")
-more_references = []
-invoke = "play_if_not_playing"
-arguments = []
-only_if = SubResource("Resource_ho3xm")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_rfn75"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_2twob"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_rfn75")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_li3gf"]
-script = ExtResource("7_02ofy")
-signal_name = "always"
-to = NodePath("..")
-more_references = []
-invoke = "move_side"
-arguments = []
-only_if = SubResource("Resource_2twob")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_5poes"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: AudioStreamPlayer2D, to: AudioStreamPlayer2D):
-	return 0
-"
-
-[sub_resource type="Resource" id="Resource_swd2a"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_5poes")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_glo67"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: AudioStreamPlayer2D, to: AudioStreamPlayer2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_nlk0i"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_glo67")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_3pica"]
-script = ExtResource("7_02ofy")
-signal_name = "finished"
-to = NodePath(".")
-more_references = []
-invoke = "play"
-arguments = [SubResource("Resource_swd2a")]
-only_if = SubResource("Resource_nlk0i")
-deferred = false
-enabled = true
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8ji6e"]
 
@@ -1540,20 +1440,14 @@ position = Vector2(921, 0)
 script = ExtResource("2_dr2ov")
 
 [node name="TileMap" type="TileMap" parent="jumpnrun_template"]
-material = SubResource("CanvasItemMaterial_chevg")
-tile_set = ExtResource("3_pru7n")
+scale = Vector2(4, 4)
+tile_set = ExtResource("3_mg4j3")
 format = 2
-layer_0/tile_data = PackedInt32Array(589829, 327680, 5, 589830, 327680, 5, 589831, 327680, 5, 589832, 327680, 5, 589833, 327680, 5, 589837, 327680, 5, 589838, 327680, 5, 589839, 327680, 5, 589840, 327680, 5, 589841, 327680, 5, 589842, 327680, 5, 589834, 327680, 5, 589835, 327680, 5, 589836, 327680, 5, 589828, 327680, 5, 524292, 327680, 5, 458756, 327680, 5, 393220, 327680, 5, 327684, 327680, 5, 262148, 327680, 5, 196612, 327680, 5, 131076, 327680, 5, 65540, 327680, 5, 4, 327680, 5, -65532, 327680, 5, 458772, 327680, 5, 524307, 327680, 5, 393237, 327680, 5, 589843, 327680, 5, 589844, 327680, 5, 589845, 327680, 5, 524309, 327680, 5, 458773, 327680, 5, 524308, 327680, 5, 393238, 327680, 5, 458774, 327680, 5, 524310, 327680, 5, 589846, 327680, 5, 393239, 327680, 5, 458775, 327680, 5, 524311, 327680, 5, 589847, 327680, 5, 393240, 327680, 5, 393241, 327680, 5, 393242, 327680, 5, 393243, 327680, 5, 458779, 327680, 5, 524315, 327680, 5, 589851, 327680, 5, 589850, 327680, 5, 589849, 327680, 5, 589848, 327680, 5, 524312, 327680, 5, 458776, 327680, 5, 458777, 327680, 5, 458778, 327680, 5, 524314, 327680, 5, 524313, 327680, 5, 393246, 327680, 5, 458782, 327680, 5, 524318, 327680, 5, 589854, 327680, 5, 458791, 327680, 5, 524327, 327680, 5, 589863, 327680, 5, 589864, 327680, 5, 589865, 327680, 5, 524328, 327680, 5, 458792, 327680, 5, 393256, 327680, 5, 393257, 327680, 5, 458793, 327680, 5, 524329, 327680, 5, 589866, 327680, 5, 524330, 327680, 5, 458794, 327680, 5, 393258, 327680, 5, 393259, 327680, 5, 458795, 327680, 5, 524331, 327680, 5, 589867, 327680, 5, 65557, 0, 1, 65558, 65536, 1, 65563, 65536, 1, 65562, 0, 1, 65570, 0, 1, 65571, 65536, 1, 196637, 65536, 1, 196636, 0, 1, 393251, 327680, 5, 458787, 327680, 5, 524323, 327680, 5, 589859, 327680, 5, 196644, 0, 1, 196645, 65536, 1, 393255, 393216, 0, 262176, 0, 0, 262177, 65536, 0, 262183, 0, 0, 262184, 65536, 0, 327723, 327680, 5, 262188, 65536, 0, 262187, 0, 0, 327702, 327680, 5, 131095, 0, 1, 131096, 65536, 1, 393260, 327680, 5, 458796, 327680, 5, 524332, 327680, 5, 589868, 327680, 5, 589869, 327680, 5, 524333, 327680, 5, 458797, 327680, 5, 524334, 327680, 5, 589870, 327680, 5, 262192, 327680, 5, 262193, 327680, 5, 262194, 327680, 5, 262195, 327680, 5, 262196, 327680, 5, 262197, 327680, 5, 262198, 327680, 5, 327734, 327680, 5, 327733, 327680, 5, 196662, 327680, 5, 196661, 327680, 5, 196660, 327680, 5, 196659, 327680, 5, 196658, 327680, 5, 196657, 327680, 5, 196656, 327680, 5, 196655, 327680, 5, 131119, 327680, 5, 65583, 327680, 5, 47, 327680, 5, 48, 327680, 5, 65584, 327680, 5, 131120, 327680, 5, 131121, 327680, 5, 65585, 327680, 5, 49, 327680, 5, 65586, 327680, 5, 131122, 327680, 5, 50, 327680, 5, 51, 327680, 5, 65587, 327680, 5, 131123, 327680, 5, 131124, 327680, 5, 65588, 327680, 5, 52, 327680, 5, 53, 327680, 5, 65589, 327680, 5, 131125, 327680, 5, 131126, 327680, 5, 65590, 327680, 5, 54, 327680, 5, 655407, 327680, 5, 655408, 327680, 5, 655409, 327680, 5, 655410, 327680, 5, 655411, 327680, 5, 655412, 327680, 5, 655413, 327680, 5, 655414, 327680, 5, 655406, 327680, 5, 655405, 327680, 5, 655404, 327680, 5, 655403, 327680, 5, 655402, 327680, 5, 655401, 327680, 5, 655400, 327680, 5, 655399, 327680, 5, 589871, 327680, 5, 655395, 327680, 5, 655390, 327680, 5, 655387, 327680, 5, 655386, 327680, 5, 655385, 327680, 5, 655384, 327680, 5, 655383, 327680, 5, 655382, 327680, 5, 655381, 327680, 5, 655380, 327680, 5, 655379, 327680, 5, 655378, 327680, 5, 655377, 327680, 5, 655376, 327680, 5, 655375, 327680, 5, 655374, 327680, 5, 655373, 327680, 5, 655372, 327680, 5, 655371, 327680, 5, 655370, 327680, 5, 655369, 327680, 5, 655368, 327680, 5, 655367, 327680, 5, 655366, 327680, 5, 655365, 327680, 5, 655364, 327680, 5, 393271, 327680, 5, 55, 327680, 5, 65591, 327680, 5, 131127, 327680, 5, 196663, 327680, 5, 262199, 327680, 5, 327735, 327680, 5, 56, 327680, 5, 65592, 327680, 5, 131128, 327680, 5, 196664, 327680, 5, 262200, 327680, 5, 327736, 327680, 5, 57, 327680, 5, 65593, 327680, 5, 131129, 327680, 5, 196665, 327680, 5, 262201, 327680, 5, 327737, 327680, 5, 58, 327680, 5, 65594, 327680, 5, 131130, 327680, 5, 196666, 327680, 5, 262202, 327680, 5, 59, 327680, 5, 65595, 327680, 5, 131131, 327680, 5, 196667, 327680, 5, 60, 327680, 5, 65596, 327680, 5, 131132, 327680, 5, 61, 327680, 5, 65597, 327680, 5, 131133, 327680, 5, 62, 327680, 5, 65598, 327680, 5, 63, 327680, 5, 65599, 327680, 5, 655415, 327680, 5, 655416, 327680, 5, 655417, 327680, 5, 655418, 327680, 5, 655419, 327680, 5, 655420, 327680, 5, 655421, 327680, 5, 655422, 327680, 5, 655423, 327680, 5)
+layer_0/tile_data = PackedInt32Array(589829, 65536, 0, 589830, 65536, 0, 589831, 65536, 0, 589832, 65536, 0, 589833, 65536, 0, 589837, 65536, 0, 589838, 65536, 0, 589839, 65536, 0, 589840, 65536, 0, 589841, 65536, 0, 589842, 65536, 0, 589834, 65536, 0, 589835, 65536, 0, 589836, 65536, 0, 589828, 589824, 3, 524292, 262144, 1, 458756, 262144, 1, 393220, 262144, 1, 327684, 262144, 1, 262148, 262144, 1, 196612, 262144, 1, 131076, 262144, 1, 65540, 262144, 1, 4, 262144, 1, -65532, 262144, 0, 458772, 0, 0, 524307, 0, 0, 393237, 0, 0, 589843, 458752, 0, 589844, 65536, 1, 589845, 65536, 1, 524309, 65536, 1, 458773, 458752, 0, 524308, 458752, 0, 393238, 655360, 0, 458774, 65536, 1, 524310, 65536, 1, 589846, 65536, 1, 393239, 65536, 0, 458775, 65536, 1, 524311, 65536, 1, 589847, 65536, 1, 393240, 65536, 0, 393241, 65536, 0, 393242, 65536, 0, 393243, 131072, 0, 458779, 131072, 1, 524315, 131072, 1, 589851, 131072, 1, 589850, 65536, 1, 589849, 65536, 1, 589848, 65536, 1, 524312, 65536, 1, 458776, 65536, 1, 458777, 65536, 1, 458778, 65536, 1, 524314, 65536, 1, 524313, 65536, 1, 393246, 262144, 0, 458782, 262144, 1, 524318, 262144, 1, 589854, 262144, 1, 458791, 0, 0, 524327, 0, 1, 589863, 0, 1, 589864, 65536, 1, 589865, 65536, 1, 524328, 65536, 1, 458792, 458752, 0, 393256, 0, 0, 393257, 65536, 0, 458793, 65536, 1, 524329, 65536, 1, 589866, 65536, 1, 524330, 65536, 1, 458794, 65536, 1, 393258, 65536, 0, 393259, 655360, 0, 458795, 65536, 1, 524331, 65536, 1, 589867, 65536, 1, 65557, 983040, 4, 65558, 1048576, 4, 65563, 1048576, 4, 65562, 983040, 4, 65570, 983040, 4, 65571, 1048576, 4, 196637, 1048576, 4, 196636, 983040, 4, 393251, 262144, 0, 458787, 262144, 1, 524323, 262144, 1, 589859, 262144, 1, 196644, 983040, 4, 196645, 1048576, 4, 327723, 262144, 0, 327702, 262144, 0, 131095, 983040, 4, 131096, 1048576, 4, 393260, 131072, 0, 458796, 393216, 0, 524332, 65536, 1, 589868, 65536, 1, 589869, 65536, 1, 524333, 393216, 0, 458797, 131072, 0, 524334, 131072, 0, 589870, 393216, 0, 262192, 65536, 805306369, 262193, 65536, 805306369, 262194, 65536, 805306369, 262195, 65536, 805306369, 262196, 65536, 805306369, 262197, 65536, 805306369, 262198, 65536, 805306369, 327734, 65536, 805306369, 327733, 65536, 805306369, 196662, 65536, 805306369, 196661, 65536, 805306369, 196660, 65536, 805306369, 196659, 65536, 805306369, 196658, 65536, 805306369, 196657, 65536, 805306369, 196656, 65536, 805306369, 196655, 65536, 805306369, 131119, 65536, 805306369, 65583, 65536, 805306369, 47, 65536, 805306369, 48, 65536, 805306369, 65584, 65536, 805306369, 131120, 65536, 805306369, 131121, 65536, 805306369, 65585, 65536, 805306369, 49, 65536, 805306369, 65586, 65536, 805306369, 131122, 65536, 805306369, 50, 65536, 805306369, 51, 65536, 805306369, 65587, 65536, 805306369, 131123, 65536, 805306369, 131124, 65536, 805306369, 65588, 65536, 805306369, 52, 65536, 805306369, 53, 65536, 805306369, 65589, 65536, 805306369, 131125, 65536, 805306369, 131126, 65536, 805306369, 65590, 65536, 805306369, 54, 65536, 805306369, 655407, 393216, 3, 655408, 65536, 4, 655409, 65536, 4, 655410, 65536, 4, 655411, 65536, 4, 655412, 65536, 4, 655413, 65536, 4, 655414, 65536, 4, 655406, 65536, 2, 655405, 65536, 2, 655404, 65536, 2, 655403, 65536, 2, 655402, 65536, 2, 655401, 65536, 2, 655400, 65536, 2, 655399, 0, 2, 589871, 131072, 0, 655395, 262144, 2, 655390, 262144, 2, 655387, 131072, 2, 655386, 65536, 2, 655385, 65536, 2, 655384, 65536, 2, 655383, 65536, 2, 655382, 65536, 2, 655381, 65536, 2, 655380, 65536, 2, 655379, 65536, 2, 655378, 65536, 2, 655377, 65536, 2, 655376, 65536, 2, 655375, 65536, 2, 655374, 65536, 2, 655373, 65536, 2, 655372, 65536, 2, 655371, 65536, 2, 655370, 65536, 2, 655369, 65536, 2, 655368, 65536, 2, 655367, 65536, 2, 655366, 65536, 2, 655365, 65536, 2, 655364, 0, 2, 393271, 0, 805306368, 55, 65536, 805306369, 65591, 65536, 805306369, 131127, 65536, 805306369, 196663, 65536, 805306369, 262199, 65536, 805306369, 327735, 458752, 805306368, 56, 65536, 805306369, 65592, 65536, 805306369, 131128, 65536, 805306369, 196664, 65536, 805306369, 262200, 65536, 805306369, 327736, 65536, 805306368, 57, 65536, 805306369, 65593, 65536, 805306369, 131129, 65536, 805306369, 196665, 65536, 805306369, 262201, 458752, 805306368, 327737, 0, 805306368, 58, 65536, 805306369, 65594, 65536, 805306369, 131130, 65536, 805306369, 196666, 458752, 805306368, 262202, 0, 805306368, 59, 65536, 805306369, 65595, 65536, 805306369, 131131, 458752, 805306368, 196667, 0, 805306368, 60, 65536, 805306369, 65596, 65536, 805306369, 131132, 65536, 805306368, 61, 65536, 1, 65597, 65536, 1, 131133, 65536, 1, 62, 65536, 1, 65598, 65536, 1, 63, 65536, 1, 65599, 65536, 1, 655415, 65536, 4, 655416, 65536, 4, 655417, 65536, 4, 655418, 65536, 4, 655419, 65536, 4, 655420, 65536, 4, 655421, 65536, 4, 655422, 65536, 4, 655423, 65536, 4, 327729, 65536, 805306369, 327730, 65536, 805306369, 327731, 65536, 805306369, 327732, 65536, 805306369, 393270, 65536, 805306368, 393269, 65536, 805306368, 393268, 65536, 805306368, 393267, 65536, 805306368, 393266, 65536, 805306368, 393265, 131072, 805306368)
 
 [node name="Player" type="CharacterBody2D" parent="jumpnrun_template" groups=["player"]]
 light_mask = 2
 position = Vector2(918, 532)
-
-[node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/Player"]
-script = ExtResource("3_c0q12")
-use_sprite = true
-sprite_texture = SubResource("ImageTexture_c1vcs")
-placeholder_size = Vector2(51, 65)
 
 [node name="PlatformerControllerBehavior" type="Node2D" parent="jumpnrun_template/Player"]
 position = Vector2(54, -84)
@@ -1578,7 +1472,7 @@ float_step_size = 1.0
 metadata/pronto_connections = [SubResource("Resource_gdog8")]
 
 [node name="HealthBarBehavior" type="Node2D" parent="jumpnrun_template/Player"]
-position = Vector2(0, -32)
+position = Vector2(0, -60)
 script = ExtResource("8_vbh6w")
 progress_gradient = SubResource("Gradient_rcwrg")
 metadata/pronto_connections = [SubResource("Resource_6j2re")]
@@ -1621,12 +1515,6 @@ position = Vector2(83, 42)
 script = ExtResource("9_i1bdh")
 limit_to_group = "enemy"
 metadata/pronto_connections = [SubResource("Resource_nhuam"), SubResource("Resource_ntd24")]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="jumpnrun_template/Player"]
-stream = ExtResource("13_7pl3e")
-volume_db = 4.91
-autoplay = true
-max_distance = 710.0
 
 [node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="jumpnrun_template/Player"]
 position = Vector2(1, 3)
@@ -1679,6 +1567,57 @@ offset_bottom = -213.0
 text = "Reset"
 label_settings = SubResource("LabelSettings_6ty26")
 
+[node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/Player"]
+script = ExtResource("3_c0q12")
+color = Color(1, 1, 1, 0)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_31a6d")
+outline_color = Color(1, 1, 0, 0)
+placeholder_size = Vector2(80, 100)
+
+[node name="TextureRect" type="TextureRect" parent="jumpnrun_template/Player"]
+offset_left = -36.0
+offset_top = -44.0
+offset_right = 41.0
+offset_bottom = 44.0
+texture = ExtResource("5_nssc6")
+expand_mode = 1
+
+[node name="Label4" type="Label" parent="jumpnrun_template/Player"]
+offset_left = -32.0
+offset_top = -125.0
+offset_right = 24.0
+offset_bottom = -102.0
+script = ExtResource("21_7gvbe")
+
+[node name="ClockBehavior" type="Node2D" parent="jumpnrun_template/Player"]
+position = Vector2(-59, -91)
+script = ExtResource("12_xnjgy")
+duration_seconds = 5.0
+trigger_every_x_seconds = true
+trigger_interval_in_seconds = 5.0
+metadata/pronto_connections = [SubResource("Resource_0cdvr")]
+
+[node name="Node" type="Node" parent="jumpnrun_template/Player"]
+script = ExtResource("22_ras3a")
+
+[node name="ClockBehavior2" type="Node2D" parent="jumpnrun_template/Player"]
+position = Vector2(-96.0001, -71)
+script = ExtResource("12_xnjgy")
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_3oyy1"), SubResource("Resource_qmm6l"), SubResource("Resource_bjpl6"), SubResource("Resource_wed85"), SubResource("Resource_hbppb")]
+
+[node name="Error" type="AudioStreamPlayer2D" parent="jumpnrun_template/Player"]
+stream = ExtResource("23_nvmr4")
+
+[node name="ClockBehavior3" type="Node2D" parent="jumpnrun_template/Player"]
+position = Vector2(10, -129)
+script = ExtResource("12_xnjgy")
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_w5gfl")]
+
 [node name="CoinSpawner" type="Node2D" parent="jumpnrun_template"]
 position = Vector2(757, 550)
 script = ExtResource("11_sd8pn")
@@ -1718,52 +1657,6 @@ float_value = 3.0
 float_step_size = 0.1
 metadata/pronto_connections = [SubResource("Resource_k20lk")]
 
-[node name="EnemyGuard" type="CharacterBody2D" parent="jumpnrun_template" groups=["enemy"]]
-material = SubResource("CanvasItemMaterial_v7nao")
-position = Vector2(571, 511)
-
-[node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/EnemyGuard"]
-modulate = Color(0.568627, 0, 0.0823529, 1)
-material = SubResource("CanvasItemMaterial_xs1gn")
-script = ExtResource("3_c0q12")
-color = Color(0, 1, 1, 1)
-use_sprite = true
-sprite_texture = SubResource("ImageTexture_ryym7")
-placeholder_size = Vector2(138, 156)
-
-[node name="MoveBehavior" type="Node2D" parent="jumpnrun_template/EnemyGuard"]
-position = Vector2(-104.139, -4.55207e-06)
-script = ExtResource("13_68vfu")
-gravity = 10.0
-done = null
-
-[node name="max_velocity" type="Node2D" parent="jumpnrun_template/EnemyGuard/MoveBehavior"]
-position = Vector2(50, 50)
-script = ExtResource("5_cvf4j")
-float_min = -500.0
-float_max = 500.0
-float_value = 142.0
-float_step_size = 1.0
-metadata/pronto_connections = [SubResource("Resource_ltfhd")]
-
-[node name="AlwaysBehavior" type="Node2D" parent="jumpnrun_template/EnemyGuard/MoveBehavior"]
-position = Vector2(-40, -1.74846e-06)
-script = ExtResource("14_jta5q")
-paused = false
-metadata/pronto_connections = [SubResource("Resource_hkntj")]
-
-[node name="CollisionBehavior" type="Node2D" parent="jumpnrun_template/EnemyGuard"]
-position = Vector2(-82.3962, -82.3962)
-script = ExtResource("9_i1bdh")
-limit_to_group = "player"
-metadata/pronto_connections = [SubResource("Resource_nqtnd"), SubResource("Resource_7ryib")]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="jumpnrun_template/EnemyGuard"]
-stream = ExtResource("17_b0j4t")
-volume_db = 5.943
-autoplay = true
-max_distance = 710.0
-
 [node name="BottomKillZone" type="Area2D" parent="jumpnrun_template" groups=["oob"]]
 position = Vector2(389, 786)
 metadata/pronto_connections = [SubResource("Resource_3wwl4")]
@@ -1772,41 +1665,6 @@ metadata/pronto_connections = [SubResource("Resource_3wwl4")]
 position = Vector2(6873.25, -65)
 shape = SubResource("RectangleShape2D_iyh7h")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
-
-[node name="EnemyZecke" type="CharacterBody2D" parent="jumpnrun_template" groups=["enemy"]]
-position = Vector2(2043, 355)
-
-[node name="PlaceholderBehavior" type="Node2D" parent="jumpnrun_template/EnemyZecke"]
-modulate = Color(0.509804, 0, 0.117647, 1)
-script = ExtResource("3_c0q12")
-use_sprite = true
-sprite_texture = SubResource("ImageTexture_kcnpj")
-placeholder_size = Vector2(37, 32)
-
-[node name="CollisionBehavior" type="Node2D" parent="jumpnrun_template/EnemyZecke"]
-position = Vector2(-365, -54)
-script = ExtResource("9_i1bdh")
-limit_to_group = "player"
-metadata/pronto_connections = [SubResource("Resource_gx658"), SubResource("Resource_pfb8a")]
-
-[node name="MoveBehavior" type="Node2D" parent="jumpnrun_template/EnemyZecke"]
-position = Vector2(-28.2843, -28.2843)
-script = ExtResource("13_68vfu")
-max_velocity = 200.0
-right_side = false
-done = null
-
-[node name="AlwaysBehavior" type="Node2D" parent="jumpnrun_template/EnemyZecke/MoveBehavior"]
-position = Vector2(-28.2843, 28.2843)
-script = ExtResource("14_jta5q")
-paused = false
-metadata/pronto_connections = [SubResource("Resource_li3gf")]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="jumpnrun_template/EnemyZecke"]
-stream = ExtResource("23_6avei")
-autoplay = true
-max_distance = 200.0
-metadata/pronto_connections = [SubResource("Resource_3pica")]
 
 [node name="TileMap2" type="TileMap" parent="jumpnrun_template"]
 material = SubResource("CanvasItemMaterial_8ji6e")
@@ -1992,10 +1850,11 @@ scroll_offset = Vector2(-4139.79, -235.976)
 visible = false
 color = Color(0, 0, 0, 1)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("15_dagm6")
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("27_cgeq0")
 volume_db = -5.396
 autoplay = true
+script = ExtResource("32_luxyn")
 
 [node name="Button" type="Button" parent="."]
 offset_left = 215.0
@@ -2399,6 +2258,13 @@ trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = []
 
 [connection signal="death" from="jumpnrun_template/Player/HealthBarBehavior" to="jumpnrun_template" method="_on_health_bar_behavior_death"]
+[connection signal="change_text" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/Label4" method="set_text_key_code"]
+[connection signal="change_text" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/ClockBehavior2" method="start_timer"]
+[connection signal="key_pressed" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/Label4" method="set_text_key_pressed"]
+[connection signal="key_pressed" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/ClockBehavior2" method="pause_timer"]
+[connection signal="wrong_key_pressed" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/HealthBarBehavior" method="wrong_key_damage"]
+[connection signal="elapsed" from="jumpnrun_template/Player/ClockBehavior2" to="Music" method="pause"]
+[connection signal="elapsed" from="jumpnrun_template/Player/ClockBehavior3" to="Music" method="resume"]
 [connection signal="pressed" from="Button" to="jumpnrun_template" method="restart_game"]
 [connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_first_area_2d_body_shape_entered" flags=18]
 [connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D2" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]

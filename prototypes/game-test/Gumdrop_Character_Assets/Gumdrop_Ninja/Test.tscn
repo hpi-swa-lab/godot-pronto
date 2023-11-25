@@ -1,0 +1,132 @@
+[gd_scene load_steps=12 format=3 uid="uid://drovvi5hp8x6w"]
+
+[ext_resource type="PackedScene" uid="uid://bjd1iy5erlmqy" path="res://Gumdrop.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://bf1p4aubawdht" path="res://sprites/Ninja_Style_3_P2.png" id="2_2koeo"]
+[ext_resource type="Texture2D" uid="uid://o3e7aueelb0n" path="res://sprites/Ninja_Style_3_Normals.png" id="3_j7urm"]
+[ext_resource type="Texture2D" uid="uid://bkhvhv5jka4ek" path="res://sprites/light_test.png" id="4_5hfqy"]
+[ext_resource type="Texture2D" uid="uid://pwuov7qtiejj" path="res://sprites/Ninja_P9.png" id="5_54g3i"]
+[ext_resource type="Texture2D" uid="uid://cx1ryrxg8s4lb" path="res://sprites/Ninja_Normals.png" id="6_74myi"]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_n65ak"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_yi51e"]
+diffuse_texture = ExtResource("2_2koeo")
+normal_texture = ExtResource("3_j7urm")
+texture_filter = 1
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_cmacr"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ru4kr"]
+diffuse_texture = ExtResource("5_54g3i")
+normal_texture = ExtResource("6_74myi")
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_nng7r"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.25, 0.25)
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="Gumdrop" parent="." instance=ExtResource("1")]
+position = Vector2(21, 1)
+
+[node name="Weapon_BG_Sprite" parent="Gumdrop" index="0"]
+region_rect = Rect2(448, 192, 64, 64)
+
+[node name="Character_Sprite" parent="Gumdrop" index="1"]
+region_rect = Rect2(448, 192, 64, 64)
+
+[node name="Weapon_FG_Sprite" parent="Gumdrop" index="2"]
+region_rect = Rect2(448, 192, 64, 64)
+
+[node name="Flash_Sprite" parent="Gumdrop" index="3"]
+region_rect = Rect2(448, 192, 64, 64)
+
+[node name="CharacterTree" parent="Gumdrop" index="6"]
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_n65ak")
+
+[node name="Gumdrop2" parent="." instance=ExtResource("1")]
+position = Vector2(-33, 1)
+
+[node name="Weapon_BG_Sprite" parent="Gumdrop2" index="0"]
+region_rect = Rect2(448, 192, 64, 64)
+
+[node name="Character_Sprite" parent="Gumdrop2" index="1"]
+texture = SubResource("CanvasTexture_yi51e")
+region_rect = Rect2(448, 192, 64, 64)
+
+[node name="Weapon_FG_Sprite" parent="Gumdrop2" index="2"]
+region_rect = Rect2(448, 192, 64, 64)
+
+[node name="Flash_Sprite" parent="Gumdrop2" index="3"]
+region_rect = Rect2(448, 192, 64, 64)
+
+[node name="CharacterTree" parent="Gumdrop2" index="6"]
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_cmacr")
+
+[node name="Light" type="PointLight2D" parent="Gumdrop2"]
+position = Vector2(20, 18)
+texture = ExtResource("4_5hfqy")
+
+[node name="Light2" type="PointLight2D" parent="Gumdrop2"]
+position = Vector2(28, 10)
+texture = ExtResource("4_5hfqy")
+height = 48.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Gumdrop2"]
+color = Color(0, 0, 0, 1)
+
+[node name="Gumdrop3" parent="." instance=ExtResource("1")]
+position = Vector2(-7, -27)
+
+[node name="Weapon_BG_Sprite" parent="Gumdrop3" index="0"]
+region_rect = Rect2(320, 0, 64, 64)
+
+[node name="Character_Sprite" parent="Gumdrop3" index="1"]
+texture = SubResource("CanvasTexture_ru4kr")
+region_rect = Rect2(320, 0, 64, 64)
+
+[node name="Weapon_FG_Sprite" parent="Gumdrop3" index="2"]
+region_rect = Rect2(320, 0, 64, 64)
+
+[node name="Flash_Sprite" parent="Gumdrop3" index="3"]
+region_rect = Rect2(320, 0, 64, 64)
+
+[node name="CharacterTree" parent="Gumdrop3" index="6"]
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_nng7r")
+parameters/AttackA/blend_position = Vector2(0, 1)
+parameters/AttackB/blend_position = Vector2(0, 1)
+parameters/AttackC/blend_position = Vector2(0, 1)
+parameters/Draw/blend_position = Vector2(0, 1)
+parameters/Hurt/blend_position = Vector2(0, 1)
+parameters/HurtDrawn/blend_position = Vector2(0, 1)
+parameters/Idle/blend_position = Vector2(0, 1)
+parameters/IdleDrawn/blend_position = Vector2(0, 1)
+parameters/Run/blend_position = Vector2(0, 1)
+parameters/Sheath/blend_position = Vector2(0, 1)
+parameters/Walk/blend_position = Vector2(0, 1)
+parameters/WalkDrawn/blend_position = Vector2(0, 1)
+
+[node name="Blend2D" parent="Gumdrop3" index="7"]
+parameters/blend_position = Vector2(0.0266067, 0.55)
+
+[node name="Light" type="PointLight2D" parent="Gumdrop3"]
+visible = false
+position = Vector2(20, 18)
+texture = ExtResource("4_5hfqy")
+
+[node name="Light2" type="PointLight2D" parent="Gumdrop3"]
+visible = false
+position = Vector2(28, 10)
+texture = ExtResource("4_5hfqy")
+height = 48.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Gumdrop3"]
+visible = false
+color = Color(0, 0, 0, 1)
+
+[editable path="Gumdrop"]
+[editable path="Gumdrop2"]
+[editable path="Gumdrop3"]

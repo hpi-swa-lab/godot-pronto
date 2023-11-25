@@ -2,10 +2,7 @@ extends Node2D
 
 var spikes_enabled: bool = false
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	$SpikeWallMap.material.set_light_mode(2)
-	$TileMap.material.set_light_mode(2)
-	$Torches/TileMap2.material.set_light_mode(2)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

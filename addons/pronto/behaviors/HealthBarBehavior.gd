@@ -179,3 +179,6 @@ func handles():
 			"healthbar_size",
 			func (coord): return (floor(coord * 2) * transform.translated(-position)).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 	]
+
+func wrong_key_damage():
+	damage(25)

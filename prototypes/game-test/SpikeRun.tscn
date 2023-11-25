@@ -391,7 +391,7 @@ script = ExtResource("2_7bj6n")
 
 [node name="AudioStreamPlayer2DSpikes" type="AudioStreamPlayer2D" parent="SpikeWallMap"]
 stream = ExtResource("6_0pqkv")
-volume_db = 3.545
+volume_db = -12.769
 pitch_scale = 0.85
 
 [node name="Alert" type="AudioStreamPlayer" parent="."]
