@@ -30,26 +30,3 @@ func _physics_process(delta):
 		if pressed == true:
 			get_tree().reload_current_scene()
 			pressed = false
-
-
-func _on_clock_behavior_trap_trigger_elapsed():
-	$Player/PointLight2D.set_enabled(true)
-	$Player/PlatformerControllerBehavior.set_movement_enabled(true)	
-
-
-func _on_audio_stream_player_trap_trigger_finished():
-	$Player/PointLight2D.set_enabled(false)
-	$"../SpikeRun".blackScreen_on()
-	$"../SpikeRun".enable_camera()
-	$Player/CameraPlayer.set_enabled(false)
-
-
-func _on_trap_trigger_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	print("Area Entered")
-	$Player/PlatformerControllerBehavior.set_movement_enabled(false)
-	$"../TrapTrigger".queue_free()
-
-
-func _on_health_bar_behavior_death():
-	$"../SpikeRun"._on_health_bar_behavior_death()
-	pass # Replace with function body.

@@ -1,10 +1,9 @@
-[gd_scene load_steps=213 format=3 uid="uid://dq5gygwtd7rxb"]
+[gd_scene load_steps=168 format=3 uid="uid://dq5gygwtd7rxb"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Script" path="res://prototypes/game-test/jumpnrun_template.gd" id="2_dr2ov"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_c0q12"]
 [ext_resource type="TileSet" uid="uid://bfcd68mnqmjiy" path="res://prototypes/game-test/GrassDirtGenericTileSet.tres" id="3_mg4j3"]
-[ext_resource type="TileSet" uid="uid://cxkbxfjg6w030" path="res://prototypes/game-test/tiles.tres" id="3_pru7n"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="4_ysmq6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="5_cvf4j"]
 [ext_resource type="Texture2D" uid="uid://ds4p45mtul1dt" path="res://prototypes/game-test/Player.png" id="5_nssc6"]
@@ -18,7 +17,6 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="12_xnjgy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="13_68vfu"]
 [ext_resource type="Texture2D" uid="uid://dn5t3tyhxxbwl" path="res://prototypes/game-test/test.png" id="13_kxfa8"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="14_jta5q"]
 [ext_resource type="AudioStream" uid="uid://da57x6iirohen" path="res://prototypes/game-test/resources/audio/Wood Golf Club Hit Ball.mp3" id="15_hyrnx"]
 [ext_resource type="AudioStream" uid="uid://dh5li7d8eqq0e" path="res://prototypes/game-test/resources/audio/Coins Shuffling.mp3" id="16_41oan"]
 [ext_resource type="Script" path="res://prototypes/game-test/AudioStreamPlayer2D3.gd" id="16_r1y3c"]
@@ -31,16 +29,8 @@
 [ext_resource type="AudioStream" uid="uid://rki0cuikc77j" path="res://prototypes/game-test/error.mp3" id="23_nvmr4"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="26_4vtvb"]
 [ext_resource type="AudioStream" uid="uid://ctql0mmf4cuxl" path="res://prototypes/game-test/A Flute's Mourning - Aakash Gandhi.mp3" id="27_cgeq0"]
-[ext_resource type="Script" path="res://prototypes/game-test/SpikeRun.gd" id="30_36qlf"]
-[ext_resource type="Script" path="res://prototypes/game-test/TrapTrigger.gd" id="31_l7ylb"]
-[ext_resource type="Script" path="res://prototypes/game-test/TileMap2.gd" id="31_w7wul"]
-[ext_resource type="Script" path="res://prototypes/game-test/SpikeWallMap.gd" id="32_if7e5"]
+[ext_resource type="Script" path="res://prototypes/game-test/DifficultyButton.gd" id="31_iqbgy"]
 [ext_resource type="Script" path="res://prototypes/game-test/Music.gd" id="32_luxyn"]
-[ext_resource type="AudioStream" uid="uid://fca47turvu6w" path="res://prototypes/game-test/resources/audio/lever pull sound effect.mp3" id="32_nnw28"]
-[ext_resource type="Script" path="res://prototypes/game-test/AudioStreamPlayerTrapTrigger.gd" id="33_ltmpf"]
-[ext_resource type="Script" path="res://prototypes/game-test/Camera2D.gd" id="33_y5nvw"]
-[ext_resource type="AudioStream" uid="uid://bl1ae8fx2x37n" path="res://prototypes/game-test/resources/audio/Gears Factory Mechanical.mp3" id="34_0qeyf"]
-[ext_resource type="AudioStream" uid="uid://cyqmtddyrmkl3" path="res://prototypes/game-test/resources/audio/Metal Gear Solid Alert.mp3" id="35_pdr0a"]
 
 [sub_resource type="GDScript" id="GDScript_yljtb"]
 script/source = "@tool
@@ -366,7 +356,7 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(prop, value, from: Node2D, to: TileMap):
-	return value == 5
+	return value == 3
 "
 
 [sub_resource type="Resource" id="Resource_ec7cy"]
@@ -517,7 +507,7 @@ enabled = true
 [sub_resource type="LabelSettings" id="LabelSettings_6ty26"]
 font_size = 12
 
-[sub_resource type="Image" id="Image_pk3n3"]
+[sub_resource type="Image" id="Image_20ea3"]
 data = {
 "data": PackedByteArray(0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 0, 0, 0, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -527,7 +517,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_31a6d"]
-image = SubResource("Image_pk3n3")
+image = SubResource("Image_20ea3")
 
 [sub_resource type="GDScript" id="GDScript_bsq11"]
 script/source = "@tool
@@ -558,7 +548,7 @@ enabled = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
+func run(from, to):
 	return 25
 "
 
@@ -610,7 +600,7 @@ return_value = true
 [sub_resource type="Resource" id="Resource_qmm6l"]
 script = ExtResource("7_02ofy")
 signal_name = "elapsed"
-to = NodePath("../Label4")
+to = NodePath("../PressXYLabel")
 more_references = []
 invoke = "set_text_key_pressed"
 arguments = []
@@ -1072,358 +1062,6 @@ size = Vector2(15921.5, 26)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8ji6e"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_w5p0e"]
-
-[sub_resource type="GDScript" id="GDScript_ns0he"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_qmauu"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_ns0he")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_ygb0q"]
-script = ExtResource("7_02ofy")
-signal_name = "always"
-to = NodePath("../MoveBehavior")
-more_references = []
-invoke = "move_down_a_bit"
-arguments = []
-only_if = SubResource("Resource_qmauu")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_qp73n"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_5kfeb"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_qp73n")
-argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_656vt"]
-script = ExtResource("7_02ofy")
-signal_name = "body_shape_entered"
-to = NodePath("../ClockBehavior")
-more_references = []
-invoke = "reset_and_start"
-arguments = []
-only_if = SubResource("Resource_5kfeb")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_x57e7"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_f3j02"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_x57e7")
-argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_iffxq"]
-script = ExtResource("7_02ofy")
-signal_name = "body_shape_entered"
-to = NodePath("../AlwaysBehavior")
-more_references = []
-invoke = "resume"
-arguments = []
-only_if = SubResource("Resource_f3j02")
-deferred = false
-enabled = true
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n3pxo"]
-size = Vector2(53, 252)
-
-[sub_resource type="GDScript" id="GDScript_ljnm8"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_ksnya"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_ljnm8")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_me0g6"]
-script = ExtResource("7_02ofy")
-signal_name = "elapsed"
-to = NodePath("../AlwaysBehavior")
-more_references = []
-invoke = "pause"
-arguments = []
-only_if = SubResource("Resource_ksnya")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_8dmt3"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_ro8yc"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_8dmt3")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_k3gv0"]
-script = ExtResource("7_02ofy")
-signal_name = "elapsed"
-to = NodePath("../MoveBehavior")
-more_references = []
-invoke = "set_done"
-arguments = []
-only_if = SubResource("Resource_ro8yc")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_1ssxf"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(body_rid, body, body_shape_index, local_shape_index, from, to):
-	return 100
-"
-
-[sub_resource type="Resource" id="Resource_2knbu"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_1ssxf")
-argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_w4ntg"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
-	return body.is_in_group(\"player\")
-"
-
-[sub_resource type="Resource" id="Resource_db20s"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_w4ntg")
-argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_ikr66"]
-script = ExtResource("7_02ofy")
-signal_name = "body_shape_entered"
-to = NodePath("../../Player/HealthBarBehavior")
-more_references = []
-invoke = "damage"
-arguments = [SubResource("Resource_2knbu")]
-only_if = SubResource("Resource_db20s")
-deferred = false
-enabled = true
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_icpf8"]
-height = 54.0
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f4ms5"]
-particles_animation = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqfre"]
-size = Vector2(34, 176)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mcybr"]
-size = Vector2(34, 560)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q23d4"]
-size = Vector2(64, 64)
-
-[sub_resource type="GDScript" id="GDScript_rsp5c"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
-	return 100
-"
-
-[sub_resource type="Resource" id="Resource_7xixa"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_rsp5c")
-argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_afgho"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(body_rid, body, body_shape_index, local_shape_index, from: Area2D, to: Node2D):
-	return body.is_in_group(\"player\")
-"
-
-[sub_resource type="Resource" id="Resource_fs8ca"]
-script = ExtResource("6_sh1cs")
-nested_script = SubResource("GDScript_afgho")
-argument_names = ["body_rid", "body", "body_shape_index", "local_shape_index", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_2alrx"]
-script = ExtResource("7_02ofy")
-signal_name = "body_shape_entered"
-to = NodePath("../../../jumpnrun_template/Player/HealthBarBehavior")
-more_references = []
-invoke = "damage"
-arguments = [SubResource("Resource_7xixa")]
-only_if = SubResource("Resource_fs8ca")
-deferred = false
-enabled = true
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4q0av"]
-size = Vector2(58, 578)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kv50"]
-size = Vector2(99, 554)
-
-[sub_resource type="GDScript" id="GDScript_2cw0g"]
-script/source = "@tool
-#thumb(\"Timer\")
-extends Behavior
-class_name ClockBehaviorTrapTrigger
-
-## The ClockBehavior is a [class Behavior] that encasulates a [class Timer]
-## and makes it accessible to other behaviors.
-
-## Emitted on [method Timer.timeout]
-signal elapsed()
-
-## Emitted in one of two cases:
-##
-## 1. If [member ClockBehavior.trigger_every_frame] is set to [code]true[/code],
-## then this is emitted every frame that the timer is active.
-##
-## 2. If [member ClockBehavior.trigger_every_x_seconds] is set to [code]true[/code],
-## then this is emitted if the last trigger was [member ClockBehavior.trigger_interval_in_seconds] 
-## seconds ago.
-signal until_elapsed()
-
-
-var _trigger_inteval: float = 1.0
-
-var _time_since_last_trigger: float = 0
-
-var _trigger_count := 0
-
-## How often the signal [signal ClockBehavor.elapsed] will be emitted.
-## A value of [code]-1[/code] means no limit.
-@export var cycle_count : int = 1
-
-## Timer duration in seconds
-@export var duration_seconds: float = 1.0:
-	get: return _timer.wait_time
-	set(value): _timer.wait_time = max(value, 0.0001)
-
-## If set to [code]true[/code], the timere will pause itself and resume
-## as soon as it is set to [code]false[/code] again.
-@export var paused: bool:
-	get: return _timer.paused
-	set(value): _timer.paused = value
-
-@export_category(\"Until Elapsed\")
-
-## Determines the mode of operation. If this is set to [code]true[/code],
-## the normal timer functionality is used.
-##
-## Mutual exclusive to [member ClockBehavior.trigger_every_x_seconds]
-@export var trigger_every_frame: bool:
-	get: return trigger_every_frame
-	set(value): 
-		trigger_every_frame = value
-		if value:
-			trigger_every_x_seconds = false
-
-## Determines the mode of operation. If this is set to [code]true[/code],
-## the custom \"trigger every x seconds\" functionality is used. This means
-## the ClockBehavior will emit [signal ClockBehavior.until_elapsed] when the
-## last emit of that signal was at least [member ClockBehavior.trigger_interval_in_seconds]
-## seconds ago.
-##
-## Mutual exclusive to [member ClockBehavior.trigger_every_frame]
-@export var trigger_every_x_seconds: bool:
-	get: return trigger_every_x_seconds
-	set(value): 
-		trigger_every_x_seconds = value
-		if value:
-			trigger_every_frame = false
-
-## If [member ClockBehavior.trigger_every_x_seconds] is set to [code]true[/code],
-## this determines the interval in which [signal ClockBehavior.until_elapsed] is
-## emitted
-@export var trigger_interval_in_seconds: float:
-	get: return _trigger_inteval
-	set(value): _trigger_inteval = value
-
-var _timer: Timer:
-	get:
-		if not _timer: _timer = Timer.new()
-		return _timer
-
-func reset_and_start():
-	self.paused = false
-	_timer.start(duration_seconds)
-
-func _process(delta):
-	super._process(delta)
-	
-	if((trigger_every_frame or trigger_every_x_seconds) and not (_timer.paused or _timer.is_stopped())):
-		if(trigger_every_x_seconds):
-			_time_since_last_trigger += delta
-			if(_time_since_last_trigger > (_trigger_inteval - delta * 1.1)):
-				_time_since_last_trigger = _time_since_last_trigger - _trigger_inteval
-				until_elapsed.emit()
-		else:
-			until_elapsed.emit()
-
-func _ready():
-	super._ready()
-	if not Engine.is_editor_hint():
-		_timer.autostart = true
-		_timer.timeout.connect(func(): _on_timer_elapsed())
-		add_child(_timer)
-
-func _on_timer_elapsed():
-	_timer.stop()
-	if cycle_count < 0:
-		elapsed.emit()
-	elif _trigger_count < cycle_count:
-		elapsed.emit()
-		_trigger_count += 1
-	else:
-		_timer.stop()
-
-func _on_audio_stream_player_trap_trigger_finished():
-	reset_and_start()
-"
-
 [node name="Node2D" type="Node2D"]
 
 [node name="ExportBehavior" type="Node2D" parent="."]
@@ -1443,7 +1081,7 @@ script = ExtResource("2_dr2ov")
 scale = Vector2(4, 4)
 tile_set = ExtResource("3_mg4j3")
 format = 2
-layer_0/tile_data = PackedInt32Array(589829, 65536, 0, 589830, 65536, 0, 589831, 65536, 0, 589832, 65536, 0, 589833, 65536, 0, 589837, 65536, 0, 589838, 65536, 0, 589839, 65536, 0, 589840, 65536, 0, 589841, 65536, 0, 589842, 65536, 0, 589834, 65536, 0, 589835, 65536, 0, 589836, 65536, 0, 589828, 589824, 3, 524292, 262144, 1, 458756, 262144, 1, 393220, 262144, 1, 327684, 262144, 1, 262148, 262144, 1, 196612, 262144, 1, 131076, 262144, 1, 65540, 262144, 1, 4, 262144, 1, -65532, 262144, 0, 458772, 0, 0, 524307, 0, 0, 393237, 0, 0, 589843, 458752, 0, 589844, 65536, 1, 589845, 65536, 1, 524309, 65536, 1, 458773, 458752, 0, 524308, 458752, 0, 393238, 655360, 0, 458774, 65536, 1, 524310, 65536, 1, 589846, 65536, 1, 393239, 65536, 0, 458775, 65536, 1, 524311, 65536, 1, 589847, 65536, 1, 393240, 65536, 0, 393241, 65536, 0, 393242, 65536, 0, 393243, 131072, 0, 458779, 131072, 1, 524315, 131072, 1, 589851, 131072, 1, 589850, 65536, 1, 589849, 65536, 1, 589848, 65536, 1, 524312, 65536, 1, 458776, 65536, 1, 458777, 65536, 1, 458778, 65536, 1, 524314, 65536, 1, 524313, 65536, 1, 393246, 262144, 0, 458782, 262144, 1, 524318, 262144, 1, 589854, 262144, 1, 458791, 0, 0, 524327, 0, 1, 589863, 0, 1, 589864, 65536, 1, 589865, 65536, 1, 524328, 65536, 1, 458792, 458752, 0, 393256, 0, 0, 393257, 65536, 0, 458793, 65536, 1, 524329, 65536, 1, 589866, 65536, 1, 524330, 65536, 1, 458794, 65536, 1, 393258, 65536, 0, 393259, 655360, 0, 458795, 65536, 1, 524331, 65536, 1, 589867, 65536, 1, 65557, 983040, 4, 65558, 1048576, 4, 65563, 1048576, 4, 65562, 983040, 4, 65570, 983040, 4, 65571, 1048576, 4, 196637, 1048576, 4, 196636, 983040, 4, 393251, 262144, 0, 458787, 262144, 1, 524323, 262144, 1, 589859, 262144, 1, 196644, 983040, 4, 196645, 1048576, 4, 327723, 262144, 0, 327702, 262144, 0, 131095, 983040, 4, 131096, 1048576, 4, 393260, 131072, 0, 458796, 393216, 0, 524332, 65536, 1, 589868, 65536, 1, 589869, 65536, 1, 524333, 393216, 0, 458797, 131072, 0, 524334, 131072, 0, 589870, 393216, 0, 262192, 65536, 805306369, 262193, 65536, 805306369, 262194, 65536, 805306369, 262195, 65536, 805306369, 262196, 65536, 805306369, 262197, 65536, 805306369, 262198, 65536, 805306369, 327734, 65536, 805306369, 327733, 65536, 805306369, 196662, 65536, 805306369, 196661, 65536, 805306369, 196660, 65536, 805306369, 196659, 65536, 805306369, 196658, 65536, 805306369, 196657, 65536, 805306369, 196656, 65536, 805306369, 196655, 65536, 805306369, 131119, 65536, 805306369, 65583, 65536, 805306369, 47, 65536, 805306369, 48, 65536, 805306369, 65584, 65536, 805306369, 131120, 65536, 805306369, 131121, 65536, 805306369, 65585, 65536, 805306369, 49, 65536, 805306369, 65586, 65536, 805306369, 131122, 65536, 805306369, 50, 65536, 805306369, 51, 65536, 805306369, 65587, 65536, 805306369, 131123, 65536, 805306369, 131124, 65536, 805306369, 65588, 65536, 805306369, 52, 65536, 805306369, 53, 65536, 805306369, 65589, 65536, 805306369, 131125, 65536, 805306369, 131126, 65536, 805306369, 65590, 65536, 805306369, 54, 65536, 805306369, 655407, 393216, 3, 655408, 65536, 4, 655409, 65536, 4, 655410, 65536, 4, 655411, 65536, 4, 655412, 65536, 4, 655413, 65536, 4, 655414, 65536, 4, 655406, 65536, 2, 655405, 65536, 2, 655404, 65536, 2, 655403, 65536, 2, 655402, 65536, 2, 655401, 65536, 2, 655400, 65536, 2, 655399, 0, 2, 589871, 131072, 0, 655395, 262144, 2, 655390, 262144, 2, 655387, 131072, 2, 655386, 65536, 2, 655385, 65536, 2, 655384, 65536, 2, 655383, 65536, 2, 655382, 65536, 2, 655381, 65536, 2, 655380, 65536, 2, 655379, 65536, 2, 655378, 65536, 2, 655377, 65536, 2, 655376, 65536, 2, 655375, 65536, 2, 655374, 65536, 2, 655373, 65536, 2, 655372, 65536, 2, 655371, 65536, 2, 655370, 65536, 2, 655369, 65536, 2, 655368, 65536, 2, 655367, 65536, 2, 655366, 65536, 2, 655365, 65536, 2, 655364, 0, 2, 393271, 0, 805306368, 55, 65536, 805306369, 65591, 65536, 805306369, 131127, 65536, 805306369, 196663, 65536, 805306369, 262199, 65536, 805306369, 327735, 458752, 805306368, 56, 65536, 805306369, 65592, 65536, 805306369, 131128, 65536, 805306369, 196664, 65536, 805306369, 262200, 65536, 805306369, 327736, 65536, 805306368, 57, 65536, 805306369, 65593, 65536, 805306369, 131129, 65536, 805306369, 196665, 65536, 805306369, 262201, 458752, 805306368, 327737, 0, 805306368, 58, 65536, 805306369, 65594, 65536, 805306369, 131130, 65536, 805306369, 196666, 458752, 805306368, 262202, 0, 805306368, 59, 65536, 805306369, 65595, 65536, 805306369, 131131, 458752, 805306368, 196667, 0, 805306368, 60, 65536, 805306369, 65596, 65536, 805306369, 131132, 65536, 805306368, 61, 65536, 1, 65597, 65536, 1, 131133, 65536, 1, 62, 65536, 1, 65598, 65536, 1, 63, 65536, 1, 65599, 65536, 1, 655415, 65536, 4, 655416, 65536, 4, 655417, 65536, 4, 655418, 65536, 4, 655419, 65536, 4, 655420, 65536, 4, 655421, 65536, 4, 655422, 65536, 4, 655423, 65536, 4, 327729, 65536, 805306369, 327730, 65536, 805306369, 327731, 65536, 805306369, 327732, 65536, 805306369, 393270, 65536, 805306368, 393269, 65536, 805306368, 393268, 65536, 805306368, 393267, 65536, 805306368, 393266, 65536, 805306368, 393265, 131072, 805306368)
+layer_0/tile_data = PackedInt32Array(589829, 65536, 0, 589830, 65536, 0, 589831, 65536, 0, 589832, 65536, 0, 589833, 65536, 0, 589837, 65536, 0, 589838, 65536, 0, 589839, 65536, 0, 589840, 65536, 0, 589842, 65536, 0, 589834, 65536, 0, 589835, 65536, 0, 589836, 65536, 0, 589828, 589824, 3, 524292, 262144, 1, 458756, 262144, 1, 393220, 262144, 1, 327684, 262144, 1, 262148, 262144, 1, 196612, 262144, 1, 131076, 262144, 1, 65540, 262144, 1, 4, 262144, 1, -65532, 262144, 0, 458772, 0, 0, 524307, 0, 0, 393237, 0, 0, 589843, 458752, 0, 589844, 65536, 1, 589845, 65536, 1, 524309, 65536, 1, 458773, 458752, 0, 524308, 458752, 0, 393238, 655360, 0, 458774, 65536, 1, 524310, 65536, 1, 589846, 65536, 1, 393239, 65536, 0, 458775, 65536, 1, 524311, 65536, 1, 589847, 65536, 1, 393240, 65536, 0, 393241, 65536, 0, 393242, 65536, 0, 393243, 131072, 0, 458779, 131072, 1, 524315, 131072, 1, 589851, 131072, 1, 589850, 65536, 1, 589849, 65536, 1, 589848, 65536, 1, 524312, 65536, 1, 458776, 65536, 1, 458777, 65536, 1, 458778, 65536, 1, 524314, 65536, 1, 524313, 65536, 1, 393246, 262144, 0, 458782, 262144, 1, 524318, 262144, 1, 589854, 262144, 1, 458791, 0, 0, 524327, 0, 1, 589863, 0, 1, 589864, 65536, 1, 589865, 65536, 1, 524328, 65536, 1, 458792, 458752, 0, 393256, 0, 0, 393257, 65536, 0, 458793, 65536, 1, 524329, 65536, 1, 589866, 65536, 1, 524330, 65536, 1, 458794, 65536, 1, 393258, 65536, 0, 393259, 655360, 0, 458795, 65536, 1, 524331, 65536, 1, 589867, 65536, 1, 65557, 983040, 4, 65558, 1048576, 4, 65563, 1048576, 4, 65562, 983040, 4, 65570, 983040, 4, 65571, 1048576, 4, 393251, 262144, 0, 458787, 262144, 1, 524323, 262144, 1, 589859, 262144, 1, 327723, 262144, 0, 327702, 262144, 0, 131095, 983040, 4, 131096, 1048576, 4, 393260, 131072, 0, 458796, 131072, 1, 524332, 131072, 1, 589868, 131072, 1, 262193, 393216, 805306371, 262194, 65536, 805306370, 262195, 65536, 805306370, 262196, 65536, 805306370, 262197, 65536, 805306370, 262198, 65536, 805306370, 327734, 65536, 805306369, 327733, 65536, 805306369, 65583, 65536, 2, 47, 65536, 0, 48, 65536, 0, 65584, 65536, 2, 65585, 65536, 2, 49, 65536, 0, 65586, 65536, 2, 50, 65536, 0, 51, 65536, 0, 65587, 65536, 2, 65588, 65536, 2, 52, 65536, 0, 53, 65536, 0, 65589, 65536, 2, 65590, 65536, 2, 54, 65536, 0, 655404, 131072, 2, 655403, 65536, 2, 655402, 65536, 2, 655401, 65536, 2, 655400, 65536, 2, 655399, 0, 2, 655395, 262144, 2, 655390, 262144, 2, 655387, 131072, 2, 655386, 65536, 2, 655385, 65536, 2, 655384, 65536, 2, 655383, 65536, 2, 655382, 65536, 2, 655381, 65536, 2, 655380, 65536, 2, 655379, 65536, 2, 655378, 65536, 2, 655376, 65536, 2, 655375, 65536, 2, 655374, 65536, 2, 655373, 65536, 2, 655372, 65536, 2, 655371, 65536, 2, 655370, 65536, 2, 655369, 65536, 2, 655368, 65536, 2, 655367, 65536, 2, 655366, 65536, 2, 655365, 65536, 2, 655364, 0, 2, 393271, 0, 805306368, 55, 65536, 0, 65591, 65536, 2, 262199, 65536, 805306370, 327735, 458752, 805306368, 56, 65536, 0, 65592, 65536, 2, 262200, 65536, 805306370, 327736, 65536, 805306368, 57, 65536, 0, 65593, 65536, 2, 262201, 65536, 805306370, 327737, 0, 805306368, 58, 65536, 0, 65594, 65536, 2, 262202, 0, 805306372, 59, 65536, 0, 65595, 65536, 2, 60, 65536, 0, 65596, 65536, 2, 61, 131072, 0, 65597, 131072, 2, 655419, 0, 4, 655420, 65536, 4, 655421, 65536, 4, 655422, 65536, 4, 655423, 131072, 4, 327729, 0, 1, 327730, 65536, 805306369, 327731, 65536, 805306369, 327732, 65536, 805306369, 393270, 65536, 805306368, 393269, 65536, 805306368, 393268, 65536, 805306368, 393267, 65536, 805306368, 393266, 65536, 805306368, 393265, 131072, 805306368, 46, 65536, 0, 45, 65536, 0, 44, 65536, 0, 43, 65536, 0, 42, 65536, 0, 41, 65536, 0, 40, 0, 0, 262192, 65536, 805306372, 262191, 65536, 805306372, 65576, 0, 2, 65577, 65536, 2, 65578, 65536, 2, 65579, 65536, 2, 65580, 65536, 2, 65581, 65536, 2, 65582, 65536, 2, 655427, 0, 4, 524359, 0, 4, 655428, 65536, 4, 524360, 65536, 4, 393283, 65536, 4, 655429, 131072, 4, 524361, 131072, 4, 393284, 131072, 4, 131135, 0, 4, 131137, 131072, 4, 131136, 65536, 4, 262210, 262144, 0, 327746, 262144, 1, 393282, 983040, 3)
 
 [node name="Player" type="CharacterBody2D" parent="jumpnrun_template" groups=["player"]]
 light_mask = 2
@@ -1485,7 +1123,7 @@ metadata/pronto_connections = [SubResource("Resource_jpu4a"), SubResource("Resou
 
 [node name="CameraPlayer" type="Camera2D" parent="jumpnrun_template/Player"]
 position = Vector2(-3, -84)
-zoom = Vector2(1.795, 1.795)
+zoom = Vector2(1.5, 1.5)
 script = ExtResource("11_eisga")
 
 [node name="PointLight2D" type="PointLight2D" parent="jumpnrun_template/Player"]
@@ -1583,7 +1221,7 @@ offset_bottom = 44.0
 texture = ExtResource("5_nssc6")
 expand_mode = 1
 
-[node name="Label4" type="Label" parent="jumpnrun_template/Player"]
+[node name="PressXYLabel" type="Label" parent="jumpnrun_template/Player"]
 offset_left = -32.0
 offset_top = -125.0
 offset_right = 24.0
@@ -1669,101 +1307,15 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 [node name="TileMap2" type="TileMap" parent="jumpnrun_template"]
 material = SubResource("CanvasItemMaterial_8ji6e")
 position = Vector2(1472, 259)
-tile_set = ExtResource("3_pru7n")
+scale = Vector2(-3.97546, -3.97546)
+tile_set = ExtResource("3_mg4j3")
 format = 2
-layer_0/tile_data = PackedInt32Array(65535, 262144, 5, -1, 262144, 5)
+layer_0/tile_data = PackedInt32Array(65535, 262144, 5, -1, 262144, 5, -65536, 262144, 0, 0, 262144, 805306368)
 
 [node name="MoveBehavior" type="Node2D" parent="jumpnrun_template/TileMap2"]
 position = Vector2(-738, 105)
 script = ExtResource("13_68vfu")
 done = null
-
-[node name="MovingSpikeMap" type="TileMap" parent="jumpnrun_template" groups=["spikes"]]
-material = SubResource("CanvasItemMaterial_w5p0e")
-tile_set = ExtResource("3_pru7n")
-format = 2
-layer_0/tile_data = PackedInt32Array(327727, 458752, 805306369, 393264, 458752, 805306369, 458801, 458752, 805306369, 458802, 458752, 805306369, 458803, 458752, 805306369, 458804, 458752, 805306369, 458805, 458752, 805306369, 458806, 458752, 805306369, 327728, 327680, 5, 327729, 327680, 5, 327730, 327680, 5, 327731, 327680, 5, 327732, 327680, 5, 393265, 327680, 5, 262191, 327680, 5, 262192, 327680, 5, 393266, 327680, 5, 393267, 327680, 5, 393268, 327680, 5, 393269, 327680, 5, 393270, 327680, 5, 327734, 327680, 5, 327733, 327680, 5, 262193, 327680, 5, 262194, 327680, 5, 262195, 327680, 5, 262196, 327680, 5, 262197, 327680, 5, 262198, 327680, 5, 196661, 327680, 5, 196660, 327680, 5, 196659, 327680, 5, 196658, 327680, 5, 196657, 327680, 5, 196656, 327680, 5, 196655, 327680, 5, 131119, 327680, 5, 131120, 327680, 5, 131121, 327680, 5, 131122, 327680, 5, 131123, 327680, 5, 131124, 327680, 5, 131125, 327680, 5, 131126, 327680, 5, 65590, 327680, 5, 65589, 327680, 5, 65588, 327680, 5, 65587, 327680, 5, 65586, 327680, 5, 65585, 327680, 5, 65584, 327680, 5, 65583, 327680, 5)
-
-[node name="MoveBehavior" type="Node2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(2839.26, 163.932)
-script = ExtResource("13_68vfu")
-
-[node name="AlwaysBehavior" type="Node2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(2828.1, 128.309)
-script = ExtResource("14_jta5q")
-metadata/pronto_connections = [SubResource("Resource_ygb0q")]
-
-[node name="Area2D" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(2754.37, 194.905)
-metadata/pronto_connections = [SubResource("Resource_656vt"), SubResource("Resource_iffxq")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D"]
-position = Vector2(27.6267, -2.90488)
-shape = SubResource("RectangleShape2D_n3pxo")
-
-[node name="ClockBehavior" type="Node2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(2865, 80)
-script = ExtResource("12_xnjgy")
-duration_seconds = 10.0
-paused = true
-trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_me0g6"), SubResource("Resource_k3gv0")]
-
-[node name="Area2D2" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(3040, 350)
-metadata/pronto_connections = [SubResource("Resource_ikr66")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D2"]
-shape = SubResource("CapsuleShape2D_icpf8")
-
-[node name="Area2D3" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(3104, 414)
-metadata/pronto_connections = [SubResource("Resource_ikr66")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D3"]
-shape = SubResource("CapsuleShape2D_icpf8")
-
-[node name="Area2D4" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(3168, 477)
-metadata/pronto_connections = [SubResource("Resource_ikr66")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D4"]
-shape = SubResource("CapsuleShape2D_icpf8")
-
-[node name="Area2D5" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(3232, 478)
-metadata/pronto_connections = [SubResource("Resource_ikr66")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D5"]
-shape = SubResource("CapsuleShape2D_icpf8")
-
-[node name="Area2D6" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(3296, 478)
-metadata/pronto_connections = [SubResource("Resource_ikr66")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D6"]
-shape = SubResource("CapsuleShape2D_icpf8")
-
-[node name="Area2D7" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(3360, 478)
-metadata/pronto_connections = [SubResource("Resource_ikr66")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D7"]
-shape = SubResource("CapsuleShape2D_icpf8")
-
-[node name="Area2D8" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(3424, 478)
-metadata/pronto_connections = [SubResource("Resource_ikr66")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D8"]
-shape = SubResource("CapsuleShape2D_icpf8")
-
-[node name="Area2D9" type="Area2D" parent="jumpnrun_template/MovingSpikeMap"]
-position = Vector2(3488, 478)
-metadata/pronto_connections = [SubResource("Resource_ikr66")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpnrun_template/MovingSpikeMap/Area2D9"]
-shape = SubResource("CapsuleShape2D_icpf8")
 
 [node name="Node" type="Node" parent="jumpnrun_template"]
 
@@ -1863,418 +1415,19 @@ offset_right = 420.0
 offset_bottom = 276.0
 text = "Restart Game"
 
-[node name="SpikeRun" type="Node2D" parent="."]
-position = Vector2(5016.79, -0.0238647)
-script = ExtResource("30_36qlf")
-
-[node name="Black" type="ColorRect" parent="SpikeRun"]
-offset_left = -192.0
-offset_right = 1352.0
-offset_bottom = 704.0
-color = Color(0, 0, 0, 1)
-
-[node name="Torches" type="Node2D" parent="SpikeRun"]
-position = Vector2(-128, -344)
-
-[node name="TileMap2" type="TileMap" parent="SpikeRun/Torches"]
-material = SubResource("CanvasItemMaterial_f4ms5")
-tile_set = ExtResource("3_pru7n")
-format = 2
-layer_0/tile_data = PackedInt32Array(458766, 458752, 6, 458772, 458752, 6, 458778, 458752, 6, 458760, 458752, 6, 458754, 458752, 6, 524290, 393216, 5, 524296, 393216, 5, 524302, 393216, 5, 524308, 393216, 5, 524314, 393216, 5, 524320, 393216, 5, 524326, 393216, 5, 524332, 393216, 5, 524338, 393216, 5, 524344, 393216, 5, 524350, 393216, 5, 524356, 393216, 5, 524362, 393216, 5, 524368, 393216, 5, 524374, 393216, 5, 524380, 393216, 5, 524386, 393216, 5, 524392, 393216, 5, 524398, 393216, 5, 524404, 393216, 5, 524410, 393216, 5, 524416, 393216, 5, 524422, 393216, 5, 524428, 393216, 5, 524434, 393216, 5, 458784, 458752, 6, 458790, 458752, 6, 458796, 458752, 6, 458802, 458752, 6, 458808, 458752, 6, 458814, 458752, 6, 458820, 458752, 6, 458826, 458752, 6, 458832, 458752, 6, 458838, 458752, 6, 458844, 458752, 6, 458850, 458752, 6, 458856, 458752, 6, 458862, 458752, 6, 458868, 458752, 6, 458874, 458752, 6, 458880, 458752, 6, 458886, 458752, 6, 458892, 458752, 6, 458898, 458752, 6)
-script = ExtResource("31_w7wul")
-
-[node name="PointLight2D" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(160, 704)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D2" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(544, 704)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D3" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(928, 704)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D4" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(1312, 700)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D5" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(1696, 700)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D6" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(2080, 704)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D7" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(2464, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D8" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(2848, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D9" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(3232, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D10" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(3616, 692)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D11" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(4000, 692)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D12" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(4384, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D13" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(4768, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D14" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(5152, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D15" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(5536, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D16" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(5920, 692)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D17" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(6304, 692)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D18" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(6688, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D19" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(7072, 688)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D20" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(7456, 688)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D21" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(7840, 688)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D22" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(8224, 684)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D23" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(8608, 684)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D24" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(8989.71, 688)
-scale = Vector2(117.692, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLight2D25" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-position = Vector2(9376, 696)
-scale = Vector2(73.8461, 223.59)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="PointLightCeiling" type="PointLight2D" parent="SpikeRun/Torches/TileMap2"]
-visible = false
-position = Vector2(1132, 334)
-scale = Vector2(646.154, 33.8461)
-color = Color(0.745098, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-texture_scale = 0.3
-
-[node name="TileMap" type="TileMap" parent="SpikeRun"]
-material = SubResource("CanvasItemMaterial_f4ms5")
-tile_set = ExtResource("3_pru7n")
-format = 2
-layer_0/tile_data = PackedInt32Array(0, 327680, 5, 1, 327680, 5, 2, 327680, 5, 3, 327680, 5, 4, 327680, 5, 5, 327680, 5, 6, 327680, 5, 7, 327680, 5, 8, 327680, 5, 9, 327680, 5, 10, 327680, 5, 11, 327680, 5, 12, 327680, 5, 13, 327680, 5, 14, 327680, 5, 15, 327680, 5, 655360, 327680, 5, 655361, 327680, 5, 655362, 327680, 5, 655363, 327680, 5, 655364, 327680, 5, 655365, 327680, 5, 655366, 327680, 5, 655367, 327680, 5, 655368, 327680, 5, 655369, 327680, 5, 655370, 327680, 5, 655371, 327680, 5, 655372, 327680, 5, 655373, 327680, 5, 655374, 327680, 5, 655375, 327680, 5, 655376, 327680, 5, 655377, 327680, 5, 655378, 327680, 5, 655379, 327680, 5, 16, 327680, 5, 17, 327680, 5, 18, 327680, 5, 19, 327680, 5, 20, 327680, 5, 21, 327680, 5, 22, 327680, 5, 23, 327680, 5, 24, 327680, 5, 25, 327680, 5, 26, 327680, 5, 27, 327680, 5, 28, 327680, 5, 29, 327680, 5, 30, 327680, 5, 31, 327680, 5, 32, 327680, 5, 33, 327680, 5, 34, 327680, 5, 35, 327680, 5, 36, 327680, 5, 37, 327680, 5, 38, 327680, 5, 39, 327680, 5, 40, 327680, 5, 41, 327680, 5, 42, 327680, 5, 43, 327680, 5, 44, 327680, 5, 45, 327680, 5, 46, 327680, 5, 47, 327680, 5, 48, 327680, 5, 49, 327680, 5, 50, 327680, 5, 51, 327680, 5, 52, 327680, 5, 53, 327680, 5, 54, 327680, 5, 55, 327680, 5, 56, 327680, 5, 57, 327680, 5, 58, 327680, 5, 59, 327680, 5, 60, 327680, 5, 61, 327680, 5, 62, 327680, 5, 63, 327680, 5, 64, 327680, 5, 65, 327680, 5, 66, 327680, 5, 67, 327680, 5, 68, 327680, 5, 69, 327680, 5, 655380, 327680, 5, 655412, 327680, 5, 655413, 327680, 5, 655414, 327680, 5, 655415, 327680, 5, 655416, 327680, 5, 655417, 327680, 5, 655418, 327680, 5, 655419, 327680, 5, 655420, 327680, 5, 655421, 327680, 5, 655422, 327680, 5, 655423, 327680, 5, 655424, 327680, 5, 655425, 327680, 5, 655426, 327680, 5, 655427, 327680, 5, 655428, 327680, 5, 655429, 327680, 5, 70, 327680, 5, 71, 327680, 5, 72, 327680, 5, 73, 327680, 5, 74, 327680, 5, 75, 327680, 5, 76, 327680, 5, 77, 327680, 5, 78, 327680, 5, 79, 327680, 5, 80, 327680, 5, 81, 327680, 5, 82, 327680, 5, 83, 327680, 5, 84, 327680, 5, 85, 327680, 5, 86, 327680, 5, 87, 327680, 5, 88, 327680, 5, 89, 327680, 5, 90, 327680, 5, 91, 327680, 5, 92, 327680, 5, 93, 327680, 5, 94, 327680, 5, 95, 327680, 5, 96, 327680, 5, 97, 327680, 5, 98, 327680, 5, 99, 327680, 5, 100, 327680, 5, 101, 327680, 5, 102, 327680, 5, 103, 327680, 5, 104, 327680, 5, 105, 327680, 5, 106, 327680, 5, 107, 327680, 5, 108, 327680, 5, 109, 327680, 5, 110, 327680, 5, 111, 327680, 5, 112, 327680, 5, 113, 327680, 5, 114, 327680, 5, 115, 327680, 5, 116, 327680, 5, 117, 327680, 5, 118, 327680, 5, 119, 327680, 5, 120, 327680, 5, 121, 327680, 5, 122, 327680, 5, 123, 327680, 5, 124, 327680, 5, 125, 327680, 5, 126, 327680, 5, 127, 327680, 5, 128, 327680, 5, 129, 327680, 5, 130, 327680, 5, 131, 327680, 5, 132, 327680, 5, 133, 327680, 5, 134, 327680, 5, 135, 327680, 5, 136, 327680, 5, 655430, 327680, 5, 655431, 327680, 5, 655432, 327680, 5, 655433, 327680, 5, 655434, 327680, 5, 655435, 327680, 5, 655442, 327680, 5, 655443, 327680, 5, 655444, 327680, 5, 655445, 327680, 5, 655446, 327680, 5, 655447, 327680, 5, 655448, 327680, 5, 655449, 327680, 5, 655450, 327680, 5, 655451, 327680, 5, 655452, 327680, 5, 655453, 327680, 5, 655454, 327680, 5, 655455, 327680, 5, 655456, 327680, 5, 655457, 327680, 5, 655458, 327680, 5, 655459, 327680, 5, 655460, 327680, 5, 655461, 327680, 5, 655462, 327680, 5, 655463, 327680, 5, 655464, 327680, 5, 655465, 327680, 5, 655466, 327680, 5, 655467, 327680, 5, 655468, 327680, 5, 655469, 327680, 5, 655473, 327680, 5, 655474, 327680, 5, 655475, 327680, 5, 655476, 327680, 5, 655477, 327680, 5, 655478, 327680, 5, 655479, 327680, 5, 655483, 327680, 5, 655487, 327680, 5, 655488, 327680, 5, 655489, 327680, 5, 655490, 327680, 5, 655491, 327680, 5, 655492, 327680, 5, 655493, 327680, 5, 655494, 327680, 5, 655495, 327680, 5, 137, 327680, 5, 138, 327680, 5, 139, 327680, 5, 140, 327680, 5, 141, 327680, 5, 142, 327680, 5, 143, 327680, 5, 144, 327680, 5, 145, 327680, 5, 655501, 327680, 5, 655502, 327680, 5, 655503, 327680, 5, 655504, 327680, 5, 655505, 327680, 5, 146, 327680, 5, 655506, 327680, 5, 589847, 327680, 5, 458777, 327680, 5, 327703, 327680, 5, 262170, 327680, 5, 262174, 327680, 5, 65567, 327680, 5, 131103, 327680, 4, 262177, 327680, 5, 327724, 0, 4, 262191, 0, 4, 65569, 196608, 6, 65588, 196608, 6, 589863, 0, 4, 458794, 0, 4, 655396, 0, 4, 655441, 327680, 5, 655440, 327680, 5, 655439, 327680, 5, 655438, 327680, 5, 655437, 327680, 5, 655436, 327680, 5, 65605, 196608, 6, 65623, 196608, 6, 65641, 196608, 6, 655480, 327680, 5, 655481, 327680, 5, 655482, 327680, 5, 655500, 327680, 805306372, 524426, 196608, 9, 589970, 327680, 5, 524434, 327680, 5, 458898, 327680, 5, 393362, 327680, 5, 327826, 327680, 5, 262290, 327680, 5, 196754, 327680, 5, 131218, 327680, 5, 65682, 327680, 5)
-
-[node name="ColorRect" type="ColorRect" parent="SpikeRun/TileMap"]
-offset_left = 2128.0
-offset_top = 80.0
-offset_right = 2160.0
-offset_bottom = 256.0
-color = Color(1, 0, 0, 0.45098)
-
-[node name="PointLight2D" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(2144, 159.024)
-scale = Vector2(3.69232, 22.6154)
-color = Color(1, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-
-[node name="Area2D" type="Area2D" parent="SpikeRun/TileMap"]
-position = Vector2(2120, -72)
-metadata/pronto_connections = []
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D"]
-position = Vector2(23, 240)
-shape = SubResource("RectangleShape2D_yqfre")
-
-[node name="ColorRect2" type="ColorRect" parent="SpikeRun/TileMap"]
-offset_left = 3344.0
-offset_top = 80.0
-offset_right = 3376.0
-offset_bottom = 640.0
-color = Color(1, 0, 0, 0.45098)
-
-[node name="PointLight2D2" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(3360, 355.024)
-scale = Vector2(3.69232, 52.7692)
-color = Color(1, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-
-[node name="Area2D2" type="Area2D" parent="SpikeRun/TileMap"]
-position = Vector2(3336, -72)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D2"]
-position = Vector2(23, 431)
-shape = SubResource("RectangleShape2D_mcybr")
-
-[node name="ColorRect3" type="ColorRect" parent="SpikeRun/TileMap"]
-offset_left = 4432.0
-offset_top = 80.0
-offset_right = 4464.0
-offset_bottom = 640.0
-color = Color(1, 0, 0, 0.45098)
-
-[node name="PointLight2D3" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(4448, 354.524)
-scale = Vector2(3.69232, 52.2308)
-color = Color(1, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-
-[node name="Area2D3" type="Area2D" parent="SpikeRun/TileMap"]
-position = Vector2(4424, -72)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D3"]
-position = Vector2(23, 431)
-shape = SubResource("RectangleShape2D_mcybr")
-
-[node name="ColorRect4" type="ColorRect" parent="SpikeRun/TileMap"]
-offset_left = 5584.0
-offset_top = 80.0
-offset_right = 5616.0
-offset_bottom = 640.0
-color = Color(1, 0, 0, 0.45098)
-
-[node name="PointLight2D4" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(5600, 351.524)
-scale = Vector2(3.69232, 52.3846)
-color = Color(1, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-
-[node name="Area2D4" type="Area2D" parent="SpikeRun/TileMap"]
-position = Vector2(5576, -72)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D4"]
-position = Vector2(23, 431)
-shape = SubResource("RectangleShape2D_mcybr")
-
-[node name="ColorRect5" type="ColorRect" parent="SpikeRun/TileMap"]
-offset_left = 6736.0
-offset_top = 72.0
-offset_right = 6768.0
-offset_bottom = 632.0
-color = Color(1, 0, 0, 0.45098)
-
-[node name="PointLight2D6" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(6752, 351.024)
-scale = Vector2(3.69232, 52)
-color = Color(1, 0, 0, 1)
-texture = ExtResource("17_r8jq7")
-
-[node name="Area2D5" type="Area2D" parent="SpikeRun/TileMap"]
-position = Vector2(6728, -80)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D5"]
-position = Vector2(23, 431)
-shape = SubResource("RectangleShape2D_mcybr")
-
-[node name="Area2D11" type="Area2D" parent="SpikeRun/TileMap"]
-position = Vector2(4992, 104)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/TileMap/Area2D11"]
-position = Vector2(3872, 440)
-shape = SubResource("RectangleShape2D_q23d4")
-
-[node name="PointLight2D5" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(2336.38, 684.375)
-scale = Vector2(2.40381, 3.01922)
-texture = ExtResource("17_r8jq7")
-
-[node name="PointLight2D11" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(2528, 616)
-scale = Vector2(2.40381, 3.01922)
-texture = ExtResource("17_r8jq7")
-
-[node name="PointLight2D12" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(3040, 296)
-scale = Vector2(2.40381, 3.01922)
-texture = ExtResource("17_r8jq7")
-
-[node name="PointLight2D13" type="PointLight2D" parent="SpikeRun/TileMap"]
-position = Vector2(2848, 360)
-scale = Vector2(2.40381, 3.01922)
-texture = ExtResource("17_r8jq7")
-
-[node name="SpikeWallMap" type="TileMap" parent="SpikeRun"]
-material = SubResource("CanvasItemMaterial_f4ms5")
-tile_set = ExtResource("3_pru7n")
-format = 2
-layer_0/tile_data = PackedInt32Array(131069, 327680, 5, 196605, 327680, 5, 262141, 327680, 5, 327677, 327680, 5, 393213, 327680, 5, 458749, 327680, 5, 524285, 327680, 5, 589821, 327680, 5, 655357, 327680, 5, 458750, 196608, 1342177281, 524286, 196608, 1342177281, 589822, 196608, 1342177281, 655358, 196608, 1342177281, 131070, 196608, 1342177281, 196606, 196608, 1342177281, 262142, 196608, 1342177281, 327678, 196608, 1342177281, 393214, 196608, 1342177281)
-script = ExtResource("32_if7e5")
-
-[node name="Area2D" type="Area2D" parent="SpikeRun/SpikeWallMap"]
-metadata/pronto_connections = [SubResource("Resource_2alrx")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeRun/SpikeWallMap/Area2D"]
-position = Vector2(-101, 351)
-shape = SubResource("RectangleShape2D_4q0av")
-
-[node name="MoveBehavior" type="Node2D" parent="SpikeRun/SpikeWallMap"]
-position = Vector2(3.49691e-06, -40)
-script = ExtResource("13_68vfu")
-
-[node name="Camera2D" type="Camera2D" parent="SpikeRun/SpikeWallMap"]
-position = Vector2(440, 376)
-zoom = Vector2(0.915, 0.915)
-limit_left = -192
-limit_top = 0
-limit_bottom = 704
-script = ExtResource("33_y5nvw")
-
-[node name="AudioStreamPlayer2DSpikes" type="AudioStreamPlayer2D" parent="SpikeRun/SpikeWallMap"]
-stream = ExtResource("34_0qeyf")
-volume_db = 3.545
-pitch_scale = 0.85
-
-[node name="Alert" type="AudioStreamPlayer" parent="SpikeRun"]
-stream = ExtResource("35_pdr0a")
-pitch_scale = 0.66
-
-[node name="TrapTrigger" type="Area2D" parent="."]
-position = Vector2(4915, -7)
-script = ExtResource("31_l7ylb")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TrapTrigger"]
-position = Vector2(295, 361)
-shape = SubResource("RectangleShape2D_1kv50")
-
-[node name="AudioStreamPlayerTrapTrigger" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("32_nnw28")
-pitch_scale = 0.81
-script = ExtResource("33_ltmpf")
-
-[node name="ClockBehaviorTrapTrigger" type="Node2D" parent="."]
-position = Vector2(5081, -102)
-script = SubResource("GDScript_2cw0g")
-cycle_count = -1
-duration_seconds = 2.0
-paused = true
-trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = []
-
-[connection signal="death" from="jumpnrun_template/Player/HealthBarBehavior" to="jumpnrun_template" method="_on_health_bar_behavior_death"]
-[connection signal="change_text" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/Label4" method="set_text_key_code"]
+[node name="Difficulty" type="Button" parent="."]
+offset_left = 1492.0
+offset_top = 424.0
+offset_right = 1697.0
+offset_bottom = 499.0
+script = ExtResource("31_iqbgy")
+
+[connection signal="change_text" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/PressXYLabel" method="set_text_key_code"]
 [connection signal="change_text" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/ClockBehavior2" method="start_timer"]
-[connection signal="key_pressed" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/Label4" method="set_text_key_pressed"]
+[connection signal="changed_difficulty" from="jumpnrun_template/Player/Node" to="Difficulty" method="_on_node_changed_difficulty"]
+[connection signal="key_pressed" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/PressXYLabel" method="set_text_key_pressed"]
 [connection signal="key_pressed" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/ClockBehavior2" method="pause_timer"]
-[connection signal="wrong_key_pressed" from="jumpnrun_template/Player/Node" to="jumpnrun_template/Player/HealthBarBehavior" method="wrong_key_damage"]
 [connection signal="elapsed" from="jumpnrun_template/Player/ClockBehavior2" to="Music" method="pause"]
 [connection signal="elapsed" from="jumpnrun_template/Player/ClockBehavior3" to="Music" method="resume"]
 [connection signal="pressed" from="Button" to="jumpnrun_template" method="restart_game"]
-[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_first_area_2d_body_shape_entered" flags=18]
-[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D2" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]
-[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D3" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]
-[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D4" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]
-[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D5" to="SpikeRun/SpikeWallMap/MoveBehavior" method="_on_area_2d_body_shape_entered" flags=18]
-[connection signal="body_shape_entered" from="SpikeRun/TileMap/Area2D11" to="SpikeRun" method="_on_area_2d_11_body_shape_entered" flags=18]
-[connection signal="body_shape_entered" from="TrapTrigger" to="jumpnrun_template" method="_on_trap_trigger_body_shape_entered"]
-[connection signal="body_shape_entered" from="TrapTrigger" to="AudioStreamPlayerTrapTrigger" method="_on_trap_trigger_body_shape_entered"]
-[connection signal="finished" from="AudioStreamPlayerTrapTrigger" to="jumpnrun_template" method="_on_audio_stream_player_trap_trigger_finished"]
-[connection signal="finished" from="AudioStreamPlayerTrapTrigger" to="ClockBehaviorTrapTrigger" method="_on_audio_stream_player_trap_trigger_finished"]
-[connection signal="elapsed" from="ClockBehaviorTrapTrigger" to="jumpnrun_template" method="_on_clock_behavior_trap_trigger_elapsed"]
-[connection signal="elapsed" from="ClockBehaviorTrapTrigger" to="SpikeRun" method="_on_clock_behavior_trap_trigger_elapsed"]
+[connection signal="pressed" from="Difficulty" to="jumpnrun_template/Player/Node" method="_on_difficulty_pressed"]
