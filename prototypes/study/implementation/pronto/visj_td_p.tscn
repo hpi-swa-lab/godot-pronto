@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://cal784t2cawkt"]
+[gd_scene load_steps=168 format=3 uid="uid://cal784t2cawkt"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_d6g1h"]
 [ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="2_wf7s3"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="13_s63vy"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="15_qpgdu"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="16_xvsf0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="17_7wjf7"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PrototypingUIBehavior.gd" id="17_u4oop"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1flb5"]
@@ -270,14 +271,643 @@ expression = SubResource("Resource_6yutn")
 deferred = false
 enabled = true
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sjywi"]
+size = Vector2(50, 100)
+
+[sub_resource type="Image" id="Image_866wu"]
+data = {
+"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_3m86n"]
+image = SubResource("Image_866wu")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mxete"]
+radius = 24.0
+
+[sub_resource type="GDScript" id="GDScript_6jvbt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return \"\"
+"
+
+[sub_resource type="Resource" id="Resource_crdn3"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_6jvbt")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3f55t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return other.name.contains(\"Enemy\")
+"
+
+[sub_resource type="Resource" id="Resource_7r6kg"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_3f55t")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_af6p8"]
+script = ExtResource("8_bh3ew")
+signal_name = "collided"
+to = NodePath("../../PlayerUnitStateMachine/Traveling")
+more_references = []
+invoke = "exit"
+arguments = [SubResource("Resource_crdn3")]
+only_if = SubResource("Resource_7r6kg")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_p7xlh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return \"target\"
+"
+
+[sub_resource type="Resource" id="Resource_by30x"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_p7xlh")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_pes2y"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return other
+"
+
+[sub_resource type="Resource" id="Resource_asgix"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_pes2y")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ryt0s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return other.name.contains(\"Enemy\")
+"
+
+[sub_resource type="Resource" id="Resource_uq8c6"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_ryt0s")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jsh0y"]
+script = ExtResource("8_bh3ew")
+signal_name = "collided"
+to = NodePath("../../StoreBehavior")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_by30x"), SubResource("Resource_asgix")]
+only_if = SubResource("Resource_uq8c6")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_gdrvu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_5leml"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_gdrvu")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3ynlx"]
+script = ExtResource("8_bh3ew")
+signal_name = "exited"
+to = NodePath("../Attacking")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_5leml")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_qjdkn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7ffs3"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_qjdkn")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_txri2"]
+script = ExtResource("8_bh3ew")
+signal_name = "entered"
+to = NodePath("../../MoveBehavior/AlwaysBehavior")
+more_references = []
+invoke = "resume"
+arguments = []
+only_if = SubResource("Resource_7ffs3")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_7nodq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_fsjq8"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_7nodq")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_n1f4x"]
+script = ExtResource("8_bh3ew")
+signal_name = "exited"
+to = NodePath("../../MoveBehavior/AlwaysBehavior")
+more_references = []
+invoke = "pause"
+arguments = []
+only_if = SubResource("Resource_fsjq8")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fdqdo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_qgd33"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_fdqdo")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nkvmv"]
+script = ExtResource("8_bh3ew")
+signal_name = "exited"
+to = NodePath("../Traveling")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_qgd33")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_sd61p"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rxxia"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_sd61p")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_5lsdf"]
+script = ExtResource("8_bh3ew")
+signal_name = "entered"
+to = NodePath("AttackTimer")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_rxxia")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_sfojl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(target_state_name, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3sbu7"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_sfojl")
+argument_names = ["target_state_name", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_egwp7"]
+script = ExtResource("8_bh3ew")
+signal_name = "exited"
+to = NodePath("AttackTimer")
+more_references = []
+invoke = "pause"
+arguments = []
+only_if = SubResource("Resource_3sbu7")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_wwvw8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_btb0w"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_wwvw8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_hgu14"]
+script = ExtResource("8_bh3ew")
+signal_name = "elapsed"
+to = NodePath("../CodeBehavior")
+more_references = []
+invoke = "execute"
+arguments = []
+only_if = SubResource("Resource_btb0w")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_3u6t2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	var store: StoreBehavior = closest(\"StoreBehavior\")
+	if not store.has(\"target\"):
+		_exit_state()
+		return false
+	var target = store.at(\"target\")
+	if not is_instance_valid(target):
+		_exit_state()
+		return false
+	var target_health: HealthBarBehavior
+	if target is Area2D:
+		# target is the base
+		target_health = target.get_parent().find_child(\"HealthBarBehavior\", true, false)
+	else:
+		target_health = target.find_child(\"HealthBarBehavior\", true, false)
+	if not is_instance_valid(target_health):
+		_exit_state()
+		return false
+	target_health.damage(at(\"PlayerUnitDamage\"))
+	return true
+
+func _exit_state():
+	# target is already dead, move to traveling state to search for new target
+	closest(\"Attacking\").exit(\"\")
+"
+
+[sub_resource type="Resource" id="Resource_6n3ji"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_3u6t2")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ulpfe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return closest(\"EnemyBase\").position
+"
+
+[sub_resource type="Resource" id="Resource_uko5b"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_ulpfe")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_c8yie"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ba0rs"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_c8yie")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_pij5h"]
+script = ExtResource("8_bh3ew")
+signal_name = "physiscs_always"
+to = NodePath("..")
+more_references = []
+invoke = "move_toward"
+arguments = [SubResource("Resource_uko5b")]
+only_if = SubResource("Resource_ba0rs")
+deferred = false
+enabled = true
+
+[sub_resource type="Gradient" id="Gradient_ipv0p"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_6dxre"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_x6bo0"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_6dxre")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_b6ux2"]
+script = ExtResource("8_bh3ew")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_x6bo0")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_fdlfy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return [0]
+"
+
+[sub_resource type="Resource" id="Resource_c6mq2"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_fdlfy")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_oltn1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_p8ty7"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_oltn1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_unxc5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_7fuju"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_unxc5")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_01cgg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8e655"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_01cgg")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_7o70s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return not closest(\"StoreBehavior\").at(\"PlayerSpawnUnitCooldown\")
+"
+
+[sub_resource type="Resource" id="Resource_87tg7"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_7o70s")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_748ke"]
+script = ExtResource("8_bh3ew")
+signal_name = "pressed"
+to = NodePath("../../PlayerSpawner")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_c6mq2"), SubResource("Resource_p8ty7"), SubResource("Resource_7fuju"), SubResource("Resource_8e655")]
+only_if = SubResource("Resource_87tg7")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_uytb5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"PlayerSpawnUnitCooldown\"
+"
+
+[sub_resource type="Resource" id="Resource_kws2s"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_uytb5")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_q7j2g"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_s0u13"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_q7j2g")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_06w3d"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return not to.at(\"PlayerSpawnUnitCooldown\")
+"
+
+[sub_resource type="Resource" id="Resource_xpspg"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_06w3d")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xf0qn"]
+script = ExtResource("8_bh3ew")
+signal_name = "pressed"
+to = NodePath("../StoreBehavior")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_kws2s"), SubResource("Resource_s0u13")]
+only_if = SubResource("Resource_xpspg")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_y4jbh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return to.paused
+"
+
+[sub_resource type="Resource" id="Resource_i3abm"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_y4jbh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gcoka"]
+script = ExtResource("8_bh3ew")
+signal_name = "pressed"
+to = NodePath("../ClockBehavior")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_i3abm")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_8d1fe"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"PlayerSpawnUnitCooldown\"
+"
+
+[sub_resource type="Resource" id="Resource_fpmlq"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_8d1fe")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_u3pmn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_mhwru"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_u3pmn")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_78l0k"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_q6gnq"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_78l0k")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rvlwu"]
+script = ExtResource("8_bh3ew")
+signal_name = "elapsed"
+to = NodePath("../StoreBehavior")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_fpmlq"), SubResource("Resource_mhwru")]
+only_if = SubResource("Resource_q6gnq")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_224nu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_h366n"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_224nu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4hoq7"]
+script = ExtResource("8_bh3ew")
+signal_name = "elapsed"
+to = NodePath(".")
+more_references = []
+invoke = "pause"
+arguments = []
+only_if = SubResource("Resource_h366n")
+deferred = false
+enabled = true
+
 [sub_resource type="Gradient" id="Gradient_gvpcg"]
 offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_dyhcj"]
+radius = 42.107
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32l5q"]
 size = Vector2(50, 100)
 
-[sub_resource type="Image" id="Image_f6y5u"]
+[sub_resource type="Image" id="Image_m2b74"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -287,11 +917,36 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_n3eip"]
-image = SubResource("Image_f6y5u")
+image = SubResource("Image_m2b74")
 
 [sub_resource type="Gradient" id="Gradient_bjfnf"]
 offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_b11mc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rmbsf"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_b11mc")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0cib6"]
+script = ExtResource("8_bh3ew")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "queue_free"
+arguments = []
+only_if = SubResource("Resource_rmbsf")
+deferred = false
+enabled = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_38gs0"]
 radius = 24.0
@@ -608,19 +1263,28 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run():
 	var store: StoreBehavior = closest(\"StoreBehavior\")
-	if store.has(\"target\"):
-		var target = store.at(\"target\")
-		if target:
-			var target_health = target.get_parent().find_child(\"HealthBarBehavior\", true, false)
-			if not target_health:
-				closest(\"Attacking\").exit(\"\")
-				return null
-			if target_health.current > 0:
-				target_health.damage(at(\"EnemyUnitDamage\"))
-				return null
-	else: 
-		closest(\"Attacking\").exit(\"\")
-	return null
+	if not store.has(\"target\"):
+		_exit_state()
+		return false
+	var target = store.at(\"target\")
+	if not is_instance_valid(target):
+		_exit_state()
+		return false
+	var target_health: HealthBarBehavior
+	if target is Area2D:
+		# target is the base
+		target_health = target.get_parent().find_child(\"HealthBarBehavior\", true, false)
+	else:
+		target_health = target.find_child(\"HealthBarBehavior\", true, false)
+	if not is_instance_valid(target_health):
+		_exit_state()
+		return false
+	target_health.damage(at(\"EnemyUnitDamage\"))
+	return true
+
+func _exit_state():
+	# target is already dead, move to traveling state to search for new target
+	closest(\"Attacking\").exit(\"\")
 "
 
 [sub_resource type="Resource" id="Resource_a8f82"]
@@ -723,8 +1387,8 @@ offset_left = -1.0
 offset_top = -243.0
 offset_right = 1151.0
 offset_bottom = -5.0
-text = "Task: Analyse and explain the curent implementation for unit targeting and damage calculation.
-Task 2 (unclear): Impelement new unit with unique damage method or make unit's damage values unique to each type and balance the the game to last ~3 minutes"
+text = "Task: Analyse and explain the curent implementation for unit logic.
+Task 2 (unclear): Implement a new unit for the playedr with unique damage method and balance the the game to last ~60 seconds."
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -765,6 +1429,110 @@ script = ExtResource("3_txk66")
 progress_gradient = SubResource("Gradient_arpt8")
 metadata/pronto_connections = [SubResource("Resource_2y7mj")]
 
+[node name="PlayerSpawner" type="Node2D" parent="level/Player"]
+position = Vector2(176, 248)
+script = ExtResource("7_pbf3w")
+spawn_shape_generic = SubResource("RectangleShape2D_sjywi")
+
+[node name="PlayerUnit" type="CharacterBody2D" parent="level/Player/PlayerSpawner"]
+position = Vector2(-40, -72)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
+script = ExtResource("8_500im")
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_3m86n")
+outline_visible = true
+outline_color = Color(0, 0, 0, 1)
+placeholder_size = Vector2(20, 20)
+
+[node name="AttackArea" type="Area2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level/Player/PlayerSpawner/PlayerUnit/AttackArea"]
+shape = SubResource("CircleShape2D_mxete")
+
+[node name="CollisionBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/AttackArea"]
+position = Vector2(48, -2.22542e-06)
+script = ExtResource("3_x6nr8")
+metadata/pronto_connections = [SubResource("Resource_af6p8"), SubResource("Resource_jsh0y")]
+
+[node name="PlayerUnitStateMachine" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
+position = Vector2(-312, 128)
+script = ExtResource("9_n6x53")
+
+[node name="Traveling" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/PlayerUnitStateMachine"]
+position = Vector2(-80, 64)
+script = ExtResource("10_jd5ym")
+active = true
+metadata/pronto_connections = [SubResource("Resource_3ynlx"), SubResource("Resource_txri2"), SubResource("Resource_n1f4x")]
+
+[node name="Attacking" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/PlayerUnitStateMachine"]
+position = Vector2(40, 64)
+script = ExtResource("10_jd5ym")
+metadata/pronto_connections = [SubResource("Resource_nkvmv"), SubResource("Resource_5lsdf"), SubResource("Resource_egwp7")]
+
+[node name="AttackTimer" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/PlayerUnitStateMachine/Attacking"]
+position = Vector2(0, 32)
+script = ExtResource("13_5el5o")
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_hgu14")]
+
+[node name="CodeBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/PlayerUnitStateMachine/Attacking"]
+position = Vector2(32, 32)
+script = ExtResource("15_qpgdu")
+evaluate = SubResource("Resource_6n3ji")
+
+[node name="MoveBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
+position = Vector2(-48, 0)
+script = ExtResource("11_rog5l")
+
+[node name="AlwaysBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/MoveBehavior"]
+position = Vector2(0, -32)
+script = ExtResource("12_8qh34")
+paused = true
+metadata/pronto_connections = [SubResource("Resource_pij5h")]
+
+[node name="StoreBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
+position = Vector2(32, -40)
+script = ExtResource("13_s63vy")
+
+[node name="HealthBarBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
+position = Vector2(0, -16)
+script = ExtResource("3_txk66")
+max = 5
+current = 5
+healthbar_size = Vector2(16, 6)
+progress_gradient = SubResource("Gradient_ipv0p")
+metadata/pronto_connections = [SubResource("Resource_b6ux2")]
+
+[node name="PlayerUnitDamage" type="Node2D" parent="level/Player"]
+position = Vector2(-56, 416)
+script = ExtResource("16_xvsf0")
+float_min = 0.0
+float_max = 10.0
+float_value = 3.0
+float_step_size = 1.0
+
+[node name="Actions" type="Node2D" parent="level/Player"]
+
+[node name="KeyBehavior" type="Node2D" parent="level/Player/Actions"]
+position = Vector2(232, 304)
+script = ExtResource("17_7wjf7")
+key = "space"
+metadata/pronto_connections = [SubResource("Resource_748ke"), SubResource("Resource_xf0qn"), SubResource("Resource_gcoka")]
+
+[node name="StoreBehavior" type="Node2D" parent="level/Player/Actions"]
+position = Vector2(200, 304)
+script = ExtResource("13_s63vy")
+
+[node name="ClockBehavior" type="Node2D" parent="level/Player/Actions"]
+position = Vector2(200, 328)
+script = ExtResource("13_5el5o")
+cycle_count = 1
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_rvlwu"), SubResource("Resource_4hoq7")]
+
 [node name="Enemy" type="Node2D" parent="level"]
 
 [node name="EnemyBase" type="Node2D" parent="level/Enemy"]
@@ -774,6 +1542,11 @@ position = Vector2(1006, 251)
 position = Vector2(0, -20)
 script = ExtResource("3_txk66")
 progress_gradient = SubResource("Gradient_gvpcg")
+
+[node name="EnemyBaseRange" type="Area2D" parent="level/Enemy/EnemyBase"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level/Enemy/EnemyBase/EnemyBaseRange"]
+shape = SubResource("CircleShape2D_dyhcj")
 
 [node name="EnemySpawn" type="Node2D" parent="level/Enemy"]
 position = Vector2(977, 251)
@@ -801,6 +1574,7 @@ max = 5
 current = 5
 healthbar_size = Vector2(15, 6)
 progress_gradient = SubResource("Gradient_bjfnf")
+metadata/pronto_connections = [SubResource("Resource_0cib6")]
 
 [node name="AttackArea" type="Area2D" parent="level/Enemy/EnemySpawner/EnemyUnit"]
 
@@ -873,5 +1647,5 @@ float_step_size = 1.0
 [node name="UI" type="Node2D" parent="."]
 
 [node name="PrototypingUIBehavior" type="Node2D" parent="UI"]
-position = Vector2(-320, 8)
+position = Vector2(-400, -280)
 script = ExtResource("17_u4oop")
