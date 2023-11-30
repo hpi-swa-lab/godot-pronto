@@ -195,6 +195,8 @@ func default_focus():
 func get_state_machine() -> StateMachineBehavior:
 	if from and from.get_parent() is StateMachineBehavior:
 		return from.get_parent()
+	if receiver is StateMachineBehavior:
+		return receiver
 	return null
 
 func _on_add_trigger_pressed():
