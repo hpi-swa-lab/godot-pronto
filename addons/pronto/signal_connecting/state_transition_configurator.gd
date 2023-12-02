@@ -31,6 +31,12 @@ static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source
 
 	return i.open(receiver)
 	
+static func should_be_opened_with_transition_configurator(node, index):
+	var connection = Connection.get_connections(node)[index]
+	var isStateTransition = node is StateBehavior and connection["signal_name"] == "on_trigger_received"
+	var isOutsideTrigger = connection["invoke"] == "trigger" and node.get_node(connection["to"]) is StateMachineBehavior
+	return isStateTransition || isOutsideTrigger
+	
 func set_mode():
 	if receiver is StateMachineBehavior:
 		mode = ConfigurationMode.TO_STATE_MACHINE
@@ -123,6 +129,12 @@ func empty_script(expr: String, return_value: bool):
 func init_empty_scripts():
 	%Condition.edit_script = empty_script("true", true)
 
+func get_trigger_argument_script(trigger):
+	var argument = empty_script("'%s'" % trigger, true)
+	argument.argument_names = ["from", "to"]
+	argument.argument_types = ["Node", "Node"]
+	return argument
+
 func save():
 	var trigger = %TriggerSelection.get_item_text(%TriggerSelection.get_selected_id())
 
@@ -136,7 +148,7 @@ func save():
 					"invoke": "trigger",
 					"signal_name": %Signal.text,
 					"more_references": more_references,
-					"arguments": [empty_script("func(from, node): return '%s'" % trigger, true)]
+					"arguments": [get_trigger_argument_script(trigger)]
 				}
 		else:
 			connection_object =  {
@@ -158,7 +170,7 @@ func save():
 				selected_signal["name"],
 				from.get_path_to(receiver),
 				"trigger",
-				[empty_script("func(from, node): return '%s'" % trigger, true)],
+				[get_trigger_argument_script(trigger)],
 				more_references,
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo
 			)
