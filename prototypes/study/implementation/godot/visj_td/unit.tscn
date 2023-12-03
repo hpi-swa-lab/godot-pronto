@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://fs1c28k7o2y0"]
+
+[ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="1_64igy"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_td/unit.gd" id="1_yo1o7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dh4fb"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s5cns"]
+radius = 26.0
+
+[node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("attack_range")]
+script = ExtResource("1_yo1o7")
+attack_range = NodePath("AttackRange")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.117188, 0.117188)
+texture = ExtResource("1_64igy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dh4fb")
+
+[node name="AttackRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("CircleShape2D_s5cns")
+
+[node name="HealthDisplay" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -21.0
+offset_top = -31.0
+offset_right = 22.0
+offset_bottom = -8.66667
+theme_override_font_sizes/font_size = 5
+text = "?/?"
+horizontal_alignment = 1
+vertical_alignment = 2

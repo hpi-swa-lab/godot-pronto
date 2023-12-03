@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dorygjooe0sh4"]
+
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_surv/bullet.gd" id="1_okpg7"]
+[ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="2_nmmkw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0afxm"]
+size = Vector2(10, 4)
+
+[node name="Bullet" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_okpg7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.19209e-07, 1.78814e-07)
+scale = Vector2(0.078125, 0.03125)
+texture = ExtResource("2_nmmkw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0afxm")
+
+[node name="ExitNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.5, 0.2)

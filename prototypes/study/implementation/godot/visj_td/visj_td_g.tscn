@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://cal784t2cawkt"]
+[gd_scene load_steps=10 format=3 uid="uid://ctd1qere17667"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_gr4fe"]
-[ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="3_p5soj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_p61po"]
+[ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="2_81o0d"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_td/PlayerBase.gd" id="3_8iplu"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_td/EnemyBase.gd" id="3_bsnf3"]
+[ext_resource type="PackedScene" uid="uid://fs1c28k7o2y0" path="res://prototypes/study/implementation/godot/visj_td/unit.tscn" id="4_0u41n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1flb5"]
-texture = ExtResource("3_p5soj")
+texture = ExtResource("2_81o0d")
 0:0/0 = 0
 0:1/0 = 0
 0:2/0 = 0
@@ -207,11 +210,17 @@ texture = ExtResource("3_p5soj")
 [sub_resource type="TileSet" id="TileSet_ieo6w"]
 sources/0 = SubResource("TileSetAtlasSource_1flb5")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6mghm"]
+radius = 48.0104
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dhh2l"]
+radius = 48.2597
+
 [node name="visj_td" type="Node2D"]
 
 [node name="StudyTrackerBehavior" type="Node2D" parent="."]
 position = Vector2(1174, -36)
-script = ExtResource("1_gr4fe")
+script = ExtResource("1_p61po")
 
 [node name="level" type="Node2D" parent="."]
 
@@ -238,3 +247,47 @@ layer_1/y_sort_origin = 0
 layer_1/z_index = 0
 layer_1/navigation_enabled = true
 layer_1/tile_data = PackedInt32Array(983048, 589824, 0, 983049, 1048576, 0, 983102, 1048576, 3, 983103, 524288, 3, 458770, 262144, 6, 1900556, 262144, 6, 1966124, 262144, 6, 1507360, 262144, 6, 1441824, 262144, 6, 1048612, 262144, 6, 458787, 262144, 6, 655412, 262144, 6, 1114162, 262144, 6, 1114148, 262144, 5, 917529, 262144, 5, 1310747, 262144, 5, 131117, 262144, 5, 1769528, 262144, 5, 655417, 262144, 5, 327746, 262144, 5, 2031640, 262144, 5, 1441811, 262144, 5)
+
+[node name="PlayerBase" type="Node2D" parent="level" node_paths=PackedStringArray("initial_target")]
+position = Vector2(145, 248)
+script = ExtResource("3_8iplu")
+player_unit_scene = ExtResource("4_0u41n")
+initial_target = NodePath("../EnemyBase")
+
+[node name="PlayerBaseRange" type="Area2D" parent="level/PlayerBase"]
+priority = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level/PlayerBase/PlayerBaseRange"]
+shape = SubResource("CircleShape2D_6mghm")
+
+[node name="PlayerBaseHealthDisplay" type="Label" parent="level/PlayerBase"]
+unique_name_in_owner = true
+offset_left = -33.0
+offset_top = -32.0
+offset_right = 34.0
+offset_bottom = -9.0
+text = "?/?"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="EnemyBase" type="Node2D" parent="level" node_paths=PackedStringArray("initial_target")]
+position = Vector2(1007, 250)
+script = ExtResource("3_bsnf3")
+enemy_unit_scene = ExtResource("4_0u41n")
+initial_target = NodePath("../PlayerBase")
+spawn_cooldown = 5.0
+
+[node name="EnemyBaseRange" type="Area2D" parent="level/EnemyBase"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level/EnemyBase/EnemyBaseRange"]
+shape = SubResource("CircleShape2D_dhh2l")
+
+[node name="EnemyBaseHealthDisplay" type="Label" parent="level/EnemyBase"]
+unique_name_in_owner = true
+offset_left = -35.0
+offset_top = -34.0
+offset_right = 39.0
+offset_bottom = -11.0
+text = "?/?"
+horizontal_alignment = 1
+vertical_alignment = 2

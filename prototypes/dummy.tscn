@@ -1,0 +1,119 @@
+[gd_scene load_steps=11 format=3 uid="uid://jmhbes717ccn"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="1_os0qy"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_fl207"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_nadkg"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_6qit6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="4_5l0yq"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="4_8dccv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CodeBehavior.gd" id="5_t7mqt"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="8_syntg"]
+
+[sub_resource type="GDScript" id="GDScript_h4cyq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return null
+"
+
+[sub_resource type="Resource" id="Resource_uyawp"]
+script = ExtResource("2_fl207")
+nested_script = SubResource("GDScript_h4cyq")
+argument_names = []
+return_value = true
+
+[node name="Dummy" type="Node2D"]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="ClockBehavior" type="Node2D" parent="Node2D"]
+position = Vector2(576, 324)
+script = ExtResource("4_5l0yq")
+trigger_interval_in_seconds = 1.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D/ClockBehavior"]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Node2D/ClockBehavior/CharacterBody2D"]
+script = ExtResource("2_nadkg")
+sprite_texture = ExtResource("3_6qit6")
+placeholder_size = Vector2(20, 20)
+
+[node name="CollisionBehavior" type="Node2D" parent="Node2D/ClockBehavior/CharacterBody2D"]
+position = Vector2(-40, -1.74846e-06)
+script = ExtResource("4_8dccv")
+
+[node name="CodeBehavior" type="Node2D" parent="Node2D/ClockBehavior/CharacterBody2D"]
+position = Vector2(-28.2843, -28.2843)
+script = ExtResource("5_t7mqt")
+evaluate = SubResource("Resource_uyawp")
+
+[node name="AlwaysBehavior" type="Node2D" parent="Node2D"]
+position = Vector2(576, 324)
+script = ExtResource("1_os0qy")
+
+[node name="BackgroundBehavior" type="Node2D" parent="Node2D"]
+position = Vector2(576, 324)
+script = ExtResource("8_syntg")
+
+[node name="Node2D2" type="Node2D" parent="."]
+
+[node name="ClockBehavior" type="Node2D" parent="Node2D2"]
+position = Vector2(576, 324)
+script = ExtResource("4_5l0yq")
+trigger_interval_in_seconds = 1.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D2/ClockBehavior"]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Node2D2/ClockBehavior/CharacterBody2D"]
+script = ExtResource("2_nadkg")
+sprite_texture = ExtResource("3_6qit6")
+placeholder_size = Vector2(20, 20)
+
+[node name="CollisionBehavior" type="Node2D" parent="Node2D2/ClockBehavior/CharacterBody2D"]
+position = Vector2(-40, -1.74846e-06)
+script = ExtResource("4_8dccv")
+
+[node name="CodeBehavior" type="Node2D" parent="Node2D2/ClockBehavior/CharacterBody2D"]
+position = Vector2(-28.2843, -28.2843)
+script = ExtResource("5_t7mqt")
+evaluate = SubResource("Resource_uyawp")
+
+[node name="AlwaysBehavior" type="Node2D" parent="Node2D2"]
+position = Vector2(576, 324)
+script = ExtResource("1_os0qy")
+
+[node name="BackgroundBehavior" type="Node2D" parent="Node2D2"]
+position = Vector2(576, 324)
+script = ExtResource("8_syntg")
+
+[node name="Node2D3" type="Node2D" parent="."]
+
+[node name="ClockBehavior" type="Node2D" parent="Node2D3"]
+position = Vector2(576, 324)
+script = ExtResource("4_5l0yq")
+trigger_interval_in_seconds = 1.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D3/ClockBehavior"]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Node2D3/ClockBehavior/CharacterBody2D"]
+script = ExtResource("2_nadkg")
+sprite_texture = ExtResource("3_6qit6")
+placeholder_size = Vector2(20, 20)
+
+[node name="CollisionBehavior" type="Node2D" parent="Node2D3/ClockBehavior/CharacterBody2D"]
+position = Vector2(-40, -1.74846e-06)
+script = ExtResource("4_8dccv")
+
+[node name="CodeBehavior" type="Node2D" parent="Node2D3/ClockBehavior/CharacterBody2D"]
+position = Vector2(-28.2843, -28.2843)
+script = ExtResource("5_t7mqt")
+evaluate = SubResource("Resource_uyawp")
+
+[node name="AlwaysBehavior" type="Node2D" parent="Node2D3"]
+position = Vector2(576, 324)
+script = ExtResource("1_os0qy")
+
+[node name="BackgroundBehavior" type="Node2D" parent="Node2D3"]
+position = Vector2(576, 324)
+script = ExtResource("8_syntg")
