@@ -1,17 +1,12 @@
-[gd_scene load_steps=26 format=3 uid="uid://rf10sg2nyg07"]
+[gd_scene load_steps=8 format=3 uid="uid://gljdtsy48v2u"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_xnt7v"]
-[ext_resource type="Texture2D" uid="uid://dbbq5g37wq1en" path="res://prototypes/study/demo-assets/driving/spritesheet_tiles.png" id="2_ad2js"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="4_gjvmx"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="4_j7cvu"]
-[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="5_gp1pu"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="6_qfu0f"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="7_n6nwg"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="8_057tg"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="9_rc74y"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_evpb5"]
+[ext_resource type="Texture2D" uid="uid://dbbq5g37wq1en" path="res://prototypes/study/demo-assets/driving/spritesheet_tiles.png" id="2_jd50m"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/vis_c_g_scripts/LeftTrackCheck.gd" id="3_ouutu"]
+[ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="5_r1anu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wym6f"]
-texture = ExtResource("2_ad2js")
+texture = ExtResource("2_jd50m")
 texture_region_size = Vector2i(128, 128)
 0:3/0 = 0
 0:4/0 = 0
@@ -337,132 +332,14 @@ texture_region_size = Vector2i(128, 128)
 tile_size = Vector2i(128, 128)
 sources/0 = SubResource("TileSetAtlasSource_wym6f")
 
-[sub_resource type="GDScript" id="GDScript_b81mu"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from):
-	print(\"Car left track, reset\")
-	G.get_tree().reload_current_scene()
-"
-
-[sub_resource type="Resource" id="Resource_7pf31"]
-script = ExtResource("8_057tg")
-nested_script = SubResource("GDScript_b81mu")
-argument_names = ["delta", "from"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_8ftxh"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D):
-	var map: TileMap = closest(\"TileMap\")
-	var car_pos = map.local_to_map(closest(\"Car\").position*4)
-	if map.get_cell_source_id(0, car_pos) == -1:
-		return true
-	else:
-		return false
-"
-
-[sub_resource type="Resource" id="Resource_66mpl"]
-script = ExtResource("8_057tg")
-nested_script = SubResource("GDScript_8ftxh")
-argument_names = ["delta", "from"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_k5kka"]
-script = ExtResource("9_rc74y")
-signal_name = "physiscs_always"
-to = NodePath("")
-more_references = []
-invoke = ""
-arguments = []
-only_if = SubResource("Resource_66mpl")
-expression = SubResource("Resource_7pf31")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_vns8h"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_wof1k"]
-script = ExtResource("8_057tg")
-nested_script = SubResource("GDScript_vns8h")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_hsyio"]
-script = ExtResource("9_rc74y")
-signal_name = "left"
-to = NodePath("../MoveBehavior")
-more_references = []
-invoke = "rotate_left"
-arguments = []
-only_if = SubResource("Resource_wof1k")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_qw8tg"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_ggjit"]
-script = ExtResource("8_057tg")
-nested_script = SubResource("GDScript_qw8tg")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_o84n7"]
-script = ExtResource("9_rc74y")
-signal_name = "right"
-to = NodePath("../MoveBehavior")
-more_references = []
-invoke = "rotate_right"
-arguments = []
-only_if = SubResource("Resource_ggjit")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_00ecp"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_i4as5"]
-script = ExtResource("8_057tg")
-nested_script = SubResource("GDScript_00ecp")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_0bvl4"]
-script = ExtResource("9_rc74y")
-signal_name = "up"
-to = NodePath("../MoveBehavior")
-more_references = []
-invoke = "move_up"
-arguments = []
-only_if = SubResource("Resource_i4as5")
-deferred = false
-enabled = true
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h13vj"]
+size = Vector2(44, 16)
 
 [node name="VisDriving" type="Node2D"]
 
 [node name="StudyTrackerBehavior" type="Node2D" parent="."]
 position = Vector2(1174, -36)
-script = ExtResource("1_xnt7v")
+script = ExtResource("1_evpb5")
 
 [node name="level" type="Node2D" parent="."]
 
@@ -474,10 +351,6 @@ format = 2
 layer_0/name = "Main"
 layer_0/tile_data = PackedInt32Array(262149, 262144, 805306377, 327685, 262144, 805306377, 393221, 262144, 805306377, 458757, 262144, 805306377, 524293, 196608, 6, 589829, 131072, 6, 262150, 262144, 10, 327686, 262144, 10, 393222, 262144, 10, 458758, 262144, 10, 524294, 262144, 10, 589830, 131072, 5, 262151, 262144, 1610612740, 327687, 262144, 9, 393223, 262144, 9, 458759, 262144, 805306372, 524295, 262144, 10, 589831, 196608, 10, 262152, 196608, 10, 589832, 196608, 10, 262153, 196608, 10, 589833, 196608, 10, 262154, 196608, 10, 589834, 196608, 10, 262155, 196608, 10, 589835, 196608, 10, 262156, 196608, 10, 589836, 196608, 10, 262157, 196608, 10, 589837, 196608, 10, 262158, 196608, 10, 589838, 196608, 10, 262159, 196608, 10, 589839, 196608, 10, 262160, 196608, 10, 589840, 196608, 10, 262161, 0, 15, 589841, 196608, 10, 262162, 196608, 10, 589842, 196608, 10, 262163, 196608, 10, 589843, 196608, 10, 262164, 196608, 10, 589844, 196608, 10, 262165, 196608, 10, 589845, 196608, 10, 262166, 196608, 10, 589846, 196608, 10, 262167, 196608, 10, 589847, 196608, 10, 262168, 196608, 10, 589848, 196608, 10, 262169, 196608, 10, 589849, 196608, 10, 262170, 196608, 10, 589850, 196608, 10, 262171, 262144, 4, 327707, 262144, 805306377, 393243, 262144, 805306377, 458779, 262144, 1342177284, 524315, 262144, 10, 589851, 196608, 10, 262172, 262144, 10, 327708, 262144, 10, 393244, 262144, 10, 458780, 262144, 10, 524316, 262144, 10, 589852, 131072, 4, 262173, 262144, 9, 327709, 262144, 9, 393245, 262144, 9, 458781, 262144, 9, 524317, 196608, 3, 589853, 131072, 3, 131077, 327680, 6, 196613, 262144, 6, 131078, 327680, 5, 196614, 262144, 10, 131079, 327680, 10, 196615, 262144, 10, 131080, 327680, 10, 196616, 262144, 10, 458760, 327680, 10, 524296, 262144, 10, 131081, 327680, 10, 196617, 262144, 10, 458761, 327680, 10, 524297, 262144, 10, 131082, 327680, 10, 196618, 262144, 10, 458762, 327680, 10, 524298, 262144, 10, 131083, 327680, 10, 196619, 262144, 10, 458763, 327680, 10, 524299, 262144, 10, 131084, 327680, 10, 196620, 262144, 10, 458764, 327680, 10, 524300, 262144, 10, 131085, 327680, 10, 196621, 262144, 10, 458765, 327680, 10, 524301, 262144, 10, 131086, 327680, 10, 196622, 262144, 10, 458766, 327680, 10, 524302, 262144, 10, 131087, 327680, 10, 196623, 262144, 10, 458767, 327680, 10, 524303, 262144, 10, 131088, 327680, 10, 196624, 262144, 10, 458768, 327680, 10, 524304, 262144, 10, 131089, 0, 17, 196625, 0, 16, 458769, 327680, 10, 524305, 262144, 10, 131090, 327680, 10, 196626, 262144, 10, 458770, 327680, 10, 524306, 262144, 10, 131091, 327680, 10, 196627, 262144, 10, 458771, 327680, 10, 524307, 262144, 10, 131092, 327680, 10, 196628, 262144, 10, 458772, 327680, 10, 524308, 262144, 10, 131093, 327680, 10, 196629, 262144, 10, 458773, 327680, 10, 524309, 262144, 10, 131094, 327680, 10, 196630, 262144, 10, 458774, 327680, 10, 524310, 262144, 10, 131095, 327680, 10, 196631, 262144, 10, 458775, 327680, 10, 524311, 262144, 10, 131096, 327680, 10, 196632, 262144, 10, 458776, 327680, 10, 524312, 262144, 10, 131097, 327680, 10, 196633, 262144, 10, 458777, 327680, 10, 524313, 262144, 10, 131098, 327680, 10, 196634, 262144, 10, 458778, 327680, 10, 524314, 262144, 10, 131099, 327680, 10, 196635, 262144, 10, 131100, 327680, 4, 196636, 262144, 10, 131101, 327680, 3, 196637, 262144, 3)
 
-[node name="Node2D" type="Node2D" parent="level/TileMap"]
-position = Vector2(2680, 424)
-scale = Vector2(4, 4)
-
 [node name="Label" type="Label" parent="level"]
 offset_left = 5.0
 offset_top = -246.0
@@ -487,26 +360,16 @@ text = "Task: Prototype a car and driving mechanic to beat the round in X second
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AlwaysBehavior" type="Node2D" parent="level"]
-position = Vector2(1013, 23)
-script = ExtResource("4_gjvmx")
-metadata/pronto_connections = [SubResource("Resource_k5kka")]
+[node name="LeftTrackCheck" type="Node2D" parent="level"]
+script = ExtResource("3_ouutu")
 
 [node name="Car" type="CharacterBody2D" parent="."]
 position = Vector2(535, 107)
+motion_mode = 1
 
-[node name="PlaceholderBehavior" type="Node2D" parent="Car"]
-script = ExtResource("4_j7cvu")
-label = "CAR"
-color = Color(0.262745, 0.321569, 0.254902, 1)
-sprite_texture = ExtResource("5_gp1pu")
-placeholder_size = Vector2(15, 36)
+[node name="Sprite2D" type="Sprite2D" parent="Car"]
+scale = Vector2(0.347656, 0.125)
+texture = ExtResource("5_r1anu")
 
-[node name="MoveBehavior" type="Node2D" parent="Car"]
-position = Vector2(-1, 76)
-script = ExtResource("6_qfu0f")
-
-[node name="ControlsBehavior" type="Node2D" parent="Car"]
-position = Vector2(28, 77)
-script = ExtResource("7_n6nwg")
-metadata/pronto_connections = [SubResource("Resource_hsyio"), SubResource("Resource_o84n7"), SubResource("Resource_0bvl4")]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Car"]
+shape = SubResource("RectangleShape2D_h13vj")
