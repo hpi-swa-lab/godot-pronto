@@ -76,8 +76,6 @@ static func get_connections(node: Node) -> Array:
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
-	#if null == expression:
-		#print(seslf.signal_name)
 	return expression != null
 
 ## Return whether this connection will invoke a method on a target.

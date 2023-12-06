@@ -145,6 +145,6 @@ func _draw():
 	draw_set_transform(Vector2.ZERO) # Reset transform after it has been changed when drawing lines
 
 func _study_logging():
-	var _study_tracker = get_node("/root/").find_child("StudyTrackerBehavior", true, false)
+	var _study_tracker = get_node("/root/").find_child("StudyRoot", true, false)
 	if _study_tracker and _study_tracker.active:
 		_study_tracker.logger.log("behavior_insert " + str(self.name))

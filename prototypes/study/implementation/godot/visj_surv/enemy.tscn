@@ -4,17 +4,17 @@
 [ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="2_hl86v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vfu2l"]
-size = Vector2(14, 14)
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_qknu5")
 speed = 50.0
-max_speed = 200.0
+max_speed = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.109375, 0.109375)
+position = Vector2(-9.53674e-07, -9.53674e-07)
+scale = Vector2(0.15625, 0.15625)
 texture = ExtResource("2_hl86v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
