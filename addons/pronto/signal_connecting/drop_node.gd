@@ -28,7 +28,7 @@ func _drop_data(at_position, data):
 	NodeToNodeConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
 
 func _study_logging(text):
-	var _study_tracker = get_node("/root/").find_child("StudyTrackerBehavior", true, false)
+	var _study_tracker = get_node("/root/").find_child("StudyRoot", true, false)
 	if _study_tracker.active:		
 		_study_tracker.logger.log(text)
 

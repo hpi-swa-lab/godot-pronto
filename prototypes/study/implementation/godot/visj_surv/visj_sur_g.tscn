@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://cal784t2cawkt"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_58uyp"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/StudyTracker.gd" id="1_35s4v"]
 [ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="2_7ukho"]
 [ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_surv/Player.gd" id="3_eo3xt"]
 [ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="4_8emur"]
@@ -621,23 +621,10 @@ sources/0 = SubResource("TileSetAtlasSource_1flb5")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ksllo"]
 size = Vector2(16, 46)
 
-[node name="visj_td" type="Node2D"]
-
-[node name="StudyTrackerBehavior" type="Node2D" parent="."]
-position = Vector2(1174, -36)
-script = ExtResource("1_58uyp")
+[node name="StudyRoot" type="Node2D"]
+script = ExtResource("1_35s4v")
 
 [node name="level" type="Node2D" parent="."]
-
-[node name="Label" type="Label" parent="level"]
-offset_left = -1.0
-offset_top = -243.0
-offset_right = 1151.0
-offset_bottom = -5.0
-text = "Task: Analyse and explain the curent implementation for unit targeting and damage calculation.
-Task 2 (unclear): Impelement new unit with unique damage method or make unit's damage values unique to each type and balance the the game to last ~3 minutes"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="TileMap" type="TileMap" parent="level"]
 tile_set = SubResource("TileSet_ieo6w")
@@ -674,7 +661,7 @@ vertical_alignment = 2
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("5_iwmij")
 enemy_scene = ExtResource("6_2b6is")
-spawn_cooldown = 5.0
+spawn_cooldown = 0.75
 
 [node name="PowerUpSpawner" type="Node2D" parent="."]
 script = ExtResource("8_csrtn")
