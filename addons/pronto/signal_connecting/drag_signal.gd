@@ -72,6 +72,6 @@ func _notification(what):
 		drop_destinations = []
 
 func _study_logging(text):
-	var _study_tracker = get_node("/root/").find_child("StudyTrackerBehavior", true, false)
+	var _study_tracker = get_node("/root/").find_child("StudyRoot", true, false)
 	if _study_tracker.active:		
 		_study_tracker.logger.log(text)

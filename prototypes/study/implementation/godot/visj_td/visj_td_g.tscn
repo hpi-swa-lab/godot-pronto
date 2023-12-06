@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://ctd1qere17667"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/StudyTrackerBehavior.gd" id="1_p61po"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/StudyTracker.gd" id="1_e15s6"]
 [ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="2_81o0d"]
 [ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_td/PlayerBase.gd" id="3_8iplu"]
 [ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_td/EnemyBase.gd" id="3_bsnf3"]
@@ -216,23 +216,10 @@ radius = 48.0104
 [sub_resource type="CircleShape2D" id="CircleShape2D_dhh2l"]
 radius = 48.2597
 
-[node name="visj_td" type="Node2D"]
-
-[node name="StudyTrackerBehavior" type="Node2D" parent="."]
-position = Vector2(1174, -36)
-script = ExtResource("1_p61po")
+[node name="StudyRoot" type="Node2D"]
+script = ExtResource("1_e15s6")
 
 [node name="level" type="Node2D" parent="."]
-
-[node name="Label" type="Label" parent="level"]
-offset_left = -1.0
-offset_top = -243.0
-offset_right = 1151.0
-offset_bottom = -5.0
-text = "Task: Analyse and explain the curent implementation for unit targeting and damage calculation.
-Task 2 (unclear): Impelement new unit with unique damage method or make unit's damage values unique to each type and balance the the game to last ~3 minutes"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="TileMap" type="TileMap" parent="level"]
 tile_set = SubResource("TileSet_ieo6w")
@@ -253,6 +240,7 @@ position = Vector2(145, 248)
 script = ExtResource("3_8iplu")
 player_unit_scene = ExtResource("4_0u41n")
 initial_target = NodePath("../EnemyBase")
+health = 30.0
 
 [node name="PlayerBaseRange" type="Area2D" parent="level/PlayerBase"]
 priority = 1
@@ -276,6 +264,7 @@ script = ExtResource("3_bsnf3")
 enemy_unit_scene = ExtResource("4_0u41n")
 initial_target = NodePath("../PlayerBase")
 spawn_cooldown = 5.0
+health = 30.0
 
 [node name="EnemyBaseRange" type="Area2D" parent="level/EnemyBase"]
 
