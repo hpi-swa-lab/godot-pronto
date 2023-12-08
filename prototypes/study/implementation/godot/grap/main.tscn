@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://prototypes/study/implementation/StudyTracker.gd" id="1_cn3xr"]
 [ext_resource type="Texture2D" uid="uid://c4xeskmlrb1yc" path="res://prototypes/study/demo-assets/tilemap_packed.png" id="2_1utgl"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/vis_g_g_scripts/OutOfBounds.gd" id="3_12bxe"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/vis_g_g_scripts/Player.gd" id="3_gxtv0"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/grap/OutOfBounds.gd" id="3_12bxe"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/grap/Player.gd" id="3_gxtv0"]
 [ext_resource type="Texture2D" uid="uid://8f8052mgytg2" path="res://prototypes/study/demo-assets/tilemap.png" id="4_6h34a"]
 [ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="4_th85y"]
 
@@ -1203,6 +1203,7 @@ size = Vector2(23, 56)
 
 [node name="StudyRoot" type="Node2D"]
 script = ExtResource("1_cn3xr")
+studyId = "G1"
 
 [node name="level" type="Node2D" parent="."]
 

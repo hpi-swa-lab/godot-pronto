@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://prototypes/study/implementation/StudyTracker.gd" id="1_35s4v"]
 [ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="2_7ukho"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_surv/Player.gd" id="3_eo3xt"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/surv/Player.gd" id="3_eo3xt"]
 [ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="4_8emur"]
-[ext_resource type="PackedScene" uid="uid://dorygjooe0sh4" path="res://prototypes/study/implementation/godot/visj_surv/bullet.tscn" id="4_y30u0"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_surv/EnemySpawner.gd" id="5_iwmij"]
-[ext_resource type="PackedScene" uid="uid://dfod60hvlihy0" path="res://prototypes/study/implementation/godot/visj_surv/enemy.tscn" id="6_2b6is"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_surv/PowerUpSpawner.gd" id="8_csrtn"]
-[ext_resource type="PackedScene" uid="uid://btquag4dr0f7n" path="res://prototypes/study/implementation/godot/visj_surv/powerup.tscn" id="9_vlayj"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_surv/SurvivalTimer.gd" id="10_h7xi8"]
+[ext_resource type="PackedScene" uid="uid://dorygjooe0sh4" path="res://prototypes/study/implementation/godot/surv/bullet.tscn" id="4_y30u0"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/surv/EnemySpawner.gd" id="5_iwmij"]
+[ext_resource type="PackedScene" uid="uid://dfod60hvlihy0" path="res://prototypes/study/implementation/godot/surv/enemy.tscn" id="6_2b6is"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/surv/PowerUpSpawner.gd" id="8_csrtn"]
+[ext_resource type="PackedScene" uid="uid://btquag4dr0f7n" path="res://prototypes/study/implementation/godot/surv/powerup.tscn" id="9_vlayj"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/surv/SurvivalTimer.gd" id="10_h7xi8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1flb5"]
 texture = ExtResource("2_7ukho")
@@ -623,6 +623,7 @@ size = Vector2(16, 46)
 
 [node name="StudyRoot" type="Node2D"]
 script = ExtResource("1_35s4v")
+studyId = "G4"
 
 [node name="level" type="Node2D" parent="."]
 

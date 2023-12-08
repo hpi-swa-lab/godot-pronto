@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://prototypes/study/implementation/StudyTracker.gd" id="1_e15s6"]
 [ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="2_81o0d"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_td/PlayerBase.gd" id="3_8iplu"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_td/EnemyBase.gd" id="3_bsnf3"]
-[ext_resource type="PackedScene" uid="uid://fs1c28k7o2y0" path="res://prototypes/study/implementation/godot/visj_td/unit.tscn" id="4_0u41n"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/base/PlayerBase.gd" id="3_8iplu"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/base/EnemyBase.gd" id="3_bsnf3"]
+[ext_resource type="PackedScene" uid="uid://fs1c28k7o2y0" path="res://prototypes/study/implementation/godot/base/unit.tscn" id="4_0u41n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1flb5"]
 texture = ExtResource("2_81o0d")
@@ -218,6 +218,7 @@ radius = 48.2597
 
 [node name="StudyRoot" type="Node2D"]
 script = ExtResource("1_e15s6")
+studyId = "G3"
 
 [node name="level" type="Node2D" parent="."]
 
