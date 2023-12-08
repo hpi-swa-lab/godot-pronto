@@ -218,6 +218,7 @@ radius = 48.2597
 
 [node name="StudyRoot" type="Node2D"]
 script = ExtResource("1_e15s6")
+participantId = 2
 studyId = "G3"
 
 [node name="level" type="Node2D" parent="."]
@@ -264,7 +265,7 @@ position = Vector2(1007, 250)
 script = ExtResource("3_bsnf3")
 enemy_unit_scene = ExtResource("4_0u41n")
 initial_target = NodePath("../PlayerBase")
-spawn_cooldown = 5.0
+spawn_cooldown = 3.0
 health = 30.0
 
 [node name="EnemyBaseRange" type="Area2D" parent="level/EnemyBase"]

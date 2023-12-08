@@ -11,6 +11,8 @@ radius = 26.0
 
 [node name="Unit" type="CharacterBody2D" node_paths=PackedStringArray("attack_range")]
 script = ExtResource("1_yo1o7")
+speed = 50.0
+max_speed = 200.0
 attack_range = NodePath("AttackRange")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
