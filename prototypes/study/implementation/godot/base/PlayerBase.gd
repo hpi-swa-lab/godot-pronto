@@ -13,10 +13,6 @@ var last_spawn: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# spawn_timer.timeout.connect(_spawn_unit)
-	# spawn_timer.wait_time = spawn_cooldown
-	# add_child(spawn_timer)
-	# spawn_timer.start()
 	max_health = health
 	_update_health_display()
 	pass
@@ -42,5 +38,7 @@ func damage(amount: int):
 		health = health - amount
 		_update_health_display()
 	else:
+		health = 0
+		_update_health_display()
 		print("Player base has been destryoed")
 		get_tree().paused = true
