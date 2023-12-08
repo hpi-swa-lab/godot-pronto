@@ -639,6 +639,7 @@ sources/0 = SubResource("TileSetAtlasSource_kveg0")
 
 [node name="StudyRoot" type="Node2D"]
 script = ExtResource("1_j67xq")
+studyId = "P1"
 
 [node name="level" type="Node2D" parent="."]
 

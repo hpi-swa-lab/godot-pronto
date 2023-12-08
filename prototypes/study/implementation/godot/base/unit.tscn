@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://fs1c28k7o2y0"]
 
 [ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="1_64igy"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_td/unit.gd" id="1_yo1o7"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/base/unit.gd" id="1_yo1o7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dh4fb"]
 size = Vector2(16, 16)
