@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dfod60hvlihy0"]
 
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_surv/enemy.gd" id="1_qknu5"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/surv/enemy.gd" id="1_qknu5"]
 [ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="2_hl86v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vfu2l"]

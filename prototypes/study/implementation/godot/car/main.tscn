@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://prototypes/study/implementation/StudyTracker.gd" id="1_ksf7h"]
 [ext_resource type="Texture2D" uid="uid://dbbq5g37wq1en" path="res://prototypes/study/demo-assets/driving/spritesheet_tiles.png" id="2_jd50m"]
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/vis_c_g_scripts/LeftTrackCheck.gd" id="3_ouutu"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/car/LeftTrackCheck.gd" id="3_ouutu"]
 [ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="5_r1anu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wym6f"]
@@ -337,6 +337,8 @@ size = Vector2(44, 16)
 
 [node name="StudyRoot" type="Node2D"]
 script = ExtResource("1_ksf7h")
+participantId = 1
+studyId = "G2"
 
 [node name="level" type="Node2D" parent="."]
 

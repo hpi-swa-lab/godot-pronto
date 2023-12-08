@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://btquag4dr0f7n"]
 
-[ext_resource type="Script" path="res://prototypes/study/implementation/godot/visj_surv/powerup.gd" id="1_5gol7"]
+[ext_resource type="Script" path="res://prototypes/study/implementation/godot/surv/powerup.gd" id="1_5gol7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6pj5"]
 size = Vector2(22, 15)
