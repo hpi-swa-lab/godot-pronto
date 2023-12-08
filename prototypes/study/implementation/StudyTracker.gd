@@ -18,7 +18,7 @@ var logger: Logger = null
 func _handle_activation(_active):
 	if Engine.is_editor_hint():
 		if _active:
-			logger = Logger.new("C:/test/studyLog_participant_" + str(participantId) + ".log", "studyTracker")
+			logger = Logger.new("res://logs/studyLog_participant_" + str(participantId) + ".log", "studyTracker")
 			_subscribe_to_relevant_signals()
 			logger.log("Participant " + str(participantId) + " started study " + str(studyId))
 			print("Activated")

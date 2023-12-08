@@ -1228,6 +1228,7 @@ position = Vector2(156, 408)
 
 [node name="TileMap2" type="TileMap" parent="level/OnlyUseThisOnceToldTo"]
 visible = false
+position = Vector2(0, -1000)
 tile_set = SubResource("TileSet_o4mew")
 rendering_quadrant_size = 18
 format = 2
@@ -1236,6 +1237,7 @@ layer_0/tile_data = PackedInt32Array(1835076, 131074, 1, 1900612, 131074, 6, 196
 
 [node name="TileMap3" type="TileMap" parent="level/OnlyUseThisOnceToldTo"]
 visible = false
+position = Vector2(0, -1000)
 tile_set = SubResource("TileSet_o4mew")
 rendering_quadrant_size = 18
 format = 2

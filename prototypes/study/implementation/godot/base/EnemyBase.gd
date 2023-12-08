@@ -37,5 +37,7 @@ func damage(amount: int):
 		health = health - amount
 		_update_health_display()
 	else:
+		health = 0
+		_update_health_display()
 		print("Enemy base has been destroyed, you WIN!")
 		get_tree().paused = true
