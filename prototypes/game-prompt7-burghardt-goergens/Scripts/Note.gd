@@ -11,7 +11,7 @@ const RIGHT_LANE_SPAWN = Vector2(1388, SPAWN_Y)
 var speed = 0
 var hit = false
 
-var bpm = 115
+var bpm = 80
 var sec_per_beat = 60.0 / bpm
 
 

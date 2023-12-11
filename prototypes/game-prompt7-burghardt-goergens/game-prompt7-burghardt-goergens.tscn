@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bt8mq02w33hjr" path="res://addons/pronto/assets/spritesheetScribblePlatformer.png" id="4_damas"]
 [ext_resource type="SpriteFrames" uid="uid://bix6tinubj0fg" path="res://prototypes/game-prompt7-burghardt-goergens/Frames/arrow_right_frames.tres" id="5_0focw"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="7_xoj3b"]
-[ext_resource type="AudioStream" uid="uid://djl1u6ubmbf48" path="res://prototypes/game-prompt7-burghardt-goergens/song.ogg" id="8_bmsdq"]
+[ext_resource type="AudioStream" uid="uid://b4rb4g8lbl42h" path="res://prototypes/game-prompt7-burghardt-goergens/Dead_Wrong_-_Jeremy_Blake.mp3" id="8_bhn2o"]
 [ext_resource type="PackedScene" uid="uid://bnp0cjb83ux6n" path="res://prototypes/game-prompt7-burghardt-goergens/Conductor.tscn" id="10_s64sl"]
 [ext_resource type="Script" path="res://prototypes/game-prompt7-burghardt-goergens/Player.gd" id="11_kaoqc"]
 [ext_resource type="Texture2D" uid="uid://drss1nt8svfwy" path="res://prototypes/game-prompt7-burghardt-goergens/Player.png" id="11_lwxs6"]
@@ -502,7 +502,7 @@ text = "0 max"
 metadata/_edit_use_anchors_ = true
 
 [node name="Conductor" parent="." instance=ExtResource("10_s64sl")]
-stream = ExtResource("8_bmsdq")
+stream = ExtResource("8_bhn2o")
 volume_db = -15.0
 
 [node name="ExportBehavior" type="Node2D" parent="."]

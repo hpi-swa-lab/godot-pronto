@@ -17,7 +17,7 @@ var endTime
 var lastClickTime = Time.get_unix_time_from_system()
 var lastBeatTime = 0
 
-var bpm = 115
+var bpm = 80
 
 var song_position = 0.0
 var song_position_in_beats = 0
@@ -67,61 +67,61 @@ func _on_Conductor_beat(localPosition, beatTime):
 	lastBeatTime = beatTime
 	song_position_in_beats = localPosition
 	if song_position_in_beats > 36:
+		spawn_1_beat = 2
+		spawn_2_beat = 0
+		spawn_3_beat = 1
+		spawn_4_beat = 0
+	if song_position_in_beats > 53:
 		spawn_1_beat = 1
 		spawn_2_beat = 1
 		spawn_3_beat = 1
 		spawn_4_beat = 1
-	if song_position_in_beats > 98:
-		spawn_1_beat = 2
-		spawn_2_beat = 0
-		spawn_3_beat = 1
-		spawn_4_beat = 0
-	if song_position_in_beats > 132:
-		spawn_1_beat = 0
-		spawn_2_beat = 2
-		spawn_3_beat = 0
-		spawn_4_beat = 2
-	if song_position_in_beats > 162:
+	if song_position_in_beats > 80:
 		spawn_1_beat = 2
 		spawn_2_beat = 2
 		spawn_3_beat = 1
 		spawn_4_beat = 1
-	if song_position_in_beats > 194:
+	if song_position_in_beats > 108:
 		spawn_1_beat = 2
 		spawn_2_beat = 2
-		spawn_3_beat = 1
-		spawn_4_beat = 2
-	if song_position_in_beats > 228:
-		spawn_1_beat = 0
-		spawn_2_beat = 2
-		spawn_3_beat = 1
-		spawn_4_beat = 2
-	if song_position_in_beats > 258:
+		spawn_3_beat = 2
+		spawn_4_beat = 1
+	if song_position_in_beats > 128:
 		spawn_1_beat = 1
+		spawn_2_beat = 0
+		spawn_3_beat = 2
+		spawn_4_beat = 0
+	if song_position_in_beats > 144:
+		spawn_1_beat = 0
 		spawn_2_beat = 2
 		spawn_3_beat = 1
 		spawn_4_beat = 2
-	if song_position_in_beats > 288:
+	if song_position_in_beats > 160:
 		spawn_1_beat = 0
-		spawn_2_beat = 2
-		spawn_3_beat = 0
+		spawn_2_beat = 0
+		spawn_3_beat = 1
+		spawn_4_beat = 1
+	if song_position_in_beats > 192:
+		spawn_1_beat = 2
+		spawn_2_beat = 1
+		spawn_3_beat = 2
 		spawn_4_beat = 2
-	if song_position_in_beats > 322:
+	if song_position_in_beats > 208:
 		spawn_1_beat = 3
 		spawn_2_beat = 2
 		spawn_3_beat = 2
 		spawn_4_beat = 1
-	if song_position_in_beats > 388:
+	if song_position_in_beats > 222:
 		spawn_1_beat = 1
 		spawn_2_beat = 0
-		spawn_3_beat = 0
+		spawn_3_beat = 1
 		spawn_4_beat = 0
-	if song_position_in_beats > 396:
+	if song_position_in_beats > 248:
 		spawn_1_beat = 0
 		spawn_2_beat = 0
 		spawn_3_beat = 0
 		spawn_4_beat = 0
-	if song_position_in_beats > 404:
+	if song_position_in_beats > 259:
 		if get_tree().change_scene_to_file("res://prototypes/game-prompt7-burghardt-goergens/menu.tscn") != OK:
 			print ("Error changing scene to Menu")
 
@@ -169,7 +169,7 @@ func increment_score(by):
 	else:
 		$Combo.text = ""
 	
-	if combo == 20:
+	if combo == 40:
 		comboBuff.emit(true)
 
 
