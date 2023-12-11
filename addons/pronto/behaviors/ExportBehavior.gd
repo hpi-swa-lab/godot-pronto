@@ -28,7 +28,7 @@ const DEFAULT_AUTHOR = "<Author>"
 @export_category("Thumbnail")
 
 ## If true, a screenshot will be taken after a delay and saved as thumbnail.png
-@export var take_screenshot: bool = true
+@export var take_screenshot: bool = false
 
 ## The delay until the screenshot is taken
 @export var wait_seconds: int = 1

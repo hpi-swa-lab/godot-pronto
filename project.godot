@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="pronto"
+run/main_scene="res://prototypes/game-prompt7-burghardt-goergens/game-prompt7-burghardt-goergens.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 run/low_processor_mode=true
+boot_splash/image="res://prototypes/game-prompt7-burghardt-goergens/thumbnail.png"
 config/icon="res://icon.svg"
 
 [autoload]

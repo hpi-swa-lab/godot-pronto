@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ctql0mmf4cuxl"
+path="res://.godot/imported/A Flute's Mourning - Aakash Gandhi.mp3-23c4c71a7d106324f507544323ce2d44.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-prompt7-burghardt-goergens/A Flute's Mourning - Aakash Gandhi.mp3"
+dest_files=["res://.godot/imported/A Flute's Mourning - Aakash Gandhi.mp3-23c4c71a7d106324f507544323ce2d44.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

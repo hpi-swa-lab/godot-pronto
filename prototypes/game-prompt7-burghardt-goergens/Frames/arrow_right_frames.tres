@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://bix6tinubj0fg"]
+
+[ext_resource type="Texture2D" uid="uid://c131w343atepv" path="res://prototypes/game-prompt7-burghardt-goergens/Sprites/game/arrow_button/right/arrow_button_right1.png" id="1_qlpux"]
+[ext_resource type="Texture2D" uid="uid://dqfdbytqaoj0a" path="res://prototypes/game-prompt7-burghardt-goergens/Sprites/game/arrow_button/right/arrow_button_right2.png" id="2_vl386"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qlpux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vl386")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

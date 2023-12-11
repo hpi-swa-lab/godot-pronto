@@ -215,7 +215,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			if target is CodeBehavior:
 				target.call(c.invoke, args)
 			else:
-				target.callv(c.invoke, args)
+				target.callv(c.idsnvoke, args)
 			args_string = ",".join(args.map(func (s): return str(s)))
 		else:
 			c._run_script(from, c.expression, values)
