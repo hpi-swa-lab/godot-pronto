@@ -43,6 +43,7 @@ func set_mode():
 	else:
 		mode = ConfigurationMode.TRANSITION
 	redraw_receiver_label()
+	update_argument_names()
 
 func open(receiver: Node) -> StateTransitionConfigurator:
 	# find existing configurator siblings
@@ -100,9 +101,9 @@ func set_existing_connection(from: Node, connection: Connection):
 	if connection.is_target():
 		receiver = from.get_node(connection.to)
 	set_mode()
-	#for i in connection.more_references:
-	#	more_references.append(i)
-	#update_argument_names()
+	for i in connection.more_references:
+		more_references.append(i)
+	update_argument_names()
 	
 	%Enabled.button_pressed = connection.enabled
 	
@@ -133,15 +134,35 @@ func get_trigger_argument_script(trigger):
 	var argument = empty_script("'%s'" % trigger, true)
 	argument.argument_names = ["from", "to"]
 	argument.argument_types = ["Node", "Node"]
+	for i in range(more_references.size()):
+		var ref = more_references[i]
+		var node = from.get_node(ref)
+		argument.argument_names.push_back("ref{0}".format([i]))
+		argument.argument_types.push_back(Utils.get_specific_class_name(node))
 	return argument
+	
+# directly copied from node_to_node_configurator
+func basic_argument_names_and_types():
+	var names_and_types = []
+	names_and_types.append(["from", Utils.get_specific_class_name(from)])
+	names_and_types.append(["to", Utils.get_specific_class_name(receiver)])
+	names_and_types += range(len(more_references)).map(func (i):
+		var ref = more_references[i]
+		var node = from.get_node(ref)
+		return ["ref{0}".format([i]), Utils.get_specific_class_name(node)])
+	return names_and_types
+
+func argument_names():
+	return basic_argument_names_and_types().map(func (a): return a[0])
 
 func save():
 	var trigger = %TriggerSelection.get_item_text(%TriggerSelection.get_selected_id())
-
+	print("more references ", more_references)
 	if existing_connection:
 		Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
 			{"source_code": %Condition.text}, "reload")
 		var connection_object
+		print("More references ", more_references)
 		if mode == ConfigurationMode.TO_STATE_MACHINE:
 			connection_object = {
 					"expression": null,
@@ -211,6 +232,71 @@ func get_state_machine() -> StateMachineBehavior:
 		return receiver
 	return null
 
+func argument_types():
+	return basic_argument_names_and_types().map(func (a): return a[1])
+
+func update_argument_names():
+	var names = argument_names()
+	var types = argument_types()
+	%Condition.argument_names = names
+	%Condition.argument_types = types
+	for i in %BasicArgs.get_child_count():
+		%BasicArgs.get_child(i).queue_free()
+	var iref := -1
+	for name in argument_names():
+		var label := Label.new()
+		label.text = "{0}{1}".format([name, "," if name != argument_names().back() else ""])
+		%BasicArgs.add_child(label)
+		
+		label.mouse_filter = Control.MOUSE_FILTER_PASS
+		var node_str
+		if name == "from":
+			node_str = from
+		elif name == "receiver":
+			node_str = receiver
+		elif name.begins_with("ref"):
+			iref += 1
+			var ref = more_references[iref]
+			node_str = "{0} ({1})".format([ref, from.get_node(ref)])
+			
+			# add popup menu for editing and removing reference
+			label.mouse_filter = Control.MOUSE_FILTER_STOP
+			label.gui_input.connect(func(event):
+				if !(event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and not event.pressed): return
+				
+				var menu := PopupMenu.new()
+				menu.add_item("Edit path", 0)
+				menu.add_item("Remove", 1)
+				menu.id_pressed.connect(func(id):
+					if id == 0:  # edit
+						_request_reference_path(ref, func(new_ref):
+							more_references[iref] = new_ref
+							update_argument_names())
+					elif id == 1:  # remove
+						var new_more_references := []
+						for i in range(more_references.size()):
+							if i != iref:
+								new_more_references.append(more_references[i])
+						more_references = new_more_references
+						update_argument_names()
+				)
+				label.add_child(menu)
+				menu.size = Vector2.ZERO
+				menu.position = label.global_position
+				menu.popup()
+			)
+		
+		label.tooltip_text = "{0}".format([node_str])
+	
+	# add deffered call to update size - HACKED
+	(func():
+		var tree = get_tree()
+		if tree == null: return
+		await tree.process_frame
+		self.size = Vector2.ZERO
+	).call_deferred()
+
+
 func _on_add_trigger_pressed():
 	var new_trigger = %TriggerEdit.text
 	if new_trigger not in get_state_machine().triggers:
@@ -237,6 +323,31 @@ func _on_open_in_connection_editor_pressed():
 	else:
 		NodeToNodeConfigurator.open_new_invoke(undo_redo, from, selected_signal,receiver)
 	queue_free()
+
+func _on_add_reference_button_pressed():
+	_request_reference_path(^"", func (path):
+		more_references += [path]
+		update_argument_names()
+		mark_changed())
+
+func _request_reference_path(path, callback: Callable):
+	var dialog := AcceptDialog.new()
+	dialog.set_title('Enter reference path (relative to "from")')
+	var lineEdit := LineEdit.new()
+	lineEdit.text = path
+	dialog.add_child(lineEdit)
+	dialog.add_cancel_button("Cancel")
+	
+	dialog.connect("confirmed", func():
+		path = NodePath(lineEdit.text)
+		dialog.queue_free()
+		if !path.is_empty():
+			callback.call(path))
+	
+	add_child(dialog)
+	dialog.size = Vector2(420, 100)
+	dialog.popup_centered()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

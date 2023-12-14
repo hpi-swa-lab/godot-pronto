@@ -8,7 +8,7 @@ class_name StateMachineBehavior
 ## The [class GroupDrawer] is used for this.
 
 var active_state: StateBehavior = null
-@export var triggers: Array[String] = []
+@export var triggers: Array[String] = ["ε"]
 
 func set_active_state(state: StateBehavior, is_active: bool):
 	if active_state:
@@ -34,3 +34,7 @@ func states():
 func trigger(trigger: String):
 	if active_state:
 		active_state.on_trigger_received.emit(trigger)
+		
+func _process(delta):
+	super._process(delta)
+	trigger("ε")
