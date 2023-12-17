@@ -45,6 +45,7 @@ static func create_transition(from: Node, signal_name: String, to: NodePath, inv
 	c.to = to
 	c.invoke = invoke
 	c.trigger = trigger
+	#c.arguments = arguments
 	c.more_references = more_references
 	c.only_if = only_if
 	c._store(from, undo_redo)
@@ -207,15 +208,14 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			names.append("to")
 			values.append(target)
 			
-		
-		if not c.should_trigger(names, values, from):
-			continue
-		
-		for i in len(self.more_references):
-			var ref_path = self.more_references[i]
+		for i in len(c.more_references):
+			var ref_path = c.more_references[i]
 			var ref_node = from.get_node(ref_path)
 			names.append("ref" + str(i))
 			values.append(ref_node)
+
+		if not c.should_trigger(names, values, from):
+			continue
 		
 		var args_string
 		if deferred: await ConnectionsList.get_tree().process_frame

@@ -132,14 +132,21 @@ func init_empty_scripts():
 
 func get_trigger_argument_script(trigger):
 	var argument = empty_script("'%s'" % trigger, true)
-	argument.argument_names = ["from", "to"]
-	argument.argument_types = ["Node", "Node"]
+	argument.argument_names = ["trigger", "from", "to"]
+	argument.argument_types = ["String", "Node", "Node"]
 	for i in range(more_references.size()):
 		var ref = more_references[i]
 		var node = from.get_node(ref)
 		argument.argument_names.push_back("ref{0}".format([i]))
 		argument.argument_types.push_back(Utils.get_specific_class_name(node))
 	return argument
+
+# directly copied from node_to_node_configurator
+func argument_names_and_types():
+	return selected_signal["args"].map(func (a):
+		# TODO: use reflection to get type of signal arguments?
+		return [a["name"], null]) \
+		+ basic_argument_names_and_types()
 	
 # directly copied from node_to_node_configurator
 func basic_argument_names_and_types():
@@ -153,16 +160,17 @@ func basic_argument_names_and_types():
 	return names_and_types
 
 func argument_names():
-	return basic_argument_names_and_types().map(func (a): return a[0])
+	return argument_names_and_types().map(func (a): return a[0])
+
+func argument_types():
+	return argument_names_and_types().map(func (a): return a[1])
 
 func save():
 	var trigger = %TriggerSelection.get_item_text(%TriggerSelection.get_selected_id())
-	print("more references ", more_references)
 	if existing_connection:
 		Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
 			{"source_code": %Condition.text}, "reload")
 		var connection_object
-		print("More references ", more_references)
 		if mode == ConfigurationMode.TO_STATE_MACHINE:
 			connection_object = {
 					"expression": null,
@@ -196,14 +204,16 @@ func save():
 				%Condition.updated_script(from, selected_signal["name"]), undo_redo
 			)
 		else:
+			var only_if = %Condition.updated_script(from, selected_signal["name"])
 			existing_connection = Connection.create_transition(
 				from,
 				selected_signal["name"],
 				from.get_path_to(receiver),
 				"enter",
 				more_references,
-				%Condition.updated_script(from, selected_signal["name"]),
+				only_if,
 				trigger,
+				#[ empty_script("'%s'" % trigger, true)],
 				undo_redo
 			)
 	existing_connection.enabled = %Enabled.button_pressed
@@ -231,9 +241,6 @@ func get_state_machine() -> StateMachineBehavior:
 	if receiver is StateMachineBehavior:
 		return receiver
 	return null
-
-func argument_types():
-	return basic_argument_names_and_types().map(func (a): return a[1])
 
 func update_argument_names():
 	var names = argument_names()
