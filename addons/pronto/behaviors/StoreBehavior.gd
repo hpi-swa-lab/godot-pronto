@@ -55,6 +55,9 @@ func at_and_remove(prop: String, default = null):
 func has(key: String):
 	return data.has(key)
 
+func get_field_names():
+	return fields.keys()
+
 func _report_game_value(prop: String, value: Variant):
 	_last_reported_game_values[prop] = value
 

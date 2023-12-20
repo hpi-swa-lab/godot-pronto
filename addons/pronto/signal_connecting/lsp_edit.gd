@@ -53,7 +53,7 @@ func _request_code_completion(force):
 		if at_regex.search(txt) or put_regex.search(txt) or at_and_erase_regex.search(txt):
 			var store_list = Utils.all_nodes_that(G.get_parent(), func(node): return is_instance_of(node, StoreBehavior))
 			for store in store_list:
-				for store_entry in store.get_meta_list():
+				for store_entry in store.get_field_names():
 					add_code_completion_option(CodeEdit.KIND_MEMBER, store_entry, _get_proper_insertion_value(store_entry,!contains_quotes))
 			for key in G.values.keys():
 				if key != "_pronto_behaviors" and key != "_pronto_editor_plugin":
