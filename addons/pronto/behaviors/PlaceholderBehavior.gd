@@ -471,19 +471,20 @@ func _draw_debug_capsule():
 	draw_rect(Rect2(-(capsule_radius),-(capsule_height/2)+capsule_radius,2*capsule_radius,capsule_height-(capsule_radius*2)), debug_color, true)
 
 func handles():
+	var parent_rotation = get_parent().rotation if (get_parent() != null) else 0
 	if shape_type == "Rect":
 		return [
 			Handles.SetPropHandle.new(
-				(transform * placeholder_size - position) / 2,
+				(transform.rotated(parent_rotation) * placeholder_size - position) / 2,
 				Utils.icon_from_theme("EditorHandle", self),
 				self,
 				"placeholder_size",
-				func (coord): return (floor(coord * 2) * transform.translated(-position)).clamp(Vector2(1, 1), Vector2(10000, 10000)))
+				func (coord): return (floor(coord * 2) * transform.rotated(parent_rotation).translated(-position)).clamp(Vector2(1, 1), Vector2(10000, 10000)))
 		]
 	elif shape_type == "Circle":
 		return [
 			Handles.SetPropHandle.new(
-				(transform * Vector2(circle_radius, 0) - position),
+				(transform.rotated(parent_rotation) * Vector2(circle_radius, 0) - position),
 				Utils.icon_from_theme("EditorHandle", self),
 				self,
 				"circle_radius",
@@ -492,13 +493,13 @@ func handles():
 	elif shape_type == "Capsule":
 		return [
 			Handles.SetPropHandle.new(
-				(transform * Vector2(capsule_radius, 0) - position),
+				(transform.rotated(parent_rotation) * Vector2(capsule_radius, 0) - position),
 				Utils.icon_from_theme("EditorHandle", self),
 				self,
 				"capsule_radius",
 				func (coord): return clamp(coord.distance_to(Vector2(0,0)),1.0, 10000.0)),
 			Handles.SetPropHandle.new(
-				(transform * Vector2(0, capsule_height/2) - position),
+				(transform.rotated(parent_rotation) * Vector2(0, capsule_height/2) - position),
 				Utils.icon_from_theme("EditorHandle", self),
 				self,
 				"capsule_height",
