@@ -289,6 +289,11 @@ func print(flip = false, shorten = true, single_line = false, show_disabled = fa
 		assert(is_expression())
 		return "{2}{0} ↺ {1}{3}".format([signal_name, Utils.ellipsize(expression.source_code.split('\n')[0], 16 if shorten else -1), prefix, suffix]).replace("\n" if single_line else "", "")
 
+## Capture all information as a string. Not used to deserialize, but to identify
+## connections (as opposed to print()).
+func serialize_as_string():
+	return "{0}/{1}/{2}".format([signal_name, to, invoke])
+
 ## Iterate over connections and check whether the target still exists for them.
 ## If not, remove the connection.
 static func garbage_collect(from: Node):

@@ -17,6 +17,8 @@ var node: Node:
 	set(value):
 		node = value
 		build_connection_list()
+		
+var connections_data: Array = []
 
 func _ready():
 	ConnectionsList.connections_changed.connect(build_connection_list)
@@ -24,7 +26,9 @@ func _ready():
 func build_connection_list():
 	%connections.clear()
 	_displayed_connections = Connection.get_connections(node).duplicate()
+	connections_data = []
 	for c in _displayed_connections:
+		connections_data.push_back(c.serialize_as_string())
 		var added_index = %connections.add_item(c.print(false, false, true, true), Utils.icon_from_theme("Signals", node))
 		#%connections.set_item_disabled(added_index, !c.enabled)
 	
@@ -60,9 +64,9 @@ func _process(delta):
 	# feel free to improve it
 	if _check_for_connection_highlight and %connections.visible:
 		var idx = %connections.get_item_at_position(get_local_mouse_position())
-		var name = %connections.get_item_text(idx)
+		var serialized = connections_data[idx]
 		var conn = Utils.find(Connection.get_connections(node),
-			func (c: Connection): return c.print(false, false, true) == name)
+			func (c: Connection): return c.serialize_as_string() == serialized)
 		if conn:
 			Utils.get_behavior(node).highlight_activated(conn)
 
