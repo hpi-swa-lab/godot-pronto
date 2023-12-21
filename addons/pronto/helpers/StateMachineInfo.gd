@@ -19,6 +19,14 @@ func _process(delta):
 
 var label_position = Vector2.ZERO
 
+func get_label_position():
+	var states = get_parent().get_children()
+	if states.size() == 0: return Vector2(150,0)
+	var max_x = 0
+	for node in states:
+		max_x = max(node.position.x/2, max_x)
+	return Vector2(max_x + 150, 0)
+
 func _draw():
 	if not get_parent() is StateMachineBehavior: return
 	var state_machine: StateMachineBehavior = get_parent()
@@ -27,7 +35,7 @@ func _draw():
 	
 	var label = "Triggers:"
 	var label_size = ThemeDB.fallback_font.get_string_size(label, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
-	label_position = Vector2(get_parent().position.x, get_parent().position.y)
+	label_position = get_label_position()
 	draw_string(ThemeDB.fallback_font, label_position, label, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, color)
 	for trigger in state_machine.triggers:
 		label = trigger
