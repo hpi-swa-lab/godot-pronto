@@ -56,6 +56,12 @@ func open(receiver: Node) -> StateTransitionConfigurator:
 	Utils.spawn_popup_from_canvas(receiver, self)
 	default_focus()
 	return self
+	
+func has_same_connection(other: StateTransitionConfigurator):
+	return other.from == from \
+		and other.selected_signal == selected_signal \
+		and other.receiver == receiver \
+		and other.existing_connection == existing_connection
 
 var undo_redo: EditorUndoRedoManager
 
