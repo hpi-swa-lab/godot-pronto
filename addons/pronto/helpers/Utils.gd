@@ -331,3 +331,6 @@ static func get_behavior(object):
 	b.hidden_child = true
 	object.add_child(b, false, INTERNAL_MODE_FRONT)
 	return b
+
+static func count_lines(string):
+	return string.split('\n').size()

@@ -65,6 +65,12 @@ func line_text_function(connection: Connection) -> Callable:
 	var addendum = ""
 	if connection.trigger != "":
 		addendum = "\ntransition on '%s'" % connection.trigger
+		var only_if_source_code = connection.only_if.source_code
+		if only_if_source_code != "true":
+			if Utils.count_lines(only_if_source_code) == 1:
+				addendum += " if " + only_if_source_code
+			else:
+				addendum += " if [?]"
 	
 	return func(flipped):
 		return connection.print(flipped) + addendum
