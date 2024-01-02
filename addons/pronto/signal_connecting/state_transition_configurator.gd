@@ -226,6 +226,7 @@ func save():
 	# FIXME doesn't respect undo
 	ConnectionsList.emit_connections_changed()
 	mark_changed(false)
+	warn_on_same_triggers()
 	
 func reload_triggers():
 	%TriggerSelection.clear()
@@ -240,6 +241,14 @@ func mark_changed(value: bool = true):
 func default_focus():
 	await get_tree().process_frame
 	%TriggerEdit.grab_focus()
+	
+func warn_on_same_triggers():
+	if mode != ConfigurationMode.TRANSITION: return
+	for c in Connection.get_connections(from):
+		if c.to != existing_connection.to and \
+			c.only_if.source_code == existing_connection.only_if.source_code and \
+			c.trigger == existing_connection.trigger:
+				printerr("Multiple transitions from {0} with trigger {1} and same condition. This might lead to unexpected behavior.".format([from,c.trigger]))
 
 func get_state_machine() -> StateMachineBehavior:
 	if from and from.get_parent() is StateMachineBehavior:
