@@ -1,0 +1,542 @@
+[gd_scene load_steps=66 format=3 uid="uid://b1dowbqvpyke4"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StateMachineBehavior.gd" id="1_716dj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StateBehavior.gd" id="1_ioomn"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_5x05x"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_mlg5x"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="5_g7n4x"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="6_5g1dp"]
+
+[sub_resource type="GDScript" id="GDScript_uvd4u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return Color.RED
+"
+
+[sub_resource type="Resource" id="Resource_lj5l5"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_uvd4u")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_10dyw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: ColorRect):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_bo28e"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_10dyw")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_y42ev"]
+script = ExtResource("3_mlg5x")
+signal_name = "entered"
+to = NodePath("../../ColorRect")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_lj5l5")]
+only_if = SubResource("Resource_bo28e")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_aqaxi"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	print(123)
+"
+
+[sub_resource type="Resource" id="Resource_0yt32"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_aqaxi")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_f0fnv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_3mqo3"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_f0fnv")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0r21c"]
+script = ExtResource("3_mlg5x")
+signal_name = "entered"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_3mqo3")
+expression = SubResource("Resource_0yt32")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_wcqqu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_tum7v"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_wcqqu")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_l2a4r"]
+script = ExtResource("3_mlg5x")
+signal_name = "on_trigger_received"
+to = NodePath("../Yellow")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_tum7v")
+deferred = false
+enabled = true
+trigger = "changecolor"
+
+[sub_resource type="GDScript" id="GDScript_0gj6g"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_gc16c"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_0gj6g")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_isfwc"]
+script = ExtResource("3_mlg5x")
+signal_name = "on_trigger_received"
+to = NodePath("../Green")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_gc16c")
+deferred = false
+enabled = true
+trigger = "changecolor"
+
+[sub_resource type="GDScript" id="GDScript_7najv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: ColorRect):
+	return Color.YELLOW
+"
+
+[sub_resource type="Resource" id="Resource_ucmcd"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_7najv")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4gefl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: ColorRect):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_n5ghd"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_4gefl")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ds5ki"]
+script = ExtResource("3_mlg5x")
+signal_name = "entered"
+to = NodePath("../../ColorRect")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_ucmcd")]
+only_if = SubResource("Resource_n5ghd")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_yhu3t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from: Node2D, to: Node2D):
+	return at(\"count\") % 3 != 0
+"
+
+[sub_resource type="Resource" id="Resource_4iipt"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_yhu3t")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_f5n2o"]
+script = ExtResource("3_mlg5x")
+signal_name = "on_trigger_received"
+to = NodePath("../Red")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_4iipt")
+deferred = false
+enabled = true
+trigger = "changecolor"
+
+[sub_resource type="GDScript" id="GDScript_wy2mp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: ColorRect):
+	return Color.GREEN
+"
+
+[sub_resource type="Resource" id="Resource_eiwk7"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_wy2mp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0dr4s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: ColorRect):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_uqq8k"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_0dr4s")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_vdelv"]
+script = ExtResource("3_mlg5x")
+signal_name = "entered"
+to = NodePath("../../ColorRect")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_eiwk7")]
+only_if = SubResource("Resource_uqq8k")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_r7l7h"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"count\"
+"
+
+[sub_resource type="Resource" id="Resource_uboie"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_r7l7h")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_wb7i0"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return 1
+"
+
+[sub_resource type="Resource" id="Resource_xbkhj"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_wb7i0")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_vqhk6"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_tvdf1"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_vqhk6")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_d0gu8"]
+script = ExtResource("3_mlg5x")
+signal_name = "entered"
+to = NodePath("../../StoreBehavior")
+more_references = []
+invoke = "inc"
+arguments = [SubResource("Resource_uboie"), SubResource("Resource_xbkhj")]
+only_if = SubResource("Resource_tvdf1")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_dubkd"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from: Node2D, to: Node2D):
+	return at(\"count\") % 3 == 0
+"
+
+[sub_resource type="Resource" id="Resource_ci6hk"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_dubkd")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_s2u1e"]
+script = ExtResource("3_mlg5x")
+signal_name = "on_trigger_received"
+to = NodePath("../Blue")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_ci6hk")
+deferred = false
+enabled = true
+trigger = "changecolor"
+
+[sub_resource type="GDScript" id="GDScript_g8ibj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_v4423"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_g8ibj")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_w7fdk"]
+script = ExtResource("3_mlg5x")
+signal_name = "on_trigger_received"
+to = NodePath("../Red")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_v4423")
+deferred = false
+enabled = true
+trigger = "changecolor"
+
+[sub_resource type="GDScript" id="GDScript_ukfxv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: ColorRect):
+	return Color.BLUE
+"
+
+[sub_resource type="Resource" id="Resource_infwu"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_ukfxv")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_huka8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: ColorRect):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_f5p7j"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_huka8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gxnom"]
+script = ExtResource("3_mlg5x")
+signal_name = "entered"
+to = NodePath("../../ColorRect")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_infwu")]
+only_if = SubResource("Resource_f5p7j")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_ktoru"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node, to: Node):
+	return 'changecolor'
+"
+
+[sub_resource type="Resource" id="Resource_pw11k"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_ktoru")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hy67u"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_sghak"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_hy67u")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_cyb00"]
+script = ExtResource("3_mlg5x")
+signal_name = "just_down"
+to = NodePath("../StateMachineBehavior")
+more_references = []
+invoke = "trigger"
+arguments = [SubResource("Resource_pw11k")]
+only_if = SubResource("Resource_sghak")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_4yib1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_e00jm"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_4yib1")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3mt3i"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(prop, value, text, from: Node2D, to: Label):
+	return text
+"
+
+[sub_resource type="Resource" id="Resource_0kxb5"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_3mt3i")
+argument_names = ["prop", "value", "text", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_1oo17"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(prop, value, text, from: Node2D, to: Label):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_yqad0"]
+script = ExtResource("2_5x05x")
+nested_script = SubResource("GDScript_1oo17")
+argument_names = ["prop", "value", "text", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_kdyx0"]
+script = ExtResource("3_mlg5x")
+signal_name = "sync"
+to = NodePath("../Label")
+more_references = []
+invoke = "set_text"
+arguments = [SubResource("Resource_0kxb5")]
+only_if = SubResource("Resource_yqad0")
+deferred = false
+enabled = true
+trigger = ""
+
+[node name="StateMachinesTest" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 336.0
+offset_top = 102.0
+offset_right = 382.0
+offset_bottom = 140.0
+color = Color(0, 1, 1, 1)
+
+[node name="StateMachineBehavior" type="Node2D" parent="."]
+position = Vector2(430, 233)
+script = ExtResource("1_716dj")
+triggers = Array[String](["ε", "changecolor"])
+
+[node name="Red" type="Node2D" parent="StateMachineBehavior"]
+position = Vector2(-191, -57)
+script = ExtResource("1_ioomn")
+is_initial_state = true
+metadata/pronto_connections = [SubResource("Resource_y42ev"), SubResource("Resource_0r21c"), SubResource("Resource_l2a4r")]
+
+[node name="Yellow" type="Node2D" parent="StateMachineBehavior"]
+position = Vector2(-84, -173)
+script = ExtResource("1_ioomn")
+metadata/pronto_connections = [SubResource("Resource_isfwc"), SubResource("Resource_ds5ki")]
+
+[node name="Green" type="Node2D" parent="StateMachineBehavior"]
+position = Vector2(32, -52)
+script = ExtResource("1_ioomn")
+metadata/pronto_connections = [SubResource("Resource_f5n2o"), SubResource("Resource_vdelv"), SubResource("Resource_d0gu8"), SubResource("Resource_s2u1e")]
+
+[node name="Blue" type="Node2D" parent="StateMachineBehavior"]
+position = Vector2(-141, 20)
+script = ExtResource("1_ioomn")
+metadata/pronto_connections = [SubResource("Resource_w7fdk"), SubResource("Resource_gxnom")]
+
+[node name="KeyBehavior" type="Node2D" parent="."]
+position = Vector2(530, 248)
+script = ExtResource("5_g7n4x")
+key = "SPACE"
+metadata/pronto_connections = [SubResource("Resource_cyb00")]
+
+[node name="StoreBehavior" type="Node2D" parent="."]
+position = Vector2(453, 131)
+script = ExtResource("6_5g1dp")
+fields = {
+"count": SubResource("Resource_e00jm")
+}
+metadata/pronto_connections = [SubResource("Resource_kdyx0")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 464.0
+offset_top = 154.0
+offset_right = 504.0
+offset_bottom = 176.333

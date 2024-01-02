@@ -138,8 +138,8 @@ func init_empty_scripts():
 
 func get_trigger_argument_script(trigger):
 	var argument = empty_script("'%s'" % trigger, true)
-	argument.argument_names = ["trigger", "from", "to"]
-	argument.argument_types = ["String", "Node", "Node"]
+	argument.argument_names = [ "from", "to"]
+	argument.argument_types = ["Node", "Node"]
 	for i in range(more_references.size()):
 		var ref = more_references[i]
 		var node = from.get_node(ref)
