@@ -80,7 +80,12 @@ func line_text_function(connection: Connection) -> Callable:
 ## Override of [method Behavior.lines] 
 ## Used to add the State name below the icon
 func lines():
-	return super.lines() + [Lines.BottomText.new(self, str(name))]
+	var connection_lines = super.lines()
+	# Color state transitions specially
+	for line in connection_lines:
+		if line.to is StateBehavior and line.from is StateBehavior:
+			line.color = Color.LIGHT_GREEN
+	return connection_lines + [Lines.BottomText.new(self, str(name))]
 	
 func _get_connected_states(seen_nodes = []):
 	seen_nodes.append(self)
