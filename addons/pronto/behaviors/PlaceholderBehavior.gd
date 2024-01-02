@@ -136,10 +136,13 @@ var circle_radius: float = 10:
 # The [class Sprite2D] used as a child in the Placeholder.
 var sprite: Sprite2D
 
+var shape: Shape2D
+
 # The size of the Placeholder, overridden by the [member PlaceholderBehavior.placeholder_size].
 var size: Vector2:
 	get:
-		return placeholder_size
+		if not shape: return placeholder_size
+		return shape.get_rect().size
 		
 func _ready():
 	super._ready()
@@ -208,8 +211,6 @@ var _flash_tween : Tween
 
 ## Color to restore when restarting flash
 var _restore_color : Color
-
-var shape
 
 ## Flashes this Placeholder a certain color for a duration.
 ## It will take on the desired color immediately and return to its original
