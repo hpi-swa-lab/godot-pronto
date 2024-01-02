@@ -34,7 +34,8 @@ func states():
 func trigger(trigger: String):
 	if active_state:
 		active_state.on_trigger_received.emit(trigger)
-		
+
+
 func _process(delta):
 	super._process(delta)
 	trigger("ε")

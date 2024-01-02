@@ -44,8 +44,10 @@ var active: bool = false:
 var _active_texture = load("res://addons/pronto/icons/StateActive.svg")
 var _inactive_texture = load("res://addons/pronto/icons/StateInactive.svg")
 
-func _get_configuration_warning() -> String:
-	return "A custom node configuration warning!"
+func _get_configuration_warnings() -> PackedStringArray:
+	if not get_parent() is StateMachineBehavior:
+		return ["StateBehavior must be child of a StateMachineBehavior"]
+	return []
 
 ## Function that tells the state to become active. Works only if the state is not active yet.
 func enter():
@@ -99,8 +101,7 @@ func _ready():
 	if is_initial_state:
 		if get_parent():
 			get_parent().set_active_state(self, true)
-		
-		
+
 func _process(delta):
 	super._process(delta)
 	
