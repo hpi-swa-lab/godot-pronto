@@ -66,7 +66,7 @@ func add_to_list(session_id, from, connection, args_string):
 	var at_bottom = list.get_v_scroll_bar().value >= (list.get_v_scroll_bar().max_value - list.size.y - 12)
 	list.add_item(
 		"{0}:{1} -> {2}.{3}({4})".format([from, connection.signal_name, connection.to, connection.invoke, args_string])
-		if connection.is_target()
+		if connection.has_target()
 		else "{0}:{1} ↺ {2}".format([from, connection.signal_name, connection.expression]))
 	if at_bottom:
 		await list.get_tree().process_frame

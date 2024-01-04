@@ -79,7 +79,7 @@ func is_expression() -> bool:
 	return expression != null
 
 ## Return whether this connection will invoke a method on a target.
-func is_target() -> bool:
+func has_target() -> bool:
 	return not to.is_empty()
 
 ## Remove this connection from [param node].
@@ -189,7 +189,7 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 		names.append("from")
 		values.append(from)
 		var target
-		if not c.is_expression() or c.is_target():
+		if not c.is_expression() or c.has_target():
 			target = from.get_node(c.to)
 			names.append("to")
 			values.append(target)
@@ -250,12 +250,12 @@ func _run_script(from: Node, s: ConnectionScript, arguments: Array):
 	return await s.run(arguments, from)
 
 func is_valid(from: Node):
-	return not is_target() or from.get_node_or_null(to) != null
+	return is_expression() or (has_target() and from.get_node_or_null(to) != null)
 
 func print(flip = false, shorten = true, single_line = false, show_disabled = false):
 	var prefix = "[?] " if has_condition() else ""
 	var suffix = " (disabled)" if show_disabled and !enabled else ""
-	if is_target():
+	if has_target():
 		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return a.source_code))])
 		var statements_string = expression.source_code.split('\n')[0] if is_expression() else ""
 		return ("{1}{2} ← {0}{3}" if flip else "{1}{0} → {2}{3}").format([

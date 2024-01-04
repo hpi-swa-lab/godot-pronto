@@ -19,4 +19,4 @@
   - Nodes in connections are no longer restricted to nodes with a `global_position` property but can be any Godot nodes. For accessing the closest position or positional node, use `Utils.closest_parent_with_position()` and `Utils.find_position()`, resp.
   - Connections that are expressions now also expect an optional `to` node.
   - Moved `Utils.print_connection()` to `Connection.print()`.
-  - State of `Connection` and `NodeToNodeConfigurator` is refined: new receiver mode (`is_target()`, indicates whether the connection has a target) orthogonal to existing expression mode (`is_expression()`, indicates whether the connection has a code expression instead of calling a method).
+  - State of `Connection` and `NodeToNodeConfigurator` is refined: new receiver mode (`has_target()`, indicates whether the connection has a target) orthogonal to existing expression mode (`is_expression()`, indicates whether the connection has a code expression instead of calling a method).

@@ -223,9 +223,9 @@ func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
 	existing_connection = connection
 	self.selected_signal = Utils.find(from.get_signal_list(), func (s): return s["name"] == connection.signal_name)
-	set_mode(connection.is_expression(), connection.is_target())
+	set_mode(connection.is_expression(), connection.has_target())
 	%Condition.edit_script = connection.only_if
-	if connection.is_target():
+	if connection.has_target():
 		receiver = from.get_node(connection.to)
 		%FunctionName.anchor = anchor
 		%FunctionName.text = connection.invoke if not connection.is_expression() else "<statement(s)>"
@@ -236,7 +236,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	if connection.expression != null:
 		%Expression.edit_script = connection.expression
 	
-	%Receiver.visible = connection.is_target()
+	%Receiver.visible = connection.has_target()
 	%Expression.visible = connection.is_expression()
 	%Enabled.button_pressed = connection.enabled
 	

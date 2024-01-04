@@ -127,7 +127,7 @@ func line_text_function(connection: Connection) -> Callable:
 func lines() -> Array:
 	var target = get_target_node()
 	return Connection.get_connections(target).map(func (connection):
-		var other = self if not connection.is_target() else target.get_node_or_null(connection.to)
+		var other = self if not connection.has_target() else target.get_node_or_null(connection.to)
 		if other == null:
 			return null
 		return Lines.Line.new(self,
