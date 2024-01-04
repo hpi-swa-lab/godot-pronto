@@ -25,7 +25,7 @@ func build_connection_list():
 	%connections.clear()
 	_displayed_connections = Connection.get_connections(node).duplicate()
 	for c in _displayed_connections:
-		var added_index = %connections.add_item(c.print(false, false, true, true), Utils.icon_from_theme("Signals", node))
+		var added_index = %connections.add_item(c.print(node, false, false, true, true), Utils.icon_from_theme("Signals", node))
 		#%connections.set_item_disabled(added_index, !c.enabled)
 	
 	# connecting to signals for slight performance improvement
@@ -65,7 +65,7 @@ func _process(delta):
 		var idx = %connections.get_item_at_position(get_local_mouse_position())
 		var name = %connections.get_item_text(idx)
 		var conn = Utils.find(Connection.get_connections(node),
-			func (c: Connection): return c.print(false, false, true) == name)
+			func (c: Connection): return c.print(node, false, false, true) == name)
 		if conn:
 			Utils.get_behavior(node).highlight_activated(conn)
 

@@ -82,6 +82,9 @@ func is_expression() -> bool:
 func has_target() -> bool:
 	return not to.is_empty()
 
+func is_own_target(from: Node) -> bool:
+	return from != null and has_target() and from.get_node_or_null(to) == from
+
 ## Remove this connection from [param node].
 func delete(from: Node, undo_redo = null):
 	if undo_redo == null:
@@ -250,12 +253,12 @@ func _run_script(from: Node, s: ConnectionScript, arguments: Array):
 	return await s.run(arguments, from)
 
 func is_valid(from: Node):
-	return is_expression() or (has_target() and from.get_node_or_null(to) != null)
+	return has_target() and from.get_node_or_null(to) != null
 
-func print(flip = false, shorten = true, single_line = false, show_disabled = false):
+func print(from: Node, flip = false, shorten = true, single_line = false, show_disabled = false):
 	var prefix = "[?] " if has_condition() else ""
 	var suffix = " (disabled)" if show_disabled and !enabled else ""
-	if has_target():
+	if has_target() and not is_own_target(from):
 		var invocation_string = "{0}({1})".format([invoke, ",".join(arguments.map(func (a): return a.source_code))])
 		var statements_string = expression.source_code.split('\n')[0] if is_expression() else ""
 		return ("{1}{2} ← {0}{3}" if flip else "{1}{0} → {2}{3}").format([
@@ -265,7 +268,7 @@ func print(flip = false, shorten = true, single_line = false, show_disabled = fa
 			suffix
 		]).replace("\n" if single_line else "", "")
 	else:
-		assert(is_expression())
+		assert(is_own_target(from))
 		return "{2}{0} ↺ {1}{3}".format([signal_name, Utils.ellipsize(expression.source_code.split('\n')[0], 16 if shorten else -1), prefix, suffix]).replace("\n" if single_line else "", "")
 
 ## Iterate over connections and check whether the target still exists for them.

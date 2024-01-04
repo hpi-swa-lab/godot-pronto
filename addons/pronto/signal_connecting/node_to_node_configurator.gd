@@ -33,6 +33,7 @@ static func open_new_expression(undo_redo: EditorUndoRedoManager, from: Node, so
 	var i = _open(Utils.parent_that(from, func (n): return Utils.has_position(n)), undo_redo)
 	i.selected_signal = source_signal
 	i.from = from
+	i.receiver = from
 	i.set_mode(true, false)
 	i.init_empty_scripts()
 	return i.open(from)
@@ -339,8 +340,7 @@ func basic_argument_names():
 func basic_argument_names_and_types():
 	var names_and_types = []
 	names_and_types.append(["from", Utils.get_specific_class_name(from)])
-	if %Receiver.visible:
-		names_and_types.append(["to", Utils.get_specific_class_name(receiver)])
+	names_and_types.append(["to", Utils.get_specific_class_name(receiver)])
 	names_and_types += range(len(more_references)).map(func (i):
 		var ref = more_references[i]
 		var node = from.get_node(ref)
@@ -401,7 +401,7 @@ func save():
 					"more_references": more_references
 				})
 		else:
-			var to_path = from.get_path_to(receiver) if %Receiver.visible else ""
+			var to_path = from.get_path_to(receiver)
 			existing_connection = Connection.connect_expr(from, selected_signal["name"], to_path,
 				%Expression.updated_script(from, selected_signal["name"]),
 				more_references,

@@ -122,7 +122,7 @@ func flash_line(value: float, key: Variant, type: String):
 	queue_redraw()
 
 func line_text_function(connection: Connection) -> Callable:
-	return func(flipped): return connection.print(flipped)
+	return func(flipped): return connection.print(self, flipped)
 
 func lines() -> Array:
 	var target = get_target_node()
