@@ -2,7 +2,7 @@
 extends Node
 class_name Lines
 
-var _last_pos = []
+var _last_line_properties = []
 var _last_zoom = 1.0
 var _flashed = {}
 
@@ -14,20 +14,28 @@ const flash_colors = {
 	'highlight': Color.GREEN,
 }
 
+# Returns a list of properties of a line that, if changed, need to trigger a redraw
+func _relevant_line_properties(line):
+	return [
+		line.from.global_position,
+		line.from.global_rotation,
+		Utils.find_position(line.to),
+		line.text_fn.call(false),
+		line.color
+	]
+
+# Returns `true` if any of the lines need to be redrawn
 func _needs_update(lines: Array):
+	# Check zoomlevel
 	var new_zoom = lines[0].from.get_viewport_transform().get_scale().x if not lines.is_empty() else 1.0
 	var needs_update = _last_zoom != new_zoom
 	_last_zoom = new_zoom
 	
-	var new_pos = []
-	for l in lines:
-		new_pos.append(l.from.global_position)
-		new_pos.append(Utils.find_position(l.to))
-		new_pos.append(l.text_fn.call(false))
-		new_pos.append(l.color)
+	# Check line properties
+	var new_line_properties = lines.map(_relevant_line_properties)
+	needs_update = needs_update or _last_line_properties != new_line_properties
+	_last_line_properties = new_line_properties
 	
-	needs_update = needs_update or _last_pos != new_pos
-	_last_pos = new_pos
 	return needs_update
 
 func _draw_lines(c: CanvasItem, lines: Array):
@@ -110,7 +118,7 @@ class Line:
 		var col := current_color(lines)
 		
 		# Used for displaying everything correctly if Behavior is rotated
-		var c_rotation = c.get_transform().get_rotation()
+		var c_rotation = c.get_global_transform().get_rotation()
 		
 		c.draw_set_transform(Vector2.ZERO, -c_rotation)
 		
