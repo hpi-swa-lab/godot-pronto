@@ -7,8 +7,14 @@ class_name StateMachineBehavior
 ## hint as to which [class StateBehavior] objects belong to the same state machine.
 ## The [class GroupDrawer] is used for this.
 
+signal triggered(trigger: String)
+
 var active_state: StateBehavior = null
 @export var triggers: Array[String] = ["ε"]
+
+## When true, the state machine will trigger the "ε" trigger on every frame,
+## allowing state transitions without other triggers.
+@export var trigger_epsilon: bool = true
 
 func set_active_state(state: StateBehavior, is_active: bool):
 	if active_state:
@@ -34,8 +40,9 @@ func states():
 func trigger(trigger: String):
 	if active_state:
 		active_state.on_trigger_received.emit(trigger)
-
+		triggered.emit(trigger)
 
 func _process(delta):
 	super._process(delta)
-	trigger("ε")
+	if trigger_epsilon:
+		trigger("ε")

@@ -146,7 +146,7 @@ sync_handles_x = true
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("3_immw5")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43.9094)
+custom_minimum_size = Vector2(0, 43.9003)
 layout_mode = 2
 default_text = "true"
 max_width = 500

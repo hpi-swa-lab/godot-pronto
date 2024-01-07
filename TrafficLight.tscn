@@ -1,0 +1,789 @@
+[gd_scene load_steps=95 format=3 uid="uid://bhhwgrcblmkfi"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StateMachineBehavior.gd" id="1_acke5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StateBehavior.gd" id="2_wtoxc"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="3_re87h"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="4_gck4j"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="5_6407f"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="6_u0y5j"]
+
+[sub_resource type="GDScript" id="GDScript_8tpyw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_omvvl"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_8tpyw")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nbfce"]
+script = ExtResource("4_gck4j")
+signal_name = "on_trigger_received"
+to = NodePath("../AlmostGo")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_omvvl")
+deferred = false
+enabled = true
+trigger = "switch"
+
+[sub_resource type="GDScript" id="GDScript_eylq8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_lk7sc"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_eylq8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_qrqsg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ihasp"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_qrqsg")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ml2c4"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Green")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_lk7sc")]
+only_if = SubResource("Resource_ihasp")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_u7pad"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_nlvo1"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_u7pad")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_lwnf1"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_njep7"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_lwnf1")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_pbyby"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Yellow")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_nlvo1")]
+only_if = SubResource("Resource_njep7")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_kbjbm"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.RED
+"
+
+[sub_resource type="Resource" id="Resource_dh0js"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_kbjbm")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_b1kjn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_g6tc6"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_b1kjn")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0lbpr"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Red")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_dh0js")]
+only_if = SubResource("Resource_g6tc6")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_4384t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_j6agy"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_4384t")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_umhfw"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ClockBehavior")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_j6agy")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_4s8b4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_k3078"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_4s8b4")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_d8kg5"]
+script = ExtResource("4_gck4j")
+signal_name = "on_trigger_received"
+to = NodePath("../Go")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_k3078")
+deferred = false
+enabled = true
+trigger = "timer_elapsed"
+
+[sub_resource type="GDScript" id="GDScript_tt8xu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_lprdq"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_tt8xu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_vo68t"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_cnqci"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_vo68t")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nkpgn"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Green")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_lprdq")]
+only_if = SubResource("Resource_cnqci")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_cxlm5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.YELLOW
+"
+
+[sub_resource type="Resource" id="Resource_r1v60"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_cxlm5")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_13u7f"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ps0tr"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_13u7f")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_onff4"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Yellow")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_r1v60")]
+only_if = SubResource("Resource_ps0tr")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_a32t3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.RED
+"
+
+[sub_resource type="Resource" id="Resource_87tsy"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_a32t3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_hjlsp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_6a7u1"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_hjlsp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_n6w8m"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Red")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_87tsy")]
+only_if = SubResource("Resource_6a7u1")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_4r7pu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jc3uu"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_4r7pu")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_p7yc3"]
+script = ExtResource("4_gck4j")
+signal_name = "on_trigger_received"
+to = NodePath("../AlmostStop")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_jc3uu")
+deferred = false
+enabled = true
+trigger = "switch"
+
+[sub_resource type="GDScript" id="GDScript_mvmm3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_golcg"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_mvmm3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_irut3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_11g06"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_irut3")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_pd43b"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Red")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_golcg")]
+only_if = SubResource("Resource_11g06")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_ix6dg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_bq1sr"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_ix6dg")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0ghui"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_1qke3"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_0ghui")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gmvhr"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Yellow")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_bq1sr")]
+only_if = SubResource("Resource_1qke3")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_0nrc8"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.GREEN
+"
+
+[sub_resource type="Resource" id="Resource_dvvt4"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_0nrc8")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_r6g50"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_rymln"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_r6g50")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ij31u"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Green")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_dvvt4")]
+only_if = SubResource("Resource_rymln")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_klh7s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_7mtvc"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_klh7s")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_a1svn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jk3pu"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_a1svn")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_pwbfc"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Red")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_7mtvc")]
+only_if = SubResource("Resource_jk3pu")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_5lyjr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.YELLOW
+"
+
+[sub_resource type="Resource" id="Resource_dgt3r"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_5lyjr")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xh0xs"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_05b24"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_xh0xs")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0uypu"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Yellow")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_dgt3r")]
+only_if = SubResource("Resource_05b24")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_hqt0w"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return Color.WHITE
+"
+
+[sub_resource type="Resource" id="Resource_a61l5"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_hqt0w")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_usk5a"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Polygon2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2h4ta"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_usk5a")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_b4mtp"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ColorRect/Green")
+more_references = []
+invoke = "set_color"
+arguments = [SubResource("Resource_a61l5")]
+only_if = SubResource("Resource_2h4ta")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_tyyck"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_5vcy0"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_tyyck")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_47md5"]
+script = ExtResource("4_gck4j")
+signal_name = "entered"
+to = NodePath("../../ClockBehavior")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_5vcy0")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_jvxso"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_qfk6s"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_jvxso")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_t25ih"]
+script = ExtResource("4_gck4j")
+signal_name = "on_trigger_received"
+to = NodePath("../Stop")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_qfk6s")
+deferred = false
+enabled = true
+trigger = "timer_elapsed"
+
+[sub_resource type="GDScript" id="GDScript_ru15s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node, to: Node):
+	return 'switch'
+"
+
+[sub_resource type="Resource" id="Resource_f11je"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_ru15s")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_86ffw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_oifsv"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_86ffw")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gqt3r"]
+script = ExtResource("4_gck4j")
+signal_name = "just_down"
+to = NodePath("../TrafficLightControl")
+more_references = []
+invoke = "trigger"
+arguments = [SubResource("Resource_f11je")]
+only_if = SubResource("Resource_oifsv")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_s2o8j"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node, to: Node):
+	return 'timer_elapsed'
+"
+
+[sub_resource type="Resource" id="Resource_c8jd0"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_s2o8j")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_v8w74"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_snato"]
+script = ExtResource("3_re87h")
+nested_script = SubResource("GDScript_v8w74")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_bamoe"]
+script = ExtResource("4_gck4j")
+signal_name = "elapsed"
+to = NodePath("../TrafficLightControl")
+more_references = []
+invoke = "trigger"
+arguments = [SubResource("Resource_c8jd0")]
+only_if = SubResource("Resource_snato")
+deferred = false
+enabled = true
+trigger = ""
+
+[node name="TrafficLight" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 519.0
+offset_top = 128.0
+offset_right = 646.0
+offset_bottom = 418.0
+color = Color(0.137255, 0.137255, 0.137255, 1)
+
+[node name="Red" type="Polygon2D" parent="ColorRect"]
+position = Vector2(61, 53)
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-29, -25, -22, -31, -13, -35, -4, -37, 4, -37, 13, -36, 21, -32, 28, -25, 33, -18, 37, -9, 38, -1, 37, 7, 33, 19, 29, 25, 23, 31, 15, 35, 8, 37, -3, 38, -12, 36, -20, 32, -26, 28, -32, 22, -35, 16, -37, 9, -38, -1, -37, -9, -34, -18)
+
+[node name="Yellow" type="Polygon2D" parent="ColorRect"]
+position = Vector2(61, 138)
+color = Color(1, 0.917647, 0, 1)
+polygon = PackedVector2Array(-29, -25, -22, -31, -13, -35, -4, -37, 4, -37, 13, -36, 21, -32, 28, -25, 33, -18, 37, -9, 38, -1, 37, 7, 33, 19, 29, 25, 23, 31, 15, 35, 8, 37, -3, 38, -12, 36, -20, 32, -26, 28, -32, 22, -35, 16, -37, 9, -38, -1, -37, -9, -34, -18)
+
+[node name="Green" type="Polygon2D" parent="ColorRect"]
+position = Vector2(63, 224)
+color = Color(0.172549, 0.8, 0, 1)
+polygon = PackedVector2Array(-29, -25, -22, -31, -13, -35, -4, -37, 4, -37, 13, -36, 21, -32, 28, -25, 33, -18, 37, -9, 38, -1, 37, 7, 33, 19, 29, 25, 23, 31, 15, 35, 8, 37, -3, 38, -12, 36, -20, 32, -26, 28, -32, 22, -35, 16, -37, 9, -38, -1, -37, -9, -34, -18)
+
+[node name="TrafficLightControl" type="Node2D" parent="."]
+position = Vector2(706, 232)
+script = ExtResource("1_acke5")
+triggers = Array[String](["ε", "switch", "timer_elapsed"])
+
+[node name="Stop" type="Node2D" parent="TrafficLightControl"]
+position = Vector2(-237, -128)
+script = ExtResource("2_wtoxc")
+is_initial_state = true
+metadata/pronto_connections = [SubResource("Resource_nbfce"), SubResource("Resource_ml2c4"), SubResource("Resource_pbyby"), SubResource("Resource_0lbpr")]
+
+[node name="AlmostGo" type="Node2D" parent="TrafficLightControl"]
+position = Vector2(-282, 220)
+script = ExtResource("2_wtoxc")
+metadata/pronto_connections = [SubResource("Resource_umhfw"), SubResource("Resource_d8kg5"), SubResource("Resource_nkpgn"), SubResource("Resource_onff4"), SubResource("Resource_n6w8m")]
+
+[node name="Go" type="Node2D" parent="TrafficLightControl"]
+position = Vector2(19, 190)
+script = ExtResource("2_wtoxc")
+metadata/pronto_connections = [SubResource("Resource_p7yc3"), SubResource("Resource_pd43b"), SubResource("Resource_gmvhr"), SubResource("Resource_ij31u")]
+
+[node name="AlmostStop" type="Node2D" parent="TrafficLightControl"]
+position = Vector2(5, -114)
+script = ExtResource("2_wtoxc")
+metadata/pronto_connections = [SubResource("Resource_pwbfc"), SubResource("Resource_0uypu"), SubResource("Resource_b4mtp"), SubResource("Resource_47md5"), SubResource("Resource_t25ih")]
+
+[node name="KeyBehavior" type="Node2D" parent="."]
+position = Vector2(842, 292)
+script = ExtResource("5_6407f")
+key = "a"
+metadata/pronto_connections = [SubResource("Resource_gqt3r")]
+
+[node name="ClockBehavior" type="Node2D" parent="."]
+position = Vector2(842, 443)
+script = ExtResource("6_u0y5j")
+cycle_count = 1
+duration_seconds = 0.8
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_bamoe")]
