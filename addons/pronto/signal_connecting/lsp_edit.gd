@@ -51,14 +51,14 @@ func _request_code_completion(force):
 		txt = txt.substr(max(0,col-15), min(15, txt.length()))
 		var contains_quotes = txt.contains("(\"\"")
 		if at_regex.search(txt) or put_regex.search(txt) or at_and_erase_regex.search(txt):
-			var store_list = Utils.all_nodes_that(G.get_parent(), func(node): return is_instance_of(node, StoreBehavior))
+			var store_list = Utils.all_nodes_that(get_tree().edited_scene_root, func(node): return is_instance_of(node, StoreBehavior))
 			for store in store_list:
 				for store_entry in store.get_field_names():
 					add_code_completion_option(CodeEdit.KIND_MEMBER, store_entry, _get_proper_insertion_value(store_entry,!contains_quotes))
-			for key in G.values.keys():
-				if key != "_pronto_behaviors" and key != "_pronto_editor_plugin":
-					add_code_completion_option(CodeEdit.KIND_MEMBER, key, _get_proper_insertion_value(key,!contains_quotes))
-			update_code_completion_options(true)	
+			var value_list = Utils.all_nodes_that(get_tree().edited_scene_root, func(node): return is_instance_of(node, ValueBehavior))
+			for value in value_list:
+				add_code_completion_option(CodeEdit.KIND_MEMBER, value.name, _get_proper_insertion_value(value.name,!contains_quotes))
+			update_code_completion_options(true)
 	)
 	
 	ConnectionScript.map_row_col(edited_script, get_caret_line(), get_caret_column(), func (row, col):

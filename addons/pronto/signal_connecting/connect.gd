@@ -50,6 +50,9 @@ func _process(delta):
 	if anchor:
 		var r = Utils.global_rect_of(anchor)
 		position = anchor.get_viewport_transform() * Vector2(r.position.x, 2 + r.position.y + r.size.y)
+		var pos = anchor.get_viewport_transform() * r.get_center()
+		var parent_rotation = anchor.get_parent().rotation if (anchor.get_parent() is Node2D and anchor.get_parent() != null) else 0
+		position = pos + (position - pos).rotated(anchor.rotation).rotated(parent_rotation)
 
 	if %signals.visible:
 		if not get_global_rect().has_point(get_viewport().get_mouse_position()):
