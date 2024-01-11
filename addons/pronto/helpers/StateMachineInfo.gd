@@ -13,7 +13,7 @@ func _ready():
 	redraw_periodically()
 	if get_parent() is StateMachineBehavior:
 		var parent: StateMachineBehavior = get_parent()
-		#parent.triggered.connect(redraw_with_trigger)
+		parent.triggered.connect(redraw_with_trigger)
 
 func redraw_periodically():
 	while is_inside_tree():

@@ -39,7 +39,6 @@ var active: bool = false:
 	set(value): 
 		if get_parent():
 			get_parent().set_active_state(self, value)
-		reload_icon()
 
 var _active_texture = load("res://addons/pronto/icons/StateActive.svg")
 var _inactive_texture = load("res://addons/pronto/icons/StateInactive.svg")
@@ -99,6 +98,10 @@ func _get_connected_states(seen_nodes = []):
 ## Used to display the correct icon when the StateBehavior is active or inactive
 func icon_texture():
 	return _active_texture if active else _inactive_texture
+	
+func _reload_icon_from_game(value: bool):
+	var icon = _active_texture if value else _inactive_texture
+	self.reload_icon(icon)
 
 func _ready():
 	super._ready()
