@@ -194,6 +194,26 @@ static func all_classes_of(node: Node):
 		l.append(c)
 		c = ClassDB.get_parent_class(c)
 	return l
+	
+static func get_custom_class_name(node: Node):
+	var script = node.get_script()
+	var regex = RegEx.new()
+	regex.compile("class_name (?<class_name>\\w+)")
+	var result = regex.search(script.get_source_code())
+	if result:
+		return result.get_string("class_name")
+		
+static func get_script_properties(node: Node, filter_underscore: bool = true):
+	var script = node.get_script()
+	if not script: return
+	var properties =  script.get_script_property_list()
+	if filter_underscore:
+		var new_props = []
+		for prop in properties:
+			if not prop["name"].begins_with("_"):
+				new_props.push_back(prop)
+		return new_props
+	return properties	
 
 static func build_class_row(c: StringName, ref: Node):
 	var label = Label.new()

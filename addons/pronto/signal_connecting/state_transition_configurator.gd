@@ -324,8 +324,8 @@ func _on_add_trigger_pressed():
 	if new_trigger not in get_state_machine().triggers:
 		get_state_machine().triggers.push_back(new_trigger)
 		%TriggerSelection.add_item(new_trigger)
+		%TriggerSelection.select(len(get_state_machine().triggers)-1)
 	%TriggerEdit.text = ""
-	%TriggerSelection.select(len(get_state_machine().triggers)-1)
 
 func _on_done_pressed():
 	save()
