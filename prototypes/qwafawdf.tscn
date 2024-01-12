@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgejtbojopc8u"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="1_5wkxe"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="2_s30dr"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="3_0xb3q"]
+
+[node name="Qwafawdf" type="Node2D"]
+
+[node name="AlwaysBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1_5wkxe")
+
+[node name="ClockBehavior" type="Node2D" parent="."]
+position = Vector2(523, 332)
+script = ExtResource("2_s30dr")
+trigger_interval_in_seconds = 1.0
+
+[node name="CollisionBehavior" type="Node2D" parent="."]
+position = Vector2(550, 226)
+script = ExtResource("3_0xb3q")
