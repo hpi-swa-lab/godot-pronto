@@ -12,7 +12,6 @@ class_name StateBehavior
 signal entered
 
 ## Signal that gets emitted when the state becomes inactive.
-## Use [param transition_id] to determine in the transitions' condition which transition to trigger.
 signal exited(target_state_name: String)
 
 ## Signal that gets emitted every frame while the state is active.
@@ -48,7 +47,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 		return ["StateBehavior must be child of a StateMachineBehavior"]
 	return []
 
-## Function that tells the state to become active. Works only if the state is not active yet.
+## Function that tells the state to become active.
+## Will not do anything if the state is already active.
 func enter():
 	if not active:
 		active = true
@@ -61,7 +61,7 @@ func exit(target_state_name: String):
 		exited.emit(target_state_name)
 
 ## Override of [method Behavior.line_text_function].
-## Used to display the node name of a target StateBehavior on a line
+## Used to display special text on transitions.
 func line_text_function(connection: Connection) -> Callable:
 	var addendum = ""
 	if connection.trigger != "":
@@ -77,7 +77,7 @@ func line_text_function(connection: Connection) -> Callable:
 		return connection.print(flipped) + addendum
 
 ## Override of [method Behavior.lines] 
-## Used to add the State name below the icon
+## Used to add the State name below the icon and change the color.
 func lines():
 	var connection_lines = super.lines()
 	# Color state transitions specially

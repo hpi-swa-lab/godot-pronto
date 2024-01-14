@@ -17,6 +17,8 @@ const always_trigger = "ε"
 ## allowing state transitions without other triggers.
 @export var trigger_epsilon: bool = true
 
+## Exits the current active state and enters the new active state.
+## Is usually called by StateBehavior/enter.
 func set_active_state(state: StateBehavior, is_active: bool):
 	if active_state:
 		active_state.exit(state.name)
@@ -30,15 +32,17 @@ var _state_machine_info = null
 
 func _ready():
 	super._ready()
-	print("READY ", self)
 	if Engine.is_editor_hint():
 		add_child(preload("res://addons/pronto/helpers/GroupDrawer.tscn").instantiate(), false, INTERNAL_MODE_BACK)
 		_state_machine_info = preload("res://addons/pronto/helpers/StateMachineInfo.tscn").instantiate()
 		add_child(_state_machine_info, false, INTERNAL_MODE_BACK)
-
+		
+## List of all StateBehavior nodes in this StateMachineBehavior
 func states():
 	return get_children().filter(func (c): c is StateBehavior)
 
+## Provide a trigger to the State Machine. This will trigger the active state
+## which may lead to a transition via "on_trigger_received".
 func trigger(trigger: String):
 	if active_state:
 		active_state.on_trigger_received.emit(trigger)
