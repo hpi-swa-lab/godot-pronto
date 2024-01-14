@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfw7x6eo4kgct"]
+
+[ext_resource type="Script" path="res://addons/pronto/helpers/StateMachineInfo.gd" id="1_ggpev"]
+
+[node name="StateMachineInfo" type="Node2D"]
+script = ExtResource("1_ggpev")

@@ -10,8 +10,8 @@ var _lines := Lines.new()
 ## a non-Behavior subclass. See pronto.gd:get_behavor() for more context.
 var hidden_child = false
 
-func reload_icon():
-	_icon.texture = icon_texture()
+func reload_icon(override_texture = null):
+	_icon.texture = override_texture if override_texture else icon_texture()
 	_icon.queue_redraw()
 
 func icon_texture():

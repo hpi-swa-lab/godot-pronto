@@ -41,6 +41,16 @@ func _capture(message, data, session_id):
 	if message == "pronto:value_set":
 		_sync_value_change(data)
 		return true
+	if message == "pronto:state_activation":
+		var state_machine = editor_interface.get_edited_scene_root().get_parent().get_node_or_null(str(data[0]).substr(6))
+		var active_state = editor_interface.get_edited_scene_root().get_parent().get_node_or_null(str(data[1]).substr(6))
+		state_machine._redraw_states_from_game(active_state)
+		return true
+	if message == "pronto:state_machine_trigger":
+		var state_machine = editor_interface.get_edited_scene_root().get_parent().get_node_or_null(str(data[0]).substr(6))
+		if state_machine:
+			state_machine._redraw_info_from_game(data[1])
+		return true
 	return true
 	
 func _sync_value_change(info: Array):
