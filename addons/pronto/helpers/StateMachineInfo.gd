@@ -11,9 +11,6 @@ var processing_trigger = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	redraw_periodically()
-	if get_parent() is StateMachineBehavior:
-		var parent: StateMachineBehavior = get_parent()
-		parent.triggered.connect(redraw_with_trigger)
 
 func redraw_periodically():
 	while is_inside_tree():
@@ -21,14 +18,14 @@ func redraw_periodically():
 		if not processing_trigger:
 			queue_redraw()
 
-# TODO: This does not currently work. Why? Is only called for "ε" trigger
 var active_trigger = ""
-func redraw_with_trigger(trigger):
-	if trigger != "ε":
+func _redraw_with_trigger(trigger):
+	if trigger != StateMachineBehavior.always_trigger:
 		active_trigger = trigger
 		processing_trigger = true
 		queue_redraw()
 		await get_tree().create_timer(0.5).timeout
+		active_trigger = ""
 		queue_redraw()
 		processing_trigger = false
 
