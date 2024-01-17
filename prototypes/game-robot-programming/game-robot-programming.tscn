@@ -1,0 +1,346 @@
+[gd_scene load_steps=40 format=3 uid="uid://74yxlswwv6xe"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_4oblb"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/draganddrop.gd" id="2_n7j77"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_idrtd"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="4_n3xyo"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/code1.gd" id="6_5h1u8"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/enlarge.gd" id="6_y2un6"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/code2.gd" id="7_h438j"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/reduce.gd" id="7_ulk6s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hsfjo"]
+size = Vector2(500, 1000)
+
+[sub_resource type="GDScript" id="GDScript_5ws3x"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Node2D):
+	return []
+"
+
+[sub_resource type="Resource" id="Resource_gyyqb"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_5ws3x")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_rje73"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_n67lu"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_rje73")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_d6evf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_cwicm"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_d6evf")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_igp25"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_o7aw2"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_igp25")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_k3omr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_2jvc5"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_k3omr")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_bc7xg"]
+script = ExtResource("3_idrtd")
+signal_name = "pressed"
+to = NodePath("SpawnerBehavior")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_gyyqb"), SubResource("Resource_n67lu"), SubResource("Resource_cwicm"), SubResource("Resource_o7aw2")]
+only_if = SubResource("Resource_2jvc5")
+deferred = false
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uw0cl"]
+size = Vector2(200, 20)
+
+[sub_resource type="GDScript" id="GDScript_xwgmp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from: Node2D):
+	instance.get_node(\"CollisionShape2D\").shape = instance.get_node(\"CollisionShape2D\").shape.duplicate()
+"
+
+[sub_resource type="Resource" id="Resource_8qjl8"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_xwgmp")
+argument_names = ["instance", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_640pa"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(instance, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_02ic5"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_640pa")
+argument_names = ["instance", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_m4jki"]
+script = ExtResource("3_idrtd")
+signal_name = "spawned"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_02ic5")
+expression = SubResource("Resource_8qjl8")
+deferred = false
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lfj5l"]
+resource_local_to_scene = true
+size = Vector2(200, 20)
+
+[sub_resource type="GDScript" id="GDScript_pjc1p"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Button):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_nggno"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_pjc1p")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_l2spb"]
+script = ExtResource("3_idrtd")
+signal_name = "pressed"
+to = NodePath(".")
+more_references = []
+invoke = "enlarge"
+arguments = []
+only_if = SubResource("Resource_nggno")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_1vjpt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Button):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_00gu1"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_1vjpt")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_asa6e"]
+script = ExtResource("3_idrtd")
+signal_name = "pressed"
+to = NodePath(".")
+more_references = []
+invoke = "reduce"
+arguments = []
+only_if = SubResource("Resource_00gu1")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_trcyf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button):
+	var areas = from.get_node(\"../Area2D2\").get_overlapping_areas()
+	
+	areas.sort_custom(func (a: Area2D, b: Area2D): return a.position.y < b.position.y)
+	
+	for area in areas:
+		var stmt = area.get_node(\"Code\").get_code()
+		if stmt == \"forward\":
+			print(\"forward\")
+		elif stmt == \"while\":
+			print(\"loop\")
+			print(area.get_node(\"Code\").get_stmts())
+"
+
+[sub_resource type="Resource" id="Resource_snxqd"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_trcyf")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_spcdo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8l4lu"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_spcdo")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_vevg8"]
+script = ExtResource("3_idrtd")
+signal_name = "pressed"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_8l4lu")
+expression = SubResource("Resource_snxqd")
+deferred = false
+enabled = true
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ExportBehavior" type="Node2D" parent="."]
+position = Vector2(168, 134)
+script = ExtResource("1")
+title = "Roboter Programmierung"
+authors = PackedStringArray("Max", "Luke")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(829, 154)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_hsfjo")
+
+[node name="Polygon2D" type="Polygon2D" parent="Area2D2"]
+z_index = -1000
+color = Color(1, 1, 0, 1)
+polygon = PackedVector2Array(-150, -171, 349, -177, 333, 565, -150, 544)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 99.0
+offset_top = 47.0
+offset_right = 214.0
+offset_bottom = 78.0
+text = "Spawn simple
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="Button"]
+position = Vector2(-42.11, 42.11)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="Button/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="Button/SpawnerBehavior/Area2D"]
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_uw0cl")
+
+[node name="Code" type="Node2D" parent="Button/SpawnerBehavior/Area2D"]
+script = ExtResource("6_5h1u8")
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 104.0
+offset_top = 245.0
+offset_right = 219.0
+offset_bottom = 276.0
+text = "Spawn resizable
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="Button2"]
+position = Vector2(-42.11, 42.11)
+script = ExtResource("4_n3xyo")
+metadata/pronto_connections = [SubResource("Resource_m4jki")]
+
+[node name="Area2D" type="Area2D" parent="Button2/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="Button2/SpawnerBehavior/Area2D"]
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button2/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_lfj5l")
+
+[node name="Code" type="Node2D" parent="Button2/SpawnerBehavior/Area2D"]
+position = Vector2(-5, -198)
+script = ExtResource("7_h438j")
+
+[node name="Button" type="Button" parent="Button2/SpawnerBehavior/Area2D"]
+offset_left = 82.0
+offset_top = -17.0
+offset_right = 100.0
+offset_bottom = 14.0
+text = "+
+"
+script = ExtResource("6_y2un6")
+metadata/pronto_connections = [SubResource("Resource_l2spb")]
+
+[node name="Button2" type="Button" parent="Button2/SpawnerBehavior/Area2D"]
+offset_left = 65.0
+offset_top = -17.0
+offset_right = 79.0
+offset_bottom = 14.0
+text = "-"
+script = ExtResource("7_ulk6s")
+metadata/pronto_connections = [SubResource("Resource_asa6e")]
+
+[node name="execute" type="Button" parent="."]
+offset_left = 868.0
+offset_top = 21.0
+offset_right = 937.0
+offset_bottom = 52.0
+text = "Execute"
+metadata/pronto_connections = [SubResource("Resource_vevg8")]
+
+[connection signal="input_event" from="Button/SpawnerBehavior/Area2D" to="Button/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="Button2/SpawnerBehavior/Area2D" to="Button2/SpawnerBehavior/Area2D" method="_on_input_event"]
