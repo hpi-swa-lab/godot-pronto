@@ -310,8 +310,7 @@ func _on_function_selected(name: String):
 			else:
 				arg_ui.edit_script = empty_script(arg["name"], true)
 		%Args.add_child(arg_ui)
-		if use_vertical_arguments():
-			%Args.custom_minimum_size = Vector2(400, 0) * Utils.hidpi_scale()
+		%Args.custom_minimum_size = Vector2(400, 0) * Utils.hidpi_scale()
 		arg_ui.text_changed.connect(func(): mark_changed())
 		arg_ui.save_requested.connect(func(): save())
 	update_argument_names()
