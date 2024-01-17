@@ -183,6 +183,16 @@ func _get_property_list():
 	if target:
 		var property_names = []
 		property_names.push_front('<statement(s)>')
+		
+		var custom_class = Utils.get_custom_class_name(target)
+		if custom_class:
+			property_names.push_back("-- %s --" % custom_class)
+			var custom_property_names = Utils.get_script_properties(target).map(func(_property): return _property.name)
+			custom_property_names.sort()
+			for n in custom_property_names:
+				if n.contains(".gd"):
+					continue
+				property_names.push_back(n)
 		for _class in Utils.all_classes_of(target):
 			var new_property_names = ClassDB.class_get_property_list(_class, true)\
 				.map(func(_property): return _property.name)

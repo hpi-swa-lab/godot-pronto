@@ -38,6 +38,18 @@ static func connect_expr(from: Node, signal_name: String, to: NodePath, expressi
 	c.only_if = only_if
 	c._store(from, undo_redo)
 	return c
+	
+static func create_transition(from: Node, signal_name: String, to: NodePath, invoke: String, more_references: Array, only_if: ConnectionScript, trigger: String, undo_redo = null):
+	var c = Connection.new()
+	c.signal_name = signal_name
+	c.to = to
+	c.invoke = invoke
+	c.trigger = trigger
+	#c.arguments = arguments
+	c.more_references = more_references
+	c.only_if = only_if
+	c._store(from, undo_redo)
+	return c
 
 ## Returns list of all connections from [param node]
 static func get_connections(node: Node) -> Array:
@@ -73,6 +85,8 @@ static func get_connections(node: Node) -> Array:
 		return enabled
 	set(new_value):
 		enabled = new_value
+## Used to trigger state transitions (connections between StateBehaviors)
+@export var trigger: String = ""
 
 ## Return whether this connection will execute an expression.
 func is_expression() -> bool:
@@ -193,15 +207,15 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 			target = from.get_node(c.to)
 			names.append("to")
 			values.append(target)
-		
-		if not c.should_trigger(names, values, from):
-			continue
-		
-		for i in len(self.more_references):
-			var ref_path = self.more_references[i]
+			
+		for i in len(c.more_references):
+			var ref_path = c.more_references[i]
 			var ref_node = from.get_node(ref_path)
 			names.append("ref" + str(i))
 			values.append(ref_node)
+
+		if not c.should_trigger(names, values, from):
+			continue
 		
 		var args_string
 		if deferred: await ConnectionsList.get_tree().process_frame
@@ -225,9 +239,16 @@ func _trigger(from: Object, signal_name: String, argument_names: Array, argument
 
 func has_condition():
 	return only_if.source_code != "true"
+	
+func state_transition_should_trigger(names: Array, values: Array):
+	if trigger == "":
+		return true
+	var trigger_idx = names.find("trigger")
+	var trigger_value = values[trigger_idx]
+	return trigger == trigger_value
 
-func should_trigger(names, values, from):
-	return not has_condition() or await _run_script(from, only_if, values)
+func should_trigger(names: Array, values: Array, from):
+	return (not has_condition() or await _run_script(from, only_if, values)) and state_transition_should_trigger(names, values)
 
 func make_unique(from: Node, undo_redo):
 	var old = _ensure_connections(from)
@@ -267,6 +288,11 @@ func print(flip = false, shorten = true, single_line = false, show_disabled = fa
 	else:
 		assert(is_expression())
 		return "{2}{0} ↺ {1}{3}".format([signal_name, Utils.ellipsize(expression.source_code.split('\n')[0], 16 if shorten else -1), prefix, suffix]).replace("\n" if single_line else "", "")
+
+## Capture all information as a string. Not used to deserialize, but to identify
+## connections (as opposed to print()).
+func serialize_as_string():
+	return "{0}/{1}/{2}".format([signal_name, to, invoke])
 
 ## Iterate over connections and check whether the target still exists for them.
 ## If not, remove the connection.

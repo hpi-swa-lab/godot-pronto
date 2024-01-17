@@ -279,6 +279,9 @@ func _on_function_selected(name: String):
 		# which is automatically set later in Connection.gd::_trigger.
 		arguments = method["args"]
 		arguments.pop_back()
+	elif receiver is StateMachineBehavior and name == "trigger":
+		StateTransitionConfigurator.open_new_invoke(undo_redo, from, selected_signal, receiver)
+		queue_free()
 	else:
 		arguments = method["args"]
 		var index = method["args"].size() - method["default_args"].size()
