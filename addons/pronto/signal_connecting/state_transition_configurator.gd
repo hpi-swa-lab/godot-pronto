@@ -321,7 +321,7 @@ func update_argument_names():
 
 func _on_add_trigger_pressed():
 	var new_trigger = %TriggerEdit.text
-	if new_trigger not in get_state_machine().triggers:
+	if new_trigger not in get_state_machine().triggers and len(new_trigger) > 0:
 		get_state_machine().triggers.push_back(new_trigger)
 		%TriggerSelection.add_item(new_trigger)
 		%TriggerSelection.select(len(get_state_machine().triggers)-1)
