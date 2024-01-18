@@ -2,7 +2,7 @@ extends Node2D
 
 
 func get_code():
-	return "while"
+	return "main"
 
 func get_stmts():
 	var areas = self.get_parent().get_overlapping_areas()

@@ -2,7 +2,7 @@ extends Node2D
 
 
 func get_code():
-	return "forward"
+	return "rotate-left"
 
 func get_stmts():
 	return []
