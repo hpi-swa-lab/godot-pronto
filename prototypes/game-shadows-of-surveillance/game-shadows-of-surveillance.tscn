@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://c83unhh8aqtco"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
+[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/game-shadows-of-surveillance.gd" id="1_odj0a"]
+[ext_resource type="PackedScene" uid="uid://dyvtu758xr2so" path="res://scenes/level.tscn" id="3_3xcs3"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_odj0a")
+
+[node name="ExportBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1")
+title = "Shadows of Surveillance"
+authors = PackedStringArray("Ole Becker", "David Schroschk", "Matvey Sivashinski")
+description = "You are a brilliant scientist who just discovered time travel. Unfortunately, during your first test, something goes wrong and your mind is split into two parts, one part travels to the future and one is stuck in the present. 
+In this coop split screen game, your goal is to somehow recombine the two parts of your mind. But be careful: In the future, some things have changed..."
+
+[node name="LeftSubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 565.0
+offset_bottom = 646.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="LeftSubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(565, 646)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="LeftSubViewportContainer/SubViewport"]
+
+[node name="Level" parent="LeftSubViewportContainer/SubViewport" instance=ExtResource("3_3xcs3")]
+
+[node name="RightSubViewportContainer" type="SubViewportContainer" parent="."]
+offset_left = 576.0
+offset_right = 1153.0
+offset_bottom = 650.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="RightSubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(577, 650)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="RightSubViewportContainer/SubViewport"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 566.0
+offset_top = -4.0
+offset_right = 574.0
+offset_bottom = 648.0
+color = Color(0.0235294, 0.501961, 1, 1)

@@ -241,5 +241,5 @@ metadata/pronto_connections = [SubResource("Resource_rw5bd")]
 [node name="PlaceholderBehavior" type="Node2D" parent="."]
 position = Vector2(129, 32)
 script = ExtResource("5_p6hy4")
-placeholder_size = Vector2(216, 43)
 sprite_texture = ExtResource("6_aynaj")
+placeholder_size = Vector2(216, 43)

@@ -56,8 +56,8 @@ script = ExtResource("1_lu5kp")
 position = Vector2(107, 5)
 script = ExtResource("2_pgkhl")
 color = Color(0.439216, 0.580392, 1, 1)
-placeholder_size = Vector2(5, 8)
 sprite_texture = ExtResource("3_0okxi")
+placeholder_size = Vector2(5, 8)
 
 [node name="Always" type="Node2D" parent="."]
 position = Vector2(448, 119)
