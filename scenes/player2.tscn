@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxp4mlvvs0g2"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="1_vl5ip"]
+[ext_resource type="Texture2D" uid="uid://chiivrwridrdd" path="res://scenes/ole_player2.jpg" id="2_0d7en"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7cbuj"]
+height = 248.062
+
+[node name="Player2" type="CharacterBody2D"]
+scale = Vector2(0.258, 0.258)
+
+[node name="OlePlayer2" type="Sprite2D" parent="."]
+position = Vector2(7.75194, 7.75195)
+scale = Vector2(0.269467, 0.269467)
+texture = ExtResource("2_0d7en")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11.6279, 38.7597)
+scale = Vector2(5.96124, 1)
+shape = SubResource("CapsuleShape2D_7cbuj")
+
+[node name="PlatformerControllerBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1_vl5ip")
+player = 1

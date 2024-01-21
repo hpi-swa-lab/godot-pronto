@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5c24526dtufn"]
+
+[ext_resource type="Texture2D" uid="uid://b6etujec8ohme" path="res://scenes/david_player1.png" id="1_3bxhg"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="2_4o648"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h8f81"]
+radius = 12.1039
+height = 137.594
+
+[node name="Player1" type="CharacterBody2D"]
+
+[node name="DavidPlayer1" type="Sprite2D" parent="."]
+position = Vector2(28, -5)
+scale = Vector2(0.591623, 0.591623)
+texture = ExtResource("1_3bxhg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 12)
+scale = Vector2(3.55259, 1.54803)
+shape = SubResource("CapsuleShape2D_h8f81")
+
+[node name="PlatformerControllerBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("2_4o648")

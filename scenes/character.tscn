@@ -18,3 +18,4 @@ shape = SubResource("RectangleShape2D_6dg28")
 [node name="PlatformerControllerBehavior" type="Node2D" parent="."]
 position = Vector2(576, 324)
 script = ExtResource("2_uxt7j")
+player = null
