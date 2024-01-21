@@ -131,6 +131,34 @@ icon = SubResource("Texture2D_4bvmr")
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="TriggerContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TriggerContainer"]
+layout_mode = 2
+
+[node name="TriggerListLabel" type="Label" parent="MarginContainer/VBoxContainer/TriggerContainer/HBoxContainer"]
+layout_mode = 2
+text = "Select trigger:"
+
+[node name="TriggerSelection" type="OptionButton" parent="MarginContainer/VBoxContainer/TriggerContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TriggerCreationContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TriggerContainer"]
+layout_mode = 2
+
+[node name="TriggerEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Add a new trigger..."
+
+[node name="create_trigger" type="Button" parent="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer"]
+layout_mode = 2
+text = "Create trigger"
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -146,30 +174,10 @@ sync_handles_x = true
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("3_immw5")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43.0426)
+custom_minimum_size = Vector2(0, 43.7075)
 layout_mode = 2
 default_text = "true"
 max_width = 500
-
-[node name="TriggerContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="TriggerSelection" type="OptionButton" parent="MarginContainer/VBoxContainer/TriggerContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TriggerCreationContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TriggerContainer"]
-layout_mode = 2
-
-[node name="TriggerEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="create_trigger" type="Button" parent="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer"]
-layout_mode = 2
-text = "Create trigger"
 
 [node name="ButtonList" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -188,8 +196,13 @@ text = "Cancel"
 [node name="open_in_connection_editor" type="Button" parent="MarginContainer/VBoxContainer/ButtonList"]
 layout_mode = 2
 size_flags_horizontal = 10
-text = "Open connection editor"
+text = "Switch to Connection Editor"
+flat = true
 
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/AddReferenceButton" to="." method="_on_add_reference_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer/create_trigger" to="." method="_on_add_trigger_pressed"]

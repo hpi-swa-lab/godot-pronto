@@ -353,6 +353,33 @@ func _on_add_reference_button_pressed():
 		update_argument_names()
 		mark_changed())
 
+var _drag_start_offset = null
+
+func _on_gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.double_click and event.button_index == MOUSE_BUTTON_LEFT:
+		_double_click()
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.is_pressed():
+			_start_drag(event.global_position)
+		else:
+			_stop_drag()
+	elif event is InputEventMouseMotion and _drag_start_offset != null:
+		_drag(event.global_position)
+
+func _double_click():
+	pinned = not pinned
+
+func _start_drag(_position: Vector2):
+	_drag_start_offset = _position - position_offset
+	# come to front
+	self.get_parent().move_child(self, -1)
+
+func _stop_drag():
+	_drag_start_offset = null
+
+func _drag(_position: Vector2):
+	position_offset = _position - _drag_start_offset
+
 func _request_reference_path(path, callback: Callable):
 	var dialog := AcceptDialog.new()
 	dialog.set_title('Enter reference path (relative to "from")')
@@ -396,4 +423,3 @@ func _process(delta):
 	if is_hovered:
 		if self.existing_connection:
 			Utils.get_behavior(from).highlight_activated(self.existing_connection)
-
