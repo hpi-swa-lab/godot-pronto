@@ -6,13 +6,16 @@ class_name StateBehavior
 ## The StateBehavior is the fundamental building block of a state machine.
 ## 
 ## Each StateBehavior emits the signals [signal StateBehavior.entered] and
-## [signal StateBehavior.exited] to communicate the state machine's state
+## [signal StateBehavior.exited] to communicate the state machine's state, as
+## well as [signal StateBehavior.in_state], while it is active.  
+## The active state is managed by its parent node, which must be a
+## StateMachineBehavior.
 
 ## Signal that gets emitted when the state becomes active
 signal entered
 
 ## Signal that gets emitted when the state becomes inactive.
-signal exited(target_state_name: String)
+signal exited(next_state_name: String)
 
 ## Signal that gets emitted every frame while the state is active.
 signal in_state(delta: float)
@@ -54,11 +57,10 @@ func enter():
 		active = true
 		entered.emit()
 
-## DEPRECATED
-func exit(target_state_name: String):
-	reload_icon()
+## Call the exited signal.
+func _exit(next_state_name: String):
 	if active:
-		exited.emit(target_state_name)
+		exited.emit(next_state_name)
 
 ## Override of [method Behavior.line_text_function].
 ## Used to display special text on transitions.

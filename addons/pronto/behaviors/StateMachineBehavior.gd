@@ -21,7 +21,7 @@ const always_trigger = "always"
 ## Is usually called by StateBehavior/enter.
 func _set_active_state(state: StateBehavior, is_active: bool):
 	if active_state:
-		active_state.exit(state.name)
+		active_state._exit(state.name)
 	if is_active:
 		active_state = state
 		state.enter() # Since _set_active_state is usually called from a state's enter(), this won't do anything.
