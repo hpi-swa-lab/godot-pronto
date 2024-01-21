@@ -19,12 +19,12 @@ const always_trigger = "always"
 
 ## Exits the current active state and enters the new active state.
 ## Is usually called by StateBehavior/enter.
-func set_active_state(state: StateBehavior, is_active: bool):
+func _set_active_state(state: StateBehavior, is_active: bool):
 	if active_state:
 		active_state.exit(state.name)
 	if is_active:
 		active_state = state
-		state.enter() # Since set_active_state is usually called from a state's enter(), this won't do anything.
+		state.enter() # Since _set_active_state is usually called from a state's enter(), this won't do anything.
 		if EngineDebugger.is_active():
 			EngineDebugger.send_message("pronto:state_activation", [get_path(), state.get_path()])
 
@@ -36,10 +36,6 @@ func _ready():
 		add_child(preload("res://addons/pronto/helpers/GroupDrawer.tscn").instantiate(), false, INTERNAL_MODE_BACK)
 		_state_machine_info = preload("res://addons/pronto/helpers/StateMachineInfo.tscn").instantiate()
 		add_child(_state_machine_info, false, INTERNAL_MODE_BACK)
-		
-## List of all StateBehavior nodes in this StateMachineBehavior
-func states():
-	return get_children().filter(func (c): c is StateBehavior)
 
 ## Provide a trigger to the State Machine. This will trigger the active state
 ## which may lead to a transition via "on_trigger_received".

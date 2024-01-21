@@ -37,7 +37,7 @@ var active: bool = false:
 			return false
 	set(value): 
 		if get_parent():
-			get_parent().set_active_state(self, value)
+			get_parent()._set_active_state(self, value)
 
 var _active_texture = load("res://addons/pronto/icons/StateActive.svg")
 var _inactive_texture = load("res://addons/pronto/icons/StateInactive.svg")
@@ -108,7 +108,7 @@ func _ready():
 	
 	if is_initial_state:
 		if get_parent():
-			get_parent().set_active_state(self, true)
+			enter()
 
 func _process(delta):
 	super._process(delta)
