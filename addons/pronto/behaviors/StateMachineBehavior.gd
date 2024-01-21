@@ -10,10 +10,10 @@ class_name StateMachineBehavior
 signal triggered(trigger: String)
 
 var active_state: StateBehavior = null
-const always_trigger = "ε"
+const always_trigger = "always"
 @export var triggers: Array[String] = [always_trigger]
 
-## When true, the state machine will trigger the "ε" trigger on every frame,
+## When true, the state machine will trigger the "always" trigger on every frame,
 ## allowing state transitions without other triggers.
 @export var trigger_epsilon: bool = true
 
