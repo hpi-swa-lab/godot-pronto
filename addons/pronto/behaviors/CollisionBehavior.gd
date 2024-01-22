@@ -24,7 +24,7 @@ var screen_entered_emitted = false
 var screen_exited_emitted = false
 
 func _ready():
-	var scene_b = preload("res://scenes/level2.tscn")
+	var scene_b = preload("res://prototypes/game-shadows-of-surveillance/levels/level2.tscn")
 	super._ready()
 	if not Engine.is_editor_hint():
 		var p = get_parent()

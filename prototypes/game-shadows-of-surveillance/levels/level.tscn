@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dyvtu758xr2so"]
 
 [ext_resource type="Texture2D" uid="uid://bhjxc5s34c3cu" path="res://prototypes/game-shadows-of-surveillance/assets/10.png" id="1_elldh"]
-[ext_resource type="Script" path="res://scenes/LightSwitch.gd" id="2_4klox"]
+[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/LightSwitch.gd" id="2_4klox"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_euvp3"]
 [ext_resource type="TileSet" uid="uid://dp12gfueqor5q" path="res://tileset.tres" id="3_r5ys7"]
 [ext_resource type="PackedScene" uid="uid://c5c24526dtufn" path="res://prototypes/game-shadows-of-surveillance/characters/player1.tscn" id="3_x2hlg"]

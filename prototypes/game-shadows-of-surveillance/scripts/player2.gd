@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const bullet_scene = preload("res://scenes/bullet.tscn")
+const bullet_scene = preload("res://prototypes/game-shadows-of-surveillance/characters/bullet.tscn")
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
