@@ -19,7 +19,6 @@ func _ready():
 	for node in players.values():
 		var remote_transform := RemoteTransform2D.new()
 		remote_transform.remote_path = node.camera.get_path()
-		print(node)
 		node.player.add_child(remote_transform)
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.	
