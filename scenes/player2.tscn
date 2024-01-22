@@ -1,13 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://dxp4mlvvs0g2"]
+[gd_scene load_steps=6 format=3 uid="uid://dxp4mlvvs0g2"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="1_vl5ip"]
+[ext_resource type="Script" path="res://scenes/player2.gd" id="1_vm6uo"]
 [ext_resource type="Texture2D" uid="uid://chiivrwridrdd" path="res://scenes/ole_player2.jpg" id="2_0d7en"]
+[ext_resource type="Texture2D" uid="uid://ca3jyudumrgbl" path="res://LightSprite.png" id="4_qvm50"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7cbuj"]
 height = 248.062
 
-[node name="Player2" type="CharacterBody2D"]
+[node name="Player2" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.258, 0.258)
+script = ExtResource("1_vm6uo")
 
 [node name="OlePlayer2" type="Sprite2D" parent="."]
 position = Vector2(7.75194, 7.75195)
@@ -23,3 +26,10 @@ shape = SubResource("CapsuleShape2D_7cbuj")
 position = Vector2(576, 324)
 script = ExtResource("1_vl5ip")
 player = 1
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-54.2636, 38.7597)
+
+[node name="Flashlight" type="PointLight2D" parent="." groups=["light"]]
+position = Vector2(3.87598, 31.0078)
+texture = ExtResource("4_qvm50")

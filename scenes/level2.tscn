@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://c7nvl73x1g6ig"]
+[gd_scene load_steps=16 format=3 uid="uid://nrfvxvrpbboq"]
 
 [ext_resource type="Texture2D" uid="uid://ej3g6agmjf0x" path="res://scenes/6.png" id="1_sm2i4"]
-[ext_resource type="PackedScene" uid="uid://4j52c4ucysq5" path="res://Tilemap.tscn" id="2_7nhks"]
+[ext_resource type="PackedScene" path="res://Tilemap.tscn" id="2_7nhks"]
 [ext_resource type="TileSet" uid="uid://dp12gfueqor5q" path="res://tileset.tres" id="3_34qp1"]
 [ext_resource type="PackedScene" uid="uid://dxp4mlvvs0g2" path="res://scenes/player2.tscn" id="3_lafji"]
-[ext_resource type="Texture2D" uid="uid://ch6w3mr4w7ueu" path="res://LightSprite.png" id="5_kwx7m"]
-[ext_resource type="Texture2D" uid="uid://dn1e3hoeursu" path="res://scenes/drone.png" id="6_yo0f5"]
+[ext_resource type="Texture2D" uid="uid://bm7wvm5fbbm4b" path="res://scenes/drone.png" id="6_yo0f5"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="7_ooonu"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="8_wsqn2"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="9_6atqn"]
@@ -69,14 +68,7 @@ color = Color(0, 0, 0, 1)
 [node name="TileMap" parent="." instance=ExtResource("2_7nhks")]
 tile_set = ExtResource("3_34qp1")
 
-[node name="Player2" parent="." instance=ExtResource("3_lafji")]
-position = Vector2(313, 419)
-
-[node name="Flashlight" type="PointLight2D" parent="Player2" groups=["light"]]
-position = Vector2(3.87598, 31.0078)
-texture = ExtResource("5_kwx7m")
-
-[node name="Enemy" type="CharacterBody2D" parent="."]
+[node name="Enemy" type="CharacterBody2D" parent="." groups=["enemy"]]
 position = Vector2(637, 360)
 scale = Vector2(0.274855, 0.274855)
 
@@ -96,6 +88,8 @@ acceleration = 20.0
 
 [node name="AlwaysBehavior" type="Node2D" parent="Enemy/MoveBehavior"]
 position = Vector2(-35.1815, 14.5728)
-scale = Vector2(1, 1)
 script = ExtResource("8_wsqn2")
 metadata/pronto_connections = [SubResource("Resource_81ot0")]
+
+[node name="Player2" parent="." instance=ExtResource("3_lafji")]
+position = Vector2(297, 304)
