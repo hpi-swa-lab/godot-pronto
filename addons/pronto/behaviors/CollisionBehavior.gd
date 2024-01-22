@@ -24,6 +24,7 @@ var screen_entered_emitted = false
 var screen_exited_emitted = false
 
 func _ready():
+	var scene_b = preload("res://scenes/level2.tscn")
 	super._ready()
 	if not Engine.is_editor_hint():
 		var p = get_parent()
@@ -36,7 +37,8 @@ func _ready():
 			(p as RigidBody2D).max_contacts_reported = max((p as RigidBody2D).max_contacts_reported, 1)
 		if get_parent() is StaticBody2D:
 			push_error("StaticBody2D cannot report collisions in Godot. Move the Collision to the other collision partner.")
-
+	
+	
 func _physics_process(delta):
 	if get_parent() is CharacterBody2D:
 		var parent = (get_parent() as CharacterBody2D)
@@ -80,3 +82,23 @@ func _get_configuration_warnings():
 	if not is_valid_parent():
 		return ["Collision only works with Area2D, RigidBody2D and CharacterBody2D"]
 	return ""
+	
+func _on_area_2d_body_entered(body):
+	var dark = get_tree().get_nodes_in_group("dark")
+	var canvasModulate = dark[0]
+	canvasModulate.hide()
+	
+	var light = get_tree().get_nodes_in_group("light")
+	var flashlight = light[0]
+	flashlight.hide()
+	
+	#var canvasModulate = dark.get_node("CanvasModulate")
+	#var canvasModulate = get_parent().get_parent().find_child("CanvasModulate")
+	#canvasModulate.hide()
+	
+	#dark.hide()
+	#var flashLight = level2.get_node("Flashlight")
+	#flashLight.hide()
+	#var timer = get_parent().get_parent().get_parent().find_child("Timer")
+	#timer.set_one_shot(true)
+	#timer.start(3)

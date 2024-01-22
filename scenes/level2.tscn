@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpgsybybj4jmh"]
+[gd_scene load_steps=6 format=3 uid="uid://bpgsybybj4jmh"]
 
 [ext_resource type="Texture2D" uid="uid://ej3g6agmjf0x" path="res://scenes/6.png" id="1_sm2i4"]
 [ext_resource type="PackedScene" uid="uid://4j52c4ucysq5" path="res://Tilemap.tscn" id="2_7nhks"]
 [ext_resource type="TileSet" uid="uid://dp12gfueqor5q" path="res://tileset.tres" id="3_34qp1"]
 [ext_resource type="PackedScene" uid="uid://dxp4mlvvs0g2" path="res://scenes/player2.tscn" id="3_lafji"]
+[ext_resource type="Texture2D" uid="uid://ch6w3mr4w7ueu" path="res://LightSprite.png" id="5_kwx7m"]
 
 [node name="Level2" type="Node2D"]
 
@@ -12,8 +13,15 @@ position = Vector2(578, 319)
 scale = Vector2(2.01189, 2.01189)
 texture = ExtResource("1_sm2i4")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="6" groups=["dark"]]
+color = Color(0, 0, 0, 1)
+
 [node name="TileMap" parent="." instance=ExtResource("2_7nhks")]
 tile_set = ExtResource("3_34qp1")
 
 [node name="Player2" parent="." instance=ExtResource("3_lafji")]
 position = Vector2(313, 419)
+
+[node name="Flashlight" type="PointLight2D" parent="Player2" groups=["light"]]
+position = Vector2(3.87598, 31.0078)
+texture = ExtResource("5_kwx7m")
