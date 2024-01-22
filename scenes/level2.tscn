@@ -1,10 +1,60 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpgsybybj4jmh"]
+[gd_scene load_steps=17 format=3 uid="uid://c7nvl73x1g6ig"]
 
 [ext_resource type="Texture2D" uid="uid://ej3g6agmjf0x" path="res://scenes/6.png" id="1_sm2i4"]
 [ext_resource type="PackedScene" uid="uid://4j52c4ucysq5" path="res://Tilemap.tscn" id="2_7nhks"]
 [ext_resource type="TileSet" uid="uid://dp12gfueqor5q" path="res://tileset.tres" id="3_34qp1"]
 [ext_resource type="PackedScene" uid="uid://dxp4mlvvs0g2" path="res://scenes/player2.tscn" id="3_lafji"]
 [ext_resource type="Texture2D" uid="uid://ch6w3mr4w7ueu" path="res://LightSprite.png" id="5_kwx7m"]
+[ext_resource type="Texture2D" uid="uid://dn1e3hoeursu" path="res://scenes/drone.png" id="6_yo0f5"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="7_ooonu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="8_wsqn2"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="9_6atqn"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="10_wl7i3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kvhpb"]
+
+[sub_resource type="GDScript" id="GDScript_6kxwn"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	var player = get_parent().get_parent().get_parent().get_node(\"Player2\")
+	var random_x = randf_range(-50, 50)
+	var random_y = randf_range(-50, 50)
+	return (player.position - to.get_parent().position + Vector2(random_x, random_y)).normalized()
+"
+
+[sub_resource type="Resource" id="Resource_htvxy"]
+script = ExtResource("9_6atqn")
+nested_script = SubResource("GDScript_6kxwn")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jvn02"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_lsqwp"]
+script = ExtResource("9_6atqn")
+nested_script = SubResource("GDScript_jvn02")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_81ot0"]
+script = ExtResource("10_wl7i3")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "move_direction"
+arguments = [SubResource("Resource_htvxy")]
+only_if = SubResource("Resource_lsqwp")
+deferred = false
+enabled = true
+trigger = ""
 
 [node name="Level2" type="Node2D"]
 
@@ -25,3 +75,27 @@ position = Vector2(313, 419)
 [node name="Flashlight" type="PointLight2D" parent="Player2" groups=["light"]]
 position = Vector2(3.87598, 31.0078)
 texture = ExtResource("5_kwx7m")
+
+[node name="Enemy" type="CharacterBody2D" parent="."]
+position = Vector2(637, 360)
+scale = Vector2(0.274855, 0.274855)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+position = Vector2(7.27649, -10.9149)
+scale = Vector2(8.32211, 8.32211)
+shape = SubResource("CircleShape2D_kvhpb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy"]
+texture = ExtResource("6_yo0f5")
+
+[node name="MoveBehavior" type="Node2D" parent="Enemy"]
+position = Vector2(4.34964e-06, -49.7541)
+script = ExtResource("7_ooonu")
+max_velocity = 100.0
+acceleration = 20.0
+
+[node name="AlwaysBehavior" type="Node2D" parent="Enemy/MoveBehavior"]
+position = Vector2(-35.1815, 14.5728)
+scale = Vector2(1, 1)
+script = ExtResource("8_wsqn2")
+metadata/pronto_connections = [SubResource("Resource_81ot0")]

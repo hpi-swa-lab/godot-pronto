@@ -85,12 +85,15 @@ func _get_configuration_warnings():
 	
 func _on_area_2d_body_entered(body):
 	var dark = get_tree().get_nodes_in_group("dark")
-	var canvasModulate = dark[0]
-	canvasModulate.hide()
+	print("dark:", dark)
+	if dark:
+		var canvasModulate = dark[0]
+		canvasModulate.hide()
 	
 	var light = get_tree().get_nodes_in_group("light")
-	var flashlight = light[0]
-	flashlight.hide()
+	if light:
+		var flashlight = light[0]
+		flashlight.hide()
 	
 	#var canvasModulate = dark.get_node("CanvasModulate")
 	#var canvasModulate = get_parent().get_parent().find_child("CanvasModulate")
