@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dp12gfueqor5q"]
 
-[ext_resource type="Texture2D" uid="uid://bq6gt543ylrs6" path="res://prototypes/game-shadows-of-surveillance/tilemap_packed.png" id="1_g80l8"]
+[ext_resource type="Texture2D" uid="uid://bq6gt543ylrs6" path="res://prototypes/game-shadows-of-surveillance/assets/tilemap_packed.png" id="1_g80l8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_abbh2"]
 texture = ExtResource("1_g80l8")

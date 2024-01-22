@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fk1ulnsrwyon"
-path="res://.godot/imported/thumbnail.png-4decdd16a2263ffe18c5c2388d77a903.ctex"
+uid="uid://bq6gt543ylrs6"
+path="res://.godot/imported/tilemap_packed.png-0753c552bba01e3794ca0398cdb6d8d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://prototypes/game-shadows-of-surveillance/thumbnail.png"
-dest_files=["res://.godot/imported/thumbnail.png-4decdd16a2263ffe18c5c2388d77a903.ctex"]
+source_file="res://prototypes/game-shadows-of-surveillance/assets/tilemap_packed.png"
+dest_files=["res://.godot/imported/tilemap_packed.png-0753c552bba01e3794ca0398cdb6d8d8.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6etujec8ohme"
-path="res://.godot/imported/david_player1.png-598717f91a06f9a7a46ac286cb4c4d33.ctex"
+uid="uid://fk1ulnsrwyon"
+path="res://.godot/imported/thumbnail.png-59c49cd5c778afc16f9183932f7a96ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/david_player1.png"
-dest_files=["res://.godot/imported/david_player1.png-598717f91a06f9a7a46ac286cb4c4d33.ctex"]
+source_file="res://prototypes/game-shadows-of-surveillance/assets/thumbnail.png"
+dest_files=["res://.godot/imported/thumbnail.png-59c49cd5c778afc16f9183932f7a96ed.ctex"]
 
 [params]
 

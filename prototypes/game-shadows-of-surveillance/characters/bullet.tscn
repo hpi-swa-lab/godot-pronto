@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://boqn5yw22tcj7"]
 
-[ext_resource type="Texture2D" uid="uid://cooutieukq5fx" path="res://scenes/laserRed01.png" id="1_4l3sk"]
-[ext_resource type="Script" path="res://scenes/bullet.gd" id="1_qyq4p"]
+[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/bullet.gd" id="1_qyq4p"]
+[ext_resource type="Texture2D" uid="uid://cooutieukq5fx" path="res://prototypes/game-shadows-of-surveillance/assets/laserRed01.png" id="2_xmq7n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cn71r"]
 size = Vector2(57, 10)
@@ -11,7 +11,7 @@ script = ExtResource("1_qyq4p")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
-texture = ExtResource("1_4l3sk")
+texture = ExtResource("2_xmq7n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.5, 0)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c5c24526dtufn"]
 
-[ext_resource type="Texture2D" uid="uid://b6etujec8ohme" path="res://scenes/david_player1.png" id="1_3bxhg"]
+[ext_resource type="Texture2D" uid="uid://b6etujec8ohme" path="res://prototypes/game-shadows-of-surveillance/assets/david_player1.png" id="1_3bxhg"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="2_4o648"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h8f81"]

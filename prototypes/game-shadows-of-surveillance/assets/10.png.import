@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dn1e3hoeursu"
-path="res://.godot/imported/drone.png-9944b21944f7dbd30dc9e145ede24a7f.ctex"
+uid="uid://bhjxc5s34c3cu"
+path="res://.godot/imported/10.png-45bea63df15292014782e821e9ab3d65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/drone.png"
-dest_files=["res://.godot/imported/drone.png-9944b21944f7dbd30dc9e145ede24a7f.ctex"]
+source_file="res://prototypes/game-shadows-of-surveillance/assets/10.png"
+dest_files=["res://.godot/imported/10.png-45bea63df15292014782e821e9ab3d65.ctex"]
 
 [params]
 
