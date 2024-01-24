@@ -66,7 +66,7 @@ func _exit(next_state_name: String):
 ## Used to display special text on transitions.
 func line_text_function(connection: Connection) -> Callable:
 	var addendum = ""
-	if connection.trigger != "":
+	if connection.is_state_transition():
 		addendum = "\ntransition on '%s'" % connection.trigger
 		var only_if_source_code = connection.only_if.source_code
 		if only_if_source_code != "true":

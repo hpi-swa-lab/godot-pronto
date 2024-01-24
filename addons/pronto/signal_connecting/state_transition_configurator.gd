@@ -121,11 +121,10 @@ func set_existing_connection(from: Node, connection: Connection):
 	#%SharedLinksNote.visible = total["total"] > 1
 	#%SharedLinksCount.text = "This connection is linked to {0} other node{1}.".format([total["total"] - 1, "s" if total["total"] != 2 else ""])
 	reload_triggers()
-	if connection.trigger != "":
-		for i in range(%TriggerSelection.item_count):
-			if %TriggerSelection.get_item_text(i) == connection.trigger:
-				%TriggerSelection.select(i)
-	
+	var selected_trigger = connection.trigger if connection.is_state_transition() else extract_trigger_from_trigger_argument_script(connection.arguments[0])
+	for i in range(%TriggerSelection.item_count):
+		if %TriggerSelection.get_item_text(i) == selected_trigger:
+			%TriggerSelection.select(i)
 	mark_changed(false)
 
 func empty_script(expr: String, return_value: bool):
@@ -138,14 +137,25 @@ func init_empty_scripts():
 
 func get_trigger_argument_script(trigger):
 	var argument = empty_script("'%s'" % trigger, true)
-	argument.argument_names = [ "from", "to"]
-	argument.argument_types = ["Node", "Node"]
+	argument.argument_names = selected_signal["args"].map(func (a):
+		return a["name"]) + [ "from", "to"]
+	argument.argument_types = selected_signal["args"].map(func (a):
+		return null) + ["Node", "Node"]
+	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
 	for i in range(more_references.size()):
 		var ref = more_references[i]
 		var node = from.get_node(ref)
 		argument.argument_names.push_back("ref{0}".format([i]))
 		argument.argument_types.push_back(Utils.get_specific_class_name(node))
 	return argument
+	
+func extract_trigger_from_trigger_argument_script(script):
+	var regex = RegEx.new()
+	regex.compile("^'(?<trigger>.*)'$")
+	var result = regex.search(script.source_code)
+	if result:
+		return result.get_string("trigger")
+	
 
 # directly copied from node_to_node_configurator
 func argument_names_and_types():
@@ -183,10 +193,10 @@ func save():
 					"invoke": "trigger",
 					"signal_name": %Signal.text,
 					"more_references": more_references,
-					"arguments": [get_trigger_argument_script(trigger)]
+					"arguments": [get_trigger_argument_script(trigger)],
 				}
 		else:
-			connection_object =  {
+			connection_object = {
 				"expression": null,
 				"invoke": "enter",
 				"signal_name": %Signal.text,
@@ -200,14 +210,15 @@ func save():
 			)
 	else:
 		if mode == ConfigurationMode.TO_STATE_MACHINE:
-			existing_connection =Connection.connect_target(
+			existing_connection = Connection.connect_target(
 				from,
 				selected_signal["name"],
 				from.get_path_to(receiver),
 				"trigger",
 				[get_trigger_argument_script(trigger)],
 				more_references,
-				%Condition.updated_script(from, selected_signal["name"]), undo_redo
+				%Condition.updated_script(from, selected_signal["name"]), 
+				undo_redo
 			)
 		else:
 			var only_if = %Condition.updated_script(from, selected_signal["name"])
