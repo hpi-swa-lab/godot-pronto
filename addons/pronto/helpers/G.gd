@@ -49,9 +49,9 @@ func _ready():
 func maybe_add_value_user_interface():
 	if not Utils.all_nodes_that(get_tree().root, func (node): return node is PrototypingUIBehavior).is_empty():
 		return
-	return
 	var ui = PrototypingUIBehavior.new()
 	ui.name = 'Config'
+	ui.minimized = true
 	# Place the PrototypingUI in its own CanvasLayer
 	var canvasLayer = CanvasLayer.new()
 	canvasLayer.add_child(ui)

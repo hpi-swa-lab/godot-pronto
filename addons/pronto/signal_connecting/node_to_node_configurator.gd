@@ -477,7 +477,7 @@ func _on_add_reference_button_pressed():
 
 func _request_reference_path(path, callback: Callable):
 	var dialog := AcceptDialog.new()
-	dialog.set_title('Enter reference path (relative to "from")')
+	dialog.set_title("Enter reference path (relative to 'from') using '..', '/' and 'node names'")
 	var lineEdit := LineEdit.new()
 	lineEdit.text = path
 	dialog.add_child(lineEdit)

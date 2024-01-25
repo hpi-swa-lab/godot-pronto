@@ -191,7 +191,7 @@ sync_handles_x = true
 
 [node name="Expression" parent="MarginContainer/VBoxContainer/ResizableContainer" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43.8127)
+custom_minimum_size = Vector2(0, 43.7423)
 layout_mode = 2
 size_flags_horizontal = 1
 return_value = false
@@ -213,7 +213,7 @@ sync_handles_x = true
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("5_ujudk")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43.4152)
+custom_minimum_size = Vector2(0, 43.7427)
 layout_mode = 2
 default_text = "true"
 max_width = 500
