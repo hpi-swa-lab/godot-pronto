@@ -1,4 +1,4 @@
-[gd_scene load_steps=172 format=3 uid="uid://cal784t2cawkt"]
+[gd_scene load_steps=173 format=3 uid="uid://cal784t2cawkt"]
 
 [ext_resource type="Script" path="res://prototypes/study/implementation/StudyTracker.gd" id="1_0cf4q"]
 [ext_resource type="Texture2D" uid="uid://ccjxigs6tfe7d" path="res://prototypes/study/demo-assets/defense/tilemap_packed.png" id="2_wf7s3"]
@@ -269,11 +269,12 @@ only_if = SubResource("Resource_5rjiv")
 expression = SubResource("Resource_6yutn")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sjywi"]
 size = Vector2(50, 100)
 
-[sub_resource type="Image" id="Image_tymp3"]
+[sub_resource type="Image" id="Image_w40y4"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -283,55 +284,16 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_3m86n"]
-image = SubResource("Image_tymp3")
+image = SubResource("Image_w40y4")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mxete"]
 radius = 24.0
-
-[sub_resource type="GDScript" id="GDScript_6jvbt"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
-	return \"\"
-"
-
-[sub_resource type="Resource" id="Resource_crdn3"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_6jvbt")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_3f55t"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
-	return other.name.contains(\"Enemy\")
-"
-
-[sub_resource type="Resource" id="Resource_7r6kg"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_3f55t")
-argument_names = ["other", "direction", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_af6p8"]
-script = ExtResource("8_bh3ew")
-signal_name = "collided"
-to = NodePath("../../PlayerUnitStateMachine/Traveling")
-more_references = []
-invoke = "exit"
-arguments = [SubResource("Resource_crdn3")]
-only_if = SubResource("Resource_7r6kg")
-deferred = false
-enabled = true
 
 [sub_resource type="GDScript" id="GDScript_p7xlh"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
+func run(other, direction, from, to):
 	return \"target\"
 "
 
@@ -345,7 +307,7 @@ return_value = true
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(other, direction, from: Node2D, to: Node2D):
+func run(other, direction, from, to):
 	return other
 "
 
@@ -379,256 +341,61 @@ arguments = [SubResource("Resource_by30x"), SubResource("Resource_asgix")]
 only_if = SubResource("Resource_uq8c6")
 deferred = false
 enabled = true
+trigger = ""
 
-[sub_resource type="GDScript" id="GDScript_gdrvu"]
+[sub_resource type="GDScript" id="GDScript_h84rj"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(target_state_name, from: Node2D, to: Node2D):
-	return true
+func run(from: Node, to: Node):
+	return 'switch_to_attack'
 "
 
-[sub_resource type="Resource" id="Resource_5leml"]
+[sub_resource type="Resource" id="Resource_l0hvh"]
 script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_gdrvu")
-argument_names = ["target_state_name", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_3ynlx"]
-script = ExtResource("8_bh3ew")
-signal_name = "exited"
-to = NodePath("../Attacking")
-more_references = []
-invoke = "enter"
-arguments = []
-only_if = SubResource("Resource_5leml")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_qjdkn"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_7ffs3"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_qjdkn")
+nested_script = SubResource("GDScript_h84rj")
 argument_names = ["from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_txri2"]
-script = ExtResource("8_bh3ew")
-signal_name = "entered"
-to = NodePath("../../MoveBehavior/AlwaysBehavior")
-more_references = []
-invoke = "resume"
-arguments = []
-only_if = SubResource("Resource_7ffs3")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_7nodq"]
+[sub_resource type="GDScript" id="GDScript_reqxb"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
-func run(target_state_name, from: Node2D, to: Node2D):
-	return true
+func run(other, direction, from: Node2D, to: Node2D):
+	return other.name.contains(\"Enemy\")
 "
 
-[sub_resource type="Resource" id="Resource_fsjq8"]
+[sub_resource type="Resource" id="Resource_y0psk"]
 script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_7nodq")
-argument_names = ["target_state_name", "from", "to"]
+nested_script = SubResource("GDScript_reqxb")
+argument_names = ["other", "direction", "from", "to"]
 return_value = true
 
-[sub_resource type="Resource" id="Resource_n1f4x"]
+[sub_resource type="Resource" id="Resource_tcph6"]
 script = ExtResource("8_bh3ew")
-signal_name = "exited"
-to = NodePath("../../MoveBehavior/AlwaysBehavior")
+signal_name = "collided"
+to = NodePath("../../StateMachineBehavior")
 more_references = []
-invoke = "pause"
-arguments = []
-only_if = SubResource("Resource_fsjq8")
+invoke = "trigger"
+arguments = [SubResource("Resource_l0hvh")]
+only_if = SubResource("Resource_y0psk")
 deferred = false
 enabled = true
+trigger = ""
 
-[sub_resource type="GDScript" id="GDScript_fdqdo"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(target_state_name, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_qgd33"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_fdqdo")
-argument_names = ["target_state_name", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_nkvmv"]
-script = ExtResource("8_bh3ew")
-signal_name = "exited"
-to = NodePath("../Traveling")
-more_references = []
-invoke = "enter"
-arguments = []
-only_if = SubResource("Resource_qgd33")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_sd61p"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_rxxia"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_sd61p")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_5lsdf"]
-script = ExtResource("8_bh3ew")
-signal_name = "entered"
-to = NodePath("AttackTimer")
-more_references = []
-invoke = "reset_and_start"
-arguments = []
-only_if = SubResource("Resource_rxxia")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_sfojl"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(target_state_name, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_3sbu7"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_sfojl")
-argument_names = ["target_state_name", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_egwp7"]
-script = ExtResource("8_bh3ew")
-signal_name = "exited"
-to = NodePath("AttackTimer")
-more_references = []
-invoke = "pause"
-arguments = []
-only_if = SubResource("Resource_3sbu7")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_wwvw8"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_btb0w"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_wwvw8")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_hgu14"]
-script = ExtResource("8_bh3ew")
-signal_name = "elapsed"
-to = NodePath("../CodeBehavior")
-more_references = []
-invoke = "execute"
-arguments = []
-only_if = SubResource("Resource_btb0w")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_3u6t2"]
+[sub_resource type="GDScript" id="GDScript_x0hd4"]
 script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run():
-	var store: StoreBehavior = closest(\"StoreBehavior\")
-	if not store.has(\"target\"):
-		_exit_state()
-		return false
-	var target = store.at(\"target\")
-	if not is_instance_valid(target):
-		_exit_state()
-		return false
-	var target_health: HealthBarBehavior
-	if target is Area2D:
-		# target is the base
-		target_health = target.get_parent().find_child(\"HealthBarBehavior\", true, false)
-	else:
-		target_health = target.find_child(\"HealthBarBehavior\", true, false)
-	if not is_instance_valid(target_health):
-		_exit_state()
-		return false
-	target_health.damage(at(\"PlayerUnitDamage\"))
-	return true
-
-func _exit_state():
-	# target is already dead, move to traveling state to search for new target
-	closest(\"Attacking\").exit(\"\")
+	return null
 "
 
-[sub_resource type="Resource" id="Resource_6n3ji"]
+[sub_resource type="Resource" id="Resource_0huc0"]
 script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_3u6t2")
+nested_script = SubResource("GDScript_x0hd4")
 argument_names = []
 return_value = true
-
-[sub_resource type="GDScript" id="GDScript_ulpfe"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Node2D):
-	return closest(\"EnemyBase\").position
-"
-
-[sub_resource type="Resource" id="Resource_uko5b"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_ulpfe")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="GDScript" id="GDScript_c8yie"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(delta, from: Node2D, to: Node2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_ba0rs"]
-script = ExtResource("7_lluac")
-nested_script = SubResource("GDScript_c8yie")
-argument_names = ["delta", "from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_pij5h"]
-script = ExtResource("8_bh3ew")
-signal_name = "physiscs_always"
-to = NodePath("..")
-more_references = []
-invoke = "move_toward"
-arguments = [SubResource("Resource_uko5b")]
-only_if = SubResource("Resource_ba0rs")
-deferred = false
-enabled = true
 
 [sub_resource type="Gradient" id="Gradient_ipv0p"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -658,6 +425,232 @@ arguments = []
 only_if = SubResource("Resource_x6bo0")
 deferred = false
 enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_apaeg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return closest(\"EnemyBase\").position
+"
+
+[sub_resource type="Resource" id="Resource_qd4eg"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_apaeg")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jpmrc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jdhv4"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_jpmrc")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_sh7fd"]
+script = ExtResource("8_bh3ew")
+signal_name = "in_state"
+to = NodePath("../../MoveBehavior")
+more_references = []
+invoke = "move_toward"
+arguments = [SubResource("Resource_qd4eg")]
+only_if = SubResource("Resource_jdhv4")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_ykwid"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_mca8l"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_ykwid")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7be0e"]
+script = ExtResource("8_bh3ew")
+signal_name = "entered"
+to = NodePath("../../ClockBehavior")
+more_references = []
+invoke = "pause"
+arguments = []
+only_if = SubResource("Resource_mca8l")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_4ne1m"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_13ipd"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_4ne1m")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_cjavl"]
+script = ExtResource("8_bh3ew")
+signal_name = "on_trigger_received"
+to = NodePath("../Attack")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_13ipd")
+deferred = false
+enabled = true
+trigger = "switch_to_attack"
+
+[sub_resource type="GDScript" id="GDScript_sivsh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_58h4y"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_sivsh")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_caphd"]
+script = ExtResource("8_bh3ew")
+signal_name = "entered"
+to = NodePath("../../ClockBehavior")
+more_references = []
+invoke = "reset_and_start"
+arguments = []
+only_if = SubResource("Resource_58h4y")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_onuem"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(trigger, from, to):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_4oeeb"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_onuem")
+argument_names = ["trigger", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_hslxh"]
+script = ExtResource("8_bh3ew")
+signal_name = "on_trigger_received"
+to = NodePath("../Travel")
+more_references = []
+invoke = "enter"
+arguments = []
+only_if = SubResource("Resource_4oeeb")
+deferred = false
+enabled = true
+trigger = "switch_to_travel"
+
+[sub_resource type="GDScript" id="GDScript_0pqbs"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node, to: Node):
+	return 'test'
+"
+
+[sub_resource type="Resource" id="Resource_i8mqk"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_0pqbs")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_25bhh"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return at(\"target\") == null or not is_instance_valid(at(\"target\")) 
+"
+
+[sub_resource type="Resource" id="Resource_kaoy1"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_25bhh")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_1mku1"]
+script = ExtResource("8_bh3ew")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "trigger"
+arguments = [SubResource("Resource_i8mqk")]
+only_if = SubResource("Resource_kaoy1")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_vn34b"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from):
+	at(\"target\").find_child(\"HealthBarBehavior\", true, false).damage(3)
+"
+
+[sub_resource type="Resource" id="Resource_b6gp0"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_vn34b")
+argument_names = ["from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_fa2we"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_7w03s"]
+script = ExtResource("7_lluac")
+nested_script = SubResource("GDScript_fa2we")
+argument_names = ["from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_psooc"]
+script = ExtResource("8_bh3ew")
+signal_name = "elapsed"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_7w03s")
+expression = SubResource("Resource_b6gp0")
+deferred = false
+enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_fdlfy"]
 script/source = "@tool
@@ -739,6 +732,7 @@ arguments = [SubResource("Resource_c6mq2"), SubResource("Resource_p8ty7"), SubRe
 only_if = SubResource("Resource_87tg7")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_uytb5"]
 script/source = "@tool
@@ -792,6 +786,7 @@ arguments = [SubResource("Resource_kws2s"), SubResource("Resource_s0u13")]
 only_if = SubResource("Resource_xpspg")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_y4jbh"]
 script/source = "@tool
@@ -817,6 +812,7 @@ arguments = []
 only_if = SubResource("Resource_i3abm")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_8d1fe"]
 script/source = "@tool
@@ -870,6 +866,7 @@ arguments = [SubResource("Resource_fpmlq"), SubResource("Resource_mhwru")]
 only_if = SubResource("Resource_q6gnq")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_224nu"]
 script/source = "@tool
@@ -895,6 +892,10 @@ arguments = []
 only_if = SubResource("Resource_h366n")
 deferred = false
 enabled = true
+trigger = ""
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dyhcj"]
+radius = 42.107
 
 [sub_resource type="Gradient" id="Gradient_gvpcg"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -940,14 +941,12 @@ only_if = SubResource("Resource_uesyg")
 expression = SubResource("Resource_jel1w")
 deferred = false
 enabled = true
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_dyhcj"]
-radius = 42.107
+trigger = ""
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32l5q"]
 size = Vector2(50, 100)
 
-[sub_resource type="Image" id="Image_g4bnv"]
+[sub_resource type="Image" id="Image_7aynt"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -957,7 +956,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_n3eip"]
-image = SubResource("Image_g4bnv")
+image = SubResource("Image_7aynt")
 
 [sub_resource type="Gradient" id="Gradient_bjfnf"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -987,6 +986,7 @@ arguments = []
 only_if = SubResource("Resource_rmbsf")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_38gs0"]
 radius = 24.0
@@ -1043,6 +1043,7 @@ arguments = [SubResource("Resource_ethja"), SubResource("Resource_iofvs")]
 only_if = SubResource("Resource_g8tp8")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_520ky"]
 script/source = "@tool
@@ -1082,6 +1083,7 @@ arguments = [SubResource("Resource_rq3o8")]
 only_if = SubResource("Resource_ccheu")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_u2ixj"]
 script/source = "@tool
@@ -1107,6 +1109,7 @@ arguments = []
 only_if = SubResource("Resource_clmio")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_wnu40"]
 script/source = "@tool
@@ -1132,6 +1135,7 @@ arguments = []
 only_if = SubResource("Resource_lu5i3")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_jkbcq"]
 script/source = "@tool
@@ -1157,6 +1161,7 @@ arguments = []
 only_if = SubResource("Resource_55ibr")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_fx3hu"]
 script/source = "@tool
@@ -1182,6 +1187,7 @@ arguments = []
 only_if = SubResource("Resource_vst8h")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_ou4ul"]
 script/source = "@tool
@@ -1207,6 +1213,7 @@ arguments = []
 only_if = SubResource("Resource_fcp5t")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_hugs0"]
 script/source = "@tool
@@ -1232,6 +1239,7 @@ arguments = []
 only_if = SubResource("Resource_n4jc0")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_qx80d"]
 script/source = "@tool
@@ -1271,6 +1279,7 @@ arguments = [SubResource("Resource_ixpyo")]
 only_if = SubResource("Resource_yltgv")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_0l3jn"]
 script/source = "@tool
@@ -1296,6 +1305,7 @@ arguments = []
 only_if = SubResource("Resource_oo6xr")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_jl6ew"]
 script/source = "@tool
@@ -1413,6 +1423,7 @@ arguments = [SubResource("Resource_miihr"), SubResource("Resource_61e0j"), SubRe
 only_if = SubResource("Resource_xt3qs")
 deferred = false
 enabled = true
+trigger = ""
 
 [node name="StudyRoot" type="Node2D"]
 script = ExtResource("1_0cf4q")
@@ -1441,7 +1452,7 @@ position = Vector2(144, 250)
 [node name="PlayerBaseRangeShape" type="CollisionShape2D" parent="level/Player/PlayerBase/PlayerBaseRange"]
 shape = SubResource("CircleShape2D_u430t")
 
-[node name="HealthBarBehavior" type="Node2D" parent="level/Player/PlayerBase"]
+[node name="HealthBarBehavior" type="Node2D" parent="level/Player/PlayerBase/PlayerBaseRange"]
 position = Vector2(0, -19)
 script = ExtResource("3_txk66")
 max = 30
@@ -1455,7 +1466,7 @@ script = ExtResource("7_pbf3w")
 spawn_shape_generic = SubResource("RectangleShape2D_sjywi")
 
 [node name="PlayerUnit" type="CharacterBody2D" parent="level/Player/PlayerSpawner"]
-position = Vector2(-40, -72)
+position = Vector2(0, -155)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
 script = ExtResource("8_500im")
@@ -1471,51 +1482,21 @@ placeholder_size = Vector2(20, 20)
 shape = SubResource("CircleShape2D_mxete")
 
 [node name="CollisionBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/AttackArea"]
-position = Vector2(48, -2.22542e-06)
+position = Vector2(-62, -37)
 script = ExtResource("3_x6nr8")
-metadata/pronto_connections = [SubResource("Resource_af6p8"), SubResource("Resource_jsh0y")]
-
-[node name="PlayerUnitStateMachine" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
-position = Vector2(-312, 128)
-script = ExtResource("9_n6x53")
-
-[node name="Traveling" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/PlayerUnitStateMachine"]
-position = Vector2(-80, 64)
-script = ExtResource("10_jd5ym")
-active = true
-metadata/pronto_connections = [SubResource("Resource_3ynlx"), SubResource("Resource_txri2"), SubResource("Resource_n1f4x")]
-
-[node name="Attacking" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/PlayerUnitStateMachine"]
-position = Vector2(40, 64)
-script = ExtResource("10_jd5ym")
-metadata/pronto_connections = [SubResource("Resource_nkvmv"), SubResource("Resource_5lsdf"), SubResource("Resource_egwp7")]
-
-[node name="AttackTimer" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/PlayerUnitStateMachine/Attacking"]
-position = Vector2(0, 32)
-script = ExtResource("13_5el5o")
-paused = true
-trigger_interval_in_seconds = 1.0
-metadata/pronto_connections = [SubResource("Resource_hgu14")]
-
-[node name="CodeBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/PlayerUnitStateMachine/Attacking"]
-position = Vector2(32, 32)
-script = ExtResource("15_qpgdu")
-evaluate = SubResource("Resource_6n3ji")
+metadata/pronto_connections = [SubResource("Resource_jsh0y"), SubResource("Resource_tcph6")]
 
 [node name="MoveBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
-position = Vector2(-48, 0)
+position = Vector2(-62, -1)
 script = ExtResource("11_rog5l")
 max_velocity = 400.0
 
-[node name="AlwaysBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/MoveBehavior"]
-position = Vector2(0, -32)
-script = ExtResource("12_8qh34")
-paused = true
-metadata/pronto_connections = [SubResource("Resource_pij5h")]
-
 [node name="StoreBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
-position = Vector2(32, -40)
+position = Vector2(-4, -67)
 script = ExtResource("13_s63vy")
+fields = {
+"target": SubResource("Resource_0huc0")
+}
 
 [node name="HealthBarBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
 position = Vector2(0, -16)
@@ -1526,28 +1507,56 @@ healthbar_size = Vector2(16, 6)
 progress_gradient = SubResource("Gradient_ipv0p")
 metadata/pronto_connections = [SubResource("Resource_b6ux2")]
 
+[node name="StateMachineBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
+position = Vector2(-245, -53)
+script = ExtResource("9_n6x53")
+triggers = Array[String](["switch_to_travel", "switch_to_attack", "test"])
+
+[node name="Travel" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/StateMachineBehavior"]
+position = Vector2(82, 53)
+script = ExtResource("10_jd5ym")
+is_initial_state = true
+metadata/pronto_connections = [SubResource("Resource_sh7fd"), SubResource("Resource_7be0e"), SubResource("Resource_cjavl")]
+
+[node name="Attack" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/StateMachineBehavior"]
+position = Vector2(-224, 51)
+script = ExtResource("10_jd5ym")
+metadata/pronto_connections = [SubResource("Resource_caphd"), SubResource("Resource_hslxh")]
+
+[node name="AlwaysBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit/StateMachineBehavior"]
+position = Vector2(96, -34)
+script = ExtResource("12_8qh34")
+metadata/pronto_connections = [SubResource("Resource_1mku1")]
+
+[node name="ClockBehavior" type="Node2D" parent="level/Player/PlayerSpawner/PlayerUnit"]
+position = Vector2(-304, 96)
+script = ExtResource("13_5el5o")
+paused = true
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_psooc")]
+
 [node name="PlayerUnitDamage" type="Node2D" parent="level/Player"]
-position = Vector2(-56, 416)
+position = Vector2(112, 135)
 script = ExtResource("16_xvsf0")
 float_min = 0.0
 float_max = 10.0
-float_value = 3.0
+float_value = 6.0
 float_step_size = 1.0
 
 [node name="Actions" type="Node2D" parent="level/Player"]
 
 [node name="KeyBehavior" type="Node2D" parent="level/Player/Actions"]
-position = Vector2(232, 304)
+position = Vector2(176, 330)
 script = ExtResource("17_7wjf7")
 key = "space"
 metadata/pronto_connections = [SubResource("Resource_748ke"), SubResource("Resource_xf0qn"), SubResource("Resource_gcoka")]
 
 [node name="StoreBehavior" type="Node2D" parent="level/Player/Actions"]
-position = Vector2(200, 304)
+position = Vector2(76, 328)
 script = ExtResource("13_s63vy")
 
 [node name="ClockBehavior" type="Node2D" parent="level/Player/Actions"]
-position = Vector2(200, 328)
+position = Vector2(133, 401)
 script = ExtResource("13_5el5o")
 cycle_count = 1
 paused = true
@@ -1559,18 +1568,18 @@ metadata/pronto_connections = [SubResource("Resource_rvlwu"), SubResource("Resou
 [node name="EnemyBase" type="Node2D" parent="level/Enemy"]
 position = Vector2(1006, 251)
 
-[node name="HealthBarBehavior" type="Node2D" parent="level/Enemy/EnemyBase"]
+[node name="EnemyBaseRange" type="Area2D" parent="level/Enemy/EnemyBase"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level/Enemy/EnemyBase/EnemyBaseRange"]
+shape = SubResource("CircleShape2D_dyhcj")
+
+[node name="HealthBarBehavior" type="Node2D" parent="level/Enemy/EnemyBase/EnemyBaseRange"]
 position = Vector2(0, -20)
 script = ExtResource("3_txk66")
 max = 30
 current = 30
 progress_gradient = SubResource("Gradient_gvpcg")
 metadata/pronto_connections = [SubResource("Resource_ma2fe")]
-
-[node name="EnemyBaseRange" type="Area2D" parent="level/Enemy/EnemyBase"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="level/Enemy/EnemyBase/EnemyBaseRange"]
-shape = SubResource("CircleShape2D_dyhcj")
 
 [node name="EnemySpawn" type="Node2D" parent="level/Enemy"]
 position = Vector2(977, 251)
@@ -1617,7 +1626,6 @@ script = ExtResource("9_n6x53")
 [node name="Traveling" type="Node2D" parent="level/Enemy/EnemySpawner/EnemyUnit/EnemyUnitStateMachine"]
 position = Vector2(-56, 48)
 script = ExtResource("10_jd5ym")
-active = true
 metadata/pronto_connections = [SubResource("Resource_qfpq0"), SubResource("Resource_4tfcg"), SubResource("Resource_je2f3")]
 
 [node name="Attacking" type="Node2D" parent="level/Enemy/EnemySpawner/EnemyUnit/EnemyUnitStateMachine"]
@@ -1665,5 +1673,5 @@ position = Vector2(1224, 128)
 script = ExtResource("16_xvsf0")
 float_min = 0.0
 float_max = 10.0
-float_value = 2.0
+float_value = 6.0
 float_step_size = 1.0
