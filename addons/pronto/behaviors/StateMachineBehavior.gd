@@ -15,7 +15,7 @@ const always_trigger = "always"
 
 ## When true, the state machine will trigger the "always" trigger on every frame,
 ## allowing state transitions without other triggers.
-@export var trigger_epsilon: bool = true
+@export var trigger_always: bool = true
 
 ## Exits the current active state and enters the new active state.
 ## Is usually called by StateBehavior/enter.
@@ -57,5 +57,5 @@ func _redraw_info_from_game(trigger: String):
 
 func _process(delta):
 	super._process(delta)
-	if trigger_epsilon and not Engine.is_editor_hint():
+	if trigger_always and not Engine.is_editor_hint():
 		trigger(always_trigger)
