@@ -2,6 +2,14 @@
 extends PanelContainer
 class_name StateTransitionConfigurator
 
+
+## The StateTransitionConfigurator is used to create and edit connections
+## related to state machines.
+## It is used for connections to StateMachines (Mode TO_STATE_MACHINE), and
+## transitions / connections between StateMachineBehaviors (Mode TRANSITION).
+## In both cases, triggers can be created and selected.
+## Most of the code of this class was directly copied from node_to_node_configurator
+
 static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
 	var i: StateTransitionConfigurator = load("res://addons/pronto/signal_connecting/state_transition_configurator.tscn").instantiate()
 	i.anchor = anchor

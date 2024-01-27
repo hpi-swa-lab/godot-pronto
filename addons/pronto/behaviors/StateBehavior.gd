@@ -22,7 +22,7 @@ signal in_state(delta: float)
 
 ## Signal that gets emitted when the state machine receives a trigger and this
 ## is the active state.
-## Use this to tranistion to different states.
+## Use this to transition to different states.
 signal on_trigger_received(trigger: String)
 
 ## Use this variable to determine the initial state.

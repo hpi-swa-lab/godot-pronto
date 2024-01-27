@@ -7,10 +7,18 @@ class_name StateMachineBehavior
 ## hint as to which [class StateBehavior] objects belong to the same state machine.
 ## The [class GroupDrawer] is used for this.
 
+## Signal that gets emitted when the trigger method is called on this state machine.
 signal triggered(trigger: String)
 
 var active_state: StateBehavior = null
+
+## Name of the trigger that is called in every frame.
 const always_trigger = "always"
+
+## List of the triggers that this state machine processes. Triggers are used in
+## trigger method and the "on_trigger_received" method of [class StateBehavior].
+## Both these ways use the [class StateTransitionConfigurator], which allows the creation
+## of triggers.
 @export var triggers: Array[String] = [always_trigger]
 
 ## When true, the state machine will trigger the "always" trigger on every frame,
@@ -18,7 +26,7 @@ const always_trigger = "always"
 @export var trigger_always: bool = true
 
 ## Exits the current active state and enters the new active state.
-## Is usually called by StateBehavior/enter.
+## Is usually called by [class StateBehavior] enter.
 func _set_active_state(state: StateBehavior, is_active: bool):
 	if active_state:
 		active_state._exit(state.name)
