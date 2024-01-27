@@ -46,6 +46,22 @@ func trigger(trigger: String):
 		if trigger != always_trigger:
 			EngineDebugger.send_message("pronto:state_machine_trigger", [get_path(),trigger])
 
+func _get_configuration_warnings() -> PackedStringArray:
+	var sum = 0
+	for c in get_children():
+		if c is StateBehavior and c.is_initial_state:
+			sum += 1
+	if sum == 0:
+		return ["At least one state needs to be marked as the initial state."]
+	if sum > 1:
+		return ["There can only be one initial state. Currently " + str(sum) + " states are marked as initial state."]
+	return []
+
+func _redraw_states_from_editor():
+	for c in get_children():
+		if c.has_method("reload_icon"):
+			c.reload_icon()
+
 func _redraw_states_from_game(active_state: StateBehavior):
 	for c in get_children():
 		if c.has_method("_reload_icon_from_game"):

@@ -30,6 +30,8 @@ signal on_trigger_received(trigger: String)
 	set(value):
 		active = value
 		is_initial_state = value
+		if get_parent() is StateMachineBehavior:
+			get_parent()._redraw_states_from_editor()
 
 ## Models whether the state reacts to transitions at all.
 var active: bool = false:
@@ -97,9 +99,11 @@ func _get_connected_states(seen_nodes = []):
 	return seen_nodes
 
 ## Override of the corresponding method in Behavior.gd
-## Used to display the correct icon when the StateBehavior is active or inactive
+## Used to display the correct icon when the StateBehavior is initial state.
+## The icon is set with the _reload_icon_from_game method from the game
+## via ConnectionDebug.gd.
 func icon_texture():
-	return _active_texture if active else _inactive_texture
+	return _active_texture if is_initial_state else _inactive_texture
 	
 func _reload_icon_from_game(value: bool):
 	var icon = _active_texture if value else _inactive_texture
