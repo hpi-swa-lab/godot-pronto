@@ -103,10 +103,6 @@ signal mouse_drag_global(pos: Vector2)
 var enable_drag = false
 var held_mouse_buttons = {}
 
-## time in ms to wait after a key input to process the next input (0 for no throttle)
-@export var input_throttle_delay = 0
-var last_input_time = 0
-
 #const valid_directions = ["left", "right", "up", "down"]
 func _is_key_pressed(direction):
 	#if not direction in valid_directions:
@@ -120,27 +116,19 @@ func _process(delta):
 	
 	if Engine.is_editor_hint(): return
 	
-	# If throttling is enabled, discard input events until delay has passed
-	var current_time = Time.get_ticks_msec()
-	var discard_key_events = last_input_time + input_throttle_delay > current_time
-	
 	var input_direction = Vector2.ZERO # Used to allow vertical movement
-	if _is_key_pressed("left") and not discard_key_events:
+	if _is_key_pressed("left"):
 		left.emit()
 		input_direction += Vector2.LEFT
-		last_input_time = current_time
-	if _is_key_pressed("right") and not discard_key_events:
+	if _is_key_pressed("right"):
 		right.emit()
 		input_direction += Vector2.RIGHT
-		last_input_time = current_time
-	if _is_key_pressed("up") and not discard_key_events:
+	if _is_key_pressed("up"):
 		up.emit()
 		input_direction += Vector2.UP
-		last_input_time = current_time
-	if _is_key_pressed("down") and not discard_key_events:
+	if _is_key_pressed("down"):
 		down.emit()
 		input_direction += Vector2.DOWN
-		last_input_time = current_time
 	# Emit signals
 	vertical_direction.emit(Vector2(0, input_direction.y))
 	horizontal_direction.emit(Vector2(input_direction.x, 0))
