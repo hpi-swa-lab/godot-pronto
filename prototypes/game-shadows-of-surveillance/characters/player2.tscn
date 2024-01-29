@@ -10,6 +10,7 @@ height = 248.062
 
 [node name="Player2" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.258, 0.258)
+collision_layer = 3
 script = ExtResource("1_dryno")
 
 [node name="OlePlayer2" type="Sprite2D" parent="."]

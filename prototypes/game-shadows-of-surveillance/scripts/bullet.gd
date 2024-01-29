@@ -17,7 +17,7 @@ func _process(delta):
 	position += dir * speed * delta
 
 func _on_body_entered(body):
-	if body.is_in_group("enemy"):
+	if body.is_in_group("player"):
 		body.queue_free()
-	if !body.is_in_group("player"):
+	if !body.is_in_group("enemy"):
 		queue_free()
