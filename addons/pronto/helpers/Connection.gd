@@ -241,7 +241,7 @@ func has_condition():
 	return only_if.source_code != "true"
 	
 func state_transition_should_trigger(names: Array, values: Array):
-	if trigger == "":
+	if not is_state_transition():
 		return true
 	var trigger_idx = names.find("trigger")
 	var trigger_value = values[trigger_idx]
@@ -293,6 +293,10 @@ func print(flip = false, shorten = true, single_line = false, show_disabled = fa
 ## connections (as opposed to print()).
 func serialize_as_string():
 	return "{0}/{1}/{2}".format([signal_name, to, invoke])
+	
+func is_state_transition():
+	return trigger != ""
+
 
 ## Iterate over connections and check whether the target still exists for them.
 ## If not, remove the connection.

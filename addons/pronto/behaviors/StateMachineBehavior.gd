@@ -7,24 +7,32 @@ class_name StateMachineBehavior
 ## hint as to which [class StateBehavior] objects belong to the same state machine.
 ## The [class GroupDrawer] is used for this.
 
+## Signal that gets emitted when the trigger method is called on this state machine.
 signal triggered(trigger: String)
 
 var active_state: StateBehavior = null
-const always_trigger = "ε"
+
+## Name of the trigger that is called in every frame.
+const always_trigger = "always"
+
+## List of the triggers that this state machine processes. Triggers are used in
+## trigger method and the "on_trigger_received" method of [class StateBehavior].
+## Both these ways use the [class StateTransitionConfigurator], which allows the creation
+## of triggers.
 @export var triggers: Array[String] = [always_trigger]
 
-## When true, the state machine will trigger the "ε" trigger on every frame,
+## When true, the state machine will trigger the "always" trigger on every frame,
 ## allowing state transitions without other triggers.
-@export var trigger_epsilon: bool = true
+@export var trigger_always: bool = true
 
 ## Exits the current active state and enters the new active state.
-## Is usually called by StateBehavior/enter.
-func set_active_state(state: StateBehavior, is_active: bool):
+## Is usually called by [class StateBehavior] enter.
+func _set_active_state(state: StateBehavior, is_active: bool):
 	if active_state:
-		active_state.exit(state.name)
+		active_state._exit(state.name)
 	if is_active:
 		active_state = state
-		state.enter() # Since set_active_state is usually called from a state's enter(), this won't do anything.
+		state.enter() # Since _set_active_state is usually called from a state's enter(), this won't do anything.
 		if EngineDebugger.is_active():
 			EngineDebugger.send_message("pronto:state_activation", [get_path(), state.get_path()])
 
@@ -36,10 +44,6 @@ func _ready():
 		add_child(preload("res://addons/pronto/helpers/GroupDrawer.tscn").instantiate(), false, INTERNAL_MODE_BACK)
 		_state_machine_info = preload("res://addons/pronto/helpers/StateMachineInfo.tscn").instantiate()
 		add_child(_state_machine_info, false, INTERNAL_MODE_BACK)
-		
-## List of all StateBehavior nodes in this StateMachineBehavior
-func states():
-	return get_children().filter(func (c): c is StateBehavior)
 
 ## Provide a trigger to the State Machine. This will trigger the active state
 ## which may lead to a transition via "on_trigger_received".
@@ -49,6 +53,22 @@ func trigger(trigger: String):
 		triggered.emit(trigger)
 		if trigger != always_trigger:
 			EngineDebugger.send_message("pronto:state_machine_trigger", [get_path(),trigger])
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var sum = 0
+	for c in get_children():
+		if c is StateBehavior and c.is_initial_state:
+			sum += 1
+	if sum == 0:
+		return ["At least one state needs to be marked as the initial state."]
+	if sum > 1:
+		return ["There can only be one initial state. Currently " + str(sum) + " states are marked as initial state."]
+	return []
+
+func _redraw_states_from_editor():
+	for c in get_children():
+		if c.has_method("reload_icon"):
+			c.reload_icon()
 
 func _redraw_states_from_game(active_state: StateBehavior):
 	for c in get_children():
@@ -61,5 +81,5 @@ func _redraw_info_from_game(trigger: String):
 
 func _process(delta):
 	super._process(delta)
-	if trigger_epsilon and not Engine.is_editor_hint():
+	if trigger_always and not Engine.is_editor_hint():
 		trigger(always_trigger)

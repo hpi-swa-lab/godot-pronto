@@ -2,6 +2,14 @@
 extends PanelContainer
 class_name StateTransitionConfigurator
 
+
+## The StateTransitionConfigurator is used to create and edit connections
+## related to state machines.
+## It is used for connections to StateMachines (Mode TO_STATE_MACHINE), and
+## transitions / connections between StateMachineBehaviors (Mode TRANSITION).
+## In both cases, triggers can be created and selected.
+## Most of the code of this class was directly copied from node_to_node_configurator
+
 static func _open(anchor: Node, undo_redo: EditorUndoRedoManager):
 	var i: StateTransitionConfigurator = load("res://addons/pronto/signal_connecting/state_transition_configurator.tscn").instantiate()
 	i.anchor = anchor
@@ -121,11 +129,10 @@ func set_existing_connection(from: Node, connection: Connection):
 	#%SharedLinksNote.visible = total["total"] > 1
 	#%SharedLinksCount.text = "This connection is linked to {0} other node{1}.".format([total["total"] - 1, "s" if total["total"] != 2 else ""])
 	reload_triggers()
-	if connection.trigger != "":
-		for i in range(%TriggerSelection.item_count):
-			if %TriggerSelection.get_item_text(i) == connection.trigger:
-				%TriggerSelection.select(i)
-	
+	var selected_trigger = connection.trigger if connection.is_state_transition() else extract_trigger_from_trigger_argument_script(connection.arguments[0])
+	for i in range(%TriggerSelection.item_count):
+		if %TriggerSelection.get_item_text(i) == selected_trigger:
+			%TriggerSelection.select(i)
 	mark_changed(false)
 
 func empty_script(expr: String, return_value: bool):
@@ -138,14 +145,25 @@ func init_empty_scripts():
 
 func get_trigger_argument_script(trigger):
 	var argument = empty_script("'%s'" % trigger, true)
-	argument.argument_names = [ "from", "to"]
-	argument.argument_types = ["Node", "Node"]
+	argument.argument_names = selected_signal["args"].map(func (a):
+		return a["name"]) + [ "from", "to"]
+	argument.argument_types = selected_signal["args"].map(func (a):
+		return null) + ["Node", "Node"]
+	%SignalArgs.text = "({0})".format([Utils.print_args(selected_signal)])
 	for i in range(more_references.size()):
 		var ref = more_references[i]
 		var node = from.get_node(ref)
 		argument.argument_names.push_back("ref{0}".format([i]))
 		argument.argument_types.push_back(Utils.get_specific_class_name(node))
 	return argument
+	
+func extract_trigger_from_trigger_argument_script(script):
+	var regex = RegEx.new()
+	regex.compile("^'(?<trigger>.*)'$")
+	var result = regex.search(script.source_code)
+	if result:
+		return result.get_string("trigger")
+	
 
 # directly copied from node_to_node_configurator
 func argument_names_and_types():
@@ -183,10 +201,10 @@ func save():
 					"invoke": "trigger",
 					"signal_name": %Signal.text,
 					"more_references": more_references,
-					"arguments": [get_trigger_argument_script(trigger)]
+					"arguments": [get_trigger_argument_script(trigger)],
 				}
 		else:
-			connection_object =  {
+			connection_object = {
 				"expression": null,
 				"invoke": "enter",
 				"signal_name": %Signal.text,
@@ -200,14 +218,15 @@ func save():
 			)
 	else:
 		if mode == ConfigurationMode.TO_STATE_MACHINE:
-			existing_connection =Connection.connect_target(
+			existing_connection = Connection.connect_target(
 				from,
 				selected_signal["name"],
 				from.get_path_to(receiver),
 				"trigger",
 				[get_trigger_argument_script(trigger)],
 				more_references,
-				%Condition.updated_script(from, selected_signal["name"]), undo_redo
+				%Condition.updated_script(from, selected_signal["name"]), 
+				undo_redo
 			)
 		else:
 			var only_if = %Condition.updated_script(from, selected_signal["name"])
@@ -321,7 +340,7 @@ func update_argument_names():
 
 func _on_add_trigger_pressed():
 	var new_trigger = %TriggerEdit.text
-	if new_trigger not in get_state_machine().triggers:
+	if new_trigger not in get_state_machine().triggers and len(new_trigger) > 0:
 		get_state_machine().triggers.push_back(new_trigger)
 		%TriggerSelection.add_item(new_trigger)
 		%TriggerSelection.select(len(get_state_machine().triggers)-1)
@@ -352,6 +371,33 @@ func _on_add_reference_button_pressed():
 		more_references += [path]
 		update_argument_names()
 		mark_changed())
+
+var _drag_start_offset = null
+
+func _on_gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.double_click and event.button_index == MOUSE_BUTTON_LEFT:
+		_double_click()
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.is_pressed():
+			_start_drag(event.global_position)
+		else:
+			_stop_drag()
+	elif event is InputEventMouseMotion and _drag_start_offset != null:
+		_drag(event.global_position)
+
+func _double_click():
+	pinned = not pinned
+
+func _start_drag(_position: Vector2):
+	_drag_start_offset = _position - position_offset
+	# come to front
+	self.get_parent().move_child(self, -1)
+
+func _stop_drag():
+	_drag_start_offset = null
+
+func _drag(_position: Vector2):
+	position_offset = _position - _drag_start_offset
 
 func _request_reference_path(path, callback: Callable):
 	var dialog := AcceptDialog.new()
@@ -396,4 +442,3 @@ func _process(delta):
 	if is_hovered:
 		if self.existing_connection:
 			Utils.get_behavior(from).highlight_activated(self.existing_connection)
-
