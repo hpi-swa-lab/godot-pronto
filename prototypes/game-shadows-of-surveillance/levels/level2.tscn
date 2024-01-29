@@ -14,7 +14,6 @@ scale = Vector2(2.01189, 2.01189)
 texture = ExtResource("1_j6sv0")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="6" groups=["dark"]]
-visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="TileMap" parent="." instance=ExtResource("2_llo4g")]
