@@ -36,7 +36,6 @@ static func open_new_invoke(undo_redo: EditorUndoRedoManager, from: Node, source
 	i.set_mode()
 	i.init_empty_scripts()
 	i.reload_triggers()
-
 	return i.open(receiver)
 	
 static func should_be_opened_with_transition_configurator(node, index):
@@ -191,6 +190,7 @@ func argument_types():
 
 func save():
 	var trigger = %TriggerSelection.get_item_text(%TriggerSelection.get_selected_id())
+	print(trigger)
 	if existing_connection:
 		Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
 			{"source_code": %Condition.text}, "reload")

@@ -25,7 +25,6 @@ func _drop_data(at_position, data):
 	else:
 		NodeToNodeConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
 	_study_logging("connection_create from " + data["source"].name + " to " + node.name + " of signal type " + _source_signal_print(source_signal))
-	NodeToNodeConfigurator.open_new_invoke(undo_redo, data["source"], source_signal, node)
 
 func _study_logging(text):
 	var _study_tracker = get_node("/root/").find_child("StudyRoot", true, false)
