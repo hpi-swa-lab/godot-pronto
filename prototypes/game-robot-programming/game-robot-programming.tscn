@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://74yxlswwv6xe"]
+[gd_scene load_steps=93 format=3 uid="uid://74yxlswwv6xe"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_4oblb"]
@@ -7,20 +7,73 @@
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="3_idrtd"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/robot.gd" id="3_oymdl"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="4_n3xyo"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="5_0pcpf"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/code1.gd" id="6_5h1u8"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/enlarge.gd" id="6_y2un6"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/code2.gd" id="7_h438j"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/reduce.gd" id="7_ulk6s"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/run.gd" id="8_tudq4"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/code3.gd" id="11_6ra6u"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/code4.gd" id="12_nx5id"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="13_2cpm6"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/code5.gd" id="14_6e33k"]
 [ext_resource type="Script" path="res://prototypes/game-robot-programming/code6.gd" id="16_x8s06"]
+[ext_resource type="TileSet" uid="uid://0rypmakw860k" path="res://addons/pronto/assets/TileSet.tres" id="17_bgw6t"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/Code7.gd" id="17_e3n6e"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/code10.gd" id="17_taj4c"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/code9.gd" id="19_b0qqc"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/Code8.gd" id="19_km3en"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/code11.gd" id="21_7b6ee"]
+[ext_resource type="Script" path="res://prototypes/game-robot-programming/code12.gd" id="22_uw4s8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hsfjo"]
-size = Vector2(500, 2000)
+size = Vector2(500, 1000)
 
-[sub_resource type="Image" id="Image_u3mvf"]
+[sub_resource type="Gradient" id="Gradient_jqsb4"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_i1d1s"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	to.queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_qfw4u"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_i1d1s")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_pa00e"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_slaaf"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_pa00e")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7xmyw"]
+script = ExtResource("3_idrtd")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_slaaf")
+expression = SubResource("Resource_qfw4u")
+deferred = false
+enabled = true
+
+[sub_resource type="Image" id="Image_fvfly"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -30,7 +83,12 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_s5m3q"]
-image = SubResource("Image_u3mvf")
+image = SubResource("Image_fvfly")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jg4r4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw8j6"]
+size = Vector2(20, 1000)
 
 [sub_resource type="GDScript" id="GDScript_trcyf"]
 script/source = "@tool
@@ -38,72 +96,8 @@ extends U
 @warning_ignore(\"unused_parameter\")
 func run(from):
 	var robot = from.get_node(\"%Robot\")
-	execute_area(from.get_node(\"../Area2D2\"), robot)
+	from.execute_area(from.get_node(\"../Editor\"), robot)
 	
-func execute_area(area_to_run: Area2D, robot):
-	var areas = area_to_run.get_node(\"Code\").get_stmts()
-	var executed = []
-	
-	for area in areas:
-		await area_to_run.get_tree().create_timer(0.2).timeout
-		
-		if area in executed:
-			continue
-		
-		var stmt = area.get_node(\"Code\").get_code()
-		if stmt == \"main\":
-			print(\"main\")
-		elif stmt == \"forward\":
-			print(\"forward\")
-			executed.append(area)
-			
-			if robot.orientation == 0:
-				robot.position.x += 50
-			elif robot.orientation == 1:
-				robot.position.y -= 50
-			elif robot.orientation == 2:
-				robot.position.x -= 50
-			elif robot.orientation == 3:
-				robot.position.y += 50
-			
-		elif stmt == \"rotate-left\":
-			print(\"rotate left\")
-			robot.rotation_degrees -= 90
-			robot.orientation = (robot.orientation + 1) % 4
-		elif stmt == \"while\":
-			print(\"loop\")
-			
-			if len(area.get_node(\"Code\").get_stmts()) == 0:
-				print(\"No blocks inside container\")
-				continue
-			
-			var condition = area.get_node(\"Code\").get_stmts()[0]
-			if not condition.get_node(\"Code\").is_condition:
-				print(\"No conditions inside container\")
-				continue
-				
-			while condition.get_node(\"Code\").check(robot):
-				execute_area(area, robot)
-			
-			executed.append_array(area.get_node(\"Code\").get_stmts())
-		elif stmt == \"if\":
-			print(\"if\")
-			
-			if len(area.get_node(\"Code\").get_stmts()) == 0:
-				print(\"No blocks inside container\")
-				continue
-			
-			var condition = area.get_node(\"Code\").get_stmts()[0]
-			if not condition.get_node(\"Code\").is_condition:
-				print(\"No conditions inside container\")
-				continue
-				
-			if condition.get_node(\"Code\").check(robot):
-				execute_area(area, robot)
-			
-			executed.append_array(area.get_node(\"Code\").get_stmts())
-			
-	return executed
 "
 
 [sub_resource type="Resource" id="Resource_snxqd"]
@@ -135,6 +129,87 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_8l4lu")
 expression = SubResource("Resource_snxqd")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_nwwui"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Camera2D):
+	to.position += Vector2(0, 1000)
+"
+
+[sub_resource type="Resource" id="Resource_kwd0p"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_nwwui")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_wk2bv"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Camera2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_e5cuv"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_wk2bv")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_4l6t1"]
+script = ExtResource("3_idrtd")
+signal_name = "pressed"
+to = NodePath("../Camera2D")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_e5cuv")
+expression = SubResource("Resource_kwd0p")
+deferred = false
+enabled = true
+
+[sub_resource type="GDScript" id="GDScript_8b0sx"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Button):
+	var robot = from.get_node(\"%Enemy\")
+	from.execute_area(from.get_node(\"../enemy-code\"), robot)
+"
+
+[sub_resource type="Resource" id="Resource_7m7sf"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_8b0sx")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_cj1wt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Button):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_87hti"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_cj1wt")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_cnv6a"]
+script = ExtResource("3_idrtd")
+signal_name = "pressed"
+to = NodePath(".")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_87hti")
+expression = SubResource("Resource_7m7sf")
 deferred = false
 enabled = true
 
@@ -409,6 +484,46 @@ only_if = SubResource("Resource_754vg")
 deferred = false
 enabled = true
 
+[sub_resource type="GDScript" id="GDScript_nha02"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Camera2D):
+	to.position.y -= 1000
+"
+
+[sub_resource type="Resource" id="Resource_vtyea"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_nha02")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_4g8ed"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Camera2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_6sbg0"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_4g8ed")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_rqgae"]
+script = ExtResource("3_idrtd")
+signal_name = "pressed"
+to = NodePath("../Camera2D")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_6sbg0")
+expression = SubResource("Resource_vtyea")
+deferred = false
+enabled = true
+
 [node name="Node2D" type="Node2D"]
 
 [node name="ExportBehavior" type="Node2D" parent="."]
@@ -417,33 +532,137 @@ script = ExtResource("1")
 title = "Roboter Programmierung"
 authors = PackedStringArray("Max", "Luke")
 
-[node name="Area2D2" type="Area2D" parent="."]
+[node name="Editor" type="Area2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(850, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-position = Vector2(100, 100)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Editor"]
+position = Vector2(100, 329)
 shape = SubResource("RectangleShape2D_hsfjo")
 
-[node name="Polygon2D" type="Polygon2D" parent="Area2D2"]
+[node name="Polygon2D" type="Polygon2D" parent="Editor"]
 z_index = -1000
 position = Vector2(-1, 144)
 color = Color(1, 1, 0, 1)
 polygon = PackedVector2Array(-150, -171, 349, -177, 333, 565, -150, 544)
 
-[node name="Code" type="Node2D" parent="Area2D2"]
+[node name="Code" type="Node2D" parent="Editor"]
 position = Vector2(-829, -154)
 script = ExtResource("2_y5bua")
 
-[node name="Robot" type="CharacterBody2D" parent="."]
+[node name="enemy-code" type="Area2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(240, 573)
+position = Vector2(2116, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy-code"]
+position = Vector2(100, 329)
+shape = SubResource("RectangleShape2D_hsfjo")
+
+[node name="Polygon2D" type="Polygon2D" parent="enemy-code"]
+z_index = -1000
+position = Vector2(-1, 144)
+color = Color(1, 1, 0, 1)
+polygon = PackedVector2Array(-150, -171, 349, -177, 333, 565, -150, 544)
+
+[node name="Code" type="Node2D" parent="enemy-code"]
+position = Vector2(-829, -154)
+script = ExtResource("2_y5bua")
+
+[node name="Robot" type="CharacterBody2D" parent="." groups=["Robot"]]
+unique_name_in_owner = true
+z_index = 10
+position = Vector2(415, 1505)
+scale = Vector2(0.6, 0.6)
+collision_mask = 0
 script = ExtResource("3_oymdl")
+
+[node name="HP" type="Node2D" parent="Robot"]
+position = Vector2(0, -48)
+script = ExtResource("5_0pcpf")
+max = 2
+current = 2
+progress_gradient = SubResource("Gradient_jqsb4")
+metadata/pronto_connections = [SubResource("Resource_7xmyw")]
 
 [node name="PlaceholderBehavior" type="Node2D" parent="Robot"]
 script = ExtResource("13_2cpm6")
+color = Color(0.25098, 0.635294, 0, 1)
 use_sprite = true
 sprite_texture = SubResource("ImageTexture_s5m3q")
 placeholder_size = Vector2(100, 100)
+
+[node name="FrontFree" type="Area2D" parent="Robot"]
+position = Vector2(100, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Robot/FrontFree"]
+shape = SubResource("CircleShape2D_jg4r4")
+
+[node name="Laser" type="Area2D" parent="Robot"]
+position = Vector2(0, -500)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Robot/Laser"]
+shape = SubResource("RectangleShape2D_bw8j6")
+
+[node name="LaserShape" type="Polygon2D" parent="Robot/Laser"]
+visible = false
+z_index = -100
+color = Color(0, 1, 1, 1)
+polygon = PackedVector2Array(-10, 500, 10, 500, 10, -500, -10, -500)
+
+[node name="Vision" type="Area2D" parent="Robot"]
+position = Vector2(500, 0)
+rotation = 1.5708
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Robot/Vision"]
+shape = SubResource("RectangleShape2D_bw8j6")
+
+[node name="Enemy" type="CharacterBody2D" parent="." groups=["Robot"]]
+unique_name_in_owner = true
+z_index = 10
+position = Vector2(480, 1497)
+rotation = 3.14159
+scale = Vector2(0.6, 0.6)
+collision_mask = 0
+script = ExtResource("3_oymdl")
+orientation = 2
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Enemy"]
+script = ExtResource("13_2cpm6")
+color = Color(0.941176, 0.239216, 0, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_s5m3q")
+placeholder_size = Vector2(100, 100)
+
+[node name="FrontFree" type="Area2D" parent="Enemy"]
+position = Vector2(100, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy/FrontFree"]
+shape = SubResource("CircleShape2D_jg4r4")
+
+[node name="Laser" type="Area2D" parent="Enemy"]
+position = Vector2(0, -500)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy/Laser"]
+shape = SubResource("RectangleShape2D_bw8j6")
+
+[node name="LaserShape" type="Polygon2D" parent="Enemy/Laser"]
+visible = false
+z_index = -100
+color = Color(0, 1, 1, 1)
+polygon = PackedVector2Array(-10, 500, 10, 500, 10, -500, -10, -500)
+
+[node name="HP" type="Node2D" parent="Enemy"]
+position = Vector2(0, -48)
+script = ExtResource("5_0pcpf")
+max = 2
+current = 2
+progress_gradient = SubResource("Gradient_jqsb4")
+metadata/pronto_connections = [SubResource("Resource_7xmyw")]
 
 [node name="execute" type="Button" parent="."]
 offset_left = 868.0
@@ -451,71 +670,73 @@ offset_top = 21.0
 offset_right = 937.0
 offset_bottom = 52.0
 text = "Execute"
-metadata/pronto_connections = [SubResource("Resource_vevg8")]
+script = ExtResource("8_tudq4")
+metadata/pronto_connections = [SubResource("Resource_vevg8"), SubResource("Resource_4l6t1"), SubResource("Resource_cnv6a")]
 
-[node name="Button" type="Button" parent="."]
-offset_left = 99.0
-offset_top = 47.0
-offset_right = 214.0
-offset_bottom = 78.0
+[node name="Forward" type="Button" parent="."]
+offset_left = 26.0
+offset_top = 8.0
+offset_right = 195.0
+offset_bottom = 39.0
 text = "Spawn drive forward
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
-[node name="SpawnerBehavior" type="Node2D" parent="Button"]
+[node name="SpawnerBehavior" type="Node2D" parent="Forward"]
 position = Vector2(-42.11, 42.11)
 script = ExtResource("4_n3xyo")
 
-[node name="Area2D" type="Area2D" parent="Button/SpawnerBehavior"]
+[node name="Area2D" type="Area2D" parent="Forward/SpawnerBehavior"]
 position = Vector2(83.11, 84.89)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="Button/SpawnerBehavior/Area2D"]
+[node name="Polygon2D" type="Polygon2D" parent="Forward/SpawnerBehavior/Area2D"]
+color = Color(0, 1, 0, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Button/SpawnerBehavior/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Forward/SpawnerBehavior/Area2D"]
 shape = SubResource("RectangleShape2D_uw0cl")
 
-[node name="Code" type="Node2D" parent="Button/SpawnerBehavior/Area2D"]
+[node name="Code" type="Node2D" parent="Forward/SpawnerBehavior/Area2D"]
 script = ExtResource("6_5h1u8")
 
-[node name="Label" type="Label" parent="Button/SpawnerBehavior/Area2D"]
+[node name="Label" type="Label" parent="Forward/SpawnerBehavior/Area2D"]
 offset_left = -48.0
 offset_top = -11.0
 offset_right = 62.0
 offset_bottom = 12.0
 text = "Drive Forward"
 
-[node name="Button2" type="Button" parent="."]
-offset_left = 104.0
-offset_top = 245.0
-offset_right = 219.0
-offset_bottom = 276.0
+[node name="Loop" type="Button" parent="."]
+offset_left = 24.0
+offset_top = 49.0
+offset_right = 139.0
+offset_bottom = 80.0
 text = "Spawn loop
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
-[node name="SpawnerBehavior" type="Node2D" parent="Button2"]
+[node name="SpawnerBehavior" type="Node2D" parent="Loop"]
 position = Vector2(-42.11, 42.11)
 script = ExtResource("4_n3xyo")
 metadata/pronto_connections = [SubResource("Resource_m4jki")]
 
-[node name="Area2D" type="Area2D" parent="Button2/SpawnerBehavior"]
+[node name="Area2D" type="Area2D" parent="Loop/SpawnerBehavior"]
 position = Vector2(83.11, 84.89)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="Button2/SpawnerBehavior/Area2D"]
+[node name="Polygon2D" type="Polygon2D" parent="Loop/SpawnerBehavior/Area2D"]
 color = Color(0.47451, 0.52549, 0.882353, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Button2/SpawnerBehavior/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Loop/SpawnerBehavior/Area2D"]
 shape = SubResource("RectangleShape2D_lfj5l")
 
-[node name="Code" type="Node2D" parent="Button2/SpawnerBehavior/Area2D"]
+[node name="Code" type="Node2D" parent="Loop/SpawnerBehavior/Area2D"]
 position = Vector2(-5, -198)
 script = ExtResource("7_h438j")
 
-[node name="Button" type="Button" parent="Button2/SpawnerBehavior/Area2D"]
+[node name="Button" type="Button" parent="Loop/SpawnerBehavior/Area2D"]
 offset_left = 82.0
 offset_top = -17.0
 offset_right = 100.0
@@ -525,7 +746,7 @@ text = "+
 script = ExtResource("6_y2un6")
 metadata/pronto_connections = [SubResource("Resource_l2spb")]
 
-[node name="Button2" type="Button" parent="Button2/SpawnerBehavior/Area2D"]
+[node name="Button2" type="Button" parent="Loop/SpawnerBehavior/Area2D"]
 offset_left = 65.0
 offset_top = -17.0
 offset_right = 79.0
@@ -534,76 +755,76 @@ text = "-"
 script = ExtResource("7_ulk6s")
 metadata/pronto_connections = [SubResource("Resource_asa6e")]
 
-[node name="Label" type="Label" parent="Button2/SpawnerBehavior/Area2D"]
+[node name="Label" type="Label" parent="Loop/SpawnerBehavior/Area2D"]
 offset_left = -53.0
 offset_top = -10.0
 offset_right = 47.0
 offset_bottom = 13.0
 text = "Repeat while"
 
-[node name="Button3" type="Button" parent="."]
-offset_left = 376.0
-offset_top = 5.0
-offset_right = 491.0
-offset_bottom = 36.0
+[node name="Random" type="Button" parent="."]
+offset_left = 22.0
+offset_top = 89.0
+offset_right = 224.0
+offset_bottom = 120.0
 text = "Spawn random condition
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
-[node name="SpawnerBehavior" type="Node2D" parent="Button3"]
+[node name="SpawnerBehavior" type="Node2D" parent="Random"]
 position = Vector2(-42.11, 42.11)
 script = ExtResource("4_n3xyo")
 
-[node name="Area2D" type="Area2D" parent="Button3/SpawnerBehavior"]
+[node name="Area2D" type="Area2D" parent="Random/SpawnerBehavior"]
 position = Vector2(83.11, 84.89)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="Button3/SpawnerBehavior/Area2D"]
+[node name="Polygon2D" type="Polygon2D" parent="Random/SpawnerBehavior/Area2D"]
 color = Color(1, 0.164706, 0.34902, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Button3/SpawnerBehavior/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Random/SpawnerBehavior/Area2D"]
 shape = SubResource("RectangleShape2D_qq34o")
 
-[node name="Code" type="Node2D" parent="Button3/SpawnerBehavior/Area2D"]
+[node name="Code" type="Node2D" parent="Random/SpawnerBehavior/Area2D"]
 script = ExtResource("11_6ra6u")
 
-[node name="Label" type="Label" parent="Button3/SpawnerBehavior/Area2D"]
+[node name="Label" type="Label" parent="Random/SpawnerBehavior/Area2D"]
 offset_left = -83.0
 offset_top = -11.0
 offset_right = 94.0
 offset_bottom = 12.0
 text = "tossed coin shows tails"
 
-[node name="Button4" type="Button" parent="."]
-offset_left = 438.0
-offset_top = 185.0
-offset_right = 640.0
-offset_bottom = 216.0
+[node name="If" type="Button" parent="."]
+offset_left = 265.0
+offset_top = 11.0
+offset_right = 467.0
+offset_bottom = 42.0
 text = "Spawn if block
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
-[node name="SpawnerBehavior" type="Node2D" parent="Button4"]
+[node name="SpawnerBehavior" type="Node2D" parent="If"]
 position = Vector2(-42.11, 42.11)
 script = ExtResource("4_n3xyo")
 metadata/pronto_connections = [SubResource("Resource_u2ke8")]
 
-[node name="Area2D" type="Area2D" parent="Button4/SpawnerBehavior"]
+[node name="Area2D" type="Area2D" parent="If/SpawnerBehavior"]
 position = Vector2(83.11, 84.89)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="Button4/SpawnerBehavior/Area2D"]
+[node name="Polygon2D" type="Polygon2D" parent="If/SpawnerBehavior/Area2D"]
 color = Color(0.47451, 0.52549, 0.882353, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Button4/SpawnerBehavior/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="If/SpawnerBehavior/Area2D"]
 shape = SubResource("RectangleShape2D_uw0cl")
 
-[node name="Code" type="Node2D" parent="Button4/SpawnerBehavior/Area2D"]
+[node name="Code" type="Node2D" parent="If/SpawnerBehavior/Area2D"]
 script = ExtResource("12_nx5id")
 
-[node name="Button" type="Button" parent="Button4/SpawnerBehavior/Area2D"]
+[node name="Button" type="Button" parent="If/SpawnerBehavior/Area2D"]
 offset_left = 81.0
 offset_top = -14.0
 offset_right = 99.0
@@ -612,7 +833,7 @@ text = "+"
 script = ExtResource("6_y2un6")
 metadata/pronto_connections = [SubResource("Resource_be6ua")]
 
-[node name="Button2" type="Button" parent="Button4/SpawnerBehavior/Area2D"]
+[node name="Button2" type="Button" parent="If/SpawnerBehavior/Area2D"]
 offset_left = 66.0
 offset_top = -14.0
 offset_right = 80.0
@@ -621,89 +842,360 @@ text = "-"
 script = ExtResource("7_ulk6s")
 metadata/pronto_connections = [SubResource("Resource_yt0vn")]
 
-[node name="Label" type="Label" parent="Button4/SpawnerBehavior/Area2D"]
+[node name="Label" type="Label" parent="If/SpawnerBehavior/Area2D"]
 offset_left = -22.0
 offset_top = -11.0
 offset_right = 18.0
 offset_bottom = 12.0
 text = "Do if"
 
-[node name="Button5" type="Button" parent="."]
-offset_left = 374.0
-offset_top = 342.0
-offset_right = 489.0
-offset_bottom = 373.0
+[node name="Not" type="Button" parent="."]
+offset_left = 263.0
+offset_top = 160.0
+offset_right = 465.0
+offset_bottom = 191.0
+text = "Spawn not block
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="Not"]
+position = Vector2(-42.11, 42.11)
+script = ExtResource("4_n3xyo")
+metadata/pronto_connections = [SubResource("Resource_u2ke8")]
+
+[node name="Area2D" type="Area2D" parent="Not/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="Not/SpawnerBehavior/Area2D"]
+color = Color(0.47451, 0.52549, 0.882353, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Not/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_uw0cl")
+
+[node name="Code" type="Node2D" parent="Not/SpawnerBehavior/Area2D"]
+script = ExtResource("17_taj4c")
+
+[node name="Button" type="Button" parent="Not/SpawnerBehavior/Area2D"]
+offset_left = 81.0
+offset_top = -14.0
+offset_right = 99.0
+offset_bottom = 17.0
+text = "+"
+script = ExtResource("6_y2un6")
+metadata/pronto_connections = [SubResource("Resource_be6ua")]
+
+[node name="Button2" type="Button" parent="Not/SpawnerBehavior/Area2D"]
+offset_left = 66.0
+offset_top = -14.0
+offset_right = 80.0
+offset_bottom = 17.0
+text = "-"
+script = ExtResource("7_ulk6s")
+metadata/pronto_connections = [SubResource("Resource_yt0vn")]
+
+[node name="Label" type="Label" parent="Not/SpawnerBehavior/Area2D"]
+offset_left = -22.0
+offset_top = -11.0
+offset_right = 18.0
+offset_bottom = 12.0
+text = "not"
+
+[node name="Rotate" type="Button" parent="."]
+offset_left = 267.0
+offset_top = 51.0
+offset_right = 409.0
+offset_bottom = 82.0
 text = "Spawn rotate left
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
-[node name="SpawnerBehavior" type="Node2D" parent="Button5"]
+[node name="SpawnerBehavior" type="Node2D" parent="Rotate"]
 position = Vector2(-42.11, 42.11)
 script = ExtResource("4_n3xyo")
 
-[node name="Area2D" type="Area2D" parent="Button5/SpawnerBehavior"]
+[node name="Area2D" type="Area2D" parent="Rotate/SpawnerBehavior"]
 position = Vector2(83.11, 84.89)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="Button5/SpawnerBehavior/Area2D"]
+[node name="Polygon2D" type="Polygon2D" parent="Rotate/SpawnerBehavior/Area2D"]
+color = Color(0, 1, 0, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Button5/SpawnerBehavior/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rotate/SpawnerBehavior/Area2D"]
 shape = SubResource("RectangleShape2D_uw0cl")
 
-[node name="Code" type="Node2D" parent="Button5/SpawnerBehavior/Area2D"]
+[node name="Code" type="Node2D" parent="Rotate/SpawnerBehavior/Area2D"]
 script = ExtResource("14_6e33k")
 
-[node name="Label" type="Label" parent="Button5/SpawnerBehavior/Area2D"]
+[node name="Label" type="Label" parent="Rotate/SpawnerBehavior/Area2D"]
 offset_left = -46.0
 offset_top = -11.0
 offset_right = 36.0
 offset_bottom = 12.0
 text = "Rotate left"
 
-[node name="Button6" type="Button" parent="."]
-offset_left = 81.0
-offset_top = 414.0
-offset_right = 283.0
-offset_bottom = 445.0
+[node name="Facing" type="Button" parent="."]
+offset_left = 267.0
+offset_top = 87.0
+offset_right = 469.0
+offset_bottom = 118.0
 text = "Spawn facing condition
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
-[node name="SpawnerBehavior" type="Node2D" parent="Button6"]
+[node name="SpawnerBehavior" type="Node2D" parent="Facing"]
 position = Vector2(-42.11, 42.11)
 script = ExtResource("4_n3xyo")
 
-[node name="Area2D" type="Area2D" parent="Button6/SpawnerBehavior"]
+[node name="Area2D" type="Area2D" parent="Facing/SpawnerBehavior"]
 position = Vector2(83.11, 84.89)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="Button6/SpawnerBehavior/Area2D"]
+[node name="Polygon2D" type="Polygon2D" parent="Facing/SpawnerBehavior/Area2D"]
 color = Color(1, 0.164706, 0.34902, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Button6/SpawnerBehavior/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Facing/SpawnerBehavior/Area2D"]
 shape = SubResource("RectangleShape2D_qq34o")
 
-[node name="Code" type="Node2D" parent="Button6/SpawnerBehavior/Area2D"]
+[node name="Code" type="Node2D" parent="Facing/SpawnerBehavior/Area2D"]
 script = ExtResource("16_x8s06")
 
-[node name="Label" type="Label" parent="Button6/SpawnerBehavior/Area2D"]
+[node name="Label" type="Label" parent="Facing/SpawnerBehavior/Area2D"]
 offset_left = -83.0
 offset_top = -11.0
 offset_right = 94.0
 offset_bottom = 12.0
 text = "Robot facing "
 
-[node name="TextEdit" type="TextEdit" parent="Button6/SpawnerBehavior/Area2D"]
+[node name="TextEdit" type="TextEdit" parent="Facing/SpawnerBehavior/Area2D"]
 offset_left = 17.0
 offset_top = -9.0
 offset_right = 99.0
 offset_bottom = 10.0
 
-[connection signal="input_event" from="Button/SpawnerBehavior/Area2D" to="Button/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="Button2/SpawnerBehavior/Area2D" to="Button2/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="Button3/SpawnerBehavior/Area2D" to="Button3/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="Button4/SpawnerBehavior/Area2D" to="Button4/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="Button5/SpawnerBehavior/Area2D" to="Button5/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="Button6/SpawnerBehavior/Area2D" to="Button6/SpawnerBehavior/Area2D" method="_on_input_event"]
+[node name="PathBlocked" type="Button" parent="."]
+offset_left = 265.0
+offset_top = 125.0
+offset_right = 512.0
+offset_bottom = 156.0
+text = "Spawn wand vorraus condition
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="PathBlocked"]
+position = Vector2(-42.11, 42.11)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="PathBlocked/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="PathBlocked/SpawnerBehavior/Area2D"]
+color = Color(1, 0.164706, 0.34902, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathBlocked/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_qq34o")
+
+[node name="Code" type="Node2D" parent="PathBlocked/SpawnerBehavior/Area2D"]
+script = ExtResource("19_b0qqc")
+
+[node name="Label" type="Label" parent="PathBlocked/SpawnerBehavior/Area2D"]
+offset_left = -83.0
+offset_top = -11.0
+offset_right = 94.0
+offset_bottom = 12.0
+text = "Wall directly ahead"
+
+[node name="EnemyDirectlyAhead" type="Button" parent="."]
+offset_left = 271.0
+offset_top = 198.0
+offset_right = 579.0
+offset_bottom = 229.0
+text = "Spawn enemy directly ahead condition
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="EnemyDirectlyAhead"]
+position = Vector2(-42.11, 42.11)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="EnemyDirectlyAhead/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
+color = Color(1, 0.164706, 0.34902, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_qq34o")
+
+[node name="Code" type="Node2D" parent="EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
+script = ExtResource("21_7b6ee")
+
+[node name="Label" type="Label" parent="EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
+offset_left = -83.0
+offset_top = -11.0
+offset_right = 94.0
+offset_bottom = 12.0
+text = "Enemy directly ahead"
+
+[node name="EnemyInVision" type="Button" parent="."]
+offset_left = 273.0
+offset_top = 244.0
+offset_right = 581.0
+offset_bottom = 275.0
+text = "Spawn enemy in vision condition
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="EnemyInVision"]
+position = Vector2(-42.11, 42.11)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="EnemyInVision/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="EnemyInVision/SpawnerBehavior/Area2D"]
+color = Color(1, 0.164706, 0.34902, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyInVision/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_qq34o")
+
+[node name="Code" type="Node2D" parent="EnemyInVision/SpawnerBehavior/Area2D"]
+script = ExtResource("22_uw4s8")
+
+[node name="Label" type="Label" parent="EnemyInVision/SpawnerBehavior/Area2D"]
+offset_left = -83.0
+offset_top = -11.0
+offset_right = 94.0
+offset_bottom = 12.0
+text = "Enemy in vision"
+
+[node name="Laser" type="Button" parent="."]
+offset_left = 73.0
+offset_top = 197.0
+offset_right = 242.0
+offset_bottom = 228.0
+text = "Laser"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="Laser"]
+position = Vector2(-42.11, 42.11)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="Laser/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="Laser/SpawnerBehavior/Area2D"]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Laser/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_uw0cl")
+
+[node name="Code" type="Node2D" parent="Laser/SpawnerBehavior/Area2D"]
+script = ExtResource("17_e3n6e")
+
+[node name="Label" type="Label" parent="Laser/SpawnerBehavior/Area2D"]
+offset_left = -48.0
+offset_top = -11.0
+offset_right = 62.0
+offset_bottom = 12.0
+text = "Fire Laser Left"
+
+[node name="Punch" type="Button" parent="."]
+offset_left = 90.0
+offset_top = 249.0
+offset_right = 259.0
+offset_bottom = 280.0
+text = "Punch
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="Punch"]
+position = Vector2(-42.11, 42.11)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="Punch/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="Punch/SpawnerBehavior/Area2D"]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Punch/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_uw0cl")
+
+[node name="Code" type="Node2D" parent="Punch/SpawnerBehavior/Area2D"]
+script = ExtResource("19_km3en")
+
+[node name="Label" type="Label" parent="Punch/SpawnerBehavior/Area2D"]
+offset_left = -48.0
+offset_top = -11.0
+offset_right = 62.0
+offset_bottom = 12.0
+text = "Punch
+"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(578, 325)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("17_bgw6t")
+format = 2
+layer_0/tile_data = PackedInt32Array(1638400, 327680, 5, 1572864, 327680, 5, 1507328, 327680, 5, 1441792, 327680, 5, 1048576, 327680, 5, 1114112, 327680, 5, 1376256, 327680, 5, 1310720, 327680, 5, 1245184, 327680, 5, 1638401, 327680, 5, 1638402, 327680, 5, 1638403, 327680, 5, 1638404, 327680, 5, 1638405, 327680, 5, 1638406, 327680, 5, 1638407, 327680, 5, 1638408, 327680, 5, 1638409, 327680, 5, 1638410, 327680, 5, 1638411, 327680, 5, 1179648, 327680, 5, 1507345, 327680, 5, 1441809, 327680, 5, 1638417, 327680, 5, 1638416, 327680, 5, 1638415, 327680, 5, 1638414, 327680, 5, 1638413, 327680, 5, 1638412, 327680, 5, 1572881, 327680, 5, 983040, 327680, 5, 983041, 327680, 5, 983042, 327680, 5, 983043, 327680, 5, 983044, 327680, 5, 983045, 327680, 5, 983046, 327680, 5, 983047, 327680, 5, 983048, 327680, 5, 983049, 327680, 5, 983050, 327680, 5, 983051, 327680, 5, 983052, 327680, 5, 983053, 327680, 5, 983054, 327680, 5, 983055, 327680, 5, 983056, 327680, 5, 983057, 327680, 5, 1048593, 327680, 5, 1114129, 327680, 5, 1179665, 327680, 5, 1245201, 327680, 5, 1310737, 327680, 5, 1376273, 327680, 5, 1572872, 262144, 5, 1572871, 262144, 5, 1048583, 262144, 5, 1048584, 262144, 5, 1048585, 262144, 5, 1048586, 262144, 5, 1048587, 262144, 5, 1572875, 262144, 5, 1572874, 262144, 5, 1572873, 262144, 5, 1572870, 262144, 5, 1048582, 262144, 5, 1048588, 262144, 5, 1572876, 262144, 5, 1572877, 262144, 5, 1507341, 262144, 5, 1441805, 262144, 5, 1376269, 262144, 5, 1310733, 262144, 5, 1245197, 262144, 5, 1179661, 262144, 5, 1114125, 262144, 5, 1048589, 262144, 5, 1572869, 262144, 5, 1507333, 262144, 5, 1441797, 262144, 5, 1376261, 262144, 5, 1310725, 262144, 5, 1245189, 262144, 5, 1179653, 262144, 5, 1179652, 262144, 5, 1114116, 262144, 5, 1114117, 262144, 5, 1048581, 262144, 5, 1048580, 262144, 5, 1048579, 262144, 5, 1048578, 262144, 5, 1048577, 262144, 5, 1114113, 262144, 5, 1179649, 262144, 5, 1245185, 262144, 5, 1310721, 262144, 5, 1310722, 262144, 5, 1310723, 262144, 5, 1245187, 262144, 5, 1245188, 262144, 5, 1310724, 262144, 5, 1245186, 262144, 5, 1179650, 262144, 5, 1114114, 262144, 5, 1114115, 262144, 5, 1179651, 262144, 5, 1376260, 262144, 5, 1376259, 262144, 5, 1376258, 262144, 5, 1376257, 262144, 5, 1441793, 262144, 5, 1507329, 262144, 5, 1572865, 262144, 5, 1572866, 262144, 5, 1507330, 262144, 5, 1441794, 262144, 5, 1441795, 262144, 5, 1441796, 262144, 5, 1507332, 262144, 5, 1507331, 262144, 5, 1572878, 262144, 5, 1572879, 262144, 5, 1572880, 262144, 5, 1507344, 262144, 5, 1441808, 262144, 5, 1376272, 262144, 5, 1310736, 262144, 5, 1245200, 262144, 5, 1179664, 262144, 5, 1114128, 262144, 5, 1048592, 262144, 5, 1048591, 262144, 5, 1114126, 262144, 5, 1048590, 262144, 5, 1114127, 262144, 5, 1179663, 262144, 5, 1245199, 262144, 5, 1310735, 262144, 5, 1376271, 262144, 5, 1441807, 262144, 5, 1507343, 262144, 5, 1507342, 262144, 5, 1441806, 262144, 5, 1376270, 262144, 5, 1310734, 262144, 5, 1245198, 262144, 5, 1179662, 262144, 5, 1572868, 262144, 5, 1572867, 262144, 5, 1376263, 131072, 0, 1376264, 131072, 0, 1376265, 131072, 0, 1376266, 131072, 0, 1376267, 131072, 0, 1507334, 131072, 0, 1441798, 131072, 0, 1376262, 131072, 0, 1310726, 131072, 0, 1245190, 131072, 0, 1179654, 131072, 0, 1114118, 131072, 0, 1114119, 131072, 0, 1114120, 131072, 0, 1114121, 131072, 0, 1114122, 131072, 0, 1114123, 131072, 0, 1114124, 131072, 0, 1179660, 131072, 0, 1245196, 131072, 0, 1310732, 131072, 0, 1376268, 131072, 0, 1441804, 131072, 0, 1507340, 131072, 0, 1507339, 131072, 0, 1507338, 131072, 0, 1507337, 131072, 0, 1507336, 131072, 0, 1507335, 131072, 0, 1441799, 131072, 0, 1441800, 131072, 0, 1441801, 131072, 0, 1441802, 131072, 0, 1441803, 131072, 0, 1310731, 131072, 0, 1245195, 131072, 0, 1179659, 131072, 0, 1179658, 131072, 0, 1179657, 131072, 0, 1179656, 131072, 0, 1179655, 131072, 0, 1245191, 131072, 0, 1245192, 131072, 0, 1310728, 131072, 0, 1310729, 131072, 0, 1245193, 131072, 0, 1310727, 131072, 0, 1310730, 131072, 0, 1245194, 131072, 0)
+
+[node name="reset" type="Button" parent="."]
+offset_left = 1055.0
+offset_top = 999.0
+offset_right = 1106.0
+offset_bottom = 1030.0
+text = "Reset
+"
+metadata/pronto_connections = [SubResource("Resource_rqgae")]
+
+[node name="enemy-code-code" type="Node2D" parent="."]
+
+[node name="Area2D2" type="Area2D" parent="enemy-code-code"]
+position = Vector2(2129, 88)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D2"]
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy-code-code/Area2D2"]
+shape = SubResource("RectangleShape2D_uw0cl")
+
+[node name="Code" type="Node2D" parent="enemy-code-code/Area2D2"]
+script = ExtResource("6_5h1u8")
+
+[node name="Label" type="Label" parent="enemy-code-code/Area2D2"]
+offset_left = -48.0
+offset_top = -11.0
+offset_right = 62.0
+offset_bottom = 12.0
+text = "Drive Forward"
+
+[connection signal="input_event" from="Forward/SpawnerBehavior/Area2D" to="Forward/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="Loop/SpawnerBehavior/Area2D" to="Loop/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="Random/SpawnerBehavior/Area2D" to="Random/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="If/SpawnerBehavior/Area2D" to="If/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="Not/SpawnerBehavior/Area2D" to="Not/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="Rotate/SpawnerBehavior/Area2D" to="Rotate/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="Facing/SpawnerBehavior/Area2D" to="Facing/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="PathBlocked/SpawnerBehavior/Area2D" to="PathBlocked/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="EnemyDirectlyAhead/SpawnerBehavior/Area2D" to="EnemyDirectlyAhead/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="EnemyInVision/SpawnerBehavior/Area2D" to="EnemyInVision/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="Laser/SpawnerBehavior/Area2D" to="Laser/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="Punch/SpawnerBehavior/Area2D" to="Punch/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="enemy-code-code/Area2D2" to="enemy-code-code/Area2D2" method="_on_input_event"]

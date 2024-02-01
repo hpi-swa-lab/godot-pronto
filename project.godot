@@ -124,6 +124,10 @@ player_2_jump={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_13="solid"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
