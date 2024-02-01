@@ -35,6 +35,10 @@ func execute_area(area_to_run: Area2D, robot):
 			print("rotate left")
 			robot.rotation_degrees -= 90
 			robot.orientation = (robot.orientation + 1) % 4
+		elif stmt == "rotate-right":
+			print("rotate right")
+			robot.rotation_degrees += 90
+			robot.orientation = ((robot.orientation - 1) + 4) % 4
 		elif stmt == "while":
 			print("loop")
 			
