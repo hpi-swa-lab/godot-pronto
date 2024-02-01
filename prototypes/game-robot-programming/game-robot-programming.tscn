@@ -526,7 +526,7 @@ expression = SubResource("Resource_vtyea")
 deferred = false
 enabled = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7imq0"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y274l"]
 resource_local_to_scene = true
 size = Vector2(200, 500)
 
@@ -636,6 +636,7 @@ rotation = 3.14159
 scale = Vector2(0.6, 0.6)
 collision_mask = 0
 script = ExtResource("3_oymdl")
+orientation = 2
 
 [node name="HP" type="Node2D" parent="Enemy"]
 position = Vector2(0, -48)
@@ -1212,24 +1213,24 @@ text = "Reset
 metadata/pronto_connections = [SubResource("Resource_rqgae")]
 
 [node name="enemy-code-code" type="Node2D" parent="."]
-position = Vector2(2200, 20)
+position = Vector2(2200, 200)
 
-[node name="Area2D3" type="Area2D" parent="enemy-code-code"]
+[node name="Area2D2" type="Area2D" parent="enemy-code-code"]
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D3"]
+[node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D2"]
 color = Color(0.47451, 0.52549, 0.882353, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy-code-code/Area2D3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy-code-code/Area2D2"]
 position = Vector2(0, 250)
-shape = SubResource("RectangleShape2D_7imq0")
+shape = SubResource("RectangleShape2D_y274l")
 
-[node name="Code" type="Node2D" parent="enemy-code-code/Area2D3"]
+[node name="Code" type="Node2D" parent="enemy-code-code/Area2D2"]
 position = Vector2(-5, -198)
 script = ExtResource("7_h438j")
 
-[node name="Button" type="Button" parent="enemy-code-code/Area2D3"]
+[node name="Button" type="Button" parent="enemy-code-code/Area2D2"]
 offset_left = 82.0
 offset_top = -17.0
 offset_right = 100.0
@@ -1239,7 +1240,7 @@ text = "+
 script = ExtResource("6_y2un6")
 metadata/pronto_connections = [SubResource("Resource_l2spb")]
 
-[node name="Button2" type="Button" parent="enemy-code-code/Area2D3"]
+[node name="Button2" type="Button" parent="enemy-code-code/Area2D2"]
 offset_left = 65.0
 offset_top = -17.0
 offset_right = 79.0
@@ -1248,28 +1249,28 @@ text = "-"
 script = ExtResource("7_ulk6s")
 metadata/pronto_connections = [SubResource("Resource_asa6e")]
 
-[node name="Label" type="Label" parent="enemy-code-code/Area2D3"]
+[node name="Label" type="Label" parent="enemy-code-code/Area2D2"]
 offset_left = -53.0
 offset_top = -10.0
 offset_right = 47.0
 offset_bottom = 13.0
 text = "Repeat while"
 
-[node name="Area2D2" type="Area2D" parent="enemy-code-code"]
-position = Vector2(0, 20)
+[node name="Area2D3" type="Area2D" parent="enemy-code-code"]
+position = Vector2(10, 20)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D2"]
+[node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D3"]
 color = Color(1, 0.164706, 0.34902, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy-code-code/Area2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy-code-code/Area2D3"]
 shape = SubResource("RectangleShape2D_qq34o")
 
-[node name="Code" type="Node2D" parent="enemy-code-code/Area2D2"]
+[node name="Code" type="Node2D" parent="enemy-code-code/Area2D3"]
 script = ExtResource("16_w751w")
 
-[node name="Label" type="Label" parent="enemy-code-code/Area2D2"]
+[node name="Label" type="Label" parent="enemy-code-code/Area2D3"]
 offset_left = -83.0
 offset_top = -11.0
 offset_right = 94.0
@@ -1277,7 +1278,7 @@ offset_bottom = 12.0
 text = "true"
 
 [node name="Area2D4" type="Area2D" parent="enemy-code-code"]
-position = Vector2(0, 40)
+position = Vector2(10, 40)
 script = ExtResource("2_n7j77")
 
 [node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D4"]
@@ -1298,7 +1299,7 @@ offset_bottom = 12.0
 text = "Drive Forward"
 
 [node name="Area2D5" type="Area2D" parent="enemy-code-code"]
-position = Vector2(0, 60)
+position = Vector2(10, 60)
 script = ExtResource("2_n7j77")
 
 [node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D5"]
@@ -1319,7 +1320,7 @@ offset_bottom = 12.0
 text = "Fire Laser Left"
 
 [node name="Area2D6" type="Area2D" parent="enemy-code-code"]
-position = Vector2(0, 100)
+position = Vector2(10, 100)
 script = ExtResource("2_n7j77")
 
 [node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D6"]
@@ -1359,7 +1360,7 @@ offset_bottom = 12.0
 text = "Do if"
 
 [node name="Area2D7" type="Area2D" parent="enemy-code-code"]
-position = Vector2(0, 120)
+position = Vector2(20, 120)
 script = ExtResource("2_n7j77")
 
 [node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D7"]
@@ -1380,7 +1381,7 @@ offset_bottom = 12.0
 text = "Wall directly ahead"
 
 [node name="Area2D8" type="Area2D" parent="enemy-code-code"]
-position = Vector2(0, 140)
+position = Vector2(20, 140)
 script = ExtResource("2_n7j77")
 
 [node name="Polygon2D" type="Polygon2D" parent="enemy-code-code/Area2D8"]
@@ -1414,8 +1415,8 @@ text = "Rotate left"
 [connection signal="input_event" from="VBoxContainer/EnemyInVision/SpawnerBehavior/Area2D" to="VBoxContainer/EnemyInVision/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/Laser/SpawnerBehavior/Area2D" to="VBoxContainer/Laser/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/Punch/SpawnerBehavior/Area2D" to="VBoxContainer/Punch/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="enemy-code-code/Area2D3" to="enemy-code-code/Area2D3" method="_on_input_event"]
 [connection signal="input_event" from="enemy-code-code/Area2D2" to="enemy-code-code/Area2D2" method="_on_input_event"]
+[connection signal="input_event" from="enemy-code-code/Area2D3" to="enemy-code-code/Area2D3" method="_on_input_event"]
 [connection signal="input_event" from="enemy-code-code/Area2D4" to="enemy-code-code/Area2D4" method="_on_input_event"]
 [connection signal="input_event" from="enemy-code-code/Area2D5" to="enemy-code-code/Area2D5" method="_on_input_event"]
 [connection signal="input_event" from="enemy-code-code/Area2D6" to="enemy-code-code/Area2D6" method="_on_input_event"]

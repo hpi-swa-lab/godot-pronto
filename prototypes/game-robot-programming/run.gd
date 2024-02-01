@@ -4,6 +4,7 @@ extends Button
 func execute_area(area_to_run: Area2D, robot):
 	var areas = area_to_run.get_node("Code").get_stmts()
 	var executed = []
+	print(robot, area_to_run, areas)
 	
 	for area in areas:
 		await area_to_run.get_tree().create_timer(0.2).timeout
@@ -33,10 +34,12 @@ func execute_area(area_to_run: Area2D, robot):
 			
 		elif stmt == "rotate-left":
 			print("rotate left")
+			executed.append(area)
 			robot.rotation_degrees -= 90
 			robot.orientation = (robot.orientation + 1) % 4
 		elif stmt == "rotate-right":
 			print("rotate right")
+			executed.append(area)
 			robot.rotation_degrees += 90
 			robot.orientation = ((robot.orientation - 1) + 4) % 4
 		elif stmt == "while":
@@ -53,7 +56,6 @@ func execute_area(area_to_run: Area2D, robot):
 				
 			while condition.get_node("Code").check(robot):
 				print("Condition passed!")
-				
 				await execute_area(area, robot)
 			
 			executed.append_array(area.get_node("Code").get_stmts())
@@ -68,14 +70,17 @@ func execute_area(area_to_run: Area2D, robot):
 			if not condition.get_node("Code").is_condition():
 				print("No conditions inside container")
 				continue
-				
-			if condition.get_node("Code").check(robot):
-				execute_area(area, robot)
 			
+			if condition.get_node("Code").check(robot):
+				print("if is true")
+				execute_area(area, robot)
+			print(executed)
 			executed.append_array(area.get_node("Code").get_stmts())
+			print(executed)
 		
 		elif stmt == "laser":
 			print("laser")
+			executed.append(area)
 			
 			robot.get_node("Laser/LaserShape").visible = true
 			
@@ -90,6 +95,7 @@ func execute_area(area_to_run: Area2D, robot):
 		
 		elif stmt == "punch":
 			print("punch")
+			executed.append(area)
 			
 			var bodies = robot.get_node("FrontFree").get_overlapping_bodies()
 			for body in bodies:
