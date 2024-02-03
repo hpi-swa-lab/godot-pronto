@@ -107,6 +107,9 @@ func redraw_receiver_label():
 	else:
 		%ReceiverLabel.text = "Connecting to state ${0} ({1})".format([from.get_path_to(receiver), receiver.name])
 
+func _get_trigger_for_connection(connection: Connection):
+	return connection.trigger if connection.is_state_transition() else extract_trigger_from_trigger_argument_script(connection.arguments[0])
+
 func set_existing_connection(from: Node, connection: Connection):
 	self.from = from
 	existing_connection = connection
@@ -129,7 +132,7 @@ func set_existing_connection(from: Node, connection: Connection):
 	#%SharedLinksNote.visible = total["total"] > 1
 	#%SharedLinksCount.text = "This connection is linked to {0} other node{1}.".format([total["total"] - 1, "s" if total["total"] != 2 else ""])
 	reload_triggers()
-	var selected_trigger = connection.trigger if connection.is_state_transition() else extract_trigger_from_trigger_argument_script(connection.arguments[0])
+	var selected_trigger = _get_trigger_for_connection(connection)
 	for i in range(%TriggerSelection.item_count):
 		if %TriggerSelection.get_item_text(i) == selected_trigger:
 			%TriggerSelection.select(i)
@@ -188,9 +191,12 @@ func argument_names():
 
 func argument_types():
 	return argument_names_and_types().map(func (a): return a[1])
+	
+func _get_selected_trigger():
+	return %TriggerSelection.get_item_text(%TriggerSelection.get_selected_id())
 
 func save():
-	var trigger = %TriggerSelection.get_item_text(%TriggerSelection.get_selected_id())
+	var trigger = _get_selected_trigger()
 	if existing_connection:
 		Utils.commit_undoable(undo_redo, "Update condition of connection", existing_connection.only_if,
 			{"source_code": %Condition.text}, "reload")
@@ -345,6 +351,12 @@ func _on_add_trigger_pressed():
 		%TriggerSelection.add_item(new_trigger)
 		%TriggerSelection.select(len(get_state_machine().triggers)-1)
 	%TriggerEdit.text = ""
+	
+func _on_trigger_selection_item_selected(index):
+	mark_changed(true)
+
+func _on_condition_text_changed():
+	mark_changed(true)
 
 func _on_done_pressed():
 	save()

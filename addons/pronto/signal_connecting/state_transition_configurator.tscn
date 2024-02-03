@@ -174,7 +174,7 @@ sync_handles_x = true
 
 [node name="Condition" parent="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2" instance=ExtResource("3_immw5")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 43.9353)
+custom_minimum_size = Vector2(0, 43.3363)
 layout_mode = 2
 default_text = "true"
 max_width = 500
@@ -205,7 +205,9 @@ layout_mode = 2
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/AddReferenceButton" to="." method="_on_add_reference_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/remove" to="." method="_on_remove_pressed"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/TriggerContainer/HBoxContainer/TriggerSelection" to="." method="_on_trigger_selection_item_selected"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TriggerContainer/TriggerCreationContainer/create_trigger" to="." method="_on_add_trigger_pressed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/ResizableContainer2/Condition" to="." method="_on_condition_text_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/done" to="." method="_on_done_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/cancel" to="." method="_on_cancel_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonList/open_in_connection_editor" to="." method="_on_open_in_connection_editor_pressed"]
