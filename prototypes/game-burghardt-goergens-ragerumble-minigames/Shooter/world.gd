@@ -28,10 +28,9 @@ func _on_host_button_pressed():
 	multiplayer.peer_disconnected.connect(remove_player)
 	
 	add_player(multiplayer.get_unique_id())
+	
 	var idx = AudioServer.get_bus_index("Record")
 	effect = AudioServer.get_bus_effect(idx, 0)
-	
-	#upnp_setup()
 	while true:
 		_on_RecordButton_pressed()
 		await get_tree().create_timer(0.1).timeout
@@ -44,6 +43,9 @@ func _on_join_button_pressed():
 	
 	enet_peer.create_client(address_entry.text, PORT)
 	multiplayer.multiplayer_peer = enet_peer
+	
+	var idx = AudioServer.get_bus_index("Record")
+	effect = AudioServer.get_bus_effect(idx, 0)
 	while true:
 		_on_RecordButton_pressed()
 		await get_tree().create_timer(0.1).timeout
@@ -53,6 +55,7 @@ func _on_join_button_pressed():
 func add_player(peer_id):
 	var player = Player.instantiate()
 	player.name = str(peer_id)
+	
 	add_child(player)
 	if player.is_multiplayer_authority():
 		player.health_changed.connect(update_health_bar)
@@ -68,23 +71,6 @@ func update_health_bar(health_value):
 func _on_multiplayer_spawner_spawned(node):
 	if node.is_multiplayer_authority():
 		node.health_changed.connect(update_health_bar)
-
-func upnp_setup():
-	var upnp = UPNP.new()
-	
-	var discover_result = upnp.discover()
-	assert(discover_result == UPNP.UPNP_RESULT_SUCCESS, \
-		"UPNP Discover Failed! Error %s" % discover_result)
-
-	assert(upnp.get_gateway() and upnp.get_gateway().is_valid_gateway(), \
-		"UPNP Invalid Gateway!")
-
-	var map_result = upnp.add_port_mapping(PORT)
-	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
-		"UPNP Port Mapping Failed! Error %s" % map_result)
-	
-	print("Success! Join Address: %s" % upnp.query_external_address())
-
 
 func _on_RecordButton_pressed():
 	if effect.is_recording_active():
@@ -118,10 +104,13 @@ func _on_PlayButton_pressed():
 	# Update max_amplitude if this sample's amplitude is greater
 		if amplitude > max_amplitude:
 			max_amplitude = amplitude
-	var amplitude_percentage = roundi(100.0*max_amplitude/(32768 - threshold))
+	#var amplitude_percentage = roundi(100.0*max_amplitude/(32768 - threshold))
+	var amplitude_percentage = roundi(100.0*max_amplitude/(20000 - threshold))
 	var playerlabel = $CanvasLayer/HUD/Recordinglabel
-	var playerchar = get_tree().get_nodes_in_group("player")[0]
-	#if playerlabel == null:
-#		return
+	var playerchar = get_tree().get_nodes_in_group("player")
+	print(playerchar)
+	if playerlabel == null:
+		return
 	playerlabel.setText("Amp: " + str(amplitude_percentage) +"%")
-	playerchar.SPEED = 10.0 + 10.0 * (max_amplitude / threshold)
+	for player in playerchar:
+		player.SPEED = 10.0 + 10.0 * (max_amplitude / threshold)
