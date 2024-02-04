@@ -22,6 +22,7 @@ ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
 G="*res://addons/pronto/helpers/G.gd"
 LanguageClient="*res://addons/pronto/helpers/LanguageClient.gd"
 PromoteUtil="*res://addons/pronto/helpers/PromoteUtil.gd"
+Global="*res://prototypes/game-robot-programming/global.gd"
 
 [display]
 

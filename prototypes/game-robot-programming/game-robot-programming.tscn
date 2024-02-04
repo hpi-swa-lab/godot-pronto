@@ -76,7 +76,7 @@ expression = SubResource("Resource_qfw4u")
 deferred = false
 enabled = true
 
-[sub_resource type="Image" id="Image_wi5gr"]
+[sub_resource type="Image" id="Image_snk25"]
 data = {
 "data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
 "format": "RGBA8",
@@ -86,12 +86,52 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_s5m3q"]
-image = SubResource("Image_wi5gr")
+image = SubResource("Image_snk25")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jg4r4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bw8j6"]
 size = Vector2(20, 1000)
+
+[sub_resource type="GDScript" id="GDScript_sehxu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Camera2D):
+	to.position += Vector2(0, 1000)
+"
+
+[sub_resource type="Resource" id="Resource_u1md0"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_sehxu")
+argument_names = ["from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_7hqkg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: Camera2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ltcvw"]
+script = ExtResource("2_4oblb")
+nested_script = SubResource("GDScript_7hqkg")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_3ahle"]
+script = ExtResource("3_idrtd")
+signal_name = "pressed"
+to = NodePath("../Camera2D")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_ltcvw")
+expression = SubResource("Resource_u1md0")
+deferred = false
+enabled = true
 
 [sub_resource type="GDScript" id="GDScript_trcyf"]
 script/source = "@tool
@@ -132,46 +172,6 @@ invoke = ""
 arguments = []
 only_if = SubResource("Resource_8l4lu")
 expression = SubResource("Resource_snxqd")
-deferred = false
-enabled = true
-
-[sub_resource type="GDScript" id="GDScript_nwwui"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Button, to: Camera2D):
-	to.position += Vector2(0, 1000)
-"
-
-[sub_resource type="Resource" id="Resource_kwd0p"]
-script = ExtResource("2_4oblb")
-nested_script = SubResource("GDScript_nwwui")
-argument_names = ["from", "to"]
-return_value = false
-
-[sub_resource type="GDScript" id="GDScript_wk2bv"]
-script/source = "@tool
-extends U
-@warning_ignore(\"unused_parameter\")
-func run(from: Button, to: Camera2D):
-	return true
-"
-
-[sub_resource type="Resource" id="Resource_e5cuv"]
-script = ExtResource("2_4oblb")
-nested_script = SubResource("GDScript_wk2bv")
-argument_names = ["from", "to"]
-return_value = true
-
-[sub_resource type="Resource" id="Resource_4l6t1"]
-script = ExtResource("3_idrtd")
-signal_name = "pressed"
-to = NodePath("../Camera2D")
-more_references = []
-invoke = ""
-arguments = []
-only_if = SubResource("Resource_e5cuv")
-expression = SubResource("Resource_kwd0p")
 deferred = false
 enabled = true
 
@@ -297,9 +297,6 @@ only_if = SubResource("Resource_2jvc5")
 deferred = false
 enabled = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uw0cl"]
-size = Vector2(200, 20)
-
 [sub_resource type="GDScript" id="GDScript_xwgmp"]
 script/source = "@tool
 extends U
@@ -394,9 +391,6 @@ only_if = SubResource("Resource_00gu1")
 deferred = false
 enabled = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qq34o"]
-size = Vector2(200, 20)
-
 [sub_resource type="GDScript" id="GDScript_aqj1b"]
 script/source = "@tool
 extends U
@@ -436,6 +430,9 @@ only_if = SubResource("Resource_p5hnd")
 expression = SubResource("Resource_1jauk")
 deferred = false
 enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uw0cl"]
+size = Vector2(200, 20)
 
 [sub_resource type="GDScript" id="GDScript_a2l4g"]
 script/source = "@tool
@@ -486,6 +483,9 @@ arguments = []
 only_if = SubResource("Resource_754vg")
 deferred = false
 enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qq34o"]
+size = Vector2(200, 20)
 
 [sub_resource type="GDScript" id="GDScript_nha02"]
 script/source = "@tool
@@ -554,7 +554,7 @@ shape = SubResource("RectangleShape2D_hsfjo")
 [node name="Polygon2D" type="Polygon2D" parent="Editor"]
 z_index = -1000
 position = Vector2(-1, 144)
-color = Color(1, 1, 0, 1)
+color = Color(1, 1, 0.317647, 1)
 polygon = PackedVector2Array(-150, -171, 349, -177, 333, 565, -150, 544)
 
 [node name="Code" type="Node2D" parent="Editor"]
@@ -683,51 +683,37 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy/Vision"]
 shape = SubResource("RectangleShape2D_bw8j6")
 
+[node name="change cam" type="Button" parent="."]
+offset_left = 1057.0
+offset_top = 33.0
+offset_right = 1140.0
+offset_bottom = 64.0
+text = "View Map"
+metadata/pronto_connections = [SubResource("Resource_3ahle")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 717.0
+offset_top = 7.0
+offset_right = 1140.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Commands overlapping with this area will be executed"
+
 [node name="execute" type="Button" parent="."]
-offset_left = 868.0
-offset_top = 21.0
-offset_right = 937.0
-offset_bottom = 52.0
+z_index = 100
+offset_left = 974.0
+offset_top = 1081.0
+offset_right = 1043.0
+offset_bottom = 1112.0
 text = "Execute"
 script = ExtResource("8_tudq4")
-metadata/pronto_connections = [SubResource("Resource_vevg8"), SubResource("Resource_4l6t1"), SubResource("Resource_cnv6a")]
+metadata/pronto_connections = [SubResource("Resource_vevg8"), SubResource("Resource_cnv6a")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 369.0
 offset_top = 14.0
 offset_right = 677.0
 offset_bottom = 500.0
-
-[node name="Forward" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Spawn drive forward
-"
-metadata/pronto_connections = [SubResource("Resource_bc7xg")]
-
-[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Forward"]
-position = Vector2(-42.11, 42.11)
-script = ExtResource("4_n3xyo")
-
-[node name="Area2D" type="Area2D" parent="VBoxContainer/Forward/SpawnerBehavior"]
-position = Vector2(83.11, 84.89)
-script = ExtResource("2_n7j77")
-
-[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/Forward/SpawnerBehavior/Area2D"]
-color = Color(0, 1, 0, 1)
-polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/Forward/SpawnerBehavior/Area2D"]
-shape = SubResource("RectangleShape2D_uw0cl")
-
-[node name="Code" type="Node2D" parent="VBoxContainer/Forward/SpawnerBehavior/Area2D"]
-script = ExtResource("6_5h1u8")
-
-[node name="Label" type="Label" parent="VBoxContainer/Forward/SpawnerBehavior/Area2D"]
-offset_left = -48.0
-offset_top = -11.0
-offset_right = 62.0
-offset_bottom = 12.0
-text = "Drive Forward"
 
 [node name="Loop" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -736,7 +722,7 @@ text = "Spawn loop
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Loop"]
-position = Vector2(-42.11, 42.11)
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 metadata/pronto_connections = [SubResource("Resource_m4jki")]
 
@@ -781,68 +767,6 @@ offset_right = 47.0
 offset_bottom = 13.0
 text = "Repeat while"
 
-[node name="Random" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Spawn random condition
-"
-metadata/pronto_connections = [SubResource("Resource_bc7xg")]
-
-[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Random"]
-position = Vector2(-42.11, 42.11)
-script = ExtResource("4_n3xyo")
-
-[node name="Area2D" type="Area2D" parent="VBoxContainer/Random/SpawnerBehavior"]
-position = Vector2(83.11, 84.89)
-script = ExtResource("2_n7j77")
-
-[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/Random/SpawnerBehavior/Area2D"]
-color = Color(1, 0.164706, 0.34902, 1)
-polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/Random/SpawnerBehavior/Area2D"]
-shape = SubResource("RectangleShape2D_qq34o")
-
-[node name="Code" type="Node2D" parent="VBoxContainer/Random/SpawnerBehavior/Area2D"]
-script = ExtResource("11_6ra6u")
-
-[node name="Label" type="Label" parent="VBoxContainer/Random/SpawnerBehavior/Area2D"]
-offset_left = -83.0
-offset_top = -11.0
-offset_right = 94.0
-offset_bottom = 12.0
-text = "tossed coin shows tails"
-
-[node name="True" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Spawn true condition
-"
-metadata/pronto_connections = [SubResource("Resource_bc7xg")]
-
-[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/True"]
-position = Vector2(-42.11, 42.11)
-script = ExtResource("4_n3xyo")
-
-[node name="Area2D" type="Area2D" parent="VBoxContainer/True/SpawnerBehavior"]
-position = Vector2(83.11, 84.89)
-script = ExtResource("2_n7j77")
-
-[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/True/SpawnerBehavior/Area2D"]
-color = Color(1, 0.164706, 0.34902, 1)
-polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/True/SpawnerBehavior/Area2D"]
-shape = SubResource("RectangleShape2D_qq34o")
-
-[node name="Code" type="Node2D" parent="VBoxContainer/True/SpawnerBehavior/Area2D"]
-script = ExtResource("16_w751w")
-
-[node name="Label" type="Label" parent="VBoxContainer/True/SpawnerBehavior/Area2D"]
-offset_left = -83.0
-offset_top = -11.0
-offset_right = 94.0
-offset_bottom = 12.0
-text = "true"
-
 [node name="If" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Spawn if block
@@ -850,7 +774,7 @@ text = "Spawn if block
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/If"]
-position = Vector2(-42.11, 42.11)
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 metadata/pronto_connections = [SubResource("Resource_u2ke8")]
 
@@ -892,6 +816,7 @@ offset_top = -11.0
 offset_right = 18.0
 offset_bottom = 12.0
 text = "Do if"
+metadata/_edit_use_anchors_ = true
 
 [node name="Not" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -900,7 +825,7 @@ text = "Spawn not block
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Not"]
-position = Vector2(-42.11, 42.11)
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 metadata/pronto_connections = [SubResource("Resource_u2ke8")]
 
@@ -942,68 +867,69 @@ offset_top = -11.0
 offset_right = 18.0
 offset_bottom = 12.0
 text = "not"
+metadata/_edit_use_anchors_ = true
 
-[node name="RotateRight" type="Button" parent="VBoxContainer"]
+[node name="True" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn rotate right
+text = "Spawn true condition
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
-[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/RotateRight"]
-position = Vector2(-42.11, 42.11)
+[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/True"]
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer/RotateRight/SpawnerBehavior"]
+[node name="Area2D" type="Area2D" parent="VBoxContainer/True/SpawnerBehavior"]
 position = Vector2(83.11, 84.89)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/RotateRight/SpawnerBehavior/Area2D"]
-color = Color(0, 1, 0, 1)
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/True/SpawnerBehavior/Area2D"]
+color = Color(1, 0.164706, 0.34902, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/RotateRight/SpawnerBehavior/Area2D"]
-shape = SubResource("RectangleShape2D_uw0cl")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/True/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_qq34o")
 
-[node name="Code" type="Node2D" parent="VBoxContainer/RotateRight/SpawnerBehavior/Area2D"]
-script = ExtResource("20_4em3a")
+[node name="Code" type="Node2D" parent="VBoxContainer/True/SpawnerBehavior/Area2D"]
+script = ExtResource("16_w751w")
 
-[node name="Label" type="Label" parent="VBoxContainer/RotateRight/SpawnerBehavior/Area2D"]
-offset_left = -46.0
+[node name="Label" type="Label" parent="VBoxContainer/True/SpawnerBehavior/Area2D"]
+offset_left = -83.0
 offset_top = -11.0
-offset_right = 36.0
+offset_right = 94.0
 offset_bottom = 12.0
-text = "Rotate right"
+text = "true"
 
-[node name="RotateLeft" type="Button" parent="VBoxContainer"]
+[node name="Random" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn rotate left
+text = "Spawn random condition
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
-[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/RotateLeft"]
-position = Vector2(-42.11, 42.11)
+[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Random"]
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 
-[node name="Area2D" type="Area2D" parent="VBoxContainer/RotateLeft/SpawnerBehavior"]
+[node name="Area2D" type="Area2D" parent="VBoxContainer/Random/SpawnerBehavior"]
 position = Vector2(83.11, 84.89)
 script = ExtResource("2_n7j77")
 
-[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D"]
-color = Color(0, 1, 0, 1)
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/Random/SpawnerBehavior/Area2D"]
+color = Color(1, 0.164706, 0.34902, 1)
 polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D"]
-shape = SubResource("RectangleShape2D_uw0cl")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/Random/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_qq34o")
 
-[node name="Code" type="Node2D" parent="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D"]
-script = ExtResource("14_6e33k")
+[node name="Code" type="Node2D" parent="VBoxContainer/Random/SpawnerBehavior/Area2D"]
+script = ExtResource("11_6ra6u")
 
-[node name="Label" type="Label" parent="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D"]
-offset_left = -46.0
+[node name="Label" type="Label" parent="VBoxContainer/Random/SpawnerBehavior/Area2D"]
+offset_left = -83.0
 offset_top = -11.0
-offset_right = 36.0
+offset_right = 94.0
 offset_bottom = 12.0
-text = "Rotate left"
+text = "tossed coin shows tails"
 
 [node name="Facing" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -1012,7 +938,7 @@ text = "Spawn facing condition
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Facing"]
-position = Vector2(-42.11, 42.11)
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 
 [node name="Area2D" type="Area2D" parent="VBoxContainer/Facing/SpawnerBehavior"]
@@ -1049,7 +975,7 @@ text = "Spawn Path blocked condition
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/PathBlocked"]
-position = Vector2(-42.11, 42.11)
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 
 [node name="Area2D" type="Area2D" parent="VBoxContainer/PathBlocked/SpawnerBehavior"]
@@ -1073,37 +999,6 @@ offset_right = 94.0
 offset_bottom = 12.0
 text = "Path blocked"
 
-[node name="EnemyDirectlyAhead" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Spawn enemy directly ahead condition
-"
-metadata/pronto_connections = [SubResource("Resource_bc7xg")]
-
-[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/EnemyDirectlyAhead"]
-position = Vector2(-42.11, 42.11)
-script = ExtResource("4_n3xyo")
-
-[node name="Area2D" type="Area2D" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior"]
-position = Vector2(83.11, 84.89)
-script = ExtResource("2_n7j77")
-
-[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
-color = Color(1, 0.164706, 0.34902, 1)
-polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
-shape = SubResource("RectangleShape2D_qq34o")
-
-[node name="Code" type="Node2D" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
-script = ExtResource("21_7b6ee")
-
-[node name="Label" type="Label" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
-offset_left = -83.0
-offset_top = -11.0
-offset_right = 94.0
-offset_bottom = 12.0
-text = "Enemy directly ahead"
-
 [node name="EnemyInVision" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Spawn enemy in vision condition
@@ -1111,7 +1006,7 @@ text = "Spawn enemy in vision condition
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/EnemyInVision"]
-position = Vector2(-42.11, 42.11)
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 
 [node name="Area2D" type="Area2D" parent="VBoxContainer/EnemyInVision/SpawnerBehavior"]
@@ -1135,13 +1030,137 @@ offset_right = 94.0
 offset_bottom = 12.0
 text = "Enemy in vision"
 
+[node name="EnemyDirectlyAhead" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Spawn enemy directly ahead condition
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/EnemyDirectlyAhead"]
+position = Vector2(-200, 15)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
+color = Color(1, 0.164706, 0.34902, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_qq34o")
+
+[node name="Code" type="Node2D" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
+script = ExtResource("21_7b6ee")
+
+[node name="Label" type="Label" parent="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D"]
+offset_left = -83.0
+offset_top = -11.0
+offset_right = 94.0
+offset_bottom = 12.0
+text = "Enemy directly ahead"
+
+[node name="Forward" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Spawn drive forward
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Forward"]
+position = Vector2(-200, 15)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/Forward/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/Forward/SpawnerBehavior/Area2D"]
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/Forward/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_uw0cl")
+
+[node name="Code" type="Node2D" parent="VBoxContainer/Forward/SpawnerBehavior/Area2D"]
+script = ExtResource("6_5h1u8")
+
+[node name="Label" type="Label" parent="VBoxContainer/Forward/SpawnerBehavior/Area2D"]
+offset_left = -48.0
+offset_top = -11.0
+offset_right = 62.0
+offset_bottom = 12.0
+text = "Drive Forward"
+
+[node name="RotateRight" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Spawn rotate right
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/RotateRight"]
+position = Vector2(-200, 15)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/RotateRight/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/RotateRight/SpawnerBehavior/Area2D"]
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/RotateRight/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_uw0cl")
+
+[node name="Code" type="Node2D" parent="VBoxContainer/RotateRight/SpawnerBehavior/Area2D"]
+script = ExtResource("20_4em3a")
+
+[node name="Label" type="Label" parent="VBoxContainer/RotateRight/SpawnerBehavior/Area2D"]
+offset_left = -46.0
+offset_top = -11.0
+offset_right = 36.0
+offset_bottom = 12.0
+text = "Rotate right"
+
+[node name="RotateLeft" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Spawn rotate left
+"
+metadata/pronto_connections = [SubResource("Resource_bc7xg")]
+
+[node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/RotateLeft"]
+position = Vector2(-200, 15)
+script = ExtResource("4_n3xyo")
+
+[node name="Area2D" type="Area2D" parent="VBoxContainer/RotateLeft/SpawnerBehavior"]
+position = Vector2(83.11, 84.89)
+script = ExtResource("2_n7j77")
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D"]
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(100, 10, 100, -10, -100, -10, -100, 10, 100, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D"]
+shape = SubResource("RectangleShape2D_uw0cl")
+
+[node name="Code" type="Node2D" parent="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D"]
+script = ExtResource("14_6e33k")
+
+[node name="Label" type="Label" parent="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D"]
+offset_left = -46.0
+offset_top = -11.0
+offset_right = 36.0
+offset_bottom = 12.0
+text = "Rotate left"
+
 [node name="Laser" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Laser"
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Laser"]
-position = Vector2(-42.11, 42.11)
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 
 [node name="Area2D" type="Area2D" parent="VBoxContainer/Laser/SpawnerBehavior"]
@@ -1172,7 +1191,7 @@ text = "Punch
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Punch"]
-position = Vector2(-42.11, 42.11)
+position = Vector2(-200, 15)
 script = ExtResource("4_n3xyo")
 
 [node name="Area2D" type="Area2D" parent="VBoxContainer/Punch/SpawnerBehavior"]
@@ -1206,11 +1225,11 @@ format = 2
 layer_0/tile_data = PackedInt32Array(1638400, 327680, 5, 1572864, 327680, 5, 1507328, 327680, 5, 1441792, 327680, 5, 1048576, 327680, 5, 1114112, 327680, 5, 1376256, 327680, 5, 1310720, 327680, 5, 1245184, 327680, 5, 1638401, 327680, 5, 1638402, 327680, 5, 1638403, 327680, 5, 1638404, 327680, 5, 1638405, 327680, 5, 1638406, 327680, 5, 1638407, 327680, 5, 1638408, 327680, 5, 1638409, 327680, 5, 1638410, 327680, 5, 1638411, 327680, 5, 1179648, 327680, 5, 1507345, 327680, 5, 1441809, 327680, 5, 1638417, 327680, 5, 1638416, 327680, 5, 1638415, 327680, 5, 1638414, 327680, 5, 1638413, 327680, 5, 1638412, 327680, 5, 1572881, 327680, 5, 983040, 327680, 5, 983041, 327680, 5, 983042, 327680, 5, 983043, 327680, 5, 983044, 327680, 5, 983045, 327680, 5, 983046, 327680, 5, 983047, 327680, 5, 983048, 327680, 5, 983049, 327680, 5, 983050, 327680, 5, 983051, 327680, 5, 983052, 327680, 5, 983053, 327680, 5, 983054, 327680, 5, 983055, 327680, 5, 983056, 327680, 5, 983057, 327680, 5, 1048593, 327680, 5, 1114129, 327680, 5, 1179665, 327680, 5, 1245201, 327680, 5, 1310737, 327680, 5, 1376273, 327680, 5, 1572872, 262144, 5, 1572871, 262144, 5, 1048583, 262144, 5, 1048584, 262144, 5, 1048585, 262144, 5, 1048586, 262144, 5, 1048587, 262144, 5, 1572875, 262144, 5, 1572874, 262144, 5, 1572873, 262144, 5, 1572870, 262144, 5, 1048582, 262144, 5, 1048588, 262144, 5, 1572876, 262144, 5, 1572877, 262144, 5, 1507341, 262144, 5, 1441805, 262144, 5, 1376269, 262144, 5, 1310733, 262144, 5, 1245197, 262144, 5, 1179661, 262144, 5, 1114125, 262144, 5, 1048589, 262144, 5, 1572869, 262144, 5, 1507333, 262144, 5, 1441797, 262144, 5, 1376261, 262144, 5, 1310725, 262144, 5, 1245189, 262144, 5, 1179653, 262144, 5, 1179652, 262144, 5, 1114116, 262144, 5, 1114117, 262144, 5, 1048581, 262144, 5, 1048580, 262144, 5, 1048579, 262144, 5, 1048578, 262144, 5, 1048577, 262144, 5, 1114113, 262144, 5, 1179649, 262144, 5, 1245185, 262144, 5, 1310721, 262144, 5, 1310722, 262144, 5, 1310723, 262144, 5, 1245187, 262144, 5, 1245188, 262144, 5, 1310724, 262144, 5, 1245186, 262144, 5, 1179650, 262144, 5, 1114114, 262144, 5, 1114115, 262144, 5, 1179651, 262144, 5, 1376260, 262144, 5, 1376259, 262144, 5, 1376258, 262144, 5, 1376257, 262144, 5, 1441793, 262144, 5, 1507329, 262144, 5, 1572865, 262144, 5, 1572866, 262144, 5, 1507330, 262144, 5, 1441794, 262144, 5, 1441795, 262144, 5, 1441796, 262144, 5, 1507332, 262144, 5, 1507331, 262144, 5, 1572878, 262144, 5, 1572879, 262144, 5, 1572880, 262144, 5, 1507344, 262144, 5, 1441808, 262144, 5, 1376272, 262144, 5, 1310736, 262144, 5, 1245200, 262144, 5, 1179664, 262144, 5, 1114128, 262144, 5, 1048592, 262144, 5, 1048591, 262144, 5, 1114126, 262144, 5, 1048590, 262144, 5, 1114127, 262144, 5, 1179663, 262144, 5, 1245199, 262144, 5, 1310735, 262144, 5, 1376271, 262144, 5, 1441807, 262144, 5, 1507343, 262144, 5, 1507342, 262144, 5, 1441806, 262144, 5, 1376270, 262144, 5, 1310734, 262144, 5, 1245198, 262144, 5, 1179662, 262144, 5, 1572868, 262144, 5, 1572867, 262144, 5, 1376263, 131072, 0, 1376264, 131072, 0, 1376265, 131072, 0, 1376266, 131072, 0, 1376267, 131072, 0, 1507334, 131072, 0, 1441798, 131072, 0, 1376262, 131072, 0, 1310726, 131072, 0, 1245190, 131072, 0, 1179654, 131072, 0, 1114118, 131072, 0, 1114119, 131072, 0, 1114120, 131072, 0, 1114121, 131072, 0, 1114122, 131072, 0, 1114123, 131072, 0, 1114124, 131072, 0, 1179660, 131072, 0, 1245196, 131072, 0, 1310732, 131072, 0, 1376268, 131072, 0, 1441804, 131072, 0, 1507340, 131072, 0, 1507339, 131072, 0, 1507338, 131072, 0, 1507337, 131072, 0, 1507336, 131072, 0, 1507335, 131072, 0, 1441799, 131072, 0, 1441800, 131072, 0, 1441801, 131072, 0, 1441802, 131072, 0, 1441803, 131072, 0, 1310731, 131072, 0, 1245195, 131072, 0, 1179659, 131072, 0, 1179658, 131072, 0, 1179657, 131072, 0, 1179656, 131072, 0, 1179655, 131072, 0, 1245191, 131072, 0, 1245192, 131072, 0, 1310728, 131072, 0, 1310729, 131072, 0, 1245193, 131072, 0, 1310727, 131072, 0, 1310730, 131072, 0, 1245194, 131072, 0)
 
 [node name="reset" type="Button" parent="."]
-offset_left = 1055.0
-offset_top = 999.0
-offset_right = 1106.0
-offset_bottom = 1030.0
-text = "Reset
+offset_left = 959.0
+offset_top = 1039.0
+offset_right = 1075.0
+offset_bottom = 1070.0
+text = "Reset Camera
 "
 metadata/pronto_connections = [SubResource("Resource_rqgae")]
 
@@ -1403,18 +1422,18 @@ offset_right = 36.0
 offset_bottom = 12.0
 text = "Rotate left"
 
-[connection signal="input_event" from="VBoxContainer/Forward/SpawnerBehavior/Area2D" to="VBoxContainer/Forward/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/Loop/SpawnerBehavior/Area2D" to="VBoxContainer/Loop/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="VBoxContainer/Random/SpawnerBehavior/Area2D" to="VBoxContainer/Random/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="VBoxContainer/True/SpawnerBehavior/Area2D" to="VBoxContainer/True/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/If/SpawnerBehavior/Area2D" to="VBoxContainer/If/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/Not/SpawnerBehavior/Area2D" to="VBoxContainer/Not/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="VBoxContainer/RotateRight/SpawnerBehavior/Area2D" to="VBoxContainer/RotateRight/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D" to="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="VBoxContainer/True/SpawnerBehavior/Area2D" to="VBoxContainer/True/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="VBoxContainer/Random/SpawnerBehavior/Area2D" to="VBoxContainer/Random/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/Facing/SpawnerBehavior/Area2D" to="VBoxContainer/Facing/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/PathBlocked/SpawnerBehavior/Area2D" to="VBoxContainer/PathBlocked/SpawnerBehavior/Area2D" method="_on_input_event"]
-[connection signal="input_event" from="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D" to="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/EnemyInVision/SpawnerBehavior/Area2D" to="VBoxContainer/EnemyInVision/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D" to="VBoxContainer/EnemyDirectlyAhead/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="VBoxContainer/Forward/SpawnerBehavior/Area2D" to="VBoxContainer/Forward/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="VBoxContainer/RotateRight/SpawnerBehavior/Area2D" to="VBoxContainer/RotateRight/SpawnerBehavior/Area2D" method="_on_input_event"]
+[connection signal="input_event" from="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D" to="VBoxContainer/RotateLeft/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/Laser/SpawnerBehavior/Area2D" to="VBoxContainer/Laser/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="VBoxContainer/Punch/SpawnerBehavior/Area2D" to="VBoxContainer/Punch/SpawnerBehavior/Area2D" method="_on_input_event"]
 [connection signal="input_event" from="enemy-code-code/Area2D2" to="enemy-code-code/Area2D2" method="_on_input_event"]

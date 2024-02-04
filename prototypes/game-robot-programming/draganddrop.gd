@@ -18,21 +18,14 @@ func _process(delta):
 		
 func _set_drag_pc():
 	dragging = !dragging
-	
-#	if !dragging and len(get_overlapping_areas()) > 1:
-#		
-#		for area in get_overlapping_areas():
-#			if area == %Editor:
-#				align()
-#				return
-	
-func align():
-	position.x = 850
-	
+
 func _on_input_event(viewport, event, shape_idx):
-	print("Input event")
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			if Global.event_is_handled(event):
+				return
 			dragsignal.emit()
+			Global.note_event(event)
 		elif event.button_index == MOUSE_BUTTON_LEFT and !event.pressed:
-			dragsignal.emit()
+			if dragging:
+				dragsignal.emit()
