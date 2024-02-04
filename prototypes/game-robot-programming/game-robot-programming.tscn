@@ -717,7 +717,7 @@ offset_bottom = 500.0
 
 [node name="Loop" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn loop
+text = "Spawn \"Loop\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -769,7 +769,7 @@ text = "Repeat while"
 
 [node name="If" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn if block
+text = "Spawn \"If\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -820,7 +820,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Not" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn not block
+text = "Spawn \"Not\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -869,9 +869,12 @@ offset_bottom = 12.0
 text = "not"
 metadata/_edit_use_anchors_ = true
 
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
 [node name="True" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn true condition
+text = "Spawn condition \"True\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -902,7 +905,7 @@ text = "true"
 
 [node name="Random" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn random condition
+text = "Spawn condition \"Random (50:50)\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -933,7 +936,7 @@ text = "tossed coin shows tails"
 
 [node name="Facing" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn facing condition
+text = "Spawn condition \"Facing\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -970,7 +973,7 @@ offset_bottom = 10.0
 
 [node name="PathBlocked" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn Path blocked condition
+text = "Spawn condition \"Path blocked\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -1001,7 +1004,7 @@ text = "Path blocked"
 
 [node name="EnemyInVision" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn enemy in vision condition
+text = "Spawn condition \"Enemy in vision\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -1032,7 +1035,7 @@ text = "Enemy in vision"
 
 [node name="EnemyDirectlyAhead" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn enemy directly ahead condition
+text = "Spawn condition \"Enemy directly ahead\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -1061,9 +1064,12 @@ offset_right = 94.0
 offset_bottom = 12.0
 text = "Enemy directly ahead"
 
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
 [node name="Forward" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn drive forward
+text = "Spawn \"Drive forward\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -1094,7 +1100,7 @@ text = "Drive Forward"
 
 [node name="RotateRight" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn rotate right
+text = "Spawn \"Rotate right\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -1125,7 +1131,7 @@ text = "Rotate right"
 
 [node name="RotateLeft" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Spawn rotate left
+text = "Spawn \"Rotate left\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
@@ -1156,7 +1162,7 @@ text = "Rotate left"
 
 [node name="Laser" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Laser"
+text = "Spawn \"Laser\""
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
 [node name="SpawnerBehavior" type="Node2D" parent="VBoxContainer/Laser"]
@@ -1186,7 +1192,7 @@ text = "Fire Laser Left"
 
 [node name="Punch" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Punch
+text = "Spawn \"Punch\"
 "
 metadata/pronto_connections = [SubResource("Resource_bc7xg")]
 
