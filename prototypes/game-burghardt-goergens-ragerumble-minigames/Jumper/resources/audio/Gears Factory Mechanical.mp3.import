@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bl1ae8fx2x37n"
+path="res://.godot/imported/Gears Factory Mechanical.mp3-fa4980c9f213e4b01a0a0d2845c13d21.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-burghardt-goergens-ragerumble-minigames/Jumper/resources/audio/Gears Factory Mechanical.mp3"
+dest_files=["res://.godot/imported/Gears Factory Mechanical.mp3-fa4980c9f213e4b01a0a0d2845c13d21.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

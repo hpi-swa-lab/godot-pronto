@@ -5,17 +5,17 @@ class_name PlatformerControllerBehavior
 
 @export_category("Gameplay")
 ## Defines the available controls
-enum Player {
-	Player_1 = 0, ## A - D, W or Space to jump
-	Player_2 = 1, ## Arrow keys, up to jump
-	Player_3 = 2  ## J - L, I to jump
+enum Controls {
+	WASD = 0, ## A - D, Jump: Space
+	Arrow_Keys = 1, ## Arrow keys
+	IJKL = 2  ## J - L, Jump: I
 }
 
 ## Determines which controls (keys) are used. 
 ## Which keys that are is defined in [member PlatformControllerBehavior.key_map]
 ##
 ## See [enum PlatformControllerBehavior.Controls] for possible values
-@export var player: Player = Player.Player_1
+@export var controls: Controls = Controls.WASD
 ## The speed with which the character jumps.
 @export var jump_velocity: float = 400:
 	set(v):
@@ -47,7 +47,31 @@ var _last_jump_input = -10000
 var _last_positions_max = 30
 var _last_positions = []
 
+var movement_enabled: bool = true
+
+@onready var goal_horizontal_velocity: float = horizontal_velocity
+
 signal collided(last_collision: KinematicCollision2D)
+
+# Make sure that these keys are identical to the comments from the enum "Controls" above when changing them.
+var key_map = [{
+	"function": Input.is_physical_key_pressed,
+	"left": KEY_A,
+	"right": KEY_D,
+	"jump": KEY_W
+},
+{
+	"function": Input.is_action_pressed,
+	"left": "ui_left",
+	"right": "ui_right",
+	"jump": "ui_up"
+},
+{
+	"function": Input.is_physical_key_pressed,
+	"left": KEY_J,
+	"right": KEY_L,
+	"jump": KEY_I
+}]
 
 func _enter_tree():
 	if not get_parent() is CharacterBody2D:
@@ -82,21 +106,31 @@ func _draw():
 	for pos in _last_positions:
 		draw_circle(pos, 3, Color.RED)
 
-#const valid_directions = ["left", "right", "jump"]
 func _is_key_pressed(direction):
-	#if not direction in valid_directions:
-		#push_error("Direction must be one of {0} (got {1})".format(", ".join(valid_directions), direction))
-	var action_string = "player_{0}_{1}".format([str(player), direction])
-	return Input.is_action_pressed(action_string)
+	var keys = key_map[controls]
+	if (typeof(keys[direction]) == TYPE_ARRAY):
+		return keys[direction].any(func(key): return keys["function"].call(key))
+	else:
+		return keys["function"].call(keys[direction])
+
 
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
 	
+	# region for lerping the horizontal_velocity
+	var delta_time = delta
+	var duration = 0.5 # goal Duration of the transition in seconds
+	var t = min(delta_time / duration, 1.0) # Ensure t is between 0 and 1
+	var start_value = horizontal_velocity
+	var end_value = goal_horizontal_velocity
+	horizontal_velocity = lerp(start_value, end_value, t)
+	
 	var gravity = PhysicsServer2D.body_get_direct_state(_parent).total_gravity
 	if gravity_paused:
 		gravity = Vector2.ZERO
 	
+
 	# vertical
 	_update_jump()
 	if _can_jump():
@@ -106,28 +140,35 @@ func _physics_process(delta):
 		_parent.velocity.y = -jump_velocity
 	else:
 		_parent.velocity.y += gravity.y * delta
-	
-	# horizontal
-	var input_direction_x = 0
-	if _is_key_pressed("left"):
-		input_direction_x += -1
-	if _is_key_pressed("right"):
-		input_direction_x += 1
-	_parent.velocity.x = input_direction_x * horizontal_velocity
-	_parent.velocity.x += gravity.x * delta
-	
-	# move
-	var did_collide = _parent.move_and_slide()
-	
-	if did_collide:
-		collided.emit(_parent.get_last_slide_collision())
-	
-	# trail
-	_last_positions.append(_parent.position)
-	if _last_positions.size() > _last_positions_max:
-		_last_positions.pop_front()
-	
+		
+	if movement_enabled:
+		# horizontal
+		var input_direction_x = 0
+		if _is_key_pressed("left"):
+			input_direction_x += -1
+		if _is_key_pressed("right"):
+			input_direction_x += 1
+		_parent.velocity.x = input_direction_x * horizontal_velocity
+		_parent.velocity.x += gravity.x * delta
+		
+		# move
+		var did_collide = _parent.move_and_slide()
+		
+		if did_collide:
+			collided.emit(_parent.get_last_slide_collision())
+		
+		# trail
+		_last_positions.append(_parent.position)
+		if _last_positions.size() > _last_positions_max:
+			_last_positions.pop_front()
+		
 	queue_redraw()
 
 func lines():
 	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (f): return "controls", "controls")]
+
+func update_horizontal_velocity(value: float):
+	goal_horizontal_velocity = value
+
+func set_movement_enabled(boolean: bool):
+	movement_enabled = boolean

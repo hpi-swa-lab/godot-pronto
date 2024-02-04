@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhmbalp02kf76"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
+[ext_resource type="Script" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/mainmenu.gd" id="1_flf17"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_flf17")
+
+[node name="ExportBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1")
+title = "RageRumble"
+authors = PackedStringArray("Pierre Burghardt", "Tobias Goergens")
+description = "Collection of outrageous minigames"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 422.0
+offset_top = 258.0
+offset_right = 748.0
+offset_bottom = 343.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+color = Color(0.854902, 0.266667, 0.176471, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ShooterButton" type="Button" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "ShOoT!1!"
+
+[node name="GuitarHeroButton" type="Button" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Hero in!"
+
+[node name="ScreamJumpButton" type="Button" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "JJUUMMP!"
+
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/HBoxContainer/ShooterButton" to="." method="_on_shooter_button_down"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/HBoxContainer/GuitarHeroButton" to="." method="_on_guitar_hero_button_down"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/HBoxContainer/ScreamJumpButton" to="." method="_on_scream_jump_button_down"]

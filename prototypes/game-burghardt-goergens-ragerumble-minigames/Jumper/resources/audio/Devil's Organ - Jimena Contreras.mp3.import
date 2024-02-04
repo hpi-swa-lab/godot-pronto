@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://vkq36uncgqho"
+path="res://.godot/imported/Devil's Organ - Jimena Contreras.mp3-8631a772c7e28f123048b2843fbdfdaf.mp3str"
+
+[deps]
+
+source_file="res://prototypes/game-burghardt-goergens-ragerumble-minigames/Jumper/resources/audio/Devil's Organ - Jimena Contreras.mp3"
+dest_files=["res://.godot/imported/Devil's Organ - Jimena Contreras.mp3-8631a772c7e28f123048b2843fbdfdaf.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
