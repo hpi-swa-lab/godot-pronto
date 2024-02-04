@@ -12,6 +12,7 @@ script = ExtResource("1")
 title = "RageRumble"
 authors = PackedStringArray("Pierre Burghardt", "Tobias Goergens")
 description = "Collection of outrageous minigames"
+take_screenshot = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

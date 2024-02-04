@@ -1,6 +1,5 @@
-[gd_scene load_steps=20 format=3 uid="uid://fr4bg276k240"]
+[gd_scene load_steps=19 format=3 uid="uid://fr4bg276k240"]
 
-[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Script" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/GuitarHero/Scripts/Game.gd" id="1_od03g"]
 [ext_resource type="Texture2D" uid="uid://bcys26i3fl3d5" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/GuitarHero/arena.png" id="2_3lpk4"]
 [ext_resource type="Texture2D" uid="uid://x2sac485rpyp" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/GuitarHero/Sprites/game/road/road.png" id="2_ob8wy"]
@@ -504,13 +503,6 @@ metadata/_edit_use_anchors_ = true
 [node name="Conductor" parent="." instance=ExtResource("10_s64sl")]
 stream = ExtResource("8_sgk04")
 volume_db = -15.0
-
-[node name="ExportBehavior" type="Node2D" parent="."]
-position = Vector2(576, 324)
-script = ExtResource("1")
-title = "Rhythmic Reign"
-authors = PackedStringArray("Tobias Goergens", "Pierre Burghardt")
-description = "Prototype for rhythmic game mechanic"
 
 [node name="TileMap" type="TileMap" parent="."]
 modulate = Color(0.294118, 0, 0, 1)
