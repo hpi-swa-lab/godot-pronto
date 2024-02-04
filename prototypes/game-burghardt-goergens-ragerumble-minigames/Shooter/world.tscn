@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c8oqxmm2w2wvv"]
+[gd_scene load_steps=11 format=3 uid="uid://c8oqxmm2w2wvv"]
 
 [ext_resource type="Script" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/Shooter/world.gd" id="1_6tkge"]
 [ext_resource type="PackedScene" uid="uid://c1j7an8woikyd" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/Shooter/environment.tscn" id="1_iktak"]
@@ -23,6 +23,8 @@ bg_color = Color(1, 0.117647, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmecq"]
 bg_color = Color(0.00392157, 1, 0, 1)
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_w6lcf"]
 
 [node name="World" type="Node"]
 script = ExtResource("1_6tkge")
@@ -130,6 +132,11 @@ script = ExtResource("4_6timr")
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://prototypes/game-burghardt-goergens-ragerumble-minigames/Shooter/player.tscn")
 spawn_path = NodePath("..")
+
+[node name="AudioStreamRecord" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_w6lcf")
+autoplay = true
+bus = &"Record"
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
