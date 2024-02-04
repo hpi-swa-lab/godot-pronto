@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://xcjrjq5cbn7y"]
+[gd_scene load_steps=18 format=3 uid="uid://xcjrjq5cbn7y"]
 
 [ext_resource type="Script" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/Shooter/Player.gd" id="1_2v3wm"]
 [ext_resource type="PackedScene" uid="uid://cf1dcxwv6bvl3" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/Shooter/models/Pistol.glb" id="2_4esil"]
@@ -133,7 +133,9 @@ properties/2/path = NodePath("Camera3D:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D"]
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_2wxd4"]
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_2v3wm")
 
@@ -174,5 +176,10 @@ playback_default_blend_time = 0.05
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_hn37q")
+
+[node name="AudioStreamRecord" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_2wxd4")
+autoplay = true
+bus = &"Record"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
