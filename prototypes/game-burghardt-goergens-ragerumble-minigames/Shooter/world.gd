@@ -12,7 +12,7 @@ var enet_peer = ENetMultiplayerPeer.new()
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit"):
-		get_tree().quit()
+		get_tree().change_scene_to_file("res://prototypes/game-burghardt-goergens-ragerumble-minigames/game-burghardt-goergens-ragerumble-minigames.tscn")
 
 func _on_host_button_pressed():
 	main_menu.hide()

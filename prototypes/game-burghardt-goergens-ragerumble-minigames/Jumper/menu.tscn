@@ -13,3 +13,5 @@ offset_bottom = 294.0
 scale = Vector2(4.02586, 3.15462)
 text = "Start"
 metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Button" to="." method="_on_Start_Button_button_down"]
