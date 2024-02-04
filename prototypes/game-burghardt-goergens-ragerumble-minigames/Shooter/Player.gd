@@ -6,7 +6,11 @@ signal health_changed(health_value)
 @onready var anim_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
 @onready var raycast = $Camera3D/RayCast3D
-
+var stereo := true
+var effect  # See AudioEffect in docs
+var recording  # See AudioStreamSample in docs
+var mix_rate := 44100  # This is the default mix rate on recordings
+var format := 1  # This equals to the default format: 16 bits
 var health = 3
 
 @export var SPEED = 10.0
@@ -23,6 +27,13 @@ func _ready():
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.current = true
+	var idx = AudioServer.get_bus_index("Record")
+	effect = AudioServer.get_bus_effect(idx, 0)
+	while true:
+		_on_RecordButton_pressed()
+		await get_tree().create_timer(0.1).timeout
+		_on_RecordButton_pressed()
+		_on_PlayButton_pressed()
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority(): return
@@ -88,3 +99,42 @@ func receive_damage():
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot":
 		anim_player.play("idle")
+
+
+func _on_RecordButton_pressed():
+	if effect.is_recording_active():
+		recording = effect.get_recording()
+		effect.set_recording_active(false)
+		recording.set_mix_rate(mix_rate)
+		recording.set_format(format)
+		recording.set_stereo(stereo)
+	else:
+		effect.set_recording_active(true)
+
+func _on_PlayButton_pressed():
+	var max_amplitude = 0
+	var data = recording.get_data()
+	const threshold = 5000
+	# Iterate through each pair of bytes in the PackedByteArray
+	for i in range(0, data.size(), 2):
+	# Combine two bytes to create one 16-bit sample
+		var sample = data[i] | (data[i+1] << 8)
+	
+	# Convert to signed 16-bit integer if necessary
+		if sample >= 32768:
+			sample -= 65536
+	
+	# Calculate absolute value for amplitude
+		var amplitude = abs(sample)
+		amplitude = max(0, amplitude - threshold)
+		#if amplitude <= 200:
+		#	amplitude = 0
+
+	# Update max_amplitude if this sample's amplitude is greater
+		if amplitude > max_amplitude:
+			max_amplitude = amplitude
+	#var amplitude_percentage = roundi(100.0*max_amplitude/(32768 - threshold))
+	var amplitude_percentage = roundi(100.0*max_amplitude/(20000 - threshold))
+	var playerlabel = get_tree().get_nodes_in_group("label")[0]
+	playerlabel.setText("Amp: " + str(amplitude_percentage) +"%")
+	SPEED = 10.0 + 10.0 * (max_amplitude / threshold)
