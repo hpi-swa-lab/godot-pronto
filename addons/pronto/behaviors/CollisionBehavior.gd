@@ -110,3 +110,16 @@ func _on_area_2d_body_entered(body):
 	#var timer = get_parent().get_parent().get_parent().find_child("Timer")
 	#timer.set_one_shot(true)
 	#timer.start(3)
+
+
+func _on_rifle_body_entered(body):
+	var player2 = get_tree().get_nodes_in_group("player")[1]
+	player2.timeCapsule = true
+	get_tree().get_nodes_in_group("rifle")[0].queue_free()
+
+	#var labels = get_tree().get_nodes_in_group("label")
+	#for label in labels:
+	#label.show()
+	#await get_tree().create_timer(3).timeout
+	#for label in labels:
+	#label.hide()

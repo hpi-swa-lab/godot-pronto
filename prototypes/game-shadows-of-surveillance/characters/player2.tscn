@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/player2.gd" id="1_dxuki"]
 [ext_resource type="Texture2D" uid="uid://dx884i5e2o8ql" path="res://prototypes/game-shadows-of-surveillance/characters/Pink Man/Idle (32x32).png" id="2_3wlyp"]
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/characters/PlatformerControllerPlayer2.gd" id="3_kwpqc"]
-[ext_resource type="Texture2D" uid="uid://ca3jyudumrgbl" path="res://LightSprite.png" id="4_u5jrv"]
+[ext_resource type="Texture2D" uid="uid://ch6w3mr4w7ueu" path="res://LightSprite.png" id="4_u5jrv"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="5_oymb4"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_82em1"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_dkbr3"]
