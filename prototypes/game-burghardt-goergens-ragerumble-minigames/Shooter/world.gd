@@ -45,7 +45,7 @@ func add_player(peer_id):
 	if player.is_multiplayer_authority():
 		player.health_changed.connect(update_health_bar)
 		player.amp_changes.connect(set_amp_label)
-		player.kill_changes.connect(set_kill_label)
+		player.kills_changed.connect(set_kill_label)
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
@@ -58,12 +58,11 @@ func update_health_bar(health_value):
 func set_amp_label(amp):
 	$CanvasLayer/HUD/Recordinglabel.set_text(amp)
 	
-func set_kill_label(kills):
-	print(kills)
-	$CanvasLayer/HUD/KillCounter.set_text("Kills: " + str(kills))
+func set_kill_label(kills_value):
+	$CanvasLayer/HUD/KillCounter.set_text(kills_value)
 
 func _on_multiplayer_spawner_spawned(node):
 	if node.is_multiplayer_authority():
 		node.health_changed.connect(update_health_bar)
 		node.amp_changes.connect(set_amp_label)
-		node.kill_changes.connect(set_kill_label)
+		node.kills_changed.connect(set_kill_label)

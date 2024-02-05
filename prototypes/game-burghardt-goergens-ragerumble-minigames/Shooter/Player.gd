@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 signal health_changed(health_value)
 signal amp_changes(amp)
-signal kill_changes(kills)
+signal kills_changed(kills_value)
 
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
@@ -97,16 +97,17 @@ func play_shoot_effects():
 func receive_damage():
 	health -= 1
 	if health <= 0:
-		set_kills.rpc_id(multiplayer.get_remote_sender_id())
+		var sender = multiplayer.get_remote_sender_id()
+		var enemy = get_parent().get_node_or_null(str(sender))
+		enemy.set_kills.rpc_id(sender)
 		health = 3
 		position = Vector3.ZERO
 	health_changed.emit(health)
-	
+
 @rpc("any_peer")
 func set_kills():
 	kills += 1
-	print(kills)
-	kill_changes.emit(kills)
+	kills_changed.emit("Kills: " + str(kills))
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot":
