@@ -24,7 +24,7 @@ bg_color = Color(1, 0.117647, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cf32s"]
 bg_color = Color(0.00392157, 1, 0, 1)
 
-[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_h1sb2"]
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_mf6rc"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_1h20w")
@@ -128,15 +128,15 @@ text = "Amp: 0"
 script = ExtResource("22_4qbxk")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://prototypes/game-burghardt-goergens-ragerumble-minigames/Shooter/player.tscn")
+_spawnable_scenes = PackedStringArray("res://prototypes/game-burghardt-goergens-ragerumble-minigames/Jumper/player.tscn")
 spawn_path = NodePath("..")
 
+[node name="environment" parent="." instance=ExtResource("4_ajv8v")]
+
 [node name="AudioStreamRecord" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamMicrophone_h1sb2")
+stream = SubResource("AudioStreamMicrophone_mf6rc")
 autoplay = true
 bus = &"Record"
-
-[node name="environment" parent="." instance=ExtResource("4_ajv8v")]
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]

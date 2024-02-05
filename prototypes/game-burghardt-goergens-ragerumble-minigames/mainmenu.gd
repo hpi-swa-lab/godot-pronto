@@ -19,5 +19,5 @@ func _on_shooter_button_down():
 		print ("Error changing to Shooter!")
 
 func _on_scream_jump_button_down():
-	if get_tree().change_scene_to_file("res://prototypes/game-burghardt-goergens-ragerumble-minigames/Jumper/menu.tscn") != OK:
+	if get_tree().change_scene_to_file("res://prototypes/game-burghardt-goergens-ragerumble-minigames/Jumper/game-test.tscn") != OK:
 		print ("Error changing to Jumper!")
