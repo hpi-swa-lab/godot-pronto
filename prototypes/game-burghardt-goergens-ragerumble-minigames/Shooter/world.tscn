@@ -82,7 +82,6 @@ placeholder_text = "Enter Address to Join Here"
 alignment = 1
 
 [node name="HUD" type="Control" parent="CanvasLayer"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -120,13 +119,22 @@ max_value = 3.0
 value = 3.0
 show_percentage = false
 
-[node name="Recordinglabel" type="Label" parent="CanvasLayer/HUD" groups=["label"]]
+[node name="Recordinglabel" type="Label" parent="CanvasLayer/HUD"]
 layout_mode = 0
-offset_left = 542.0
+offset_left = 487.0
 offset_top = 37.0
-offset_right = 596.0
+offset_right = 541.0
 offset_bottom = 60.0
 text = "Amp: 0"
+script = ExtResource("4_6timr")
+
+[node name="KillCounter" type="Label" parent="CanvasLayer/HUD"]
+layout_mode = 0
+offset_left = 590.0
+offset_top = 37.0
+offset_right = 644.0
+offset_bottom = 60.0
+text = "Kills: 0"
 script = ExtResource("4_6timr")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]

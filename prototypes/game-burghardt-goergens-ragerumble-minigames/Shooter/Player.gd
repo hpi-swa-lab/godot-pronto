@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 signal health_changed(health_value)
 signal amp_changes(amp)
+signal kill_changes(kills)
 
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
@@ -13,6 +14,7 @@ var recording  # See AudioStreamSample in docs
 var mix_rate := 44100  # This is the default mix rate on recordings
 var format := 1  # This equals to the default format: 16 bits
 var health = 3
+var kills = 0
 
 @export var SPEED = 10.0
 const JUMP_VELOCITY = 10.0
@@ -95,9 +97,16 @@ func play_shoot_effects():
 func receive_damage():
 	health -= 1
 	if health <= 0:
+		set_kills.rpc_id(multiplayer.get_remote_sender_id())
 		health = 3
 		position = Vector3.ZERO
 	health_changed.emit(health)
+	
+@rpc("any_peer")
+func set_kills():
+	kills += 1
+	print(kills)
+	kill_changes.emit(kills)
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot":

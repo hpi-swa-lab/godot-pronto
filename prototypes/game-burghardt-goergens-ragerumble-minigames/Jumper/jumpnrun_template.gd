@@ -9,7 +9,6 @@ var key_map = {
 
 func _ready():
 	$TileMap.material.set_light_mode(2)
-	$TileMap2.material.set_light_mode(2)
 	camera.make_current()
 
 func restart_game():
