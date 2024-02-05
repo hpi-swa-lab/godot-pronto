@@ -13,6 +13,7 @@ position = Vector2(578, 319)
 scale = Vector2(3.5, 3.5)
 texture = ExtResource("1_j6sv0")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="6" groups=["dark"]]
 [node name="Background_2" type="Sprite2D" parent="Background"]
 position = Vector2(576, 0)
 texture = ExtResource("1_j6sv0")

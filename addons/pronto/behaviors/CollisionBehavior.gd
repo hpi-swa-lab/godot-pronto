@@ -83,17 +83,22 @@ func _get_configuration_warnings():
 		return ["Collision only works with Area2D, RigidBody2D and CharacterBody2D"]
 	return ""
 	
+	
+func toggleVisibility(node):
+	if node.visible:
+		node.hide()
+	else: 
+		node.show()
+
 func _on_area_2d_body_entered(body):
 	var dark = get_tree().get_nodes_in_group("dark")
 	print("dark:", dark)
 	if dark:
-		var canvasModulate = dark[0]
-		canvasModulate.hide()
+		toggleVisibility(dark[0])
 	
 	var light = get_tree().get_nodes_in_group("light")
 	if light:
-		var flashlight = light[0]
-		flashlight.hide()
+		toggleVisibility(light[0])
 	
 	#var canvasModulate = dark.get_node("CanvasModulate")
 	#var canvasModulate = get_parent().get_parent().find_child("CanvasModulate")
