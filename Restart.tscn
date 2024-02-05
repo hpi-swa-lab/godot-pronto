@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://fe6tbssgpdo"]
+
+[ext_resource type="Script" path="res://Restart.gd" id="1_dmkts"]
+[ext_resource type="Texture2D" uid="uid://bauf77n1ppfno" path="res://background.png" id="2_f6gj5"]
+
+[sub_resource type="SystemFont" id="SystemFont_vi34g"]
+
+[node name="RestartMenu" type="Node2D"]
+script = ExtResource("1_dmkts")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(594, 325)
+scale = Vector2(0.662946, 0.632139)
+texture = ExtResource("2_f6gj5")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_left = 464.0
+offset_top = 210.0
+offset_right = 802.0
+offset_bottom = 455.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Restart" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_vi34g")
+text = "Restart"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

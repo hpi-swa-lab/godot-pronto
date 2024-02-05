@@ -43,12 +43,11 @@ func _physics_process(delta):
 			
 	if player:
 		var distanceToPlayer = position.distance_to(player.position)
-		if distanceToPlayer > 200:
+		if distanceToPlayer < 1000:
 			shootingTimer += delta
 			if shootingTimer > shootingCooldown:
 				shoot()
 				shootingTimer = 0
-				print("shoot")
 	move_and_slide()
 
 func shoot():

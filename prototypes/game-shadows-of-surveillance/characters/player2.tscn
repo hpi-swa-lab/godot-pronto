@@ -69,5 +69,7 @@ script = ExtResource("3_kwpqc")
 [node name="HealthBarBehavior" type="Node2D" parent="."]
 position = Vector2(0, -11.6279)
 script = ExtResource("5_oymb4")
+max = 200
+current = 200
 progress_gradient = SubResource("Gradient_53jmr")
 metadata/pronto_connections = [SubResource("Resource_xvx8k")]

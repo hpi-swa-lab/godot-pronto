@@ -32,9 +32,15 @@ func _physics_process(delta):
 		
 func die():
 	queue_free()
+	get_tree().change_scene_to_file("res://Restart.tscn")
 	
 func shoot():
 	var b = bullet_scene.instantiate()
 	var direction = (get_global_mouse_position() - global_position).normalized()
 	b.setup(direction, $Marker2D.global_position)
 	owner.add_child(b)
+
+
+func _on_goal_body_entered(body):
+	if body.is_in_group("player"):
+		get_tree().change_scene_to_file("res://Win.tscn")

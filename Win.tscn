@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://by5ds7n3g1sv"]
+
+[ext_resource type="Script" path="res://Restart.gd" id="1_kwtlj"]
+[ext_resource type="Texture2D" uid="uid://bauf77n1ppfno" path="res://background.png" id="2_qdldx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u547s"]
+font_size = 76
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.92549)
+
+[sub_resource type="SystemFont" id="SystemFont_vi34g"]
+
+[node name="RestartMenu" type="Node2D"]
+script = ExtResource("1_kwtlj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(594, 325)
+scale = Vector2(0.662946, 0.632139)
+texture = ExtResource("2_qdldx")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_left = 464.0
+offset_top = 210.0
+offset_right = 802.0
+offset_bottom = 455.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "You Won"
+label_settings = SubResource("LabelSettings_u547s")
+
+[node name="Restart" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_vi34g")
+text = "Restart"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
