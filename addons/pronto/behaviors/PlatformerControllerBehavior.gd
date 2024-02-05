@@ -74,10 +74,12 @@ var key_map = [{
 }]
 
 func _enter_tree():
+	if not is_multiplayer_authority(): return
 	if not get_parent() is CharacterBody2D:
 		push_error("PlatformerController must be a child of a CharacterBody2D")
 
 func _update_jump():
+	if not is_multiplayer_authority(): return
 	var now = Time.get_ticks_msec()
 	
 	if _parent.is_on_floor():
@@ -88,16 +90,19 @@ func _update_jump():
 		_last_jump_input = now
 
 func _can_jump():
+	if not is_multiplayer_authority(): return
 	var now = Time.get_ticks_msec()
 	var input = _last_jump_input > now - 1000 * jump_buffer
 	var floored = _last_on_floor > now - 1000 * coyote_time
 	return input and floored
 
 func _reset_jump():
+	if not is_multiplayer_authority(): return
 	_last_jump_input = -10000
 	_last_on_floor = -10000
 
 func _draw():
+	if not is_multiplayer_authority(): return
 	super._draw()
 	if !show_trail:
 		return
@@ -117,6 +122,7 @@ func _is_key_pressed(direction):
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
+	if not is_multiplayer_authority(): return
 	
 	# region for lerping the horizontal_velocity
 	var delta_time = delta
@@ -165,10 +171,13 @@ func _physics_process(delta):
 	queue_redraw()
 
 func lines():
+	if not is_multiplayer_authority(): return
 	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (f): return "controls", "controls")]
 
 func update_horizontal_velocity(value: float):
+	if not is_multiplayer_authority(): return
 	goal_horizontal_velocity = value
 
 func set_movement_enabled(boolean: bool):
+	if not is_multiplayer_authority(): return
 	movement_enabled = boolean

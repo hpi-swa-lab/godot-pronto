@@ -26,7 +26,7 @@ func _physics_process(delta):
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	player = get_parent().get_parent().get_node("Player")
+	player = get_tree().get_nodes_in_group("player")[0]
 	if player == null:
 		return
 	playerpos = player.global_position.x

@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 signal health_changed(health_value)
+signal amp_changes(amp)
 
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
@@ -27,7 +28,9 @@ func _ready():
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.current = true
+	print("here")
 	var idx = AudioServer.get_bus_index("Record")
+	AudioServer.add_bus_effect(idx, AudioEffectRecord.new(), 0)
 	effect = AudioServer.get_bus_effect(idx, 0)
 	while true:
 		_on_RecordButton_pressed()
@@ -112,9 +115,9 @@ func _on_RecordButton_pressed():
 		effect.set_recording_active(true)
 
 func _on_PlayButton_pressed():
-	var max_amplitude = 0
 	var data = recording.get_data()
-	const threshold = 5000
+	const max_amplitude = 12000.0
+	var amplitude = 0.0
 	# Iterate through each pair of bytes in the PackedByteArray
 	for i in range(0, data.size(), 2):
 	# Combine two bytes to create one 16-bit sample
@@ -125,16 +128,10 @@ func _on_PlayButton_pressed():
 			sample -= 65536
 	
 	# Calculate absolute value for amplitude
-		var amplitude = abs(sample)
-		amplitude = max(0, amplitude - threshold)
-		#if amplitude <= 200:
-		#	amplitude = 0
-
-	# Update max_amplitude if this sample's amplitude is greater
-		if amplitude > max_amplitude:
-			max_amplitude = amplitude
+		amplitude = abs(sample)
+		if amplitude <= 200.0:
+			amplitude = 0.0
 	#var amplitude_percentage = roundi(100.0*max_amplitude/(32768 - threshold))
-	var amplitude_percentage = roundi(100.0*max_amplitude/(20000 - threshold))
-	var playerlabel = get_tree().get_nodes_in_group("label")[0]
-	playerlabel.setText("Amp: " + str(amplitude_percentage) +"%")
-	SPEED = 10.0 + 10.0 * (max_amplitude / threshold)
+	var amplitude_percentage = roundi(100.0* (amplitude / max_amplitude))
+	amp_changes.emit("Amp: " + str(amplitude_percentage) +"%")
+	SPEED = 10.0 + 10.0 * (amplitude / max_amplitude)
