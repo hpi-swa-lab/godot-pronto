@@ -1,9 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://c83unhh8aqtco"]
+[gd_scene load_steps=7 format=3 uid="uid://c83unhh8aqtco"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1"]
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/game-shadows-of-surveillance.gd" id="1_odj0a"]
 [ext_resource type="PackedScene" uid="uid://dyvtu758xr2so" path="res://prototypes/game-shadows-of-surveillance/levels/level.tscn" id="3_3xcs3"]
 [ext_resource type="PackedScene" uid="uid://nrfvxvrpbboq" path="res://prototypes/game-shadows-of-surveillance/levels/level2.tscn" id="4_bj0tv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gbxak"]
+font_size = 25
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5losd"]
+font_size = 25
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_odj0a")
@@ -30,6 +40,13 @@ render_target_update_mode = 4
 
 [node name="Level" parent="LeftSubViewportContainer/SubViewport" instance=ExtResource("3_3xcs3")]
 
+[node name="LeftLabel" type="Label" parent="LeftSubViewportContainer" groups=["label"]]
+visible = false
+layout_mode = 2
+text = "You just put the Rifle into a time capsule!"
+label_settings = SubResource("LabelSettings_gbxak")
+horizontal_alignment = 1
+
 [node name="RightSubViewportContainer" type="SubViewportContainer" parent="."]
 offset_left = 576.0
 offset_right = 1153.0
@@ -44,6 +61,13 @@ render_target_update_mode = 4
 [node name="Camera2D" type="Camera2D" parent="RightSubViewportContainer/SubViewport"]
 
 [node name="Level2" parent="RightSubViewportContainer/SubViewport" instance=ExtResource("4_bj0tv")]
+
+[node name="RightLabel" type="Label" parent="RightSubViewportContainer" groups=["label"]]
+visible = false
+layout_mode = 2
+text = "You just found the Rifle in a time capsule!"
+label_settings = SubResource("LabelSettings_5losd")
+horizontal_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 566.0

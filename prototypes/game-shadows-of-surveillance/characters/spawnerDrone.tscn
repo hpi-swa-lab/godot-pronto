@@ -1,13 +1,13 @@
-[gd_scene load_steps=24 format=3 uid="uid://ds24wbrnr7tta"]
+[gd_scene load_steps=24 format=3 uid="uid://bgp6gb2h3myof"]
 
-[ext_resource type="Script" path="res://addons/pronto/helpers/Behavior.gd" id="1_1yuyd"]
-[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/drone.gd" id="1_lvo7j"]
-[ext_resource type="Texture2D" uid="uid://dn1e3hoeursu" path="res://prototypes/game-shadows-of-surveillance/assets/drone.png" id="2_fdysg"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="3_bsdfp"]
-[ext_resource type="Material" uid="uid://b5akcj0c3kh4w" path="res://addons/pronto/icons/icon_outline_material.tres" id="4_7xmif"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="5_kgvfr"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_r5j4j"]
-[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_4ojfr"]
+[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/drone.gd" id="1_fox4f"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Behavior.gd" id="2_1kpyf"]
+[ext_resource type="Texture2D" uid="uid://dn1e3hoeursu" path="res://prototypes/game-shadows-of-surveillance/assets/drone.png" id="3_om10t"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="4_oguuv"]
+[ext_resource type="Material" uid="uid://b5akcj0c3kh4w" path="res://addons/pronto/icons/icon_outline_material.tres" id="5_yx7ll"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="6_3hwvo"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="7_d0ojv"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="8_8n4uw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kvhpb"]
 
@@ -28,14 +28,14 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(delta, from, to):
-	var player = get_parent().get_parent().get_parent().get_node(\"Player2\")
+	var player = get_parent().get_parent().get_parent().get_parent().get_node(\"Player2\")
 	var random_x = randf_range(-50, 50)
 	var random_y = randf_range(-50, 50)
 	return (player.position - to.get_parent().position + Vector2(random_x, random_y)).normalized()
 "
 
 [sub_resource type="Resource" id="Resource_htvxy"]
-script = ExtResource("6_r5j4j")
+script = ExtResource("7_d0ojv")
 nested_script = SubResource("GDScript_6kxwn")
 argument_names = ["delta", "from", "to"]
 return_value = true
@@ -45,19 +45,19 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(delta, from: Node2D, to: Node2D):
-	var player = get_parent().get_parent().get_parent().get_node(\"Player2\")
+	var player = get_parent().get_parent().get_parent().get_parent().get_node(\"Player2\")
 	if player:
 		return (player.position - to.get_parent().position).length() > 150
 "
 
 [sub_resource type="Resource" id="Resource_lsqwp"]
-script = ExtResource("6_r5j4j")
+script = ExtResource("7_d0ojv")
 nested_script = SubResource("GDScript_jvn02")
 argument_names = ["delta", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_81ot0"]
-script = ExtResource("7_4ojfr")
+script = ExtResource("8_8n4uw")
 signal_name = "always"
 to = NodePath("..")
 more_references = []
@@ -73,14 +73,14 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(delta, from, to):
-	var player = get_parent().get_parent().get_parent().get_node(\"Player2\")
+	var player = get_parent().get_parent().get_parent().get_parent().get_node(\"Player2\")
 	var random_x = randf_range(-50, 50)
 	var random_y = randf_range(-50, 50)
 	return (player.position - to.get_parent().position + Vector2(random_x, random_y)).normalized() * Vector2(-1, -1)
 "
 
 [sub_resource type="Resource" id="Resource_ln8xh"]
-script = ExtResource("6_r5j4j")
+script = ExtResource("7_d0ojv")
 nested_script = SubResource("GDScript_gg4eo")
 argument_names = ["delta", "from", "to"]
 return_value = true
@@ -90,19 +90,19 @@ script/source = "@tool
 extends U
 @warning_ignore(\"unused_parameter\")
 func run(delta, from: Node2D, to: Node2D):
-	var player = get_parent().get_parent().get_parent().get_node(\"Player2\")
+	var player = get_parent().get_parent().get_parent().get_parent().get_node(\"Player2\")
 	if player: 
 		return (player.position - to.get_parent().position).length() < 150
 "
 
 [sub_resource type="Resource" id="Resource_yqroi"]
-script = ExtResource("6_r5j4j")
+script = ExtResource("7_d0ojv")
 nested_script = SubResource("GDScript_nxs8t")
 argument_names = ["delta", "from", "to"]
 return_value = true
 
 [sub_resource type="Resource" id="Resource_51sef"]
-script = ExtResource("7_4ojfr")
+script = ExtResource("8_8n4uw")
 signal_name = "always"
 to = NodePath("..")
 more_references = []
@@ -128,10 +128,10 @@ image = SubResource("Image_l4lx3")
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
 position = Vector2(870, 309)
 scale = Vector2(0.274855, 0.274855)
-script = ExtResource("1_lvo7j")
+script = ExtResource("1_fox4f")
 
 [node name="_Node2D_19803" type="Node2D" parent="."]
-script = ExtResource("1_1yuyd")
+script = ExtResource("2_1kpyf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(7.27649, -10.9149)
@@ -139,22 +139,22 @@ scale = Vector2(8.32211, 8.32211)
 shape = SubResource("CircleShape2D_kvhpb")
 
 [node name="_Node2D_19804" type="Node2D" parent="CollisionShape2D"]
-script = ExtResource("1_1yuyd")
+script = ExtResource("2_1kpyf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_fdysg")
+texture = ExtResource("3_om10t")
 
 [node name="_Node2D_19805" type="Node2D" parent="Sprite2D"]
-script = ExtResource("1_1yuyd")
+script = ExtResource("2_1kpyf")
 
 [node name="MoveBehavior" type="Node2D" parent="."]
 position = Vector2(4.34964e-06, -49.7541)
-script = ExtResource("3_bsdfp")
+script = ExtResource("4_oguuv")
 max_velocity = 100.0
 acceleration = 20.0
 
 [node name="_TextureRect_19799" type="TextureRect" parent="MoveBehavior"]
-material = ExtResource("4_7xmif")
+material = ExtResource("5_yx7ll")
 offset_left = -8.0
 offset_top = -8.0
 offset_right = -8.0
@@ -163,11 +163,11 @@ texture = SubResource("ImageTexture_1i6xe")
 
 [node name="AlwaysBehavior" type="Node2D" parent="MoveBehavior"]
 position = Vector2(-35.1815, 14.5728)
-script = ExtResource("5_kgvfr")
+script = ExtResource("6_3hwvo")
 metadata/pronto_connections = [SubResource("Resource_81ot0"), SubResource("Resource_51sef")]
 
 [node name="_TextureRect_19798" type="TextureRect" parent="MoveBehavior/AlwaysBehavior"]
-material = ExtResource("4_7xmif")
+material = ExtResource("5_yx7ll")
 offset_left = -8.0
 offset_top = -8.0
 offset_right = -8.0

@@ -28,7 +28,7 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	
 	if player:
-		var heightDifference = player.position.y - position.y
+		var heightDifference = player.global_position.y - global_position.y
 		#print(heightDifference)
 		if heightDifference < minimalHeightDiff:
 				velocity.y = -130

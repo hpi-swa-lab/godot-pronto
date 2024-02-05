@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 200.0
+const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 var timeCapsule = false
 const bullet_scene = preload("res://prototypes/game-shadows-of-surveillance/characters/bullet.tscn")
@@ -19,12 +19,7 @@ func _physics_process(delta):
 
 	# Get tehe input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+	
 	move_and_slide()
   
 	if Input.is_action_just_pressed("shoot") and timeCapsule: 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://nrfvxvrpbboq"]
+[gd_scene load_steps=46 format=3 uid="uid://nrfvxvrpbboq"]
 
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/levels/level2.gd" id="1_33jqr"]
 [ext_resource type="Texture2D" uid="uid://ej3g6agmjf0x" path="res://prototypes/game-shadows-of-surveillance/assets/6.png" id="1_j6sv0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ds24wbrnr7tta" path="res://prototypes/game-shadows-of-surveillance/characters/drone.tscn" id="4_m1bym"]
 [ext_resource type="PackedScene" uid="uid://dxp4mlvvs0g2" path="res://prototypes/game-shadows-of-surveillance/characters/player2.tscn" id="5_a7n2h"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="7_ke1up"]
+[ext_resource type="PackedScene" uid="uid://bgp6gb2h3myof" path="res://prototypes/game-shadows-of-surveillance/characters/spawnerDrone.tscn" id="8_aslly"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="8_fh3bx"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="9_wm1v4"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="10_j1m30"]
@@ -281,7 +282,6 @@ position = Vector2(575.714, 2.27374e-12)
 texture = ExtResource("1_j6sv0")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Background" groups=["dark"]]
-visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Sky" type="ColorRect" parent="Background"]
@@ -325,27 +325,24 @@ position = Vector2(688, 56)
 script = ExtResource("7_ke1up")
 metadata/pronto_connections = []
 
-[node name="drone3" parent="Spawner1" instance=ExtResource("4_m1bym")]
-position = Vector2(519, 327)
+[node name="Enemy" parent="Spawner1" instance=ExtResource("8_aslly")]
 
 [node name="Spawner2" type="Node2D" parent="."]
 position = Vector2(1277, -87)
 script = ExtResource("7_ke1up")
 
-[node name="drone4" parent="Spawner2" instance=ExtResource("4_m1bym")]
-position = Vector2(719, 327)
+[node name="Enemy" parent="Spawner2" instance=ExtResource("8_aslly")]
 
 [node name="Spawner3" type="Node2D" parent="."]
 position = Vector2(2644, 228)
 script = ExtResource("7_ke1up")
 
-[node name="drone5" parent="Spawner3" instance=ExtResource("4_m1bym")]
-position = Vector2(2017, -117)
+[node name="Enemy" parent="Spawner3" instance=ExtResource("8_aslly")]
 
 [node name="SpawnTimer" type="Node2D" parent="."]
 position = Vector2(1084, -56)
 script = ExtResource("8_fh3bx")
-duration_seconds = 20.0
+duration_seconds = 5.0
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_ygmac"), SubResource("Resource_fqdnk"), SubResource("Resource_7nopu")]
 

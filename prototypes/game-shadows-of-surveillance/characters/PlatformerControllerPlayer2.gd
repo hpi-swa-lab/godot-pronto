@@ -1,4 +1,3 @@
-@tool
 #thumb("JoyButton")
 extends Behavior
 class_name PlatformerControllerPlayer2

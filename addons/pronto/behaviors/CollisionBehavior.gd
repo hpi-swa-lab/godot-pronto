@@ -92,7 +92,6 @@ func toggleVisibility(node):
 
 func _on_area_2d_body_entered(body):
 	var dark = get_tree().get_nodes_in_group("dark")
-	print("dark:", dark)
 	if dark:
 		toggleVisibility(dark[0])
 	
@@ -117,9 +116,9 @@ func _on_rifle_body_entered(body):
 	player2.timeCapsule = true
 	get_tree().get_nodes_in_group("rifle")[0].queue_free()
 
-	#var labels = get_tree().get_nodes_in_group("label")
-	#for label in labels:
-	#label.show()
-	#await get_tree().create_timer(3).timeout
-	#for label in labels:
-	#label.hide()
+	var labels = get_tree().get_nodes_in_group("label")
+	for label in labels:
+		label.show()
+	await get_tree().create_timer(3).timeout
+	for label in labels:
+		label.hide()

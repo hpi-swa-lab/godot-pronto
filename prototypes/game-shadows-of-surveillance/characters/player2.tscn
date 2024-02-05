@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/player2.gd" id="1_dxuki"]
 [ext_resource type="Texture2D" uid="uid://dx884i5e2o8ql" path="res://prototypes/game-shadows-of-surveillance/characters/Pink Man/Idle (32x32).png" id="2_3wlyp"]
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/characters/PlatformerControllerPlayer2.gd" id="3_kwpqc"]
-[ext_resource type="Texture2D" uid="uid://ca3jyudumrgbl" path="res://LightSprite.png" id="4_u5jrv"]
+[ext_resource type="Texture2D" uid="uid://ch6w3mr4w7ueu" path="res://LightSprite.png" id="4_u5jrv"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="5_oymb4"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_82em1"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_dkbr3"]
@@ -65,11 +65,13 @@ texture = ExtResource("4_u5jrv")
 [node name="PlatformerControllerBehavior2" type="Node2D" parent="."]
 position = Vector2(576, 324)
 script = ExtResource("3_kwpqc")
+jump_velocity = 350.0
+horizontal_velocity = 300.0
 
 [node name="HealthBarBehavior" type="Node2D" parent="."]
 position = Vector2(0, -11.6279)
 script = ExtResource("5_oymb4")
-max = 10000
-current = 10000
+max = 200
+current = 200
 progress_gradient = SubResource("Gradient_53jmr")
 metadata/pronto_connections = [SubResource("Resource_xvx8k")]
