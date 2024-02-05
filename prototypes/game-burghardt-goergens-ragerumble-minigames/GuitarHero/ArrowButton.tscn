@@ -4,13 +4,13 @@
 [ext_resource type="Script" path="res://prototypes/game-burghardt-goergens-ragerumble-minigames/GuitarHero/Scripts/ArrowButton.gd" id="2"]
 
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(16.7529, 1.15498)
+size = Vector2(5.29038, 1.15498)
 
 [sub_resource type="RectangleShape2D" id="2"]
-size = Vector2(16.7529, 4.28826)
+size = Vector2(5.29038, 4.28826)
 
 [sub_resource type="RectangleShape2D" id="3"]
-size = Vector2(16.7529, 6.86121)
+size = Vector2(5.29038, 6.86121)
 
 [node name="ArrowButton" type="AnimatedSprite2D"]
 scale = Vector2(2.26827, 2.33195)
