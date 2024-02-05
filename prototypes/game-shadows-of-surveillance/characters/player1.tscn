@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c5c24526dtufn"]
 
-[ext_resource type="Texture2D" uid="uid://b6etujec8ohme" path="res://prototypes/game-shadows-of-surveillance/assets/david_player1.png" id="1_3bxhg"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="2_4o648"]
+[ext_resource type="Texture2D" uid="uid://cfemjjj52u7tw" path="res://prototypes/game-shadows-of-surveillance/characters/Virtual Guy/Idle (32x32).png" id="1_am0mg"]
+[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/characters/PlatfomerControllerPlayer1.gd" id="2_opehh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h8f81"]
 radius = 12.1039
@@ -10,15 +10,16 @@ height = 137.594
 [node name="Player1" type="CharacterBody2D"]
 
 [node name="DavidPlayer1" type="Sprite2D" parent="."]
-position = Vector2(28, -5)
-scale = Vector2(0.591623, 0.591623)
-texture = ExtResource("1_3bxhg")
+position = Vector2(0, 4.76837e-07)
+scale = Vector2(1, 1.0625)
+texture = ExtResource("1_am0mg")
+hframes = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 12)
-scale = Vector2(3.55259, 1.54803)
+position = Vector2(0, 4)
+scale = Vector2(0.912592, 0.18803)
 shape = SubResource("CapsuleShape2D_h8f81")
 
-[node name="PlatformerControllerBehavior" type="Node2D" parent="."]
+[node name="PlatformerControllerPlayer1" type="Node2D" parent="."]
 position = Vector2(576, 324)
-script = ExtResource("2_4o648")
+script = ExtResource("2_opehh")

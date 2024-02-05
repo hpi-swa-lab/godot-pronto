@@ -1,7 +1,7 @@
 @tool
 #thumb("JoyButton")
 extends Behavior
-class_name PlatformerControllerBehavior
+class_name PlatformerControllerPlayer1
 
 @export_category("Gameplay")
 ## Defines the available controls
@@ -15,7 +15,7 @@ enum Controls {
 ## Which keys that are is defined in [member PlatformControllerBehavior.key_map]
 ##
 ## See [enum PlatformControllerBehavior.Controls] for possible values
-@export var controls: Controls = Controls.Arrow_Keys
+@export var controls: Controls = Controls.WASD
 ## The speed with which the character jumps.
 @export var jump_velocity: float = 400:
 	set(v):

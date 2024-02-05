@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxp4mlvvs0g2"]
+[gd_scene load_steps=5 format=3 uid="uid://dxp4mlvvs0g2"]
 
-[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/player2.gd" id="1_dryno"]
-[ext_resource type="Texture2D" uid="uid://chiivrwridrdd" path="res://prototypes/game-shadows-of-surveillance/assets/ole_player2.jpg" id="2_s085l"]
-[ext_resource type="Script" path="res://addons/pronto/behaviors/PlatformerControllerBehavior.gd" id="3_mgoso"]
+[ext_resource type="Texture2D" uid="uid://dx884i5e2o8ql" path="res://prototypes/game-shadows-of-surveillance/characters/Pink Man/Idle (32x32).png" id="2_3wlyp"]
+[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/characters/PlatformerControllerPlayer2.gd" id="3_kwpqc"]
 [ext_resource type="Texture2D" uid="uid://ch6w3mr4w7ueu" path="res://LightSprite.png" id="4_u5jrv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7cbuj"]
@@ -11,26 +10,24 @@ height = 248.062
 [node name="Player2" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.258, 0.258)
 collision_layer = 3
-script = ExtResource("1_dryno")
 
 [node name="OlePlayer2" type="Sprite2D" parent="."]
-position = Vector2(7.75194, 7.75195)
-scale = Vector2(0.269467, 0.269467)
-texture = ExtResource("2_s085l")
+scale = Vector2(1, 1.10562)
+texture = ExtResource("2_3wlyp")
+hframes = 11
+frame = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(11.6279, 38.7597)
-scale = Vector2(5.96124, 1)
+position = Vector2(0, 3.87597)
+scale = Vector2(1, 0.11)
 shape = SubResource("CapsuleShape2D_7cbuj")
 
-[node name="PlatformerControllerBehavior" type="Node2D" parent="."]
-position = Vector2(576, 324)
-script = ExtResource("3_mgoso")
-player = 1
-
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(-54.2636, 38.7597)
 
 [node name="Flashlight" type="PointLight2D" parent="." groups=["light"]]
-position = Vector2(3.87598, 31.0078)
+scale = Vector2(0.22, 0.22)
 texture = ExtResource("4_u5jrv")
+
+[node name="PlatformerControllerBehavior2" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("3_kwpqc")

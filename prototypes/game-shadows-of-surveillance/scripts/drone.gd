@@ -11,7 +11,7 @@ var player
 var shootingTimer = 0
 
 func _ready():
-	player = get_parent().get_node("Player2")
+	player = get_parent().get_node("Player1")
 	print(player)
 
 func _physics_process(delta):
@@ -32,7 +32,7 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
 	if player:
-		var distanceToPlayer = position.distance_to(player.position)
+l		var distanceToPlayer = position.distance_to(player.position)
 		print(distanceToPlayer)
 		if distanceToPlayer > 200: 
 			shootingTimer += delta

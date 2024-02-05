@@ -1,7 +1,7 @@
 @tool
 #thumb("JoyButton")
 extends Behavior
-class_name PlatformerControllerBehavior
+class_name PlatformerControllerPlayer2
 
 @export_category("Gameplay")
 ## Defines the available controls
