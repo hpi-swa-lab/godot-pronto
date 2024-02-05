@@ -30,8 +30,10 @@ func _physics_process(delta):
   
 	if Input.is_action_just_pressed("shoot"): 
 		shoot()
+		
+func die():
+	queue_free()
 	
-
 func shoot():
 	var b = bullet_scene.instantiate()
 	var direction = (get_global_mouse_position() - global_position).normalized()

@@ -17,7 +17,9 @@ func _process(delta):
 	position += dir * speed * delta
 
 func _on_body_entered(body):
+	var playerHealth = get_parent().get_node("Player2").get_node("HealthBarBehavior")
 	if body.is_in_group("player"):
-		body.queue_free()
+		if playerHealth:
+			playerHealth.damage(20)
 	if !body.is_in_group("enemy"):
 		queue_free()

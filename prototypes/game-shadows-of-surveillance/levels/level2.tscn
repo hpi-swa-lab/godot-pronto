@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://nrfvxvrpbboq"]
 
 [ext_resource type="Texture2D" uid="uid://ej3g6agmjf0x" path="res://prototypes/game-shadows-of-surveillance/assets/6.png" id="1_j6sv0"]
-[ext_resource type="PackedScene" uid="uid://4j52c4ucysq5" path="res://Tilemap.tscn" id="2_llo4g"]
+[ext_resource type="PackedScene" path="res://Tilemap.tscn" id="2_llo4g"]
 [ext_resource type="TileSet" uid="uid://dp12gfueqor5q" path="res://tileset.tres" id="3_ko4tt"]
 [ext_resource type="PackedScene" uid="uid://ds24wbrnr7tta" path="res://prototypes/game-shadows-of-surveillance/characters/drone.tscn" id="4_m1bym"]
 [ext_resource type="PackedScene" uid="uid://dxp4mlvvs0g2" path="res://prototypes/game-shadows-of-surveillance/characters/player2.tscn" id="5_a7n2h"]
@@ -15,17 +15,14 @@ texture = ExtResource("1_j6sv0")
 
 [node name="Background_2" type="Sprite2D" parent="Background"]
 position = Vector2(576, 0)
-scale = Vector2(1, 1)
 texture = ExtResource("1_j6sv0")
 
 [node name="Background_3" type="Sprite2D" parent="Background"]
 position = Vector2(1152, 0)
-scale = Vector2(1, 1)
 texture = ExtResource("1_j6sv0")
 
 [node name="Background_4" type="Sprite2D" parent="Background/Background_3"]
 position = Vector2(575.714, 2.27374e-12)
-scale = Vector2(1, 1)
 texture = ExtResource("1_j6sv0")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Background" groups=["dark"]]

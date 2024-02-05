@@ -1,11 +1,44 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxp4mlvvs0g2"]
+[gd_scene load_steps=13 format=3 uid="uid://dxp4mlvvs0g2"]
 
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/player2.gd" id="1_dxuki"]
 [ext_resource type="Texture2D" uid="uid://dx884i5e2o8ql" path="res://prototypes/game-shadows-of-surveillance/characters/Pink Man/Idle (32x32).png" id="2_3wlyp"]
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/characters/PlatformerControllerPlayer2.gd" id="3_kwpqc"]
-[ext_resource type="Texture2D" uid="uid://ch6w3mr4w7ueu" path="res://LightSprite.png" id="4_u5jrv"]
+[ext_resource type="Texture2D" uid="uid://ca3jyudumrgbl" path="res://LightSprite.png" id="4_u5jrv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/HealthBarBehavior.gd" id="5_oymb4"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="6_82em1"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_dkbr3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_csvif"]
+
+[sub_resource type="Gradient" id="Gradient_53jmr"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.196078, 0.803922, 0.196078, 1)
+
+[sub_resource type="GDScript" id="GDScript_1v478"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: CharacterBody2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_v6c5t"]
+script = ExtResource("6_82em1")
+nested_script = SubResource("GDScript_1v478")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_xvx8k"]
+script = ExtResource("7_dkbr3")
+signal_name = "death"
+to = NodePath("..")
+more_references = []
+invoke = "die"
+arguments = []
+only_if = SubResource("Resource_v6c5t")
+deferred = false
+enabled = true
+trigger = ""
 
 [node name="Player2" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.258, 0.258)
@@ -32,3 +65,9 @@ texture = ExtResource("4_u5jrv")
 [node name="PlatformerControllerBehavior2" type="Node2D" parent="."]
 position = Vector2(576, 324)
 script = ExtResource("3_kwpqc")
+
+[node name="HealthBarBehavior" type="Node2D" parent="."]
+position = Vector2(0, -11.6279)
+script = ExtResource("5_oymb4")
+progress_gradient = SubResource("Gradient_53jmr")
+metadata/pronto_connections = [SubResource("Resource_xvx8k")]
