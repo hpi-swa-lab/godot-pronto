@@ -1,12 +1,11 @@
 extends CharacterBody2D
 
-const bullet_scene = preload("res://prototypes/game-shadows-of-surveillance/characters/bullet.tscn")
 const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
-
+var timeCapsule = false
+const bullet_scene = preload("res://prototypes/game-shadows-of-surveillance/characters/bullet.tscn")
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -28,7 +27,7 @@ func _physics_process(delta):
 
 	move_and_slide()
   
-	if Input.is_action_just_pressed("shoot"): 
+	if Input.is_action_just_pressed("shoot") and timeCapsule: 
 		shoot()
 	
 

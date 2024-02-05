@@ -1,15 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://ci42negqibb6p"]
 
-[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/bullet.gd" id="1_kahhp"]
+[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/characters/droneBullet.gd" id="1_rjykv"]
 [ext_resource type="Texture2D" uid="uid://cooutieukq5fx" path="res://prototypes/game-shadows-of-surveillance/assets/laserRed01.png" id="2_uy31x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cn71r"]
 size = Vector2(57, 10)
 
-[node name="Bullet" type="Area2D"]
+[node name="Dronebullet" type="Area2D"]
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("1_kahhp")
+script = ExtResource("1_rjykv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
