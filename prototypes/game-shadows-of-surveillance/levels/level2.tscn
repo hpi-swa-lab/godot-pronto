@@ -14,6 +14,7 @@ scale = Vector2(3.5, 3.5)
 texture = ExtResource("1_j6sv0")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="6" groups=["dark"]]
+visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="TileMap" parent="." instance=ExtResource("2_llo4g")]
@@ -26,3 +27,6 @@ position = Vector2(932, -32)
 [node name="Player2" parent="." instance=ExtResource("5_a7n2h")]
 position = Vector2(294, 440)
 scale = Vector2(1.5, 1.5)
+
+[node name="drone" parent="." instance=ExtResource("4_m1bym")]
+position = Vector2(236, -6)

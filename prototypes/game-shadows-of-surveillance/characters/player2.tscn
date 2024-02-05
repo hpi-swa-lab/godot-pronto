@@ -1,15 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxp4mlvvs0g2"]
+[gd_scene load_steps=6 format=3 uid="uid://dxp4mlvvs0g2"]
 
+[ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/scripts/player2.gd" id="1_dxuki"]
 [ext_resource type="Texture2D" uid="uid://dx884i5e2o8ql" path="res://prototypes/game-shadows-of-surveillance/characters/Pink Man/Idle (32x32).png" id="2_3wlyp"]
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/characters/PlatformerControllerPlayer2.gd" id="3_kwpqc"]
 [ext_resource type="Texture2D" uid="uid://ch6w3mr4w7ueu" path="res://LightSprite.png" id="4_u5jrv"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7cbuj"]
-height = 248.062
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_csvif"]
 
 [node name="Player2" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.258, 0.258)
 collision_layer = 3
+script = ExtResource("1_dxuki")
 
 [node name="OlePlayer2" type="Sprite2D" parent="."]
 scale = Vector2(1, 1.10562)
@@ -19,8 +20,8 @@ frame = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3.87597)
-scale = Vector2(1, 0.11)
-shape = SubResource("CapsuleShape2D_7cbuj")
+scale = Vector2(1.12791, 1.45493)
+shape = SubResource("RectangleShape2D_csvif")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 

@@ -3,11 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://cfemjjj52u7tw" path="res://prototypes/game-shadows-of-surveillance/characters/Virtual Guy/Idle (32x32).png" id="1_am0mg"]
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/characters/PlatfomerControllerPlayer1.gd" id="2_opehh"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h8f81"]
-radius = 12.1039
-height = 137.594
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7aa12"]
+size = Vector2(17.84, 19.8482)
 
-[node name="Player1" type="CharacterBody2D"]
+[node name="Player1" type="CharacterBody2D" groups=["player"]]
 
 [node name="DavidPlayer1" type="Sprite2D" parent="."]
 position = Vector2(0, 4.76837e-07)
@@ -16,9 +15,9 @@ texture = ExtResource("1_am0mg")
 hframes = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
-scale = Vector2(0.912592, 0.18803)
-shape = SubResource("CapsuleShape2D_h8f81")
+position = Vector2(-5.96046e-07, 4.10018)
+scale = Vector2(1.23053, 1.34308)
+shape = SubResource("RectangleShape2D_7aa12")
 
 [node name="PlatformerControllerPlayer1" type="Node2D" parent="."]
 position = Vector2(576, 324)

@@ -28,7 +28,7 @@ color = Color(1, 1, 0.0313726, 1)
 sprite_texture = ExtResource("4_rqfal")
 placeholder_size = Vector2(20, 20)
 
-[node name="Player1" parent="." groups=["player"] instance=ExtResource("3_x2hlg")]
+[node name="Player1" parent="." instance=ExtResource("3_x2hlg")]
 position = Vector2(101, 565)
 scale = Vector2(1.5, 1.5)
 collision_layer = 3
