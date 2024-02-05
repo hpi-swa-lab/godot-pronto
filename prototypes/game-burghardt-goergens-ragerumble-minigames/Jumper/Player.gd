@@ -31,8 +31,10 @@ func _ready():
 	AudioServer.add_bus_effect(idx, AudioEffectRecord.new(), 0)
 	effect = AudioServer.get_bus_effect(idx, 0)
 	while true:
+		var tree = get_tree()
+		if !tree: return
 		_on_RecordButton_pressed()
-		await get_tree().create_timer(0.1).timeout
+		await tree.create_timer(0.1).timeout
 		_on_RecordButton_pressed()
 		_on_PlayButton_pressed()
 
@@ -55,26 +57,28 @@ func _on_RecordButton_pressed():
 		effect.set_recording_active(true)
 
 func _on_PlayButton_pressed():
+	var max_amplitude = 0
 	var data = recording.get_data()
-	const max_amplitude = 12000.0
-	var amplitude = 0.0
+	const threshold = 5000
 	# Iterate through each pair of bytes in the PackedByteArray
 	for i in range(0, data.size(), 2):
 	# Combine two bytes to create one 16-bit sample
 		var sample = data[i] | (data[i+1] << 8)
-	
+
 	# Convert to signed 16-bit integer if necessary
 		if sample >= 32768:
 			sample -= 65536
-	
+
 	# Calculate absolute value for amplitude
-		amplitude = abs(sample)
-		if amplitude <= 200.0:
-			amplitude = 0.0
-	#var amplitude_percentage = roundi(100.0*max_amplitude/(32768 - threshold))
-	var amplitude_percentage = roundi(100.0* (amplitude / max_amplitude))
+		var amplitude = abs(sample)
+		amplitude = max(0, amplitude - threshold)
+
+	# Update max_amplitude if this sample's amplitude is greater
+		if amplitude > max_amplitude:
+			max_amplitude = amplitude
+	var amplitude_percentage = roundi(100.0*max_amplitude/(32768 - threshold))
 	amp_changes.emit("Amp: " + str(amplitude_percentage) +"%")
-	SPEED = 250.0 + 250.0 * (amplitude / max_amplitude)
+	SPEED = 250.0 + 250.0 * (max_amplitude / threshold)
 
 func reset_player():
 	position = Vector2(128.0, 512.0)
@@ -90,7 +94,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("up") and is_on_floor():
 		velocity.y = -JUMP_VELOCITY
 		
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_accept"):
 		reset_player()
 		
 

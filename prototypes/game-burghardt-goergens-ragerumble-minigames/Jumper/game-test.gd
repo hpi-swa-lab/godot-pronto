@@ -29,7 +29,7 @@ func _on_host_button_pressed():
 func _on_join_button_pressed():
 	main_menu.hide()
 	hud.show()
-	print("here2")
+
 	var address = address_entry.text
 	if address_entry.text == "":
 		address = "localhost"
