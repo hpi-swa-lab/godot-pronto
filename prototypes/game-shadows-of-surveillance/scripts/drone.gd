@@ -15,7 +15,7 @@ func _ready():
 	pass
 	
 func _physics_process(delta):
-	player = get_parent().get_node("Player2")
+	player = get_tree().get_nodes_in_group("player")[1]
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -54,4 +54,4 @@ func shoot():
 	var b = bullet_scene.instantiate()
 	var direction = (player.global_position - global_position).normalized()
 	b.setup(direction, $Marker2D.global_position)
-	owner.add_child(b)
+	get_tree().get_first_node_in_group("level").add_child(b)

@@ -17,7 +17,7 @@ func _process(delta):
 	position += dir * speed * delta
 
 func _on_body_entered(body):
-	var playerHealth = get_parent().get_node("Player2").get_node("HealthBarBehavior")
+	var playerHealth = get_tree().get_nodes_in_group("player")[1].get_node("HealthBarBehavior")
 	if body.is_in_group("player"):
 		if playerHealth:
 			playerHealth.damage(20)

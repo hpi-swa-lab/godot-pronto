@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://nrfvxvrpbboq"]
+[gd_scene load_steps=45 format=3 uid="uid://nrfvxvrpbboq"]
 
 [ext_resource type="Script" path="res://prototypes/game-shadows-of-surveillance/levels/level2.gd" id="1_33jqr"]
 [ext_resource type="Texture2D" uid="uid://ej3g6agmjf0x" path="res://prototypes/game-shadows-of-surveillance/assets/6.png" id="1_j6sv0"]
@@ -6,11 +6,261 @@
 [ext_resource type="TileSet" uid="uid://dp12gfueqor5q" path="res://tileset.tres" id="3_ko4tt"]
 [ext_resource type="PackedScene" uid="uid://ds24wbrnr7tta" path="res://prototypes/game-shadows-of-surveillance/characters/drone.tscn" id="4_m1bym"]
 [ext_resource type="PackedScene" uid="uid://dxp4mlvvs0g2" path="res://prototypes/game-shadows-of-surveillance/characters/player2.tscn" id="5_a7n2h"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="7_ke1up"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ClockBehavior.gd" id="8_fh3bx"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="9_wm1v4"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="10_j1m30"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrbx1"]
 size = Vector2(16.5, 16.5)
 
-[node name="Level2" type="Node2D"]
+[sub_resource type="GDScript" id="GDScript_48bnc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return []
+"
+
+[sub_resource type="Resource" id="Resource_s0r2c"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_48bnc")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_uttnf"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_m4php"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_uttnf")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_jybyt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_k8s6d"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_jybyt")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_qf5xo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_t7y3n"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_qf5xo")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ylcip"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_607cf"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_ylcip")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_ygmac"]
+script = ExtResource("10_j1m30")
+signal_name = "elapsed"
+to = NodePath("../Spawner1")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_s0r2c"), SubResource("Resource_m4php"), SubResource("Resource_k8s6d"), SubResource("Resource_t7y3n")]
+only_if = SubResource("Resource_607cf")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_2j3e5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return []
+"
+
+[sub_resource type="Resource" id="Resource_00wav"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_2j3e5")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_mvlnp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_163jc"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_mvlnp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_b4yf4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_s7fr6"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_b4yf4")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_a045n"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_i1iej"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_a045n")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_w43ay"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_pyb2j"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_w43ay")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_fqdnk"]
+script = ExtResource("10_j1m30")
+signal_name = "elapsed"
+to = NodePath("../Spawner2")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_00wav"), SubResource("Resource_163jc"), SubResource("Resource_s7fr6"), SubResource("Resource_i1iej")]
+only_if = SubResource("Resource_pyb2j")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_gbxlt"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return []
+"
+
+[sub_resource type="Resource" id="Resource_16dks"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_gbxlt")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_0q5dq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_j74xb"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_0q5dq")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4kxx5"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_gcr0w"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_4kxx5")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_crmdo"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_ggy3t"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_crmdo")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_7pvm7"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ncgxf"]
+script = ExtResource("9_wm1v4")
+nested_script = SubResource("GDScript_7pvm7")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7nopu"]
+script = ExtResource("10_j1m30")
+signal_name = "elapsed"
+to = NodePath("../Spawner3")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_16dks"), SubResource("Resource_j74xb"), SubResource("Resource_gcr0w"), SubResource("Resource_ggy3t")]
+only_if = SubResource("Resource_ncgxf")
+deferred = false
+enabled = true
+trigger = ""
+
+[node name="Level2" type="Node2D" groups=["level"]]
 script = ExtResource("1_33jqr")
 
 [node name="Background" type="Sprite2D" parent="."]
@@ -31,6 +281,7 @@ position = Vector2(575.714, 2.27374e-12)
 texture = ExtResource("1_j6sv0")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Background" groups=["dark"]]
+visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Sky" type="ColorRect" parent="Background"]
@@ -62,14 +313,40 @@ scale = Vector2(1.5, 1.5)
 [node name="drone" parent="." instance=ExtResource("4_m1bym")]
 position = Vector2(236, -6)
 
-[node name="drone3" parent="." instance=ExtResource("4_m1bym")]
-position = Vector2(2285, 254)
-
 [node name="Goal" type="Area2D" parent="."]
 position = Vector2(2822, 343)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
 position = Vector2(0.75, -0.25)
 shape = SubResource("RectangleShape2D_vrbx1")
+
+[node name="Spawner1" type="Node2D" parent="."]
+position = Vector2(688, 56)
+script = ExtResource("7_ke1up")
+metadata/pronto_connections = []
+
+[node name="drone3" parent="Spawner1" instance=ExtResource("4_m1bym")]
+position = Vector2(519, 327)
+
+[node name="Spawner2" type="Node2D" parent="."]
+position = Vector2(1277, -87)
+script = ExtResource("7_ke1up")
+
+[node name="drone4" parent="Spawner2" instance=ExtResource("4_m1bym")]
+position = Vector2(719, 327)
+
+[node name="Spawner3" type="Node2D" parent="."]
+position = Vector2(2644, 228)
+script = ExtResource("7_ke1up")
+
+[node name="drone5" parent="Spawner3" instance=ExtResource("4_m1bym")]
+position = Vector2(2017, -117)
+
+[node name="SpawnTimer" type="Node2D" parent="."]
+position = Vector2(1084, -56)
+script = ExtResource("8_fh3bx")
+duration_seconds = 20.0
+trigger_interval_in_seconds = 1.0
+metadata/pronto_connections = [SubResource("Resource_ygmac"), SubResource("Resource_fqdnk"), SubResource("Resource_7nopu")]
 
 [connection signal="body_entered" from="Goal" to="Player2" method="_on_goal_body_entered"]
