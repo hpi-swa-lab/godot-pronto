@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://d0rrj0rnb3tdo"]
+
+[ext_resource type="Script" path="res://addons/prompto/chat/chat.gd" id="1_r4llr"]
+[ext_resource type="PackedScene" uid="uid://y16c466rq77f" path="res://addons/prompto/health_indicator.tscn" id="2_omo0d"]
+[ext_resource type="Script" path="res://addons/prompto/chat/InputField.gd" id="4_ndlp7"]
+
+[sub_resource type="GDScript" id="GDScript_vhn8d"]
+script/source = "@tool
+extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var session_manager = get_node(\"/root/PromptoManager\")
+	var current_user = session_manager.session_store.username
+	set_text(current_user)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_vl5el"]
+script/source = "@tool
+extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	set_process(false)
+
+func _pressed():
+	var prompto_manager = get_node(\"/root/PromptoManager\")
+	prompto_manager.attempt_logout()
+
+	
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_bkfye"]
+font_size = 38
+
+[node name="Prompto Chat" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r4llr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Header" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 10
+
+[node name="HealthIndicator" parent="VBoxContainer/Header/HBoxContainer" instance=ExtResource("2_omo0d")]
+layout_mode = 2
+init_status = true
+status_changed = Signal()
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/Header/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset"
+
+[node name="UserLabel" type="Label" parent="VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+text = "julian.egbert"
+vertical_alignment = 1
+script = SubResource("GDScript_vhn8d")
+
+[node name="Logout" type="Button" parent="VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+text = "Logout"
+script = SubResource("GDScript_vl5el")
+
+[node name="PromptoLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(2.08165e-12, 180)
+layout_mode = 2
+text = "Prompto"
+label_settings = SubResource("LabelSettings_bkfye")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollableMessageContainer" type="ScrollContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="MessageContainer" type="VBoxContainer" parent="VBoxContainer/ScrollableMessageContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="InputField" type="TextEdit" parent="VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 256)
+layout_mode = 2
+size_flags_vertical = 8
+placeholder_text = "Send a message to Prompto"
+script = ExtResource("4_ndlp7")
+
+[connection signal="pressed" from="VBoxContainer/Header/HBoxContainer/ResetButton" to="." method="reset"]

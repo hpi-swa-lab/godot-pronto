@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 ConnectionsList="*res://addons/pronto/helpers/ConnectionsList.gd"
 G="*res://addons/pronto/helpers/G.gd"
 LanguageClient="*res://addons/pronto/helpers/LanguageClient.gd"
+PromptoManager="*res://addons/prompto/prompto_manager.gd"
 PromoteUtil="*res://addons/pronto/helpers/PromoteUtil.gd"
 
 [display]
@@ -29,7 +30,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/pronto/plugin.cfg")
+enabled=PackedStringArray("res://addons/prompto/plugin.cfg", "res://addons/pronto/plugin.cfg")
 
 [filesystem]
 
