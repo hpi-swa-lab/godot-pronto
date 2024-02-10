@@ -3,23 +3,25 @@
 extends Behavior
 class_name StateMachineBehavior
 
-## The StateMachineBehavior is a [class Behavior] that acts as a purely graphic
-## hint as to which [class StateBehavior] objects belong to the same state machine.
-## The [class GroupDrawer] is used for this.
+## The StateMachineBehavior is a [class Behavior] that is a part of a state
+## state machine. Fill the state machine with states by creating
+## [class StateBehavior] nodes as children.  
+## The StateMachineBehavior manages the active state and can receive triggers
+## from outside, which are then available on the active state.
 
 ## Signal that gets emitted when the trigger method is called on this state machine.
 signal triggered(trigger: String)
 
 var active_state: StateBehavior = null
 
-## Name of the trigger that is called in every frame.
-const always_trigger = "always"
-
 ## List of the triggers that this state machine processes. Triggers are used in
 ## trigger method and the "on_trigger_received" method of [class StateBehavior].
-## Both these ways use the [class StateTransitionConfigurator], which allows the creation
-## of triggers.
+## Both these ways use the [class StateTransitionConfigurator], which allows the
+## creation of triggers.
 @export var triggers: Array[String] = [always_trigger]
+
+## Name of the trigger that is called in every frame.
+const always_trigger = "always"
 
 ## When true, the state machine will trigger the "always" trigger on every frame,
 ## allowing state transitions without other triggers.
