@@ -2,7 +2,6 @@
 #thumb("GPUParticlesCollisionBox3D")
 extends Behavior
 class_name CollisionBehavior
-
 ## The CollisionBehavior is a [class Behavior] that emits [signal CollisionBehavior.collided]
 ## when its parent collides with another node.
 

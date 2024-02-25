@@ -2,7 +2,6 @@
 #thumb("GPUParticles3D")
 extends Behavior
 class_name SpawnerBehavior
-
 ## The SpawnerBehavior is a [class Behavior] that allows to spawn 
 ## new nodes based off a number of blueprint nodes (its children)
 

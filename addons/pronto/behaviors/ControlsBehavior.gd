@@ -2,7 +2,6 @@
 #thumb("Joypad")
 extends Behavior
 class_name ControlsBehavior
-
 ## The ControlsBehavior is a [class Behavior] that encapsulates common
 ## control mechanisms for one of three players.
 

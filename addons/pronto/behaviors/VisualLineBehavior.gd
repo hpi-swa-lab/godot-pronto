@@ -2,7 +2,6 @@
 #thumb("EditBezier")
 extends Behavior
 class_name VisualLineBehavior
-
 ## The VisualLineBehavior is a [class Behavior] that allows to draw a straight line
 ## between two nodes.
 

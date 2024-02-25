@@ -2,7 +2,6 @@
 #thumb("Instance")
 extends Behavior
 class_name InstanceBehavior
-
 ## Allows you to instantiate its children in multiple places, while syncing changes to the original to all instances.
 ## Effectively creates a nested scene, in the same way that you would create a new scene in Godot.
 ## Supports editable children and overriding properties in its instances.

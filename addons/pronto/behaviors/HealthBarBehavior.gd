@@ -2,7 +2,6 @@
 #thumb("Heart")
 extends Behavior
 class_name HealthBarBehavior
-
 ## The HealthBarBehavior is a [class Behavior] that
 ## adds a health system to characters/objects. 
 ##

@@ -29,6 +29,10 @@ enum Player {
 ## The amount of time a jump input will trigger a jump if the character is not touching the floor, in seconds.
 @export_range(0.0, 1.0) var jump_buffer = 0.1
 
+@export var excess_air_velocity_dampening: float = 0.98
+@export var excess_on_ground_velocity_dampening: float = 0.5
+
+
 @export_category("Physics")
 @export var gravity_paused: bool = false:
 	get: return gravity_paused
@@ -113,7 +117,13 @@ func _physics_process(delta):
 		input_direction_x += -1
 	if _is_key_pressed("right"):
 		input_direction_x += 1
-	_parent.velocity.x = input_direction_x * horizontal_velocity
+	if _accelerated_by_other_means():
+		if _parent.is_on_floor():
+			_parent.velocity.x = lerp(horizontal_velocity*input_direction_x, _parent.velocity.x, excess_on_ground_velocity_dampening)
+		else:
+			_parent.velocity.x = lerp(horizontal_velocity*input_direction_x, _parent.velocity.x, excess_air_velocity_dampening)
+	else:
+		_parent.velocity.x = input_direction_x * horizontal_velocity
 	_parent.velocity.x += gravity.x * delta
 	
 	# move
@@ -128,6 +138,9 @@ func _physics_process(delta):
 		_last_positions.pop_front()
 	
 	queue_redraw()
+
+func _accelerated_by_other_means():
+	return true if _parent.velocity.x > horizontal_velocity + 2 or _parent.velocity.x < -horizontal_velocity - 2 else false
 
 func lines():
 	return super.lines() + [Lines.DashedLine.new(self, get_parent(), func (f): return "controls", "controls")]

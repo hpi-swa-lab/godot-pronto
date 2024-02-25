@@ -2,7 +2,6 @@
 #thumb("ScriptCreateDialog")
 extends Behavior
 class_name CodeBehavior
-
 ## The CodeBehavior is a [class Behavior] that can run arbitrary code
 ## and communicates the result with [signal CodeBehavior.after].
 

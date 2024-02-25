@@ -2,7 +2,6 @@
 #thumb("EditBezier")
 extends Behavior
 class_name BindBehavior
-
 ## The BindBehavior is a [class Behavior] that helps connecting values from one node
 ## to properties in another one.
 

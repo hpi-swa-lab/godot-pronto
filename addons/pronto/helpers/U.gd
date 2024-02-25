@@ -68,7 +68,7 @@ static func mouse_position() -> Vector2:
 
 func next_store(name: String):
 	var key = (str(ref.get_path()) if ref else "") + ":" + name
-	if key in _at_cache: return _at_cache[key]
+	if key in _at_cache and is_instance_valid(_at_cache[key]): return _at_cache[key]
 	var s = closest_that(func (n): return n is StoreBehavior and n.has(name))
 	_at_cache[key] = G if s == null else s
 	

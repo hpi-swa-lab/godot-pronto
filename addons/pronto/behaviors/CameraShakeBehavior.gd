@@ -2,7 +2,6 @@
 extends Behavior
 #thumb("CameraAttributes")
 class_name CameraShakeBehavior
-
 ## The CameraShakeBehavior is a [class Behavior] that applies a shreen shake to the
 ## camera. This allows to add a rapid movement of the camera in small steps for a short amount of time
 ##

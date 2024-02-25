@@ -2,7 +2,6 @@
 #thumb("CylinderMesh")
 extends Behavior
 class_name StoreBehavior
-
 ## Mapping from field names to expressions initializing each field
 @export var fields: Dictionary = {}
 

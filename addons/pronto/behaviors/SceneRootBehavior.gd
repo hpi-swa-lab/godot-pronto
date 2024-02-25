@@ -2,7 +2,6 @@
 #thumb("ClassList")
 extends Behavior
 class_name SceneRootBehavior
-
 ## The SceneRootBehavior is a [class Behavior] that 
 ## allows for easy access of the [class SceneTree].
 

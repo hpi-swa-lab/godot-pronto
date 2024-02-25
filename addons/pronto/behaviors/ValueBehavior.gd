@@ -2,7 +2,6 @@
 #thumb("PinJoint2D")
 extends Behavior
 class_name ValueBehavior
-
 ## A ValueBehavior is a [class Behavior] that allows for easier representation of single 
 ## float values while prototyping.
 

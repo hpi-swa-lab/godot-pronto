@@ -2,7 +2,6 @@
 #thumb("ToolMove")
 extends Behavior
 class_name MoveBehavior
-
 ## Move the parent node.
 ## You tell the MoveBehavior in what direction and it does the rest, as per its configuration.
 ## If you want to move at different speeds, use multiple MoveBehaviors.

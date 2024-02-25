@@ -2,7 +2,6 @@
 #thumb("Mouse")
 extends Behavior
 class_name DragBehavior
-
 ## The DragBehavior is a [class Behavior] that encapsulates mouse movement bahavior
 ## on its parent node.
 

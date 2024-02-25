@@ -48,6 +48,7 @@ arguments = [SubResource("Resource_6toae")]
 only_if = SubResource("Resource_5es7b")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kveg0"]
 texture = ExtResource("7_i5x8e")
@@ -1298,3 +1299,4 @@ position = Vector2(-40, -1.74846e-06)
 script = ExtResource("9_rgqlk")
 jump_velocity = 200.0
 horizontal_velocity = 200.0
+show_trail = true

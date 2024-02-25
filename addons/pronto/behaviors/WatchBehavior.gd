@@ -2,7 +2,6 @@
 #thumb("Search")
 extends Behavior
 class_name WatchBehavior
-
 ## The Watchbehavior is a [class Behavior] that calculates a given script's results
 ## and puts it into the [class EngineDebugger] for every frame
 

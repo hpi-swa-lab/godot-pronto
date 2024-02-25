@@ -2,7 +2,6 @@
 #thumb("Search")
 extends Behavior
 class_name InspectBehavior
-
 ## Add the InspectBehavior as a child of a node to inspect its properties inside the game.
 
 var default_property = 'position'

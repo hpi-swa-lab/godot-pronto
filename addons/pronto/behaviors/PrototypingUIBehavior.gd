@@ -2,7 +2,6 @@
 #thumb("Grid")
 extends Behavior
 class_name PrototypingUIBehavior
-
 ## Add to your scene to edit properties while in-game.
 ## If you have any ValueBehaviors within your game and do not add a PrototypingUI,
 ## one will automatically be created with these default values
@@ -627,7 +626,7 @@ func _sync_editor_value(value: ValueBehavior):
 
 func handle_size_button_click(button: Button, initial: bool = false):
 	if not initial: minimized = !minimized
-	button.release_focus()
+	#button.release_focus()
 	vbox.visible = !minimized
 	if minimized:
 		panel.size = header.size

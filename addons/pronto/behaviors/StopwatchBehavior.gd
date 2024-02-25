@@ -2,7 +2,6 @@
 #thumb("Time")
 extends Behavior
 class_name StopwatchBehavior
-
 ## The StopwatchBehavior is a [class Behavior] that counts time in seconds.
 
 var _start: int = 0

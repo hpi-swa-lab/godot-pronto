@@ -2,7 +2,6 @@
 #thumb("Search")
 extends Behavior
 class_name QueryBehavior
-
 ## Searches for nodes in the scene and emits signals for results.
 ## Properties allow to filter, sort, and limit results.
 ## All properties can be overridden through the [code]parameters[/code] argument of the [code]query()[/code] method.

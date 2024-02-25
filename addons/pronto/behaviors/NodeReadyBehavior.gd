@@ -2,7 +2,6 @@
 #thumb("PlayStart")
 extends Behavior
 class_name NodeReadyBehavior
-
 ## The NodeReadyBehavior is a [class Behavior] that emits its [signal NodeReadyBehavior.node_ready]
 ## when the node's [NodeReadyBehavior._ready] was called and the node is still in the scene tree
 

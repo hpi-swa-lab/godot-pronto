@@ -2,7 +2,6 @@
 #thumb("Timer")
 extends Behavior
 class_name ClockBehavior
-
 ## The ClockBehavior is a [class Behavior] that encasulates a [class Timer]
 ## and makes it accessible to other behaviors.
 

@@ -1,0 +1,616 @@
+[gd_scene load_steps=63 format=3 uid="uid://c5421m0fsdkn4"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/BackgroundBehavior.gd" id="1_fhjfl"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_shlx5"]
+[ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="3_c5ka0"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="4_6n8n7"]
+[ext_resource type="Texture2D" uid="uid://cckvu4or44463" path="res://prototypes/study/implementation/godot/recap/49-Breakout-Tiles.png" id="4_bb3rt"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_ebbro"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="6_wseuv"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="8_qgjpu"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/AlwaysBehavior.gd" id="9_xceo7"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="10_fiaww"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="11_8mn5d"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ValueBehavior.gd" id="12_mvonj"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/KeyBehavior.gd" id="12_xv3yy"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/GroupBehavior.gd" id="14_nr62k"]
+
+[sub_resource type="GDScript" id="GDScript_2dqru"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	from.get_tree().reload_current_scene()
+"
+
+[sub_resource type="Resource" id="Resource_b7fyq"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_2dqru")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_m1a3y"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other.name.contains(\"Ball\")
+"
+
+[sub_resource type="Resource" id="Resource_t6n8e"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_m1a3y")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dw451"]
+script = ExtResource("6_wseuv")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_t6n8e")
+expression = SubResource("Resource_b7fyq")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_yf1bg"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from, to):
+	return at(\"ball_dir\") * at(\"ball_speed\")
+"
+
+[sub_resource type="Resource" id="Resource_fe57g"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_yf1bg")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_w5a6p"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: Node2D):
+	return at(\"ball_active\")
+"
+
+[sub_resource type="Resource" id="Resource_q4f5e"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_w5a6p")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_vm1vb"]
+script = ExtResource("6_wseuv")
+signal_name = "physiscs_always"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "set_velocity"
+arguments = [SubResource("Resource_fe57g")]
+only_if = SubResource("Resource_q4f5e")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_75nci"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from):
+	var col =  from.get_parent().get_last_slide_collision()
+	put(\"ball_dir\", from.get_parent().velocity.bounce(col.get_normal()).normalized())
+"
+
+[sub_resource type="Resource" id="Resource_ojfmo"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_75nci")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_pjcb2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_0pyv5"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_pjcb2")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_wha5o"]
+script = ExtResource("6_wseuv")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_0pyv5")
+expression = SubResource("Resource_ojfmo")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_n6tww"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	other.queue_free()
+"
+
+[sub_resource type="Resource" id="Resource_u4e8x"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_n6tww")
+argument_names = ["other", "direction", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_373sb"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D):
+	return other.name.contains(\"Brick\")
+"
+
+[sub_resource type="Resource" id="Resource_dpu6m"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_373sb")
+argument_names = ["other", "direction", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_nhijb"]
+script = ExtResource("6_wseuv")
+signal_name = "collided"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_dpu6m")
+expression = SubResource("Resource_u4e8x")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_mv3xw"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: CharacterBody2D):
+	return Vector2(closest(\"Paddle\").global_position.x,to.global_position.y)
+"
+
+[sub_resource type="Resource" id="Resource_idsey"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_mv3xw")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_trvsl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D, to: CharacterBody2D):
+	return !at(\"ball_active\")
+"
+
+[sub_resource type="Resource" id="Resource_e0y5b"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_trvsl")
+argument_names = ["delta", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_y42um"]
+script = ExtResource("6_wseuv")
+signal_name = "always"
+to = NodePath("..")
+more_references = []
+invoke = "set_global_position"
+arguments = [SubResource("Resource_idsey")]
+only_if = SubResource("Resource_e0y5b")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_pw0aj"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_wp4t3"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_pw0aj")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_sjjq3"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return Vector2(0,-1)
+"
+
+[sub_resource type="Resource" id="Resource_x4nrq"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_sjjq3")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_8x4rl"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return \"ball_dir\"
+"
+
+[sub_resource type="Resource" id="Resource_y5l4o"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_8x4rl")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_lwxdc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from, to):
+	return Vector2(randf_range(-1,1), randf_range(-.1, -1)).normalized()
+"
+
+[sub_resource type="Resource" id="Resource_7uanj"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_lwxdc")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_ionhc"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_gnhc3"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_ionhc")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_7xc2n"]
+script = ExtResource("6_wseuv")
+signal_name = "node_ready"
+to = NodePath("..")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_y5l4o"), SubResource("Resource_7uanj")]
+only_if = SubResource("Resource_gnhc3")
+deferred = false
+enabled = false
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_8gpid"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return \"ball_active\"
+"
+
+[sub_resource type="Resource" id="Resource_2o87f"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_8gpid")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_xuivr"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_w5dck"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_xuivr")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_s2ikq"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return !at(\"ball_active\")
+"
+
+[sub_resource type="Resource" id="Resource_o4hl0"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_s2ikq")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jsut0"]
+script = ExtResource("6_wseuv")
+signal_name = "just_down"
+to = NodePath("..")
+more_references = []
+invoke = "put"
+arguments = [SubResource("Resource_2o87f"), SubResource("Resource_w5dck")]
+only_if = SubResource("Resource_o4hl0")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_3bs7f"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	print(\"YOU WON\")
+	G.get_tree().paused = true
+"
+
+[sub_resource type="Resource" id="Resource_2jols"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_3bs7f")
+argument_names = ["delta", "from"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_4mu55"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(delta, from: Node2D):
+	if G.get_tree().get_nodes_in_group(\"Bricks\").size() == 0:
+		return true
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_xymry"]
+script = ExtResource("5_ebbro")
+nested_script = SubResource("GDScript_4mu55")
+argument_names = ["delta", "from"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dy0yg"]
+script = ExtResource("6_wseuv")
+signal_name = "always"
+to = NodePath("")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_xymry")
+expression = SubResource("Resource_2jols")
+deferred = false
+enabled = true
+trigger = ""
+
+[node name="Brickbreaker" type="Node2D"]
+
+[node name="BackgroundBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1_fhjfl")
+color = Color(0.443137, 0.368627, 0.639216, 1)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="wall_right" type="StaticBody2D" parent="Walls"]
+
+[node name="wall_right" type="Node2D" parent="Walls/wall_right"]
+position = Vector2(1163, 324)
+script = ExtResource("2_shlx5")
+color = Color(1, 1, 1, 0.129412)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(20, 905)
+
+[node name="wall_left" type="StaticBody2D" parent="Walls"]
+
+[node name="wall_left" type="Node2D" parent="Walls/wall_left"]
+position = Vector2(-11, 324)
+script = ExtResource("2_shlx5")
+color = Color(1, 1, 1, 0.129412)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(20, 905)
+
+[node name="wall_top" type="StaticBody2D" parent="Walls"]
+
+[node name="wall_top" type="Node2D" parent="Walls/wall_top"]
+position = Vector2(574, -11)
+script = ExtResource("2_shlx5")
+color = Color(1, 1, 1, 0.129412)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(1162, 22)
+
+[node name="Area2D" type="Area2D" parent="Walls"]
+position = Vector2(577, 660)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Walls/Area2D"]
+script = ExtResource("2_shlx5")
+color = Color(0.192157, 1, 1, 0.129412)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(1159, 21)
+
+[node name="CollisionBehavior" type="Node2D" parent="Walls/Area2D"]
+position = Vector2(-1, 46)
+script = ExtResource("4_6n8n7")
+metadata/pronto_connections = [SubResource("Resource_dw451")]
+
+[node name="Paddle" type="CharacterBody2D" parent="."]
+position = Vector2(578, 585)
+rotation = 1.5708
+motion_mode = 1
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Paddle"]
+script = ExtResource("2_shlx5")
+sprite_texture = ExtResource("4_bb3rt")
+outline_visible = true
+outline_color = Color(0, 0, 0, 1)
+outline_width = 2.0
+shape_type = "Capsule"
+capsule_height = 98.0
+capsule_radius = 13.0
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(579, 559)
+motion_mode = 1
+wall_min_slide_angle = 3.14159
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Ball"]
+script = ExtResource("2_shlx5")
+color = Color(0.576471, 0.576471, 0.576471, 1)
+sprite_texture = ExtResource("3_c5ka0")
+outline_visible = true
+outline_color = Color(0, 0, 0, 1)
+outline_width = 2.0
+shape_type = "Circle"
+circle_radius = 10.0
+
+[node name="MoveBehavior" type="Node2D" parent="Ball"]
+position = Vector2(-63, -38)
+script = ExtResource("8_qgjpu")
+max_velocity = 1000.0
+
+[node name="AlwaysBehavior" type="Node2D" parent="Ball"]
+position = Vector2(-167, -38)
+script = ExtResource("9_xceo7")
+metadata/pronto_connections = [SubResource("Resource_vm1vb")]
+
+[node name="CollisionBehavior" type="Node2D" parent="Ball"]
+position = Vector2(61, -38)
+script = ExtResource("4_6n8n7")
+metadata/pronto_connections = [SubResource("Resource_wha5o"), SubResource("Resource_nhijb")]
+
+[node name="AlwaysBehavior2" type="Node2D" parent="Ball"]
+position = Vector2(-90, 1.52588e-05)
+script = ExtResource("9_xceo7")
+metadata/pronto_connections = [SubResource("Resource_y42um")]
+
+[node name="StoreBehavior" type="Node2D" parent="."]
+position = Vector2(308, 428)
+script = ExtResource("10_fiaww")
+fields = {
+"ball_active": SubResource("Resource_wp4t3"),
+"ball_dir": SubResource("Resource_x4nrq")
+}
+
+[node name="NodeReadyBehavior" type="Node2D" parent="StoreBehavior"]
+position = Vector2(-88, 0)
+script = ExtResource("11_8mn5d")
+metadata/pronto_connections = [SubResource("Resource_7xc2n")]
+
+[node name="KeyBehavior" type="Node2D" parent="StoreBehavior"]
+position = Vector2(84, -3.8147e-06)
+script = ExtResource("12_xv3yy")
+key = "space"
+metadata/pronto_connections = [SubResource("Resource_jsut0")]
+
+[node name="ball_speed" type="Node2D" parent="."]
+position = Vector2(581, 517)
+script = ExtResource("12_mvonj")
+float_min = 0.0
+float_max = 1000.0
+float_value = 500.0
+float_step_size = 1.0
+
+[node name="Bricks" type="Node2D" parent="."]
+position = Vector2(576, 64)
+script = ExtResource("14_nr62k")
+
+[node name="Brick" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="Brick2" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+position = Vector2(80, 28)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick2"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="Brick6" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+position = Vector2(80, 83)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick6"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="Brick7" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+position = Vector2(-80, 83)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick7"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="Brick8" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+position = Vector2(1, 110)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick8"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="Brick9" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+position = Vector2(160, 55)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick9"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="Brick3" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+position = Vector2(-80, 28)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick3"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="Brick4" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+position = Vector2(-1, 55)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick4"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="Brick5" type="StaticBody2D" parent="Bricks" groups=["Bricks"]]
+position = Vector2(-160, 57)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Bricks/Brick5"]
+script = ExtResource("2_shlx5")
+color = Color(0, 0.27451, 0.72549, 1)
+sprite_texture = ExtResource("3_c5ka0")
+placeholder_size = Vector2(78, 26)
+
+[node name="AlwaysBehavior" type="Node2D" parent="Bricks"]
+position = Vector2(2, -38)
+script = ExtResource("9_xceo7")
+metadata/pronto_connections = [SubResource("Resource_dy0yg")]

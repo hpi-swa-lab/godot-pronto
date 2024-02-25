@@ -2,7 +2,6 @@
 #thumb("KeyboardPhysical")
 extends Behavior
 class_name KeyBehavior
-
 ## The KeyBehavior is a [class Behavior] that helps reacting to keyboard events.
 ##
 ## Each KeyBehavior can react to exactly one key and

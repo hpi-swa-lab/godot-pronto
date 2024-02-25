@@ -2,7 +2,6 @@
 #thumb("Loop")
 extends Behavior
 class_name AlwaysBehavior
-
 ## The AlwaysBehavior is a [class Behavior] that emits signals every frame.
 ## 
 ## See [signal AlwaysBehavior.always] and [signal AlwaysBehavior.physics_always] for 

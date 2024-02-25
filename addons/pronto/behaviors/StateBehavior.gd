@@ -2,7 +2,6 @@
 #thumb("Slot")
 extends Behavior
 class_name StateBehavior
-
 ## The StateBehavior is the fundamental building block of a state machine.
 ## 
 ## Each StateBehavior emits the signals [signal StateBehavior.entered] and

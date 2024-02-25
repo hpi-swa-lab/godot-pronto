@@ -2,7 +2,6 @@
 extends Behavior
 #thumb("PointMesh")
 class_name GroupBehavior
-
 ## The GroupBehavior is a [class Behavior] that visually represents
 ## a group of notes. It has no further functionality. Use it for organization.
 
