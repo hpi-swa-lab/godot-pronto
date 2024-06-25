@@ -1,0 +1,636 @@
+[gd_scene load_steps=47 format=3 uid="uid://cvhse7toffuey"]
+
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1_kcdu6"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_irm2l"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/ControlsBehavior.gd" id="3_ee2un"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="4_rg3f6"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="5_eh652"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/MoveBehavior.gd" id="6_qhh04"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="7_gww4o"]
+[ext_resource type="Texture2D" uid="uid://bix7ddlk13iod" path="res://prototypes/game-overshaded/blur-pix.jpg" id="8_6jyrp"]
+[ext_resource type="Texture2D" uid="uid://sw7s6p7b0t72" path="res://prototypes/game-overshaded/pix.jpg" id="9_a05bp"]
+[ext_resource type="Texture2D" uid="uid://dhm80xms8f8st" path="res://prototypes/game-overshaded/blur.jpg" id="10_67lal"]
+[ext_resource type="Texture2D" uid="uid://dq5uihlnqc0ni" path="res://prototypes/game-overshaded/normal.jpg" id="11_la4nj"]
+[ext_resource type="Texture2D" uid="uid://uuuiupxyuhf" path="res://prototypes/game-overshaded/blur-dith.jpg" id="12_4rmas"]
+[ext_resource type="Texture2D" uid="uid://c0j1kioxhy7g8" path="res://prototypes/game-overshaded/blur-pix-dith.jpg" id="13_5vacg"]
+[ext_resource type="Texture2D" uid="uid://ce4p4078rh4ss" path="res://prototypes/game-overshaded/bw-pix.jpg" id="14_pv5s3"]
+[ext_resource type="Texture2D" uid="uid://brd01flsbi36t" path="res://prototypes/game-overshaded/bw.jpg" id="15_i4o78"]
+[ext_resource type="Texture2D" uid="uid://fm7abmkrd22h" path="res://prototypes/game-overshaded/dith-bw-pix.jpg" id="16_41cr5"]
+[ext_resource type="Texture2D" uid="uid://boft5xyrr5r1f" path="res://prototypes/game-overshaded/dith-bw.jpg" id="17_eqm05"]
+[ext_resource type="Texture2D" uid="uid://b6n456fgnxw2m" path="res://prototypes/game-overshaded/dith-pix-blur.jpg" id="18_c383t"]
+[ext_resource type="Texture2D" uid="uid://crv0dhysq3iyp" path="res://prototypes/game-overshaded/dith-pix.jpg" id="19_jxa7f"]
+[ext_resource type="Texture2D" uid="uid://ngycbg6g50j1" path="res://prototypes/game-overshaded/dith.jpg" id="20_1wnpo"]
+
+[sub_resource type="Image" id="Image_7xkjx"]
+data = {
+"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_abpo7"]
+image = SubResource("Image_7xkjx")
+
+[sub_resource type="GDScript" id="GDScript_3koff"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_xdkaf"]
+script = ExtResource("4_rg3f6")
+nested_script = SubResource("GDScript_3koff")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_g7hd8"]
+script = ExtResource("5_eh652")
+signal_name = "left"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_left"
+arguments = []
+only_if = SubResource("Resource_xdkaf")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_5vu8v"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_khf7y"]
+script = ExtResource("4_rg3f6")
+nested_script = SubResource("GDScript_5vu8v")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_dxmt6"]
+script = ExtResource("5_eh652")
+signal_name = "right"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_right"
+arguments = []
+only_if = SubResource("Resource_khf7y")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_axutp"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_jy3hc"]
+script = ExtResource("4_rg3f6")
+nested_script = SubResource("GDScript_axutp")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_sjgs5"]
+script = ExtResource("5_eh652")
+signal_name = "up"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_up"
+arguments = []
+only_if = SubResource("Resource_jy3hc")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_felel"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_8crl3"]
+script = ExtResource("4_rg3f6")
+nested_script = SubResource("GDScript_felel")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_2cb8g"]
+script = ExtResource("5_eh652")
+signal_name = "down"
+to = NodePath("../MoveBehavior")
+more_references = []
+invoke = "move_down"
+arguments = []
+only_if = SubResource("Resource_8crl3")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5r2s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bhfko"]
+size = Vector2(40, 40)
+
+[sub_resource type="GDScript" id="GDScript_k6lod"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	var other_name = other.name
+	
+	if to.get_child_count() == 0 and other_name != \"normal\":
+		# don't allow starting with applied effect
+		return
+	
+	if to.get_child_count() > 0:
+		if other_name != \"normal\" and to.get_child(0).name != \"normal\":
+			# don't allow reprossessing the images
+			return
+	
+	if to.get_child_count() > 0:
+		for child in to.get_children():
+			child.queue_free()	
+	
+	var image = to.get_node(\"%\" + other_name).duplicate()
+	image.visible = true
+	to.add_child(image)
+	
+	
+"
+
+[sub_resource type="Resource" id="Resource_huhki"]
+script = ExtResource("4_rg3f6")
+nested_script = SubResource("GDScript_k6lod")
+argument_names = ["other", "direction", "from", "to"]
+return_value = false
+
+[sub_resource type="GDScript" id="GDScript_jwnp4"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_uc8tf"]
+script = ExtResource("4_rg3f6")
+nested_script = SubResource("GDScript_jwnp4")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_0cjv3"]
+script = ExtResource("5_eh652")
+signal_name = "collided"
+to = NodePath("../../Hand")
+more_references = []
+invoke = ""
+arguments = []
+only_if = SubResource("Resource_uc8tf")
+expression = SubResource("Resource_huhki")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="Image" id="Image_wpbb7"]
+data = {
+"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_eqcne"]
+image = SubResource("Image_wpbb7")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewtoa"]
+
+[sub_resource type="Image" id="Image_iwhjo"]
+data = {
+"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_lsxho"]
+image = SubResource("Image_iwhjo")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ExportBehavior" type="Node2D" parent="."]
+position = Vector2(576, 324)
+script = ExtResource("1_kcdu6")
+title = "Overshaded"
+authors = PackedStringArray("Callista", "Luke")
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(174, 202)
+script = ExtResource("2_irm2l")
+color = Color(1, 0.411765, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_abpo7")
+placeholder_size = Vector2(20, 20)
+
+[node name="ControlsBehavior" type="Node2D" parent="Player"]
+position = Vector2(63, 108)
+script = ExtResource("3_ee2un")
+metadata/pronto_connections = [SubResource("Resource_g7hd8"), SubResource("Resource_dxmt6"), SubResource("Resource_sjgs5"), SubResource("Resource_2cb8g")]
+
+[node name="MoveBehavior" type="Node2D" parent="Player"]
+position = Vector2(8, 56)
+script = ExtResource("6_qhh04")
+
+[node name="Area2D" type="Area2D" parent="Player"]
+
+[node name="CollisionBehavior" type="Node2D" parent="Player/Area2D"]
+position = Vector2(-60, -14)
+script = ExtResource("7_gww4o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+shape = SubResource("RectangleShape2D_k5r2s")
+
+[node name="Pickup" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Pickup"]
+shape = SubResource("RectangleShape2D_bhfko")
+
+[node name="CollisionBehavior" type="Node2D" parent="Player/Pickup"]
+position = Vector2(75, -29)
+script = ExtResource("7_gww4o")
+limit_to_group = "pickup"
+metadata/pronto_connections = [SubResource("Resource_0cjv3")]
+
+[node name="Hand" type="Node2D" parent="Player"]
+
+[node name="Station1" type="Node2D" parent="."]
+position = Vector2(1057, 46)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="blur-dith" type="Area2D" parent="Station1" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station1/blur-dith"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station1"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "blur-dith"
+
+[node name="Station2" type="Node2D" parent="."]
+position = Vector2(865, 46)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="blur-pix-dith" type="Area2D" parent="Station2" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station2/blur-pix-dith"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station2"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "blur-pix-dith"
+
+[node name="Station3" type="Node2D" parent="."]
+position = Vector2(1066, 385)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="blur-pix" type="Area2D" parent="Station3" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station3/blur-pix"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station3"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "blur-pix"
+
+[node name="Station4" type="Node2D" parent="."]
+position = Vector2(772, 298)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="blur" type="Area2D" parent="Station4" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station4/blur"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station4"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "blur"
+
+[node name="Station5" type="Node2D" parent="."]
+position = Vector2(584, 65)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="bw-pix" type="Area2D" parent="Station5" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station5/bw-pix"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station5"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "bw-pix"
+
+[node name="Station6" type="Node2D" parent="."]
+position = Vector2(494, 462)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="bw" type="Area2D" parent="Station6" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station6/bw"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station6"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "bw"
+
+[node name="Station7" type="Node2D" parent="."]
+position = Vector2(83, 48)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="dith-bw-pix" type="Area2D" parent="Station7" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station7/dith-bw-pix"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station7"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "dith-bw-pix"
+
+[node name="Station8" type="Node2D" parent="."]
+position = Vector2(101, 466)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="dith-bw" type="Area2D" parent="Station8" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station8/dith-bw"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station8"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "dith-bw"
+
+[node name="Station9" type="Node2D" parent="."]
+position = Vector2(341, 327)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="dith-pix-blur" type="Area2D" parent="Station9" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station9/dith-pix-blur"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station9"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "dith-pix-blur"
+
+[node name="Station10" type="Node2D" parent="."]
+position = Vector2(850, 436)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="dith-pix" type="Area2D" parent="Station10" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station10/dith-pix"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station10"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "dith-pix"
+metadata/_edit_use_anchors_ = true
+
+[node name="Station11" type="Node2D" parent="."]
+position = Vector2(618, 378)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="dith" type="Area2D" parent="Station11" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station11/dith"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station11"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "dith"
+
+[node name="Station12" type="Node2D" parent="."]
+position = Vector2(75, 320)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="normal" type="Area2D" parent="Station12" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station12/normal"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station12"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "normal"
+
+[node name="Station13" type="Node2D" parent="."]
+position = Vector2(393, 56)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="pix-dith" type="Area2D" parent="Station13" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station13/pix-dith"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station13"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "pix-dith
+"
+
+[node name="Station14" type="Node2D" parent="."]
+position = Vector2(1060, 246)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 1, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_eqcne")
+placeholder_size = Vector2(20, 20)
+
+[node name="pix" type="Area2D" parent="Station14" groups=["pickup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Station14/pix"]
+shape = SubResource("RectangleShape2D_ewtoa")
+
+[node name="Label" type="Label" parent="Station14"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "pix"
+
+[node name="Station15" type="Node2D" parent="."]
+position = Vector2(950, 181)
+script = ExtResource("2_irm2l")
+color = Color(0.286275, 1, 0.156863, 1)
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_lsxho")
+placeholder_size = Vector2(20, 20)
+
+[node name="Label" type="Label" parent="Station15"]
+offset_right = 40.0
+offset_bottom = 22.3333
+text = "View output image"
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="blur-pix" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("8_6jyrp")
+
+[node name="pix" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_a05bp")
+
+[node name="blur" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("10_67lal")
+
+[node name="normal" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("11_la4nj")
+
+[node name="blur-dith" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("12_4rmas")
+
+[node name="blur-pix-dith" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("13_5vacg")
+
+[node name="bw-pix" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("14_pv5s3")
+
+[node name="bw" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("15_i4o78")
+
+[node name="dith-bw-pix" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("16_41cr5")
+
+[node name="dith-bw" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("17_eqm05")
+
+[node name="dith-pix-blur" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("18_c383t")
+
+[node name="dith-pix" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("19_jxa7f")
+
+[node name="dith" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("20_1wnpo")

@@ -24,7 +24,6 @@ PromoteUtil="*res://addons/pronto/helpers/PromoteUtil.gd"
 
 [display]
 
-window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [editor_plugins]
