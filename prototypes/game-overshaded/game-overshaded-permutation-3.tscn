@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cvhse7toffuey"]
+[gd_scene load_steps=48 format=3 uid="uid://cvhse7toffuey"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/ExportBehavior.gd" id="1_kcdu6"]
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="2_irm2l"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://b6n456fgnxw2m" path="res://prototypes/game-overshaded/dith-pix-blur.jpg" id="18_c383t"]
 [ext_resource type="Texture2D" uid="uid://crv0dhysq3iyp" path="res://prototypes/game-overshaded/dith-pix.jpg" id="19_jxa7f"]
 [ext_resource type="Texture2D" uid="uid://ngycbg6g50j1" path="res://prototypes/game-overshaded/dith.jpg" id="20_1wnpo"]
+[ext_resource type="Texture2D" uid="uid://d2bhr0cxx7mu5" path="res://prototypes/game-overshaded/pix-dith.jpg" id="20_c5hu6"]
 
 [sub_resource type="Image" id="Image_7xkjx"]
 data = {
@@ -152,11 +153,6 @@ func run(other, direction, from: Node2D, to: Node2D):
 	if to.get_child_count() == 0 and other_name != \"normal\":
 		# don't allow starting with applied effect
 		return
-	
-	if to.get_child_count() > 0:
-		if other_name != \"normal\" and to.get_child(0).name != \"normal\":
-			# don't allow reprossessing the images
-			return
 	
 	if to.get_child_count() > 0:
 		for child in to.get_children():
@@ -627,6 +623,13 @@ visible = false
 z_index = -1
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("19_jxa7f")
+
+[node name="pix-dith" type="Sprite2D" parent="Node2D"]
+unique_name_in_owner = true
+visible = false
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("20_c5hu6")
 
 [node name="dith" type="Sprite2D" parent="Node2D"]
 unique_name_in_owner = true
