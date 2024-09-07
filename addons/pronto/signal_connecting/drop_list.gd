@@ -28,7 +28,7 @@ func add(node: Node):
 
 func all_children_without_position(root: Node, list: Array[Node] = []):
 	for c in root.get_children():
-		if not Utils.has_position(c):
+		if not Utils.has_position(c) and not c.name.begins_with("_"):
 			list.append(c)
 			all_children_without_position(c, list)
 	return list

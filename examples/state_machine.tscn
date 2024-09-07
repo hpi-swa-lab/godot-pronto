@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dkqdp6qxpooej"]
+[gd_scene load_steps=39 format=3 uid="uid://dkqdp6qxpooej"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/StateBehavior.gd" id="1_ouj63"]
 [ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="2_4y7ja"]
@@ -220,6 +220,46 @@ deferred = false
 enabled = true
 trigger = ""
 
+[sub_resource type="GDScript" id="GDScript_2dg7e"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: CPUParticles2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_famc1"]
+script = ExtResource("2_4y7ja")
+nested_script = SubResource("GDScript_2dg7e")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_i5yq7"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Button, to: CPUParticles2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_ycamd"]
+script = ExtResource("2_4y7ja")
+nested_script = SubResource("GDScript_i5yq7")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_gq4f1"]
+script = ExtResource("3_73m08")
+signal_name = "pressed"
+to = NodePath("../CPUParticles2D")
+more_references = []
+invoke = "set_emitting"
+arguments = [SubResource("Resource_famc1")]
+only_if = SubResource("Resource_ycamd")
+deferred = false
+enabled = true
+trigger = ""
+
 [node name="state_machine_example" type="Node2D"]
 
 [node name="KeyBehavior" type="Node2D" parent="."]
@@ -255,3 +295,15 @@ position = Vector2(-76, -48)
 script = ExtResource("1_ouj63")
 is_initial_state = true
 metadata/pronto_connections = [SubResource("Resource_y7wta"), SubResource("Resource_e1qdn")]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="StateMachine"]
+position = Vector2(80, -37)
+emitting = false
+
+[node name="Button" type="Button" parent="StateMachine"]
+offset_left = -4.0
+offset_top = -7.0
+offset_right = 60.0
+offset_bottom = 24.0
+text = "Hit ME!"
+metadata/pronto_connections = [SubResource("Resource_gq4f1")]

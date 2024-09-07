@@ -2,7 +2,7 @@
 extends Node2D
 class_name Behavior
 
-var _icon := TextureRect.new()
+var _icon := BehaviorIcon.new()
 var _handles := Handles.new()
 var _lines := Lines.new()
 
@@ -11,17 +11,22 @@ var _lines := Lines.new()
 var hidden_child = false
 
 func reload_icon(override_texture = null):
+	push_error("FIXME not currently supported, needs to be ported to BehaviorIcon")
 	_icon.texture = override_texture if override_texture else icon_texture()
 	_icon.queue_redraw()
 
+func icon_size():
+	return _icon.get_rect().size * _icon.scale
+
 func icon_texture():
 	var name = get_script().resource_path.get_file().split('.')[0]
-	return Utils.icon_from_theme(G.at("_pronto_behaviors")[name], self)
+	var icon = G.at("_pronto_behaviors")[name]
+	return "res://addons/pronto/icons/" + icon + ".svg"
 
 func _ready():
 	if Engine.is_editor_hint() and show_icon() and is_active_scene() and not hidden_child:
-		_icon.texture = icon_texture()
-		_icon.position = _icon.texture.get_size() / -2
+		_icon.path = icon_texture()
+		#_icon.position = _icon.texture.get_size() / -2
 		_icon.material = load("res://addons/pronto/icons/icon_outline_material.tres")
 		add_child(_icon, false, Node.INTERNAL_MODE_FRONT)
 		

@@ -66,6 +66,7 @@ arguments = [SubResource("Resource_xx3cn"), SubResource("Resource_yhc4f")]
 only_if = SubResource("Resource_jkyc0")
 deferred = false
 enabled = false
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_iw61t"]
 script/source = "@tool
@@ -131,6 +132,7 @@ only_if = SubResource("Resource_ksmnj")
 expression = SubResource("Resource_wqado")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_txfqc"]
 script/source = "@tool
@@ -172,6 +174,7 @@ only_if = SubResource("Resource_d828c")
 expression = SubResource("Resource_x0ick")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_gvfu1"]
 script/source = "@tool
@@ -211,6 +214,7 @@ arguments = [SubResource("Resource_7c6tt")]
 only_if = SubResource("Resource_ea5iu")
 deferred = false
 enabled = true
+trigger = ""
 
 [node name="Node2D" type="Node2D"]
 
@@ -220,30 +224,30 @@ position = Vector2(562, 642)
 [node name="PlaceholderBehavior" type="Node2D" parent="StaticBody2D"]
 position = Vector2(108, 1142)
 script = ExtResource("1_1p2uu")
-placeholder_size = Vector2(4417, 2303)
 keep_in_origin = false
 sprite_texture = ExtResource("2_rtpdu")
+placeholder_size = Vector2(4417, 2303)
 
 [node name="PlaceholderBehavior4" type="Node2D" parent="StaticBody2D"]
 position = Vector2(8, -1618)
 script = ExtResource("1_1p2uu")
-placeholder_size = Vector2(4210, 1990)
 keep_in_origin = false
 sprite_texture = ExtResource("2_rtpdu")
+placeholder_size = Vector2(4210, 1990)
 
 [node name="PlaceholderBehavior2" type="Node2D" parent="StaticBody2D"]
 position = Vector2(1980, -313)
 script = ExtResource("1_1p2uu")
-placeholder_size = Vector2(2800, 1190)
 keep_in_origin = false
 sprite_texture = ExtResource("2_rtpdu")
+placeholder_size = Vector2(2800, 1190)
 
 [node name="PlaceholderBehavior3" type="Node2D" parent="StaticBody2D"]
 position = Vector2(-1955, -299)
 script = ExtResource("1_1p2uu")
-placeholder_size = Vector2(2820, 1037)
 keep_in_origin = false
 sprite_texture = ExtResource("2_rtpdu")
+placeholder_size = Vector2(2820, 1037)
 
 [node name="SpawnerBehavior" type="Node2D" parent="."]
 position = Vector2(736, 81)
@@ -258,9 +262,9 @@ can_sleep = false
 [node name="PlaceholderBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
 script = ExtResource("1_1p2uu")
 color = Color(1, 1, 1, 0)
-placeholder_size = Vector2(100, 130)
 use_sprite = true
 sprite_texture = ExtResource("2_rtpdu")
+placeholder_size = Vector2(100, 130)
 
 [node name="DragBehavior" type="Node2D" parent="SpawnerBehavior/RigidBody2D"]
 position = Vector2(-723, 130)
@@ -277,14 +281,15 @@ script = ExtResource("9_mm2io")
 metadata/pronto_connections = [SubResource("Resource_x47vs")]
 
 [node name="PlayerSpawner" type="Node2D" parent="."]
+position = Vector2(576, 324)
 script = ExtResource("3_x22k0")
 
 [node name="Player" type="AudioStreamPlayer2D" parent="PlayerSpawner"]
 unique_name_in_owner = true
 
 [node name="ClockBehavior" type="Node2D" parent="PlayerSpawner/Player"]
+position = Vector2(-34, 33)
 script = ExtResource("11_6wl7d")
-one_shot = true
 duration_seconds = 0.0001
 trigger_interval_in_seconds = 1.0
 metadata/pronto_connections = [SubResource("Resource_mj1mp")]
@@ -294,4 +299,5 @@ position = Vector2(585, 331)
 
 [node name="Shake" type="Node2D" parent="Camera2D"]
 unique_name_in_owner = true
+position = Vector2(-24, 32)
 script = ExtResource("12_cpbqy")

@@ -130,10 +130,14 @@ func _process(delta):
 		down.emit()
 		input_direction += Vector2.DOWN
 	# Emit signals
-	vertical_direction.emit(Vector2(0, input_direction.y))
-	horizontal_direction.emit(Vector2(input_direction.x, 0))
+	if input_direction.y != 0:
+		vertical_direction.emit(Vector2(0, input_direction.y))
+	if input_direction.x != 0:
+		horizontal_direction.emit(Vector2(input_direction.x, 0))
+	
 	input_direction = input_direction.normalized() # normalize vector after the vertical and horizontal signals
-	direction.emit(input_direction)
+	if input_direction.length() > 0:
+		direction.emit(input_direction)
 
 func _input(event):
 	if not can_process():

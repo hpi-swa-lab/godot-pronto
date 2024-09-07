@@ -47,7 +47,7 @@ func _draw_lines(c: CanvasItem, lines: Array):
 		var group = groups[to]
 		var combined = group[0].as_combined(group)
 		if to == group[0].from: # draw connection to itself
-			var y = 0 if not c._icon else c._icon.get_size().y / 2 # for behaviors without displayed icon use y = 0
+			var y = 0 if not c._icon else c.icon_size().y / 2 # for behaviors without displayed icon use y = 0
 			c.draw_set_transform(Vector2(0, y + text_size))
 			combined.draw_text(c, font, text_size, false, self)
 		else:

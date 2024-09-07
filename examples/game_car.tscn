@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bwi63oqp83l0b"]
+[gd_scene load_steps=54 format=3 uid="uid://bwi63oqp83l0b"]
 
 [ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="1_2qxg3"]
 [ext_resource type="Texture2D" uid="uid://bhos8bn4u0qp8" path="res://addons/pronto/icons/MissingTexture.svg" id="2_fjkj2"]
@@ -51,6 +51,7 @@ arguments = []
 only_if = SubResource("Resource_bnmqc")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_qctot"]
 script/source = "@tool
@@ -76,6 +77,7 @@ arguments = []
 only_if = SubResource("Resource_22nkm")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_454bx"]
 script/source = "@tool
@@ -101,6 +103,21 @@ arguments = []
 only_if = SubResource("Resource_k6c4o")
 deferred = false
 enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_nsf21"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return 0
+"
+
+[sub_resource type="Resource" id="Resource_6sfp6"]
+script = ExtResource("5_gukvn")
+nested_script = SubResource("GDScript_nsf21")
+argument_names = []
+return_value = true
 
 [sub_resource type="GDScript" id="GDScript_prgrp"]
 script/source = "@tool
@@ -140,6 +157,7 @@ arguments = []
 only_if = SubResource("Resource_n4s7v")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_oajks"]
 script/source = "@tool
@@ -193,6 +211,7 @@ arguments = [SubResource("Resource_cy830"), SubResource("Resource_tpmnc")]
 only_if = SubResource("Resource_c5edj")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_8ej78"]
 script/source = "@tool
@@ -232,6 +251,7 @@ arguments = [SubResource("Resource_hspxi")]
 only_if = SubResource("Resource_bye08")
 deferred = false
 enabled = true
+trigger = ""
 
 [sub_resource type="GDScript" id="GDScript_ae3uv"]
 script/source = "@tool
@@ -313,6 +333,7 @@ arguments = [SubResource("Resource_o6opn"), SubResource("Resource_sdjaj"), SubRe
 only_if = SubResource("Resource_s54xh")
 deferred = false
 enabled = true
+trigger = ""
 
 [node name="car_game" type="Node2D"]
 
@@ -325,18 +346,18 @@ sprite_texture = ExtResource("2_fjkj2")
 placeholder_size = Vector2(20, 20)
 
 [node name="MoveBehavior" type="Node2D" parent="car"]
-position = Vector2(61, 47)
+position = Vector2(83, 41)
 script = ExtResource("3_e4ih0")
 friction = 2.0
 
 [node name="BindBehavior" type="Node2D" parent="car/MoveBehavior"]
-position = Vector2(-28.2843, 28.2843)
+position = Vector2(-72, 20)
 script = ExtResource("8_dgmj1")
 evaluate = SubResource("Resource_qm0jp")
 to_prop = "max_velocity"
 
 [node name="ControlsBehavior" type="Node2D" parent="car"]
-position = Vector2(143, 10)
+position = Vector2(158, 72)
 script = ExtResource("4_sw6ma")
 metadata/pronto_connections = [SubResource("Resource_21elu"), SubResource("Resource_gj3r1"), SubResource("Resource_2b55t")]
 
@@ -349,8 +370,11 @@ float_value = 1000.0
 float_step_size = 10.0
 
 [node name="StoreBehavior" type="Node2D" parent="."]
-position = Vector2(54, 42)
+position = Vector2(72, 46)
 script = ExtResource("7_4oi8o")
+fields = {
+"score": SubResource("Resource_6sfp6")
+}
 metadata/score = 0
 
 [node name="Score" type="Label" parent="."]
@@ -359,7 +383,7 @@ offset_bottom = 22.3333
 text = "Score"
 
 [node name="BindBehavior" type="Node2D" parent="Score"]
-position = Vector2(11, 66)
+position = Vector2(24, 70)
 script = ExtResource("8_dgmj1")
 evaluate = SubResource("Resource_k6tcr")
 to_prop = "text"
@@ -369,7 +393,7 @@ position = Vector2(227, 70)
 script = ExtResource("9_t5o05")
 
 [node name="pickup" type="Area2D" parent="SpawnerBehavior"]
-position = Vector2(-33, -41)
+position = Vector2(-47, -26)
 
 [node name="PlaceholderBehavior" type="Node2D" parent="SpawnerBehavior/pickup"]
 script = ExtResource("1_2qxg3")
@@ -383,7 +407,7 @@ script = ExtResource("10_ew6ax")
 metadata/pronto_connections = [SubResource("Resource_4rfwu"), SubResource("Resource_m1jgr")]
 
 [node name="ClockBehavior" type="Node2D" parent="."]
-position = Vector2(164, 104)
+position = Vector2(159, 116)
 script = ExtResource("11_2m5nj")
 duration_seconds = 0.5
 trigger_interval_in_seconds = 1.0
