@@ -1,0 +1,233 @@
+[gd_scene load_steps=31 format=3 uid="uid://s646ks3msc6r"]
+
+[ext_resource type="Script" path="res://examples/Button.gd" id="1_8hc3q"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/SpawnerBehavior.gd" id="2_ucc88"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/PlaceholderBehavior.gd" id="3_plp8t"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/StoreBehavior.gd" id="4_oxrmr"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/ConnectionScript.gd" id="5_glwyx"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/CollisionBehavior.gd" id="6_53nh8"]
+[ext_resource type="Script" path="res://addons/pronto/helpers/Connection.gd" id="7_c4lo8"]
+[ext_resource type="Script" path="res://addons/pronto/behaviors/NodeReadyBehavior.gd" id="8_jf2hp"]
+
+[sub_resource type="Image" id="Image_gccne"]
+data = {
+"data": PackedByteArray(249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 255, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0, 249, 250, 251, 0),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_gupjr"]
+image = SubResource("Image_gccne")
+
+[sub_resource type="GDScript" id="GDScript_6l1u7"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run():
+	return 10
+"
+
+[sub_resource type="Resource" id="Resource_67ckh"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_6l1u7")
+argument_names = []
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_v7db2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return \"numVegetables\"
+"
+
+[sub_resource type="Resource" id="Resource_ru50i"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_v7db2")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_iinym"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return 1
+"
+
+[sub_resource type="Resource" id="Resource_8lgb4"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_iinym")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_4xisy"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(other, direction, from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_s1bqb"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_4xisy")
+argument_names = ["other", "direction", "from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_sjph6"]
+script = ExtResource("7_c4lo8")
+signal_name = "collided"
+to = NodePath("../StoreBehavior")
+more_references = []
+invoke = "inc"
+arguments = [SubResource("Resource_ru50i"), SubResource("Resource_8lgb4")]
+only_if = SubResource("Resource_s1bqb")
+deferred = false
+enabled = true
+trigger = ""
+
+[sub_resource type="GDScript" id="GDScript_h2mff"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return []
+"
+
+[sub_resource type="Resource" id="Resource_de4dr"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_h2mff")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_3iiag"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_bi5yj"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_3iiag")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_364x2"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return Vector2(INF,INF)
+"
+
+[sub_resource type="Resource" id="Resource_tygja"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_364x2")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_tdqcu"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return false
+"
+
+[sub_resource type="Resource" id="Resource_e0lq7"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_tdqcu")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="GDScript" id="GDScript_lwoju"]
+script/source = "@tool
+extends U
+@warning_ignore(\"unused_parameter\")
+func run(from: Node2D, to: Node2D):
+	return true
+"
+
+[sub_resource type="Resource" id="Resource_nt215"]
+script = ExtResource("5_glwyx")
+nested_script = SubResource("GDScript_lwoju")
+argument_names = ["from", "to"]
+return_value = true
+
+[sub_resource type="Resource" id="Resource_jr3e5"]
+script = ExtResource("7_c4lo8")
+signal_name = "node_ready"
+to = NodePath("../Gardener")
+more_references = []
+invoke = "spawn"
+arguments = [SubResource("Resource_de4dr"), SubResource("Resource_bi5yj"), SubResource("Resource_tygja"), SubResource("Resource_e0lq7")]
+only_if = SubResource("Resource_nt215")
+deferred = false
+enabled = true
+trigger = ""
+
+[node name="Door" type="Node2D"]
+
+[node name="door" type="ColorRect" parent="."]
+offset_left = 350.0
+offset_top = 72.0
+offset_right = 405.0
+offset_bottom = 84.0
+
+[node name="wall" type="ColorRect" parent="."]
+offset_left = 407.0
+offset_top = 72.0
+offset_right = 669.0
+offset_bottom = 84.0
+color = Color(0.686275, 0.686275, 0.686275, 1)
+
+[node name="wall2" type="ColorRect" parent="."]
+offset_left = 86.0
+offset_top = 72.0
+offset_right = 348.0
+offset_bottom = 84.0
+color = Color(0.686275, 0.686275, 0.686275, 1)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 309.0
+offset_top = 122.0
+offset_right = 359.0
+offset_bottom = 153.0
+text = "Open"
+script = ExtResource("1_8hc3q")
+metadata/pronto_connections = []
+
+[node name="Gardener" type="Node2D" parent="."]
+position = Vector2(688, 305)
+script = ExtResource("2_ucc88")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Gardener"]
+position = Vector2(72, 4)
+
+[node name="PlaceholderBehavior" type="Node2D" parent="Gardener/CharacterBody2D"]
+script = ExtResource("3_plp8t")
+use_sprite = true
+sprite_texture = SubResource("ImageTexture_gupjr")
+placeholder_size = Vector2(20, 20)
+
+[node name="StoreBehavior" type="Node2D" parent="Gardener/CharacterBody2D"]
+position = Vector2(-79, 36)
+script = ExtResource("4_oxrmr")
+fields = {
+"numVegetables": SubResource("Resource_67ckh")
+}
+
+[node name="CollisionBehavior" type="Node2D" parent="Gardener/CharacterBody2D"]
+position = Vector2(12, 36)
+script = ExtResource("6_53nh8")
+metadata/pronto_connections = [SubResource("Resource_sjph6")]
+
+[node name="NodeReadyBehavior" type="Node2D" parent="."]
+position = Vector2(619, 341)
+script = ExtResource("8_jf2hp")
+metadata/pronto_connections = [SubResource("Resource_jr3e5")]
