@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqejq4kiap3ey"]
+
+[ext_resource type="Script" path="res://addons/prompto/chat/MessageBox.gd" id="2_0kjv6"]
+[ext_resource type="Texture2D" uid="uid://cnayo6p8r03ws" path="res://addons/prompto/icons/warning.svg" id="3_h1fs0"]
+[ext_resource type="Texture2D" uid="uid://c0284nril2oac" path="res://addons/prompto/icons/like.svg" id="3_uv5l2"]
+[ext_resource type="Texture2D" uid="uid://ceh5ko0t436tl" path="res://addons/prompto/icons/loading.svg" id="4_235sh"]
+[ext_resource type="Texture2D" uid="uid://cq2shwvaidqhg" path="res://addons/prompto/icons/dislike.svg" id="4_besp7"]
+
+[sub_resource type="Theme" id="Theme_djkh7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_js3c0"]
+resource_local_to_scene = true
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.219608, 0.219608, 0.219608, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="MarginContainer" type="MarginContainer"]
+offset_right = 401.0
+offset_bottom = 39.0
+script = ExtResource("2_0kjv6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="Content" type="RichTextLabel" parent="VBoxContainer"]
+unique_name_in_owner = true
+clip_contents = false
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+layout_mode = 2
+theme = SubResource("Theme_djkh7")
+theme_override_styles/normal = SubResource("StyleBoxFlat_js3c0")
+text = "This is an example content"
+fit_content = true
+scroll_following = true
+autowrap_mode = 2
+
+[node name="Warning" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("3_h1fs0")
+stretch_mode = 2
+
+[node name="Loading" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("4_235sh")
+stretch_mode = 2
+
+[node name="FeedbackButtons" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="LikeButton" type="Button" parent="VBoxContainer/FeedbackButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "This answer was helpful"
+icon = ExtResource("3_uv5l2")
+
+[node name="DislikeButton" type="Button" parent="VBoxContainer/FeedbackButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "This answer was not helpful"
+icon = ExtResource("4_besp7")

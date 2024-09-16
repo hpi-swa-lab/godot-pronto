@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=3 uid="uid://bobeowqjsp6ea"]
+
+[ext_resource type="Texture2D" uid="uid://8ujt0nftslso" path="res://addons/prompto/icons/hpi.svg" id="1_fewdl"]
+[ext_resource type="Texture2D" uid="uid://dn87bxukebfvu" path="res://icon.svg" id="1_u1l56"]
+
+[sub_resource type="GDScript" id="GDScript_bjtem"]
+script/source = "@tool
+extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+func _pressed():
+	var prompto_manager = get_node(\"/root/PromptoManager\")
+	prompto_manager.attempt_login()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="Prompto" type="Control"]
+layout_mode = 3
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.981445)
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -95.5
+offset_bottom = 95.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.998497, 1)
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_u1l56")
+stretch_mode = 5
+
+[node name="PromptoDescription" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Hello!
+
+Prompto allows you to interact with Godot and Pronto over natural language using large language models.
+
+To use Prompto, login via your HPI account.
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "LogIn with HPI"
+icon = ExtResource("1_fewdl")
+expand_icon = true
+script = SubResource("GDScript_bjtem")

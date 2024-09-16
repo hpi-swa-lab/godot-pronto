@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://y16c466rq77f"]
+
+[sub_resource type="GDScript" id="GDScript_0bx3l"]
+script/source = "@tool
+extends HBoxContainer
+
+@export var init_status: bool
+@export var status_changed: Signal
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_on_status_changed(init_status)
+	status_changed.connect(_on_status_changed)
+
+func _on_status_changed(online: bool):
+	if online:
+		indicate_online()
+	else:
+		indicate_offline()
+
+func indicate_offline():
+	%Label.text = \"Offline\"
+
+func indicate_online():
+	%Label.text = \"Online\"
+	
+"
+
+[node name="HealthIndicator" type="HBoxContainer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.0
+offset_right = 5.0
+offset_bottom = 11.0
+grow_vertical = 2
+script = SubResource("GDScript_0bx3l")
+init_status = null
+status_changed = null
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Offline"
